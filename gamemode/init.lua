@@ -1,0 +1,11 @@
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
+AddCSLuaFile("cl_horde.lua")
+
+include("shared.lua")
+include("sv_globals.lua")
+include("sv_playercommands.lua")
+include("sv_playerlifecycle.lua")
+include("sv_enemyconfig.lua")
+include("sv_nodegraph.lua")
+include("sv_horde.lua")
