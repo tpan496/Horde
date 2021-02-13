@@ -4,60 +4,60 @@ if CLIENT then return end
 util.AddNetworkString("HighlightEnemies")
 
 hook.Add("Initialize", "Horde_Init", function()
-	_G.ai_nodes = {}
-	_G.spawned_enemies = {}
-	_G.found_ai_nodes = false
-	ParseFile()
+    _G.ai_nodes = {}
+    _G.spawned_enemies = {}
+    _G.found_ai_nodes = false
+    ParseFile()
 end)
 
 hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
-	if ent:GetClass() == "info_player_teamspawn" then
-		local valid = true
-		for k,v in pairs(_G.ai_nodes) do
-			if v["pos"] == ent:GetPos() then
-				valid = false
-			end
-		end
+    if ent:GetClass() == "info_player_teamspawn" then
+        local valid = true
+        for k,v in pairs(_G.ai_nodes) do
+            if v["pos"] == ent:GetPos() then
+                valid = false
+            end
+        end
 
-		if valid then
-			local node = {
-				pos = ent:GetPos(),
-				yaw = 0,
-				offset = 0,
-				type = 0,
-				info = 0,
-				zone = 0,
-				neighbor = {},
-				numneighbors = 0,
-				link = {},
-				numlinks = 0
-			}
-			table.insert(_G.ai_nodes, node)
-		end
-	end
+        if valid then
+            local node = {
+                pos = ent:GetPos(),
+                yaw = 0,
+                offset = 0,
+                type = 0,
+                info = 0,
+                zone = 0,
+                neighbor = {},
+                numneighbors = 0,
+                link = {},
+                numlinks = 0
+            }
+            table.insert(_G.ai_nodes, node)
+        end
+    end
 end)
 
 hook.Add("OnNPCKilled","Horde_OnNPCKilled", function(victim, killer, weapon)
-	if _G.spawned_enemies[victim:EntIndex()] then
-		_G.spawned_enemies[victim:EntIndex()] = nil
+    if _G.spawned_enemies[victim:EntIndex()] then
+        _G.spawned_enemies[victim:EntIndex()] = nil
         _G.alive_enemies_this_wave = _G.alive_enemies_this_wave - 1
         print("OnKill", _G.alive_enemies_this_wave, _G.total_enemies_this_wave)
         if _G.alive_enemies_this_wave <= 10 and _G.total_enemies_this_wave <= 10 then
-			print("Notify Highlight")
+            print("Notify Highlight")
             net.Start("HighlightEnemies")
             net.WriteInt(1, 2)
             net.Broadcast()
         end
-	end
+    end
 end)
 
 hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
-	if _G.spawned_enemies[ent:EntIndex()] then
-		_G.spawned_enemies[ent:EntIndex()] = nil
+    if _G.spawned_enemies[ent:EntIndex()] then
+        _G.spawned_enemies[ent:EntIndex()] = nil
         _G.alive_enemies_this_wave = _G.alive_enemies_this_wave - 1
         _G.total_enemies_this_wave = _G.total_enemies_this_wave + 1
         print("OnRemove", ent:EntIndex(), _G.alive_enemies_this_wave, _G.total_enemies_this_wave)
-	end
+    end
 end)
 
 function Reset(enemies)
@@ -65,49 +65,49 @@ function Reset(enemies)
     _G.alive_enemies_this_wave = 0
     _G.current_wave = 0
     _G.current_break_time = _G.total_break_time
-	game.CleanUpMap()
+    game.CleanUpMap()
 end
 
 function SpawnEnemy(class, pos)
-	npc_info = list.Get("NPC")[class]
-	if not npc_info then
-		Print("NPC does not exist in ", list.Get("NPC"))
-	end
+    npc_info = list.Get("NPC")[class]
+    if not npc_info then
+        Print("NPC does not exist in ", list.Get("NPC"))
+    end
 
-	local enemy = ents.Create(class)
-	enemy:SetPos(pos)
-	enemy:SetAngles(Angle(0, math.random(0, 360), 0))
-	enemy:Spawn()
+    local enemy = ents.Create(class)
+    enemy:SetPos(pos)
+    enemy:SetAngles(Angle(0, math.random(0, 360), 0))
+    enemy:Spawn()
 
-	_G.spawned_enemies[enemy:EntIndex()] = true
+    _G.spawned_enemies[enemy:EntIndex()] = true
 
-	if npc_info["Model"] then
-		enemy:SetModel(npc_info["Model"])
-	end
+    if npc_info["Model"] then
+        enemy:SetModel(npc_info["Model"])
+    end
 
-	if npc_info["SpawnFlags"] then
-		enemy:SetKeyValue("spawnflags", npc_info["SpawnFlags"])
-	end
-	enemy:SetKeyValue("spawnflags", SF_NPC_FADE_CORPSE)
+    if npc_info["SpawnFlags"] then
+        enemy:SetKeyValue("spawnflags", npc_info["SpawnFlags"])
+    end
+    enemy:SetKeyValue("spawnflags", SF_NPC_FADE_CORPSE)
 
-	if npc_info["KeyValues"] then
-		for k, v in pairs(npc_info["KeyValues"]) do
-			enemy:SetKeyValue(k, v)
-		end
-	end
-			
-	enemy:Fire("StartPatrolling")
-	enemy:Fire("SetReadinessHigh")
-	if enemy:IsNPC() then
-		enemy:SetNPCState(NPC_STATE_COMBAT)
-	end
+    if npc_info["KeyValues"] then
+        for k, v in pairs(npc_info["KeyValues"]) do
+            enemy:SetKeyValue(k, v)
+        end
+    end
+            
+    enemy:Fire("StartPatrolling")
+    enemy:Fire("SetReadinessHigh")
+    if enemy:IsNPC() then
+        enemy:SetNPCState(NPC_STATE_COMBAT)
+    end
 
-	return enemy
+    return enemy
 end
 
 function StartBreak()
     timer.Create('Horder_Counter', 1, 0, function ()
-		if not _G.start_game then return end
+        if not _G.start_game then return end
         if 0 < _G.current_break_time then
             _G.current_break_time = _G.current_break_time - 1
         end
@@ -128,15 +128,15 @@ timer.Create('Horde_Main', 5, 0, function ()
     local valid_nodes = {}
     if table.Count(player.GetAll()) <= 0 then
         timer.Remove('Horde')
-		Reset()
+        Reset()
         return
     end
 
-	if not _G.start_game then
-		Reset()
-		PrintMessage(HUD_PRINTTALK, "Waiting to start the game...")
-		return 
-	end
+    if not _G.start_game then
+        Reset()
+        PrintMessage(HUD_PRINTTALK, "Waiting to start the game...")
+        return 
+    end
     
     if not _G.found_ai_nodes then
         ParseFile()
@@ -195,8 +195,8 @@ timer.Create('Horde_Main', 5, 0, function ()
             table.RemoveByValue(enemies, v)
             enemy:Remove()
         else
-			enemy:SetLastPosition(closest_ply:GetPos())
-			enemy:SetTarget(closest_ply)
+            enemy:SetLastPosition(closest_ply:GetPos())
+            enemy:SetTarget(closest_ply)
         end
     end
 
@@ -233,7 +233,7 @@ timer.Create('Horde_Main', 5, 0, function ()
             table.insert(valid_nodes, v["pos"])
         end
 
-		::cont::
+        ::cont::
     end
 
     --Spawn enemies
@@ -267,11 +267,11 @@ timer.Create('Horde_Main', 5, 0, function ()
     if _G.total_enemies_this_wave <= 0 and _G.alive_enemies_this_wave <= 0 then
         _G.current_break_time = _G.total_break_time
         StartBreak()
-		if _G.current_wave == 5 then
-			PrintMessage(HUD_PRINTTALK ,"Final Wave Completed! You have survived!")
-		else
-			PrintMessage(HUD_PRINTTALK ,"Wave Completed!")
-		end
+        if _G.current_wave == 5 then
+            PrintMessage(HUD_PRINTTALK ,"Final Wave Completed! You have survived!")
+        else
+            PrintMessage(HUD_PRINTTALK ,"Wave Completed!")
+        end
         net.Start("HighlightEnemies")
         net.WriteInt(0, 2)
         net.Broadcast()
