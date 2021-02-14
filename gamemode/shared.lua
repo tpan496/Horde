@@ -15,7 +15,7 @@ function GM:PlayerNoClip(ply,desiredState) return false end
 
 function GM:PlayerDeathSound() return true end
 
-function GM:DrawDeathNotice(x,y) return true end
+function GM:DrawDeathNotice(x,y) return false end
 
 function GM:PlayerSpawnVehicle(ply,model,name,table) return false end
 

@@ -60,12 +60,12 @@ hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
     end
 end)
 
-function Reset(enemies)
+function Reset()
     _G.total_enemies_this_wave = 0
     _G.alive_enemies_this_wave = 0
     _G.current_wave = 0
     _G.current_break_time = _G.total_break_time
-    game.CleanUpMap()
+    -- TODO: clean up all the spawned enemies
 end
 
 function SpawnEnemy(class, pos)
@@ -105,6 +105,18 @@ function SpawnEnemy(class, pos)
     return enemy
 end
 
+function ScanEnemies()
+    local enemies = {}
+    for ent_idx, _ in pairs(_G.spawned_enemies) do
+        if not IsValid(Entity(ent_idx)) then
+            _G.spawned_enemies[ent_idx] = nil
+        else
+            table.insert(enemies, Entity(ent_idx))
+        end
+    end
+    return enemies
+end
+
 function StartBreak()
     timer.Create('Horder_Counter', 1, 0, function ()
         if not _G.start_game then return end
@@ -134,6 +146,10 @@ timer.Create('Horde_Main', 5, 0, function ()
 
     if not _G.start_game then
         Reset()
+        local enemies = ScanEnemies()
+        for _, enemy in enemies do
+            enemy:Remove()
+        end
         PrintMessage(HUD_PRINTTALK, "Waiting to start the game...")
         return 
     end
@@ -167,14 +183,7 @@ timer.Create('Horde_Main', 5, 0, function ()
         PrintMessage(HUD_PRINTTALK, "Total Enemies: " .. _G.total_enemies_this_wave)
     end
 
-    local enemies = {}
-    for ent_idx, _ in pairs(_G.spawned_enemies) do
-        if not IsValid(Entity(ent_idx)) then
-            _G.spawned_enemies[ent_idx] = nil
-        else
-            table.insert(enemies, Entity(ent_idx))
-        end
-    end
+    local enemies = ScanEnemies()
 
     --Check zombie
     for _, enemy in pairs(enemies) do
@@ -275,6 +284,10 @@ timer.Create('Horde_Main', 5, 0, function ()
         net.Start("HighlightEnemies")
         net.WriteInt(0, 2)
         net.Broadcast()
+
+        for _, ply in pairs(player.GetAll()) do
+            if not ply:Alive() then ply:Spawn() end
+        end
     end
     end)
 

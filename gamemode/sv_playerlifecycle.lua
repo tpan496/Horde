@@ -15,7 +15,7 @@ end)
 
 hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", function(victim, inflictor, attacker)
     if not _G.start_game then return end
-    timer.Simple(1, function() 
+    timer.Simple(1, function()
         if victim:IsValid() then
             victim:SetObserverMode(OBS_MODE_CHASE)
             victim:SetMoveType(MOVETYPE_OBSERVER)
@@ -75,6 +75,7 @@ end
 
 hook.Add("PlayerDeathThink", "Horde_PlayerDeathThink", function (ply)
     if _G.start_game then return false end
+    ply:Spawn()
     return true
 end);
 
