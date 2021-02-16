@@ -21,7 +21,7 @@ local function ReadUShort(f) return toUShort(f:Read(SIZEOF_SHORT)) end
 
 -- Taken from nodegraph
 function ParseFile()
-    if _G.found_ai_nodes then
+    if HORDE.found_ai_nodes then
         return
     end
 
@@ -30,7 +30,7 @@ function ParseFile()
         return
     end
 
-    _G.found_ai_nodes = true
+    HORDE.found_ai_nodes = true
     local ainet_ver = ReadInt(f)
     local map_ver = ReadInt(f)
     if ainet_ver ~= AINET_VERSION_NUMBER then
@@ -72,7 +72,7 @@ function ParseFile()
             numlinks = 0
         }
 
-        table.insert(_G.ai_nodes,node)
+        table.insert(HORDE.ai_nodes,node)
 
         ::cont::
     end
