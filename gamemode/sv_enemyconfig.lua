@@ -93,16 +93,3 @@ EnemiesList[5] = {
     npc_vj_zss_zhulk=2,
     npc_vj_zss_burnzie=2,
 }
-
--- Normalize
-for i=1,5 do
-    local enemies = EnemiesList[i]
-    local total_weight = 0
-    for key, value in pairs(enemies) do
-        total_weight = total_weight + value
-    end
-    for key, value in pairs(enemies) do
-        EnemiesList[i][key] = value / total_weight
-    end
-    print(total_weight)
-end

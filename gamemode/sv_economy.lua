@@ -51,7 +51,7 @@ function Player:SyncEconomy()
 end
 
 hook.Add("PlayerInitialSpawn", "Horde_Economy_Setup", function (ply)
-    ply:SetMoney(10000)
+    ply:SetMoney(HORDE.start_money)
     ply:SetWeight(15)
     ply:SetClass(HORDE.classes["Survivor"])
     hook.Add("SetupMove", ply, function( self, ply, _, cmd )
@@ -65,6 +65,11 @@ hook.Add("PlayerInitialSpawn", "Horde_Economy_Setup", function (ply)
 end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
+    if ply:GetClass().Name == "Heavy" then
+        ply:SetWeight(20)
+    else
+        ply:SetWeight(15)
+    end
     ply:SyncEconomy()
 end)
 
@@ -114,7 +119,6 @@ net.Receive("Horde_BuyItem", function (len, ply)
 end)
 
 net.Receive("Horde_SelectClass", function (len, ply)
-    PrintTable(HORDE.player_class_changed)
     if HORDE.start_game then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You cannot change class after a wave has started.")
@@ -173,13 +177,13 @@ net.Receive("Horde_SelectClass", function (len, ply)
     net.WriteInt(0,2)
     net.Send(ply)
     HORDE.player_class_changed[ply:SteamID()] = true
-    PrintTable(HORDE.player_class_changed)
     ply:SyncEconomy()
 end)
 
 net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
     local class = net.ReadString()
     local price = net.ReadInt(16)
+    local count = net.ReadInt(16)
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You don't have this weapon!")
@@ -188,17 +192,27 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         return
     end
     
-    if ply:GetMoney() >= price then
-        ply:AddMoney(-price)
+    if ply:GetMoney() >= price * count then
+        ply:AddMoney(-price * count)
         local wpn = ply:GetWeapon(class)
-        local clipSize = wpn:GetMaxClip1()
+        local clip_size = wpn:GetMaxClip1()
+        local ammo_id = wpn:GetPrimaryAmmoType()
 
-        if clipSize > 0 then -- block melee
-			local nClips = 1
-			local AmmoID = wpn:GetPrimaryAmmoType()
-			local AmmoNeeded = clipSize * nClips
-			ply:GiveAmmo(AmmoNeeded , AmmoID , false)
+        if clip_size > 0 then -- block melee
+			ply:GiveAmmo(clip_size * count, ammo_id , false)
+        else
+            -- Give 1 piece of this ammo since clip size do not apply
+            local rpg_round = 8
+            local smg1_grenade = 9
+            local ar2altfire = 2
+            local xbowbolt = 6
+            local grenade = 10
+            local slam = 11
+            if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam then
+                ply:GiveAmmo(1, ammo_id, false)
+            end
 		end
+        ply:SyncEconomy()
     end
 end)
 
@@ -222,5 +236,6 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
 			local AmmoID = wpn:GetSecondaryAmmoType()
 			ply:GiveAmmo(1 , AmmoID , false)
 		end
+        ply:SyncEconomy()
     end
 end)

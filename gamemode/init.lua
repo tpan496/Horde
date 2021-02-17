@@ -9,6 +9,7 @@ AddCSLuaFile("gui/cl_class.lua")
 AddCSLuaFile("gui/cl_description.lua")
 AddCSLuaFile("gui/cl_item.lua")
 AddCSLuaFile("gui/cl_itemconfig.lua")
+AddCSLuaFile("gui/cl_enemyconfig.lua")
 AddCSLuaFile("gui/cl_shop.lua")
 
 

@@ -73,17 +73,17 @@ function BroadcastMessage(msg)
     net.Broadcast()
 end
 
-function Reset()
+function HardReset()
     HORDE.killed_enemies_this_wave = 0
     HORDE.total_enemies_this_wave = 0
     HORDE.alive_enemies_this_wave = 0
     HORDE.current_wave = 0
-    HORDE.current_break_time = HORDE.total_break_time
+    HORDE.current_break_time = HORDE.first_break_time
     -- TODO: clean up all the spawned enemies
 end
 
 function SpawnEnemy(class, pos)
-    npc_info = list.Get("NPC")[class]
+    local npc_info = list.Get("NPC")[class]
     if not npc_info then
         Print("NPC does not exist in ", list.Get("NPC"))
     end
@@ -137,9 +137,9 @@ function StartBreak()
         if 0 < HORDE.current_break_time then
             HORDE.current_break_time = HORDE.current_break_time - 1
         end
-        if HORDE.current_break_time <= 10 then
-            BroadcastMessage("Next wave starts in " .. HORDE.current_break_time)
-        end
+        
+        BroadcastMessage("Next wave starts in " .. HORDE.current_break_time)
+        
         if HORDE.current_break_time == 0 then
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
@@ -155,12 +155,12 @@ timer.Create('Horde_Main', 5, 0, function ()
     local valid_nodes = {}
     if table.Count(player.GetAll()) <= 0 then
         timer.Remove('Horde')
-        Reset()
+        HardReset()
         return
     end
 
     if not HORDE.start_game then
-        Reset()
+        HardReset()
         local enemies = ScanEnemies()
         if not table.IsEmpty(enemies) then
             for _, enemy in pairs(enemies) do
@@ -198,7 +198,7 @@ timer.Create('Horde_Main', 5, 0, function ()
         print("Enemies may not spawn well on this map, please try another.")
     end
 
-    if HORDE.current_break_time == HORDE.total_break_time then
+    if (HORDE.current_wave == 0 and HORDE.current_break_time == HORDE.first_break_time) or (HORDE.current_break_time == HORDE.total_break_time) then
         StartBreak()
     end
 
@@ -208,16 +208,30 @@ timer.Create('Horde_Main', 5, 0, function ()
 
     -- Start round
     if HORDE.current_break_time == 0 then
+        if (HORDE.enemies_normalized == nil) or table.IsEmpty(HORDE.enemies_normalized) then
+            HardReset()
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("Enemies list are empy. Config the enemyy list or no enemies wil spawn.")
+            net.WriteInt(1,2)
+            net.Broadcast()
+            HORDE.start_game = false
+            return
+        end
+
+        if table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("No enemy config set for this wave. Falling back to previous wave settings.")
+            net.WriteInt(1,2)
+            net.Broadcast()
+        end
         HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave]
         HORDE.alive_enemies_this_wave = 0
         HORDE.current_break_time = -1
         HORDE.killed_enemies_this_wave = 0
         BroadcastMessage("Enemies: " .. HORDE.total_enemies_this_wave)
         -- Close all the shop menus
-        for _, ply in pairs(player.GetAll()) do
-            net.Start("Horde_ForceCloseShop")
-            net.Send(ply)
-        end
+        net.Start("Horde_ForceCloseShop")
+        net.Broadcast()
     end
 
     local enemies = ScanEnemies()
@@ -292,7 +306,11 @@ timer.Create('Horde_Main', 5, 0, function ()
                     local p = math.random()
                     local p_cum = 0
                     local enemy
-                    for class, weight in pairs(EnemiesList[HORDE.current_wave]) do
+                    local enemy_wave = HORDE.current_wave
+                    if table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
+                        enemy_wave = enemy_wave - 1
+                    end
+                    for class, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
                         p_cum = p_cum + weight
                         if p <= p_cum then
                             enemy = SpawnEnemy(class, pos + Vector(0,0,HORDE.enemy_spawn_z))
@@ -319,7 +337,7 @@ timer.Create('Horde_Main', 5, 0, function ()
                 enemy:Remove()
             end
         end
-        if HORDE.current_wave == 5 then
+        if HORDE.current_wave == HORDE.max_waves then
             BroadcastMessage("Final Wave Completed! You have survived!")
         else
             BroadcastMessage("Wave Completed!")

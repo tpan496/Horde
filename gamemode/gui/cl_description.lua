@@ -14,20 +14,37 @@ function PANEL:Init()
     self.buy_btn:SetTall(50)
     self.buy_btn.Paint = function () end
 
-    self.ammo_btn = vgui.Create('DButton', self)
-	self.ammo_btn:Dock(BOTTOM)
-    self.ammo_btn:SetFont("Content")
-    self.ammo_btn:SetTextColor(Color(0,0,0,0))
-	self.ammo_btn:SetText("")
-    self.ammo_btn:SetTall(50)
-    self.ammo_btn.Paint = function () end
+    self.ammo_panel = vgui.Create('DPanel', self)
+	self.ammo_panel:Dock(BOTTOM)
+    self.ammo_panel:SetTall(50)
+
+    self.ammo_one_btn = vgui.Create('DButton', self.ammo_panel)
+	self.ammo_one_btn:Dock(LEFT)
+    self.ammo_one_btn:SetFont("Content")
+    self.ammo_one_btn:SetTextColor(Color(0,0,0,0))
+	self.ammo_one_btn:SetText("")
+
+    self.ammo_ten_btn = vgui.Create('DButton', self.ammo_panel)
+    self.ammo_ten_btn:Dock(LEFT)
+    self.ammo_ten_btn:SetFont("Content")
+    self.ammo_ten_btn:SetTextColor(Color(0,0,0,0))
+    self.ammo_ten_btn:SetText("")
+    self.ammo_ten_btn:SetTall(50)
+
+    self.ammo_panel.Paint = function () end
+    self.ammo_one_btn.Paint = function () end
+    self.ammo_ten_btn.Paint = function () end
 
     function self.buy_btn:DoClick()
 		self:GetParent():DoClick()
 	end
 
-    function self.ammo_btn:DoClick()
-        self:GetParent():AmmoDoClick()
+    function self.ammo_one_btn:DoClick()
+        self:GetParent():GetParent():AmmoDoClick(1)
+    end
+
+    function self.ammo_ten_btn:DoClick()
+        self:GetParent():GetParent():AmmoDoClick(10)
     end
 end
 
@@ -54,14 +71,16 @@ function PANEL:DoClick()
     net.SendToServer()
 end
 
-function PANEL:AmmoDoClick()
+function PANEL:AmmoDoClick(count)
     if not self.item then return end
     local price = self.item.ammo_price and self.item.ammo_price or HORDE.default_ammo_price
+    price = price * count
     if LocalPlayer():GetMoney() < price then return end
     -- Buy the item
     net.Start("Horde_BuyItemAmmoPrimary")
     net.WriteString(self.item.class)
     net.WriteInt(price,16)
+    net.WriteInt(count,16)
     net.SendToServer()
 end
 
@@ -96,17 +115,27 @@ function PANEL:Paint()
             end
             
             if self.item.category ~= "Melee" and self.item.category ~= "Equipment" then
-                self.ammo_btn:SetFont("Content")
-                self.ammo_btn:SetTextColor(Color(255,255,255))
+                self.ammo_one_btn:SetFont("Content")
+                self.ammo_one_btn:SetTextColor(Color(255,255,255))
                 local price = self.item.ammo_price and self.item.ammo_price or HORDE.default_ammo_price
-                self.ammo_btn:SetText("Purchase Ammo (" .. tostring(price) .. "$)")
-                
-                self.ammo_btn.Paint = function ()
+                self.ammo_one_btn:SetText("Buy Ammo x 1 (" .. tostring(price) .. "$)")
+                self.ammo_one_btn:SetWide(self:GetWide() / 2)
+                self.ammo_one_btn.Paint = function ()
                     surface.SetDrawColor(HORDE.color_crimson)
-                    surface.DrawRect(0, 0, self:GetWide(), 200)
+                    surface.DrawRect(0, 0, self:GetParent():GetParent():GetWide()/2, 200)
+                end
+
+                self.ammo_ten_btn:SetFont("Content")
+                self.ammo_ten_btn:SetTextColor(Color(255,255,255))
+                self.ammo_ten_btn:SetText("Buy Ammo x 10 (" .. tostring(price * 10) .. "$)")
+                self.ammo_ten_btn:SetWide(self:GetWide() / 2)
+                self.ammo_ten_btn.Paint = function ()
+                    surface.SetDrawColor(HORDE.color_crimson)
+                    surface.DrawRect(0, 0, self:GetParent():GetParent():GetWide()/2, 200)
                 end
             else
-                self.ammo_btn.Paint = function () end
+                self.ammo_one_btn.Paint = function () end
+                self.ammo_ten_btn.Paint = function () end
             end
         elseif LocalPlayer():GetMoney() < self.item.price or LocalPlayer():GetWeight() < self.item.weight then
             self.buy_btn:SetTextColor(Color(200,200,200))
@@ -116,18 +145,22 @@ function PANEL:Paint()
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
 
-            self.ammo_btn:SetText("")
-            self.ammo_btn.Paint = function () end
+            self.ammo_one_btn:SetText("")
+            self.ammo_ten_btn:SetText("")
+            self.ammo_one_btn.Paint = function () end
+            self.ammo_ten_btn.Paint = function () end
         else
             self.buy_btn:SetTextColor(Color(255,255,255))
-            self.buy_btn:SetText("Purchase Weapon")
+            self.buy_btn:SetText("Buy Weapon")
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
             
-            self.ammo_btn:SetText("")
-            self.ammo_btn.Paint = function () end
+            self.ammo_one_btn:SetText("")
+            self.ammo_ten_btn:SetText("")
+            self.ammo_one_btn.Paint = function () end
+            self.ammo_ten_btn.Paint = function () end
         end
     end
 

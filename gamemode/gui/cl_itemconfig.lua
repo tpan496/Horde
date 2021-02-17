@@ -96,19 +96,17 @@ function PANEL:Init()
 	local weight_editor = create_property_editor("weight", 50)
 	local description_editor = create_property_editor("description", 100)
 	local whitelist_editors = create_property_editor("whitelist", 50)
+	local ammo_price_editor = create_property_editor("ammo_price", 50)
 
 	price_editor:SetNumeric(true)
 	weight_editor:SetNumeric(true)
 	description_editor:SetMultiline(true)
+	ammo_price_editor:SetNumeric(true)
 
 	local save_btn = vgui.Create('DButton', modify_tab)
 	save_btn:Dock(BOTTOM)
 	save_btn:SetText("Save")
-
-	local add_btn = vgui.Create('DButton', modify_tab)
-	add_btn:Dock(BOTTOM)
-	add_btn:SetText("Add")
-	add_btn.DoClick = function ()
+	save_btn.DoClick = function ()
 		local whitelist = {Survivor=false, Medic=false, Demolition=false, Assault=false, Heavy=false}
 		for _, editor in pairs(whitelist_editors) do
 			if editor:GetChecked() then
@@ -122,9 +120,9 @@ function PANEL:Init()
 			price_editor:GetInt(),
 			weight_editor:GetInt(),
 			description_editor:GetText(),
-			whitelist
+			whitelist,
+			ammo_price_editor:GetInt()
 		)
-		PrintTable(HORDE.items)
 	end
 
 	local settings_tab = vgui.Create('DPanel', self)
@@ -163,24 +161,7 @@ function PANEL:Init()
 					end
 				end
 			end
-			save_btn.DoClick = function ()
-				local whitelist = {Survivor=false, Medic=false, Demolition=false, Assault=false, Heavy=false}
-				for _, editor in pairs(whitelist_editors) do
-					if editor:GetChecked() then
-						whitelist[editor:GetText()] = true
-					end
-				end
-				HORDE.items[item.class] = nil
-				HORDE.CreateItem(
-					category_editor:GetText(),
-					name_editor:GetText(),
-					class_editor:GetText(),
-					price_editor:GetInt(),
-					weight_editor:GetInt(),
-					description_editor:GetText(),
-					whitelist)
-				PrintTable(HORDE.items)
-			end
+			ammo_price_editor:SetValue(item.ammo_price and item.ammo_price or HORDE.default_ammo_price)
 		end)
 		
 		menu:AddOption('Delete', function()

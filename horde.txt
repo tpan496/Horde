@@ -10,10 +10,66 @@
 		1
 		{
 			"name"		"sbox_playershurtplayers"
-			"text"		"Friendly Fire"
+			"text"		"Friendly fire"
 			"type"		"CheckBox"
 			"default"	"0"
 		}		
+		2
+		{
+			"name"		"horde_max_wave"
+			"text"		"Max wave (1-10)"
+			"type"		"Numeric"
+			"default"	"5"
+		}
+		3
+		{
+			"name"		"horde_difficulty"
+			"text"		"Difficulty (0=Normal, 1=Hard, 2=Realism)"
+			"type"		"Numeric"
+			"default"	"0"
+		}
+		4
+		{
+			"name"		"horde_start_money"
+			"text"		"Money given at start."
+			"type"		"Numeric"
+			"default"	"1000"
+		}
+		5
+		{
+			"name"		"horde_break_time"
+			"text"		"Break time between waves (>10)"
+			"type"		"Numeric"
+			"default"	"60"
+		}
+		6
+		{
+			"name"		"horde_enable_shop"
+			"text"		"Enables shop menu"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+		7
+		{
+			"name"		"horde_enable_respawn"
+			"text"		"Players can respawn after death during a wave"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+		8
+		{
+			"name"		"horde_max_spawn_distance"
+			"text"		"Maximum enemy spawn distance (>100)"
+			"type"		"Numeric"
+			"default"	"2000"
+		}
+		9
+		{
+			"name"		"horde_min_spawn_distance"
+			"text"		"Minimum enemy spawn distance (>100)"
+			"type"		"Numeric"
+			"default"	"500"
+		}
 	}
 	
 }

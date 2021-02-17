@@ -113,7 +113,6 @@ function PANEL:Init()
 				else
 					item.cmp = item.price
 				end
-				PrintTable(item)
 				table.insert(items, item)
 			end
 		end
@@ -171,7 +170,7 @@ function PANEL:Init()
 end
 
 function PANEL:Paint(w, h)
-	Derma_DrawBackgroundBlur(self)
+	-- Derma_DrawBackgroundBlur(self)
 
     -- Entire Panel
 	draw.RoundedBox(10, 0, 0, w, h, Color(40, 40, 40, 255))

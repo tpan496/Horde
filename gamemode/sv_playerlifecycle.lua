@@ -64,22 +64,42 @@ function CheckAlivePlayers()
     end
     if aliveplayers == 0 and deadplayers > 0 then
         for _, ply in pairs(player.GetAll()) do 
-            ply:ScreenFade(SCREENFADE.OUT, Color(0,0,0), 6, 2)
-            ply:Freeze(true)
+            -- ply:ScreenFade(SCREENFADE.OUT, Color(0,0,0), 6, 2)
+            -- ply:Freeze(true)
         end
-
-        PrintMessage(HUD_PRINTTALK, "All players are dead! Restarting...")
+        
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("All players are dead! Restarting...")
+        net.WriteInt(1,2)
+        net.Broadcast()
         timer.Simple(5, function() timer.Simple(0, function() RunConsoleCommand("changelevel", game.GetMap()) end) end)
     end
 end
 
+hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function (ply)
+    if HORDE.start_game then
+        if ply:IsValid() then
+            ply:KillSilent()
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("You will respawn next wave.")
+            net.Send(ply)
+        end
+    end
+end)
+
 hook.Add("PlayerDeathThink", "Horde_PlayerDeathThink", function (ply)
     if HORDE.start_game then return false end
-    ply:Spawn()
     return true
 end);
 
 hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
-    if not HORDE.start_game then return end
+    if not HORDE.start_game then
+        timer.Simple(1, function() if victim:IsValid() then victim:Spawn() end end)
+        return
+    end
+    net.Start("Horde_LegacyNotification")
+    net.WriteString("You are dead. You will respawn next wave.")
+    net.Send(victim)
     CheckAlivePlayers()
 end)
+
