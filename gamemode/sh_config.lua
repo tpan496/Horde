@@ -1,3 +1,5 @@
+CreateConVar("horde_default_enemy_config", 1, SERVER_CAN_EXECUTE, "Use default enemy wave config settings.")
+CreateConVar("horde_default_item_config", 1, SERVER_CAN_EXECUTE, "Use default item config settings.")
 CreateConVar("horde_max_wave", 5, SERVER_CAN_EXECUTE, "Max waves." )
 CreateConVar("horde_difficulty", 0, SERVER_CAN_EXECUTE, "Difficulty.")
 CreateConVar("horde_break_time", 60, SERVER_CAN_EXECUTE, "Break time between waves.")
@@ -54,6 +56,7 @@ HORDE.CreateItem = function (category, name, class, price, weight, description, 
 end
 
 function SetItemsData()
+    if GetConVarNumber("horde_default_item_config") then return end
 	if not file.IsDir('horde', 'DATA') then
 		file.CreateDir('horde')
 	end
@@ -72,7 +75,29 @@ function GetItemsData()
     end
 end
 
-GetItemsData()
+if GetConVarNumber("horde_default_item_config") == 0 then
+    GetItemsData()
+else
+    HORDE.CreateItem("Melee",      "Stunstick",      "weapon_stunstick", 100,  3, "Electric baton.", {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true}, 10)
+    HORDE.CreateItem("Melee",      "Crowbar",        "weapon_crowbar",   100,  3, "A rusty crowbar.", {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true}, 10)
+
+    HORDE.CreateItem("Pistol",     "9mm",            "weapon_pistol",    400,  3, "USP Match.\nCombine standard sidearm.", {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true}, 10)
+    HORDE.CreateItem("Pistol",     "357",            "weapon_357",       750,  3, "Colt Python magnum pistol.", {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true}, 10)
+
+    HORDE.CreateItem("SMG",        "MP7",            "weapon_smg",       1250, 5, "A compact, fully automatic firearm.", {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true}, 10)
+
+    HORDE.CreateItem("Shotgun",    "SPAS12",         "weapon_shotgun",   1250, 7, "12-gauge shotgun.\nRMB to fire 2 shots at once.", {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true}, 10)
+    
+    HORDE.CreateItem("Rifle",      "Combine AR2",    "weapon_ar2",       1500, 7, "Overwatch standard issue rifle.\nDark energy-powered assault rifle.", {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true}, 10)
+    HORDE.CreateItem("Rifle",      "Heat Crossbow",  "weapon_crossbow",  1250, 6, "Long-raned sniper weapon.", {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true}, 10)
+
+    HORDE.CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",      75,   0, "A standard grenade.\nDoes its job well.", {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true}, 10)
+    HORDE.CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",       1500, 7, "Laser-guided rocket propulsion device.", {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true}, 10)
+    HORDE.CreateItem("Explosive",  "SLAM",           "weapon_slam",      500,  2, "Selectable Lightweight Attack Munition.\nRMB to detonate.", {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true}, 10)
+
+    HORDE.CreateItem("Equipment",  "Medkit",        "weapon_medkit",     50,   1, "Rechargeble medic.\nRMB to self-heal, LMB to heal others.", {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true}, 10)
+end
+PrintTable(HORDE.items)
 
 HORDE.max_weight = 15
 HORDE.default_ammo_price = 10
@@ -125,6 +150,7 @@ HORDE.FinalizeEnemies = function ()
 end
 
 function SetEnemiesData()
+    if GetConVarNumber("horde_default_enemy_config") then return end
 	if not file.IsDir('horde', 'DATA') then
 		file.CreateDir('horde')
 	end
@@ -144,4 +170,42 @@ function GetEnemiesData()
     end
 end
 
-GetEnemiesData()
+if GetConVarNumber("horde_default_enemy_config") then
+    HORDE.CreateEnemy("npc_zombie", 1, 1)
+    HORDE.CreateEnemy("npc_zombie_torso", 1, 1)
+
+    HORDE.CreateEnemy("npc_zombie", 1, 2)
+    HORDE.CreateEnemy("npc_zombie_torso", 1, 2)
+    HORDE.CreateEnemy("npc_fastzombie_torso", 1, 2)
+    HORDE.CreateEnemy("npc_fastzombie", 1, 2)
+
+    HORDE.CreateEnemy("npc_zombie", 2, 3)
+    HORDE.CreateEnemy("npc_poisonzombie", 1, 3)
+
+    HORDE.CreateEnemy("npc_zombie", 2, 4)
+    HORDE.CreateEnemy("npc_fastzombie", 1, 4)
+    HORDE.CreateEnemy("npc_poisonzombie", 1, 4)
+
+    HORDE.CreateEnemy("npc_zombie", 1, 5)
+    HORDE.CreateEnemy("npc_fastzombie", 1, 5)
+    HORDE.CreateEnemy("npc_poisonzombie", 1, 5)
+
+    if table.IsEmpty(HORDE.enemies) then return end
+    -- Normalize
+    for wave = 1, HORDE.max_waves do
+        HORDE.enemies_normalized[wave] = {}
+        local total_weight = 0
+        for _, enemy in pairs(HORDE.enemies) do
+            if enemy.wave == wave then
+                total_weight = total_weight + enemy.weight
+            end
+        end
+        for _, enemy in pairs(HORDE.enemies) do
+            if enemy.wave == wave then
+                HORDE.enemies_normalized[wave][enemy.class] = enemy.weight / total_weight
+            end
+        end
+    end
+else
+    GetEnemiesData()
+end

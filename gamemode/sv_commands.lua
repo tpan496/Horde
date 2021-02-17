@@ -19,6 +19,7 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, text, public)
     text = string.lower(text) -- Make the chat message entirely lowercase
     if text == "!help" then
         ply:PrintMessage(HUD_PRINTTALK, "'!ready' - Get ready")
+        ply:PrintMessage(HUD_PRINTTALK, "'!shop' - Open shop")
         ply:PrintMessage(HUD_PRINTTALK, "'!start' - Start the game (Admin only)")
         ply:PrintMessage(HUD_PRINTTALK, "'!end' - End the game (Admin only)")
     
