@@ -98,6 +98,15 @@ function PANEL:Init()
 	local whitelist_editors = create_property_editor("whitelist", 50)
 	local ammo_price_editor = create_property_editor("ammo_price", 50)
 
+	if GetConVarNumber("horde_default_item_config") then
+        local warning_label = vgui.Create('DLabel', modify_tab)
+        warning_label:DockPadding(10, 10, 10, 10)
+        warning_label:Dock(TOP)
+        warning_label:SetSize(modify_tab:GetWide(), 50)
+        warning_label:SetTextColor(Color(0,0,0))
+        warning_label:SetText("You are using default config! Your data won't be saved!")
+    end
+
 	price_editor:SetNumeric(true)
 	weight_editor:SetNumeric(true)
 	description_editor:SetMultiline(true)

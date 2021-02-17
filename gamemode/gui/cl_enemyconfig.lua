@@ -65,7 +65,6 @@ function PANEL:Init()
     local wave_editor = create_property_editor("wave", 50)
 
     if GetConVarNumber("horde_default_enemy_config") then
-        print("wake up")
         local warning_label = vgui.Create('DLabel', modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)
