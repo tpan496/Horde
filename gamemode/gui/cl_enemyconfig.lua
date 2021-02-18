@@ -30,6 +30,7 @@ function PANEL:Init()
 		label:SetText(name)
 		label:SetTextColor(Color(0,0,0))
 		label:DockPadding(10, 10, 10, 10)
+		label:SetWide(100)
 		label:Dock(LEFT)
 		
 		if name == "class" then
@@ -38,7 +39,7 @@ function PANEL:Init()
 			editor:DockPadding(10, 10, 10, 10)
 			editor:Dock(LEFT)
             local npcs = list.Get("NPC")
-            for class, npc in pairs(npcs) do
+            for class, _ in pairs(npcs) do
                 editor:AddChoice(class)
             end
             return editor
@@ -51,6 +52,23 @@ function PANEL:Init()
                 editor:AddChoice(i)
             end
             return editor
+		elseif name == "elite" then
+			local editor = vgui.Create('DCheckBox', panel)
+			editor:DockPadding(10, 10, 10, 10)
+			editor:Dock(LEFT)
+			editor:SetWide(30)
+			return editor
+		elseif name == "color" then
+			local editor1 = vgui.Create('DCheckBoxLabel', panel)
+			editor1:DockPadding(10, 10, 10, 10)
+			editor1:Dock(LEFT)
+			editor1:SetText("Use Color")
+			editor1:SetTextColor(Color(0,0,0))
+			local editor2 = vgui.Create('DColorMixer', panel)
+			editor2:DockPadding(10, 10, 10, 10)
+			editor2:Dock(LEFT)
+			editor2:SetPalette(false)
+			return {enabled_editor=editor1, color_editor=editor2}
 		else
 			local editor = vgui.Create('DTextEntry', panel)
 			editor:SetSize(200, height)
@@ -60,9 +78,16 @@ function PANEL:Init()
 		end
 	end
 
+	local name_editor = create_property_editor("name", 50)
 	local class_editor = create_property_editor("class", 50)
 	local weight_editor = create_property_editor("weight", 50)
     local wave_editor = create_property_editor("wave", 50)
+	local elite_editor = create_property_editor("elite", 50)
+	local health_editor = create_property_editor("health scaling", 50)
+	local damage_editor = create_property_editor("damage scaling", 50)
+	local reward_editor = create_property_editor("reward scaling", 50)
+	local model_scale_editor = create_property_editor("model scaling", 50)
+	local color_editor = create_property_editor("color", 150)
 
     if GetConVarNumber("horde_default_enemy_config") then
         local warning_label = vgui.Create('DLabel', modify_tab)
@@ -79,10 +104,21 @@ function PANEL:Init()
 	save_btn:Dock(BOTTOM)
 	save_btn:SetText("Save")
 	save_btn.DoClick = function ()
+		local color = nil
+		if color_editor.enabled_editor:GetChecked() then
+			color = color_editor.color_editor:GetColor()
+		end
 		HORDE.CreateEnemy(
+			name_editor:GetText(),
 			class_editor:GetText(),
-			tonumber(weight_editor:GetText()),
-            tonumber(wave_editor:GetText())
+			weight_editor:GetFloat(),
+            tonumber(wave_editor:GetText()),
+			elite_editor:GetChecked(),
+			health_editor:GetFloat(),
+			damage_editor:GetFloat(),
+			reward_editor:GetFloat(),
+			model_scale_editor:GetFloat(),
+			color
 		)
         HORDE.FinalizeEnemies()
 	end
@@ -96,9 +132,10 @@ function PANEL:Init()
 	enemy_list:Dock(FILL)
 
 	enemy_list:SetMultiSelect(false)
+	enemy_list:AddColumn('Wave')
+	enemy_list:AddColumn('Name')
 	enemy_list:AddColumn('Class')
 	enemy_list:AddColumn('Weight')
-	enemy_list:AddColumn('Wave')
 
 	enemy_list.OnClickLine = function(parent, line, selected)
 		local enemy = line.enemy
@@ -106,13 +143,25 @@ function PANEL:Init()
 		local menu = DermaMenu()
 		
 		menu:AddOption('Modify', function()
+			name_editor:SetValue(enemy.name)
 			class_editor:SetValue(enemy.class)
 			weight_editor:SetValue(enemy.weight)
 			wave_editor:SetValue(enemy.wave)
+		    elite_editor:SetChecked(enemy.is_elite)
+			health_editor:SetValue(enemy.health_scale and enemy.health_scale or 1)
+			damage_editor:SetValue(enemy.damage_scale and enemy.damage_scale or 1)
+			reward_editor:SetValue(enemy.reward_scale and enemy.reward_scale or 1)
+			model_scale_editor:SetValue(enemy.model_scale and enemy.model_scale or 1)
+			if enemy.color then
+				color_editor.enabled_editor:SetChecked(true)
+				color_editor.color_editor:SetColor(enemy.color)
+			else
+				color_editor.enabled_editor:SetChecked(false)
+			end
 		end)
 		
 		menu:AddOption('Delete', function()
-			HORDE.enemies[tostring(enemy.class) .. tostring(enemy.weight)] = nil
+			HORDE.enemies[enemy.name .. tostring(enemy.wave)] = nil
             HORDE.FinalizeEnemies()
 		end)
 
@@ -135,17 +184,18 @@ function PANEL:Think()
 			end
 		end
 		if not found then
-			self.enemy_list:AddLine(enemy.class, enemy.weight, enemy.wave).enemy = enemy
+			self.enemy_list:AddLine(enemy.wave, enemy.name, enemy.class, enemy.weight).enemy = enemy
 		end
 	end
 
 	for i, line in pairs(lines) do
 		if table.HasValue(HORDE.enemies, line.enemy) then
 			local enemy = line.enemy
-				
-			line:SetValue(1, enemy.class)
-			line:SetValue(2, enemy.weight)
-			line:SetValue(3, enemy.wave)
+
+			line:SetValue(1, enemy.wave)
+			line:SetValue(2, enemy.name)
+			line:SetValue(3, enemy.class)
+			line:SetValue(4, enemy.weight)
 		else
 			self.enemy_list:RemoveLine(i)
 		end

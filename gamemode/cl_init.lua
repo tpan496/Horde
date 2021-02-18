@@ -21,6 +21,7 @@ corner_panel:SetSize(300, 50)
 corner_panel:SetPos(25, 25)
 corner_panel.Paint = function () end
 timer.Simple(5, function ()
+	if GetConVarNumber("horde_enable_client_gui") == 0 then return end
 	corner_panel.Paint = function ()
 		draw.RoundedBox(10, 0, 0, 300, 50, Color(40,40,40,200))
 		if LocalPlayer():Alive() then
@@ -135,10 +136,7 @@ end)
 
 net.Receive('Horde_RenderCenterText', function ()
 	local str = net.ReadString()
-	--timer.Remove("RemoveCenterText")
-	--timer.Create("RemoveCenterText", 5, 1, function ()
-	--	center_panel.Paint = function (w, h) end
-	--end)
+	if GetConVarNumber("horde_enable_client_gui") == 0 then return end
 	center_panel.Paint = function (w, h)
 		draw.RoundedBox(10, 0, 0, 300, 50, Color(40,40,40,200))
 		draw.SimpleText(str, "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)

@@ -113,8 +113,13 @@ net.Receive("Horde_BuyItem", function (len, ply)
     local weight = net.ReadInt(16)
     if ply:GetMoney() >= price and ply:GetWeight() >= weight then
         ply:AddMoney(-price)
-        ply:Give(class)
-        ply:SelectWeapon(class)
+        if class == "armor" then
+            ply:SetArmor(100)
+            ply:SyncEconomy()
+        else
+            ply:Give(class)
+            ply:SelectWeapon(class)
+        end
     end
 end)
 
@@ -145,17 +150,19 @@ net.Receive("Horde_SelectClass", function (len, ply)
     timer.Remove("Horde_Medic" .. ply:SteamID())
     timer.Remove("Horde_Heavy" .. ply:SteamID())
     --timer.Remove("Horde_Survivor" .. ply:SteamID())
-    timer.Remove("Horde_Assault" .. ply:SteamID())
+    --timer.Remove("Horde_Assault" .. ply:SteamID())
     timer.Remove("Horde_Demolition" .. ply:SteamID())
 
 
     if class.name == "Assault" then
-        timer.Create("Horde_Assault" .. ply:SteamID(), 0.01, 0, function ()
-            GAMEMODE:SetPlayerSpeed(ply, class.movespd, class.sprintspd)
-        end)
+        --timer.Create("Horde_Assault" .. ply:SteamID(), 0.01, 0, function ()
+        --    GAMEMODE:SetPlayerSpeed(ply, class.movespd, class.sprintspd)
+        --end)
     elseif class.name == "Medic" then
         timer.Create("Horde_Medic" .. ply:SteamID(), 1, 0, function ()
             ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + 2))
+            print(ply:GetRunSpeed())
+            print(ply:GetJumpPower())
         end)
     elseif class.name == "Heavy" then
         timer.Create("Horde_Heavy" .. ply:SteamID(), 1, 0, function ()
@@ -168,6 +175,11 @@ net.Receive("Horde_SelectClass", function (len, ply)
         timer.Create("Horde_Demolition" .. ply:SteamID(), 30, 0, function ()
             if not ply:HasWeapon("weapon_frag") then
                 ply:Give("weapon_frag")
+            end
+        end)
+        hook.Add("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID(), function (target, dmg)
+            if target:IsValid() and target:IsPlayer() and dmg:GetDamageType() ==  DMG_BLAST then
+                dmg:ScaleDamage(1.25)
             end
         end)
     end
@@ -192,8 +204,8 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         return
     end
     
-    if ply:GetMoney() >= price * count then
-        ply:AddMoney(-price * count)
+    if ply:GetMoney() >= price then
+        ply:AddMoney(-price)
         local wpn = ply:GetWeapon(class)
         local clip_size = wpn:GetMaxClip1()
         local ammo_id = wpn:GetPrimaryAmmoType()
@@ -218,7 +230,7 @@ end)
 
 net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
     local class = net.ReadString()
-    local price = net.ReadString()
+    local price = net.ReadInt(16)
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You don't have this weapon!")
@@ -230,12 +242,10 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
     if ply:GetMoney() >= price then
         ply:AddMoney(-price)
         local wpn = ply:GetWeapon(class)
-        local clipSize = wpn:GetMaxClip2()
-
-        if clipSize > 0 then -- block melee
-			local AmmoID = wpn:GetSecondaryAmmoType()
-			ply:GiveAmmo(1 , AmmoID , false)
-		end
-        ply:SyncEconomy()
+        local ammo_id = wpn:GetSecondaryAmmoType()
+        if ammo_id >= 0 then
+			ply:GiveAmmo(1, ammo_id, false)
+            ply:SyncEconomy()
+        end
     end
 end)

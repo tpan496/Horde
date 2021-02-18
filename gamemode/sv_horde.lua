@@ -3,6 +3,8 @@ if CLIENT then return end
 
 util.AddNetworkString("Horde_HighlightEnemies")
 
+local players_count = 0
+
 hook.Add("Initialize", "Horde_Init", function()
     HORDE.ai_nodes = {}
     HORDE.spawned_enemies = {}
@@ -49,10 +51,14 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
             net.Broadcast()
         end
         HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
-        BroadcastMessage("Enemies: " .. HORDE.total_enemies_per_wave[HORDE.current_wave] - HORDE.killed_enemies_this_wave)
+        BroadcastMessage("Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
 
         if killer:IsPlayer() then
-            killer:AddMoney(150)
+            local scale = 1
+            if victim:GetVar("reward_scale") then
+                scale = victim:GetVar("reward_scale")
+            end
+            killer:AddMoney(HORDE.kill_reward_base * scale)
             killer:SyncEconomy()
         end
     end
@@ -82,41 +88,69 @@ function HardReset()
     -- TODO: clean up all the spawned enemies
 end
 
-function SpawnEnemy(class, pos)
-    local npc_info = list.Get("NPC")[class]
+function SpawnEnemy(enemy, pos)
+    local npc_info = list.Get("NPC")[enemy.class]
     if not npc_info then
-        Print("NPC does not exist in ", list.Get("NPC"))
+        print("NPC does not exist in ", list.Get("NPC"))
     end
 
-    local enemy = ents.Create(class)
-    enemy:SetPos(pos)
-    enemy:SetAngles(Angle(0, math.random(0, 360), 0))
-    enemy:Spawn()
+    local spawned_enemy = ents.Create(enemy.class)
+    spawned_enemy:SetPos(pos)
+    spawned_enemy:SetAngles(Angle(0, math.random(0, 360), 0))
+    spawned_enemy:Spawn()
 
-    HORDE.spawned_enemies[enemy:EntIndex()] = true
+    HORDE.spawned_enemies[spawned_enemy:EntIndex()] = true
 
     if npc_info["Model"] then
-        enemy:SetModel(npc_info["Model"])
+        spawned_enemy:SetModel(npc_info["Model"])
     end
 
     if npc_info["SpawnFlags"] then
-        enemy:SetKeyValue("spawnflags", npc_info["SpawnFlags"])
+        -- We need to cleanup corpses otherwise it's going to be a mess
+        spawned_enemy:SetKeyValue("spawnflags", bit.bor(npc_info["SpawnFlags"], SF_NPC_FADE_CORPSE))
     end
-    enemy:SetKeyValue("spawnflags", SF_NPC_FADE_CORPSE)
 
     if npc_info["KeyValues"] then
         for k, v in pairs(npc_info["KeyValues"]) do
-            enemy:SetKeyValue(k, v)
+            spawned_enemy:SetKeyValue(k, v)
         end
     end
             
-    enemy:Fire("StartPatrolling")
-    enemy:Fire("SetReadinessHigh")
-    if enemy:IsNPC() then
-        enemy:SetNPCState(NPC_STATE_COMBAT)
+    spawned_enemy:Fire("StartPatrolling")
+    spawned_enemy:Fire("SetReadinessHigh")
+    if spawned_enemy:IsNPC() then
+        spawned_enemy:SetNPCState(NPC_STATE_COMBAT)
     end
 
-    return enemy
+    if enemy.is_elite then
+        spawned_enemy:SetVar("is_elite", true)
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * players_count)
+        spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
+    end
+
+    if enemy.model_scale then
+        spawned_enemy:SetModelScale(enemy.model_scale)
+    end
+
+    if enemy.health_scale then
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * enemy.health_scale)
+        spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
+    end
+
+    if enemy.reward_scale then
+        spawned_enemy:SetVar("reward_scale", enemy.reward_scale)
+    end
+
+    if enemy.damage_scale then
+        spawned_enemy:SetVar("damage_scale", enemy.damage_scale)
+    end
+
+    if enemy.color then
+        spawned_enemy:SetColor(enemy.color)
+        spawned_enemy:SetRenderMode(RENDERMODE_TRANSCOLOR)
+    end
+
+    return spawned_enemy
 end
 
 function ScanEnemies()
@@ -224,7 +258,10 @@ timer.Create('Horde_Main', 5, 0, function ()
             net.WriteInt(1,2)
             net.Broadcast()
         end
-        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave]
+
+        players_count = table.Count(player.GetAll())
+        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * 0.8)
+        HORDE.total_enemies_this_wave_fixed = HORDE.total_enemies_this_wave
         HORDE.alive_enemies_this_wave = 0
         HORDE.current_break_time = -1
         HORDE.killed_enemies_this_wave = 0
@@ -236,10 +273,10 @@ timer.Create('Horde_Main', 5, 0, function ()
 
     local enemies = ScanEnemies()
 
-    --Check zombie
+    -- Check enemy
     for _, enemy in pairs(enemies) do
         local closest = 99999
-        local closest_ply = NULL
+        local closest_ply = nil
         local enemy_pos = enemy:GetPos()
 
         for _, ply in pairs(player.GetAll()) do
@@ -251,7 +288,7 @@ timer.Create('Horde_Main', 5, 0, function ()
             end
         end
 
-        if closest > HORDE.max_spawn_distance * 1.25 then
+        if closest > HORDE.max_spawn_distance then
             table.RemoveByValue(enemies, enemy)
             enemy:Remove()
         else
@@ -305,22 +342,23 @@ timer.Create('Horde_Main', 5, 0, function ()
                     table.RemoveByValue(valid_nodes, pos)
                     local p = math.random()
                     local p_cum = 0
-                    local enemy
+                    local spawned_enemy
                     local enemy_wave = HORDE.current_wave
                     if table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
                         enemy_wave = enemy_wave - 1
                     end
-                    for class, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
+                    for name, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
                         p_cum = p_cum + weight
                         if p <= p_cum then
-                            enemy = SpawnEnemy(class, pos + Vector(0,0,HORDE.enemy_spawn_z))
-                            table.insert(enemies, enemy)
+                            local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
+                            spawned_enemy = SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                            table.insert(enemies, spawned_enemy)
                             break
                         end
                     end
                     HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
                     HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
-                    print("OnSpawn", enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+                    print("OnSpawn", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
                 end
             else
                 break
@@ -331,7 +369,7 @@ timer.Create('Horde_Main', 5, 0, function ()
     if HORDE.total_enemies_this_wave <= 0 and HORDE.alive_enemies_this_wave <= 0 then
         HORDE.current_break_time = HORDE.total_break_time
         StartBreak()
-        local enemies = ScanEnemies()
+        enemies = ScanEnemies()
         if not table.IsEmpty(enemies) then
             for _, enemy in pairs(enemies) do
                 enemy:Remove()
@@ -341,7 +379,12 @@ timer.Create('Horde_Main', 5, 0, function ()
             BroadcastMessage("Final Wave Completed! You have survived!")
         else
             BroadcastMessage("Wave Completed!")
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("Wave Completed!")
+            net.WriteInt(0,2)
+            net.Broadcast()
         end
+
         net.Start("Horde_HighlightEnemies")
         net.WriteInt(0, 2)
         net.Broadcast()

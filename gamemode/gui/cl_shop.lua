@@ -55,6 +55,11 @@ function PANEL:Init()
 		btn:SetFont("Category")
 		
 		btn.Paint = function(pnl, w, h)
+			if text == "Select Class" then
+				surface.SetDrawColor(HORDE.color_crimson)
+				surface.DrawRect(0, 0, w, h)
+				return
+			end
 			surface.SetDrawColor(60, 60, 60)
 			surface.DrawRect(0, 0, w, h)
 
@@ -119,7 +124,13 @@ function PANEL:Init()
 
 		if table.IsEmpty(items) then goto cont end
 	
-		table.SortByMember(items, "cmp", function(a, b) return a > b end)
+		table.sort(items, function(a, b)
+			if a.cmp == b.cmp then
+				return a.weight < b.weight
+			else
+				return a.cmp < b.cmp
+			end
+		end)
 
 		local ShopCategoryTab = vgui.Create('DPanel')
 		
@@ -166,7 +177,7 @@ function PANEL:Init()
 		ClassTabLayout:Add(model)
 	end
 
-	createBtn("Class", ClassTab, RIGHT)
+	createBtn("Select Class", ClassTab, RIGHT)
 end
 
 function PANEL:Paint(w, h)

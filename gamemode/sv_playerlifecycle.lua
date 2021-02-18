@@ -4,17 +4,20 @@ hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function(ply)
     if ply:IsValid() then
         ply:SetCollisionGroup(15)
         ply:SetCanZoom(false)
-        ply:SetJumpPower(160)
-        ply:SetWalkSpeed(180)
-        ply:SetRunSpeed(230)
         ply:ConCommand([[mat_colorcorrection 1]])
         ply:ConCommand([[cl_showhints 0]])
         ply:SetMoveType(MOVETYPE_WALK)
     end
 end)
 
+hook.Add("Move", "Horde_move", function (ply, mv)
+    ply:SetWalkSpeed(ply:GetClass().movespd)
+    ply:SetRunSpeed(ply:GetClass().sprintspd)
+    ply:SetJumpPower(150)
+end)
+
 hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", function(victim, inflictor, attacker)
-    if not HORDE.start_game then return end
+    if not HORDE.start_game or HORDE.current_break_time > 0 then return end
     timer.Simple(1, function()
         if victim:IsValid() then
             victim:SetObserverMode(OBS_MODE_CHASE)
@@ -77,7 +80,7 @@ function CheckAlivePlayers()
 end
 
 hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function (ply)
-    if HORDE.start_game then
+    if HORDE.start_game and HORDE.current_break_time <= 0 then
         if ply:IsValid() then
             ply:KillSilent()
             net.Start("Horde_LegacyNotification")
@@ -88,12 +91,14 @@ hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function (ply)
 end)
 
 hook.Add("PlayerDeathThink", "Horde_PlayerDeathThink", function (ply)
+    if GetConVarNumber("horde_enable_respawn") == 1 then return true end
+    if HORDE.current_break_time > 0 then return true end
     if HORDE.start_game then return false end
     return true
 end);
 
 hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
-    if not HORDE.start_game then
+    if (not HORDE.start_game) or (HORDE.current_break_time > 0) then
         timer.Simple(1, function() if victim:IsValid() then victim:Spawn() end end)
         return
     end
@@ -102,4 +107,3 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     net.Send(victim)
     CheckAlivePlayers()
 end)
-

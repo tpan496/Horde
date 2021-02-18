@@ -31,6 +31,7 @@ function PANEL:Init()
 		label:SetTextColor(Color(0,0,0))
 		label:DockPadding(10, 10, 10, 10)
 		label:Dock(LEFT)
+		label:SetWide(150)
 		
 		if name == "category" then
 			local editor = vgui.Create('DComboBox', panel)
@@ -96,7 +97,8 @@ function PANEL:Init()
 	local weight_editor = create_property_editor("weight", 50)
 	local description_editor = create_property_editor("description", 100)
 	local whitelist_editors = create_property_editor("whitelist", 50)
-	local ammo_price_editor = create_property_editor("ammo_price", 50)
+	local ammo_price_editor = create_property_editor("ammo price", 50)
+	local secondary_ammo_price_editor = create_property_editor("secondary ammo price", 50)
 
 	if GetConVarNumber("horde_default_item_config") then
         local warning_label = vgui.Create('DLabel', modify_tab)
@@ -111,6 +113,7 @@ function PANEL:Init()
 	weight_editor:SetNumeric(true)
 	description_editor:SetMultiline(true)
 	ammo_price_editor:SetNumeric(true)
+	secondary_ammo_price_editor:SetNumeric(true)
 
 	local save_btn = vgui.Create('DButton', modify_tab)
 	save_btn:Dock(BOTTOM)
@@ -130,7 +133,8 @@ function PANEL:Init()
 			weight_editor:GetInt(),
 			description_editor:GetText(),
 			whitelist,
-			ammo_price_editor:GetInt()
+			ammo_price_editor:GetInt(),
+			secondary_ammo_price_editor:GetInt()
 		)
 	end
 
@@ -171,6 +175,7 @@ function PANEL:Init()
 				end
 			end
 			ammo_price_editor:SetValue(item.ammo_price and item.ammo_price or HORDE.default_ammo_price)
+			secondary_ammo_price_editor:SetValue(item.secondary_ammo_price and item.secondary_ammo_price or -1)
 		end)
 		
 		menu:AddOption('Delete', function()
