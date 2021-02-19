@@ -4,6 +4,7 @@ util.AddNetworkString("Horde_ForceCloseShop")
 util.AddNetworkString("Horde_ToggleShop")
 util.AddNetworkString("Horde_ToggleItemConfig")
 util.AddNetworkString("Horde_ToggleEnemyConfig")
+util.AddNetworkString("Horde_ToggleClassConfig")
 util.AddNetworkString("Horde_RenderCenterText")
 
 function BroadcastMessage(msg, delay)
@@ -15,8 +16,8 @@ function BroadcastMessage(msg, delay)
     end
 end
 
-hook.Add("PlayerSay", "Horde_Commands", function(ply, text, public)
-    text = string.lower(text) -- Make the chat message entirely lowercase
+hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
+    local text = string.lower(input) -- Make the chat message entirely lowercase
     if text == "!help" then
         ply:PrintMessage(HUD_PRINTTALK, "'!ready' - Get ready")
         ply:PrintMessage(HUD_PRINTTALK, "'!shop' - Open shop")
@@ -132,8 +133,25 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, text, public)
             net.WriteInt(1,2)
             net.Send(ply)
         end
+    elseif text == "!classconfig" then
+        if HORDE.start_game then
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("You cannot open config after a wave has started.")
+            net.WriteInt(1,2)
+            net.Send(ply)
+            return
+        end
+        if ply:IsSuperAdmin() then
+            net.Start("Horde_ToggleClassConfig")
+            net.Send(ply)
+        else
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("You do not have access to this command.")
+            net.WriteInt(1,2)
+            net.Send(ply)
+        end
     end
-    return ""
+    return input
 end)
 
 hook.Add("PlayerInitialSpawn", "Horde_SpawnMessage", function(ply)
@@ -152,3 +170,4 @@ hook.Add("PlayerInitialSpawn", "Horde_SpawnMessage", function(ply)
     end
     BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
 end)
+

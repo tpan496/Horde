@@ -53,20 +53,9 @@ function PANEL:Init()
 			editor:SetSize(200, height)
 			editor:DockPadding(10, 10, 10, 10)
 			editor:Dock(LEFT)
-			for _, wpn in pairs(weapons.GetList()) do
-				editor:AddChoice(wpn["ClassName"])
+			for wpn, _ in pairs(list.Get("Weapon")) do
+				editor:AddChoice(wpn)
 			end
-			editor:AddChoice("weapon_357")
-			editor:AddChoice("weapon_shotgun")
-			editor:AddChoice("weapon_smg1")
-			editor:AddChoice("weapon_ar2")
-			editor:AddChoice("weapon_physcannon")
-			editor:AddChoice("weapon_physgun")
-			editor:AddChoice("weapon_frag")
-			editor:AddChoice("weapon_slam")
-			editor:AddChoice("weapon_stunstick")
-			editor:AddChoice("weapon_rpg")
-			editor:AddChoice("weapon_pistol")
 			return editor
 		elseif name == "whitelist" then
 			local editors = {}
@@ -110,10 +99,14 @@ function PANEL:Init()
     end
 
 	price_editor:SetNumeric(true)
+	price_editor:SetValue("0")
 	weight_editor:SetNumeric(true)
+	weight_editor:SetValue("0")
 	description_editor:SetMultiline(true)
 	ammo_price_editor:SetNumeric(true)
+	ammo_price_editor:SetValue("0")
 	secondary_ammo_price_editor:SetNumeric(true)
+	secondary_ammo_price_editor:SetValue("0")
 
 	local save_btn = vgui.Create('DButton', modify_tab)
 	save_btn:Dock(BOTTOM)
@@ -125,16 +118,18 @@ function PANEL:Init()
 				whitelist[editor:GetText()] = true
 			end
 		end
+		if not category_editor:GetValue() or not name_editor:GetValue() or not class_editor:GetValue() then return end
+
 		HORDE.CreateItem(
 			category_editor:GetText(),
 			name_editor:GetText(),
 			class_editor:GetText(),
-			price_editor:GetInt(),
-			weight_editor:GetInt(),
-			description_editor:GetText(),
+			price_editor:GetInt() or 0,
+			weight_editor:GetInt() or 0,
+			description_editor:GetText() or "",
 			whitelist,
-			ammo_price_editor:GetInt(),
-			secondary_ammo_price_editor:GetInt()
+			ammo_price_editor:GetInt() or 0,
+			secondary_ammo_price_editor:GetInt() or 0
 		)
 	end
 

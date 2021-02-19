@@ -7,10 +7,26 @@ local difficulty_hard = 1
 local difficulty_realism = 2
 
 hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
-    if target:IsValid() and target:IsPlayer() and dmg:GetAttacker():IsNPC() then
-        dmg:ScaleDamage(1.25)
-        if dmg:GetAttacker():GetVar("damage_scale") then
-            dmg:ScaleDamage(dmg:GetAttacker():GetVar("damage_scale"))
+    if target:IsValid() and target:IsPlayer() then
+        if dmg:GetAttacker():IsNPC() then
+            if dmg:GetDamageType() == DAMAGE_CRUSH then
+                -- Cap bullshit physics damage that can sometimes occur
+                dmg:SetDamage(math.min(dmg:GetDamage(),20))
+            end
+            if dmg:GetDamageType() == DMG_POISON or dmg:GetDamageType() == DMG_NERVEGAS then
+                -- Otherwise poison headcrabs can oneshot you
+                return
+            end
+            if difficulty >= difficulty_hard then
+                dmg:ScaleDamage(1.25)
+            end
+            if dmg:GetAttacker():GetVar("damage_scale") then
+                dmg:ScaleDamage(dmg:GetAttacker():GetVar("damage_scale"))
+            end
+        elseif dmg:GetAttacker():IsPlayer() then
+            dmg:SetDamage(0)
+        elseif dmg:GetDamageType() == DAMAGE_CRUSH then
+            dmg.SetDamage(math.min(dmg:GetDamage(),20))
         end
     end
 end)

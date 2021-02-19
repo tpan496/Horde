@@ -1,7 +1,7 @@
 if SERVER then return end
-surface.CreateFont('Title', { font = 'arial', size = 30 })
-surface.CreateFont('Warning', { font = 'arial', size = 30, strikeout = true })
-surface.CreateFont('Content', { font = 'arial', size = 19 })
+surface.CreateFont('Title', { font = 'arial bold', size = 30 })
+surface.CreateFont('Warning', { font = 'arial bold', size = 30, strikeout = true })
+surface.CreateFont('Content', { font = 'arial bold', size = 20 })
 
 local PANEL = {}
 
@@ -14,6 +14,9 @@ function PANEL:Init()
 	self.buy_btn:SetText("")
     self.buy_btn:SetTall(50)
     self.buy_btn.Paint = function () end
+    self.buy_btn.OnCursorEntered = function ()
+        surface.PlaySound("UI/buttonrollover.wav")
+    end
 
     self.ammo_panel = vgui.Create('DPanel', self)
 	self.ammo_panel:Dock(BOTTOM)
@@ -24,6 +27,9 @@ function PANEL:Init()
     self.ammo_one_btn:SetFont("Content")
     self.ammo_one_btn:SetTextColor(Color(0,0,0,0))
 	self.ammo_one_btn:SetText("")
+    self.ammo_one_btn.OnCursorEntered = function ()
+        surface.PlaySound("UI/buttonrollover.wav")
+    end
 
     self.ammo_ten_btn = vgui.Create('DButton', self.ammo_panel)
     self.ammo_ten_btn:Dock(LEFT)
@@ -31,6 +37,9 @@ function PANEL:Init()
     self.ammo_ten_btn:SetTextColor(Color(0,0,0,0))
     self.ammo_ten_btn:SetText("")
     self.ammo_ten_btn:SetTall(50)
+    self.ammo_ten_btn.OnCursorEntered = function ()
+        surface.PlaySound("UI/buttonrollover.wav")
+    end
 
     self.ammo_secondary_btn = vgui.Create('DButton', self)
 	self.ammo_secondary_btn:Dock(BOTTOM)
@@ -39,6 +48,14 @@ function PANEL:Init()
 	self.ammo_secondary_btn:SetText("")
     self.ammo_secondary_btn:SetTall(50)
     self.ammo_secondary_btn.Paint = function () end
+    self.ammo_secondary_btn.OnCursorEntered = function ()
+        surface.PlaySound("UI/buttonrollover.wav")
+    end
+
+    self.current_ammo_panel = vgui.Create('DPanel', self)
+    self.current_ammo_panel:Dock(BOTTOM)
+    self.current_ammo_panel:SetTall(50)
+    self.current_ammo_panel.Paint = function () end
 
     self.ammo_panel.Paint = function () end
     self.ammo_one_btn.Paint = function () end
@@ -70,6 +87,7 @@ function PANEL:Init()
 end
 
 function PANEL:DoClick()
+    surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
     if not self.item.class then
         Derma_Query('Changing class will remove all your items!', 'Change Class',
@@ -94,6 +112,7 @@ function PANEL:DoClick()
 end
 
 function PANEL:AmmoDoClick(count)
+    surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
     if count == -1 then
         -- Secondary ammo
@@ -128,7 +147,7 @@ function PANEL:Paint()
         draw.DrawText(self.item.description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
         
         -- Check if this is a class or an item
-        if not self.item.class then 
+        if not self.item.class then
             self.buy_btn:SetTextColor(Color(255,255,255))
             self.buy_btn:SetText("Select Class")
             self.buy_btn.Paint = function ()
@@ -139,6 +158,7 @@ function PANEL:Paint()
             self.ammo_one_btn:SetVisible(false)
             self.ammo_ten_btn:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
+            self.current_ammo_panel:SetVisible(false)
             return
         end
 
@@ -158,7 +178,7 @@ function PANEL:Paint()
 
                 self.ammo_one_btn:SetTextColor(Color(255,255,255))
                 local price = self.item.ammo_price and self.item.ammo_price or HORDE.default_ammo_price
-                self.ammo_one_btn:SetText("Buy Ammo x 1 (" .. tostring(price) .. "$)")
+                self.ammo_one_btn:SetText("Buy Ammo Clip x 1 (" .. tostring(price) .. "$)")
                 self.ammo_one_btn:SetWide(self:GetWide() / 2)
                 self.ammo_one_btn.Paint = function ()
                     surface.SetDrawColor(HORDE.color_crimson)
@@ -166,14 +186,14 @@ function PANEL:Paint()
                 end
 
                 self.ammo_ten_btn:SetTextColor(Color(255,255,255))
-                self.ammo_ten_btn:SetText("Buy Ammo x 10 (" .. tostring(price * 10) .. "$)")
+                self.ammo_ten_btn:SetText("Buy Ammo Clip x 10 (" .. tostring(price * 10) .. "$)")
                 self.ammo_ten_btn:SetWide(self:GetWide() / 2)
                 self.ammo_ten_btn.Paint = function ()
                     surface.SetDrawColor(HORDE.color_crimson)
                     surface.DrawRect(0, 0, self:GetParent():GetParent():GetWide()/2, 200)
                 end
 
-                if self.item.secondary_ammo_price > 0 then
+                if self.item.secondary_ammo_price and self.item.secondary_ammo_price > 0 then
                     self.ammo_secondary_btn:SetVisible(true)
                     self.ammo_secondary_btn:SetTextColor(Color(255,255,255))
                     self.ammo_secondary_btn:SetText("Buy Secondary Ammo x 1 (" .. tostring(self.item.secondary_ammo_price) .. "$)")
@@ -184,10 +204,24 @@ function PANEL:Paint()
                 else
                     self.ammo_secondary_btn:SetVisible(false)
                 end
+
+                self.current_ammo_panel.Paint = function ()
+                    local wpn = LocalPlayer():GetWeapon(self.item.class)
+                    local clip_ammo = wpn:Clip1()
+                    local total_ammo = LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())
+                    if wpn:GetSecondaryAmmoType() > 0 then
+                        local clip_ammo2 = wpn:Clip2()
+                        local total_ammo2 = LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())
+	                    draw.SimpleText("Primary Ammo: " .. tonumber(clip_ammo) .. " / " .. tonumber(total_ammo) .. " | Secondary Ammo: " .. tonumber(total_ammo2), 'Content', self:GetWide()/2, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    else
+	                    draw.SimpleText("Primary Ammo: " .. tonumber(clip_ammo) .. " / " .. tonumber(total_ammo), 'Content', self:GetWide()/2, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    end
+                end
             else
                 self.ammo_one_btn:SetVisible(false)
                 self.ammo_ten_btn:SetVisible(false)
                 self.ammo_secondary_btn:SetVisible(false)
+                self.current_ammo_panel.Paint = function () end
             end
         elseif LocalPlayer():GetMoney() < self.item.price or LocalPlayer():GetWeight() < self.item.weight then
             self.buy_btn:SetTextColor(Color(200,200,200))
@@ -200,6 +234,7 @@ function PANEL:Paint()
             self.ammo_one_btn:SetVisible(false)
             self.ammo_ten_btn:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
+            self.current_ammo_panel.Paint = function () end
         else
             self.buy_btn:SetTextColor(Color(255,255,255))
             self.buy_btn:SetText("Buy Item")
@@ -211,6 +246,7 @@ function PANEL:Paint()
             self.ammo_one_btn:SetVisible(false)
             self.ammo_ten_btn:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
+            self.current_ammo_panel.Paint = function () end
         end
     end
 

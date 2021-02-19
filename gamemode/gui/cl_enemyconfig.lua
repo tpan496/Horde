@@ -99,11 +99,18 @@ function PANEL:Init()
     end
 
 	weight_editor:SetNumeric(true)
+	weight_editor:SetValue("1")
+	wave_editor:SetValue("1")
+	health_editor:SetValue("1")
+	damage_editor:SetValue("1")
+	reward_editor:SetValue("1")
+	model_scale_editor:SetValue("1")
 
 	local save_btn = vgui.Create('DButton', modify_tab)
 	save_btn:Dock(BOTTOM)
 	save_btn:SetText("Save")
 	save_btn.DoClick = function ()
+		if not name_editor:GetValue() or not class_editor:GetValue() then return end
 		local color = nil
 		if color_editor.enabled_editor:GetChecked() then
 			color = color_editor.color_editor:GetColor()
@@ -121,6 +128,10 @@ function PANEL:Init()
 			color
 		)
         HORDE.FinalizeEnemies()
+
+		-- Reload from disk
+		net.Start("Horde_GetEnemiesData")
+		net.SendToServer()
 	end
 
 	local settings_tab = vgui.Create('DPanel', self)
@@ -176,6 +187,7 @@ end
 function PANEL:Think()
 	local lines = self.enemy_list:GetLines()
 
+	if not HORDE.enemies then return end
 	for _, enemy in pairs(HORDE.enemies) do
 		local found = false
 		for _, line in pairs(lines) do
@@ -186,6 +198,8 @@ function PANEL:Think()
 		if not found then
 			self.enemy_list:AddLine(enemy.wave, enemy.name, enemy.class, enemy.weight).enemy = enemy
 		end
+
+		::cont::
 	end
 
 	for i, line in pairs(lines) do

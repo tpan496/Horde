@@ -3,7 +3,7 @@ GM.Author = "tpan496"
 GM.Email = "N/A"
 GM.Website = "N/A"
 
-DeriveGamemode("sandbox")
+DeriveGamemode("base")
 
 function GM:PlayerLoadout(ply) ply:StripWeapons() end
 

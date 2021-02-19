@@ -2,6 +2,7 @@ if CLIENT then return end
 -- HORDE SERVER
 
 util.AddNetworkString("Horde_HighlightEnemies")
+util.AddNetworkString("Horde_GameEnd")
 
 local players_count = 0
 
@@ -45,7 +46,6 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
         print("OnKill", HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
         if HORDE.alive_enemies_this_wave <= 10 and HORDE.total_enemies_this_wave <= 10 then
-            print("Notify Highlight")
             net.Start("Horde_HighlightEnemies")
             net.WriteInt(1, 2)
             net.Broadcast()
@@ -58,9 +58,40 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
             if victim:GetVar("reward_scale") then
                 scale = victim:GetVar("reward_scale")
             end
-            killer:AddMoney(HORDE.kill_reward_base * scale)
+            local reward = HORDE.kill_reward_base * scale
+            killer:AddMoney(reward)
+            if not HORDE.player_money_earned[killer:SteamID()] then HORDE.player_money_earned[killer:SteamID()] = 0 end
+            HORDE.player_money_earned[killer:SteamID()] = HORDE.player_money_earned[killer:SteamID()] + reward
+
+            if victim:GetVar("is_elite") then
+                if not HORDE.player_elite_kills[killer:SteamID()] then HORDE.player_elite_kills[killer:SteamID()] = 0 end
+                HORDE.player_elite_kills[killer:SteamID()] = HORDE.player_elite_kills[killer:SteamID()] + 1
+            end
             killer:SyncEconomy()
         end
+    end
+end)
+
+-- Record statistics 
+hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
+    if took then
+        if ent:IsNPC() and dmg:GetAttacker():IsPlayer() then
+            local id = dmg:GetAttacker():SteamID()
+            if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
+            HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
+        elseif ent:IsPlayer() and dmg:GetAttacker():IsNPC() then
+            local id = ent:SteamID()
+            if not HORDE.player_damage_taken[id] then HORDE.player_damage_taken[id] = 0 end
+            HORDE.player_damage_taken[id] = HORDE.player_damage_taken[id] + dmg:GetDamage()
+        end
+    end
+end)
+
+hook.Add("ScaleNPCDamage", "Horde_HeadshotCounter", function (npc, hitgroup, dmg)
+    if npc:IsValid() and dmg:GetAttacker():IsPlayer() then
+        local id = dmg:GetAttacker():SteamID()
+        if not HORDE.player_headshots[id] then HORDE.player_headshots[id] = 0 end
+        HORDE.player_headshots[id] = HORDE.player_headshots[id] + 1
     end
 end)
 
@@ -76,6 +107,14 @@ end)
 function BroadcastMessage(msg)
     net.Start("Horde_RenderCenterText")
     net.WriteString(msg)
+    net.WriteInt(-1,8)
+    net.Broadcast()
+end
+
+function BroadcastWaveMessage(msg, wave)
+    net.Start("Horde_RenderCenterText")
+    net.WriteString(msg)
+    net.WriteInt(wave,8)
     net.Broadcast()
 end
 
@@ -124,7 +163,7 @@ function SpawnEnemy(enemy, pos)
 
     if enemy.is_elite then
         spawned_enemy:SetVar("is_elite", true)
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * players_count)
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, players_count * 0.75))
         spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
     end
 
@@ -168,16 +207,21 @@ end
 function StartBreak()
     timer.Create('Horder_Counter', 1, 0, function ()
         if not HORDE.start_game then return end
+        BroadcastWaveMessage("Next wave starts in " .. HORDE.current_break_time, HORDE.current_break_time)
+
         if 0 < HORDE.current_break_time then
             HORDE.current_break_time = HORDE.current_break_time - 1
         end
         
-        BroadcastMessage("Next wave starts in " .. HORDE.current_break_time)
+
+        if HORDE.current_break_time <= 10 then
+            --surface.PlaySound("radiovoice/eight")
+        end
         
         if HORDE.current_break_time == 0 then
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
-            BroadcastMessage("Wave " .. HORDE.current_wave .. " has started!")
+            BroadcastWaveMessage("Wave " .. HORDE.current_wave .. " has started!", 0)
 
             timer.Remove('Horder_Counter')
         end
@@ -245,7 +289,7 @@ timer.Create('Horde_Main', 5, 0, function ()
         if (HORDE.enemies_normalized == nil) or table.IsEmpty(HORDE.enemies_normalized) then
             HardReset()
             net.Start("Horde_LegacyNotification")
-            net.WriteString("Enemies list are empy. Config the enemyy list or no enemies wil spawn.")
+            net.WriteString("Enemies list is empy. Config the enemyy list or no enemies wil spawn.")
             net.WriteInt(1,2)
             net.Broadcast()
             HORDE.start_game = false
@@ -260,8 +304,10 @@ timer.Create('Horde_Main', 5, 0, function ()
         end
 
         players_count = table.Count(player.GetAll())
-        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * 0.8)
+        local difficulty_coefficient = HORDE.difficulty * 0.05
+        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
         HORDE.total_enemies_this_wave_fixed = HORDE.total_enemies_this_wave
+        HORDE.max_enemies_alive = math.min(50, 20 + 5 * players_count)
         HORDE.alive_enemies_this_wave = 0
         HORDE.current_break_time = -1
         HORDE.killed_enemies_this_wave = 0
@@ -375,8 +421,10 @@ timer.Create('Horde_Main', 5, 0, function ()
                 enemy:Remove()
             end
         end
+        print(HORDE.current_wave, HORDE.max_waves)
         if HORDE.current_wave == HORDE.max_waves then
             BroadcastMessage("Final Wave Completed! You have survived!")
+            GameEnd()
         else
             BroadcastMessage("Wave Completed!")
             net.Start("Horde_LegacyNotification")
@@ -394,6 +442,14 @@ timer.Create('Horde_Main', 5, 0, function ()
             HORDE.player_class_changed[ply:SteamID()] = false
             HORDE.player_ready[ply:SteamID()] = false
         end
+
+        if GetConVarNumber("horde_npc_cleanup") then
+            for _, ent in pairs(ents.GetAll()) do
+                if ent:IsNPC() then
+                    ent:Remove()
+                end
+            end
+        end
     end
     end)
 
@@ -401,3 +457,128 @@ timer.Create('Horde_Main', 5, 0, function ()
         print(err)
     end
 end)
+
+function GameEnd()
+    local randomplayer = table.Random(player.GetAll())
+    local mvp_player = randomplayer
+    local mvp_damage = 0
+    local mvp_kills = 0
+
+    local kills_player = randomplayer
+    local most_kills = 0
+    local second_kills_player = 0
+    local second_most_kills = 0
+
+    local money_player = randomplayer
+    local most_money = 0
+
+    local headshot_player = randomplayer
+    local most_headshots = 0
+
+    local damage_player = randomplayer
+    local most_damage = 0
+    local second_damage_player = 0
+    local second_most_damage = 0
+    local total_damage = 0
+
+    local damage_taken_player = randomplayer
+    local most_damage_taken = 0
+
+    local elite_kill_player = randomplayer
+    local most_elite_kills = 0
+
+    for _,ply in pairs(player.GetAll()) do
+        local id = ply:SteamID()
+        if HORDE.player_damage[id] and HORDE.player_damage[id] > most_damage then
+            second_damage_player = damage_player
+            second_most_damage = most_damage
+            most_damage = HORDE.player_damage[id]
+            damage_player = ply
+        end
+        total_damage = total_damage + HORDE.player_damage[id]
+
+        if ply:Frags() > most_kills then
+            second_kills_player = kills_player
+            second_most_kills = most_kills
+            most_kills = ply:Frags()
+            kills_player = ply
+        end
+
+        if HORDE.player_money_earned[id] and HORDE.player_money_earned[id] > most_money then
+            most_money = HORDE.player_money_earned[id]
+            money_player = ply
+        end
+
+        if HORDE.player_damage_taken[id] and HORDE.player_damage_taken[id] > most_damage_taken then
+            most_damage_taken = HORDE.player_damage_taken[id]
+            damage_taken_player = ply
+        end
+
+        if HORDE.player_elite_kills[id] and HORDE.player_elite_kills[id] > most_elite_kills then
+            most_elite_kills = HORDE.player_elite_kills[id]
+            elite_kill_player = ply
+        end
+
+        if HORDE.player_headshots[id] and HORDE.player_headshots[id] > most_headshots then
+            most_headshots = HORDE.player_headshots[id]
+            headshot_player = ply
+        end
+    end
+
+    -- Find out mvp
+    if kills_player:SteamID() == damage_player:SteamID() then
+        mvp_player = kills_player
+        mvp_kills = most_kills
+        mvp_damage = most_damage
+    else
+        if kills_player:SteamID() == second_damage_player:SteamID() then
+            mvp_player = kills_player
+            mvp_kills = most_kills
+            mvp_damage = second_most_damage
+        elseif damage_player:SteamID() == second_kills_player:SteamID() then
+            mvp_player = kills_player
+            mvp_kills = second_most_kills
+            mvp_damage = most_damage
+        else
+            if HORDE.player_elite_kills[damage_player:SteamID()] > HORDE.player_elite_kills[kills_player:SteamID()] then
+                mvp_player = damage_player
+                mvp_kills = damage_player:Frags()
+                mvp_damage = most_damage
+            else
+                mvp_player = kills_player
+                mvp_kills = most_kills
+                mvp_damage = HORDE.player_damage[kills_player:SteamID()]
+            end
+        end
+    end
+
+    net.Start("Horde_GameEnd")
+
+    net.WriteEntity(mvp_player)
+    net.WriteInt(mvp_damage, 32)
+    net.WriteInt(mvp_kills, 32)
+
+    net.WriteEntity(damage_player)
+    net.WriteInt(most_damage, 32)
+
+    net.WriteEntity(kills_player)
+    net.WriteInt(most_kills, 32)
+
+    net.WriteEntity(money_player)
+    net.WriteInt(most_money, 32)
+
+    net.WriteEntity(headshot_player)
+    net.WriteInt(most_headshots, 32)
+
+    net.WriteEntity(elite_kill_player)
+    net.WriteInt(most_elite_kills, 32)
+
+    net.WriteEntity(damage_taken_player)
+    net.WriteInt(most_damage_taken, 32)
+
+    net.Broadcast()
+
+    timer.Remove('Horde_Main')
+    timer.Remove('Horder_Counter')
+    BroadcastMessage('Victory!')
+end

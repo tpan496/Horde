@@ -30,54 +30,61 @@
 		}
 		4
 		{
+			"name"		"horde_default_class_config"
+			"text"		"Use default class config."
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+		5
+		{
 			"name"		"horde_max_wave"
 			"text"		"Max wave (1-10)"
 			"type"		"Numeric"
 			"default"	"5"
 		}
-		5
+		6
 		{
 			"name"		"horde_difficulty"
 			"text"		"Difficulty (0=Normal, 1=Hard, 2=Realism)"
 			"type"		"Numeric"
 			"default"	"0"
 		}
-		6
+		7
 		{
 			"name"		"horde_start_money"
 			"text"		"Money given at start."
 			"type"		"Numeric"
 			"default"	"1000"
 		}
-		7
+		8
 		{
 			"name"		"horde_break_time"
 			"text"		"Break time between waves (>10)"
 			"type"		"Numeric"
 			"default"	"60"
 		}
-		8
+		9
 		{
 			"name"		"horde_enable_shop"
 			"text"		"Enables shop menu"
 			"type"		"CheckBox"
 			"default"	"1"
 		}
-		9
+		10
 		{
 			"name"		"horde_enable_respawn"
 			"text"		"Players can respawn after death during a wave"
 			"type"		"CheckBox"
 			"default"	"1"
 		}
-		10
+		11
 		{
 			"name"		"horde_max_spawn_distance"
 			"text"		"Maximum enemy spawn distance (>100)"
 			"type"		"Numeric"
 			"default"	"2000"
 		}
-		11
+		12
 		{
 			"name"		"horde_min_spawn_distance"
 			"text"		"Minimum enemy spawn distance (>100)"

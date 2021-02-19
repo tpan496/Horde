@@ -112,11 +112,14 @@ net.Receive("Horde_BuyItem", function (len, ply)
     local price = net.ReadInt(16)
     local weight = net.ReadInt(16)
     if ply:GetMoney() >= price and ply:GetWeight() >= weight then
-        ply:AddMoney(-price)
         if class == "armor" then
             ply:SetArmor(100)
+            ply:AddMoney(-price)
             ply:SyncEconomy()
         else
+            local wpns = list.Get("Weapon")
+            if not wpns[class] then return end
+            ply:AddMoney(-price)
             ply:Give(class)
             ply:SelectWeapon(class)
         end
@@ -124,7 +127,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
 end)
 
 net.Receive("Horde_SelectClass", function (len, ply)
-    if HORDE.start_game then
+    if HORDE.start_game and HORDE.current_break_time <= 0 then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You cannot change class after a wave has started.")
         net.WriteInt(1,2)
@@ -141,7 +144,9 @@ net.Receive("Horde_SelectClass", function (len, ply)
     local name = net.ReadString()
     local class = HORDE.classes[name]
     ply:SetClass(class)
-    ply:StripWeapons()
+    for _, wpn in pairs(ply:GetWeapons()) do
+        ply:DropWeapon(wpn)
+    end
     ply:SetWeight(HORDE.max_weight)
     net.Start("Horde_ToggleShop")
     net.Send(ply)
@@ -152,6 +157,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     --timer.Remove("Horde_Survivor" .. ply:SteamID())
     --timer.Remove("Horde_Assault" .. ply:SteamID())
     timer.Remove("Horde_Demolition" .. ply:SteamID())
+    hook.Remove("Horde_Sniper" .. ply:SteamID())
 
 
     if class.name == "Assault" then
@@ -161,8 +167,6 @@ net.Receive("Horde_SelectClass", function (len, ply)
     elseif class.name == "Medic" then
         timer.Create("Horde_Medic" .. ply:SteamID(), 1, 0, function ()
             ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + 2))
-            print(ply:GetRunSpeed())
-            print(ply:GetJumpPower())
         end)
     elseif class.name == "Heavy" then
         timer.Create("Horde_Heavy" .. ply:SteamID(), 1, 0, function ()
@@ -179,7 +183,15 @@ net.Receive("Horde_SelectClass", function (len, ply)
         end)
         hook.Add("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID(), function (target, dmg)
             if target:IsValid() and target:IsPlayer() and dmg:GetDamageType() ==  DMG_BLAST then
-                dmg:ScaleDamage(1.25)
+                dmg:ScaleDamage(0.25)
+            end
+        end)
+    elseif class.name == "Sniper" then
+        hook.Add("ScaleNPCDamage", "Horde_Sniper", function (npc, hitgroup, dmg)
+            if npc:IsValid()  and dmg:GetAttacker():IsPlayer() then
+                if hitgroup == HITGROUP_HEAD then
+                    dmg:ScaleDamage(1.5)
+                end
             end
         end)
     end
@@ -221,7 +233,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
             local grenade = 10
             local slam = 11
             if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam then
-                ply:GiveAmmo(1, ammo_id, false)
+                ply:GiveAmmo(count, ammo_id, false)
             end
 		end
         ply:SyncEconomy()

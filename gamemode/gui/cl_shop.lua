@@ -1,6 +1,6 @@
 if SERVER then return end
-surface.CreateFont('Heading', { font = 'arial', size = 22 })
-surface.CreateFont('Category', { font = 'arial', size = 22 })
+surface.CreateFont('Heading', { font = 'arial bold', size = 22 })
+surface.CreateFont('Category', { font = 'arial bold', size = 22 })
 
 local PANEL = {}
 
@@ -89,6 +89,7 @@ function PANEL:Init()
 		btn.DoClick = function(pnl)
 			for k, v in pairs(btns) do v:SetActive(false) v:OnDeactivate() end
 			pnl:SetActive(true) pnl:OnActivate()
+			surface.PlaySound("UI/buttonclick.wav")
 		end
 
 		btn.OnDeactivate = function()
@@ -98,6 +99,9 @@ function PANEL:Init()
 		btn.OnActivate = function()
 			panel:SetVisible(true)
 			panel:SetZPos(100)
+		end
+		btn.OnCursorEntered = function ()
+			surface.PlaySound("UI/buttonrollover.wav")
 		end
 
 		table.insert(btns, btn)

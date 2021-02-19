@@ -3,13 +3,15 @@ if SERVER then return end
 include("shared.lua")
 include("sh_config.lua")
 include("cl_economy.lua")
-include("class/sh_class.lua")
 include("gui/cl_class.lua")
 include("gui/cl_description.lua")
 include("gui/cl_item.lua")
 include("gui/cl_itemconfig.lua")
+include("gui/cl_classconfig.lua")
 include("gui/cl_enemyconfig.lua")
 include("gui/cl_shop.lua")
+include("gui/cl_summary.lua")
+include("gui/cl_scoreboard.lua")
 
 local center_panel = vgui.Create("DPanel")
 center_panel:SetSize(300, 50)
@@ -24,7 +26,7 @@ timer.Simple(5, function ()
 	if GetConVarNumber("horde_enable_client_gui") == 0 then return end
 	corner_panel.Paint = function ()
 		draw.RoundedBox(10, 0, 0, 300, 50, Color(40,40,40,200))
-		if LocalPlayer():Alive() then
+		if LocalPlayer():Alive() and LocalPlayer():GetClass() then
 			draw.SimpleText(LocalPlayer():GetClass().name .. " | " .. math.min(99999,LocalPlayer():GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		else
             draw.SimpleText("Spectating", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -79,6 +81,21 @@ function HORDE:ToggleEnemyConfig()
 	end
 end
 
+function HORDE:ToggleClassConfig()
+	if not HORDE.ClassConfigGUI then
+		HORDE.ClassConfigGUI = vgui.Create('HordeClassConfig')
+		HORDE.ClassConfigGUI:SetVisible(false)
+	end
+	
+	if HORDE.ClassConfigGUI:IsVisible() then
+		HORDE.ClassConfigGUI:Hide()
+		gui.EnableScreenClicker(false)
+	else
+		HORDE.ClassConfigGUI:Show()
+		gui.EnableScreenClicker(true)
+	end
+end
+
 net.Receive("Horde_HighlightEnemies", function (len, ply)
     local render = net.ReadInt(2)
     if render == 1 then
@@ -100,6 +117,10 @@ end)
 
 net.Receive("Horde_ToggleEnemyConfig", function ()
 	HORDE:ToggleEnemyConfig()
+end)
+
+net.Receive("Horde_ToggleClassConfig", function ()
+	HORDE:ToggleClassConfig()
 end)
 
 net.Receive("Horde_ForceCloseShop", function ()
@@ -136,9 +157,54 @@ end)
 
 net.Receive('Horde_RenderCenterText', function ()
 	local str = net.ReadString()
+	local num = net.ReadInt(8)
+	if num and num >= 0 then
+		if num == 10 then
+			surface.PlaySound("HL1/fvox/ten.wav")
+		elseif num == 5 then
+			surface.PlaySound("HL1/fvox/five.wav")
+		elseif num == 0 then
+			surface.PlaySound("ambient/alarms/manhack_alert_pass1.wav")
+		else
+			surface.PlaySound("cd/" .. tostring(num) ..".mp3")
+		end
+	end
 	if GetConVarNumber("horde_enable_client_gui") == 0 then return end
 	center_panel.Paint = function (w, h)
 		draw.RoundedBox(10, 0, 0, 300, 50, Color(40,40,40,200))
 		draw.SimpleText(str, "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
+end)
+
+net.Receive('Horde_GameEnd', function ()
+	local mvp = net.ReadEntity()
+	local mvp_damage = net.ReadInt(32)
+	local mvp_kills = net.ReadInt(32)
+
+	local damage_player = net.ReadEntity()
+	local most_damage = net.ReadInt(32)
+
+	local kills_player = net.ReadEntity()
+	local most_kills = net.ReadInt(32)
+	
+	local money_player = net.ReadEntity()
+	local most_money = net.ReadInt(32)
+
+	local headshot_player = net.ReadEntity()
+	local most_headshots = net.ReadInt(32)
+
+	local elite_kill_player = net.ReadEntity()
+	local most_elite_kills = net.ReadInt(32)
+
+	local damage_taken_player = net.ReadEntity()
+	local most_damage_taken = net.ReadInt(32)
+
+	local end_gui = vgui.Create("HordeSummary")
+	end_gui:SetData(mvp, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken)
+end)
+
+hook.Add("HUDShouldDraw", "RemoveRetardRedScreen", function(name) 
+    if (name == "CHudDamageIndicator") then
+       return false
+    end
 end)

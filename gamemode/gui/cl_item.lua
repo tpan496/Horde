@@ -1,6 +1,6 @@
 if SERVER then return end
 
-surface.CreateFont('Item', { font = 'arial', size = 20 })
+surface.CreateFont('Item', { font = 'arial bold', size = 20 })
 
 local PANEL = {}
 
@@ -42,10 +42,12 @@ function PANEL:SetData(item, description_panel)
 
 	function btn:DoClick()
 		self:GetParent():DoClick()
+		surface.PlaySound("UI/buttonclick.wav")
 	end
 
 	function btn:OnCursorEntered()
 		self:GetParent():OnCursorEntered()
+		surface.PlaySound("UI/buttonrollover.wav")
 	end
 	
 	function btn:OnCursorExited()
