@@ -1,5 +1,9 @@
 if CLIENT then return end
 
+concommand.Add("horde_drop_money", function (ply, cmd, args)
+    ply:DropMoney()
+end)
+
 util.AddNetworkString("Horde_BuyItem")
 util.AddNetworkString("Horde_BuyItemAmmoPrimary")
 util.AddNetworkString("Horde_BuyItemAmmoSecondary")
@@ -31,6 +35,22 @@ end
 
 function Player:GetMoney()
     return self.money
+end
+
+function Player:DropMoney()
+    if self:GetMoney() >= 50 then
+        self:AddMoney(-50)
+        local money = ents.Create("money")
+        local pos = self:GetPos()
+        local dir = (self:GetEyeTrace().HitPos - pos)
+        dir:Normalize()
+        local drop_pos = pos + dir * 50
+        drop_pos.z = pos.z + 15
+        money:SetPos(drop_pos)
+        --money:DropToFloor()
+        money:Spawn()
+        self:SyncEconomy()
+    end
 end
 
 function Player:GetWeight()

@@ -72,10 +72,11 @@ function scoreboard:show()
         gui.EnableScreenClicker(false)
         board:Remove()
         title:Remove()
+        hook.Remove("KeyPress", "Horde_Scoreboard_Mouse")
 	end
 
     hook.Add("KeyPress", "Horde_Scoreboard_Mouse", function(ply, key)
-        if (key == IN_ATTACK or key == IN_ATTACK2 or key == IN_USE) then
+        if board and title and (key == IN_ATTACK or key == IN_ATTACK2 or key == IN_USE) then
             gui.EnableScreenClicker(true)
         end
     end)

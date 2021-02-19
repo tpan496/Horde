@@ -216,7 +216,7 @@ HORDE.default_ammo_price = 10
 
 -- Class
 HORDE.classes = {}
-HORDE.CreateClass = function (name, description, max_hp, movespd, sprintspd)
+HORDE.CreateClass = function (name, description, max_hp, movespd, sprintspd, perks)
     if name == nil or name == "" then return end
     local class = {}
     class.name = name
@@ -224,6 +224,7 @@ HORDE.CreateClass = function (name, description, max_hp, movespd, sprintspd)
     class.max_hp = max_hp
     class.movespd = movespd
     class.sprintspd = sprintspd
+    class.perks = perks
     HORDE.classes[class.name] = class
 end
 -- Only allow 1 change per wave
@@ -234,15 +235,17 @@ HORDE.CreateClass(
     "No bonus.\n\nHave access to all weapons except for special weapons.",
     100,
     180,
-    220
+    220,
+    {A="None", B="None"}
 )
 
 HORDE.CreateClass(
     "Medic",
-    "Regenerate 2 health per second.\n\nHave partial access to Rifles and most light weapons.",
+    "Regenerate 2% health per second.\n\nHave partial access to Rifles and most light weapons.",
     100,
     180,
-    220
+    220,
+    {A="50% increased maximum health.", B="Deal "}
 )
 
 HORDE.CreateClass(
@@ -250,7 +253,8 @@ HORDE.CreateClass(
     "75% less explosive damage taken.\nRegenerate 1 frag grenade every 30 seconds, if you do not have one.\n\nHave full access to Explosive weapons.",
     100,
     180,
-    220
+    220,
+    {A="50% increased explosive damage", B="Enemies you kill explodes,\ndealing 150 AOE damage."}
 )
 
 HORDE.CreateClass(
@@ -277,13 +281,14 @@ HORDE.CreateClass(
     220
 )
 
+--[[
 HORDE.CreateClass(
     "Engineer",
     "No bonus.\n\nHave access to special weapons and equipment.",
     100,
     180,
     220
-)
+)]]--
 
 function SetClassData()
     if GetConVarNumber("horde_default_class_config") == 1 then return end
@@ -309,7 +314,7 @@ function GetClassData()
 
         -- Integrity
         for _, class in pairs(t) do
-            if class.name == nil or class.name == "" then
+            if class.name == nil or class.name == "" or class.perks == nil then
 		        notification.AddLegacy("Class config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
 		        notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
                 return
