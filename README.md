@@ -6,6 +6,7 @@ Besides the client-side GUI configs, you can create lua config addons! This allo
 
 You config addons should stay in `garrrysmod/your-config/lua/custom/`, and have the following (example) format:
 ```
+-- Example your-custom-config.lua
 CONFIG = {}
 CONFIG.name = "custom_config" -- YOU MUST NAME IT! Used for horde_external_lua_config.
 CONFIG.items = {
