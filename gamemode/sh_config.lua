@@ -15,6 +15,7 @@ CreateConVar("horde_enable_scoreboard", 1, SERVER_CAN_EXECUTE, "Enables built-in
 
 HORDE = {}
 HORDE.__index = HORDE
+HORDE.version = "1.0.0"
 HORDE.color_crimson = Color(220, 20, 60)
 HORDE.color_crimson_dim = Color(200, 0, 40)
 HORDE.color_crimson_dark = Color(100,0,0)
@@ -353,7 +354,7 @@ end
 -- Enemies
 HORDE.enemies = {}
 HORDE.enemies_normalized = {}
-HORDE.CreateEnemy = function (name, class, weight, wave, is_elite, health_scale, damage_scale, reward_scale, model_scale, color)
+HORDE.CreateEnemy = function (name, class, weight, wave, is_elite, health_scale, damage_scale, reward_scale, model_scale, color, weapon)
     if name == nil or class == nil or wave == nil or wave <= 0 or name == "" or class == "" then return end
     local enemy = {}
     enemy.name = name
@@ -366,6 +367,7 @@ HORDE.CreateEnemy = function (name, class, weight, wave, is_elite, health_scale,
     enemy.reward_scale = reward_scale and reward_scale or 1
     enemy.model_scale = model_scale and model_scale or 1
     enemy.color = color
+    enemy.weapon = weapon
     HORDE.enemies[name .. tostring(enemy.wave)] = enemy
 end
 
@@ -425,8 +427,14 @@ function GetEnemiesData()
 		        notification.AddLegacy("Enemy config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
 		        notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
                 return
+            else
+                if not enemy.weapon then
+                    enemy.weapon = ""
+                end
             end
         end
+
+        -- Be careful of backwards compataiblity
         HORDE.enemies = t
         HORDE.FinalizeEnemies()
     end

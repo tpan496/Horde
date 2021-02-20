@@ -192,6 +192,10 @@ function SpawnEnemy(enemy, pos)
         spawned_enemy:SetRenderMode(RENDERMODE_TRANSCOLOR)
     end
 
+    if enemy.weapon and enemy.weapon ~= "" then
+        spawned_enemy:Give(enemy.weapon)
+    end
+
     return spawned_enemy
 end
 

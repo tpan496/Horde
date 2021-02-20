@@ -89,7 +89,7 @@ function PANEL:Init()
 	local ammo_price_editor = create_property_editor("ammo price", 50)
 	local secondary_ammo_price_editor = create_property_editor("secondary ammo price", 50)
 
-	if GetConVarNumber("horde_default_item_config") then
+	if GetConVarNumber("horde_default_item_config") == 1 then
         local warning_label = vgui.Create('DLabel', modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)

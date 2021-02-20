@@ -70,7 +70,15 @@ function PANEL:Init()
 			editor2:SetPalette(false)
 			return {enabled_editor=editor1, color_editor=editor2}
 		elseif name == "weapon" then
-
+			local editor = vgui.Create('DComboBox', panel)
+			editor:SetSize(200, height)
+			editor:DockPadding(10, 10, 10, 10)
+			editor:Dock(LEFT)
+			for wpn, _ in pairs(list.Get("Weapon")) do
+				editor:AddChoice(wpn)
+			end
+			editor:AddChoice("")
+			return editor
 		else
 			local editor = vgui.Create('DTextEntry', panel)
 			editor:SetSize(200, height)
@@ -80,22 +88,23 @@ function PANEL:Init()
 		end
 	end
 
-	local name_editor = create_property_editor("name", 50)
-	local class_editor = create_property_editor("class", 50)
-	local weight_editor = create_property_editor("weight", 50)
-    local wave_editor = create_property_editor("wave", 50)
-	local elite_editor = create_property_editor("elite", 50)
-	local health_editor = create_property_editor("health scaling", 50)
-	local damage_editor = create_property_editor("damage scaling", 50)
-	local reward_editor = create_property_editor("reward scaling", 50)
-	local model_scale_editor = create_property_editor("model scaling", 50)
+	local name_editor = create_property_editor("name", 45)
+	local class_editor = create_property_editor("class", 45)
+	local weight_editor = create_property_editor("weight", 45)
+    local wave_editor = create_property_editor("wave", 45)
+	local elite_editor = create_property_editor("elite", 45)
+	local health_editor = create_property_editor("health scaling", 45)
+	local damage_editor = create_property_editor("damage scaling", 45)
+	local reward_editor = create_property_editor("reward scaling", 45)
+	local model_scale_editor = create_property_editor("model scaling", 45)
+	local weapon_editor = create_property_editor("weapon", 45)
 	local color_editor = create_property_editor("color", 150)
 
-    if GetConVarNumber("horde_default_enemy_config") then
+    if GetConVarNumber("horde_default_enemy_config") == 1 then
         local warning_label = vgui.Create('DLabel', modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)
-        warning_label:SetSize(modify_tab:GetWide(), 50)
+        warning_label:SetSize(modify_tab:GetWide(), 45)
         warning_label:SetTextColor(Color(0,0,0))
         warning_label:SetText("You are using default config! Your data won't be saved!")
     end
@@ -117,6 +126,10 @@ function PANEL:Init()
 		if color_editor.enabled_editor:GetChecked() then
 			color = color_editor.color_editor:GetColor()
 		end
+		local weapon = nil
+		if weapon_editor and weapon_editor:GetText() ~= "" then
+			weapon = weapon_editor:GetText()
+		end
 		HORDE.CreateEnemy(
 			name_editor:GetText(),
 			class_editor:GetText(),
@@ -127,7 +140,8 @@ function PANEL:Init()
 			damage_editor:GetFloat(),
 			reward_editor:GetFloat(),
 			model_scale_editor:GetFloat(),
-			color
+			color,
+			weapon
 		)
         HORDE.FinalizeEnemies()
 
@@ -170,6 +184,11 @@ function PANEL:Init()
 				color_editor.color_editor:SetColor(enemy.color)
 			else
 				color_editor.enabled_editor:SetChecked(false)
+			end
+			if enemy.weapon then
+				weapon_editor:SetValue(enemy.weapon)
+			else
+				weapon_editor:SetValue("")
 			end
 		end)
 		
