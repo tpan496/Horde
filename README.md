@@ -1,5 +1,6 @@
 # Horde Gamemode
 ## Workshop Link
+https://steamcommunity.com/sharedfiles/filedetails/?id=2401598805
 ## Creating Config Addons
 Besides the client-side GUI configs, you can create lua config addons! You config addons should stay in `garrrysmod/your-config/lua/custom/your-config.lua`, and have the following (example) format:
 ```
