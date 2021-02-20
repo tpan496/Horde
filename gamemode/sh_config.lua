@@ -12,6 +12,7 @@ CreateConVar("horde_min_spawn_distance", 500, SERVER_CAN_EXECUTE, "Minimum enenm
 CreateConVar("horde_start_money", 1000, SERVER_CAN_EXECUTE, "Money given at start.")
 CreateConVar("horde_npc_cleanup", 1, SERVER_CAN_EXECUTE, "Kills all NPCs after a wave.")
 CreateConVar("horde_enable_scoreboard", 1, SERVER_CAN_EXECUTE, "Enables built-in scoreboard.")
+CreateConVar("horde_external_lua_config", "", SERVER_CAN_EXECUTE, "Name of external config to load. This will take over the configs if exists.")
 
 HORDE = {}
 HORDE.__index = HORDE
@@ -63,10 +64,10 @@ HORDE.CreateItem = function (category, name, class, price, weight, description, 
     item.ammo_price = ammo_price
     item.secondary_ammo_price = secondary_ammo_price
     HORDE.items[item.class] = item
-    SetItemsData()
+    HORDE.SetItemsData()
 end
 
-function SetItemsData()
+HORDE.SetItemsData = function()
     if GetConVarNumber("horde_default_item_config") == 1 then return end
 	if not file.IsDir('horde', 'DATA') then
 		file.CreateDir('horde')
@@ -95,19 +96,7 @@ function GetItemsData()
     end
 end
 
-if SERVER then
-util.AddNetworkString("Horde_GetItemsData")
-
-net.Receive("Horde_GetItemsData", function ()
-    GetItemsData()
-end)
-end
-
-
-
-if GetConVarNumber("horde_default_item_config") == 0 then
-    GetItemsData()
-else
+HORDE.GetDefaultItemsData = function()
     HORDE.CreateItem("Melee",      "Stunstick",      "weapon_stunstick",     100,  1, "Electric baton.", 
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     HORDE.CreateItem("Melee",      "Crowbar",        "weapon_crowbar",       100,  1, "A rusty crowbar.",
@@ -223,9 +212,27 @@ else
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
 end
 
--- Some built-in special items
-HORDE.CreateItem("Equipment", "Kevlar Armor", "armor", 1000, 0, "Full kevlar armor set.\nFills up 100% of your armor bar.",
-{Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
+if GetConVarNumber("horde_default_item_config") == 0 then
+    GetItemsData()
+else
+    HORDE.GetDefaultItemsData()
+end
+
+if SERVER then
+    util.AddNetworkString("Horde_GetItemsData")
+    
+    net.Receive("Horde_GetItemsData", function ()
+        GetItemsData()
+    end)
+end
+
+HORDE.GetSpecialItems = function ()
+    -- Some built-in special items
+    HORDE.CreateItem("Equipment", "Kevlar Armor", "armor", 1000, 0, "Full kevlar armor set.\nFills up 100% of your armor bar.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
+end
+
+HORDE.GetSpecialItems()
 
 HORDE.max_weight = 15
 HORDE.default_ammo_price = 10
@@ -393,7 +400,7 @@ end
 
 HORDE.FinalizeEnemies = function ()
     HORDE.NormalizeEnemiesWeight()
-    SetEnemiesData()
+    HORDE.SetEnemiesData()
 end
 
 if SERVER then
@@ -404,7 +411,7 @@ net.Receive("Horde_GetEnemiesData", function ()
 end)
 end
 
-function SetEnemiesData()
+HORDE.SetEnemiesData = function()
     if GetConVarNumber("horde_default_enemy_config") == 1 then return end
 	if not file.IsDir('horde', 'DATA') then
 		file.CreateDir('horde')
@@ -440,7 +447,7 @@ function GetEnemiesData()
     end
 end
 
-if GetConVarNumber("horde_default_enemy_config") == 1 then
+HORDE.GetDefaultEnemiesData = function ()
     -- name, class, weight, wave, health_scale, damage_scale, reward_scale, model_scale, color
     HORDE.CreateEnemy("zombie", "npc_zombie", 0.1, 1, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie vj", "npc_vj_zss_czombie", 0.1, 1, false, 0.4, 1, 1, 1, nil)
@@ -638,8 +645,75 @@ if GetConVarNumber("horde_default_enemy_config") == 1 then
     HORDE.CreateEnemy("zombie vj guard", "npc_vj_zss_zombguard",     0.25, 10, false, 1, 1, 1, 1, nil)
     
     HORDE.NormalizeEnemiesWeight()
+end
+
+if GetConVarNumber("horde_default_enemy_config") == 1 then
+    HORDE.GetDefaultEnemiesData()
 else
     GetEnemiesData()
+end
+
+HORDE.SaveTempData = function ()
+    if not file.IsDir('horde', 'DATA') then
+		file.CreateDir('horde')
+	end
+    if GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "" then
+        file.Write('horde/temp_enemies.dat', util.TableToJSON(HORDE.enemies))
+        file.Write('horde/temp_items.dat', util.TableToJSON(HORDE.items))
+        print("???")
+    end
+end
+
+HORDE.LoadTempData = function ()
+    if not file.IsDir('horde', 'DATA') then
+		file.CreateDir('horde')
+        return
+	end
+    
+    if file.Read('horde/temp_items.dat', 'DATA') then
+        local t1 = util.JSONToTable(file.Read('horde/temp_items.dat', 'DATA'))
+        
+        for _, item in pairs(t1) do
+            if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
+                if CLIENT then
+		            notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
+		            notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                end
+                return
+            end
+        end
+
+        if file.Read('horde/temp_enemies.dat', 'DATA') then
+            local t2 = util.JSONToTable(file.Read('horde/temp_enemies.dat', 'DATA'))
+            -- Integrity
+            for _, enemy in pairs(t2) do
+                if enemy.name == nil or enemy.name == "" or enemy.class == nil or enemy.class == "" or enemy.weight == nil or enemy.wave == nil then
+                    if CLIENT then
+                        notification.AddLegacy("Enemy config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
+                        notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                    end
+                    return
+                else
+                    if not enemy.weapon then
+                        enemy.weapon = ""
+                    end
+                end
+            end
+    
+            -- Be careful of backwards compataiblity
+            HORDE.items = t1
+            HORDE.enemies = t2
+            HORDE.NormalizeEnemiesWeight()
+        end
+    end
+end
+
+if SERVER then
+util.AddNetworkString("Horde_UseExternalLuaConfig")
+
+net.Receive("Horde_UseExternalLuaConfig", function ()
+    HORDE.LoadTempData()
+end)
 end
 
 -- Statistics

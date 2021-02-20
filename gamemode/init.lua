@@ -1,6 +1,7 @@
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("sh_config.lua")
+AddCSLuaFile("sh_custom.lua")
 
 AddCSLuaFile("cl_economy.lua")
 AddCSLuaFile("gui/cl_class.lua")
@@ -16,6 +17,7 @@ AddCSLuaFile("gui/cl_scoreboard.lua")
 
 include("shared.lua")
 include("sh_config.lua")
+include("sh_custom.lua")
 include("sv_economy.lua")
 include("sv_commands.lua")
 include("sv_playerlifecycle.lua")
