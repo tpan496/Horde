@@ -79,23 +79,23 @@ function PANEL:Init()
 		end
 	end
 
-	local category_editor = create_property_editor("category", 50)
-	local name_editor = create_property_editor("name", 50)
-	local class_editor = create_property_editor("class", 50)
-	local price_editor = create_property_editor("price", 50)
-	local weight_editor = create_property_editor("weight", 50)
+	local class_editor = create_property_editor("class", 45)
+	local category_editor = create_property_editor("category", 45)
+	local name_editor = create_property_editor("name", 45)
+	local price_editor = create_property_editor("price", 45)
+	local weight_editor = create_property_editor("weight", 45)
 	local description_editor = create_property_editor("description", 100)
-	local whitelist_editors = create_property_editor("whitelist", 50)
-	local ammo_price_editor = create_property_editor("ammo price", 50)
-	local secondary_ammo_price_editor = create_property_editor("secondary ammo price", 50)
+	local whitelist_editors = create_property_editor("whitelist", 45)
+	local ammo_price_editor = create_property_editor("ammo price", 45)
+	local secondary_ammo_price_editor = create_property_editor("secondary ammo price", 45)
 
-	if GetConVarNumber("horde_default_item_config") == 1 then
+	if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create('DLabel', modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)
         warning_label:SetSize(modify_tab:GetWide(), 50)
         warning_label:SetTextColor(Color(0,0,0))
-        warning_label:SetText("You are using default config! Your data won't be saved!")
+        warning_label:SetText("You are using default/external config! Your data won't be saved!")
     end
 
 	price_editor:SetNumeric(true)
@@ -110,7 +110,7 @@ function PANEL:Init()
 
 	local save_btn = vgui.Create('DButton', modify_tab)
 	save_btn:Dock(BOTTOM)
-	save_btn:SetText("Save")
+	save_btn:SetText("Save Item")
 	save_btn.DoClick = function ()
 		local whitelist = {Survivor=false, Medic=false, Demolition=false, Assault=false, Heavy=false}
 		for _, editor in pairs(whitelist_editors) do
@@ -136,6 +136,44 @@ function PANEL:Init()
 		net.SendToServer()
 	end
 
+	if GetConVarNumber("horde_default_item_config") ~= 1 and (GetConVarString("horde_external_lua_config") == nil or GetConVarString("horde_external_lua_config") == "") then
+		local load_btn = vgui.Create('DButton', modify_tab)
+		load_btn:Dock(TOP)
+		load_btn:SetText("OVERWRITE with Default Config")
+		load_btn.DoClick = function ()
+			Derma_Query('Overwrite?', 'Overwrite with Default Config',
+				'Yes',
+				function()
+					HORDE.items = {}
+					HORDE.GetDefaultItemsData()
+					HORDE.GetSpecialItems()
+					-- Reload from disk
+					net.Start("Horde_GetItemsData")
+					net.SendToServer()
+				end,
+				'No', function() end
+			)
+		end
+
+		local del_btn = vgui.Create('DButton', modify_tab)
+		del_btn:Dock(TOP)
+		del_btn:SetText("Delete Everything")
+		del_btn.DoClick = function ()
+			Derma_Query('Delete Everything?', 'Delete Everything',
+				'Yes',
+				function()
+					HORDE.items = {}
+					HORDE.GetSpecialItems()
+					HORDE.SetItemsData()
+					-- Reload from disk
+					net.Start("Horde_GetItemsData")
+					net.SendToServer()
+				end,
+				'No', function() end
+			)
+		end
+	end
+
 	local settings_tab = vgui.Create('DPanel', self)
 	settings_tab:SetPos(0, 40)
 	settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
@@ -144,9 +182,9 @@ function PANEL:Init()
 	item_list:Dock(FILL)
 
 	item_list:SetMultiSelect(false)
+	item_list:AddColumn('Class')
 	item_list:AddColumn('Category')
 	item_list:AddColumn('Name')
-	item_list:AddColumn('Class')
 	item_list:AddColumn('Price')
 	item_list:AddColumn('Weight')
 	item_list:AddColumn('Description')
@@ -207,9 +245,9 @@ function PANEL:Think()
 		if table.HasValue(HORDE.items, line.item) then
 			local item = line.item
 				
-			line:SetValue(1, item.category)
-			line:SetValue(2, item.name)
-			line:SetValue(3, item.class)
+			line:SetValue(1, item.class)
+			line:SetValue(2, item.category)
+			line:SetValue(3, item.name)
 			line:SetValue(4, item.price)
 			line:SetValue(5, item.weight)
 			line:SetValue(6, item.description)

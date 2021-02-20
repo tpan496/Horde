@@ -2,6 +2,7 @@ if SERVER then return end
 
 include("shared.lua")
 include("sh_config.lua")
+include("sh_custom.lua")
 include("cl_economy.lua")
 include("gui/cl_class.lua")
 include("gui/cl_description.lua")
