@@ -1,7 +1,7 @@
 # Horde Gamemode
 ## Workshop Link
 ## Creating Config Addons
-`
+```
 CONFIG = {}
 CONFIG.name = "custom_config"
 CONFIG.items = {
@@ -34,4 +34,4 @@ CONFIG.enemies = {
         weapon = ""
     }
 }
-`
+```
