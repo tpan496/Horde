@@ -28,7 +28,7 @@ CONFIG.enemies = {
     HugeZombie = {
         name = "Huge Zombie",
         class = "npc_zombie",
-        weight = 1,
+        weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 1,
         is_elite = true,
         health_scale = 2,
@@ -40,4 +40,4 @@ CONFIG.enemies = {
     }
 }
 ```
-To use your config, simply set `horde_external_lua_config` to the name you used for the config (`CONFIG.name`). You can also do that directly in the start menu.
+To use your config, simply set `horde_external_lua_config` to the name you used for the config (`CONFIG.name`). You can also do that directly in the gmod start menu.
