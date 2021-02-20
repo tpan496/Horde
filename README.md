@@ -36,3 +36,4 @@ CONFIG.enemies = {
     }
 }
 ```
+To use your item, simply set `horde_external_lua_config` to the name you used for the config (`CONFIG.name`). You can also do that directly in the start menu.
