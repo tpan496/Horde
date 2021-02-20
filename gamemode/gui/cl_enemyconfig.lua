@@ -69,6 +69,8 @@ function PANEL:Init()
 			editor2:Dock(LEFT)
 			editor2:SetPalette(false)
 			return {enabled_editor=editor1, color_editor=editor2}
+		elseif name == "weapon" then
+
 		else
 			local editor = vgui.Create('DTextEntry', panel)
 			editor:SetSize(200, height)

@@ -72,19 +72,12 @@
 		}
 		10
 		{
-			"name"		"horde_enable_respawn"
-			"text"		"Players can respawn after death during a wave"
-			"type"		"CheckBox"
-			"default"	"1"
-		}
-		11
-		{
 			"name"		"horde_max_spawn_distance"
 			"text"		"Maximum enemy spawn distance (>100)"
 			"type"		"Numeric"
 			"default"	"2000"
 		}
-		12
+		11
 		{
 			"name"		"horde_min_spawn_distance"
 			"text"		"Minimum enemy spawn distance (>100)"

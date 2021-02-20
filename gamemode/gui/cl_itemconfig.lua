@@ -131,6 +131,9 @@ function PANEL:Init()
 			ammo_price_editor:GetInt() or 0,
 			secondary_ammo_price_editor:GetInt() or 0
 		)
+		-- Reload from disk
+		net.Start("Horde_GetItemsData")
+		net.SendToServer()
 	end
 
 	local settings_tab = vgui.Create('DPanel', self)

@@ -44,13 +44,14 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
     if HORDE.spawned_enemies[victim:EntIndex()] then
         HORDE.spawned_enemies[victim:EntIndex()] = nil
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
-        print("OnKill", HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
-        if HORDE.alive_enemies_this_wave <= 10 and HORDE.total_enemies_this_wave <= 10 then
+        --print("OnKill", HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+        HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
+        if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
+            --print("Highlight")
             net.Start("Horde_HighlightEnemies")
             net.WriteInt(1, 2)
             net.Broadcast()
         end
-        HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
         BroadcastMessage("Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
 
         if killer:IsPlayer() then
@@ -67,6 +68,8 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
                 if not HORDE.player_elite_kills[killer:SteamID()] then HORDE.player_elite_kills[killer:SteamID()] = 0 end
                 HORDE.player_elite_kills[killer:SteamID()] = HORDE.player_elite_kills[killer:SteamID()] + 1
             end
+
+            killer:AddFrags(1)
             killer:SyncEconomy()
         end
     end
@@ -100,7 +103,7 @@ hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
         HORDE.spawned_enemies[ent:EntIndex()] = nil
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
         HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
-        print("OnRemove", ent:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+        --print("OnRemove", ent:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
     end
 end)
 
@@ -228,6 +231,7 @@ function StartBreak()
     end)    
 end
 
+-- Referenced some spawning mechanics from Zombie Invasion+
 timer.Create('Horde_Main', 5, 0, function ()
     local status, err = pcall( function()
     local valid_nodes = {}
@@ -404,7 +408,7 @@ timer.Create('Horde_Main', 5, 0, function ()
                     end
                     HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
                     HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
-                    print("OnSpawn", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+                    -- print("OnSpawn", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
                 end
             else
                 break
@@ -421,7 +425,7 @@ timer.Create('Horde_Main', 5, 0, function ()
                 enemy:Remove()
             end
         end
-        print(HORDE.current_wave, HORDE.max_waves)
+        
         if HORDE.current_wave == HORDE.max_waves then
             BroadcastMessage("Final Wave Completed! You have survived!")
             GameEnd()

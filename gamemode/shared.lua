@@ -3,7 +3,7 @@ GM.Author = "tpan496"
 GM.Email = "N/A"
 GM.Website = "N/A"
 
-DeriveGamemode("base")
+DeriveGamemode("sandbox")
 
 function GM:PlayerLoadout(ply) ply:StripWeapons() end
 
@@ -15,7 +15,7 @@ function GM:PlayerNoClip(ply,desiredState) return false end
 
 function GM:PlayerDeathSound() return true end
 
-function GM:DrawDeathNotice(x,y) return true end
+--function GM:DrawDeathNotice(x,y) return true end
 
 function GM:PlayerSpawnVehicle(ply,model,name,table) return false end
 

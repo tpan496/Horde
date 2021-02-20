@@ -192,7 +192,7 @@ hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function (ply)
 end)
 
 hook.Add("PlayerDeathThink", "Horde_PlayerDeathThink", function (ply)
-    if GetConVarNumber("horde_enable_respawn") == 1 then return true end
+    --if GetConVarNumber("horde_enable_respawn") == 1 then return true end
     if HORDE.current_break_time > 0 then return true end
     if HORDE.start_game then return false end
     return true

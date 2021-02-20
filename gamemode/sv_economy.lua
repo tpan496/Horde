@@ -61,12 +61,21 @@ function Player:GetClass()
     return self.class
 end
 
+function Player:SetClassSkill(variant)
+    self.class_variant = variant
+end
+
+function Player:GetClassSkill()
+    return self.class_variant
+end
+
 function Player:SyncEconomy()
     net.Start('Horde_SynchronizeEconomy')
 	net.WriteEntity(self)
 	net.WriteInt(self.money, 32)
     net.WriteInt(self.weight, 32)
     net.WriteString(self.class.name)
+    net.WriteInt(self.class_variant, 8)
 	net.Broadcast()
 end
 
@@ -74,6 +83,7 @@ hook.Add("PlayerInitialSpawn", "Horde_Economy_Setup", function (ply)
     ply:SetMoney(HORDE.start_money)
     ply:SetWeight(15)
     ply:SetClass(HORDE.classes["Survivor"])
+    ply:SetClassSkill(-1)
     hook.Add("SetupMove", ply, function( self, ply, _, cmd )
 		if self == ply and not cmd:IsForced() then
 			hook.Run( "PlayerFullLoad", self )
@@ -168,6 +178,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
         ply:DropWeapon(wpn)
     end
     ply:SetWeight(HORDE.max_weight)
+    ply:SetMaxHealth(class.max_hp)
     net.Start("Horde_ToggleShop")
     net.Send(ply)
 
@@ -177,7 +188,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     --timer.Remove("Horde_Survivor" .. ply:SteamID())
     --timer.Remove("Horde_Assault" .. ply:SteamID())
     timer.Remove("Horde_Demolition" .. ply:SteamID())
-    hook.Remove("Horde_Sniper" .. ply:SteamID())
+    hook.Remove("Horde_Ghost" .. ply:SteamID())
 
 
     if class.name == "Assault" then
@@ -186,7 +197,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
         --end)
     elseif class.name == "Medic" then
         timer.Create("Horde_Medic" .. ply:SteamID(), 1, 0, function ()
-            ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + 2))
+            ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + 0.02 * ply:GetMaxHealth()))
         end)
     elseif class.name == "Heavy" then
         timer.Create("Horde_Heavy" .. ply:SteamID(), 1, 0, function ()
@@ -206,8 +217,8 @@ net.Receive("Horde_SelectClass", function (len, ply)
                 dmg:ScaleDamage(0.25)
             end
         end)
-    elseif class.name == "Sniper" then
-        hook.Add("ScaleNPCDamage", "Horde_Sniper", function (npc, hitgroup, dmg)
+    elseif class.name == "Ghost" then
+        hook.Add("ScaleNPCDamage", "Horde_Ghost", function (npc, hitgroup, dmg)
             if npc:IsValid()  and dmg:GetAttacker():IsPlayer() then
                 if hitgroup == HITGROUP_HEAD then
                     dmg:ScaleDamage(1.5)
@@ -222,6 +233,43 @@ net.Receive("Horde_SelectClass", function (len, ply)
     net.Send(ply)
     HORDE.player_class_changed[ply:SteamID()] = true
     ply:SyncEconomy()
+end)
+
+net.Receive("Horde_SelectClassSkillVariant", function (len, ply)
+    local price = net.ReadString()
+    local class = net.ReadString()
+    local variant = net.ReadInt()
+
+    if ply:GetClassSkill() == variant or ply:GetMoney() < price then return end
+
+    ply:SetClassSkill(variant)
+    ply:SyncEconomy()
+
+    if class == "Medic" then
+        if variant == 0 then
+            ply:SetMaxHealth(150)
+        else
+            hook.Add("EntityTakeDamage", "Horde_Medic_B", function (target, dmg)
+                
+            end)
+        end
+    elseif class == "Demolition" then
+        if variant == 0 then
+        else
+        end
+    elseif class == "Assault" then
+        if variant == 0 then
+        else
+        end
+    elseif class == "Heavy" then
+        if variant == 0 then
+        else
+        end
+    elseif class == "Ghost" then
+        if variant == 0 then
+        else
+        end
+    end
 end)
 
 net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
