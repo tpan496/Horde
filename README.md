@@ -4,9 +4,9 @@
 Besides the client-side GUI configs, you can create lua config addons! You config addons should stay in `garrrysmod/your-config/lua/custom/your-config.lua`, and have the following (example) format:
 ```
 CONFIG = {}
-CONFIG.name = "custom_config"
+CONFIG.name = "custom_config" -- YOU MUST NAME IT! Used for horde_external_lua_config.
 CONFIG.items = {
-    -- key and class must be the same
+    -- key and class must be the same!
     weapon_crowbar = {
         class="weapon_crowbar",
         category="Melee",
@@ -14,8 +14,8 @@ CONFIG.items = {
         price=50, weight=1,
         description="A cheap crowbar",
         whitelist = {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true},
-        ammo_price=0,
-        secondary_ammo_price=-1
+        ammo_price=0,           -- Leave it as 0 if it does not have secondary ammo
+        secondary_ammo_price=-1 -- Leave it as -1 if it does not have secondary ammo
     }
 }
 
