@@ -18,7 +18,7 @@ CONFIG.items = {
         price=50, weight=1,
         description="A cheap crowbar",
         whitelist = {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true},
-        ammo_price=0,           -- Leave it as 0 if it does not have secondary ammo
+        ammo_price=0,           -- Leave it as 0 if it does not have primary ammo
         secondary_ammo_price=-1 -- Leave it as -1 if it does not have secondary ammo
     }
 }
