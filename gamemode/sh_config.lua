@@ -364,8 +364,10 @@ function GetClassData()
         for _, class in pairs(t) do
             if class.name == nil or class.name == "" or class.perks == nil then
                 if CLIENT then
-		            timer.Simple(5, function() notification.AddLegacy("Class config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5) end)
-                        timer.Simple(5, function() notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5) end)
+                    hook.Add("InitPostEntity", "Horde_Class_Invalidation", function ()
+		                timer.Simple(5, function() notification.AddLegacy("Class config file validation failed! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
+                        timer.Simple(5, function() notification.AddLegacy("Default class descriptions are loaded.", NOTIFY_ERROR, 5) end)
+                    end)
                 end
                 return
             end
@@ -375,8 +377,10 @@ function GetClassData()
             -- Fallback notice
             if class.description then
                 if CLIENT then
-                    timer.Simple(5, function() notification.AddLegacy("You class config descriptions contain deprecated fields! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
-                    timer.Simple(5, function() notification.AddLegacy("Default class descriptions are loaded.", NOTIFY_ERROR, 5) end)
+                    hook.Add("InitPostEntity", "Horde_Class_Deprecation", function ()
+                        timer.Simple(5, function() notification.AddLegacy("Class config descriptions contain deprecated fields! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
+                        timer.Simple(5, function() notification.AddLegacy("Default class descriptions are loaded.", NOTIFY_ERROR, 5) end)
+                    end)
                 end
             end
             if class.extra_description then
