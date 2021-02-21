@@ -41,7 +41,7 @@ function PANEL:Init()
 	end
 
     local name_editor = create_property_editor("name", 50)
-	local description_editor = create_property_editor("description", 300)
+	local description_editor = create_property_editor("extra description", 300)
 
     name_editor:SetEditable(false)
     description_editor:SetMultiline(true)
@@ -55,15 +55,24 @@ function PANEL:Init()
         warning_label:SetText("You are using default config! Your data won't be saved!")
     end
 
+	local reset_btn = vgui.Create('DButton', modify_tab)
+	reset_btn:Dock(TOP)
+	reset_btn:SetText("Reset Everything")
+	reset_btn.DoClick = function ()
+        if GetConVarNumber("horde_default_class_config") == 1 then return end
+        HORDE.CreateClasses()
+		HORDE.UpdateClassData()
+	end
+
 	local save_btn = vgui.Create('DButton', modify_tab)
 	save_btn:Dock(BOTTOM)
 	save_btn:SetText("Save")
 	save_btn.DoClick = function ()
         if GetConVarNumber("horde_default_class_config") == 1 then return end
         local name = name_editor:GetValue()
-        local description = description_editor:GetValue()
-        if name and HORDE.classes[name] and description then
-            HORDE.classes[name].description = description
+        local extra_description = description_editor:GetValue()
+        if name and HORDE.classes[name] and extra_description then
+            HORDE.classes[name].extra_description = extra_description
             HORDE.UpdateClassData()
         end
 	end
@@ -87,7 +96,7 @@ function PANEL:Init()
 		
 		menu:AddOption('Modify', function()
             name_editor:SetValue(class.name)
-			description_editor:SetValue(class.description)
+			description_editor:SetValue(class.extra_description)
 		end)
 
 		menu:AddSpacer()
@@ -118,7 +127,7 @@ function PANEL:Think()
 			local class = line.class
 
 			line:SetValue(1, class.name)
-			line:SetValue(2, class.description)
+			line:SetValue(2, class.extra_description)
 		else
 			self.class_list:RemoveLine(i)
 		end
