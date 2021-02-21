@@ -74,26 +74,26 @@ end
 
 HORDE.SetItemsData = function()
     if GetConVarNumber("horde_default_item_config") == 1 then return end
-	if not file.IsDir('horde', 'DATA') then
-		file.CreateDir('horde')
-	end
-	
-	file.Write('horde/items.txt', util.TableToJSON(HORDE.items))
+    if not file.IsDir('horde', 'DATA') then
+        file.CreateDir('horde')
+    end
+    
+    file.Write('horde/items.txt', util.TableToJSON(HORDE.items))
 end
 
 function GetItemsData()
     if not file.IsDir('horde', 'DATA') then
-		file.CreateDir('horde')
+        file.CreateDir('horde')
         return
-	end
+    end
     
     if file.Read('horde/items.txt', 'DATA') then
         local t = util.JSONToTable(file.Read('horde/items.txt', 'DATA'))
         
         for _, item in pairs(t) do
             if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
-		        notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
-		        notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
+                notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
                 return
             end
         end
@@ -340,11 +340,11 @@ HORDE.CreateClasses()
 
 function SetClassData()
     if GetConVarNumber("horde_default_class_config") == 1 then return end
-	if not file.IsDir('horde', 'DATA') then
-		file.CreateDir('horde')
-	end
-	
-	file.Write('horde/class.txt', util.TableToJSON(HORDE.classes))
+    if not file.IsDir('horde', 'DATA') then
+        file.CreateDir('horde')
+    end
+    
+    file.Write('horde/class.txt', util.TableToJSON(HORDE.classes))
 end
 
 HORDE.UpdateClassData = function()
@@ -353,9 +353,9 @@ end
 
 function GetClassData()
     if not file.IsDir('horde', 'DATA') then
-		file.CreateDir('horde')
+        file.CreateDir('horde')
         return
-	end
+    end
     
     if file.Read('horde/class.txt', 'DATA') then
         local t = util.JSONToTable(file.Read('horde/class.txt', 'DATA'))
@@ -365,7 +365,7 @@ function GetClassData()
             if class.name == nil or class.name == "" or class.perks == nil then
                 if CLIENT then
                     hook.Add("InitPostEntity", "Horde_Class_Invalidation", function ()
-		                timer.Simple(5, function() notification.AddLegacy("Class config file validation failed! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
+                        timer.Simple(5, function() notification.AddLegacy("Class config file validation failed! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
                         timer.Simple(5, function() notification.AddLegacy("Default class descriptions are loaded.", NOTIFY_ERROR, 5) end)
                     end)
                 end
@@ -450,26 +450,26 @@ end
 
 HORDE.SetEnemiesData = function()
     if GetConVarNumber("horde_default_enemy_config") == 1 then return end
-	if not file.IsDir('horde', 'DATA') then
-		file.CreateDir('horde')
-	end
-	
-	file.Write('horde/enemies.txt', util.TableToJSON(HORDE.enemies))
+    if not file.IsDir('horde', 'DATA') then
+        file.CreateDir('horde')
+    end
+    
+    file.Write('horde/enemies.txt', util.TableToJSON(HORDE.enemies))
 end
 
 function GetEnemiesData()
     if not file.IsDir('horde', 'DATA') then
-		file.CreateDir('horde')
+        file.CreateDir('horde')
         return
-	end
+    end
     
     if file.Read('horde/enemies.txt', 'DATA') then
         local t = util.JSONToTable(file.Read('horde/enemies.txt', 'DATA'))
         -- Integrity
         for _, enemy in pairs(t) do
             if enemy.name == nil or enemy.name == "" or enemy.class == nil or enemy.class == "" or enemy.weight == nil or enemy.wave == nil then
-		        notification.AddLegacy("Enemy config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
-		        notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                notification.AddLegacy("Enemy config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
+                notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
                 return
             else
                 if not enemy.weapon then
@@ -692,8 +692,8 @@ end
 
 HORDE.SaveTempData = function ()
     if not file.IsDir('horde', 'DATA') then
-		file.CreateDir('horde')
-	end
+        file.CreateDir('horde')
+    end
     if GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "" then
         file.Write('horde/temp_enemies.dat', util.TableToJSON(HORDE.enemies))
         file.Write('horde/temp_items.dat', util.TableToJSON(HORDE.items))
@@ -703,9 +703,9 @@ end
 
 HORDE.LoadTempData = function ()
     if not file.IsDir('horde', 'DATA') then
-		file.CreateDir('horde')
+        file.CreateDir('horde')
         return
-	end
+    end
     
     if file.Read('horde/temp_items.dat', 'DATA') then
         local t1 = util.JSONToTable(file.Read('horde/temp_items.dat', 'DATA'))
@@ -713,8 +713,8 @@ HORDE.LoadTempData = function ()
         for _, item in pairs(t1) do
             if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
                 if CLIENT then
-		            notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
-		            notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                    notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
+                    notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
                 end
                 return
             end
