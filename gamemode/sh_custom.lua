@@ -26,6 +26,69 @@ function GM:RegisterCustomConfig(name)
     return false
 end
 
+HORDE.SaveTempData = function ()
+    if not file.IsDir('horde', 'DATA') then
+        file.CreateDir('horde')
+    end
+    if GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "" then
+        file.Write('horde/temp_enemies.dat', util.TableToJSON(HORDE.enemies))
+        file.Write('horde/temp_items.dat', util.TableToJSON(HORDE.items))
+        print("???")
+    end
+end
+
+HORDE.LoadTempData = function ()
+    if not file.IsDir('horde', 'DATA') then
+        file.CreateDir('horde')
+        return
+    end
+    
+    if file.Read('horde/temp_items.dat', 'DATA') then
+        local t1 = util.JSONToTable(file.Read('horde/temp_items.dat', 'DATA'))
+        
+        for _, item in pairs(t1) do
+            if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
+                if CLIENT then
+                    notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
+                    notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                end
+                return
+            end
+        end
+
+        if file.Read('horde/temp_enemies.dat', 'DATA') then
+            local t2 = util.JSONToTable(file.Read('horde/temp_enemies.dat', 'DATA'))
+            -- Integrity
+            for _, enemy in pairs(t2) do
+                if enemy.name == nil or enemy.name == "" or enemy.class == nil or enemy.class == "" or enemy.weight == nil or enemy.wave == nil then
+                    if CLIENT then
+                        notification.AddLegacy("Enemy config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
+                        notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                    end
+                    return
+                else
+                    if not enemy.weapon then
+                        enemy.weapon = ""
+                    end
+                end
+            end
+    
+            -- Be careful of backwards compataiblity
+            HORDE.items = t1
+            HORDE.enemies = t2
+            HORDE.NormalizeEnemiesWeight()
+        end
+    end
+end
+
+if SERVER then
+util.AddNetworkString("Horde_UseExternalLuaConfig")
+
+net.Receive("Horde_UseExternalLuaConfig", function ()
+    HORDE.LoadTempData()
+end)
+end
+
 if GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "" then
     local found = GM:RegisterCustomConfig(GetConVarString("horde_external_lua_config"))
     if not found then
