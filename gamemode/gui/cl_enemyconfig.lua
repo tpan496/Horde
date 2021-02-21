@@ -234,6 +234,9 @@ function PANEL:Init()
         menu:AddOption('Delete', function()
             HORDE.enemies[enemy.name .. tostring(enemy.wave)] = nil
             HORDE.FinalizeEnemies()
+			net.Start("Horde_GetEnemiesData")
+        	net.SendToServer()
+			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
         end)
 
         menu:AddSpacer()

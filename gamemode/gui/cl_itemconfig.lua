@@ -219,6 +219,10 @@ function PANEL:Init()
         
         menu:AddOption('Delete', function()
             HORDE.items[item.class] = nil
+            HORDE.SetItemsData()
+			net.Start("Horde_GetItemsData")
+        	net.SendToServer()
+			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
         end)
 
         menu:AddSpacer()
