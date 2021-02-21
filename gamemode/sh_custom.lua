@@ -41,10 +41,15 @@ if GetConVarString("horde_external_lua_config") and GetConVarString("horde_exter
         timer.Simple(1,function()notification.AddLegacy(str, NOTIFY_GENERIC, 5)end)
     end
     
-    HORDE.items = CONFIG.items
-    HORDE.enemies = {}
-    for _, enemy in pairs(CONFIG.enemies) do
-        HORDE.enemies[enemy.name .. tostring(enemy.wave)] = enemy
+    if CONFIG.items then
+        HORDE.items = CONFIG.items
+    end
+    
+    if CONFIG.enemies then
+        HORDE.enemies = {}
+        for _, enemy in pairs(CONFIG.enemies) do
+            HORDE.enemies[enemy.name .. tostring(enemy.wave)] = enemy
+        end
     end
 
     HORDE.SaveTempData()

@@ -264,7 +264,8 @@ HORDE.CreateClass(
     100,
     180,
     220,
-    {A="25% less damage taken.", B="25% increased damage."}
+    {L="25% less damage taken.",
+     R="25% increased damage."}
 )
 
 HORDE.CreateClass(
@@ -273,7 +274,8 @@ HORDE.CreateClass(
     100,
     180,
     220,
-    {A="50% increased maximum health.", B="Adds 25 Poison damage to each attack."}
+    {L="50% increased maximum health.",
+     R="Adds 25 Poison damage to each attack."}
 )
 
 HORDE.CreateClass(
@@ -282,7 +284,8 @@ HORDE.CreateClass(
     100,
     180,
     220,
-    {A="50% increased explosive damage", B="Enemies you kill explode,\ndealing (100 + 10% of their health) as AOE damage."}
+    {L="50% increased explosive damage",
+     R="Enemies you kill explode,\ndealing (100 + 10% of their health) as AOE damage."}
 )
 
 HORDE.CreateClass(
@@ -291,7 +294,8 @@ HORDE.CreateClass(
     100,
     225,
     275,
-    {A="25% chance to not consume ammo while firing.", B="Each enemy you kill grants you 1 Frenzy charge.\nEach frenzy charge increases your damage and movespeed by 6%."}
+    {L="25% chance to not consume ammo while firing.",
+    R="Each enemy you kill grants you 1 Frenzy charge.\nEach frenzy charge increases your damage and movespeed by 6%."}
 )
 
 HORDE.CreateClass(
@@ -300,7 +304,8 @@ HORDE.CreateClass(
     100,
     180,
     220,
-    {A="Immune to damage while you have armor.", B="Enemies you hit are Pressured for 1 second.\nPressured enemies deal 25% less damage and take 25% increased damage."}
+    {L="Damage does not bypass Armor.",
+     R="Enemies you hit are Pressured for 1 second.\nPressured enemies deal 25% less damage and take 25% increased damage."}
 )
 
 HORDE.CreateClass(
@@ -309,7 +314,8 @@ HORDE.CreateClass(
     100,
     180,
     220,
-    {A={"100% increased damage with single shot weapons."}, B={"Headshot damage stacks,\ndealing 10% increased damage each stack."}}
+    {L="100% increased damage with single shot weapons.",
+     R="Headshot damage stacks,\ndealing 10% increased damage each stack."}
 )
 
 --[[
