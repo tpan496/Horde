@@ -77,15 +77,6 @@ HORDE.CreateItem = function (category, name, class, price, weight, description, 
 end
 
 HORDE.SetItemsData = function()
-    if SERVER then
-        if player then
-            for _, ply in pairs(player.GetAll()) do
-                net.Start("Horde_SyncItems")
-                net.WriteTable(HORDE.items)
-                net.Send(ply)
-            end
-        end
-    end
     if GetConVarNumber("horde_default_item_config") == 1 then return end
     if not file.IsDir('horde', 'DATA') then
         file.CreateDir('horde')
@@ -111,6 +102,16 @@ function GetItemsData()
             end
         end
         HORDE.items = t
+    end
+
+    if SERVER then
+        if player then
+            for _, ply in pairs(player.GetAll()) do
+                net.Start("Horde_SyncItems")
+                net.WriteTable(HORDE.items)
+                net.Send(ply)
+            end
+        end
     end
 end
 
