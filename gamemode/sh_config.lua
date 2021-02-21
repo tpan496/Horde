@@ -19,6 +19,10 @@ CreateConVar("horde_max_enemies_alive_base", 20, SERVER_CAN_EXECUTE, "Maximum nu
 CreateConVar("horde_max_enemies_alive_scale_factor", 5, SERVER_CAN_EXECUTE, "Scale factor of the maximum number of living enemies for multiplayer.")
 CreateConVar("horde_max_enemies_alive_max", 50, SERVER_CAN_EXECUTE, "Maximum number of maximum living enemies.")
 
+if SERVER then
+util.AddNetworkString("Horde_SyncItems")
+end
+
 HORDE = {}
 HORDE.__index = HORDE
 HORDE.version = "1.0.0"
@@ -73,6 +77,15 @@ HORDE.CreateItem = function (category, name, class, price, weight, description, 
 end
 
 HORDE.SetItemsData = function()
+    if SERVER then
+        if player then
+            for _, ply in pairs(player.GetAll()) do
+                net.Start("Horde_SyncItems")
+                net.WriteTable(HORDE.items)
+                net.Send(ply)
+            end
+        end
+    end
     if GetConVarNumber("horde_default_item_config") == 1 then return end
     if not file.IsDir('horde', 'DATA') then
         file.CreateDir('horde')

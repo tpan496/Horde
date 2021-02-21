@@ -16,6 +16,12 @@ function BroadcastMessage(msg, delay)
     end
 end
 
+hook.Add("PlayerInitialSpawn", "Horde_SyncItems", function (ply)
+    net.Start("Horde_SyncItems")
+    net.WriteTable(HORDE.items)
+    net.Send(ply)
+end)
+
 hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     local text = string.lower(input) -- Make the chat message entirely lowercase
     if text == "!help" then
