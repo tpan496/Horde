@@ -4,7 +4,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=2401598805
 ## Creating Config Addons
 Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily.
 
-You config addons should stay in `garrrysmod/your-config/lua/custom/`, and have the following (example) format:
+You config addons should stay in `garrrysmod/addons/your-config/lua/custom/`, and have the following (example) format:
 ```
 -- Example your-custom-config.lua
 CONFIG = {}
