@@ -6,12 +6,12 @@ surface.CreateFont('Content', { font = 'arial bold', size = 20 })
 local PANEL = {}
 
 function PANEL:Init()
-	self.description = ""
+    self.description = ""
     self.buy_btn = vgui.Create('DButton', self)
-	self.buy_btn:Dock(BOTTOM)
+    self.buy_btn:Dock(BOTTOM)
     self.buy_btn:SetFont("Content")
     self.buy_btn:SetTextColor(Color(0,0,0,0))
-	self.buy_btn:SetText("")
+    self.buy_btn:SetText("")
     self.buy_btn:SetTall(50)
     self.buy_btn.Paint = function () end
     self.buy_btn.OnCursorEntered = function ()
@@ -19,14 +19,14 @@ function PANEL:Init()
     end
 
     self.ammo_panel = vgui.Create('DPanel', self)
-	self.ammo_panel:Dock(BOTTOM)
+    self.ammo_panel:Dock(BOTTOM)
     self.ammo_panel:SetTall(50)
 
     self.ammo_one_btn = vgui.Create('DButton', self.ammo_panel)
-	self.ammo_one_btn:Dock(LEFT)
+    self.ammo_one_btn:Dock(LEFT)
     self.ammo_one_btn:SetFont("Content")
     self.ammo_one_btn:SetTextColor(Color(0,0,0,0))
-	self.ammo_one_btn:SetText("")
+    self.ammo_one_btn:SetText("")
     self.ammo_one_btn.OnCursorEntered = function ()
         surface.PlaySound("UI/buttonrollover.wav")
     end
@@ -42,10 +42,10 @@ function PANEL:Init()
     end
 
     self.ammo_secondary_btn = vgui.Create('DButton', self)
-	self.ammo_secondary_btn:Dock(BOTTOM)
+    self.ammo_secondary_btn:Dock(BOTTOM)
     self.ammo_secondary_btn:SetFont("Content")
     self.ammo_secondary_btn:SetTextColor(Color(0,0,0,0))
-	self.ammo_secondary_btn:SetText("")
+    self.ammo_secondary_btn:SetText("")
     self.ammo_secondary_btn:SetTall(50)
     self.ammo_secondary_btn.Paint = function () end
     self.ammo_secondary_btn.OnCursorEntered = function ()
@@ -62,8 +62,8 @@ function PANEL:Init()
     self.ammo_ten_btn.Paint = function () end
 
     function self.buy_btn:DoClick()
-		self:GetParent():DoClick()
-	end
+        self:GetParent():DoClick()
+    end
 
     function self.ammo_one_btn:DoClick()
         self:GetParent():GetParent():AmmoDoClick(1)
@@ -91,14 +91,14 @@ function PANEL:DoClick()
     if not self.item then return end
     if not self.item.class then
         Derma_Query('Changing class will remove all your items!', 'Change Class',
-			'Yes',
+            'Yes',
             function()
                 net.Start("Horde_SelectClass")
                 net.WriteString(self.item.name)
                 net.SendToServer()
             end,
-			'No', function() end
-		)
+            'No', function() end
+        )
         --warning_panel:SetFont('Title')
         return
     end
@@ -136,12 +136,12 @@ function PANEL:AmmoDoClick(count)
 end
 
 function PANEL:SetData(item)
-	self.item = item
+    self.item = item
 end
 
 function PANEL:Paint()
-	surface.SetDrawColor(Color(50,50,50))
-	surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
+    surface.SetDrawColor(Color(50,50,50))
+    surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     if self.item then
         draw.DrawText(self.item.name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
         if self.item.fixed_description and self.item.extra_description then
@@ -216,9 +216,9 @@ function PANEL:Paint()
                     if wpn:GetSecondaryAmmoType() > 0 then
                         local clip_ammo2 = wpn:Clip2()
                         local total_ammo2 = LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())
-	                    draw.SimpleText("Primary Ammo: " .. tonumber(clip_ammo) .. " / " .. tonumber(total_ammo) .. " | Secondary Ammo: " .. tonumber(total_ammo2), 'Content', self:GetWide()/2, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                        draw.SimpleText("Primary Ammo: " .. tonumber(clip_ammo) .. " / " .. tonumber(total_ammo) .. " | Secondary Ammo: " .. tonumber(total_ammo2), 'Content', self:GetWide()/2, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                     else
-	                    draw.SimpleText("Primary Ammo: " .. tonumber(clip_ammo) .. " / " .. tonumber(total_ammo), 'Content', self:GetWide()/2, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                        draw.SimpleText("Primary Ammo: " .. tonumber(clip_ammo) .. " / " .. tonumber(total_ammo), 'Content', self:GetWide()/2, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                     end
                 end
             else

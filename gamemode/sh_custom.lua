@@ -1,27 +1,27 @@
 function GM:RegisterCustomConfig(name)
     local classfiles, classdirectories = file.Find(self.FolderName.."/gamemode/custom/*", "LUA")
-	table.sort(classfiles)
-	table.sort(classdirectories)
+    table.sort(classfiles)
+    table.sort(classdirectories)
 
     
-	for i, filename in ipairs(classfiles) do
-		if string.sub(filename, -4) == ".lua" then
+    for i, filename in ipairs(classfiles) do
+        if string.sub(filename, -4) == ".lua" then
             -- Just supporting one config so far
             CONFIG = {}
-			AddCSLuaFile("custom/"..filename)
-			include("custom/"..filename)
+            AddCSLuaFile("custom/"..filename)
+            include("custom/"..filename)
 
-			if CONFIG.name then
-				print(CONFIG.name)
-			else
-				ErrorNoHalt("CONFIG "..filename.." has no 'name' member!")
-			end
+            if CONFIG.name then
+                print(CONFIG.name)
+            else
+                ErrorNoHalt("CONFIG "..filename.." has no 'name' member!")
+            end
 
             if CONFIG.name == name then
                 return true
             end
-		end
-	end
+        end
+    end
 
     return false
 end
