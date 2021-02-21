@@ -62,6 +62,7 @@ function PANEL:Init()
         if GetConVarNumber("horde_default_class_config") == 1 then return end
         HORDE.CreateClasses()
 		HORDE.UpdateClassData()
+		notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
 	end
 
 	local save_btn = vgui.Create('DButton', modify_tab)
@@ -74,6 +75,7 @@ function PANEL:Init()
         if name and HORDE.classes[name] and extra_description then
             HORDE.classes[name].extra_description = extra_description
             HORDE.UpdateClassData()
+			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
         end
 	end
 
@@ -135,7 +137,7 @@ function PANEL:Think()
 end
 
 function PANEL:Paint(w, h)
-	Derma_DrawBackgroundBlur(self)
+	-- Derma_DrawBackgroundBlur(self)
 
     -- Entire Panel
 	surface.SetDrawColor(Color(40, 40, 40, 255))
