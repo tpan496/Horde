@@ -4,16 +4,18 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=2401598805
 ## Creating Config Addons
 Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily.
 
-You config addons should stay in `garrrysmod/addons/your-config/lua/custom/`, and have the following (example) format:
+You config addons should stay in `garrysmod/addons/your-config/lua/horde/gamemode/custom`, and have the following (example) format:
 ```
 -- Example your-custom-config.lua
+-- If you just want to configure items, leave enemies as empty. Vice versa.
+
 CONFIG = {}
 CONFIG.name = "custom_config" -- YOU MUST NAME IT! Used for horde_external_lua_config.
 CONFIG.items = {
     -- key and class must be the same!
     weapon_crowbar = {
         class="weapon_crowbar",
-        category="Melee",
+        category="Melee", -- You can find out the full list in !itemconfig
         name="Cheap Crowbar",
         price=50, weight=1,
         description="A cheap crowbar",
