@@ -14,6 +14,11 @@ CreateConVar("horde_npc_cleanup", 1, SERVER_CAN_EXECUTE, "Kills all NPCs after a
 CreateConVar("horde_enable_scoreboard", 1, SERVER_CAN_EXECUTE, "Enables built-in scoreboard.")
 CreateConVar("horde_external_lua_config", "", SERVER_CAN_EXECUTE, "Name of external config to load. This will take over the configs if exists.")
 
+CreateConVar("horde_director_interval", 5, SERVER_CAN_EXECUTE, "Game director execution interval in seconds. Decreasing this increases spawn rate.")
+CreateConVar("horde_max_enemies_alive_base", 20, SERVER_CAN_EXECUTE, "Maximum number of living enemies (base).")
+CreateConVar("horde_max_enemies_alive_scale_factor", 5, SERVER_CAN_EXECUTE, "Scale factor of the maximum number of living enemies for multiplayer.")
+CreateConVar("horde_max_enemies_alive_max", 50, SERVER_CAN_EXECUTE, "Maximum number of maximum living enemies.")
+
 HORDE = {}
 HORDE.__index = HORDE
 HORDE.version = "1.0.0"

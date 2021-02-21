@@ -236,7 +236,12 @@ function StartBreak()
 end
 
 -- Referenced some spawning mechanics from Zombie Invasion+
-timer.Create('Horde_Main', 5, 0, function ()
+local director_interval = 5
+if GetConVarNumber("horde_director_interval") then
+    director_interval = GetConVarNumber("horde_director_interval")
+end
+
+timer.Create('Horde_Main', director_interval, 0, function ()
     local status, err = pcall( function()
     local valid_nodes = {}
     if table.Count(player.GetAll()) <= 0 then
@@ -315,7 +320,10 @@ timer.Create('Horde_Main', 5, 0, function ()
         local difficulty_coefficient = HORDE.difficulty * 0.05
         HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
         HORDE.total_enemies_this_wave_fixed = HORDE.total_enemies_this_wave
-        HORDE.max_enemies_alive = math.min(50, 20 + 5 * players_count)
+        local max_enemies_alive_base = GetConVarNumber("horde_max_enemies_alive_base")
+        local scale = GetConVarNumber("horde_max_enemies_alive_scale_factor")
+        local max_enemies_alive_max = GetConVarNumber("horde_max_enemies_alive_max")
+        HORDE.max_enemies_alive = math.min(max_enemies_alive_max, max_enemies_alive_base + scale * players_count)
         HORDE.alive_enemies_this_wave = 0
         HORDE.current_break_time = -1
         HORDE.killed_enemies_this_wave = 0
