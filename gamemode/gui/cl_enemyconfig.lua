@@ -148,6 +148,7 @@ function PANEL:Init()
 		-- Reload from disk
 		net.Start("Horde_GetEnemiesData")
 		net.SendToServer()
+		notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
 	end
 
 	if GetConVarNumber("horde_default_enemy_config") ~= 1 and (GetConVarString("horde_external_lua_config") == nil or GetConVarString("horde_external_lua_config") == "") then
@@ -163,6 +164,7 @@ function PANEL:Init()
 					-- Reload from disk
 					net.Start("Horde_GetEnemiesData")
 					net.SendToServer()
+					notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
 				end,
 				'No', function() end
 			)
@@ -180,6 +182,7 @@ function PANEL:Init()
 					-- Reload from disk
 					net.Start("Horde_GetEnemiesData")
 					net.SendToServer()
+					notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
 				end,
 				'No', function() end
 			)
@@ -274,7 +277,7 @@ function PANEL:Think()
 end
 
 function PANEL:Paint(w, h)
-	Derma_DrawBackgroundBlur(self)
+	-- Derma_DrawBackgroundBlur(self)
 
     -- Entire Panel
 	surface.SetDrawColor(Color(40, 40, 40, 255))
