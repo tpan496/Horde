@@ -204,6 +204,10 @@ net.Receive('Horde_GameEnd', function ()
     end_gui:SetData(mvp, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken)
 end)
 
+net.Receive("Horde_SyncItems", function ()
+	HORDE.items = net.ReadTable()
+end)
+
 hook.Add("HUDShouldDraw", "RemoveRetardRedScreen", function(name) 
     if (name == "CHudDamageIndicator") then
        return false
