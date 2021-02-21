@@ -144,7 +144,11 @@ function PANEL:Paint()
 	surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     if self.item then
         draw.DrawText(self.item.name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
-        draw.DrawText(self.item.description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+        if self.item.fixed_description and self.item.extra_description then
+            draw.DrawText(self.item.fixed_description .. self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+        else
+            draw.DrawText(self.item.description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+        end
         
         -- Check if this is a class or an item
         if not self.item.class then
