@@ -151,42 +151,40 @@ function PANEL:Init()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
 
-    if GetConVarNumber("horde_default_enemy_config") ~= 1 and (GetConVarString("horde_external_lua_config") == nil or GetConVarString("horde_external_lua_config") == "") then
-        local load_btn = vgui.Create('DButton', modify_tab)
-        load_btn:Dock(TOP)
-        load_btn:SetText("OVERWRITE with Default Config")
-        load_btn.DoClick = function ()
-            Derma_Query('Overwrite?', 'Overwrite with Default Config',
-                'Yes',
-                function()
-                    HORDE.enemies = {}
-                    HORDE.GetDefaultEnemiesData()
-                    -- Reload from disk
-                    net.Start("Horde_GetEnemiesData")
-                    net.SendToServer()
-                    notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
-                end,
-                'No', function() end
-            )
-        end
+    local load_btn = vgui.Create('DButton', modify_tab)
+    load_btn:Dock(TOP)
+    load_btn:SetText("OVERWRITE with Default Config")
+    load_btn.DoClick = function ()
+        Derma_Query('Overwrite?', 'Overwrite with Default Config',
+            'Yes',
+            function()
+                HORDE.enemies = {}
+                HORDE.GetDefaultEnemiesData()
+                -- Reload from disk
+                net.Start("Horde_GetEnemiesData")
+                net.SendToServer()
+                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+            end,
+            'No', function() end
+        )
+    end
 
-        local del_btn = vgui.Create('DButton', modify_tab)
-        del_btn:Dock(TOP)
-        del_btn:SetText("Delete Everything")
-        del_btn.DoClick = function ()
-            Derma_Query('Delete Everything?', 'Delete Everything',
-                'Yes',
-                function()
-                    HORDE.enemies = {}
-                    HORDE.SetEnemiesData()
-                    -- Reload from disk
-                    net.Start("Horde_GetEnemiesData")
-                    net.SendToServer()
-                    notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
-                end,
-                'No', function() end
-            )
-        end
+    local del_btn = vgui.Create('DButton', modify_tab)
+    del_btn:Dock(TOP)
+    del_btn:SetText("Delete Everything")
+    del_btn.DoClick = function ()
+        Derma_Query('Delete Everything?', 'Delete Everything',
+            'Yes',
+            function()
+                HORDE.enemies = {}
+                HORDE.SetEnemiesData()
+                -- Reload from disk
+                net.Start("Horde_GetEnemiesData")
+                net.SendToServer()
+                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+            end,
+            'No', function() end
+        )
     end
 
     local settings_tab = vgui.Create('DPanel', self)

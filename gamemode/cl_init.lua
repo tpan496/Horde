@@ -1,7 +1,7 @@
 if SERVER then return end
 
 include("shared.lua")
-include("sh_config.lua")
+include("sh_horde.lua")
 include("sh_item.lua")
 include("sh_class.lua")
 include("sh_enemy.lua")
