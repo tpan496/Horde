@@ -1,6 +1,6 @@
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
-AddCSLuaFile("sh_config.lua")
+AddCSLuaFile("sh_horde.lua")
 AddCSLuaFile("sh_item.lua")
 AddCSLuaFile("sh_class.lua")
 AddCSLuaFile("sh_enemy.lua")
@@ -19,7 +19,7 @@ AddCSLuaFile("gui/cl_scoreboard.lua")
 
 
 include("shared.lua")
-include("sh_config.lua")
+include("sh_horde.lua")
 include("sh_item.lua")
 include("sh_class.lua")
 include("sh_enemy.lua")

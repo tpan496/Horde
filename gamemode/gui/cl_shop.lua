@@ -110,10 +110,10 @@ function PANEL:Init()
 	end
 
     local categories = {"Melee", "Pistol", "SMG", "Shotgun", "Rifle", "MG", "Explosive", "Special", "Equipment"}
+	local class = LocalPlayer():GetClass()
 
-    for _, CATEGORY in pairs(categories) do
+	for _, CATEGORY in pairs(categories) do
 		local items = {}
-		local class = LocalPlayer():GetClass()
 	
 		for _, item in pairs(HORDE.items) do
 			if item.category == CATEGORY and item.whitelist and item.whitelist[class.name] then
