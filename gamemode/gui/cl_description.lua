@@ -76,21 +76,13 @@ function PANEL:Init()
     function self.ammo_secondary_btn:DoClick()
         self:GetParent():AmmoDoClick(-1)
     end
-
-    self.class_change_warning = vgui.Create('DPanel', self)
-    self.class_change_warning:Dock(BOTTOM)
-    self.class_change_warning:SetVisible(false)
-    self.class_change_warning:SetTall(50)
-    self.class_change_warning.Paint = function ()
-        draw.SimpleText("Changing class REMOVES all your current items!", 'Warning', self:GetParent():GetWide()/4, 15, Color(255,0,0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-    end
 end
 
 function PANEL:DoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
     if not self.item.class then
-        Derma_Query('Changing class will remove all your items!', 'Change Class',
+        local panel = Derma_Query('Changing class will remove all your items!', 'Change Class',
             'Yes',
             function()
                 net.Start("Horde_SelectClass")
@@ -140,7 +132,7 @@ function PANEL:SetData(item)
 end
 
 function PANEL:Paint()
-    surface.SetDrawColor(Color(50,50,50))
+    surface.SetDrawColor(HORDE.color_hollow)
     surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     if self.item then
         draw.DrawText(self.item.name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
@@ -153,20 +145,17 @@ function PANEL:Paint()
         -- Check if this is a class or an item
         if not self.item.class then
             self.buy_btn:SetTextColor(Color(255,255,255))
-            self.buy_btn:SetText("Select Class")
+            self.buy_btn:SetText("Select Class (Your Items Will Be Removed)")
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
-            self.class_change_warning:SetVisible(true)
             self.ammo_one_btn:SetVisible(false)
             self.ammo_ten_btn:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel:SetVisible(false)
             return
         end
-
-        self.class_change_warning:SetVisible(false)
         
         if LocalPlayer():HasWeapon(self.item.class) then
             self.buy_btn:SetTextColor(Color(255,255,255))

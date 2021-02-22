@@ -25,6 +25,10 @@ function PANEL:Init()
         panel:DockPadding(10, 10, 10, 10)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
+        panel.Paint = function ()
+            surface.SetDrawColor(Color(230,230,230))
+            surface.DrawRect(0, 0, modify_tab:GetWide(), height)
+        end
 
         local label = vgui.Create('DLabel', panel)
         label:SetText(name)
@@ -38,6 +42,7 @@ function PANEL:Init()
             editor:SetSize(200, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
+            editor:SetSortItems(false)
             editor:AddChoice("Melee")
             editor:AddChoice("Pistol")
             editor:AddChoice("SMG")
@@ -59,13 +64,15 @@ function PANEL:Init()
             return editor
         elseif name == "whitelist" then
             local editors = {}
+            local start_pos = 80
             for _, class in pairs(HORDE.classes) do
                 local editor = vgui.Create('DCheckBoxLabel', panel)
-                editor:SetSize(100, height)
-                editor:Dock(LEFT)
+                editor:SetSize(80, height)
+                editor:SetPos(start_pos, 15)
                 editor:SetText(class.name)
                 editor:SetTextColor(Color(0,0,0))
                 editor:SetChecked(true)
+                start_pos = start_pos + 80
                 table.insert(editors, editor)
             end
             

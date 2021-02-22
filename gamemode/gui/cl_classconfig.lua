@@ -25,6 +25,10 @@ function PANEL:Init()
         panel:DockPadding(10, 10, 10, 10)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
+        panel.Paint = function ()
+            surface.SetDrawColor(Color(230,230,230))
+            surface.DrawRect(0, 0, modify_tab:GetWide(), height)
+        end
 
         local label = vgui.Create('DLabel', panel)
         label:SetText(name)
@@ -146,14 +150,14 @@ function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
     -- Entire Panel
-    surface.SetDrawColor(Color(40, 40, 40, 255))
+    surface.SetDrawColor(Color(40, 40, 40))
     surface.DrawRect(0, 0, w, h)
 
     -- Background
-    surface.SetDrawColor(Color(40, 40, 40, 255))
+    surface.SetDrawColor(Color(40, 40, 40))
     surface.DrawRect(0, 0, w, 48)
 
-    draw.SimpleText("Class Config (Some settings require restarting current game to take effect)", 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Class Config (Some settings require restarting current game to take effect)", 'Heading', 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register('HordeClassConfig', PANEL, 'EditablePanel')

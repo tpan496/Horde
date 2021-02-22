@@ -13,7 +13,7 @@ function PANEL:Init()
     close_btn.Paint = function() end
     close_btn:SetColor(Color(255, 255, 255))
     close_btn:SetSize(32, 32)
-    close_btn:SetPos(self:GetWide() - 40, 8)
+    close_btn:SetPos(self:GetWide() - 40, 6)
     close_btn.DoClick = function() HORDE:ToggleEnemyConfig() end
 
     local modify_tab = vgui.Create('DPanel', self)
@@ -25,6 +25,10 @@ function PANEL:Init()
         panel:DockPadding(10, 10, 10, 10)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
+        panel.Paint = function ()
+            surface.SetDrawColor(Color(230,230,230))
+            surface.DrawRect(0, 0, modify_tab:GetWide(), height)
+        end
 
         local label = vgui.Create('DLabel', panel)
         label:SetText(name)
@@ -45,10 +49,11 @@ function PANEL:Init()
             return editor
         elseif name == "wave" then
             local editor = vgui.Create('DComboBox', panel)
+            editor:SetSortItems(false)
             editor:SetSize(200, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
-            for i = 1, HORDE.max_waves do
+            for i = 1, 10 do
                 editor:AddChoice(i)
             end
             return editor
@@ -283,14 +288,14 @@ function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
     -- Entire Panel
-    surface.SetDrawColor(Color(40, 40, 40, 255))
+    surface.SetDrawColor(Color(40, 40, 40))
     surface.DrawRect(0, 0, w, h)
 
     -- Background
-    surface.SetDrawColor(Color(40, 40, 40, 255))
+    surface.SetDrawColor(Color(40, 40, 40))
     surface.DrawRect(0, 0, w, 48)
 
-    draw.SimpleText("Enemy Config (Some settings require restarting current game to take effect)", 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Enemy Config (Some settings require restarting current game to take effect)", 'Heading', 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register('HordeEnemyConfig', PANEL, 'EditablePanel')
