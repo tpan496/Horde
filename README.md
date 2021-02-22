@@ -46,7 +46,7 @@ To use your config, simply set `horde_external_lua_config` to the name you used 
 
 ## Dedicated Server Instructions
 
-AS you might already know there are two ways of setting up configs:
+As you might already know there are two ways of setting up configs:
 1. Client UI. To use this on a dedicated server, you need to put
 ```
 horde_default_item_config = 0
