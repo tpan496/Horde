@@ -169,6 +169,7 @@ function ClassConfig(ply)
 end
 
 hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
+    if not ply:IsValid() then return end
     local text = string.lower(input) -- Make the chat message entirely lowercase
     if text == "!help" then
         ply:PrintMessage(HUD_PRINTTALK, "'!ready' - Get ready")
@@ -232,6 +233,7 @@ end)
 
 hook.Add("PlayerInitialSpawn", "Horde_SpawnMessage", function(ply)
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
+    if HORDE.start_game then return end
     local ready_count = 0
     local total_player = 0
     for _, ply in pairs(player.GetAll()) do
