@@ -162,7 +162,7 @@ end)
 net.Receive('Horde_RenderCenterText', function ()
     local str = net.ReadString()
     local num = net.ReadInt(8)
-    if num and num >= 0 then
+    if num and num >= 0 and num <= 10 then
         if num == 10 then
             surface.PlaySound("HL1/fvox/ten.wav")
         elseif num == 5 then

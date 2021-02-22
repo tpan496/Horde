@@ -81,6 +81,7 @@ function Player:SyncEconomy()
 end
 
 hook.Add("PlayerInitialSpawn", "Horde_Economy_Setup", function (ply)
+    if not ply:IsValid() then return end
     ply:SetMoney(HORDE.start_money)
     ply:SetWeight(15)
     ply:SetClass(HORDE.classes["Survivor"])
@@ -96,6 +97,7 @@ hook.Add("PlayerInitialSpawn", "Horde_Economy_Setup", function (ply)
 end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
+    if not ply:IsValid() then return end
     if ply:GetClass().Name == "Heavy" then
         ply:SetWeight(20)
     else
@@ -105,6 +107,7 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
 end)
 
 hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
+    if not ply:IsValid() then return end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
         ply:AddWeight(item.weight)
@@ -113,6 +116,7 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
 end)
 
 hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
+    if not ply:IsValid() then return end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
         if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
@@ -124,6 +128,7 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
 end)
 
 hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
+    if not ply:IsValid() then return end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
         if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
@@ -139,6 +144,7 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
 end)
 
 net.Receive("Horde_BuyItem", function (len, ply)
+    if not ply:IsValid() then return end
     local class = net.ReadString()
     local price = net.ReadInt(16)
     local weight = net.ReadInt(16)
@@ -158,6 +164,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
 end)
 
 net.Receive("Horde_SellItem", function (len, ply)
+    if not ply:IsValid() then return end
     local class = net.ReadString()
     if ply:HasWeapon(class) then
         local item = HORDE.items[class]
@@ -168,6 +175,7 @@ net.Receive("Horde_SellItem", function (len, ply)
 end)
 
 net.Receive("Horde_SelectClass", function (len, ply)
+    if not ply:IsValid() then return end
     if HORDE.start_game and HORDE.current_break_time <= 0 then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You cannot change class after a wave has started.")
@@ -199,7 +207,8 @@ net.Receive("Horde_SelectClass", function (len, ply)
     --timer.Remove("Horde_Survivor" .. ply:SteamID())
     --timer.Remove("Horde_Assault" .. ply:SteamID())
     timer.Remove("Horde_Demolition" .. ply:SteamID())
-    hook.Remove("Horde_Ghost" .. ply:SteamID())
+    hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
+    hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
 
 
     if class.name == "Assault" then
@@ -208,10 +217,12 @@ net.Receive("Horde_SelectClass", function (len, ply)
         --end)
     elseif class.name == "Medic" then
         timer.Create("Horde_Medic" .. ply:SteamID(), 1, 0, function ()
+            if not ply:IsValid() then timer.Remove("Horde_Medic" .. ply:SteamID()) return end
             ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + 0.02 * ply:GetMaxHealth()))
         end)
     elseif class.name == "Heavy" then
         timer.Create("Horde_Heavy" .. ply:SteamID(), 1, 0, function ()
+            if not ply:IsValid() then timer.Remove("Horde_Heavy" .. ply:SteamID()) return end
             if ply:Armor() < 25 then
                 ply:SetArmor(math.min(25, ply:Armor() + 1))
             end
@@ -219,18 +230,21 @@ net.Receive("Horde_SelectClass", function (len, ply)
         ply:SetWeight(HORDE.max_weight + 5)
     elseif class.name == "Demolition" then
         timer.Create("Horde_Demolition" .. ply:SteamID(), 30, 0, function ()
+            if not ply:IsValid() then timer.Remove("Horde_Demolition" .. ply:SteamID()) return end
             if not ply:HasWeapon("weapon_frag") then
                 ply:Give("weapon_frag")
             end
         end)
         hook.Add("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID(), function (target, dmg)
-            if target:IsValid() and target:IsPlayer() and dmg:GetDamageType() ==  DMG_BLAST then
+            if not ply:IsValid() then hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID()) return end
+            if target:IsValid() and target:IsPlayer() and dmg:GetDamageType() ==  DMG_BLAST and target:SteamID() == ply:SteamID() then
                 dmg:ScaleDamage(0.25)
             end
         end)
     elseif class.name == "Ghost" then
-        hook.Add("ScaleNPCDamage", "Horde_Ghost", function (npc, hitgroup, dmg)
-            if npc:IsValid()  and dmg:GetAttacker():IsPlayer() then
+        hook.Add("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID(), function (npc, hitgroup, dmg)
+            if not ply:IsValid() then hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID()) return end
+            if npc:IsValid() and dmg:GetAttacker():IsPlayer() and dmg:GetAttacker():SteamID() == ply:SteamID() then
                 if hitgroup == HITGROUP_HEAD then
                     dmg:ScaleDamage(1.5)
                 end
@@ -247,6 +261,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
 end)
 
 net.Receive("Horde_SelectClassSkillVariant", function (len, ply)
+    if not ply:IsValid() then return end
     local price = net.ReadString()
     local class = net.ReadString()
     local variant = net.ReadInt()
@@ -284,6 +299,7 @@ net.Receive("Horde_SelectClassSkillVariant", function (len, ply)
 end)
 
 net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
+    if not ply:IsValid() then return end
     local class = net.ReadString()
     local price = net.ReadInt(16)
     local count = net.ReadInt(16)
@@ -300,6 +316,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         local wpn = ply:GetWeapon(class)
         local clip_size = wpn:GetMaxClip1()
         local ammo_id = wpn:GetPrimaryAmmoType()
+        print(ammo_id, clip_size)
 
         if clip_size > 0 then -- block melee
 			ply:GiveAmmo(clip_size * count, ammo_id , false)
@@ -320,6 +337,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
 end)
 
 net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
+    if not ply:IsValid() then return end
     local class = net.ReadString()
     local price = net.ReadInt(16)
     if not ply:HasWeapon(class) then

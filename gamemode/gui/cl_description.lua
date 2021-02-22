@@ -213,22 +213,25 @@ function PANEL:Paint()
             if self.item.category ~= "Melee" and self.item.category ~= "Equipment" then
                 self.ammo_one_btn:SetVisible(true)
                 self.ammo_ten_btn:SetVisible(true)
+                
+                if self.item.ammo_price and self.item.ammo_price >= 0 then
+                    self.ammo_one_btn:SetTextColor(Color(255,255,255))
+                    local price = self.item.ammo_price and self.item.ammo_price or HORDE.default_ammo_price
+                    self.ammo_one_btn:SetText("Buy Ammo Clip x 1 (" .. tostring(price) .. "$)")
+                    self.ammo_one_btn:SetWide(self:GetWide() / 2)
+                    self.ammo_one_btn.Paint = function ()
+                        surface.SetDrawColor(HORDE.color_crimson)
+                        surface.DrawRect(0, 0, self:GetParent():GetParent():GetWide()/2, 200)
+                    end
+                
 
-                self.ammo_one_btn:SetTextColor(Color(255,255,255))
-                local price = self.item.ammo_price and self.item.ammo_price or HORDE.default_ammo_price
-                self.ammo_one_btn:SetText("Buy Ammo Clip x 1 (" .. tostring(price) .. "$)")
-                self.ammo_one_btn:SetWide(self:GetWide() / 2)
-                self.ammo_one_btn.Paint = function ()
-                    surface.SetDrawColor(HORDE.color_crimson)
-                    surface.DrawRect(0, 0, self:GetParent():GetParent():GetWide()/2, 200)
-                end
-
-                self.ammo_ten_btn:SetTextColor(Color(255,255,255))
-                self.ammo_ten_btn:SetText("Buy Ammo Clip x 10 (" .. tostring(price * 10) .. "$)")
-                self.ammo_ten_btn:SetWide(self:GetWide() / 2)
-                self.ammo_ten_btn.Paint = function ()
-                    surface.SetDrawColor(HORDE.color_crimson)
-                    surface.DrawRect(0, 0, self:GetParent():GetParent():GetWide()/2, 200)
+                    self.ammo_ten_btn:SetTextColor(Color(255,255,255))
+                    self.ammo_ten_btn:SetText("Buy Ammo Clip x 10 (" .. tostring(price * 10) .. "$)")
+                    self.ammo_ten_btn:SetWide(self:GetWide() / 2)
+                    self.ammo_ten_btn.Paint = function ()
+                        surface.SetDrawColor(HORDE.color_crimson)
+                        surface.DrawRect(0, 0, self:GetParent():GetParent():GetWide()/2, 200)
+                    end
                 end
 
                 if self.item.secondary_ammo_price and self.item.secondary_ammo_price > 0 then

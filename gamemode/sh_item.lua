@@ -175,7 +175,7 @@ HORDE.GetDefaultItemsData = function()
     HORDE.CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         2000, 7, "Laser-guided rocket propulsion device.",
     {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("Explosive",  "SLAM",           "weapon_slam",        500,  2, "Selectable Lightweight Attack Munition.\nRMB to detonate.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
+    {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 0, 100)
 
     HORDE.CreateItem("Special",    "Heat Crossbow",  "weapon_crossbow",    1250, 5, "Improvised sniper weapon.\nShoots scorching rebars.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=true}, 10, -1)
