@@ -9,6 +9,7 @@ function PANEL:Init()
     self.description = ""
     self.buy_btn = vgui.Create('DButton', self)
     self.buy_btn:Dock(BOTTOM)
+    self.buy_btn:DockMargin(5,2.5,5,2.5)
     self.buy_btn:SetFont("Content")
     self.buy_btn:SetTextColor(Color(0,0,0,0))
     self.buy_btn:SetText("")
@@ -18,21 +19,35 @@ function PANEL:Init()
         surface.PlaySound("UI/buttonrollover.wav")
     end
 
+    self.sell_btn = vgui.Create('DButton', self)
+    self.sell_btn:Dock(BOTTOM)
+    self.sell_btn:DockMargin(5,2.5,5,2.5)
+    self.sell_btn:SetFont("Content")
+    self.sell_btn:SetTall(50)
+    self.sell_btn.OnCursorEntered = function ()
+        surface.PlaySound("UI/buttonrollover.wav")
+    end
+    self.sell_btn:SetVisible(false)
+
     self.ammo_panel = vgui.Create('DPanel', self)
     self.ammo_panel:Dock(BOTTOM)
+    self.ammo_panel:DockMargin(5,2.5,5,2.5)
     self.ammo_panel:SetTall(50)
 
     self.ammo_one_btn = vgui.Create('DButton', self.ammo_panel)
     self.ammo_one_btn:Dock(LEFT)
+    self.ammo_one_btn:DockMargin(0,0,2.5,0)
     self.ammo_one_btn:SetFont("Content")
     self.ammo_one_btn:SetTextColor(Color(0,0,0,0))
     self.ammo_one_btn:SetText("")
+    self.ammo_one_btn:SetTall(50)
     self.ammo_one_btn.OnCursorEntered = function ()
         surface.PlaySound("UI/buttonrollover.wav")
     end
 
     self.ammo_ten_btn = vgui.Create('DButton', self.ammo_panel)
     self.ammo_ten_btn:Dock(LEFT)
+    self.ammo_ten_btn:DockMargin(2.5,0,0,0)
     self.ammo_ten_btn:SetFont("Content")
     self.ammo_ten_btn:SetTextColor(Color(0,0,0,0))
     self.ammo_ten_btn:SetText("")
@@ -43,6 +58,7 @@ function PANEL:Init()
 
     self.ammo_secondary_btn = vgui.Create('DButton', self)
     self.ammo_secondary_btn:Dock(BOTTOM)
+    self.ammo_secondary_btn:DockMargin(5,2.5,5,2.5)
     self.ammo_secondary_btn:SetFont("Content")
     self.ammo_secondary_btn:SetTextColor(Color(0,0,0,0))
     self.ammo_secondary_btn:SetText("")
@@ -52,14 +68,14 @@ function PANEL:Init()
         surface.PlaySound("UI/buttonrollover.wav")
     end
 
+    self.ammo_panel.Paint = function () end
+    self.ammo_one_btn.Paint = function () end
+    self.ammo_ten_btn.Paint = function () end
+
     self.current_ammo_panel = vgui.Create('DPanel', self)
     self.current_ammo_panel:Dock(BOTTOM)
     self.current_ammo_panel:SetTall(50)
     self.current_ammo_panel.Paint = function () end
-
-    self.ammo_panel.Paint = function () end
-    self.ammo_one_btn.Paint = function () end
-    self.ammo_ten_btn.Paint = function () end
 
     function self.buy_btn:DoClick()
         self:GetParent():DoClick()
@@ -76,13 +92,17 @@ function PANEL:Init()
     function self.ammo_secondary_btn:DoClick()
         self:GetParent():AmmoDoClick(-1)
     end
+
+    function self.sell_btn:DoClick()
+        self:GetParent():SellDoClick()
+    end
 end
 
 function PANEL:DoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
     if not self.item.class then
-        local panel = Derma_Query('Changing class will remove all your items!', 'Change Class',
+        Derma_Query('Changing class will remove all your items!', 'Change Class',
             'Yes',
             function()
                 net.Start("Horde_SelectClass")
@@ -127,6 +147,23 @@ function PANEL:AmmoDoClick(count)
     net.SendToServer()
 end
 
+function PANEL:SellDoClick()
+    surface.PlaySound("UI/buttonclick.wav")
+    if not self.item then return end
+    if not self.item.class then return end
+    if not LocalPlayer():HasWeapon(self.item.class) then return end
+    Derma_Query('Sell Item?!', 'Sell',
+            'Yes',
+            function()
+                -- Sell the item
+                net.Start("Horde_SellItem")
+                net.WriteString(self.item.class)
+                net.SendToServer()
+            end,
+            'No', function() end
+        )
+end
+
 function PANEL:SetData(item)
     self.item = item
 end
@@ -165,6 +202,14 @@ function PANEL:Paint()
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
             
+            self.sell_btn:SetVisible(true)
+            self.sell_btn:SetTextColor(Color(255,255,255))
+            self.sell_btn:SetText("Sell for " .. tostring(math.floor(self.item.price * 0.25)) .. "$")
+            self.sell_btn.Paint = function ()
+                surface.SetDrawColor(HORDE.color_crimson)
+                surface.DrawRect(0, 0, self:GetWide(), 200)
+            end
+            
             if self.item.category ~= "Melee" and self.item.category ~= "Equipment" then
                 self.ammo_one_btn:SetVisible(true)
                 self.ammo_ten_btn:SetVisible(true)
@@ -191,7 +236,7 @@ function PANEL:Paint()
                     self.ammo_secondary_btn:SetTextColor(Color(255,255,255))
                     self.ammo_secondary_btn:SetText("Buy Secondary Ammo x 1 (" .. tostring(self.item.secondary_ammo_price) .. "$)")
                     self.ammo_secondary_btn.Paint = function ()
-                        surface.SetDrawColor(HORDE.color_crimson_dim)
+                        surface.SetDrawColor(HORDE.color_crimson)
                         surface.DrawRect(0, 0, self:GetWide(), 200)
                     end
                 else
@@ -228,6 +273,7 @@ function PANEL:Paint()
             self.ammo_ten_btn:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
+            self.sell_btn:SetVisible(false)
         else
             self.buy_btn:SetTextColor(Color(255,255,255))
             self.buy_btn:SetText("Buy Item")
@@ -240,6 +286,7 @@ function PANEL:Paint()
             self.ammo_ten_btn:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
+            self.sell_btn:SetVisible(false)
         end
     end
 

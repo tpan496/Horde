@@ -91,6 +91,20 @@
 			"type"		"Numeric"
 			"default"	"500"
 		}
+		13
+		{
+			"name"		"horde_base_walkspeed"
+			"text"		"Base Walkspeed"
+			"type"		"Numeric"
+			"default"	"180"
+		}
+		14
+		{
+			"name"		"horde_base_runspeed"
+			"text"		"Base Runspeed"
+			"type"		"Numeric"
+			"default"	"220"
+		}
 	}
 	
 }
