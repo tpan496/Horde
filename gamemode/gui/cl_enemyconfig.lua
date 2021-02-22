@@ -104,7 +104,7 @@ function PANEL:Init()
         local warning_label = vgui.Create('DLabel', modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)
-        warning_label:SetSize(modify_tab:GetWide(), 45)
+        warning_label:SetSize(modify_tab:GetWide(), 25)
         warning_label:SetTextColor(Color(0,0,0))
         warning_label:SetText("You are using default/external config! Your data won't be saved!")
     end
@@ -143,10 +143,10 @@ function PANEL:Init()
             color,
             weapon
         )
-        HORDE.FinalizeEnemies()
 
         -- Reload from disk
-        net.Start("Horde_GetEnemiesData")
+        net.Start("Horde_SetEnemiesData")
+        net.WriteTable(HORDE.enemies)
         net.SendToServer()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
@@ -161,7 +161,8 @@ function PANEL:Init()
                 HORDE.enemies = {}
                 HORDE.GetDefaultEnemiesData()
                 -- Reload from disk
-                net.Start("Horde_GetEnemiesData")
+                net.Start("Horde_SetEnemiesData")
+                net.WriteTable(HORDE.enemies)
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
@@ -179,7 +180,8 @@ function PANEL:Init()
                 HORDE.enemies = {}
                 HORDE.SetEnemiesData()
                 -- Reload from disk
-                net.Start("Horde_GetEnemiesData")
+                net.Start("Horde_SetEnemiesData")
+                net.WriteTable(HORDE.enemies)
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
@@ -231,8 +233,8 @@ function PANEL:Init()
         
         menu:AddOption('Delete', function()
             HORDE.enemies[enemy.name .. tostring(enemy.wave)] = nil
-            HORDE.FinalizeEnemies()
-			net.Start("Horde_GetEnemiesData")
+			net.Start("Horde_SetEnemiesData")
+            net.WriteTable(HORDE.enemies)
         	net.SendToServer()
 			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
         end)

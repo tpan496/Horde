@@ -93,7 +93,7 @@ function PANEL:Init()
         local warning_label = vgui.Create('DLabel', modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)
-        warning_label:SetSize(modify_tab:GetWide(), 50)
+        warning_label:SetSize(modify_tab:GetWide(), 25)
         warning_label:SetTextColor(Color(0,0,0))
         warning_label:SetText("You are using default/external config! Your data won't be saved!")
     end
@@ -132,7 +132,8 @@ function PANEL:Init()
             secondary_ammo_price_editor:GetInt() or 0
         )
         -- Reload from disk
-        net.Start("Horde_GetItemsData")
+        net.Start("Horde_SetItemsData")
+        net.WriteTable(HORDE.items)
         net.SendToServer()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
@@ -148,7 +149,8 @@ function PANEL:Init()
                 HORDE.GetDefaultItemsData()
                 HORDE.GetSpecialItems()
                 -- Reload from disk
-                net.Start("Horde_GetItemsData")
+                net.Start("Horde_SetItemsData")
+                net.WriteTable(HORDE.items)
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
@@ -167,7 +169,8 @@ function PANEL:Init()
                 HORDE.GetSpecialItems()
                 HORDE.SetItemsData()
                 -- Reload from disk
-                net.Start("Horde_GetItemsData")
+                net.Start("Horde_SetItemsData")
+                net.WriteTable(HORDE.items)
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
@@ -218,7 +221,8 @@ function PANEL:Init()
         menu:AddOption('Delete', function()
             HORDE.items[item.class] = nil
             HORDE.SetItemsData()
-			net.Start("Horde_GetItemsData")
+			net.Start("Horde_SetItemsData")
+            net.WriteTable(HORDE.items)
         	net.SendToServer()
 			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
         end)

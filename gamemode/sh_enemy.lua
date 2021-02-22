@@ -38,52 +38,62 @@ HORDE.NormalizeEnemiesWeight = function ()
     end
 end
 
-HORDE.FinalizeEnemies = function ()
-    HORDE.NormalizeEnemiesWeight()
-    HORDE.SetEnemiesData()
-end
-
-if SERVER then
-util.AddNetworkString("Horde_GetEnemiesData")
-
-net.Receive("Horde_GetEnemiesData", function ()
-    GetEnemiesData()
-end)
-end
-
 HORDE.SetEnemiesData = function()
-    if GetConVarNumber("horde_default_enemy_config") == 1 then return end
-    if not file.IsDir('horde', 'DATA') then
-        file.CreateDir('horde')
+    if SERVER then
+        HORDE.NormalizeEnemiesWeight()
+        
+        if GetConVarNumber("horde_default_enemy_config") == 1 then return end
+        if not file.IsDir('horde', 'DATA') then
+            file.CreateDir('horde')
+        end
+        
+        file.Write('horde/enemies.txt', util.TableToJSON(HORDE.enemies))
+
+        if player then
+            for _, ply in pairs(player.GetAll()) do
+                net.Start("Horde_SyncEnemies")
+                net.WriteTable(HORDE.enemies)
+                net.Send(ply)
+            end
+        end
     end
-    
-    file.Write('horde/enemies.txt', util.TableToJSON(HORDE.enemies))
 end
 
 function GetEnemiesData()
-    if not file.IsDir('horde', 'DATA') then
-        file.CreateDir('horde')
-        return
-    end
-    
-    if file.Read('horde/enemies.txt', 'DATA') then
-        local t = util.JSONToTable(file.Read('horde/enemies.txt', 'DATA'))
-        -- Integrity
-        for _, enemy in pairs(t) do
-            if enemy.name == nil or enemy.name == "" or enemy.class == nil or enemy.class == "" or enemy.weight == nil or enemy.wave == nil then
-                notification.AddLegacy("Enemy config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
-                notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
-                return
-            else
-                if not enemy.weapon then
-                    enemy.weapon = ""
+    if SERVER then
+        if not file.IsDir('horde', 'DATA') then
+            file.CreateDir('horde')
+            return
+        end
+        
+        if file.Read('horde/enemies.txt', 'DATA') then
+            local t = util.JSONToTable(file.Read('horde/enemies.txt', 'DATA'))
+            -- Integrity
+            for _, enemy in pairs(t) do
+                if enemy.name == nil or enemy.name == "" or enemy.class == nil or enemy.class == "" or enemy.weight == nil or enemy.wave == nil then
+                    notification.AddLegacy("Enemy config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
+                    notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                    return
+                else
+                    if not enemy.weapon then
+                        enemy.weapon = ""
+                    end
                 end
             end
+
+            -- Be careful of backwards compataiblity
+            HORDE.enemies = t
+            HORDE.NormalizeEnemiesWeight()
         end
 
-        -- Be careful of backwards compataiblity
-        HORDE.enemies = t
-        HORDE.FinalizeEnemies()
+
+        if player then
+            for _, ply in pairs(player.GetAll()) do
+                net.Start("Horde_SyncEnemies")
+                net.WriteTable(HORDE.enemies)
+                net.Send(ply)
+            end
+        end
     end
 end
 
@@ -287,8 +297,18 @@ HORDE.GetDefaultEnemiesData = function ()
     HORDE.NormalizeEnemiesWeight()
 end
 
-if GetConVarNumber("horde_default_enemy_config") == 1 then
-    HORDE.GetDefaultEnemiesData()
-else
-    GetEnemiesData()
+-- Startup
+if SERVER then
+    util.AddNetworkString("Horde_SetEnemiesData")
+
+    if GetConVarNumber("horde_default_enemy_config") == 1 then
+        HORDE.GetDefaultEnemiesData()
+    else
+        GetEnemiesData()
+    end
+    
+    net.Receive("Horde_SetEnemiesData", function ()
+        HORDE.enemies = net.ReadTable()
+        HORDE.SetEnemiesData()
+    end)
 end

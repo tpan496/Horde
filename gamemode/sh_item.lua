@@ -22,39 +22,51 @@ HORDE.CreateItem = function (category, name, class, price, weight, description, 
 end
 
 HORDE.SetItemsData = function()
-    if GetConVarNumber("horde_default_item_config") == 1 then return end
-    if not file.IsDir('horde', 'DATA') then
-        file.CreateDir('horde')
-    end
-    
-    file.Write('horde/items.txt', util.TableToJSON(HORDE.items))
-end
-
-function GetItemsData()
-    if not file.IsDir('horde', 'DATA') then
-        file.CreateDir('horde')
-        return
-    end
-    
-    if file.Read('horde/items.txt', 'DATA') then
-        local t = util.JSONToTable(file.Read('horde/items.txt', 'DATA'))
-        
-        for _, item in pairs(t) do
-            if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
-                notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
-                notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
-                return
-            end
-        end
-        HORDE.items = t
-    end
-
     if SERVER then
+        if GetConVarNumber("horde_default_item_config") == 1 then return end
+        if not file.IsDir('horde', 'DATA') then
+            file.CreateDir('horde')
+        end
+        
+        file.Write('horde/items.txt', util.TableToJSON(HORDE.items))
+
         if player then
             for _, ply in pairs(player.GetAll()) do
                 net.Start("Horde_SyncItems")
                 net.WriteTable(HORDE.items)
                 net.Send(ply)
+            end
+        end
+    end
+end
+
+function GetItemsData()
+    if SERVER then
+        if not file.IsDir('horde', 'DATA') then
+            file.CreateDir('horde')
+            return
+        end
+        
+        if file.Read('horde/items.txt', 'DATA') then
+            local t = util.JSONToTable(file.Read('horde/items.txt', 'DATA'))
+            
+            for _, item in pairs(t) do
+                if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
+                    notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
+                    notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                    return
+                end
+            end
+            HORDE.items = t
+        end
+
+        if SERVER then
+            if player then
+                for _, ply in pairs(player.GetAll()) do
+                    net.Start("Horde_SyncItems")
+                    net.WriteTable(HORDE.items)
+                    net.Send(ply)
+                end
             end
         end
     end
@@ -176,27 +188,29 @@ HORDE.GetDefaultItemsData = function()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
 end
 
-if GetConVarNumber("horde_default_item_config") == 0 then
-    GetItemsData()
-else
-    HORDE.GetDefaultItemsData()
-end
-
-if SERVER then
-    util.AddNetworkString("Horde_GetItemsData")
-    
-    net.Receive("Horde_GetItemsData", function ()
-        GetItemsData()
-    end)
-end
-
 HORDE.GetSpecialItems = function ()
     -- Some built-in special items
     HORDE.CreateItem("Equipment", "Kevlar Armor", "armor", 1000, 0, "Full kevlar armor set.\nFills up 100% of your armor bar.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
 end
 
-HORDE.GetSpecialItems()
+-- Startup
+if SERVER then
+    util.AddNetworkString("Horde_SetItemsData")
+
+    if GetConVarNumber("horde_default_item_config") == 0 then
+        GetItemsData()
+    else
+        HORDE.GetDefaultItemsData()
+    end
+    HORDE.GetSpecialItems()
+    
+    net.Receive("Horde_SetItemsData", function ()
+        HORDE.items = net.ReadTable()
+        HORDE.SetItemsData()
+    end)
+    
+end
 
 HORDE.max_weight = 15
 HORDE.default_ammo_price = 10

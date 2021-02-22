@@ -17,9 +17,13 @@ function BroadcastMessage(msg, delay)
     end
 end
 
-hook.Add("PlayerInitialSpawn", "Horde_SyncItems", function (ply)
+hook.Add("PlayerInitialSpawn", "Horde_SyncGlobals", function (ply)
     net.Start("Horde_SyncItems")
     net.WriteTable(HORDE.items)
+    net.Send(ply)
+
+    net.Start("Horde_SyncEnemies")
+    net.WriteTable(HORDE.enemies)
     net.Send(ply)
 end)
 
