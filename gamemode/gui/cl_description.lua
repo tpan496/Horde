@@ -191,6 +191,7 @@ function PANEL:Paint()
             self.ammo_ten_btn:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel:SetVisible(false)
+            self.sell_btn:SetVisible(false)
             return
         end
         

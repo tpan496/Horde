@@ -1,7 +1,7 @@
 if CLIENT then return end
 -- Manages player spawn/death settings
 
-function GameEnd()
+HORDE.GameEnd = function (status)
     local randomplayer = table.Random(player.GetAll())
     local mvp_player = randomplayer
     local mvp_damage = 0
@@ -31,14 +31,15 @@ function GameEnd()
     local most_elite_kills = 0
 
     for _,ply in pairs(player.GetAll()) do
+        if not ply:IsValid() then goto cont end
         local id = ply:SteamID()
-        if HORDE.player_damage[id] and HORDE.player_damage[id] > most_damage then
+        if (not id) or (id == "") then goto cont end
+        if HORDE.player_damage and HORDE.player_damage[id] and HORDE.player_damage[id] > most_damage then
             second_damage_player = damage_player
             second_most_damage = most_damage
             most_damage = HORDE.player_damage[id]
             damage_player = ply
         end
-        total_damage = total_damage + HORDE.player_damage[id]
 
         if ply:Frags() > most_kills then
             second_kills_player = kills_player
@@ -47,25 +48,27 @@ function GameEnd()
             kills_player = ply
         end
 
-        if HORDE.player_money_earned[id] and HORDE.player_money_earned[id] > most_money then
+        if HORDE.player_money_earned and HORDE.player_money_earned[id] and HORDE.player_money_earned[id] > most_money then
             most_money = HORDE.player_money_earned[id]
             money_player = ply
         end
 
-        if HORDE.player_damage_taken[id] and HORDE.player_damage_taken[id] > most_damage_taken then
+        if HORDE.player_damage_taken and HORDE.player_damage_taken[id] and HORDE.player_damage_taken[id] > most_damage_taken then
             most_damage_taken = HORDE.player_damage_taken[id]
             damage_taken_player = ply
         end
 
-        if HORDE.player_elite_kills[id] and HORDE.player_elite_kills[id] > most_elite_kills then
+        if HORDE.player_elite_kills and HORDE.player_elite_kills[id] and HORDE.player_elite_kills[id] > most_elite_kills then
             most_elite_kills = HORDE.player_elite_kills[id]
             elite_kill_player = ply
         end
 
-        if HORDE.player_headshots[id] and HORDE.player_headshots[id] > most_headshots then
+        if HORDE.player_headshots and HORDE.player_headshots[id] and HORDE.player_headshots[id] > most_headshots then
             most_headshots = HORDE.player_headshots[id]
             headshot_player = ply
         end
+
+        ::cont::
     end
 
     -- Find out mvp
@@ -123,7 +126,7 @@ function GameEnd()
 
     timer.Remove('Horde_Main')
     timer.Remove('Horder_Counter')
-    BroadcastMessage('Victory!')
+    BroadcastMessage(status)
 end
 
 hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function(ply)
@@ -175,7 +178,7 @@ function CheckAlivePlayers()
         net.WriteString("All players are dead! Restarting...")
         net.WriteInt(1,2)
         net.Broadcast()
-        GameEnd()
+        HORDE.GameEnd("Defeat")
         timer.Simple(10, function() timer.Simple(0, function() RunConsoleCommand("changelevel", game.GetMap()) end) end)
     end
 end
