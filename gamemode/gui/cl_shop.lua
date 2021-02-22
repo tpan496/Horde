@@ -22,13 +22,14 @@ function PANEL:Init()
 	btn_container:Dock(TOP)
 	btn_container:DockMargin(0, 48, 0, 0)
     btn_container.Paint = function (pnl, w, h)
-        surface.SetDrawColor(60, 60, 60)
+        surface.SetDrawColor(40, 40, 40, 0)
         surface.DrawRect(0, 0, self:GetWide(), 32)
     end
 
 	local container = vgui.Create("DPanel", self)
 	container:Dock(LEFT)
     container:SetSize(self:GetWide() / 2, self:GetTall() - 100)
+	container:SetBackgroundColor(HORDE.color_hollow)
 
 	local description_panel = vgui.Create("HordeDescription", self)
 	description_panel:Dock(LEFT)
@@ -39,7 +40,7 @@ function PANEL:Init()
 	local function createBtn(text, panel, dock)
 		panel:SetParent(container)
 		panel:Dock(FILL)
-		panel.Paint = function(pnl, w, h) surface.SetDrawColor(40, 40, 40) surface.DrawRect(0, 0, w, h) end
+		panel.Paint = function(pnl, w, h) surface.SetDrawColor(40, 40, 40, 200) surface.DrawRect(0, 0, w, h) end
 
 		if firstBtn then
 			panel:SetZPos(100)
@@ -60,19 +61,32 @@ function PANEL:Init()
 				surface.DrawRect(0, 0, w, h)
 				return
 			end
-			surface.SetDrawColor(60, 60, 60)
+			surface.SetDrawColor(0,0,0,0)
 			surface.DrawRect(0, 0, w, h)
 
 			if pnl:GetActive() then
-				surface.SetDrawColor(Color(50,50,50))
+				surface.SetDrawColor(Color(40,40,40,230))
 				surface.DrawRect(0, 0, w, h)
 			end
 		end
 
 		btn.UpdateColours = function(pnl)
-			if pnl:GetActive() then return pnl:SetTextColor(Color(220, 220, 220, 255)) end
-			if pnl.Hovered then return pnl:SetTextColor(HORDE.color_crimson) end
-			pnl:SetTextColor(Color(200, 200, 200, 255))
+			if pnl:GetActive() then
+				if text == "Select Class" then
+					pnl:SetTextColor(Color(220,220,220))
+				else
+					pnl:SetTextColor(HORDE.color_crimson)
+				end
+				return
+			end
+			if pnl.Hovered then
+				if text == "Select Class" then
+					pnl:SetTextColor(Color(220,220,220))
+				else
+					pnl:SetTextColor(HORDE.color_crimson)
+				end
+			return end
+			pnl:SetTextColor(Color(255, 255, 255))
 		end
 
 		btn.PerformLayout = function(pnl)
@@ -188,7 +202,7 @@ function PANEL:Paint(w, h)
 	-- Derma_DrawBackgroundBlur(self)
 
     -- Entire Panel
-	draw.RoundedBox(10, 0, 0, w, h, Color(40, 40, 40, 255))
+	draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
 
 	-- Money
 	draw.SimpleText("Class: " .. LocalPlayer():GetClass().name, 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)

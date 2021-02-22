@@ -14,6 +14,7 @@ end
 
 function PANEL:DoClick()
 	self.description_panel:SetData(self.class)
+	surface.PlaySound("UI/buttonclick.wav")
 end
 
 function PANEL:OnCursorEntered()
@@ -22,6 +23,7 @@ end
 
 function PANEL:OnCursorExited()
 	self.bg_color = Color(50,50,50)
+	surface.PlaySound("UI/buttonrollover.wav")
 end
 
 function PANEL:SetData(class, description_panel)

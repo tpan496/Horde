@@ -6,8 +6,8 @@ local PANEL = {}
 
 function PANEL:Init()
 	self.name = ""
-	self.bg_color = Color(50,50,50)
-	self.bg_color_poor = Color(30,30,30)
+	self.bg_color = Color(50,50,50, 200)
+	self.bg_color_poor = Color(30,30,30, 200)
 	self.text_color = Color(255,255,255)
 	self.text_color_poor = Color(100,0,0)
 end
@@ -17,11 +17,11 @@ function PANEL:DoClick()
 end
 
 function PANEL:OnCursorEntered()
-	self.bg_color = Color(100, 100, 100)
+	self.bg_color = Color(100, 100, 100, 200)
 end
 
 function PANEL:OnCursorExited()
-	self.bg_color = Color(50,50,50)
+	self.bg_color = Color(50,50,50, 200)
 end
 
 function PANEL:SetData(item, description_panel)
