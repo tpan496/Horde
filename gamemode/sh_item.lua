@@ -119,7 +119,7 @@ HORDE.GetDefaultItemsData = function()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
     HORDE.CreateItem("SMG",        "P90",            "arccw_go_p90",      2000, 6, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
-    HORDE.CreateItem("SMG",        "Vector",         "arccw_mw2_vector",  2000, 6, "KRISS Vector Gen I.\nSses an unconventional delayed blowback system.",
+    HORDE.CreateItem("SMG",        "Vector",         "arccw_mw2_vector",  2000, 6, "KRISS Vector Gen I.\nUses an unconventional delayed blowback system.",
     {Medic=true, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
 
     HORDE.CreateItem("Shotgun",    "SPAS12",         "weapon_shotgun",    1250, 7, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
@@ -151,7 +151,7 @@ HORDE.GetDefaultItemsData = function()
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("Rifle",      "F2000",          "arccw_mw2_f2000",   2250, 7, "FN F2000.\nAn ambidextrous bullpup rifle developed by FN.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    HORDE.CreateItem("Rifle",      "Tavor",          "arccw_mw2_tavor",   2250, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, simplicity.",
+    HORDE.CreateItem("Rifle",      "Tavor",          "arccw_mw2_tavor",   2250, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     
     HORDE.CreateItem("Rifle",      "AWP",            "arccw_go_awp",      2000, 7, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
@@ -182,7 +182,7 @@ HORDE.GetDefaultItemsData = function()
     HORDE.CreateItem("Special",    "Gravity Gun",  "weapon_physcannon",    1500, 5, "Zero Point Energy Field Manipulator.\nPinnacle of theoretical physics.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 10, -1)
 
-    HORDE.CreateItem("Equipment",  "Medkit",         "weapon_medkit",      50,   1, "Rechargeble medic.\nRMB to self-heal, LMB to heal others.",
+    HORDE.CreateItem("Equipment",  "Medkit",         "weapon_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     
     print("[HORDE] - Loaded default item config.")
