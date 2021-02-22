@@ -43,3 +43,11 @@ CONFIG.enemies = {
 }
 ```
 To use your config, simply set `horde_external_lua_config` to the name you used for the config (`CONFIG.name`). You can also do that directly in the gmod start menu.
+
+## Dedicated Server Instructions
+Put
+```
+horde_default_item_config = 0
+horde_default_enemy_config = 0
+```
+In `autoexec.cfg`.
