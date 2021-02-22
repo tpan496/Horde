@@ -89,7 +89,7 @@ function GetEnemiesData()
             HORDE.enemies = t
             HORDE.NormalizeEnemiesWeight()
 
-            print("[HORDE] - Lodead custom enemy config.")
+            print("[HORDE] - Loaded custom enemy config.")
         end
 
 
@@ -296,7 +296,7 @@ HORDE.GetDefaultEnemiesData = function ()
     
     HORDE.NormalizeEnemiesWeight()
 
-    print("[HORDE] - Lodead default enemy config.")
+    print("[HORDE] - Loaded default enemy config.")
 end
 
 -- Startup

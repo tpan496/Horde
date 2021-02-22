@@ -51,7 +51,7 @@ function PANEL:Init()
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)
         warning_label:SetSize(modify_tab:GetWide(), 50)
-        warning_label:SetTextColor(Color(0,0,0))
+        warning_label:SetTextColor(Color(255,0,0))
         warning_label:SetText("You are using default config! Your data won't be saved!")
     end
 

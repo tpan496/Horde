@@ -63,7 +63,7 @@ function GetItemsData()
             end
             HORDE.items = t
 
-            print("[HORDE] - Lodead custom item config.")
+            print("[HORDE] - Loaded custom item config.")
         end
 
         HORDE.SyncItems()
@@ -185,7 +185,7 @@ HORDE.GetDefaultItemsData = function()
     HORDE.CreateItem("Equipment",  "Medkit",         "weapon_medkit",      50,   1, "Rechargeble medic.\nRMB to self-heal, LMB to heal others.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     
-    print("[HORDE] - Lodead default item config.")
+    print("[HORDE] - Loaded default item config.")
 end
 
 HORDE.GetSpecialItems = function ()
