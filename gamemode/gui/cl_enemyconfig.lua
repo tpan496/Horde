@@ -122,9 +122,19 @@ function PANEL:Init()
     reward_editor:SetValue("1")
     model_scale_editor:SetValue("1")
 
-    local save_btn = vgui.Create('DButton', modify_tab)
-    save_btn:Dock(BOTTOM)
+    local btn_panel = vgui.Create('DPanel', self)
+    btn_panel:SetPos(self:GetWide() - 210, 50)
+    btn_panel:SetSize(200, self:GetTall() - 50)
+    btn_panel.Paint = function ()
+        surface.SetDrawColor(Color(230,230,230))
+        surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
+    end
+
+    local save_btn = vgui.Create('DButton', btn_panel)
     save_btn:SetText("Save Enemy")
+    save_btn:SetTall(40)
+    save_btn:DockMargin(10, 10, 10, 10)
+    save_btn:Dock(TOP)
     save_btn.DoClick = function ()
         if not name_editor:GetValue() or not class_editor:GetValue() then return end
         local color = nil
@@ -156,9 +166,79 @@ function PANEL:Init()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
 
-    local load_btn = vgui.Create('DButton', modify_tab)
+    local save_for_waves = vgui.Create('DPanel', btn_panel)
+    save_for_waves:Dock(TOP)
+    save_for_waves:DockMargin(10, 10, 10, 10)
+    save_for_waves:SetTall(90)
+    save_for_waves.Paint = function () end
+
+    local boxes_pane = vgui.Create('DPanel', save_for_waves)
+    boxes_pane:Dock(BOTTOM)
+    boxes_pane.Paint = function () end
+    boxes_pane:SetTall(50)
+    local wave_start_box = vgui.Create('DComboBox', boxes_pane)
+    wave_start_box:SetPos(10,10)
+    wave_start_box:SetSize(50,30)
+    wave_start_box:SetSortItems(false)
+    local to_label = vgui.Create('DLabel', boxes_pane)
+    to_label:SetText("to")
+    to_label:SetTextColor(Color(0,0,0))
+    to_label:SetPos(80,15)
+    local wave_end_box = vgui.Create('DComboBox', boxes_pane)
+    wave_end_box:SetPos(120,10)
+    wave_end_box:SetSize(50,30)
+    wave_end_box:SetSortItems(false)
+    for i = 1, 10 do
+        wave_start_box:AddChoice(i)
+        wave_end_box:AddChoice(i)
+    end
+
+    local save_after_btn = vgui.Create('DButton', save_for_waves)
+    save_after_btn:Dock(BOTTOM)
+    save_after_btn:SetText("Save Enemy For Wave")
+    save_after_btn:SetTall(40)
+    save_after_btn.DoClick = function ()
+        if not name_editor:GetValue() or not class_editor:GetValue() then return end
+        local color = nil
+        if color_editor.enabled_editor:GetChecked() then
+            color = color_editor.color_editor:GetColor()
+        end
+        local weapon = nil
+        if weapon_editor and weapon_editor:GetText() ~= "" then
+            weapon = weapon_editor:GetText()
+        end
+
+        local start_wave = tonumber(wave_start_box:GetText())
+        local end_wave = tonumber(wave_end_box:GetText())
+        if start_wave > end_wave then return end
+        
+        for i = start_wave, end_wave do
+            HORDE.CreateEnemy(
+            name_editor:GetText(),
+            class_editor:GetText(),
+            weight_editor:GetFloat(),
+            i,
+            elite_editor:GetChecked(),
+            health_editor:GetFloat(),
+            damage_editor:GetFloat(),
+            reward_editor:GetFloat(),
+            model_scale_editor:GetFloat(),
+            color,
+            weapon
+        )
+        end
+
+        net.Start("Horde_SetEnemiesData")
+        net.WriteTable(HORDE.enemies)
+        net.SendToServer()
+        notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+    end
+
+    local load_btn = vgui.Create('DButton', btn_panel)
     load_btn:Dock(TOP)
+    load_btn:DockMargin(10, 10, 10, 10)
     load_btn:SetText("OVERWRITE with Default Config")
+    load_btn:SetTall(40)
     load_btn.DoClick = function ()
         Derma_Query('Overwrite?', 'Overwrite with Default Config',
             'Yes',
@@ -175,9 +255,11 @@ function PANEL:Init()
         )
     end
 
-    local del_btn = vgui.Create('DButton', modify_tab)
+    local del_btn = vgui.Create('DButton', btn_panel)
     del_btn:Dock(TOP)
+    del_btn:DockMargin(10, 10, 10, 10)
     del_btn:SetText("Delete Everything")
+    del_btn:SetTall(40)
     del_btn.DoClick = function ()
         Derma_Query('Delete Everything?', 'Delete Everything',
             'Yes',

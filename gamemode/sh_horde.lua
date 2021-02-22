@@ -19,6 +19,9 @@ CreateConVar("horde_max_enemies_alive_base", 20, SERVER_CAN_EXECUTE, "Maximum nu
 CreateConVar("horde_max_enemies_alive_scale_factor", 5, SERVER_CAN_EXECUTE, "Scale factor of the maximum number of living enemies for multiplayer.")
 CreateConVar("horde_max_enemies_alive_max", 50, SERVER_CAN_EXECUTE, "Maximum number of maximum living enemies.")
 
+CreateConVar("horde_base_walkspeed", 180, SERVER_CAN_EXECUTE, "Base walkspeed.")
+CreateConVar("horde_base_runspeed", 220, SERVER_CAN_EXECUTE, "Base runspeed.")
+
 if SERVER then
 util.AddNetworkString("Horde_SyncItems")
 util.AddNetworkString("Horde_SyncEnemies")

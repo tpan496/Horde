@@ -7,6 +7,7 @@ end)
 util.AddNetworkString("Horde_BuyItem")
 util.AddNetworkString("Horde_BuyItemAmmoPrimary")
 util.AddNetworkString("Horde_BuyItemAmmoSecondary")
+util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
 util.AddNetworkString("Horde_SynchronizeEconomy")
 util.AddNetworkString("Horde_LegacyNotification")
@@ -153,6 +154,16 @@ net.Receive("Horde_BuyItem", function (len, ply)
             ply:Give(class)
             ply:SelectWeapon(class)
         end
+    end
+end)
+
+net.Receive("Horde_SellItem", function (len, ply)
+    local class = net.ReadString()
+    if ply:HasWeapon(class) then
+        local item = HORDE.items[class]
+        ply:AddMoney(math.floor(item.price * 0.25))
+        ply:StripWeapon(class)
+        ply:SyncEconomy()
     end
 end)
 
