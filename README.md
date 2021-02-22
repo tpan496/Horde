@@ -50,4 +50,4 @@ Put
 horde_default_item_config = 0
 horde_default_enemy_config = 0
 ```
-In `autoexec.cfg`.
+In `autoexec.cfg`. A quick way to setup the config is just to put your `item.txt` or `enemy.txt` into your server's `data` folder.
