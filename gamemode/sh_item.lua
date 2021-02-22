@@ -21,6 +21,16 @@ HORDE.CreateItem = function (category, name, class, price, weight, description, 
     HORDE.SetItemsData()
 end
 
+HORDE.SyncItems = function ()
+    if player then
+        for _, ply in pairs(player.GetAll()) do
+            net.Start("Horde_SyncItems")
+            net.WriteTable(HORDE.items)
+            net.Send(ply)
+        end
+    end
+end
+
 HORDE.SetItemsData = function()
     if SERVER then
         if GetConVarNumber("horde_default_item_config") == 1 then return end
@@ -30,13 +40,7 @@ HORDE.SetItemsData = function()
         
         file.Write('horde/items.txt', util.TableToJSON(HORDE.items))
 
-        if player then
-            for _, ply in pairs(player.GetAll()) do
-                net.Start("Horde_SyncItems")
-                net.WriteTable(HORDE.items)
-                net.Send(ply)
-            end
-        end
+        HORDE.SyncItems()
     end
 end
 
@@ -58,17 +62,11 @@ function GetItemsData()
                 end
             end
             HORDE.items = t
+
+            print("[HORDE] - Lodead custom item config.")
         end
 
-        if SERVER then
-            if player then
-                for _, ply in pairs(player.GetAll()) do
-                    net.Start("Horde_SyncItems")
-                    net.WriteTable(HORDE.items)
-                    net.Send(ply)
-                end
-            end
-        end
+        HORDE.SyncItems()
     end
 end
 
@@ -186,6 +184,8 @@ HORDE.GetDefaultItemsData = function()
 
     HORDE.CreateItem("Equipment",  "Medkit",         "weapon_medkit",      50,   1, "Rechargeble medic.\nRMB to self-heal, LMB to heal others.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
+    
+    print("[HORDE] - Lodead default item config.")
 end
 
 HORDE.GetSpecialItems = function ()
@@ -200,10 +200,13 @@ if SERVER then
 
     if GetConVarNumber("horde_default_item_config") == 0 then
         GetItemsData()
+        HORDE.GetSpecialItems()
     else
         HORDE.GetDefaultItemsData()
+        HORDE.GetSpecialItems()
+        HORDE.SyncItems()
     end
-    HORDE.GetSpecialItems()
+    
     
     net.Receive("Horde_SetItemsData", function ()
         HORDE.items = net.ReadTable()
