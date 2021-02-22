@@ -95,12 +95,14 @@ end
 HORDE.CreateClasses()
 
 function SetClassData()
-    if GetConVarNumber("horde_default_class_config") == 1 then return end
-    if not file.IsDir('horde', 'DATA') then
-        file.CreateDir('horde')
+    if SERVER then
+        if GetConVarNumber("horde_default_class_config") == 1 then return end
+        if not file.IsDir('horde', 'DATA') then
+            file.CreateDir('horde')
+        end
+        
+        file.Write('horde/class.txt', util.TableToJSON(HORDE.classes))
     end
-    
-    file.Write('horde/class.txt', util.TableToJSON(HORDE.classes))
 end
 
 HORDE.UpdateClassData = function()
@@ -108,39 +110,41 @@ HORDE.UpdateClassData = function()
 end
 
 function GetClassData()
-    if not file.IsDir('horde', 'DATA') then
-        file.CreateDir('horde')
-        return
-    end
-    
-    if file.Read('horde/class.txt', 'DATA') then
-        local t = util.JSONToTable(file.Read('horde/class.txt', 'DATA'))
-
-        -- Integrity
-        for _, class in pairs(t) do
-            if class.name == nil or class.name == "" or class.perks == nil then
-                if CLIENT then
-                    hook.Add("InitPostEntity", "Horde_Class_Invalidation", function ()
-                        timer.Simple(5, function() notification.AddLegacy("Class config file validation failed! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
-                        timer.Simple(5, function() notification.AddLegacy("Default class descriptions are loaded.", NOTIFY_ERROR, 5) end)
-                    end)
-                end
-                return
-            end
+    if SERVER then
+        if not file.IsDir('horde', 'DATA') then
+            file.CreateDir('horde')
+            return
         end
+        
+        if file.Read('horde/class.txt', 'DATA') then
+            local t = util.JSONToTable(file.Read('horde/class.txt', 'DATA'))
 
-        for _, class in pairs(t) do
-            -- Fallback notice
-            if class.description then
-                if CLIENT then
-                    hook.Add("InitPostEntity", "Horde_Class_Deprecation", function ()
-                        timer.Simple(5, function() notification.AddLegacy("Class config descriptions contain deprecated fields! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
-                        timer.Simple(5, function() notification.AddLegacy("Default class descriptions are loaded.", NOTIFY_ERROR, 5) end)
-                    end)
+            -- Integrity
+            for _, class in pairs(t) do
+                if class.name == nil or class.name == "" or class.perks == nil then
+                    if CLIENT then
+                        hook.Add("InitPostEntity", "Horde_Class_Invalidation", function ()
+                            timer.Simple(5, function() notification.AddLegacy("Class config file validation failed! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
+                            timer.Simple(5, function() notification.AddLegacy("Default class descriptions are loaded.", NOTIFY_ERROR, 5) end)
+                        end)
+                    end
+                    return
                 end
             end
-            if class.extra_description then
-                HORDE.classes[class.name].extra_description = class.extra_description
+
+            for _, class in pairs(t) do
+                -- Fallback notice
+                if class.description then
+                    if CLIENT then
+                        hook.Add("InitPostEntity", "Horde_Class_Deprecation", function ()
+                            timer.Simple(5, function() notification.AddLegacy("Class config descriptions contain deprecated fields! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
+                            timer.Simple(5, function() notification.AddLegacy("Default class descriptions are loaded.", NOTIFY_ERROR, 5) end)
+                        end)
+                    end
+                end
+                if class.extra_description then
+                    HORDE.classes[class.name].extra_description = class.extra_description
+                end
             end
         end
     end
