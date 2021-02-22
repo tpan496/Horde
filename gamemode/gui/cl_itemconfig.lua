@@ -148,7 +148,7 @@ function PANEL:Init()
                 HORDE.items = {}
                 HORDE.GetDefaultItemsData()
                 HORDE.GetSpecialItems()
-                -- Reload from disk
+
                 net.Start("Horde_SetItemsData")
                 net.WriteTable(HORDE.items)
                 net.SendToServer()
@@ -167,8 +167,7 @@ function PANEL:Init()
             function()
                 HORDE.items = {}
                 HORDE.GetSpecialItems()
-                HORDE.SetItemsData()
-                -- Reload from disk
+
                 net.Start("Horde_SetItemsData")
                 net.WriteTable(HORDE.items)
                 net.SendToServer()
@@ -220,7 +219,7 @@ function PANEL:Init()
         
         menu:AddOption('Delete', function()
             HORDE.items[item.class] = nil
-            HORDE.SetItemsData()
+
 			net.Start("Horde_SetItemsData")
             net.WriteTable(HORDE.items)
         	net.SendToServer()

@@ -160,7 +160,7 @@ function PANEL:Init()
             function()
                 HORDE.enemies = {}
                 HORDE.GetDefaultEnemiesData()
-                -- Reload from disk
+
                 net.Start("Horde_SetEnemiesData")
                 net.WriteTable(HORDE.enemies)
                 net.SendToServer()
@@ -178,8 +178,7 @@ function PANEL:Init()
             'Yes',
             function()
                 HORDE.enemies = {}
-                HORDE.SetEnemiesData()
-                -- Reload from disk
+
                 net.Start("Horde_SetEnemiesData")
                 net.WriteTable(HORDE.enemies)
                 net.SendToServer()
@@ -233,6 +232,7 @@ function PANEL:Init()
         
         menu:AddOption('Delete', function()
             HORDE.enemies[enemy.name .. tostring(enemy.wave)] = nil
+
 			net.Start("Horde_SetEnemiesData")
             net.WriteTable(HORDE.enemies)
         	net.SendToServer()

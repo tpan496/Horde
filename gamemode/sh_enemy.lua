@@ -38,6 +38,16 @@ HORDE.NormalizeEnemiesWeight = function ()
     end
 end
 
+HORDE.SyncEnemies = function ()
+    if player then
+        for _, ply in pairs(player.GetAll()) do
+            net.Start("Horde_SyncEnemies")
+            net.WriteTable(HORDE.enemies)
+            net.Send(ply)
+        end
+    end
+end
+
 HORDE.SetEnemiesData = function()
     if SERVER then
         HORDE.NormalizeEnemiesWeight()
@@ -49,13 +59,7 @@ HORDE.SetEnemiesData = function()
         
         file.Write('horde/enemies.txt', util.TableToJSON(HORDE.enemies))
 
-        if player then
-            for _, ply in pairs(player.GetAll()) do
-                net.Start("Horde_SyncEnemies")
-                net.WriteTable(HORDE.enemies)
-                net.Send(ply)
-            end
-        end
+        HORDE.SyncEnemies()
     end
 end
 
@@ -84,16 +88,12 @@ function GetEnemiesData()
             -- Be careful of backwards compataiblity
             HORDE.enemies = t
             HORDE.NormalizeEnemiesWeight()
+
+            print("[HORDE] - Lodead custom enemy config.")
         end
 
 
-        if player then
-            for _, ply in pairs(player.GetAll()) do
-                net.Start("Horde_SyncEnemies")
-                net.WriteTable(HORDE.enemies)
-                net.Send(ply)
-            end
-        end
+        HORDE.SyncEnemies()
     end
 end
 
@@ -295,6 +295,8 @@ HORDE.GetDefaultEnemiesData = function ()
     HORDE.CreateEnemy("zombie vj guard", "npc_vj_zss_zombguard",     0.25, 10, false, 1, 1, 1, 1, nil)
     
     HORDE.NormalizeEnemiesWeight()
+
+    print("[HORDE] - Lodead default enemy config.")
 end
 
 -- Startup
@@ -303,6 +305,7 @@ if SERVER then
 
     if GetConVarNumber("horde_default_enemy_config") == 1 then
         HORDE.GetDefaultEnemiesData()
+        HORDE.SyncEnemies()
     else
         GetEnemiesData()
     end
