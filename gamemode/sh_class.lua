@@ -92,9 +92,17 @@ HORDE.CreateClasses = function()
     )]]--
 end
 
-HORDE.CreateClasses()
+function SyncClasses()
+    if player then
+        for _, ply in pairs(player.GetAll()) do
+            net.Start("Horde_SyncClasses")
+            net.WriteTable(HORDE.classes)
+            net.Send(ply)
+        end
+    end
+end
 
-function SetClassData()
+HORDE.SetClassData = function ()
     if SERVER then
         if GetConVarNumber("horde_default_class_config") == 1 then return end
         if not file.IsDir('horde', 'DATA') then
@@ -103,10 +111,6 @@ function SetClassData()
         
         file.Write('horde/class.txt', util.TableToJSON(HORDE.classes))
     end
-end
-
-HORDE.UpdateClassData = function()
-    SetClassData()
 end
 
 function GetClassData()
@@ -150,7 +154,22 @@ function GetClassData()
     end
 end
 
-if GetConVarNumber("horde_default_class_config") == 0 then
-    -- Overwrite description
-    GetClassData()
+-- Startup
+HORDE.CreateClasses()
+if SERVER then
+    util.AddNetworkString("Horde_SetClassData")
+
+    if GetConVarNumber("horde_default_class_config") == 1 then
+        -- Do nothing
+    else
+        GetClassData()
+    end
+
+    SyncClasses()
+    
+    net.Receive("Horde_SetClassData", function ()
+        HORDE.classes = net.ReadTable()
+        HORDE.SetClassData()
+        SyncClasses()
+    end)
 end

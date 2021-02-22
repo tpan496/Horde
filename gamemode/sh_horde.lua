@@ -22,6 +22,7 @@ CreateConVar("horde_max_enemies_alive_max", 50, SERVER_CAN_EXECUTE, "Maximum num
 if SERVER then
 util.AddNetworkString("Horde_SyncItems")
 util.AddNetworkString("Horde_SyncEnemies")
+util.AddNetworkString("Horde_SyncClasses")
 end
 
 HORDE = {}

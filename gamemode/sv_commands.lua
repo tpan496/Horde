@@ -25,6 +25,10 @@ hook.Add("PlayerInitialSpawn", "Horde_SyncGlobals", function (ply)
     net.Start("Horde_SyncEnemies")
     net.WriteTable(HORDE.enemies)
     net.Send(ply)
+
+    net.Start("Horde_SyncClasses")
+    net.WriteTable(HORDE.classes)
+    net.Send(ply)
 end)
 
 function Start(ply)
