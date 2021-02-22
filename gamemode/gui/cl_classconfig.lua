@@ -61,7 +61,10 @@ function PANEL:Init()
     reset_btn.DoClick = function ()
         if GetConVarNumber("horde_default_class_config") == 1 then return end
         HORDE.CreateClasses()
-        HORDE.UpdateClassData()
+        
+        net.Start("Horde_SetClassData")
+        net.WriteTable(HORDE.classes)
+        net.SendToServer()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
 
@@ -74,7 +77,10 @@ function PANEL:Init()
         local extra_description = description_editor:GetValue()
         if name and HORDE.classes[name] and extra_description then
             HORDE.classes[name].extra_description = extra_description
-            HORDE.UpdateClassData()
+
+            net.Start("Horde_SetClassData")
+            net.WriteTable(HORDE.classes)
+            net.SendToServer()
             notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
         end
     end

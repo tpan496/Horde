@@ -215,6 +215,10 @@ net.Receive("Horde_SyncEnemies", function ()
 	HORDE.enemies = net.ReadTable()
 end)
 
+net.Receive("Horde_SyncClasses", function ()
+    HORDE.classes = net.ReadTable()
+end)
+
 hook.Add("HUDShouldDraw", "RemoveRetardRedScreen", function(name) 
     if (name == "CHudDamageIndicator") then
        return false
