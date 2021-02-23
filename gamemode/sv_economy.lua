@@ -108,6 +108,7 @@ end)
 
 hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
     if not ply:IsValid() then return end
+    if ply:IsNPC() then return end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
         ply:AddWeight(item.weight)
@@ -116,7 +117,8 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
 end)
 
 hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
-    if not ply:IsValid() then return end
+    if not ply:IsValid() then return false end
+    if ply:IsNPC() then return true end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
         if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
