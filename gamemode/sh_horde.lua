@@ -30,8 +30,8 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.0.1"
-print("[HORDE] HORDE Version is 1.0.0.1") -- Sanity check
+HORDE.version = "1.0.0.2"
+print("[HORDE] HORDE Version is" .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
 HORDE.color_crimson_dim = Color(200, 0, 40)
