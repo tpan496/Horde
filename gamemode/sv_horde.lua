@@ -196,7 +196,8 @@ function SpawnEnemy(enemy, pos)
         spawned_enemy:Give(enemy.weapon)
     end
 
-    spawned_enemy:SetSquad("horde")
+    -- This is experimental
+    --spawned_enemy:SetSquad("horde")
 
     return spawned_enemy
 end
