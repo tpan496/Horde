@@ -44,7 +44,7 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
     if HORDE.spawned_enemies[victim:EntIndex()] then
         HORDE.spawned_enemies[victim:EntIndex()] = nil
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
-        --print("OnKill", HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+        --print("OnKill", "[HORDE] Killing ", HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
         HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
             --print("Highlight")
@@ -103,7 +103,7 @@ hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
         HORDE.spawned_enemies[ent:EntIndex()] = nil
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
         HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
-        --print("OnRemove", ent:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+        --print("OnRemove", "[HORDE] Remove ", ent:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
     end
 end)
 
@@ -374,10 +374,11 @@ timer.Create('Horde_Main', director_interval, 0, function ()
     --Get valid nodes
     for _, node in pairs(HORDE.ai_nodes) do
         local valid = false
+        local z_dist
 
         for _, ply in pairs(player.GetAll()) do
             local dist = node["pos"]:Distance(ply:GetPos())
-            local z_dist = math.abs(node["pos"].z - ply:GetPos().z)
+            z_dist = math.abs(node["pos"].z - ply:GetPos().z)
 
             if (dist <= HORDE.min_spawn_distance) or (z_dist >= GetConVarNumber("horde_max_spawn_z_distance")) then
                 valid = false
@@ -391,7 +392,7 @@ timer.Create('Horde_Main', director_interval, 0, function ()
 
         for _, enemy in pairs(enemies) do
             local dist = node["pos"]:Distance(enemy:GetPos())
-            if dist <= 50 then
+            if dist <= 100 then
                 valid = false
                 break
             end
@@ -429,7 +430,7 @@ timer.Create('Horde_Main', director_interval, 0, function ()
                     end
                     HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
                     HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
-                    -- print("OnSpawn", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+                    --print("OnSpawn", "[HORDE] Spawning ", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
                 end
             else
                 break
@@ -474,7 +475,7 @@ timer.Create('Horde_Main', director_interval, 0, function ()
             HORDE.player_ready[ply:SteamID()] = false
         end
 
-        if GetConVarNumber("horde_npc_cleanup") then
+        if GetConVarNumber("horde_npc_cleanup") == 1 then
             for _, ent in pairs(ents.GetAll()) do
                 if ent:IsNPC() then
                     ent:Remove()
