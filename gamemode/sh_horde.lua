@@ -30,7 +30,8 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.0"
+HORDE.version = "1.0.0.1"
+print("[HORDE] HORDE Version is 1.0.0.1")
 HORDE.color_crimson = Color(220, 20, 60, 225)
 HORDE.color_crimson_dim = Color(200, 0, 40)
 HORDE.color_crimson_dark = Color(100,0,0)
