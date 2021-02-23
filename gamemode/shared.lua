@@ -36,3 +36,9 @@ function GM:PlayerSpawnEffect(ply,model) return false end
 function GM:PlayerGiveSWEP(ply,weapon,swep) return false end
 
 function GM:HUDAmmoPickedUp(item, amount) return false end
+
+function GM:ShowTeam(ply) ConfigMenu(ply) end
+
+function GM:ShowSpare1(ply) Shop(ply) end
+
+function GM:ShowSpare2(ply) Ready(ply) end

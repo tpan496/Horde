@@ -2,6 +2,7 @@ if CLIENT then return end
 
 util.AddNetworkString("Horde_ForceCloseShop")
 util.AddNetworkString("Horde_ToggleShop")
+util.AddNetworkString("Horde_ToggleConfigMenu")
 util.AddNetworkString("Horde_ToggleItemConfig")
 util.AddNetworkString("Horde_ToggleEnemyConfig")
 util.AddNetworkString("Horde_ToggleClassConfig")
@@ -159,6 +160,25 @@ function ClassConfig(ply)
     end
     if ply:IsSuperAdmin() then
         net.Start("Horde_ToggleClassConfig")
+        net.Send(ply)
+    else
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("You do not have access to this command.")
+        net.WriteInt(1,2)
+        net.Send(ply)
+    end
+end
+
+function ConfigMenu(ply)
+    if HORDE.start_game then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("You cannot open config after a wave has started.")
+        net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
+    if ply:IsSuperAdmin() then
+        net.Start("Horde_ToggleConfigMenu")
         net.Send(ply)
     else
         net.Start("Horde_LegacyNotification")
