@@ -1,5 +1,4 @@
 if SERVER then return end
-
 include("shared.lua")
 include("sh_horde.lua")
 include("sh_item.lua")
@@ -16,6 +15,9 @@ include("gui/cl_enemyconfig.lua")
 include("gui/cl_shop.lua")
 include("gui/cl_summary.lua")
 include("gui/cl_scoreboard.lua")
+
+-- Some users report severe lag with halo
+CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
 
 local center_panel = vgui.Create("DPanel")
 center_panel:SetSize(300, 50)
@@ -101,6 +103,7 @@ function HORDE:ToggleClassConfig()
 end
 
 net.Receive("Horde_HighlightEnemies", function (len, ply)
+    if GetConVarNumber("horde_enable_halo") == 0 then return end
     local render = net.ReadInt(2)
     if render == 1 then
         hook.Add("PreDrawHalos", "Horde_AddPropHalos", function()
