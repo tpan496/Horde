@@ -100,12 +100,19 @@
 		}
 		14
 		{
+			"name"		"horde_max_spawn_z_distance"
+			"text"		"Maximum enemy spawn height difference."
+			"type"		"Numeric"
+			"default"	"500"
+		}
+		15
+		{
 			"name"		"horde_base_walkspeed"
 			"text"		"Base Walkspeed"
 			"type"		"Numeric"
 			"default"	"180"
 		}
-		15
+		16
 		{
 			"name"		"horde_base_runspeed"
 			"text"		"Base Runspeed"

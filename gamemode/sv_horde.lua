@@ -341,19 +341,24 @@ timer.Create('Horde_Main', director_interval, 0, function ()
     -- Check enemy
     for _, enemy in pairs(enemies) do
         local closest = 99999
+        local closest_z = 99999
         local closest_ply = nil
         local enemy_pos = enemy:GetPos()
 
         for _, ply in pairs(player.GetAll()) do
             local dist = enemy_pos:Distance(ply:GetPos())
+            local z_dist = math.abs(ply:GetPos().z - enemy_pos.z)
 
             if dist < closest then
                 closest_ply = ply
                 closest = dist
             end
+            if z_dist < closest_z then
+                closest_z = z_dist
+            end
         end
 
-        if closest > HORDE.max_spawn_distance then
+        if closest > HORDE.max_spawn_distance or (closest_z > GetConVarNumber("horde_max_spawn_z_distance")) then
             table.RemoveByValue(enemies, enemy)
             enemy:Remove()
         else
@@ -367,13 +372,14 @@ timer.Create('Horde_Main', director_interval, 0, function ()
     end
 
     --Get valid nodes
-    for k, v in pairs(HORDE.ai_nodes) do
+    for _, node in pairs(HORDE.ai_nodes) do
         local valid = false
 
-        for k2, v2 in pairs(player.GetAll()) do
-            local dist = v["pos"]:Distance(v2:GetPos())
+        for _, ply in pairs(player.GetAll()) do
+            local dist = node["pos"]:Distance(ply:GetPos())
+            local z_dist = math.abs(node["pos"].z - ply:GetPos().z)
 
-            if dist <= HORDE.min_spawn_distance then
+            if (dist <= HORDE.min_spawn_distance) or (z_dist >= GetConVarNumber("horde_max_spawn_z_distance")) then
                 valid = false
                 break
             elseif dist < HORDE.max_spawn_distance then
@@ -383,16 +389,16 @@ timer.Create('Horde_Main', director_interval, 0, function ()
 
         if not valid then goto cont end
 
-        for k2, v2 in pairs(enemies) do
-            local dist = v["pos"]:Distance(v2:GetPos())
-            if dist <= 100 then
+        for _, enemy in pairs(enemies) do
+            local dist = node["pos"]:Distance(enemy:GetPos())
+            if dist <= 50 then
                 valid = false
                 break
             end
         end
 
         if valid then
-            table.insert(valid_nodes, v["pos"])
+            table.insert(valid_nodes, node["pos"])
         end
 
         ::cont::

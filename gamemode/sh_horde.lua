@@ -9,6 +9,8 @@ CreateConVar("horde_enable_client_gui", 1, SERVER_CAN_EXECUTE, "Enables client i
 --CreateConVar("horde_enable_respawn", 0, SERVER_CAN_EXECUTE, "Players can respawn after death during a wave.")
 CreateConVar("horde_max_spawn_distance", 2000, SERVER_CAN_EXECUTE, "Maximum enenmy respawn distance.")
 CreateConVar("horde_min_spawn_distance", 500, SERVER_CAN_EXECUTE, "Minimum enenmy respawn distance.")
+CreateConVar("horde_max_spawn_z_distance", 500, SERVER_CAN_EXECUTE, "Maximum enemy respawn height difference with players.")
+
 CreateConVar("horde_start_money", 1000, SERVER_CAN_EXECUTE, "Money given at start.")
 CreateConVar("horde_npc_cleanup", 1, SERVER_CAN_EXECUTE, "Kills all NPCs after a wave.")
 CreateConVar("horde_enable_scoreboard", 1, SERVER_CAN_EXECUTE, "Enables built-in scoreboard.")
