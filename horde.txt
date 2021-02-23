@@ -79,26 +79,33 @@
 		}
 		11
 		{
+			"name"		"horde_enable_sandbox"
+			"text"		"Enables sandbox/cheat features"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+		12
+		{
 			"name"		"horde_max_spawn_distance"
 			"text"		"Maximum enemy spawn distance (>100)"
 			"type"		"Numeric"
 			"default"	"2000"
 		}
-		12
+		13
 		{
 			"name"		"horde_min_spawn_distance"
 			"text"		"Minimum enemy spawn distance (>100)"
 			"type"		"Numeric"
 			"default"	"500"
 		}
-		13
+		14
 		{
 			"name"		"horde_base_walkspeed"
 			"text"		"Base Walkspeed"
 			"type"		"Numeric"
 			"default"	"180"
 		}
-		14
+		15
 		{
 			"name"		"horde_base_runspeed"
 			"text"		"Base Runspeed"

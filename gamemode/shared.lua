@@ -3,36 +3,59 @@ GM.Author = "tpan496"
 GM.Email = "N/A"
 GM.Website = "N/A"
 
+CreateConVar("horde_enable_sandbox", 0, SERVER_CAN_EXECUTE, "Enables sandbox/cheat features.")
+
 DeriveGamemode("sandbox")
 
 function GM:PlayerLoadout(ply) ply:StripWeapons() end
 
-function GM:OnSpawnMenuOpen() return false end
+local function CheckAllowHook(hook_name)
+    if GetConVarNumber("horde_enable_sandbox") == 1 then
+        hook.Call(hook_name)
+        return true
+    else
+	    return false
+    end
+end
 
-function GM:ContextMenuOpen() return false end
+local function CheckAllowFeature()
+    print("check")
+    if GetConVarNumber("horde_enable_sandbox") == 1 then
+        print("yes")
+        return true
+    else
+	    return false
+    end
+end
 
-function GM:PlayerNoClip(ply,desiredState) return false end
+hook.Add("SpawnMenuOpen", "Horde_SpawnMenu", CheckAllowFeature)
+
+--function GM:OnSpawnMenuOpen() return CheckAllowHook("SpawnMenuOpen") end
+
+function GM:ContextMenuOpen() return CheckAllowHook("ContextMenuOpen") end
+
+function GM:PlayerNoClip(ply,desiredState) return CheckAllowFeature() end
 
 function GM:PlayerDeathSound() return true end
 
 --function GM:DrawDeathNotice(x,y) return true end
 
-function GM:PlayerSpawnVehicle(ply,model,name,table) return false end
+function GM:PlayerSpawnVehicle(ply,model,name,table) return CheckAllowFeature() end
 
-function GM:PlayerSpawnSWEP(ply,weapon,info) return false end
+function GM:PlayerSpawnSWEP(ply,weapon,info) return CheckAllowFeature() end
 
-function GM:PlayerSpawnSENT(ply,class) return false end
+function GM:PlayerSpawnSENT(ply,class) return CheckAllowFeature() end
 
-function GM:PlayerSpawnRagdoll(ply,model) return false end
+function GM:PlayerSpawnRagdoll(ply,model) return CheckAllowFeature() end
 
-function GM:PlayerSpawnProp(ply,model) return false end
+function GM:PlayerSpawnProp(ply,model) return CheckAllowFeature() end
 
-function GM:PlayerSpawnObject(ply,model,skin) return false end
+function GM:PlayerSpawnObject(ply,model,skin) return CheckAllowFeature() end
 
-function GM:PlayerSpawnNPC(ply,npc_type,weapon) return false end
+function GM:PlayerSpawnNPC(ply,npc_type,weapon) return CheckAllowFeature() end
 
-function GM:PlayerSpawnEffect(ply,model) return false end
+function GM:PlayerSpawnEffect(ply,model) return CheckAllowFeature() end
 
-function GM:PlayerGiveSWEP(ply,weapon,swep) return false end
+function GM:PlayerGiveSWEP(ply,weapon,swep) return CheckAllowFeature() end
 
-function GM:HUDAmmoPickedUp(item, amount) return false end
+function GM:HUDAmmoPickedUp(item, amount) return CheckAllowFeature() end
