@@ -441,6 +441,12 @@ timer.Create('Horde_Main', director_interval, 0, function ()
         if HORDE.current_wave == HORDE.max_waves then
             BroadcastMessage("Final Wave Completed! You have survived!")
             HORDE.GameEnd("Victory")
+            timer.Simple(5, function ()
+                net.Start("Horde_LegacyNotification")
+                net.WriteString("Changing map to " .. game.GetMapNext() .. " in 30 seconds!", NOTIFY_GENERIC, 5)
+                net.Broadcast()
+            end)
+            timer.Simple(35, function() timer.Simple(0, function() RunConsoleCommand("changelevel", game.GetMapNext()) end) end)
         else
             BroadcastMessage("Wave Completed!")
             net.Start("Horde_LegacyNotification")
