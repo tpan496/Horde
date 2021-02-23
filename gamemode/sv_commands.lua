@@ -174,8 +174,8 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     if text == "!help" then
         ply:PrintMessage(HUD_PRINTTALK, "'!ready' - Get ready")
         ply:PrintMessage(HUD_PRINTTALK, "'!shop' - Open shop")
-        ply:PrintMessage(HUD_PRINTTALK, "'!start' - Start the game (Admin only)")
-        ply:PrintMessage(HUD_PRINTTALK, "'!end' - End the game (Admin only)")
+        ply:PrintMessage(HUD_PRINTTALK, "'!drop' - Drop weapon")
+        ply:PrintMessage(HUD_PRINTTALK, "'!donate' - Drop 50$")
     
     elseif text == "!start" then
         Start(ply)
@@ -197,7 +197,10 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         
     elseif text == "!classconfig" then
         ClassConfig(ply)
-        
+    elseif text == "!drop" then
+        ply:DropWeapon()
+    elseif text == "!donate" then
+        ply:DropMoney()
     end
     return input
 end)

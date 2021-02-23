@@ -4,6 +4,10 @@ concommand.Add("horde_drop_money", function (ply, cmd, args)
     ply:DropMoney()
 end)
 
+concommand.Add("horde_drop_weapon", function (ply, cmd, args)
+    ply:DropWeapon()
+end)
+
 util.AddNetworkString("Horde_BuyItem")
 util.AddNetworkString("Horde_BuyItemAmmoPrimary")
 util.AddNetworkString("Horde_BuyItemAmmoSecondary")
