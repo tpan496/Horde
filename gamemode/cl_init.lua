@@ -104,6 +104,9 @@ function HORDE:ToggleClassConfig()
 end
 
 function HORDE:ToggleConfigMenu()
+    if not LocalPlayer():IsSuperAdmin() then
+        return
+    end
     if not HORDE.ConfigMenuGUI then
         HORDE.ConfigMenuGUI = vgui.Create('HordeConfigMenu')
         HORDE.ConfigMenuGUI:SetVisible(false)
