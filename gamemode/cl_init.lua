@@ -12,6 +12,7 @@ include("gui/cl_item.lua")
 include("gui/cl_itemconfig.lua")
 include("gui/cl_classconfig.lua")
 include("gui/cl_enemyconfig.lua")
+include("gui/cl_configmenu.lua")
 include("gui/cl_shop.lua")
 include("gui/cl_summary.lua")
 include("gui/cl_scoreboard.lua")
@@ -102,6 +103,24 @@ function HORDE:ToggleClassConfig()
     end
 end
 
+function HORDE:ToggleConfigMenu()
+    if not HORDE.ConfigMenuGUI then
+        HORDE.ConfigMenuGUI = vgui.Create('HordeConfigMenu')
+        HORDE.ConfigMenuGUI:SetVisible(false)
+    end
+
+    print(HORDE.ConfigMenuGUI:IsVisible())
+
+    if HORDE.ConfigMenuGUI:IsVisible() then
+        HORDE.ConfigMenuGUI:Hide()
+        gui.EnableScreenClicker(false)
+    else
+        HORDE.ConfigMenuGUI:Show()
+        gui.EnableScreenClicker(true)
+    end
+end
+
+
 net.Receive("Horde_HighlightEnemies", function (len, ply)
     if GetConVarNumber("horde_enable_halo") == 0 then return end
     local render = net.ReadInt(2)
@@ -128,6 +147,10 @@ end)
 
 net.Receive("Horde_ToggleClassConfig", function ()
     HORDE:ToggleClassConfig()
+end)
+
+net.Receive("Horde_ToggleConfigMenu", function ()
+    HORDE:ToggleConfigMenu()
 end)
 
 net.Receive("Horde_ForceCloseShop", function ()
