@@ -109,8 +109,6 @@ function HORDE:ToggleConfigMenu()
         HORDE.ConfigMenuGUI:SetVisible(false)
     end
 
-    print(HORDE.ConfigMenuGUI:IsVisible())
-
     if HORDE.ConfigMenuGUI:IsVisible() then
         HORDE.ConfigMenuGUI:Hide()
         gui.EnableScreenClicker(false)
