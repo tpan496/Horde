@@ -73,12 +73,12 @@ end
 HORDE.GetDefaultItemsData = function()
     HORDE.CreateItem("Melee",      "Stunstick",      "weapon_stunstick",     100,  1, "Electric baton.", 
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
-    HORDE.CreateItem("Melee",      "Crowbar",        "weapon_crowbar",       100,  1, "A rusty crowbar.",
+    HORDE.CreateItem("Melee",      "Crowbar",        "weapon_crowbar",       100,  0, "A rusty crowbar.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     HORDE.CreateItem("Melee",      "Combat Knife",   "arccw_go_melee_knife", 500,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
 
-    HORDE.CreateItem("Pistol",     "9mm",            "weapon_pistol",     400,  2, "Combine standard sidearm.",
+    HORDE.CreateItem("Pistol",     "9mm",            "weapon_pistol",     200,  0, "Combine standard sidearm.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     HORDE.CreateItem("Pistol",     "357",            "weapon_357",        500,  2, "Colt python magnum pistol.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
