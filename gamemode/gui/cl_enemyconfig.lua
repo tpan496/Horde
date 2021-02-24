@@ -3,7 +3,7 @@ if SERVER then return end
 local PANEL = {}
 
 function PANEL:Init()
-    self:SetSize(ScrW() / 1.5, ScrH() / 1.5)
+    self:SetSize(ScrW() / 1.25, ScrH() / 1.5)
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
@@ -16,7 +16,7 @@ function PANEL:Init()
     close_btn:SetPos(self:GetWide() - 40, 6)
     close_btn.DoClick = function() HORDE:ToggleEnemyConfig() end
 
-    local modify_tab = vgui.Create('DPanel', self)
+    local modify_tab = vgui.Create('DScrollPanel', self)
     modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
     modify_tab:SetPos(self:GetWide() / 2, 40)
 
@@ -39,7 +39,7 @@ function PANEL:Init()
         
         if name == "class" then
             local editor = vgui.Create('DComboBox', panel)
-            editor:SetSize(200, height)
+            editor:SetSize(150, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
             local npcs = list.Get("NPC")
@@ -50,7 +50,7 @@ function PANEL:Init()
         elseif name == "wave" then
             local editor = vgui.Create('DComboBox', panel)
             editor:SetSortItems(false)
-            editor:SetSize(200, height)
+            editor:SetSize(150, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
             for i = 1, 10 do
@@ -76,7 +76,7 @@ function PANEL:Init()
             return {enabled_editor=editor1, color_editor=editor2}
         elseif name == "weapon" then
             local editor = vgui.Create('DComboBox', panel)
-            editor:SetSize(200, height)
+            editor:SetSize(150, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
             for wpn, _ in pairs(list.Get("Weapon")) do
@@ -86,7 +86,7 @@ function PANEL:Init()
             return editor
         else
             local editor = vgui.Create('DTextEntry', panel)
-            editor:SetSize(200, height)
+            editor:SetSize(150, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
             return editor
@@ -124,9 +124,9 @@ function PANEL:Init()
 
     local btn_panel = vgui.Create('DPanel', self)
     btn_panel:SetPos(self:GetWide() - 210, 50)
-    btn_panel:SetSize(200, self:GetTall() - 50)
+    btn_panel:SetSize(200, self:GetTall() - 200)
     btn_panel.Paint = function ()
-        surface.SetDrawColor(Color(230,230,230))
+        surface.SetDrawColor(Color(230,230,230,0))
         surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     end
 
@@ -289,6 +289,8 @@ function PANEL:Init()
     enemy_list:AddColumn('Class')
     enemy_list:AddColumn('Weight')
 
+    enemy_list:SetDataHeight(20)
+
     enemy_list.OnClickLine = function(parent, line, selected)
         local enemy = line.enemy
         
@@ -370,7 +372,7 @@ function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
     -- Entire Panel
-    surface.SetDrawColor(Color(40, 40, 40))
+    surface.SetDrawColor(Color(230, 230, 230))
     surface.DrawRect(0, 0, w, h)
 
     -- Background
