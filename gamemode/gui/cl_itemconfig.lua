@@ -16,7 +16,7 @@ function PANEL:Init()
     close_btn:SetPos(self:GetWide() - 40, 8)
     close_btn.DoClick = function() HORDE:ToggleItemConfig() end
 
-    local modify_tab = vgui.Create('DPanel', self)
+    local modify_tab = vgui.Create('DScrollPanel', self)
     modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
     modify_tab:SetPos(self:GetWide() / 2, 40)
 
@@ -116,7 +116,9 @@ function PANEL:Init()
     secondary_ammo_price_editor:SetValue("0")
 
     local save_btn = vgui.Create('DButton', modify_tab)
-    save_btn:Dock(BOTTOM)
+    save_btn:Dock(TOP)
+    save_btn:DockMargin(10,10,10,10)
+    save_btn:SetTall(30)
     save_btn:SetText("Save Item")
     save_btn.DoClick = function ()
         local whitelist = {Survivor=false, Medic=false, Demolition=false, Assault=false, Heavy=false}
@@ -147,6 +149,8 @@ function PANEL:Init()
 
     local load_btn = vgui.Create('DButton', modify_tab)
     load_btn:Dock(TOP)
+    load_btn:DockMargin(10,10,10,10)
+    load_btn:SetTall(30)
     load_btn:SetText("OVERWRITE with Default Config")
     load_btn.DoClick = function ()
         Derma_Query('Overwrite?', 'Overwrite with Default Config',
@@ -167,6 +171,8 @@ function PANEL:Init()
 
     local del_btn = vgui.Create('DButton', modify_tab)
     del_btn:Dock(TOP)
+    del_btn:DockMargin(10,10,10,10)
+    del_btn:SetTall(30)
     del_btn:SetText("Delete Everything")
     del_btn.DoClick = function ()
         Derma_Query('Delete Everything?', 'Delete Everything',
@@ -197,7 +203,8 @@ function PANEL:Init()
     item_list:AddColumn('Name')
     item_list:AddColumn('Price')
     item_list:AddColumn('Weight')
-    item_list:AddColumn('Description')
+
+    item_list:SetDataHeight(20)
 
     item_list.OnClickLine = function(parent, line, selected)
         local item = line.item
@@ -252,7 +259,7 @@ function PANEL:Think()
             end
         end
         if not found then
-            self.item_list:AddLine(item.category, item.name, item.class, item.price, item.weight, item.description).item = item
+            self.item_list:AddLine(item.category, item.name, item.class, item.price, item.weight).item = item
         end
     end
 
@@ -265,7 +272,6 @@ function PANEL:Think()
             line:SetValue(3, item.name)
             line:SetValue(4, item.price)
             line:SetValue(5, item.weight)
-            line:SetValue(6, item.description)
         else
             self.item_list:RemoveLine(i)
         end
@@ -276,7 +282,7 @@ function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
     -- Entire Panel
-    surface.SetDrawColor(Color(40, 40, 40, 255))
+    surface.SetDrawColor(Color(230, 230, 230, 255))
     surface.DrawRect(0, 0, w, h)
 
     -- Background

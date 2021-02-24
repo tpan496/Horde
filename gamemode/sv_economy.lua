@@ -322,7 +322,6 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         local wpn = ply:GetWeapon(class)
         local clip_size = wpn:GetMaxClip1()
         local ammo_id = wpn:GetPrimaryAmmoType()
-        print(ammo_id, clip_size)
 
         if clip_size > 0 then -- block melee
             ply:GiveAmmo(clip_size * count, ammo_id , false)

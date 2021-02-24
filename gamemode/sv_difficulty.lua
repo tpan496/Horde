@@ -1,6 +1,9 @@
 if CLIENT then return end
 
 -- Difficulty settings
+-- 0 - normal, 1 - hard, 2 - realism
+
+
 local difficulty = GetConVarNumber("horde_difficulty")
 local difficulty_normal = 0
 local difficulty_hard = 1

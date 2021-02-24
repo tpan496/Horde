@@ -1,8 +1,12 @@
 if CLIENT then return end
 -- Manages player spawn/death settings
 
+local map_list = {}
+local map_votes = {}
+
 HORDE.GameEnd = function (status)
     local randomplayer = table.Random(player.GetAll())
+
     local mvp_player = randomplayer
     local mvp_damage = 0
     local mvp_kills = 0
@@ -34,11 +38,14 @@ HORDE.GameEnd = function (status)
         if not ply:IsValid() then goto cont end
         local id = ply:SteamID()
         if (not id) or (id == "") then goto cont end
-        if HORDE.player_damage and HORDE.player_damage[id] and HORDE.player_damage[id] > most_damage then
-            second_damage_player = damage_player
-            second_most_damage = most_damage
-            most_damage = HORDE.player_damage[id]
-            damage_player = ply
+        if HORDE.player_damage and HORDE.player_damage[id] then
+            total_damage = total_damage + HORDE.player_damage[id]
+            if HORDE.player_damage[id] > most_damage then
+                second_damage_player = damage_player
+                second_most_damage = most_damage
+                most_damage = HORDE.player_damage[id]
+                damage_player = ply
+            end
         end
 
         if ply:Frags() > most_kills then
@@ -122,12 +129,83 @@ HORDE.GameEnd = function (status)
     net.WriteEntity(damage_taken_player)
     net.WriteInt(most_damage_taken, 32)
 
+    net.WriteInt(total_damage, 32)
+
+    local maps = file.Find( "maps/*.bsp", "GAME")
+    for _, map in ipairs( maps ) do
+        map = map:sub(1, -5) -- Take off .bsp
+        table.insert(map_list, map)
+    end
+
+    if not map_list then
+        map_list = {game.GetMapNext()}
+    end
+
+    net.WriteTable(map_list)
+
     net.Broadcast()
 
     timer.Remove('Horde_Main')
     timer.Remove('Horder_Counter')
     BroadcastMessage(status)
+
+    local remaining_time = 60
+    timer.Create("Horde_MapVoteCountdown", 1, 0, function ()
+        if remaining_time == 0 then
+            timer.Remove("Horde_MapVoteCountdown")
+
+            local chosen_map = game.GetMapNext()
+            local chosen_map_count = 0
+
+            local map_collect = {}
+            for _, map in ipairs(map_list) do
+                map_collect[map] = 0
+            end
+
+            for ply, map_voted in pairs(map_votes) do
+                for map, count in pairs(map_collect) do
+                    if map == map_voted then
+                        map_collect[map] = count + 1
+                    end
+                end
+            end
+
+            for map, count in pairs(map_collect) do
+                if count > chosen_map_count then
+                    chosen_map = map
+                    chosen_map_count = count
+                end
+            end
+            
+            timer.Simple(0, function() RunConsoleCommand("changelevel", chosen_map) end)
+        end
+        net.Start("Horde_RemainingTime")
+        net.WriteInt(remaining_time, 8)
+        net.Broadcast()
+        remaining_time = remaining_time - 1
+    end)
 end
+
+net.Receive("Horde_Votemap", function (len, ply)
+    map_votes[ply] = net.ReadString()
+
+    local map_collect = {}
+    for _, map in ipairs(map_list) do
+        map_collect[map] = 0
+    end
+
+    for ply, map_voted in pairs(map_votes) do
+        for map, count in pairs(map_collect) do
+            if map == map_voted then
+                map_collect[map] = count + 1
+            end
+        end
+    end
+
+    net.Start("Horde_VotemapSync")
+    net.WriteTable(map_collect)
+    net.Broadcast()
+end)
 
 hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function(ply)
     if ply:IsValid() then
@@ -179,7 +257,6 @@ function CheckAlivePlayers()
         net.WriteInt(1,2)
         net.Broadcast()
         HORDE.GameEnd("Defeat")
-        timer.Simple(10, function() timer.Simple(0, function() RunConsoleCommand("changelevel", game.GetMap()) end) end)
     end
 end
 

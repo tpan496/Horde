@@ -8,6 +8,9 @@ util.AddNetworkString("Horde_ToggleEnemyConfig")
 util.AddNetworkString("Horde_ToggleClassConfig")
 util.AddNetworkString("Horde_RenderCenterText")
 util.AddNetworkString("Horde_Console_Commands")
+util.AddNetworkString("Horde_Votemap")
+util.AddNetworkString("Horde_VotemapSync")
+util.AddNetworkString("Horde_RemainingTime")
 
 function BroadcastMessage(msg, delay)
     for _, ply in pairs(player.GetAll()) do
@@ -271,4 +274,3 @@ hook.Add("PlayerInitialSpawn", "Horde_SpawnMessage", function(ply)
     end
     BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
 end)
-
