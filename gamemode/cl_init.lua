@@ -250,7 +250,7 @@ hook.Add("HUDShouldDraw", "RemoveRetardRedScreen", function(name)
 end)
 
 hook.Add("PlayerBindPress", "HelpfulBinds", function(ply, bind, pressed)
-    if bind == "noclip" and pressed then
+    if not GetConVar("horde_enable_sandbox"):GetBool() and bind == "noclip" and pressed then
        net.Start("Horde_DropMoney")
        net.SendToServer()
     end
