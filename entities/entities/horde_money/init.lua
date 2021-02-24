@@ -4,10 +4,16 @@ include("shared.lua")
 ENT.CleanupPriority = 2
 
 function ENT:Initialize()
-    self:SetColor(IsMounted("cstrike") and Color(255, 255, 255) or Color(0, 255, 0))
-    self:SetModel(IsMounted("cstrike") and "models/props/cs_assault/Money.mdl" or "models/items/flare.mdl")
-    self:PhysicsInit(SOLID_VPHYSICS)
-    --self:PhysicsInitBox(Vector(-4, -4, -1), Vector(4, 4, 1))
+
+    if IsMounted("cstrike") then
+        self:SetModel("models/props/cs_assault/Money.mdl")
+        self:PhysicsInit(SOLID_VPHYSICS)
+    else
+        self:SetColor(Color(0, 255, 0))
+        self:SetModel("models/items/flare.mdl")
+        self:PhysicsInitBox(Vector(-1, -1, -1), Vector(1, 1, 1))
+    end
+
     self:SetSolid(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
