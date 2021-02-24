@@ -24,9 +24,7 @@ local function CheckAllowHook(hook_name)
 end
 
 local function CheckAllowFeature()
-    --print("check")
     if GetConVar("horde_enable_sandbox"):GetBool() then
-        --print("yes")
         return true
     else
         return false
