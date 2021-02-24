@@ -322,7 +322,6 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         local wpn = ply:GetWeapon(class)
         local clip_size = wpn:GetMaxClip1()
         local ammo_id = wpn:GetPrimaryAmmoType()
-        print(ammo_id)
 
         if clip_size > 0 then -- block melee
 			ply:GiveAmmo(clip_size * count, ammo_id , false)
@@ -361,7 +360,6 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         ply:AddMoney(-price)
         local wpn = ply:GetWeapon(class)
         local ammo_id = wpn:GetSecondaryAmmoType()
-        print(ammo_id)
         if ammo_id >= 0 then
 			ply:GiveAmmo(1, ammo_id, false)
             ply:SyncEconomy()
