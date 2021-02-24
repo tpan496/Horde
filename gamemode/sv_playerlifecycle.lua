@@ -202,8 +202,6 @@ net.Receive("Horde_Votemap", function (len, ply)
         end
     end
 
-    PrintTable(map_collect)
-
     net.Start("Horde_VotemapSync")
     net.WriteTable(map_collect)
     net.Broadcast()
