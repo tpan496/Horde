@@ -19,9 +19,7 @@ local function CheckAllowHook(hook_name)
 end
 
 local function CheckAllowFeature()
-    print("check")
     if GetConVarNumber("horde_enable_sandbox") == 1 then
-        print("yes")
         return true
     else
 	    return false
