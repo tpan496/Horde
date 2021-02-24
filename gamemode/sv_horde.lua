@@ -284,7 +284,7 @@ timer.Create('Horde_Main', director_interval, 0, function ()
         local ready_count = 0
         local total_player = 0
         for _, ply in pairs(player.GetAll()) do
-            if HORDE.player_ready[ply:SteamID()] then
+            if HORDE.player_ready[ply] then
                 ready_count = ready_count + 1
             end
             total_player = total_player + 1
@@ -485,7 +485,7 @@ timer.Create('Horde_Main', director_interval, 0, function ()
         for _, ply in pairs(player.GetAll()) do
             if not ply:Alive() then ply:Spawn() end
             HORDE.player_class_changed[ply:SteamID()] = false
-            HORDE.player_ready[ply:SteamID()] = false
+            HORDE.player_ready[ply] = false
         end
 
         if GetConVarNumber("horde_npc_cleanup") == 1 then
