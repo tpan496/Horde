@@ -159,6 +159,8 @@ function PANEL:Init()
             surface.PlaySound("UI/buttonclick.wav")
         end
         
+        players_votes[map] = 0
+
         local name_label = vgui.Create('DLabel', vote_btn)
         name_label:Dock(LEFT)
         name_label:SetText('')
@@ -166,10 +168,13 @@ function PANEL:Init()
         name_label:SetColor(Color(255,255,255))
         name_label:SetFont('Content')
         name_label.Paint = function ()
-            draw.SimpleText(map, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
+            if (players_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
+                draw.SimpleText(map, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
+            else
+                draw.SimpleText(map, "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
+            end
         end
 
-        players_votes[map] = 0
         local count_label = vgui.Create('DLabel', vote_btn)
         count_label:Dock(RIGHT)
         count_label:SetSize(50, 80)
@@ -177,7 +182,13 @@ function PANEL:Init()
         count_label:SetFont('Content')
         count_label:SetText('')
         count_label.Paint = function ()
-            draw.SimpleText(tostring(players_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, Color(255,255,255))
+            if players_votes[map] then
+                if (players_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
+                    draw.SimpleText(tostring(players_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, Color(255,255,255))
+                else
+                    draw.SimpleText(tostring(players_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, HORDE.color_crimson)
+                end
+            end
         end
 
         self.map_btns[vote_btn] = 0
