@@ -2,7 +2,7 @@
 ## Workshop Link
 https://steamcommunity.com/sharedfiles/filedetails/?id=2401598805
 ## Full Console Command List
-Client:
+### Client:
 - horde_shop: Console variant for !shop.
 - horde_ready: Console variant for !ready.
 - horde_drop_weapon: Console variant for !drop.
@@ -13,7 +13,7 @@ Client:
 - horde_start: Console variant for !start.
 - horde_enable_halo(0/1): Enable highlight for last 10 enemies. 1 by default.
 
-Server:
+### Server:
 You need to change these BEFORE your game/server starts to take effect.
 - horde_default_enemy_config(0/1) - Use default enemy wave config settings. 1 by default.
 - horde_default_item_config(0/1) - Use default item config settings. 1 by default.
