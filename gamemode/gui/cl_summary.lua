@@ -41,7 +41,7 @@ function PANEL:Init()
         end
     end
 
-    local votemap_panel = vgui.Create('DPanel', self)
+    local votemap_panel = vgui.Create('DScrollPanel', self)
     votemap_panel:SetSize(1024, 550)
     votemap_panel:SetPos(0,50)
     votemap_panel:SetBackgroundColor(Color(0,0,0,0))
