@@ -15,6 +15,7 @@ util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
 util.AddNetworkString("Horde_SynchronizeEconomy")
 util.AddNetworkString("Horde_LegacyNotification")
+util.AddNetworkString("Horde_DropMoney")
 
 local Player = FindMetaTable('Player')
 
@@ -45,15 +46,14 @@ end
 function Player:DropMoney()
     if self:GetMoney() >= 50 then
         self:AddMoney(-50)
-        local money = ents.Create("money")
-        local pos = self:GetPos()
-        local dir = (self:GetEyeTrace().HitPos - pos)
-        dir:Normalize()
-        local drop_pos = pos + dir * 50
-        drop_pos.z = pos.z + 15
-        money:SetPos(drop_pos)
-        --money:DropToFloor()
+        local money = ents.Create("horde_money")
+        local pos = self:EyePos() + self:GetEyeTrace().Normal * 25
+        money:SetOwner(self) -- Prevents owner from immediately picking the money up
+        money:SetPos(pos)
+        money:SetAngles(Angle(0, math.random(-180, 180), 0))
         money:Spawn()
+        money:GetPhysicsObject():AddVelocity(self:GetVelocity() + self:GetEyeTrace().Normal * 200 + Vector(0, 0, 100))
+        timer.Simple(1, function() if IsValid(money) then money:SetOwner(nil) end end)
         self:SyncEconomy()
     end
 end
@@ -76,28 +76,28 @@ end
 
 function Player:SyncEconomy()
     net.Start('Horde_SynchronizeEconomy')
-	net.WriteEntity(self)
-	net.WriteInt(self.money, 32)
+    net.WriteEntity(self)
+    net.WriteInt(self.money, 32)
     net.WriteInt(self.weight, 32)
     net.WriteString(self.class.name)
     net.WriteInt(self.class_variant, 8)
-	net.Broadcast()
+    net.Broadcast()
 end
 
-hook.Add("PlayerInitialSpawn", "Horde_Economy_Setup", function (ply)
+hook.Add("PlayerInitialSpawn", "Horde_Economy_Setup", function(ply)
     if not ply:IsValid() then return end
     ply:SetMoney(HORDE.start_money)
     ply:SetWeight(15)
     ply:SetClass(HORDE.classes["Survivor"])
     ply:SetClassSkill(-1)
     hook.Add("SetupMove", ply, function( self, ply, _, cmd )
-		if self == ply and not cmd:IsForced() then
-			hook.Run( "PlayerFullLoad", self )
-			hook.Remove( "SetupMove", self )
+        if self == ply and not cmd:IsForced() then
+            hook.Run( "PlayerFullLoad", self )
+            hook.Remove( "SetupMove", self )
             HORDE.player_class_changed[ply:SteamID()] = false
             ply:SyncEconomy()
-		end
-	end )
+        end
+    end )
 end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
@@ -125,11 +125,10 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
     if ply:IsNPC() then return true end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
-        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
+        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name] and not table.HasValue(HORDE.classes[ply:GetClass().name].weapons, wpn:GetClass())) then
             return false
         end
     end
-
     return true
 end)
 
@@ -137,7 +136,7 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
     if not ply:IsValid() then return end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
-        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
+        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name] and not table.HasValue(HORDE.classes[ply:GetClass().name].weapons, wpn:GetClass())) then
             timer.Simple(0, function ()
                 ply:DropWeapon(wpn)
             end)
@@ -325,7 +324,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         print(ammo_id, clip_size)
 
         if clip_size > 0 then -- block melee
-			ply:GiveAmmo(clip_size * count, ammo_id , false)
+            ply:GiveAmmo(clip_size * count, ammo_id , false)
         else
             -- Give 1 piece of this ammo since clip size do not apply
             local rpg_round = 8
@@ -337,7 +336,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
             if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam then
                 ply:GiveAmmo(count, ammo_id, false)
             end
-		end
+        end
         ply:SyncEconomy()
     end
 end)
@@ -359,8 +358,12 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         local wpn = ply:GetWeapon(class)
         local ammo_id = wpn:GetSecondaryAmmoType()
         if ammo_id >= 0 then
-			ply:GiveAmmo(1, ammo_id, false)
+            ply:GiveAmmo(1, ammo_id, false)
             ply:SyncEconomy()
         end
     end
+end)
+
+net.Receive("Horde_DropMoney", function(len, ply)
+    ply:DropMoney()
 end)
