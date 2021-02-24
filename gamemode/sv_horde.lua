@@ -262,6 +262,7 @@ if GetConVarNumber("horde_director_interval") then
     director_interval = GetConVarNumber("horde_director_interval")
 end
 
+-- Game Director. The CORE of this addon.
 timer.Create('Horde_Main', director_interval, 0, function ()
     local status, err = pcall( function()
     local valid_nodes = {}
