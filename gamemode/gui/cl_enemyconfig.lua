@@ -195,7 +195,7 @@ function PANEL:Init()
 
     local save_after_btn = vgui.Create('DButton', save_for_waves)
     save_after_btn:Dock(BOTTOM)
-    save_after_btn:SetText("Save Enemy For Wave")
+    save_after_btn:SetText("Save Enemy From Wave A to B:")
     save_after_btn:SetTall(40)
     save_after_btn.DoClick = function ()
         if not name_editor:GetValue() or not class_editor:GetValue() then return end
