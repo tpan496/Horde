@@ -30,6 +30,7 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_base_player_walkspeed - Base walkspeed. 180 by default.
 - horde_base_player_runspeed - Base runspeed. 220 by default.
 - horde_enable_sandbox(0/1) - Enable sandbox/cheat features or not. 0 by default.
+- horde_corpse_cleanup(0/1) - Enable corpse removal or not. 0 by default. On 1, enemy corpses despawn immediately.
 
 Change these with caution:
 - horde_difficulty(0/1/2) - Difficulty. 0 by default. *experimental*
