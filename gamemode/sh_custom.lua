@@ -12,7 +12,7 @@ function GM:RegisterCustomConfig(name)
             include("custom/"..filename)
 
             if CONFIG.name then
-                print(CONFIG.name)
+                print("[HORDE] Config " .. CONFIG.name .. " found!")
             else
                 ErrorNoHalt("CONFIG "..filename.." has no 'name' member!")
             end
@@ -33,7 +33,7 @@ HORDE.SaveTempData = function ()
     if GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "" then
         file.Write('horde/temp_enemies.dat', util.TableToJSON(HORDE.enemies))
         file.Write('horde/temp_items.dat', util.TableToJSON(HORDE.items))
-        print("???")
+        print("[HORDE] External lua config found.")
     end
 end
 
