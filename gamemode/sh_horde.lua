@@ -26,9 +26,11 @@ CreateConVar("horde_base_walkspeed", 180, SERVER_CAN_EXECUTE, "Base walkspeed.")
 CreateConVar("horde_base_runspeed", 220, SERVER_CAN_EXECUTE, "Base runspeed.")
 
 if SERVER then
+util.AddNetworkString("Horde_PlayerInit")
 util.AddNetworkString("Horde_SyncItems")
 util.AddNetworkString("Horde_SyncEnemies")
 util.AddNetworkString("Horde_SyncClasses")
+util.AddNetworkString("Horde_PlayerReadySync")
 end
 
 HORDE = {}

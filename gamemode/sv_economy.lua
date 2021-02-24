@@ -84,24 +84,53 @@ function Player:SyncEconomy()
 	net.Broadcast()
 end
 
-hook.Add("PlayerInitialSpawn", "Horde_Economy_Setup", function (ply)
-    if not ply:IsValid() then return end
+-- Player Spawn
+net.Receive("Horde_PlayerInit", function (len, ply)
+    net.Start("Horde_SyncItems")
+    net.WriteTable(HORDE.items)
+    net.Send(ply)
+
+    net.Start("Horde_SyncEnemies")
+    net.WriteTable(HORDE.enemies)
+    net.Send(ply)
+
+    net.Start("Horde_SyncClasses")
+    net.WriteTable(HORDE.classes)
+    net.Send(ply)
+
+    HORDE.player_ready[ply] = false
+    net.Start("Horde_PlayerReadySync")
+    net.WriteTable(HORDE.player_ready)
+    net.Broadcast()
+    
     ply:SetMoney(HORDE.start_money)
     ply:SetWeight(15)
     ply:SetClass(HORDE.classes["Survivor"])
     ply:SetClassSkill(-1)
-    hook.Add("SetupMove", ply, function( self, ply, _, cmd )
-		if self == ply and not cmd:IsForced() then
-			hook.Run( "PlayerFullLoad", self )
-			hook.Remove( "SetupMove", self )
-            HORDE.player_class_changed[ply:SteamID()] = false
-            ply:SyncEconomy()
-		end
-	end )
+    HORDE.player_class_changed[ply:SteamID()] = false
+    ply:SyncEconomy()
+
+    ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
+    if HORDE.start_game then return end
+    local ready_count = 0
+    local total_player = 0
+    for _, ply in pairs(player.GetAll()) do
+        if HORDE.player_ready[ply] then
+            ready_count = ready_count + 1
+        end
+        total_player = total_player + 1
+    end
+    
+    if total_player == ready_count then
+        HORDE.start_game = true
+    end
+
+    BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
 end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     if not ply:IsValid() then return end
+    if not ply:GetClass() then return end
     if ply:GetClass().Name == "Heavy" then
         ply:SetWeight(20)
     else

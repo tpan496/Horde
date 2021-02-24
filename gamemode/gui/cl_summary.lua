@@ -239,8 +239,6 @@ function PANEL:SetData(mvp_player, mvp_damage, mvp_kills, damage_player, most_da
 end
 
 function PANEL:Paint(w, h)
-	--Derma_DrawBackgroundBlur(self)
-
     -- Entire Panel
 	draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
 
@@ -248,4 +246,4 @@ function PANEL:Paint(w, h)
     draw.RoundedBox(0, 0, 50, w, h, HORDE.color_hollow)
 end
 
-vgui.Register('HordeSummary', PANEL, 'DPanel')
+vgui.Register('HordeSummaryPanel', PANEL, 'DPanel')
