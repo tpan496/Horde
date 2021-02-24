@@ -107,12 +107,19 @@
 		}
 		15
 		{
+			"name"		"horde_corpse_cleanup"
+			"text"		"Remove corpses."
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+		16
+		{
 			"name"		"horde_base_walkspeed"
 			"text"		"Base Walkspeed"
 			"type"		"Numeric"
 			"default"	"180"
 		}
-		16
+		17
 		{
 			"name"		"horde_base_runspeed"
 			"text"		"Base Runspeed"

@@ -75,6 +75,20 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
     end
 end)
 
+-- Corpse settings
+if GetConVar("horde_corpse_cleanup"):GetInt() == 1 then
+	RunConsoleCommand("g_ragdoll_maxcount", "0")
+    hook.Add("OnEntityCreated", "Horde_CorpseRemoval", function(ent)
+        if ent:IsRagdoll() then
+            timer.Simple(0, function ()
+                if ent:IsValid() then ent:Remove() end
+            end)
+        end
+    end)
+else
+    RunConsoleCommand("g_ragdoll_maxcount", "1")
+end
+
 -- Record statistics 
 hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
     if took then
