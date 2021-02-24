@@ -1,6 +1,49 @@
 # Horde Gamemode
 ## Workshop Link
 https://steamcommunity.com/sharedfiles/filedetails/?id=2401598805
+## Full Console Command List
+### Client:
+- horde_shop: Console variant for !shop.
+- horde_ready: Console variant for !ready.
+- horde_drop_weapon: Console variant for !drop.
+- horde_drop_money: Console variant for !donate.
+- horde_item_config: Console variant for !itemconfig.
+- horde_enemy_config: Console variant for !enemyconfig.
+- horde_class_config: Console variant for !classconfig.
+- horde_start: Console variant for !start.
+- horde_enable_halo(0/1): Enable highlight for last 10 enemies. 1 by default.
+
+### Server:
+You need to change these BEFORE your game/server starts to take effect.
+- horde_default_enemy_config(0/1) - Use default enemy wave config settings. 1 by default.
+- horde_default_item_config(0/1) - Use default item config settings. 1 by default.
+- horde_default_class_config(0/1) - Use default class config settings. 1 by default.
+- horde_external_lua_config("") - Name of the lua config file to use. Leave this empty if you do not have one.
+
+- horde_max_wave(1-10) - Max waves. 10 by default.
+- horde_break_time(10-60) - Break time between waves. 60 by default.
+- horde_enable_shop(0/1) - Enables shop menu or not. 1 by default.
+- horde_enable_client_gui(0/1) - Enables client information ui or not. 1 by default.
+- horde_start_money - Money given at start. 1000 by default.
+- horde_npc_cleanup(0/1) - Kills all NPCs after a wave. 1 by default.
+- horde_enable_scoreboard(0/1) - Enables built-in scoreboard. 1 by default.
+- horde_base_player_walkspeed - Base walkspeed. 180 by default.
+- horde_base_player_runspeed - Base runspeed. 220 by default.
+- horde_enable_sandbox(0/1) - Enable sandbox/cheat features or not. 0 by default.
+
+Change these with caution:
+- horde_difficulty(0/1/2) - Difficulty. 0 by default. *experimental*
+- horde_max_spawn_distance - Maximum enemy respawn distance. 2000 by default.
+- horde_min_spawn_distance - Minimum enemy respawn distance. 500 by default.
+- horde_max_spawn_z_distance - Maximum enemy respawn height difference from players. 500 by default. If your map is huge and enemies spawn in extreme positions, turn this smaller.
+
+- horde_director_interval - How often the game director checks the state of the game (e.g. spawns stuff) in seconds. Default is 5.
+
+True maximum number of enemies alive = Minimum of (Max, Base + Scale Factor * PlayerCount)
+- horde_max_enemies_alive_base - Base. Default is 20.
+- horde_max_enemies_alive_scale_factor - Scale factor. Default is 5.
+- horde_max_enemies_alive_max - Max. Default is 50.
+
 ## Creating Config Addons
 Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily.
 
