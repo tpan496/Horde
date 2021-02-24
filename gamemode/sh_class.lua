@@ -1,6 +1,6 @@
 -- Class
 HORDE.classes = {}
-HORDE.CreateClass = function (name, fixed_description, extra_description, max_hp, movespd, sprintspd, perks)
+HORDE.CreateClass = function(name, fixed_description, extra_description, max_hp, movespd, sprintspd, perks, weps)
     if name == nil or name == "" then return end
     local class = {}
     class.name = name
@@ -10,6 +10,7 @@ HORDE.CreateClass = function (name, fixed_description, extra_description, max_hp
     class.movespd = movespd
     class.sprintspd = sprintspd
     class.perks = perks
+    class.weapons = weps or {"weapon_crowbar", "weapon_pistol"}
     HORDE.classes[class.name] = class
 end
 -- Only allow 1 change per wave
@@ -21,10 +22,10 @@ HORDE.CreateClasses = function()
         "No bonus.\n\n",
         "Have access to all weapons except for special weapons.",
         100,
-        GetConVarNumber("horde_base_walkspeed"),
-        GetConVarNumber("horde_base_runspeed"),
-        {L="25% less damage taken.",
-        R="25% increased damage."}
+        GetConVar("horde_base_walkspeed"):GetInt(),
+        GetConVar("horde_base_runspeed"):GetInt(),
+        {L = "25% less damage taken.",
+        R = "25% increased damage."}
     )
 
     HORDE.CreateClass(
@@ -32,10 +33,10 @@ HORDE.CreateClasses = function()
         "Regenerate 2% health per second.\n\n",
         "Have partial access to Rifles and most light weapons.",
         100,
-        GetConVarNumber("horde_base_walkspeed"),
-        GetConVarNumber("horde_base_runspeed"),
-        {L="50% increased maximum health.",
-        R="Adds 25 Poison damage to each attack."}
+        GetConVar("horde_base_walkspeed"):GetInt(),
+        GetConVar("horde_base_runspeed"):GetInt(),
+        {L = "50% increased maximum health.",
+        R = "Adds 25 Poison damage to each attack."}
     )
 
     HORDE.CreateClass(
@@ -43,10 +44,10 @@ HORDE.CreateClasses = function()
         "75% less explosive damage taken.\n\nRegenerate 1 frag grenade every 30 seconds, if you do not have one.\n\n",
         "Have full access to Explosive weapons.",
         100,
-        GetConVarNumber("horde_base_walkspeed"),
-        GetConVarNumber("horde_base_runspeed"),
-        {L="50% increased explosive damage",
-        R="Enemies you kill explode,\ndealing (100 + 10% of their health) as AOE damage."}
+        GetConVar("horde_base_walkspeed"):GetInt(),
+        GetConVar("horde_base_runspeed"):GetInt(),
+        {L = "50% increased explosive damage",
+        R = "Enemies you kill explode,\ndealing (100 + 10% of their health) as AOE damage."}
     )
 
     HORDE.CreateClass(
@@ -54,10 +55,10 @@ HORDE.CreateClasses = function()
         "25% increased movement speed.\n\n",
         "Have full access to Rifles.",
         100,
-        GetConVarNumber("horde_base_walkspeed") * 1.25,
-        GetConVarNumber("horde_base_runspeed") * 1.25,
-        {L="25% chance to not consume ammo while firing.",
-        R="Each enemy you kill grants you 1 Frenzy charge.\nEach frenzy charge increases your damage and movespeed by 6%."}
+        GetConVar("horde_base_walkspeed"):GetInt() * 1.25,
+        GetConVar("horde_base_runspeed"):GetInt() * 1.25,
+        {L = "25% chance to not consume ammo while firing.",
+        R = "Each enemy you kill grants you 1 Frenzy charge.\nEach frenzy charge increases your damage and movespeed by 6%."}
     )
 
     HORDE.CreateClass(
@@ -65,10 +66,10 @@ HORDE.CreateClasses = function()
         "+5 to maximum carrying capacity.\n\nRegenerate 1 armor per second, up to 25.\n\n",
         "Have full access to Machine Guns and heavier weapons.",
         100,
-        GetConVarNumber("horde_base_walkspeed"),
-        GetConVarNumber("horde_base_runspeed"),
-        {L="Damage does not bypass Armor.",
-        R="Enemies you hit are Pressured for 1 second.\nPressured enemies deal 25% less damage and take 25% increased damage."}
+        GetConVar("horde_base_walkspeed"):GetInt(),
+        GetConVar("horde_base_runspeed"):GetInt(),
+        {L = "Damage does not bypass Armor.",
+        R = "Enemies you hit are Pressured for 1 second.\nPressured enemies deal 25% less damage and take 25% increased damage."}
     )
 
     HORDE.CreateClass(
@@ -76,10 +77,10 @@ HORDE.CreateClasses = function()
         "50% increased headshot damage.\n\n",
         "Have access to sniper rifles and selected light weapons.",
         100,
-        GetConVarNumber("horde_base_walkspeed"),
-        GetConVarNumber("horde_base_runspeed"),
-        {L="100% increased damage with single shot weapons.",
-        R="Headshot damage stacks,\ndealing 10% increased damage each stack."}
+        GetConVar("horde_base_walkspeed"):GetInt(),
+        GetConVar("horde_base_runspeed"):GetInt(),
+        {L = "100% increased damage with single shot weapons.",
+        R = "Headshot damage stacks,\ndealing 10% increased damage each stack."}
     )
 
     --[[
@@ -104,7 +105,7 @@ end
 
 HORDE.SetClassData = function ()
     if SERVER then
-        if GetConVarNumber("horde_default_class_config") == 1 then return end
+        if GetConVar("horde_default_class_config"):GetInt() == 1 then return end
         if not file.IsDir('horde', 'DATA') then
             file.CreateDir('horde')
         end
@@ -159,7 +160,7 @@ HORDE.CreateClasses()
 if SERVER then
     util.AddNetworkString("Horde_SetClassData")
 
-    if GetConVarNumber("horde_default_class_config") == 1 then
+    if GetConVar("horde_default_class_config"):GetInt() == 1 then
         -- Do nothing
     else
         GetClassData()

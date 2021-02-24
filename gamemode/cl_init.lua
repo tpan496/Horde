@@ -46,7 +46,7 @@ function HORDE:ToggleShop()
         HORDE.ShopGUI = vgui.Create('HordeShop')
         HORDE.ShopGUI:SetVisible(false)
     end
-    
+
     if HORDE.ShopGUI:IsVisible() then
         HORDE.ShopGUI:Hide()
         gui.EnableScreenClicker(false)
@@ -63,7 +63,7 @@ function HORDE:ToggleItemConfig()
         HORDE.ItemConfigGUI = vgui.Create('HordeItemConfig')
         HORDE.ItemConfigGUI:SetVisible(false)
     end
-    
+
     if HORDE.ItemConfigGUI:IsVisible() then
         HORDE.ItemConfigGUI:Hide()
         gui.EnableScreenClicker(false)
@@ -78,7 +78,7 @@ function HORDE:ToggleEnemyConfig()
         HORDE.EnemyConfigGUI = vgui.Create('HordeEnemyConfig')
         HORDE.EnemyConfigGUI:SetVisible(false)
     end
-    
+
     if HORDE.EnemyConfigGUI:IsVisible() then
         HORDE.EnemyConfigGUI:Hide()
         gui.EnableScreenClicker(false)
@@ -93,7 +93,7 @@ function HORDE:ToggleClassConfig()
         HORDE.ClassConfigGUI = vgui.Create('HordeClassConfig')
         HORDE.ClassConfigGUI:SetVisible(false)
     end
-    
+
     if HORDE.ClassConfigGUI:IsVisible() then
         HORDE.ClassConfigGUI:Hide()
         gui.EnableScreenClicker(false)
@@ -157,7 +157,7 @@ net.Receive("Horde_ForceCloseShop", function ()
             HORDE.ShopGUI:Hide()
         end
     end
-    
+
     if HORDE.ItemConfigGUI then
         if HORDE.ItemConfigGUI:IsVisible() then
             HORDE.ItemConfigGUI:Hide()
@@ -214,7 +214,7 @@ net.Receive('Horde_GameEnd', function ()
 
     local kills_player = net.ReadEntity()
     local most_kills = net.ReadInt(32)
-    
+
     local money_player = net.ReadEntity()
     local most_money = net.ReadInt(32)
 
@@ -243,8 +243,15 @@ net.Receive("Horde_SyncClasses", function ()
     HORDE.classes = net.ReadTable()
 end)
 
-hook.Add("HUDShouldDraw", "RemoveRetardRedScreen", function(name) 
+hook.Add("HUDShouldDraw", "RemoveRetardRedScreen", function(name)
     if (name == "CHudDamageIndicator") then
        return false
+    end
+end)
+
+hook.Add("PlayerBindPress", "HelpfulBinds", function(ply, bind, pressed)
+    if bind == "noclip" and pressed then
+       net.Start("Horde_DropMoney")
+       net.SendToServer()
     end
 end)
