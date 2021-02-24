@@ -226,9 +226,13 @@ net.Receive('Horde_GameEnd', function ()
 
     local damage_taken_player = net.ReadEntity()
     local most_damage_taken = net.ReadInt(32)
+    
+    local total_damage = net.ReadInt(32)
+
+    local maps = net.ReadTable()
 
     local end_gui = vgui.Create("HordeSummary")
-    end_gui:SetData(mvp, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken)
+    end_gui:SetData(mvp, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
 end)
 
 net.Receive("Horde_SyncItems", function ()
