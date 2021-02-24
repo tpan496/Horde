@@ -322,6 +322,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         local wpn = ply:GetWeapon(class)
         local clip_size = wpn:GetMaxClip1()
         local ammo_id = wpn:GetPrimaryAmmoType()
+        print(ammo_id)
 
         if clip_size > 0 then -- block melee
 			ply:GiveAmmo(clip_size * count, ammo_id , false)
@@ -333,7 +334,10 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
             local xbowbolt = 6
             local grenade = 10
             local slam = 11
-            if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam then
+
+            -- Some ammo type from mods
+            local rust_syringe = 40
+            if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam or ammo_id == rust_syringe then
                 ply:GiveAmmo(count, ammo_id, false)
             end
 		end
@@ -357,6 +361,7 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         ply:AddMoney(-price)
         local wpn = ply:GetWeapon(class)
         local ammo_id = wpn:GetSecondaryAmmoType()
+        print(ammo_id)
         if ammo_id >= 0 then
 			ply:GiveAmmo(1, ammo_id, false)
             ply:SyncEconomy()
