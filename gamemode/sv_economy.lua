@@ -54,7 +54,7 @@ function Player:DropMoney()
         money:Spawn()
         money:Activate()
         money:GetPhysicsObject():AddVelocity(self:GetVelocity() + self:GetEyeTrace().Normal * 200 + Vector(0, 0, 100))
-        timer.Simple(1, function() if IsValid(money) then money:SetOwner(nil) end end)
+        timer.Simple(0.2, function() if IsValid(money) then money:SetOwner(nil) end end)
         self:SyncEconomy()
     end
 end
