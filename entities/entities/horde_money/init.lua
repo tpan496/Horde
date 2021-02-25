@@ -26,7 +26,7 @@ function ENT:Initialize()
 end
 
 function ENT:StartTouch(entity)
-    if not self.Removing and entity:IsPlayer() and entity:Alive() and entity ~= self:GetOwner() then
+    if not self.Removing and entity:IsPlayer() and entity:Alive() and entity ~= self:GetOwner() and (not entity:IsBot()) then
         self.Removing = true
         entity:AddHordeMoney(50)
         entity:SyncEconomy()
