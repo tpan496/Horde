@@ -114,7 +114,7 @@ function PANEL:DoClick()
         --warning_panel:SetFont("Title")
         return
     end
-    if LocalPlayer():GetMoney() < self.item.price or LocalPlayer():GetWeight() < self.item.weight then return end
+    if LocalPlayer():GetHordeMoney() < self.item.price or LocalPlayer():GetHordeWeight() < self.item.weight then return end
     -- Buy the item
     net.Start("Horde_BuyItem")
     net.WriteString(self.item.class)
@@ -128,7 +128,7 @@ function PANEL:AmmoDoClick(count)
     if not self.item then return end
     if count == -1 then
         -- Secondary ammo
-        if self.item.secondary_ammo_price <= 0 or LocalPlayer():GetMoney() < self.item.secondary_ammo_price then return end
+        if self.item.secondary_ammo_price <= 0 or LocalPlayer():GetHordeMoney() < self.item.secondary_ammo_price then return end
         -- Buy the item
         net.Start("Horde_BuyItemAmmoSecondary")
         net.WriteString(self.item.class)
@@ -138,7 +138,7 @@ function PANEL:AmmoDoClick(count)
     end
     local price = self.item.ammo_price and self.item.ammo_price or HORDE.default_ammo_price
     price = price * count
-    if LocalPlayer():GetMoney() < price then return end
+    if LocalPlayer():GetHordeMoney() < price then return end
     -- Buy the item
     net.Start("Horde_BuyItemAmmoPrimary")
     net.WriteString(self.item.class)
@@ -265,7 +265,7 @@ function PANEL:Paint()
                 self.ammo_secondary_btn:SetVisible(false)
                 self.current_ammo_panel.Paint = function () end
             end
-        elseif LocalPlayer():GetMoney() < self.item.price or LocalPlayer():GetWeight() < self.item.weight then
+        elseif LocalPlayer():GetHordeMoney() < self.item.price or LocalPlayer():GetHordeWeight() < self.item.weight then
             self.buy_btn:SetTextColor(Color(200,200,200))
             self.buy_btn:SetText("Not Enough Money or Carrying Capacity!")
             self.buy_btn.Paint = function ()

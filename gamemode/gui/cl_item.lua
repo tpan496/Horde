@@ -72,7 +72,7 @@ end
 
 function PANEL:Paint()
 	if self.item ~= nil then
-		local is_rich = LocalPlayer():GetMoney() >= self.item.price and LocalPlayer():GetWeight() >= self.item.weight
+		local is_rich = LocalPlayer():GetHordeMoney() >= self.item.price and LocalPlayer():GetHordeWeight() >= self.item.weight
 		surface.SetDrawColor(self.bg_color)
 		surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
 		surface.SetFont("Item")

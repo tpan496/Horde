@@ -60,7 +60,7 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
                 scale = victim:GetVar("reward_scale")
             end
             local reward = HORDE.kill_reward_base * scale
-            killer:AddMoney(reward)
+            killer:AddHordeMoney(reward)
             if not HORDE.player_money_earned[killer:SteamID()] then HORDE.player_money_earned[killer:SteamID()] = 0 end
             HORDE.player_money_earned[killer:SteamID()] = HORDE.player_money_earned[killer:SteamID()] + reward
 
