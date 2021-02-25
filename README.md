@@ -72,7 +72,7 @@ CONFIG.items = {
 CONFIG.enemies = {
     -- key and name must be the same!
     HugeZombie = {
-        name = "Huge Zombie",
+        name = "HugeZombie",
         class = "npc_zombie",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 1,
@@ -85,7 +85,7 @@ CONFIG.enemies = {
         weapon = ""
     },
     HugeZombie2 = {
-        name = "Huge Zombie2",
+        name = "HugeZombie2",
         class = "npc_zombie",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 1,
