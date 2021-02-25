@@ -35,7 +35,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.0.3"
+HORDE.version = "1.0.0.4"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -67,6 +67,7 @@ HORDE.start_money = math.max(0, GetConVarNumber("horde_start_money"))
 HORDE.total_enemies_this_wave_fixed = 0
 HORDE.kill_reward_base = 100
 HORDE.game_ended = false
+HORDE.player_vote_map_change = {}
 
 -- Statistics
 HORDE.player_damage = {}

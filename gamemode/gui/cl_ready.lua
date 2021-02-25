@@ -43,7 +43,7 @@ function PANEL:CreateReadyPanel(ply, status)
         if status == 0 then
             draw.SimpleText("Not Ready", "Content", 0, 8, Color(255,255,255))
         else
-            draw.SimpleText("Ready", "Content", 0, 8, HORDE.color_crimson)
+            draw.SimpleText("    Ready", "Content", 0, 8, HORDE.color_crimson)
         end
     end
 end

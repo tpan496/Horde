@@ -17,7 +17,7 @@ util.AddNetworkString("Horde_SynchronizeEconomy")
 util.AddNetworkString("Horde_LegacyNotification")
 util.AddNetworkString("Horde_DropMoney")
 
-local Player = FindMetaTable("Player")
+local Player = FindMetaTable('Player')
 
 function Player:SetWeight(weight)
     self.weight = weight
@@ -76,13 +76,13 @@ function Player:GetClassSkill()
 end
 
 function Player:SyncEconomy()
-    net.Start("Horde_SynchronizeEconomy")
-    net.WriteEntity(self)
-    net.WriteInt(self.money, 32)
+    net.Start('Horde_SynchronizeEconomy')
+	net.WriteEntity(self)
+	net.WriteInt(self.money, 32)
     net.WriteInt(self.weight, 32)
     net.WriteString(self.class.name)
     net.WriteInt(self.class_variant, 8)
-    net.Broadcast()
+	net.Broadcast()
 end
 
 -- Player Spawn Initialize
@@ -133,7 +133,10 @@ net.Receive("Horde_PlayerInit", function (len, ply)
 end)
 
 hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
-    if not HORDE.start_game then
+    if HORDE.player_vote_map_change[ply] then
+        HORDE.player_vote_map_change[ply] = nil
+    end
+    if (not HORDE.start_game) and HORDE.player_ready[ply] then
         HORDE.player_ready[ply] = nil
         net.Start("Horde_PlayerReadySync")
         net.WriteTable(HORDE.player_ready)
@@ -176,10 +179,11 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
     if ply:IsNPC() then return true end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
-        if ply:GetWeight() - item.weight < 0 or not item.whitelist[ply:GetClass().name] then
+        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
             return false
         end
     end
+
     return true
 end)
 
@@ -187,7 +191,7 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
     if not ply:IsValid() then return end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
-        if ply:GetWeight() - item.weight < 0 or not item.whitelist[ply:GetClass().name] then
+        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
             timer.Simple(0, function ()
                 ply:DropWeapon(wpn)
             end)
@@ -332,7 +336,7 @@ net.Receive("Horde_SelectClassSkillVariant", function (len, ply)
             ply:SetMaxHealth(150)
         else
             hook.Add("EntityTakeDamage", "Horde_Medic_B", function (target, dmg)
-
+                
             end)
         end
     elseif class == "Demolition" then
@@ -366,7 +370,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         net.Send(ply)
         return
     end
-
+    
     if ply:GetMoney() >= price then
         ply:AddMoney(-price)
         local wpn = ply:GetWeapon(class)
@@ -374,7 +378,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         local ammo_id = wpn:GetPrimaryAmmoType()
 
         if clip_size > 0 then -- block melee
-            ply:GiveAmmo(clip_size * count, ammo_id , false)
+			ply:GiveAmmo(clip_size * count, ammo_id , false)
         else
             -- Give 1 piece of this ammo since clip size do not apply
             local rpg_round = 8
@@ -389,7 +393,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
             if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam or ammo_id == rust_syringe then
                 ply:GiveAmmo(count, ammo_id, false)
             end
-        end
+		end
         ply:SyncEconomy()
     end
 end)
@@ -405,13 +409,13 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         net.Send(ply)
         return
     end
-
+    
     if ply:GetMoney() >= price then
         ply:AddMoney(-price)
         local wpn = ply:GetWeapon(class)
         local ammo_id = wpn:GetSecondaryAmmoType()
         if ammo_id >= 0 then
-            ply:GiveAmmo(1, ammo_id, false)
+			ply:GiveAmmo(1, ammo_id, false)
             ply:SyncEconomy()
         end
     end
