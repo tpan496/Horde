@@ -2,11 +2,11 @@ if SERVER then return end
 
 local Player = FindMetaTable("Player")
 
-function Player:GetMoney()
+function Player:GetHordeMoney()
     return self.money or 0
 end
 
-function Player:GetWeight()
+function Player:GetHordeWeight()
     return self.weight or 0
 end
 

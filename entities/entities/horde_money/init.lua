@@ -28,7 +28,7 @@ end
 function ENT:StartTouch(entity)
     if not self.Removing and entity:IsPlayer() and entity:Alive() and entity ~= self:GetOwner() then
         self.Removing = true
-        entity:AddMoney(50)
+        entity:AddHordeMoney(50)
         entity:SyncEconomy()
         entity:EmitSound("horde/dosh/dosh_" .. math.random(1, 4) .. ".ogg", 70, 100, 0.25)
         self:Remove()
