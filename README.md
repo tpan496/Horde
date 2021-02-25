@@ -84,9 +84,9 @@ CONFIG.enemies = {
         color = Color(0,255,0),
         weapon = ""
     },
-    HugeZombie2 = {
-        name = "HugeZombie2",
-        class = "npc_zombie",
+    HugeCombine = {
+        name = "HugeCombine",
+        class = "npc_combine_s",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 1,
         is_elite = true,
