@@ -34,11 +34,11 @@ end
 HORDE.SetItemsData = function()
     if SERVER then
         if GetConVarNumber("horde_default_item_config") == 1 then return end
-        if not file.IsDir('horde', 'DATA') then
-            file.CreateDir('horde')
+        if not file.IsDir("horde", "DATA") then
+            file.CreateDir("horde")
         end
-        
-        file.Write('horde/items.txt', util.TableToJSON(HORDE.items))
+
+        file.Write("horde/items.txt", util.TableToJSON(HORDE.items))
 
         HORDE.SyncItems()
     end
@@ -46,14 +46,14 @@ end
 
 function GetItemsData()
     if SERVER then
-        if not file.IsDir('horde', 'DATA') then
-            file.CreateDir('horde')
+        if not file.IsDir("horde", "DATA") then
+            file.CreateDir("horde")
             return
         end
-        
-        if file.Read('horde/items.txt', 'DATA') then
-            local t = util.JSONToTable(file.Read('horde/items.txt', 'DATA'))
-            
+
+        if file.Read("horde/items.txt", "DATA") then
+            local t = util.JSONToTable(file.Read("horde/items.txt", "DATA"))
+
             for _, item in pairs(t) do
                 if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
                     notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
@@ -71,14 +71,14 @@ function GetItemsData()
 end
 
 HORDE.GetDefaultItemsData = function()
-    HORDE.CreateItem("Melee",      "Stunstick",      "weapon_stunstick",     100,  1, "Electric baton.", 
+    HORDE.CreateItem("Melee",      "Stunstick",      "weapon_stunstick",     100,  1, "Electric baton.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
-    HORDE.CreateItem("Melee",      "Crowbar",        "weapon_crowbar",       100,  1, "A rusty crowbar.",
+    HORDE.CreateItem("Melee",      "Crowbar",        "weapon_crowbar",       100,  0, "A rusty crowbar.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     HORDE.CreateItem("Melee",      "Combat Knife",   "arccw_go_melee_knife", 500,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
 
-    HORDE.CreateItem("Pistol",     "9mm",            "weapon_pistol",     400,  2, "Combine standard sidearm.",
+    HORDE.CreateItem("Pistol",     "9mm",            "weapon_pistol",     200,  0, "Combine standard sidearm.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     HORDE.CreateItem("Pistol",     "357",            "weapon_357",        500,  2, "Colt python magnum pistol.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
@@ -134,7 +134,7 @@ HORDE.GetDefaultItemsData = function()
     {Medic=false, Assault=true, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
     HORDE.CreateItem("Shotgun",    "AA12",           "arccw_mw2_aa12",     2000, 8, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
     {Medic=false, Assault=true, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    
+
     HORDE.CreateItem("Rifle",      "Combine AR2",    "weapon_ar2",        1500, 7, "Overwatch standard issue rifle.\nDark energy-powered assault rifle.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=true}, 10, 50)
     HORDE.CreateItem("Rifle",      "FAMAS",          "arccw_go_famas",    2000, 7, "FAMAS bullpup assault rifle.\nRecognised for its high rate of fire.",
@@ -153,7 +153,7 @@ HORDE.GetDefaultItemsData = function()
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("Rifle",      "Tavor",          "arccw_mw2_tavor",   2250, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    
+
     HORDE.CreateItem("Rifle",      "AWP",            "arccw_go_awp",      2000, 7, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1)
     HORDE.CreateItem("Rifle",      "ACR",            "arccw_mw2_acr",     2150, 7, "Remington Adaptive Combat Rifle.\nA modular semi-Auto rifle.",
@@ -162,7 +162,7 @@ HORDE.GetDefaultItemsData = function()
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
     HORDE.CreateItem("Rifle",      "G3",             "arccw_go_g3",       2250, 8, "G3 Battle Rifle.\nA 7.62×51mm NATO, select-fire battle rifle developed by H&K.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
-    
+
     HORDE.CreateItem("MG",         "M249",           "arccw_go_m249para",  2250, 10, "M249 light machine gun.\nA gas operated and air-cooled weapon of destruction.",
     {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("MG",         "Negev",          "arccw_go_negev",     2250, 10, "IWI Negev.\nA 5.56×45mm NATO light machine gun developed by the IWI.",
@@ -206,13 +206,13 @@ if SERVER then
         HORDE.GetSpecialItems()
         HORDE.SyncItems()
     end
-    
-    
+
+
     net.Receive("Horde_SetItemsData", function ()
         HORDE.items = net.ReadTable()
         HORDE.SetItemsData()
     end)
-    
+
 end
 
 HORDE.max_weight = 15

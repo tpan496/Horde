@@ -7,21 +7,21 @@ function PANEL:Init()
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
-    local close_btn = vgui.Create('DButton', self)
-    close_btn:SetFont('marlett')
-    close_btn:SetText('r')
+    local close_btn = vgui.Create("DButton", self)
+    close_btn:SetFont("marlett")
+    close_btn:SetText("r")
     close_btn.Paint = function() end
     close_btn:SetColor(Color(255, 255, 255))
     close_btn:SetSize(32, 32)
     close_btn:SetPos(self:GetWide() - 40, 8)
     close_btn.DoClick = function() HORDE:ToggleClassConfig() end
 
-    local modify_tab = vgui.Create('DScrollPanel', self)
+    local modify_tab = vgui.Create("DScrollPanel", self)
     modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
     modify_tab:SetPos(self:GetWide() / 2, 40)
 
     local function create_property_editor(name, height)
-        local panel = vgui.Create('DPanel', modify_tab)
+        local panel = vgui.Create("DPanel", modify_tab)
         panel:DockPadding(10, 10, 10, 10)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
@@ -30,14 +30,14 @@ function PANEL:Init()
             surface.DrawRect(0, 0, modify_tab:GetWide(), height)
         end
 
-        local label = vgui.Create('DLabel', panel)
+        local label = vgui.Create("DLabel", panel)
         label:SetText(name)
         label:SetTextColor(Color(0,0,0))
         label:DockPadding(10, 10, 10, 10)
         label:SetWide(100)
         label:Dock(LEFT)
-        
-        local editor = vgui.Create('DTextEntry', panel)
+
+        local editor = vgui.Create("DTextEntry", panel)
         editor:SetSize(200, height)
         editor:DockPadding(10, 10, 10, 10)
         editor:Dock(LEFT)
@@ -51,7 +51,7 @@ function PANEL:Init()
     description_editor:SetMultiline(true)
 
     if GetConVarNumber("horde_default_class_config") == 1 then
-        local warning_label = vgui.Create('DLabel', modify_tab)
+        local warning_label = vgui.Create("DLabel", modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)
         warning_label:SetSize(modify_tab:GetWide(), 50)
@@ -59,7 +59,7 @@ function PANEL:Init()
         warning_label:SetText("You are using default config! Your data won't be saved!")
     end
 
-    local reset_btn = vgui.Create('DButton', modify_tab)
+    local reset_btn = vgui.Create("DButton", modify_tab)
     reset_btn:Dock(TOP)
     reset_btn:SetText("Reset Everything")
     reset_btn:SetTall(40)
@@ -67,14 +67,14 @@ function PANEL:Init()
     reset_btn.DoClick = function ()
         if GetConVarNumber("horde_default_class_config") == 1 then return end
         HORDE.CreateClasses()
-        
+
         net.Start("Horde_SetClassData")
         net.WriteTable(HORDE.classes)
         net.SendToServer()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
 
-    local save_btn = vgui.Create('DButton', modify_tab)
+    local save_btn = vgui.Create("DButton", modify_tab)
     save_btn:Dock(TOP)
     save_btn:SetText("Save")
     save_btn:SetTall(40)
@@ -93,7 +93,7 @@ function PANEL:Init()
         end
     end
 
-    local settings_tab = vgui.Create('DPanel', self)
+    local settings_tab = vgui.Create("DPanel", self)
     settings_tab:SetPos(0, 40)
     settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
 
@@ -102,23 +102,23 @@ function PANEL:Init()
     class_list:Dock(FILL)
 
     class_list:SetMultiSelect(false)
-    class_list:AddColumn('Name')
-    class_list:AddColumn('Description')
+    class_list:AddColumn("Name")
+    class_list:AddColumn("Description")
 
     class_list:SetDataHeight(20)
 
     class_list.OnClickLine = function(parent, line, selected)
         local class = line.class
-        
+
         local menu = DermaMenu()
-        
-        menu:AddOption('Modify', function()
+
+        menu:AddOption("Modify", function()
             name_editor:SetValue(class.name)
             description_editor:SetValue(class.extra_description)
         end)
 
         menu:AddSpacer()
-        
+
         menu:Open()
     end
 
@@ -163,7 +163,7 @@ function PANEL:Paint(w, h)
     surface.SetDrawColor(Color(40, 40, 40))
     surface.DrawRect(0, 0, w, 48)
 
-    draw.SimpleText("Class Config (Some settings require restarting current game to take effect)", 'Heading', 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Class Config (Some settings require restarting current game to take effect)", "Heading", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
-vgui.Register('HordeClassConfig', PANEL, 'EditablePanel')
+vgui.Register("HordeClassConfig", PANEL, "EditablePanel")
