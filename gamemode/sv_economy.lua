@@ -105,7 +105,12 @@ net.Receive("Horde_PlayerInit", function (len, ply)
         net.Broadcast()
     end
     
-    ply:SetHordeMoney(HORDE.start_money)
+    if HORDE.start_game then
+        ply:SetHordeMoney(HORDE.start_money + math.max(0, HORDE.current_wave - 1) * 150)
+    else
+        ply:SetHordeMoney(HORDE.start_money)
+    end
+    
     ply:SetHordeWeight(15)
     ply:SetHordeClass(HORDE.classes["Survivor"])
     ply:SetClassSkill(-1)

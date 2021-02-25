@@ -6,7 +6,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=2401598805
 - horde_shop: Console variant for !shop.
 - horde_ready: Console variant for !ready.
 - horde_drop_weapon: Console variant for !drop.
-- horde_drop_money: Console variant for !donate.
+- horde_drop_money: Console variant for !throwmoney.
 - horde_item_config: Console variant for !itemconfig.
 - horde_enemy_config: Console variant for !enemyconfig.
 - horde_class_config: Console variant for !classconfig.

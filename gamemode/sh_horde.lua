@@ -8,7 +8,7 @@ CreateConVar("horde_enable_shop", 1, SERVER_CAN_EXECUTE, "Enables shop menu or n
 CreateConVar("horde_enable_client_gui", 1, SERVER_CAN_EXECUTE, "Enables client information ui or not.")
 --CreateConVar("horde_enable_respawn", 0, SERVER_CAN_EXECUTE, "Players can respawn after death during a wave.")
 CreateConVar("horde_max_spawn_distance", 2000, SERVER_CAN_EXECUTE, "Maximum enenmy respawn distance.")
-CreateConVar("horde_min_spawn_distance", 500, SERVER_CAN_EXECUTE, "Minimum enenmy respawn distance.")
+CreateConVar("horde_min_spawn_distance", 400, SERVER_CAN_EXECUTE, "Minimum enenmy respawn distance.")
 CreateConVar("horde_max_spawn_z_distance", 500, SERVER_CAN_EXECUTE, "Maximum enemy respawn height difference with players.")
 
 CreateConVar("horde_start_money", 1000, SERVER_CAN_EXECUTE, "Money given at start.")
@@ -35,7 +35,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.0.4"
+HORDE.version = "1.0.0.5"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -68,6 +68,7 @@ HORDE.total_enemies_this_wave_fixed = 0
 HORDE.kill_reward_base = 100
 HORDE.game_ended = false
 HORDE.player_vote_map_change = {}
+HORDE.spawn_radius = 75
 
 -- Statistics
 HORDE.player_damage = {}
