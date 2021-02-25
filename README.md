@@ -46,7 +46,7 @@ True maximum number of enemies alive = Minimum of (Max, Base + Scale Factor * Pl
 - horde_max_enemies_alive_max - Max. Default is 50.
 
 ## Creating Config Addons
-Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily.
+Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily. Note that class descriptions changes are not available yet in external lua configs, because they may be subject to huge changes.
 
 You config addons should stay in `garrysmod/addons/your-config/lua/horde/gamemode/custom`, and have the following (example) format:
 ```
