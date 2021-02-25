@@ -124,7 +124,7 @@ function PANEL:Init()
 	end
 
     local categories = {"Melee", "Pistol", "SMG", "Shotgun", "Rifle", "MG", "Explosive", "Special", "Equipment"}
-	local class = LocalPlayer():GetClass()
+	local class = LocalPlayer():GetHordeClass()
 
 	for _, CATEGORY in pairs(categories) do
 		local items = {}
@@ -205,8 +205,8 @@ function PANEL:Paint(w, h)
 	draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
 
 	-- Money
-	draw.SimpleText("Class: " .. LocalPlayer():GetClass().name, 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-	if LocalPlayer():GetClass().name == "Heavy" then
+	draw.SimpleText("Class: " .. LocalPlayer():GetHordeClass().name, 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	if LocalPlayer():GetHordeClass().name == "Heavy" then
 		draw.SimpleText("Cash: " .. tostring(LocalPlayer():GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight + 5 - LocalPlayer():GetWeight()) .. "/" .. HORDE.max_weight + 5 .. "]", 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 	else
 		draw.SimpleText("Cash: " .. tostring(LocalPlayer():GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight - LocalPlayer():GetWeight()) .. "/" .. HORDE.max_weight .. "]", 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)

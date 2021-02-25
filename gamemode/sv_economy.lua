@@ -26,7 +26,7 @@ function Player:SetMoney(money)
     self.money = money
 end
 
-function Player:SetClass(class)
+function Player:SetHordeClass(class)
     self.class = class
 end
 
@@ -62,7 +62,7 @@ function Player:GetWeight()
     return self.weight
 end
 
-function Player:GetClass()
+function Player:GetHordeClass()
     return self.class
 end
 
@@ -107,7 +107,7 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     
     ply:SetMoney(HORDE.start_money)
     ply:SetWeight(15)
-    ply:SetClass(HORDE.classes["Survivor"])
+    ply:SetHordeClass(HORDE.classes["Survivor"])
     ply:SetClassSkill(-1)
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:SyncEconomy()
@@ -154,8 +154,8 @@ end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     if not ply:IsValid() then return end
-    if not ply:GetClass() then return end
-    if ply:GetClass().Name == "Heavy" then
+    if not ply:GetHordeClass() then return end
+    if ply:GetHordeClass().Name == "Heavy" then
         ply:SetWeight(20)
     else
         ply:SetWeight(15)
@@ -178,7 +178,7 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
     if ply:IsNPC() then return true end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
-        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
+        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetHordeClass().name]) then
             return false
         end
     end
@@ -190,7 +190,7 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
     if not ply:IsValid() then return end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
-        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
+        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetHordeClass().name]) then
             timer.Simple(0, function ()
                 ply:DropWeapon(wpn)
             end)
@@ -251,7 +251,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
     local name = net.ReadString()
     local class = HORDE.classes[name]
-    ply:SetClass(class)
+    ply:SetHordeClass(class)
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
