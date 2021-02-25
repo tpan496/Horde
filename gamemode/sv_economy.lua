@@ -17,7 +17,7 @@ util.AddNetworkString("Horde_SynchronizeEconomy")
 util.AddNetworkString("Horde_LegacyNotification")
 util.AddNetworkString("Horde_DropMoney")
 
-local Player = FindMetaTable('Player')
+local Player = FindMetaTable("Player")
 
 function Player:SetWeight(weight)
     self.weight = weight
@@ -76,7 +76,7 @@ function Player:GetClassSkill()
 end
 
 function Player:SyncEconomy()
-    net.Start('Horde_SynchronizeEconomy')
+    net.Start("Horde_SynchronizeEconomy")
     net.WriteEntity(self)
     net.WriteInt(self.money, 32)
     net.WriteInt(self.weight, 32)
@@ -282,7 +282,7 @@ net.Receive("Horde_SelectClassSkillVariant", function (len, ply)
             ply:SetMaxHealth(150)
         else
             hook.Add("EntityTakeDamage", "Horde_Medic_B", function (target, dmg)
-                
+
             end)
         end
     elseif class == "Demolition" then
@@ -316,7 +316,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         net.Send(ply)
         return
     end
-    
+
     if ply:GetMoney() >= price then
         ply:AddMoney(-price)
         local wpn = ply:GetWeapon(class)
@@ -352,7 +352,7 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         net.Send(ply)
         return
     end
-    
+
     if ply:GetMoney() >= price then
         ply:AddMoney(-price)
         local wpn = ply:GetWeapon(class)

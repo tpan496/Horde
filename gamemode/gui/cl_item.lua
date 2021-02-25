@@ -1,6 +1,6 @@
 if SERVER then return end
 
-surface.CreateFont('Item', { font = 'arial bold', size = 20 })
+surface.CreateFont("Item", { font = 'arial bold', size = 20 })
 
 local PANEL = {}
 
@@ -32,7 +32,7 @@ function PANEL:SetData(item, description_panel)
 	self.price = item.price
 	self.description_panel = description_panel
 
-	local btn = vgui.Create('DButton', self)
+	local btn = vgui.Create("DButton", self)
 	btn:Dock(FILL)
 	btn:SetText("")
 	btn.Paint = function ()
@@ -49,21 +49,21 @@ function PANEL:SetData(item, description_panel)
 		self:GetParent():OnCursorEntered()
 		surface.PlaySound("UI/buttonrollover.wav")
 	end
-	
+
 	function btn:OnCursorExited()
 		self:GetParent():OnCursorExited()
 	end
 
 	self.buy_btn = btn
 
-	local weight_panel = vgui.Create('DLabel', self)
+	local weight_panel = vgui.Create("DLabel", self)
 	weight_panel:Dock(RIGHT)
 	weight_panel:SetSize(50, weight_panel:GetTall())
 	weight_panel:SetFont("Item")
 	weight_panel:SetText("[" .. tostring(self.weight) .."]")
 	self.weight_panel = weight_panel
 
-	local price_panel = vgui.Create('DLabel', self)
+	local price_panel = vgui.Create("DLabel", self)
 	price_panel:Dock(RIGHT)
 	price_panel:SetSize(80, price_panel:GetTall())
 	price_panel:SetFont("Item")
@@ -99,4 +99,4 @@ function PANEL:Paint()
 	end
 end
 
-vgui.Register('HordeShopItem', PANEL, 'DPanel')
+vgui.Register("HordeShopItem", PANEL, "DPanel")

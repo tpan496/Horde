@@ -43,7 +43,7 @@ end)
 
 function HORDE:ToggleShop()
     if not HORDE.ShopGUI then
-        HORDE.ShopGUI = vgui.Create('HordeShop')
+        HORDE.ShopGUI = vgui.Create("HordeShop")
         HORDE.ShopGUI:SetVisible(false)
     end
 
@@ -52,7 +52,7 @@ function HORDE:ToggleShop()
         gui.EnableScreenClicker(false)
     else
         HORDE.ShopGUI:Remove()
-        HORDE.ShopGUI = vgui.Create('HordeShop')
+        HORDE.ShopGUI = vgui.Create("HordeShop")
         HORDE.ShopGUI:Show()
         gui.EnableScreenClicker(true)
     end
@@ -60,7 +60,7 @@ end
 
 function HORDE:ToggleItemConfig()
     if not HORDE.ItemConfigGUI then
-        HORDE.ItemConfigGUI = vgui.Create('HordeItemConfig')
+        HORDE.ItemConfigGUI = vgui.Create("HordeItemConfig")
         HORDE.ItemConfigGUI:SetVisible(false)
     end
 
@@ -75,7 +75,7 @@ end
 
 function HORDE:ToggleEnemyConfig()
     if not HORDE.EnemyConfigGUI then
-        HORDE.EnemyConfigGUI = vgui.Create('HordeEnemyConfig')
+        HORDE.EnemyConfigGUI = vgui.Create("HordeEnemyConfig")
         HORDE.EnemyConfigGUI:SetVisible(false)
     end
 
@@ -90,7 +90,7 @@ end
 
 function HORDE:ToggleClassConfig()
     if not HORDE.ClassConfigGUI then
-        HORDE.ClassConfigGUI = vgui.Create('HordeClassConfig')
+        HORDE.ClassConfigGUI = vgui.Create("HordeClassConfig")
         HORDE.ClassConfigGUI:SetVisible(false)
     end
 
@@ -105,7 +105,7 @@ end
 
 function HORDE:ToggleConfigMenu()
     if not HORDE.ConfigMenuGUI then
-        HORDE.ConfigMenuGUI = vgui.Create('HordeConfigMenu')
+        HORDE.ConfigMenuGUI = vgui.Create("HordeConfigMenu")
         HORDE.ConfigMenuGUI:SetVisible(false)
     end
 
@@ -173,7 +173,7 @@ net.Receive("Horde_ForceCloseShop", function ()
     gui.EnableScreenClicker(false)
 end)
 
-net.Receive('Horde_LegacyNotification', function(length)
+net.Receive("Horde_LegacyNotification", function(length)
     local str = net.ReadString()
     local type = net.ReadInt(2)
     if type == 0 then
@@ -183,7 +183,7 @@ net.Receive('Horde_LegacyNotification', function(length)
     end
 end)
 
-net.Receive('Horde_RenderCenterText', function ()
+net.Receive("Horde_RenderCenterText", function ()
     local str = net.ReadString()
     local num = net.ReadInt(8)
     if num and num >= 0 and num <= 10 then
@@ -204,7 +204,7 @@ net.Receive('Horde_RenderCenterText', function ()
     end
 end)
 
-net.Receive('Horde_GameEnd', function ()
+net.Receive("Horde_GameEnd", function ()
     local mvp = net.ReadEntity()
     local mvp_damage = net.ReadInt(32)
     local mvp_kills = net.ReadInt(32)

@@ -7,21 +7,21 @@ function PANEL:Init()
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
-    local close_btn = vgui.Create('DButton', self)
-    close_btn:SetFont('marlett')
-    close_btn:SetText('r')
+    local close_btn = vgui.Create("DButton", self)
+    close_btn:SetFont("marlett")
+    close_btn:SetText("r")
     close_btn.Paint = function() end
     close_btn:SetColor(Color(255, 255, 255))
     close_btn:SetSize(32, 32)
     close_btn:SetPos(self:GetWide() - 40, 8)
     close_btn.DoClick = function() HORDE:ToggleItemConfig() end
 
-    local modify_tab = vgui.Create('DScrollPanel', self)
+    local modify_tab = vgui.Create("DScrollPanel", self)
     modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
     modify_tab:SetPos(self:GetWide() / 2, 40)
 
     local function create_property_editor(name, height)
-        local panel = vgui.Create('DPanel', modify_tab)
+        local panel = vgui.Create("DPanel", modify_tab)
         panel:DockPadding(10, 10, 10, 10)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
@@ -30,15 +30,15 @@ function PANEL:Init()
             surface.DrawRect(0, 0, modify_tab:GetWide(), height)
         end
 
-        local label = vgui.Create('DLabel', panel)
+        local label = vgui.Create("DLabel", panel)
         label:SetText(name)
         label:SetTextColor(Color(0,0,0))
         label:DockPadding(10, 10, 10, 10)
         label:Dock(LEFT)
         label:SetWide(150)
-        
+
         if name == "category" then
-            local editor = vgui.Create('DComboBox', panel)
+            local editor = vgui.Create("DComboBox", panel)
             editor:SetSize(200, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
@@ -54,7 +54,7 @@ function PANEL:Init()
             editor:AddChoice("Equipment")
             return editor
         elseif name == "class" then
-            local editor = vgui.Create('DComboBox', panel)
+            local editor = vgui.Create("DComboBox", panel)
             editor:SetSize(200, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
@@ -66,7 +66,7 @@ function PANEL:Init()
             local editors = {}
             local start_pos = 80
             for _, class in pairs(HORDE.classes) do
-                local editor = vgui.Create('DCheckBoxLabel', panel)
+                local editor = vgui.Create("DCheckBoxLabel", panel)
                 editor:SetSize(80, height)
                 editor:SetPos(start_pos, 15)
                 editor:SetText(class.name)
@@ -75,10 +75,10 @@ function PANEL:Init()
                 start_pos = start_pos + 80
                 table.insert(editors, editor)
             end
-            
+
             return editors
         else
-            local editor = vgui.Create('DTextEntry', panel)
+            local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(200, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
@@ -97,7 +97,7 @@ function PANEL:Init()
     local secondary_ammo_price_editor = create_property_editor("secondary ammo price", 45)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
-        local warning_label = vgui.Create('DLabel', modify_tab)
+        local warning_label = vgui.Create("DLabel", modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)
         warning_label:SetSize(modify_tab:GetWide(), 25)
@@ -115,7 +115,7 @@ function PANEL:Init()
     secondary_ammo_price_editor:SetNumeric(true)
     secondary_ammo_price_editor:SetValue("0")
 
-    local save_btn = vgui.Create('DButton', modify_tab)
+    local save_btn = vgui.Create("DButton", modify_tab)
     save_btn:Dock(TOP)
     save_btn:DockMargin(10,10,10,10)
     save_btn:SetTall(30)
@@ -147,14 +147,14 @@ function PANEL:Init()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
 
-    local load_btn = vgui.Create('DButton', modify_tab)
+    local load_btn = vgui.Create("DButton", modify_tab)
     load_btn:Dock(TOP)
     load_btn:DockMargin(10,10,10,10)
     load_btn:SetTall(30)
     load_btn:SetText("OVERWRITE with Default Config")
     load_btn.DoClick = function ()
         Derma_Query('Overwrite?', 'Overwrite with Default Config',
-            'Yes',
+            "Yes",
             function()
                 HORDE.items = {}
                 HORDE.GetDefaultItemsData()
@@ -165,18 +165,18 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            'No', function() end
+            "No", function() end
         )
     end
 
-    local del_btn = vgui.Create('DButton', modify_tab)
+    local del_btn = vgui.Create("DButton", modify_tab)
     del_btn:Dock(TOP)
     del_btn:DockMargin(10,10,10,10)
     del_btn:SetTall(30)
     del_btn:SetText("Delete Everything")
     del_btn.DoClick = function ()
         Derma_Query('Delete Everything?', 'Delete Everything',
-            'Yes',
+            "Yes",
             function()
                 HORDE.items = {}
                 HORDE.GetSpecialItems()
@@ -186,11 +186,11 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            'No', function() end
+            "No", function() end
         )
     end
 
-    local settings_tab = vgui.Create('DPanel', self)
+    local settings_tab = vgui.Create("DPanel", self)
     settings_tab:SetPos(0, 40)
     settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
     local item_list = vgui.Create("DListView", settings_tab)
@@ -198,20 +198,20 @@ function PANEL:Init()
     item_list:Dock(FILL)
 
     item_list:SetMultiSelect(false)
-    item_list:AddColumn('Class')
-    item_list:AddColumn('Category')
-    item_list:AddColumn('Name')
-    item_list:AddColumn('Price')
-    item_list:AddColumn('Weight')
+    item_list:AddColumn("Class")
+    item_list:AddColumn("Category")
+    item_list:AddColumn("Name")
+    item_list:AddColumn("Price")
+    item_list:AddColumn("Weight")
 
     item_list:SetDataHeight(20)
 
     item_list.OnClickLine = function(parent, line, selected)
         local item = line.item
-        
+
         local menu = DermaMenu()
-        
-        menu:AddOption('Modify', function()
+
+        menu:AddOption("Modify", function()
             category_editor:SetValue(item.category)
             name_editor:SetValue(item.name)
             class_editor:SetValue(item.class)
@@ -230,8 +230,8 @@ function PANEL:Init()
             ammo_price_editor:SetValue(item.ammo_price and item.ammo_price or HORDE.default_ammo_price)
             secondary_ammo_price_editor:SetValue(item.secondary_ammo_price and item.secondary_ammo_price or -1)
         end)
-        
-        menu:AddOption('Delete', function()
+
+        menu:AddOption("Delete", function()
             HORDE.items[item.class] = nil
 
 			net.Start("Horde_SetItemsData")
@@ -241,7 +241,7 @@ function PANEL:Init()
         end)
 
         menu:AddSpacer()
-        
+
         menu:Open()
     end
 
@@ -266,7 +266,7 @@ function PANEL:Think()
     for i, line in pairs(lines) do
         if table.HasValue(HORDE.items, line.item) then
             local item = line.item
-                
+
             line:SetValue(1, item.class)
             line:SetValue(2, item.category)
             line:SetValue(3, item.name)
@@ -289,7 +289,7 @@ function PANEL:Paint(w, h)
     surface.SetDrawColor(Color(40, 40, 40, 255))
     surface.DrawRect(0, 0, w, 48)
 
-    draw.SimpleText("Item Config (Some settings require restarting current game to take effect)", 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Item Config (Some settings require restarting current game to take effect)", "Heading", 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
-vgui.Register('HordeItemConfig', PANEL, 'EditablePanel')
+vgui.Register("HordeItemConfig", PANEL, "EditablePanel")

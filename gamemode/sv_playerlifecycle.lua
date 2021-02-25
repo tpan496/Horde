@@ -145,8 +145,8 @@ HORDE.GameEnd = function (status)
 
     net.Broadcast()
 
-    timer.Remove('Horde_Main')
-    timer.Remove('Horder_Counter')
+    timer.Remove("Horde_Main")
+    timer.Remove("Horder_Counter")
     BroadcastMessage(status)
 
     local remaining_time = 60
@@ -176,7 +176,7 @@ HORDE.GameEnd = function (status)
                     chosen_map_count = count
                 end
             end
-            
+
             timer.Simple(0, function() RunConsoleCommand("changelevel", chosen_map) end)
         end
         net.Start("Horde_RemainingTime")
@@ -236,22 +236,22 @@ hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", function(victim, inflic
 end)
 
 function CheckAlivePlayers()
-    local aliveplayers = 0 
+    local aliveplayers = 0
     local deadplayers = 0
-    for _, ply in pairs(player.GetAll()) do 
-        if ply:IsValid() and ply:Alive() then 
-            aliveplayers = aliveplayers + 1 
+    for _, ply in pairs(player.GetAll()) do
+        if ply:IsValid() and ply:Alive() then
+            aliveplayers = aliveplayers + 1
         end
-        if ply:IsValid() and not ply:Alive() then 
-            deadplayers = deadplayers + 1 
-        end 
+        if ply:IsValid() and not ply:Alive() then
+            deadplayers = deadplayers + 1
+        end
     end
     if aliveplayers == 0 and deadplayers > 0 then
-        for _, ply in pairs(player.GetAll()) do 
+        for _, ply in pairs(player.GetAll()) do
             -- ply:ScreenFade(SCREENFADE.OUT, Color(0,0,0), 6, 2)
             -- ply:Freeze(true)
         end
-        
+
         net.Start("Horde_LegacyNotification")
         net.WriteString("All players are dead! Restarting...")
         net.WriteInt(1,2)
