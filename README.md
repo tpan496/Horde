@@ -46,7 +46,7 @@ True maximum number of enemies alive = Minimum of (Max, Base + Scale Factor * Pl
 - horde_max_enemies_alive_max - Max. Default is 50.
 
 ## Creating Config Addons
-Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily.
+Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily. Note that class descriptions changes are not available yet in external lua configs, because they may be subject to huge changes.
 
 You config addons should stay in `garrysmod/addons/your-config/lua/horde/gamemode/custom`, and have the following (example) format:
 ```
@@ -72,7 +72,7 @@ CONFIG.items = {
 CONFIG.enemies = {
     -- key and name must be the same!
     HugeZombie = {
-        name = "Huge Zombie",
+        name = "HugeZombie",
         class = "npc_zombie",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 1,
@@ -82,6 +82,19 @@ CONFIG.enemies = {
         reward_scale = 100,
         model_scale = 2,
         color = Color(0,255,0),
+        weapon = ""
+    },
+    HugeCombine = {
+        name = "HugeCombine",
+        class = "npc_combine_s",
+        weight = 1, -- Relative weight to other enemies in the same wave.
+        wave = 1,
+        is_elite = true,
+        health_scale = 2,
+        damage_scale = 1,
+        reward_scale = 100,
+        model_scale = 2,
+        color = Color(255,0,0),
         weapon = ""
     }
 }
@@ -98,4 +111,11 @@ horde_default_enemy_config = 0
 ```
 In `autoexec.cfg` and `server.cfg`. Then you can edit stuff in your shop. A quick way to setup the config is just to put your `item.txt` or `enemy.txt` into your server's `data` folder.
 
-2. Lua Scripting, as shown above.
+2. Lua Scripting, as shown above. Your `autoexec.cfg` and `server.cfg` should then look like
+```
+-- These two don't matter
+-- horde_default_item_config = 0
+-- horde_default_enemy_config = 0
+
+horde_external_lua_config "custom-config"
+```
