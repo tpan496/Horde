@@ -7,12 +7,7 @@ CreateConVar("horde_enable_sandbox", 0, SERVER_CAN_EXECUTE, "Enables sandbox/che
 
 DeriveGamemode("sandbox")
 
-function GM:PlayerLoadout(ply)
-    ply:StripWeapons()
-    for _, wep in pairs(HORDE.classes[ply:GetClass().name].weapons or {}) do
-        ply:Give(wep)
-    end
-end
+function GM:PlayerLoadout(ply) ply:StripWeapons() end
 
 local function CheckAllowHook(hook_name)
     if GetConVar("horde_enable_sandbox"):GetBool() then

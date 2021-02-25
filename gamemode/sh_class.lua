@@ -1,6 +1,6 @@
 -- Class
 HORDE.classes = {}
-HORDE.CreateClass = function(name, fixed_description, extra_description, max_hp, movespd, sprintspd, perks, weps)
+HORDE.CreateClass = function(name, fixed_description, extra_description, max_hp, movespd, sprintspd, perks)
     if name == nil or name == "" then return end
     local class = {}
     class.name = name
@@ -10,7 +10,6 @@ HORDE.CreateClass = function(name, fixed_description, extra_description, max_hp,
     class.movespd = movespd
     class.sprintspd = sprintspd
     class.perks = perks
-    class.weapons = weps or {"weapon_crowbar", "weapon_pistol"}
     HORDE.classes[class.name] = class
 end
 -- Only allow 1 change per wave
