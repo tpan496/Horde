@@ -75,7 +75,7 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
     end
 end)
 
--- Record statistics 
+-- Record statistics
 hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
     if took then
         if ent:IsNPC() and dmg:GetAttacker():IsPlayer() then
@@ -161,7 +161,7 @@ function SpawnEnemy(enemy, pos)
             spawned_enemy:SetKeyValue(k, v)
         end
     end
-            
+
     spawned_enemy:Fire("StartPatrolling")
     spawned_enemy:Fire("SetReadinessHigh")
     if spawned_enemy:IsNPC() then
@@ -219,27 +219,27 @@ function ScanEnemies()
 end
 
 function StartBreak()
-    timer.Create('Horder_Counter', 1, 0, function ()
+    timer.Create("Horder_Counter", 1, 0, function ()
         if not HORDE.start_game then return end
         BroadcastWaveMessage("Next wave starts in " .. HORDE.current_break_time, HORDE.current_break_time)
 
         if 0 < HORDE.current_break_time then
             HORDE.current_break_time = HORDE.current_break_time - 1
         end
-        
+
 
         if HORDE.current_break_time <= 10 then
             --surface.PlaySound("radiovoice/eight")
         end
-        
+
         if HORDE.current_break_time == 0 then
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
             BroadcastWaveMessage("Wave " .. HORDE.current_wave .. " has started!", 0)
 
-            timer.Remove('Horder_Counter')
+            timer.Remove("Horder_Counter")
         end
-    end)    
+    end)
 end
 
 -- Referenced some spawning mechanics from Zombie Invasion+
@@ -248,11 +248,11 @@ if GetConVarNumber("horde_director_interval") then
     director_interval = GetConVarNumber("horde_director_interval")
 end
 
-timer.Create('Horde_Main', director_interval, 0, function ()
+timer.Create("Horde_Main", director_interval, 0, function ()
     local status, err = pcall( function()
     local valid_nodes = {}
     if table.Count(player.GetAll()) <= 0 then
-        timer.Remove('Horde')
+        timer.Remove("Horde")
         HardReset()
         return
     end
@@ -274,7 +274,7 @@ timer.Create('Horde_Main', director_interval, 0, function ()
             end
             total_player = total_player + 1
         end
-       
+
         if total_player == ready_count then
             HORDE.start_game = true
         else
@@ -282,7 +282,7 @@ timer.Create('Horde_Main', director_interval, 0, function ()
         end
         return
     end
-    
+
     if not HORDE.found_ai_nodes then
         ParseFile()
     end
@@ -451,7 +451,7 @@ timer.Create('Horde_Main', director_interval, 0, function ()
                 enemy:Remove()
             end
         end
-        
+
         if HORDE.current_wave == HORDE.max_waves then
             BroadcastMessage("Final Wave Completed! You have survived!")
             HORDE.GameEnd("Victory")

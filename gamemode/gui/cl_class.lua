@@ -1,6 +1,6 @@
 if SERVER then return end
 
-surface.CreateFont('Item', { font = 'arial', size = 20 })
+surface.CreateFont("Item", { font = "arial", size = 20 })
 
 local PANEL = {}
 
@@ -32,7 +32,7 @@ function PANEL:SetData(class, description_panel)
 	self.description = class.description
 	self.description_panel = description_panel
 
-	local btn = vgui.Create('DButton', self)
+	local btn = vgui.Create("DButton", self)
 	btn:Dock(FILL)
 	btn:SetText("")
 	btn.Paint = function ()
@@ -47,7 +47,7 @@ function PANEL:SetData(class, description_panel)
 	function btn:OnCursorEntered()
 		self:GetParent():OnCursorEntered()
 	end
-	
+
 	function btn:OnCursorExited()
 		self:GetParent():OnCursorExited()
 	end
@@ -67,4 +67,4 @@ function PANEL:Paint()
 	end
 end
 
-vgui.Register('HordeClass', PANEL, 'DPanel')
+vgui.Register("HordeClass", PANEL, "DPanel")

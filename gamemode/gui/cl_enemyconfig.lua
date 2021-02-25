@@ -7,21 +7,21 @@ function PANEL:Init()
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
-    local close_btn = vgui.Create('DButton', self)
-    close_btn:SetFont('marlett')
-    close_btn:SetText('r')
+    local close_btn = vgui.Create("DButton", self)
+    close_btn:SetFont("marlett")
+    close_btn:SetText("r")
     close_btn.Paint = function() end
     close_btn:SetColor(Color(255, 255, 255))
     close_btn:SetSize(32, 32)
     close_btn:SetPos(self:GetWide() - 40, 6)
     close_btn.DoClick = function() HORDE:ToggleEnemyConfig() end
 
-    local modify_tab = vgui.Create('DScrollPanel', self)
+    local modify_tab = vgui.Create("DScrollPanel", self)
     modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
     modify_tab:SetPos(self:GetWide() / 2, 40)
 
     local function create_property_editor(name, height)
-        local panel = vgui.Create('DPanel', modify_tab)
+        local panel = vgui.Create("DPanel", modify_tab)
         panel:DockPadding(10, 10, 10, 10)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
@@ -30,15 +30,15 @@ function PANEL:Init()
             surface.DrawRect(0, 0, modify_tab:GetWide(), height)
         end
 
-        local label = vgui.Create('DLabel', panel)
+        local label = vgui.Create("DLabel", panel)
         label:SetText(name)
         label:SetTextColor(Color(0,0,0))
         label:DockPadding(10, 10, 10, 10)
         label:SetWide(100)
         label:Dock(LEFT)
-        
+
         if name == "class" then
-            local editor = vgui.Create('DComboBox', panel)
+            local editor = vgui.Create("DComboBox", panel)
             editor:SetSize(150, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
@@ -48,7 +48,7 @@ function PANEL:Init()
             end
             return editor
         elseif name == "wave" then
-            local editor = vgui.Create('DComboBox', panel)
+            local editor = vgui.Create("DComboBox", panel)
             editor:SetSortItems(false)
             editor:SetSize(150, height)
             editor:DockPadding(10, 10, 10, 10)
@@ -58,24 +58,24 @@ function PANEL:Init()
             end
             return editor
         elseif name == "elite" then
-            local editor = vgui.Create('DCheckBox', panel)
+            local editor = vgui.Create("DCheckBox", panel)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
             editor:SetWide(30)
             return editor
         elseif name == "color" then
-            local editor1 = vgui.Create('DCheckBoxLabel', panel)
+            local editor1 = vgui.Create("DCheckBoxLabel", panel)
             editor1:DockPadding(10, 10, 10, 10)
             editor1:Dock(LEFT)
             editor1:SetText("Use Color")
             editor1:SetTextColor(Color(0,0,0))
-            local editor2 = vgui.Create('DColorMixer', panel)
+            local editor2 = vgui.Create("DColorMixer", panel)
             editor2:DockPadding(10, 10, 10, 10)
             editor2:Dock(LEFT)
             editor2:SetPalette(false)
             return {enabled_editor=editor1, color_editor=editor2}
         elseif name == "weapon" then
-            local editor = vgui.Create('DComboBox', panel)
+            local editor = vgui.Create("DComboBox", panel)
             editor:SetSize(150, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
@@ -85,7 +85,7 @@ function PANEL:Init()
             editor:AddChoice("")
             return editor
         else
-            local editor = vgui.Create('DTextEntry', panel)
+            local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(150, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
@@ -106,7 +106,7 @@ function PANEL:Init()
     local color_editor = create_property_editor("color", 130)
 
     if GetConVarNumber("horde_default_enemy_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
-        local warning_label = vgui.Create('DLabel', modify_tab)
+        local warning_label = vgui.Create("DLabel", modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
         warning_label:Dock(TOP)
         warning_label:SetSize(modify_tab:GetWide(), 25)
@@ -122,7 +122,7 @@ function PANEL:Init()
     reward_editor:SetValue("1")
     model_scale_editor:SetValue("1")
 
-    local btn_panel = vgui.Create('DPanel', self)
+    local btn_panel = vgui.Create("DPanel", self)
     btn_panel:SetPos(self:GetWide() - 210, 50)
     btn_panel:SetSize(200, self:GetTall() - 200)
     btn_panel.Paint = function ()
@@ -130,7 +130,7 @@ function PANEL:Init()
         surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     end
 
-    local save_btn = vgui.Create('DButton', btn_panel)
+    local save_btn = vgui.Create("DButton", btn_panel)
     save_btn:SetText("Save Enemy")
     save_btn:SetTall(40)
     save_btn:DockMargin(10, 10, 10, 10)
@@ -166,25 +166,25 @@ function PANEL:Init()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
 
-    local save_for_waves = vgui.Create('DPanel', btn_panel)
+    local save_for_waves = vgui.Create("DPanel", btn_panel)
     save_for_waves:Dock(TOP)
     save_for_waves:DockMargin(10, 10, 10, 10)
     save_for_waves:SetTall(90)
     save_for_waves.Paint = function () end
 
-    local boxes_pane = vgui.Create('DPanel', save_for_waves)
+    local boxes_pane = vgui.Create("DPanel", save_for_waves)
     boxes_pane:Dock(BOTTOM)
     boxes_pane.Paint = function () end
     boxes_pane:SetTall(50)
-    local wave_start_box = vgui.Create('DComboBox', boxes_pane)
+    local wave_start_box = vgui.Create("DComboBox", boxes_pane)
     wave_start_box:SetPos(10,10)
     wave_start_box:SetSize(50,30)
     wave_start_box:SetSortItems(false)
-    local to_label = vgui.Create('DLabel', boxes_pane)
+    local to_label = vgui.Create("DLabel", boxes_pane)
     to_label:SetText("to")
     to_label:SetTextColor(Color(0,0,0))
     to_label:SetPos(80,15)
-    local wave_end_box = vgui.Create('DComboBox', boxes_pane)
+    local wave_end_box = vgui.Create("DComboBox", boxes_pane)
     wave_end_box:SetPos(120,10)
     wave_end_box:SetSize(50,30)
     wave_end_box:SetSortItems(false)
@@ -193,7 +193,7 @@ function PANEL:Init()
         wave_end_box:AddChoice(i)
     end
 
-    local save_after_btn = vgui.Create('DButton', save_for_waves)
+    local save_after_btn = vgui.Create("DButton", save_for_waves)
     save_after_btn:Dock(BOTTOM)
     save_after_btn:SetText("Save Enemy For Wave")
     save_after_btn:SetTall(40)
@@ -211,7 +211,7 @@ function PANEL:Init()
         local start_wave = tonumber(wave_start_box:GetText())
         local end_wave = tonumber(wave_end_box:GetText())
         if start_wave > end_wave then return end
-        
+
         for i = start_wave, end_wave do
             HORDE.CreateEnemy(
             name_editor:GetText(),
@@ -234,14 +234,14 @@ function PANEL:Init()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
 
-    local load_btn = vgui.Create('DButton', btn_panel)
+    local load_btn = vgui.Create("DButton", btn_panel)
     load_btn:Dock(TOP)
     load_btn:DockMargin(10, 10, 10, 10)
     load_btn:SetText("OVERWRITE with Default Config")
     load_btn:SetTall(40)
     load_btn.DoClick = function ()
         Derma_Query('Overwrite?', 'Overwrite with Default Config',
-            'Yes',
+            "Yes",
             function()
                 HORDE.enemies = {}
                 HORDE.GetDefaultEnemiesData()
@@ -251,18 +251,18 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            'No', function() end
+            "No", function() end
         )
     end
 
-    local del_btn = vgui.Create('DButton', btn_panel)
+    local del_btn = vgui.Create("DButton", btn_panel)
     del_btn:Dock(TOP)
     del_btn:DockMargin(10, 10, 10, 10)
     del_btn:SetText("Delete Everything")
     del_btn:SetTall(40)
     del_btn.DoClick = function ()
         Derma_Query('Delete Everything?', 'Delete Everything',
-            'Yes',
+            "Yes",
             function()
                 HORDE.enemies = {}
 
@@ -271,11 +271,11 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            'No', function() end
+            "No", function() end
         )
     end
 
-    local settings_tab = vgui.Create('DPanel', self)
+    local settings_tab = vgui.Create("DPanel", self)
     settings_tab:SetPos(0, 40)
     settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
 
@@ -284,19 +284,19 @@ function PANEL:Init()
     enemy_list:Dock(FILL)
 
     enemy_list:SetMultiSelect(false)
-    enemy_list:AddColumn('Wave')
-    enemy_list:AddColumn('Name')
-    enemy_list:AddColumn('Class')
-    enemy_list:AddColumn('Weight')
+    enemy_list:AddColumn("Wave")
+    enemy_list:AddColumn("Name")
+    enemy_list:AddColumn("Class")
+    enemy_list:AddColumn("Weight")
 
     enemy_list:SetDataHeight(20)
 
     enemy_list.OnClickLine = function(parent, line, selected)
         local enemy = line.enemy
-        
+
         local menu = DermaMenu()
-        
-        menu:AddOption('Modify', function()
+
+        menu:AddOption("Modify", function()
             name_editor:SetValue(enemy.name)
             class_editor:SetValue(enemy.class)
             weight_editor:SetValue(enemy.weight)
@@ -318,8 +318,8 @@ function PANEL:Init()
                 weapon_editor:SetValue("")
             end
         end)
-        
-        menu:AddOption('Delete', function()
+
+        menu:AddOption("Delete", function()
             HORDE.enemies[enemy.name .. tostring(enemy.wave)] = nil
 
 			net.Start("Horde_SetEnemiesData")
@@ -329,7 +329,7 @@ function PANEL:Init()
         end)
 
         menu:AddSpacer()
-        
+
         menu:Open()
     end
 
@@ -379,7 +379,7 @@ function PANEL:Paint(w, h)
     surface.SetDrawColor(Color(40, 40, 40))
     surface.DrawRect(0, 0, w, 48)
 
-    draw.SimpleText("Enemy Config (Some settings require restarting current game to take effect)", 'Heading', 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Enemy Config (Some settings require restarting current game to take effect)", "Heading", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
-vgui.Register('HordeEnemyConfig', PANEL, 'EditablePanel')
+vgui.Register("HordeEnemyConfig", PANEL, "EditablePanel")

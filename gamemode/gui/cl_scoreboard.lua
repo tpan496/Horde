@@ -4,11 +4,11 @@ if GetConVarNumber("horde_enable_scoreboard") == 0 then return end
 
 local scoreboard = {}
 
-surface.CreateFont('Title', { font = 'arial bold', size = 30 })
-surface.CreateFont('Content', { font = 'arial bold', size = 20 })
+surface.CreateFont("Title", { font = 'arial bold', size = 30 })
+surface.CreateFont("Content", { font = 'arial bold', size = 20 })
 
 function scoreboard:show()
-    local title = vgui.Create('DPanel')
+    local title = vgui.Create("DPanel")
     title:SetSize(1000, 100)
     title:SetPos(ScrW()/2 - 1000 / 2, ScrH()/5 - 50)
     function title:Paint(w, h)
@@ -70,7 +70,7 @@ function scoreboard:show()
 		avatar:SetSize(36, 36)
         avatar:SetPlayer(v)
     end
-    
+
     function scoreboard:hide()
 		-- This is where you hide the scoreboard, such as with Base:Remove()
         gui.EnableScreenClicker(false)

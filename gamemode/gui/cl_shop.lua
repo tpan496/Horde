@@ -1,6 +1,6 @@
 if SERVER then return end
-surface.CreateFont('Heading', { font = 'arial bold', size = 22 })
-surface.CreateFont('Category', { font = 'arial bold', size = 22 })
+surface.CreateFont("Heading", { font = 'arial bold', size = 22 })
+surface.CreateFont("Category", { font = 'arial bold', size = 22 })
 
 local PANEL = {}
 
@@ -8,9 +8,9 @@ function PANEL:Init()
     self:SetSize(ScrW() / 1.5, ScrH() / 1.5)
 	self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
 
-	local close_btn = vgui.Create('DButton', self)
-	close_btn:SetFont('marlett')
-	close_btn:SetText('r')
+	local close_btn = vgui.Create("DButton", self)
+	close_btn:SetFont("marlett")
+	close_btn:SetText("r")
 	close_btn.Paint = function() end
 	close_btn:SetColor(Color(255, 255, 255))
 	close_btn:SetSize(32, 32)
@@ -54,7 +54,7 @@ function PANEL:Init()
 		btn:Dock(dock)
 		btn:SetText(text)
 		btn:SetFont("Category")
-		
+
 		btn.Paint = function(pnl, w, h)
 			if text == "Select Class" then
 				surface.SetDrawColor(HORDE.color_crimson)
@@ -128,7 +128,7 @@ function PANEL:Init()
 
 	for _, CATEGORY in pairs(categories) do
 		local items = {}
-	
+
 		for _, item in pairs(HORDE.items) do
 			if item.category == CATEGORY and item.whitelist and item.whitelist[class.name] then
 				if LocalPlayer():HasWeapon(item.class) then
@@ -141,7 +141,7 @@ function PANEL:Init()
 		end
 
 		if table.IsEmpty(items) then goto cont end
-	
+
 		table.sort(items, function(a, b)
 			if a.cmp == b.cmp then
 				return a.weight < b.weight
@@ -150,46 +150,46 @@ function PANEL:Init()
 			end
 		end)
 
-		local ShopCategoryTab = vgui.Create('DPanel')
-		
-		local DScrollPanel = vgui.Create('DScrollPanel', ShopCategoryTab)
+		local ShopCategoryTab = vgui.Create("DPanel")
+
+		local DScrollPanel = vgui.Create("DScrollPanel", ShopCategoryTab)
 		DScrollPanel:Dock(FILL)
-		
-		local ShopCategoryTabLayout = vgui.Create('DIconLayout', DScrollPanel)
+
+		local ShopCategoryTabLayout = vgui.Create("DIconLayout", DScrollPanel)
 		ShopCategoryTabLayout:Dock(FILL)
 		ShopCategoryTabLayout:SetBorder(8)
 		ShopCategoryTabLayout:SetSpaceX(8)
 		ShopCategoryTabLayout:SetSpaceY(8)
-		
+
 		DScrollPanel:AddItem(ShopCategoryTabLayout)
 
 		for _, item in pairs(items) do
 			if item.category == CATEGORY then
-				local model = vgui.Create('HordeShopItem')
+				local model = vgui.Create("HordeShopItem")
 				model:SetSize(container:GetWide() - 16, 40)
 				model:SetData(item, description_panel)
 				ShopCategoryTabLayout:Add(model)
 			end
 		end
-		
+
 		createBtn(CATEGORY, ShopCategoryTab, LEFT)
 
 		::cont::
 	end
 
 	-- Class tab
-	local ClassTab = vgui.Create('DPanel')
-	local DScrollPanel = vgui.Create('DScrollPanel', ClassTab)
+	local ClassTab = vgui.Create("DPanel")
+	local DScrollPanel = vgui.Create("DScrollPanel", ClassTab)
 	DScrollPanel:Dock(FILL)
-		
-	local ClassTabLayout = vgui.Create('DIconLayout', DScrollPanel)
+
+	local ClassTabLayout = vgui.Create("DIconLayout", DScrollPanel)
 	ClassTabLayout:Dock(FILL)
 	ClassTabLayout:SetBorder(8)
 	ClassTabLayout:SetSpaceX(8)
 	ClassTabLayout:SetSpaceY(8)
 
 	for _, class in pairs(HORDE.classes) do
-		local model = vgui.Create('HordeClass')
+		local model = vgui.Create("HordeClass")
 		model:SetSize(container:GetWide() - 16, 40)
 		model:SetData(class, description_panel)
 		ClassTabLayout:Add(model)
@@ -205,12 +205,12 @@ function PANEL:Paint(w, h)
 	draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
 
 	-- Money
-	draw.SimpleText("Class: " .. LocalPlayer():GetClass().name, 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	draw.SimpleText("Class: " .. LocalPlayer():GetClass().name, "Heading", 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	if LocalPlayer():GetClass().name == "Heavy" then
-		draw.SimpleText("Cash: " .. tostring(LocalPlayer():GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight + 5 - LocalPlayer():GetWeight()) .. "/" .. HORDE.max_weight + 5 .. "]", 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Cash: " .. tostring(LocalPlayer():GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight + 5 - LocalPlayer():GetWeight()) .. "/" .. HORDE.max_weight + 5 .. "]", "Heading", self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 	else
-		draw.SimpleText("Cash: " .. tostring(LocalPlayer():GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight - LocalPlayer():GetWeight()) .. "/" .. HORDE.max_weight .. "]", 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Cash: " .. tostring(LocalPlayer():GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight - LocalPlayer():GetWeight()) .. "/" .. HORDE.max_weight .. "]", "Heading", self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 	end
 end
-  
-vgui.Register('HordeShop', PANEL)
+
+vgui.Register("HordeShop", PANEL)

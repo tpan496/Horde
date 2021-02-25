@@ -105,23 +105,23 @@ end
 HORDE.SetClassData = function ()
     if SERVER then
         if GetConVar("horde_default_class_config"):GetInt() == 1 then return end
-        if not file.IsDir('horde', 'DATA') then
-            file.CreateDir('horde')
+        if not file.IsDir("horde", "DATA") then
+            file.CreateDir("horde")
         end
         
-        file.Write('horde/class.txt', util.TableToJSON(HORDE.classes))
+        file.Write("horde/class.txt", util.TableToJSON(HORDE.classes))
     end
 end
 
 function GetClassData()
     if SERVER then
-        if not file.IsDir('horde', 'DATA') then
-            file.CreateDir('horde')
+        if not file.IsDir("horde", "DATA") then
+            file.CreateDir("horde")
             return
         end
         
-        if file.Read('horde/class.txt', 'DATA') then
-            local t = util.JSONToTable(file.Read('horde/class.txt', 'DATA'))
+        if file.Read("horde/class.txt", "DATA") then
+            local t = util.JSONToTable(file.Read("horde/class.txt", "DATA"))
 
             -- Integrity
             for _, class in pairs(t) do
