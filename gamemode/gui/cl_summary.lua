@@ -1,7 +1,7 @@
 if SERVER then return end
 
-surface.CreateFont('Title', { font = 'arial bold', size = 25 })
-surface.CreateFont('Content', { font = 'arial bold', size = 20 })
+surface.CreateFont("Title", { font = 'arial bold', size = 25 })
+surface.CreateFont("Content", { font = 'arial bold', size = 20 })
 
 local PANEL = {}
 local players_votes = {}
@@ -20,16 +20,16 @@ function PANEL:Init()
 	self:SetPos(ScrW()/2 - (self:GetWide() / 2), ScrH()/2 - (self:GetTall() / 2))
     self:SetBackgroundColor(Color(0,0,0,0))
 
-    local summary_panel = vgui.Create('DPanel', self)
+    local summary_panel = vgui.Create("DPanel", self)
     summary_panel:SetSize(1024, 600)
     summary_panel:SetBackgroundColor(Color(0,0,0,0))
 
-    local summary_btn = vgui.Create('DButton', self)
+    local summary_btn = vgui.Create("DButton", self)
     local summary_activated = true
     local summary_hovered = false
     summary_btn:SetText("Game Summary")
     summary_btn:SetTextColor(Color(255,255,255))
-    summary_btn:SetFont('Title')
+    summary_btn:SetFont("Title")
     summary_btn:SetSize(250, 50)
     summary_btn:SetPos(0, 0)
     summary_btn.Paint = function ()
@@ -41,19 +41,19 @@ function PANEL:Init()
         end
     end
 
-    local votemap_panel = vgui.Create('DScrollPanel', self)
+    local votemap_panel = vgui.Create("DScrollPanel", self)
     votemap_panel:SetSize(1024, 550)
     votemap_panel:SetPos(0,50)
     votemap_panel:SetBackgroundColor(Color(0,0,0,0))
 
-    local maps_panel = vgui.Create('DScrollPanel', votemap_panel)
+    local maps_panel = vgui.Create("DScrollPanel", votemap_panel)
     maps_panel:Dock(FILL)
 
-    local votemap_btn = vgui.Create('DButton', self)
+    local votemap_btn = vgui.Create("DButton", self)
     local votemap_hovered = false
     votemap_btn:SetText("Vote Map")
     votemap_btn:SetTextColor(Color(255,255,255))
-    votemap_btn:SetFont('Title')
+    votemap_btn:SetFont("Title")
     votemap_btn:SetSize(250, 50)
     votemap_btn:SetPos(250, 0)
     votemap_btn.Paint = function ()
@@ -100,44 +100,44 @@ function PANEL:Init()
     end
 
     self.create_player_panel = function (pos, ply, award, reason)
-        local panel = vgui.Create('DPanel', summary_panel)
+        local panel = vgui.Create("DPanel", summary_panel)
         -- panel:Dock(TOP)
         panel:DockPadding(10, 10, 10, 10)
         panel:SetSize(480, 80)
         panel:SetPos(pos.x, pos.y)
         panel:SetBackgroundColor(HORDE.color_hollow)
-        local avatar = vgui.Create('AvatarImage', panel)
+        local avatar = vgui.Create("AvatarImage", panel)
         avatar:Dock(LEFT)
         avatar:SetSize(64,64)
         avatar:SetPlayer(ply, 64)
-        
-        local name_label = vgui.Create('DLabel', panel)
+
+        local name_label = vgui.Create("DLabel", panel)
         name_label:SetPos(90,-20)
         name_label:SetText(ply:GetName())
         name_label:SetSize(100, 80)
         name_label:SetColor(Color(255,255,255))
-        name_label:SetFont('Title')
+        name_label:SetFont("Title")
 
-        local award_label = vgui.Create('DLabel', panel)
+        local award_label = vgui.Create("DLabel", panel)
         award_label:SetPos(200, -20)
         award_label:SetText(award)
         award_label:SetSize(250, 80)
         award_label:SetColor(HORDE.color_crimson)
-        award_label:SetFont('Title')
+        award_label:SetFont("Title")
 
-        local reason_label = vgui.Create('DLabel', panel)
+        local reason_label = vgui.Create("DLabel", panel)
         reason_label:SetPos(90,20)
         reason_label:SetText(reason)
         reason_label:SetSize(400, 80)
         reason_label:SetColor(Color(255,255,255))
-        reason_label:SetFont('Title')
+        reason_label:SetFont("Title")
 
         return panel
     end
 
     self.map_btns = {}
     self.create_map_panel = function (map)
-        local vote_btn = vgui.Create('DButton', votemap_panel)
+        local vote_btn = vgui.Create("DButton", votemap_panel)
         local vote_btn_hovered = false
         vote_btn:DockMargin(10, 5, 10, 5)
         vote_btn:SetSize(self:GetParent():GetWide(), 50)
@@ -158,15 +158,13 @@ function PANEL:Init()
             votemap_panel:GetParent():Votemap(vote_btn, map)
             surface.PlaySound("UI/buttonclick.wav")
         end
-        
-        players_votes[map] = 0
 
-        local name_label = vgui.Create('DLabel', vote_btn)
+        players_votes[map] = 0
         name_label:Dock(LEFT)
-        name_label:SetText('')
+        name_label:SetText("")
         name_label:SetSize(250, 80)
         name_label:SetColor(Color(255,255,255))
-        name_label:SetFont('Content')
+        name_label:SetFont("Content")
         name_label.Paint = function ()
             if (players_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
                 draw.SimpleText(map, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
@@ -175,12 +173,12 @@ function PANEL:Init()
             end
         end
 
-        local count_label = vgui.Create('DLabel', vote_btn)
+        local count_label = vgui.Create("DLabel", vote_btn)
         count_label:Dock(RIGHT)
         count_label:SetSize(50, 80)
         count_label:SetColor(Color(255,255,255))
-        count_label:SetFont('Content')
-        count_label:SetText('')
+        count_label:SetFont("Content")
+        count_label:SetText("")
         count_label.Paint = function ()
             if players_votes[map] then
                 if (players_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
@@ -194,7 +192,7 @@ function PANEL:Init()
         self.map_btns[vote_btn] = 0
     end
 
-    local counter_label = vgui.Create('DLabel', self)
+    local counter_label = vgui.Create("DLabel", self)
     counter_label:SetText("")
     counter_label:SetSize(1024, 50)
     counter_label:SetTextColor(Color(255,255,255))
@@ -230,7 +228,7 @@ function PANEL:SetData(mvp_player, mvp_damage, mvp_kills, damage_player, most_da
     self.create_player_panel({x=512 + 5,y=340}, elite_kill_player, "Elite Killer", tostring(most_elite_kills) .. " Elite Kills")
     self.create_player_panel({x=512 + 5,y=460}, money_player, "Money Bag", tostring(most_money) .. "$ Earned")
     self.create_player_panel({x=512 - 480 - 5,y=460}, headshot_player, "SharpShooter", tostring(most_headshots) .. " Headshots")
-    
+
     for _, map in pairs(maps) do
         self.create_map_panel(map)
     end

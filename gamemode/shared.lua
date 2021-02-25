@@ -10,19 +10,19 @@ DeriveGamemode("sandbox")
 function GM:PlayerLoadout(ply) ply:StripWeapons() end
 
 local function CheckAllowHook(hook_name)
-    if GetConVarNumber("horde_enable_sandbox") == 1 then
+    if GetConVar("horde_enable_sandbox"):GetBool() then
         hook.Call(hook_name)
         return true
     else
-	    return false
+        return false
     end
 end
 
 local function CheckAllowFeature()
-    if GetConVarNumber("horde_enable_sandbox") == 1 then
+    if GetConVar("horde_enable_sandbox"):GetBool() then
         return true
     else
-	    return false
+        return false
     end
 end
 

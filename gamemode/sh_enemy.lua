@@ -51,13 +51,13 @@ end
 HORDE.SetEnemiesData = function()
     if SERVER then
         HORDE.NormalizeEnemiesWeight()
-        
+
         if GetConVarNumber("horde_default_enemy_config") == 1 then return end
-        if not file.IsDir('horde', 'DATA') then
-            file.CreateDir('horde')
+        if not file.IsDir("horde", "DATA") then
+            file.CreateDir("horde")
         end
-        
-        file.Write('horde/enemies.txt', util.TableToJSON(HORDE.enemies))
+
+        file.Write("horde/enemies.txt", util.TableToJSON(HORDE.enemies))
 
         HORDE.SyncEnemies()
     end
@@ -65,13 +65,13 @@ end
 
 function GetEnemiesData()
     if SERVER then
-        if not file.IsDir('horde', 'DATA') then
-            file.CreateDir('horde')
+        if not file.IsDir("horde", "DATA") then
+            file.CreateDir("horde")
             return
         end
-        
-        if file.Read('horde/enemies.txt', 'DATA') then
-            local t = util.JSONToTable(file.Read('horde/enemies.txt', 'DATA'))
+
+        if file.Read("horde/enemies.txt", "DATA") then
+            local t = util.JSONToTable(file.Read("horde/enemies.txt", "DATA"))
             -- Integrity
             for _, enemy in pairs(t) do
                 if enemy.name == nil or enemy.name == "" or enemy.class == nil or enemy.class == "" or enemy.weight == nil or enemy.wave == nil then
@@ -309,7 +309,7 @@ if SERVER then
     else
         GetEnemiesData()
     end
-    
+
     net.Receive("Horde_SetEnemiesData", function ()
         HORDE.enemies = net.ReadTable()
         HORDE.SetEnemiesData()
