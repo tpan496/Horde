@@ -85,7 +85,7 @@ CONFIG.enemies = {
         weapon = ""
     },
     HugeZombie2 = {
-        name = "Huge Zombie",
+        name = "Huge Zombie2",
         class = "npc_zombie",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 1,
