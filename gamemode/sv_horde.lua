@@ -52,7 +52,7 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
             net.WriteInt(1, 2)
             net.Broadcast()
         end
-        BroadcastMessage("Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
 
         if killer:IsPlayer() then
             local scale = 1
@@ -349,7 +349,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         HORDE.alive_enemies_this_wave = 0
         HORDE.current_break_time = -1
         HORDE.killed_enemies_this_wave = 0
-        BroadcastMessage("Enemies: " .. HORDE.total_enemies_this_wave)
+        BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "  Enemies: " .. HORDE.total_enemies_this_wave)
         -- Close all the shop menus
         net.Start("Horde_ForceCloseShop")
         net.Broadcast()
@@ -365,15 +365,17 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         local enemy_pos = enemy:GetPos()
 
         for _, ply in pairs(player.GetAll()) do
-            local dist = enemy_pos:Distance(ply:GetPos())
-            local z_dist = math.abs(ply:GetPos().z - enemy_pos.z)
+            if ply:Alive() then
+                local dist = enemy_pos:Distance(ply:GetPos())
+                local z_dist = math.abs(ply:GetPos().z - enemy_pos.z)
 
-            if dist < closest then
-                closest_ply = ply
-                closest = dist
-            end
-            if z_dist < closest_z then
-                closest_z = z_dist
+                if dist < closest then
+                    closest_ply = ply
+                    closest = dist
+                end
+                if z_dist < closest_z then
+                    closest_z = z_dist
+                end
             end
         end
 
@@ -396,14 +398,16 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         local z_dist
 
         for _, ply in pairs(player.GetAll()) do
-            local dist = node["pos"]:Distance(ply:GetPos())
-            z_dist = math.abs(node["pos"].z - ply:GetPos().z)
+            if ply:Alive() then
+                local dist = node["pos"]:Distance(ply:GetPos())
+                z_dist = math.abs(node["pos"].z - ply:GetPos().z)
 
-            if (dist <= HORDE.min_spawn_distance) or (z_dist >= GetConVarNumber("horde_max_spawn_z_distance")) then
-                valid = false
-                break
-            elseif dist < HORDE.max_spawn_distance then
-                valid = true
+                if (dist <= HORDE.min_spawn_distance) or (z_dist >= GetConVarNumber("horde_max_spawn_z_distance")) then
+                    valid = false
+                    break
+                elseif dist < HORDE.max_spawn_distance then
+                    valid = true
+                end
             end
         end
 
@@ -411,7 +415,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
 
         for _, enemy in pairs(enemies) do
             local dist = node["pos"]:Distance(enemy:GetPos())
-            if dist <= 100 then
+            if dist <= HORDE.spawn_radius then
                 valid = false
                 break
             end
@@ -426,7 +430,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
 
     --Spawn enemies
     if #valid_nodes > 0 then
-        for i = 0, math.random(4,6) do
+        for i = 0, math.random(4 + math.floor(players_count/2), 5 + players_count) do
             if (#enemies + 1 <= HORDE.max_enemies_alive) and (HORDE.total_enemies_this_wave > 0) then
                 local pos = table.Random(valid_nodes)
                 if pos ~= nil then

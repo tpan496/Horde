@@ -96,7 +96,7 @@
 			"name"		"horde_min_spawn_distance"
 			"text"		"Minimum enemy spawn distance (>100)"
 			"type"		"Numeric"
-			"default"	"500"
+			"default"	"400"
 		}
 		14
 		{
