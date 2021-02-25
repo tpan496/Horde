@@ -6,6 +6,7 @@ include("sh_class.lua")
 include("sh_enemy.lua")
 include("sh_custom.lua")
 include("cl_economy.lua")
+include("gui/cl_ready.lua")
 include("gui/cl_class.lua")
 include("gui/cl_description.lua")
 include("gui/cl_item.lua")
@@ -33,8 +34,12 @@ timer.Simple(5, function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     corner_panel.Paint = function ()
         draw.RoundedBox(10, 0, 0, 300, 50, Color(40,40,40,200))
-        if LocalPlayer():Alive() and LocalPlayer():GetClass() then
-            draw.SimpleText(LocalPlayer():GetClass().name .. " | " .. math.min(99999,LocalPlayer():GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        if LocalPlayer():Alive() then
+            if LocalPlayer():GetClass() then
+                draw.SimpleText(LocalPlayer():GetClass().name .. " | " .. math.min(99999,LocalPlayer():GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            else
+                draw.SimpleText("Survivor" .. " | " .. math.min(99999,LocalPlayer():GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            end
         else
             draw.SimpleText("Spectating", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
@@ -187,6 +192,9 @@ net.Receive("Horde_RenderCenterText", function ()
     local str = net.ReadString()
     local num = net.ReadInt(8)
     if num and num >= 0 and num <= 10 then
+        if HORDE.PlayerReadyPanel then
+            HORDE.PlayerReadyPanel:Remove()
+        end
         if num == 10 then
             surface.PlaySound("HL1/fvox/ten.wav")
         elseif num == 5 then
@@ -231,8 +239,10 @@ net.Receive("Horde_GameEnd", function ()
 
     local maps = net.ReadTable()
 
-    local end_gui = vgui.Create("HordeSummary")
+    local end_gui = vgui.Create("HordeSummaryPanel")
     end_gui:SetData(mvp, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
+
+    HORDE.game_ended = true
 end)
 
 net.Receive("Horde_SyncItems", function ()
@@ -247,15 +257,20 @@ net.Receive("Horde_SyncClasses", function ()
     HORDE.classes = net.ReadTable()
 end)
 
-hook.Add("HUDShouldDraw", "RemoveRetardRedScreen", function(name)
+hook.Add("HUDShouldDraw", "Horde_RemoveRetardRedScreen", function(name) 
     if (name == "CHudDamageIndicator") then
        return false
     end
 end)
 
-hook.Add("PlayerBindPress", "HelpfulBinds", function(ply, bind, pressed)
+hook.Add("PlayerBindPress", "Horde_HelpfulBinds", function(ply, bind, pressed)
     if not GetConVar("horde_enable_sandbox"):GetBool() and bind == "noclip" and pressed then
        net.Start("Horde_DropMoney")
        net.SendToServer()
     end
 end)
+
+hook.Add("InitPostEntity", "Horde_PlayerInit", function()
+	net.Start("Horde_PlayerInit")
+	net.SendToServer()
+end )

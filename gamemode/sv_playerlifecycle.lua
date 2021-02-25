@@ -263,7 +263,7 @@ end
 hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function (ply)
     if HORDE.start_game and HORDE.current_break_time <= 0 then
         if ply:IsValid() then
-            ply:KillSilent()
+            ply:Kill()
             net.Start("Horde_LegacyNotification")
             net.WriteString("You will respawn next wave.")
             net.Send(ply)

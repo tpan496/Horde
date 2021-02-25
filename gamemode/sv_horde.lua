@@ -75,6 +75,20 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
     end
 end)
 
+-- Corpse settings
+if GetConVar("horde_corpse_cleanup"):GetInt() == 1 then
+	RunConsoleCommand("g_ragdoll_maxcount", "0")
+    hook.Add("OnEntityCreated", "Horde_CorpseRemoval", function(ent)
+        if ent:IsRagdoll() then
+            timer.Simple(0, function ()
+                if ent:IsValid() then ent:Remove() end
+            end)
+        end
+    end)
+else
+    RunConsoleCommand("g_ragdoll_maxcount", "1")
+end
+
 -- Record statistics
 hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
     if took then
@@ -248,6 +262,7 @@ if GetConVarNumber("horde_director_interval") then
     director_interval = GetConVarNumber("horde_director_interval")
 end
 
+-- Game Director. The CORE of this addon.
 timer.Create("Horde_Main", director_interval, 0, function ()
     local status, err = pcall( function()
     local valid_nodes = {}
@@ -269,7 +284,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         local ready_count = 0
         local total_player = 0
         for _, ply in pairs(player.GetAll()) do
-            if HORDE.player_ready[ply:SteamID()] then
+            if HORDE.player_ready[ply] == 1 then
                 ready_count = ready_count + 1
             end
             total_player = total_player + 1
@@ -470,7 +485,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         for _, ply in pairs(player.GetAll()) do
             if not ply:Alive() then ply:Spawn() end
             HORDE.player_class_changed[ply:SteamID()] = false
-            HORDE.player_ready[ply:SteamID()] = false
+            HORDE.player_ready[ply] = 0
         end
 
         if GetConVarNumber("horde_npc_cleanup") == 1 then
