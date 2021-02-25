@@ -10,7 +10,7 @@ function Player:GetWeight()
     return self.weight or 0
 end
 
-function Player:GetClass()
+function Player:GetHordeClass()
     return self.class
 end
 

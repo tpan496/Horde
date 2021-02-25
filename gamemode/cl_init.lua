@@ -35,8 +35,8 @@ timer.Simple(5, function ()
     corner_panel.Paint = function ()
         draw.RoundedBox(10, 0, 0, 300, 50, Color(40,40,40,200))
         if LocalPlayer():Alive() then
-            if LocalPlayer():GetClass() then
-                draw.SimpleText(LocalPlayer():GetClass().name .. " | " .. math.min(99999,LocalPlayer():GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            if LocalPlayer():GetHordeClass() then
+                draw.SimpleText(LocalPlayer():GetHordeClass().name .. " | " .. math.min(99999,LocalPlayer():GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
                 draw.SimpleText("Survivor" .. " | " .. math.min(99999,LocalPlayer():GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
