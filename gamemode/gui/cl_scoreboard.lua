@@ -46,7 +46,7 @@ function scoreboard:show()
     for _, ply in ipairs(player.GetAll()) do
         if not ply:IsValid() then goto cont end
         local class = ""
-        if ply:GetClass() then class = ply:GetClass().name end
+        if ply:GetHordeClass() then class = ply:GetHordeClass().name end
 
         local list = lists:Add("DPanel")
         list:SetSize(lists:GetWide(), 45)
