@@ -15,7 +15,6 @@ util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
 util.AddNetworkString("Horde_SynchronizeEconomy")
 util.AddNetworkString("Horde_LegacyNotification")
-util.AddNetworkString("Horde_DropMoney")
 
 local Player = FindMetaTable('Player')
 
@@ -27,7 +26,7 @@ function Player:SetMoney(money)
     self.money = money
 end
 
-function Player:SetClass(class)
+function Player:SetHordeClass(class)
     self.class = class
 end
 
@@ -46,15 +45,15 @@ end
 function Player:DropMoney()
     if self:GetMoney() >= 50 then
         self:AddMoney(-50)
-        local money = ents.Create("horde_money")
-        local pos = self:EyePos() + self:GetEyeTrace().Normal * 25
-        money:SetOwner(self) -- Prevents owner from immediately picking the money up
-        money:SetPos(pos)
-        money:SetAngles(Angle(0, math.random(-180, 180), 0))
+        local money = ents.Create("money")
+        local pos = self:GetPos()
+        local dir = (self:GetEyeTrace().HitPos - pos)
+        dir:Normalize()
+        local drop_pos = pos + dir * 50
+        drop_pos.z = pos.z + 15
+        money:SetPos(drop_pos)
+        --money:DropToFloor()
         money:Spawn()
-        money:Activate()
-        money:GetPhysicsObject():AddVelocity(self:GetVelocity() + self:GetEyeTrace().Normal * 200 + Vector(0, 0, 100))
-        timer.Simple(0.2, function() if IsValid(money) then money:SetOwner(nil) end end)
         self:SyncEconomy()
     end
 end
@@ -63,7 +62,7 @@ function Player:GetWeight()
     return self.weight
 end
 
-function Player:GetClass()
+function Player:GetHordeClass()
     return self.class
 end
 
@@ -108,7 +107,7 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     
     ply:SetMoney(HORDE.start_money)
     ply:SetWeight(15)
-    ply:SetClass(HORDE.classes["Survivor"])
+    ply:SetHordeClass(HORDE.classes["Survivor"])
     ply:SetClassSkill(-1)
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:SyncEconomy()
@@ -155,8 +154,8 @@ end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     if not ply:IsValid() then return end
-    if not ply:GetClass() then return end
-    if ply:GetClass().Name == "Heavy" then
+    if not ply:GetHordeClass() then return end
+    if ply:GetHordeClass().Name == "Heavy" then
         ply:SetWeight(20)
     else
         ply:SetWeight(15)
@@ -179,7 +178,7 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
     if ply:IsNPC() then return true end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
-        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
+        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetHordeClass().name]) then
             return false
         end
     end
@@ -191,7 +190,7 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
     if not ply:IsValid() then return end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
-        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetClass().name]) then
+        if (ply:GetWeight() - item.weight < 0) or (not item.whitelist[ply:GetHordeClass().name]) then
             timer.Simple(0, function ()
                 ply:DropWeapon(wpn)
             end)
@@ -252,7 +251,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
     local name = net.ReadString()
     local class = HORDE.classes[name]
-    ply:SetClass(class)
+    ply:SetHordeClass(class)
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
@@ -419,8 +418,4 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
             ply:SyncEconomy()
         end
     end
-end)
-
-net.Receive("Horde_DropMoney", function(len, ply)
-    ply:DropMoney()
 end)

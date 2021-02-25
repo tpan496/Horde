@@ -240,9 +240,9 @@ hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function(ply)
 end)
 
 hook.Add("Move", "Horde_move", function (ply, mv)
-    if ply:GetClass() then
-        ply:SetWalkSpeed(ply:GetClass().movespd)
-        ply:SetRunSpeed(ply:GetClass().sprintspd)
+    if ply:GetHordeClass() then
+        ply:SetWalkSpeed(ply:GetHordeClass().movespd)
+        ply:SetRunSpeed(ply:GetHordeClass().sprintspd)
         ply:SetJumpPower(150)
     end
 end)
