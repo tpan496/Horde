@@ -8,9 +8,11 @@ util.AddNetworkString("Horde_ToggleEnemyConfig")
 util.AddNetworkString("Horde_ToggleClassConfig")
 util.AddNetworkString("Horde_RenderCenterText")
 util.AddNetworkString("Horde_Console_Commands")
+
 util.AddNetworkString("Horde_Votemap")
 util.AddNetworkString("Horde_VotemapSync")
 util.AddNetworkString("Horde_RemainingTime")
+
 
 function BroadcastMessage(msg, delay)
     for _, ply in pairs(player.GetAll()) do
@@ -20,20 +22,6 @@ function BroadcastMessage(msg, delay)
         net.Send(ply)
     end
 end
-
-hook.Add("PlayerInitialSpawn", "Horde_SyncGlobals", function (ply)
-    net.Start("Horde_SyncItems")
-    net.WriteTable(HORDE.items)
-    net.Send(ply)
-
-    net.Start("Horde_SyncEnemies")
-    net.WriteTable(HORDE.enemies)
-    net.Send(ply)
-
-    net.Start("Horde_SyncClasses")
-    net.WriteTable(HORDE.classes)
-    net.Send(ply)
-end)
 
 function Start(ply)
     if ply:IsAdmin() then
@@ -61,11 +49,11 @@ function Ready(ply)
         return
     end
     if HORDE.start_game then return end
-    HORDE.player_ready[ply:SteamID()] = true
+    HORDE.player_ready[ply] = 1
     local ready_count = 0
     local total_player = 0
     for _, ply in pairs(player.GetAll()) do
-        if HORDE.player_ready[ply:SteamID()] then
+        if HORDE.player_ready[ply] == 1 then
             ready_count = ready_count + 1
         end
         total_player = total_player + 1
@@ -75,6 +63,10 @@ function Ready(ply)
         HORDE.start_game = true
     end
     BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
+
+    net.Start("Horde_PlayerReadySync")
+    net.WriteTable(HORDE.player_ready)
+    net.Broadcast()
 end
 
 function End(ply)
@@ -255,22 +247,4 @@ end)
 
 concommand.Add("horde_class_config", function (ply, cmd, args)
     ClassConfig(ply)
-end)
-
-hook.Add("PlayerInitialSpawn", "Horde_SpawnMessage", function(ply)
-    ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
-    if HORDE.start_game then return end
-    local ready_count = 0
-    local total_player = 0
-    for _, ply in pairs(player.GetAll()) do
-        if HORDE.player_ready[ply:SteamID()] then
-            ready_count = ready_count + 1
-        end
-        total_player = total_player + 1
-    end
-    
-    if total_player == ready_count then
-        HORDE.start_game = true
-    end
-    BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
 end)

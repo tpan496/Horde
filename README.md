@@ -30,6 +30,7 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_base_player_walkspeed - Base walkspeed. 180 by default.
 - horde_base_player_runspeed - Base runspeed. 220 by default.
 - horde_enable_sandbox(0/1) - Enable sandbox/cheat features or not. 0 by default.
+- horde_corpse_cleanup(0/1) - Enable corpse removal or not. 0 by default. On 1, enemy corpses despawn immediately.
 
 Change these with caution:
 - horde_difficulty(0/1/2) - Difficulty. 0 by default. *experimental*
@@ -45,7 +46,7 @@ True maximum number of enemies alive = Minimum of (Max, Base + Scale Factor * Pl
 - horde_max_enemies_alive_max - Max. Default is 50.
 
 ## Creating Config Addons
-Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily.
+Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily. Note that class descriptions changes are not available yet in external lua configs, because they may be subject to huge changes.
 
 You config addons should stay in `garrysmod/addons/your-config/lua/horde/gamemode/custom`, and have the following (example) format:
 ```
@@ -71,7 +72,7 @@ CONFIG.items = {
 CONFIG.enemies = {
     -- key and name must be the same!
     HugeZombie = {
-        name = "Huge Zombie",
+        name = "HugeZombie",
         class = "npc_zombie",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 1,
@@ -82,6 +83,19 @@ CONFIG.enemies = {
         model_scale = 2,
         color = Color(0,255,0),
         weapon = ""
+    },
+    HugeCombine = {
+        name = "HugeCombine",
+        class = "npc_combine_s",
+        weight = 1, -- Relative weight to other enemies in the same wave.
+        wave = 1,
+        is_elite = true,
+        health_scale = 2,
+        damage_scale = 1,
+        reward_scale = 100,
+        model_scale = 2,
+        color = Color(255,0,0),
+        weapon = ""
     }
 }
 ```
@@ -89,7 +103,7 @@ To use your config, simply set `horde_external_lua_config` to the name you used 
 
 ## Dedicated Server Instructions
 
-As you might already know there are two ways of setting up configs:
+As you might already know there are two ways of setting up custom configs:
 1. Client UI. To use this on a dedicated server, you need to put
 ```
 horde_default_item_config = 0
@@ -97,4 +111,11 @@ horde_default_enemy_config = 0
 ```
 In `autoexec.cfg` and `server.cfg`. Then you can edit stuff in your shop. A quick way to setup the config is just to put your `item.txt` or `enemy.txt` into your server's `data` folder.
 
-2. Lua Scripting, as shown above.
+2. Lua Scripting, as shown above. Your `autoexec.cfg` and `server.cfg` should then look like
+```
+-- These two don't matter
+-- horde_default_item_config = 0
+-- horde_default_enemy_config = 0
+
+horde_external_lua_config "custom-config"
+```

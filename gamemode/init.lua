@@ -7,6 +7,7 @@ AddCSLuaFile("sh_enemy.lua")
 AddCSLuaFile("sh_custom.lua")
 
 AddCSLuaFile("cl_economy.lua")
+AddCSLuaFile("gui/cl_ready.lua")
 AddCSLuaFile("gui/cl_class.lua")
 AddCSLuaFile("gui/cl_description.lua")
 AddCSLuaFile("gui/cl_item.lua")

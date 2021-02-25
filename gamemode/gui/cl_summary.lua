@@ -159,17 +159,20 @@ function PANEL:Init()
             surface.PlaySound("UI/buttonclick.wav")
         end
 
-        local name_label = vgui.Create("DLabel", vote_btn)
+        players_votes[map] = 0
         name_label:Dock(LEFT)
         name_label:SetText("")
         name_label:SetSize(250, 80)
         name_label:SetColor(Color(255,255,255))
         name_label:SetFont("Content")
         name_label.Paint = function ()
-            draw.SimpleText(map, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
+            if (players_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
+                draw.SimpleText(map, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
+            else
+                draw.SimpleText(map, "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
+            end
         end
 
-        players_votes[map] = 0
         local count_label = vgui.Create("DLabel", vote_btn)
         count_label:Dock(RIGHT)
         count_label:SetSize(50, 80)
@@ -177,7 +180,13 @@ function PANEL:Init()
         count_label:SetFont("Content")
         count_label:SetText("")
         count_label.Paint = function ()
-            draw.SimpleText(tostring(players_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, Color(255,255,255))
+            if players_votes[map] then
+                if (players_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
+                    draw.SimpleText(tostring(players_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, Color(255,255,255))
+                else
+                    draw.SimpleText(tostring(players_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, HORDE.color_crimson)
+                end
+            end
         end
 
         self.map_btns[vote_btn] = 0
@@ -228,8 +237,6 @@ function PANEL:SetData(mvp_player, mvp_damage, mvp_kills, damage_player, most_da
 end
 
 function PANEL:Paint(w, h)
-	--Derma_DrawBackgroundBlur(self)
-
     -- Entire Panel
 	draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
 
@@ -237,4 +244,4 @@ function PANEL:Paint(w, h)
     draw.RoundedBox(0, 0, 50, w, h, HORDE.color_hollow)
 end
 
-vgui.Register("HordeSummary", PANEL, "DPanel")
+vgui.Register('HordeSummaryPanel', PANEL, 'DPanel')

@@ -85,24 +85,74 @@ function Player:SyncEconomy()
     net.Broadcast()
 end
 
-hook.Add("PlayerInitialSpawn", "Horde_Economy_Setup", function(ply)
-    if not ply:IsValid() then return end
+-- Player Spawn Initialize
+net.Receive("Horde_PlayerInit", function (len, ply)
+    net.Start("Horde_SyncItems")
+    net.WriteTable(HORDE.items)
+    net.Send(ply)
+
+    net.Start("Horde_SyncEnemies")
+    net.WriteTable(HORDE.enemies)
+    net.Send(ply)
+
+    net.Start("Horde_SyncClasses")
+    net.WriteTable(HORDE.classes)
+    net.Send(ply)
+
+    if not HORDE.start_game then
+        HORDE.player_ready[ply] = 0
+        net.Start("Horde_PlayerReadySync")
+        net.WriteTable(HORDE.player_ready)
+        net.Broadcast()
+    end
+    
     ply:SetMoney(HORDE.start_money)
     ply:SetWeight(15)
     ply:SetClass(HORDE.classes["Survivor"])
     ply:SetClassSkill(-1)
-    hook.Add("SetupMove", ply, function( self, ply, _, cmd )
-        if self == ply and not cmd:IsForced() then
-            hook.Run( "PlayerFullLoad", self )
-            hook.Remove( "SetupMove", self )
-            HORDE.player_class_changed[ply:SteamID()] = false
-            ply:SyncEconomy()
+    HORDE.player_class_changed[ply:SteamID()] = false
+    ply:SyncEconomy()
+    ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
+    
+    if HORDE.start_game then return end
+    
+    local ready_count = 0
+    local total_player = 0
+    for _, ply in pairs(player.GetAll()) do
+        if HORDE.player_ready[ply] == 1 then
+            ready_count = ready_count + 1
         end
-    end )
+        total_player = total_player + 1
+    end
+    
+    if total_player == ready_count then
+        HORDE.start_game = true
+    end
+
+    BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
+end)
+
+hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
+    if not HORDE.start_game then
+        HORDE.player_ready[ply] = nil
+        net.Start("Horde_PlayerReadySync")
+        net.WriteTable(HORDE.player_ready)
+        net.Broadcast()
+    end
+    
+    if not ply:IsValid() then return end
+
+    -- Remove all his class abilities
+    timer.Remove("Horde_Medic" .. ply:SteamID())
+    timer.Remove("Horde_Heavy" .. ply:SteamID())
+    timer.Remove("Horde_Demolition" .. ply:SteamID())
+    hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
+    hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
 end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     if not ply:IsValid() then return end
+    if not ply:GetClass() then return end
     if ply:GetClass().Name == "Heavy" then
         ply:SetWeight(20)
     else
@@ -223,12 +273,12 @@ net.Receive("Horde_SelectClass", function (len, ply)
         --end)
     elseif class.name == "Medic" then
         timer.Create("Horde_Medic" .. ply:SteamID(), 1, 0, function ()
-            if not ply:IsValid() then timer.Remove("Horde_Medic" .. ply:SteamID()) return end
+            if not ply:IsValid() then return end
             ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + 0.02 * ply:GetMaxHealth()))
         end)
     elseif class.name == "Heavy" then
         timer.Create("Horde_Heavy" .. ply:SteamID(), 1, 0, function ()
-            if not ply:IsValid() then timer.Remove("Horde_Heavy" .. ply:SteamID()) return end
+            if not ply:IsValid() then return end
             if ply:Armor() < 25 then
                 ply:SetArmor(math.min(25, ply:Armor() + 1))
             end
@@ -236,20 +286,20 @@ net.Receive("Horde_SelectClass", function (len, ply)
         ply:SetWeight(HORDE.max_weight + 5)
     elseif class.name == "Demolition" then
         timer.Create("Horde_Demolition" .. ply:SteamID(), 30, 0, function ()
-            if not ply:IsValid() then timer.Remove("Horde_Demolition" .. ply:SteamID()) return end
+            if not ply:IsValid() then return end
             if not ply:HasWeapon("weapon_frag") then
                 ply:Give("weapon_frag")
             end
         end)
         hook.Add("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID(), function (target, dmg)
-            if not ply:IsValid() then hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID()) return end
+            if not ply:IsValid() then return end
             if target:IsValid() and target:IsPlayer() and dmg:GetDamageType() ==  DMG_BLAST and target:SteamID() == ply:SteamID() then
                 dmg:ScaleDamage(0.25)
             end
         end)
     elseif class.name == "Ghost" then
         hook.Add("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID(), function (npc, hitgroup, dmg)
-            if not ply:IsValid() then hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID()) return end
+            if not ply:IsValid() then return end
             if npc:IsValid() and dmg:GetAttacker():IsPlayer() and dmg:GetAttacker():SteamID() == ply:SteamID() then
                 if hitgroup == HITGROUP_HEAD then
                     dmg:ScaleDamage(1.5)
@@ -333,7 +383,10 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
             local xbowbolt = 6
             local grenade = 10
             local slam = 11
-            if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam then
+
+            -- Some ammo type from mods
+            local rust_syringe = 40
+            if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam or ammo_id == rust_syringe then
                 ply:GiveAmmo(count, ammo_id, false)
             end
         end
