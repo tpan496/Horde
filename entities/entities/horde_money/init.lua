@@ -30,7 +30,7 @@ function ENT:StartTouch(entity)
         self.Removing = true
         entity:AddMoney(50)
         entity:SyncEconomy()
-        entity:EmitSound("horde/dosh_" .. math.random(1, 4) .. ".ogg", 70, 100, 0.25)
+        entity:EmitSound("horde/dosh/dosh_" .. math.random(1, 4) .. ".ogg", 70, 100, 0.25)
         self:Remove()
     end
 end
