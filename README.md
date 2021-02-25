@@ -103,6 +103,10 @@ To use your config, simply set `horde_external_lua_config` to the name you used 
 
 ## Dedicated Server Instructions
 
+### Default Config
+You don't need to add anything extra! Just make sure you set `gamemode` to `horde`.
+
+### Custom Config
 As you might already know there are two ways of setting up custom configs:
 1. Client UI. To use this on a dedicated server, you need to put
 ```
