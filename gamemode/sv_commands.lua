@@ -49,11 +49,11 @@ function Ready(ply)
         return
     end
     if HORDE.start_game then return end
-    HORDE.player_ready[ply] = true
+    HORDE.player_ready[ply] = 1
     local ready_count = 0
     local total_player = 0
     for _, ply in pairs(player.GetAll()) do
-        if HORDE.player_ready[ply] then
+        if HORDE.player_ready[ply] == 1 then
             ready_count = ready_count + 1
         end
         total_player = total_player + 1

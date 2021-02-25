@@ -43,24 +43,26 @@ function scoreboard:show()
         draw.DrawText("Ping", "Content", 971, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
     end
 
-    for _, v in ipairs( player.GetAll() ) do
+    for _, ply in ipairs(player.GetAll()) do
+        if not ply:IsValid() then goto cont end
         local class = ""
-        if v:GetClass() then class = v:GetClass().name end
+        if ply:GetClass() then class = ply:GetClass().name end
 
         local list = lists:Add("DPanel")
         list:SetSize(lists:GetWide(), 45)
         list:Dock(TOP)
         function list:Paint(w,h)
-            if v:Alive() then
+            if not ply:IsValid() then return end
+            if ply:Alive() then
                 draw.RoundedBox(5, 0, 0, w, 40, Color(40,40,40,200), true, true, false, false)
             else
                 draw.RoundedBox(5, 0, 0, w, 40, Color(100,0,0,200), true, true, false, false)
             end
-            draw.DrawText(v:Name():sub(1,20), "Content", 51, 9, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
+            draw.DrawText(ply:Name():sub(1,20), "Content", 51, 9, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
             draw.DrawText(class, "Content", 200, 9, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-            draw.DrawText(tostring(v:Frags()), "Content", 871, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-            draw.DrawText(tostring(v:Deaths()), "Content", 921, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-            draw.DrawText(tostring(v:Ping()), "Content", 971, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
+            draw.DrawText(tostring(ply:Frags()), "Content", 871, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+            draw.DrawText(tostring(ply:Deaths()), "Content", 921, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+            draw.DrawText(tostring(ply:Ping()), "Content", 971, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
         end
 
         local avatar = lists:Add("AvatarImage")
@@ -68,7 +70,9 @@ function scoreboard:show()
         avatar:Dock(NODOCK)
 	    avatar:SetPos(2, 2)
 		avatar:SetSize(36, 36)
-        avatar:SetPlayer(v)
+        avatar:SetPlayer(ply)
+
+        ::cont::
     end
     
     function scoreboard:hide()
@@ -87,9 +91,11 @@ function scoreboard:show()
 end
 
 function GM:ScoreboardShow()
+    if HORDE.game_ended then return end
 	scoreboard:show()
 end
 
 function GM:ScoreboardHide()
+    if HORDE.game_ended then return end
 	scoreboard:hide()
 end

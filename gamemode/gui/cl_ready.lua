@@ -3,40 +3,47 @@ if SERVER then return end
 surface.CreateFont('Content', { font = 'arial bold', size = 20 })
 
 local PANEL = {}
-local ready_panels = {}
 
 function PANEL:Init()
-    self:SetSize(1024, 100)
+    self:SetSize(ScrW() / 2, 100)
 	self:SetPos(ScrW() / 2 - (self:GetWide() / 2), 25)
     self:SetBackgroundColor(Color(0,0,0,0))
+end
 
-    local scroll_panel = vgui.Create('DScrollPanel', self)
-    scroll_panel:Dock(FILL)
-
-    local ready_layout = vgui.Create('DIconLayout', scroll_panel)
-    ready_layout:Dock(FILL)
-    ready_layout:SetBorder(5)
-    ready_layout:SetSpaceX(5)
-    ready_layout:SetSpaceY(5)
-    self.ready_layout = ready_layout
+function PANEL:ResetReadyPanel()
+    if self.ready_layout then self.ready_layout:Remove() end
+    self.ready_layout = vgui.Create('DIconLayout', self)
+    self.ready_layout:Dock(FILL)
+    self.ready_layout:SetBorder(5)
+    self.ready_layout:SetSpaceX(5)
+    self.ready_layout:SetSpaceY(5)
 end
 
 function PANEL:CreateReadyPanel(ply, status)
     local panel = vgui.Create('DPanel')
     self.ready_layout:Add(panel)
-    print("create", ply)
-    panel:SetSize(200,50)
+    panel:SetSize(230,32)
+    panel:SetBackgroundColor(HORDE.color_hollow)
     local avatar = vgui.Create('AvatarImage', panel)
     avatar:Dock(LEFT)
-    avatar:SetSize(16,16)
-    avatar:SetPlayer(ply, 16)
-    local label = vgui.Create('Panel', panel)
-    label:Dock(LEFT)
-    label.Paint = function ()
-        if status then
-            draw.SimpleText("Not Ready", "Content", 0, 20, Color(255,255,255))
+    avatar:SetSize(32,32)
+    avatar:SetPlayer(ply, 32)
+    local name_label = vgui.Create('DPanel', panel)
+    name_label:Dock(LEFT)
+    name_label:SetSize(130-32,32)
+    name_label.Paint = function ()
+        if not ply:IsValid() then return end
+        draw.SimpleText(ply:GetName(), "Content", 10, 8, Color(255,255,255))
+    end
+
+    local status_label = vgui.Create('DPanel', panel)
+    status_label:SetSize(90,32)
+    status_label:Dock(RIGHT)
+    status_label.Paint = function ()
+        if status == 0 then
+            draw.SimpleText("Not Ready", "Content", 0, 8, Color(255,255,255))
         else
-            draw.SimpleText("Ready", "Content", 0, 20, HORDE.color_crimson)
+            draw.SimpleText("Ready", "Content", 0, 8, HORDE.color_crimson)
         end
     end
 end
@@ -54,11 +61,28 @@ HORDE.PlayerReadyPanel:SetVisible(true)
 
 net.Receive("Horde_PlayerReadySync", function ()
     HORDE.player_ready = net.ReadTable()
-    PrintTable(HORDE.player_ready)
-    for _, panel in pairs(ready_panels) do
-        panel:Remove()
-    end
+    -- Lua sorting is just fucking retarded. Doing this on my own.
+    local ready_players = {}
+    local unready_players = {}
     for ply, status in pairs(HORDE.player_ready) do
-        HORDE.PlayerReadyPanel:CreateReadyPanel(ply, status)
+        if ply:IsValid() then
+            if status == 1 then
+                table.insert(ready_players, ply)
+            else
+                table.insert(unready_players, ply)
+            end
+        end
+    end
+
+    HORDE.PlayerReadyPanel:ResetReadyPanel()
+    for _, ply in pairs(unready_players) do
+        if ply:IsValid() then
+            HORDE.PlayerReadyPanel:CreateReadyPanel(ply, 0)
+        end
+    end
+    for _, ply in pairs(ready_players) do
+        if ply:IsValid() then
+            HORDE.PlayerReadyPanel:CreateReadyPanel(ply, 1)
+        end
     end
 end)
