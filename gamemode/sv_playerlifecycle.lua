@@ -1,6 +1,10 @@
 if CLIENT then return end
 -- Manages player spawn/death settings
 
+util.AddNetworkString("Horde_Votemap")
+util.AddNetworkString("Horde_VotemapSync")
+util.AddNetworkString("Horde_RemainingTime")
+
 local map_list = {}
 local map_votes = {}
 
@@ -206,6 +210,24 @@ net.Receive("Horde_Votemap", function (len, ply)
     net.WriteTable(map_collect)
     net.Broadcast()
 end)
+
+HORDE.VoteChangeMap = function (ply)
+    HORDE.player_vote_map_change[ply] = 1
+    if table.Count(HORDE.player_vote_map_change) == table.Count(player.GetAll()) then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("All players want to change map! Initiating map vote...")
+        net.WriteInt(0,2)
+        net.Broadcast()
+        timer.Simple(5, function ()
+            HORDE.GameEnd("Change Map")
+        end)
+    else
+        net.Start("Horde_LegacyNotification")
+        net.WriteString(ply:GetName() .. " wants to change the map. (" .. tostring(table.Count(HORDE.player_vote_map_change)) .. "/" .. tostring(table.Count(player.GetAll())) .. ")")
+        net.WriteInt(0,2)
+        net.Broadcast()
+    end
+end
 
 hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function(ply)
     if ply:IsValid() then

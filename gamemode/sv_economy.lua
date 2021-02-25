@@ -132,7 +132,10 @@ net.Receive("Horde_PlayerInit", function (len, ply)
 end)
 
 hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
-    if not HORDE.start_game then
+    if HORDE.player_vote_map_change[ply] then
+        HORDE.player_vote_map_change[ply] = nil
+    end
+    if (not HORDE.start_game) and HORDE.player_ready[ply] then
         HORDE.player_ready[ply] = nil
         net.Start("Horde_PlayerReadySync")
         net.WriteTable(HORDE.player_ready)
