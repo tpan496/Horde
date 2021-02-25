@@ -9,10 +9,6 @@ util.AddNetworkString("Horde_ToggleClassConfig")
 util.AddNetworkString("Horde_RenderCenterText")
 util.AddNetworkString("Horde_Console_Commands")
 
-util.AddNetworkString("Horde_Votemap")
-util.AddNetworkString("Horde_VotemapSync")
-util.AddNetworkString("Horde_RemainingTime")
-
 
 function BroadcastMessage(msg, delay)
     for _, ply in pairs(player.GetAll()) do
@@ -216,6 +212,8 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         ply:DropWeapon()
     elseif text == "!donate" then
         ply:DropMoney()
+    elseif text == "!rtv" then
+        HORDE.VoteChangeMap(ply)
     end
     return input
 end)
