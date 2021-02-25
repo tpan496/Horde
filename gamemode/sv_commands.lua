@@ -187,6 +187,7 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         ply:PrintMessage(HUD_PRINTTALK, "'!shop' - Open shop")
         ply:PrintMessage(HUD_PRINTTALK, "'!drop' - Drop weapon")
         ply:PrintMessage(HUD_PRINTTALK, "'!donate' - Drop 50$")
+        ply:PrintMessage(HUD_PRINTTALK, "'!rtv' -Initiate a map change vote")
     
     elseif text == "!start" then
         Start(ply)
