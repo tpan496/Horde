@@ -192,6 +192,9 @@ net.Receive('Horde_RenderCenterText', function ()
     local str = net.ReadString()
     local num = net.ReadInt(8)
     if num and num >= 0 and num <= 10 then
+        if HORDE.PlayerReadyPanel then
+            HORDE.PlayerReadyPanel:Remove()
+        end
         if num == 10 then
             surface.PlaySound("HL1/fvox/ten.wav")
         elseif num == 5 then
@@ -238,6 +241,8 @@ net.Receive('Horde_GameEnd', function ()
 
     local end_gui = vgui.Create("HordeSummaryPanel")
     end_gui:SetData(mvp, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
+
+    HORDE.game_ended = true
 end)
 
 net.Receive("Horde_SyncItems", function ()
