@@ -83,6 +83,19 @@ CONFIG.enemies = {
         model_scale = 2,
         color = Color(0,255,0),
         weapon = ""
+    },
+    HugeZombie2 = {
+        name = "Huge Zombie",
+        class = "npc_zombie",
+        weight = 1, -- Relative weight to other enemies in the same wave.
+        wave = 1,
+        is_elite = true,
+        health_scale = 2,
+        damage_scale = 1,
+        reward_scale = 100,
+        model_scale = 2,
+        color = Color(255,0,0),
+        weapon = ""
     }
 }
 ```
