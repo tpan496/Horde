@@ -86,7 +86,7 @@ if GetConVar("horde_corpse_cleanup"):GetInt() == 1 then
         end
     end)
 else
-    RunConsoleCommand("g_ragdoll_maxcount", "1")
+    RunConsoleCommand("g_ragdoll_maxcount", "20") -- default value
 end
 
 -- Record statistics
