@@ -214,14 +214,14 @@ function PANEL:Votemap(vote_btn, map)
     net.SendToServer()
 end
 
-function round2(num, numDecimalPlaces)
+function Round2(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
 end
 
 function PANEL:SetData(mvp_player, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
     local percentage = 0
     if total_damage > 0 then
-        percentage = round2(mvp_damage / total_damage, 2) * 100
+        percentage = Round2(mvp_damage / total_damage, 2) * 100
     end
     self.create_player_panel({x=512 - 240,y=100}, mvp_player, "MVP", tostring(mvp_kills) .. " Kills, " .. tostring(mvp_damage) .. " Damage (" .. tostring(percentage) .. "%)")
     self.create_player_panel({x=512 - 480 - 5,y=220}, damage_player, "Most Damage Dealt", tostring(most_damage) .. " Damage")

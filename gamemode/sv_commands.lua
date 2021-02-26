@@ -188,25 +188,18 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         ply:PrintMessage(HUD_PRINTTALK, "'!drop' - Drop weapon")
         ply:PrintMessage(HUD_PRINTTALK, "'!throwmoney' - Drop 50$")
         ply:PrintMessage(HUD_PRINTTALK, "'!rtv' -Initiate a map change vote")
-    
     elseif text == "!start" then
         Start(ply)
-
     elseif text == "!ready" then
         Ready(ply)
-    
     elseif text == "!end" then
         End(ply)
-
     elseif text == "!shop" then
         Shop(ply)
-
     elseif text == "!itemconfig" then
         ItemConfig(ply)
-        
     elseif text == "!enemyconfig" then
         EnemyConfig(ply)
-        
     elseif text == "!classconfig" then
         ClassConfig(ply)
     elseif text == "!drop" then

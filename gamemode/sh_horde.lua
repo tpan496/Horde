@@ -2,7 +2,6 @@ CreateConVar("horde_default_enemy_config", 1, SERVER_CAN_EXECUTE, "Use default e
 CreateConVar("horde_default_item_config", 1, SERVER_CAN_EXECUTE, "Use default item config settings.")
 CreateConVar("horde_default_class_config", 1, SERVER_CAN_EXECUTE, "Use default class config settings.")
 CreateConVar("horde_max_wave", 10, SERVER_CAN_EXECUTE, "Max waves.")
-CreateConVar("horde_difficulty", 0, SERVER_CAN_EXECUTE, "Difficulty.")
 CreateConVar("horde_break_time", 60, SERVER_CAN_EXECUTE, "Break time between waves.")
 CreateConVar("horde_enable_shop", 1, SERVER_CAN_EXECUTE, "Enables shop menu or not.")
 CreateConVar("horde_enable_client_gui", 1, SERVER_CAN_EXECUTE, "Enables client information ui or not.")
@@ -24,6 +23,9 @@ CreateConVar("horde_corpse_cleanup", 0, SERVER_CAN_EXECUTE, "Remove corpses.")
 
 CreateConVar("horde_base_walkspeed", 180, SERVER_CAN_EXECUTE, "Base walkspeed.")
 CreateConVar("horde_base_runspeed", 220, SERVER_CAN_EXECUTE, "Base runspeed.")
+
+CreateConVar("horde_difficulty", 0, SERVER_CAN_EXECUTE, "Difficulty.")
+CreateConVar("horde_difficulty_voting", 1, SERVER_CAN_EXECUTE, "Enable difficulty voting or not.")
 
 if SERVER then
 util.AddNetworkString("Horde_PlayerInit")
