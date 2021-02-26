@@ -160,6 +160,8 @@ function PANEL:Init()
         end
 
         players_votes[map] = 0
+
+        local name_label = vgui.Create("DLabel", vote_btn)
         name_label:Dock(LEFT)
         name_label:SetText("")
         name_label:SetSize(250, 80)
