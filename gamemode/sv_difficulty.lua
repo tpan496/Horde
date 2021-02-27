@@ -69,9 +69,10 @@ hook.Add("GetFallDamage", "RealisticDamage", function(ply, speed)
     if HORDE.difficulty == difficulty_normal then
         return 10
     elseif HORDE.difficulty == difficulty_hard then
-        return math.floor(0.5 * (speed / 8))
+        return math.max(0, math.ceil(0.2418 * speed - 141.75)) / 2
     else
-        return math.floor((speed / 8))
+        -- css fall damage
+        return math.max(0, math.ceil(0.2418 * speed - 141.75))
     end
 end)
 

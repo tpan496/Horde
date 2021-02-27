@@ -60,7 +60,7 @@ function scoreboard:show()
             end
             draw.DrawText(ply:Name():sub(1,20), "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-            local mat = Material("materials/" .. class .. ".png")
+            local mat = Material("materials/" .. class .. ".png", "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
             surface.DrawTexturedRect(200, 2, 38, 38)
             draw.DrawText(class, "Content", 250, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )

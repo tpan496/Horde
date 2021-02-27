@@ -156,7 +156,7 @@ HORDE.GameEnd = function (status)
 
     timer.Remove("Horde_Main")
     timer.Remove("Horder_Counter")
-    BroadcastMessage(status)
+    BroadcastMessage(status .. " Wave: " .. HORDE.current_wave)
 
     local remaining_time = 60
     timer.Create("Horde_MapVoteCountdown", 1, 0, function ()

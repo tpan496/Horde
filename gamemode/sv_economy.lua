@@ -43,11 +43,6 @@ function Player:GetHordeMoney()
     return self.money
 end
 
-function Player:GiveHordeAmmoBox()
-    print("ok")
-    return
-end
-
 function Player:DropHordeMoney()
     if self:GetHordeMoney() >= 50 then
         self:AddHordeMoney(-50)

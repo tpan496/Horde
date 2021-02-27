@@ -53,8 +53,11 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
             net.WriteInt(HORDE.render_highlight_enemies, 3)
             net.Broadcast()
         end
-        BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
-
+        if HORDE.endless then
+            BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        else
+            BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        end
         if killer:IsPlayer() then
             local scale = 1
             if victim:GetVar("reward_scale") then
@@ -247,11 +250,6 @@ function StartBreak()
             HORDE.current_break_time = HORDE.current_break_time - 1
         end
 
-
-        if HORDE.current_break_time <= 10 then
-            --surface.PlaySound("radiovoice/eight")
-        end
-
         if HORDE.current_break_time == 0 then
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
@@ -336,8 +334,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             HORDE.start_game = false
             return
         end
-
-        if table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
+        if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
             net.Start("Horde_LegacyNotification")
             net.WriteString("No enemy config set for this wave. Falling back to previous wave settings.")
             net.WriteInt(1,2)
@@ -351,7 +348,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             -- No endless
             HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
         else
-            if HORDE.total_enemies_per_wave[HORDE.current_wave] then
+            if HORDE.total_enemies_per_wave[HORDE.current_wave] ~= nil then
                  -- If we have enough waves, still use them
                  HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
             else
@@ -379,7 +376,11 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         HORDE.killed_enemies_this_wave = 0
 
         ammobox_refresh_timer = HORDE.ammobox_refresh_interval
-        BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "  Enemies: " .. HORDE.total_enemies_this_wave)
+        if HORDE.endless then
+            BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        else
+            BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        end
         -- Close all the shop menus
         net.Start("Horde_ForceCloseShop")
         net.Broadcast()
@@ -415,10 +416,14 @@ timer.Create("Horde_Main", director_interval, 0, function ()
 
         if closest > HORDE.max_spawn_distance or (closest_z > GetConVarNumber("horde_max_spawn_z_distance")) then
             table.RemoveByValue(enemies, enemy)
-            enemy:Remove()
+            if enemy:IsValid() then
+                enemy:Remove()
+            end
         else
-            enemy:SetLastPosition(closest_ply:GetPos())
-            enemy:SetTarget(closest_ply)
+            if enemy:IsValid() and enemy:IsNPC() then
+                enemy:SetLastPosition(closest_ply:GetPos())
+                enemy:SetTarget(closest_ply)
+            end
         end
     end
 
@@ -473,9 +478,17 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                     local p_cum = 0
                     local spawned_enemy
                     local enemy_wave = HORDE.current_wave
-                    if table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
+                    
+                    -- This in fact should not happen
+                    if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
                         enemy_wave = enemy_wave - 1
                     end
+                    
+                    -- Endless
+                    if HORDE.endless == 1 and enemy_wave > HORDE.max_max_waves then
+                        enemy_wave = HORDE.max_max_waves
+                    end
+                    
                     for name, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
                         p_cum = p_cum + weight
                         if p <= p_cum then
