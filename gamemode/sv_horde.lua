@@ -53,10 +53,10 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
             net.WriteInt(HORDE.render_highlight_enemies, 3)
             net.Broadcast()
         end
-        if HORDE.endless then
-            BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        if HORDE.endless == 1 then
+            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         else
-            BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         end
         if killer:IsPlayer() then
             local scale = 1
@@ -376,10 +376,10 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         HORDE.killed_enemies_this_wave = 0
 
         ammobox_refresh_timer = HORDE.ammobox_refresh_interval
-        if HORDE.endless then
-            BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        if HORDE.endless == 1 then
+            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         else
-            BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         end
         -- Close all the shop menus
         net.Start("Horde_ForceCloseShop")
@@ -389,6 +389,9 @@ timer.Create("Horde_Main", director_interval, 0, function ()
     -- Decrease ammobox refresh timer
     if HORDE.enable_ammobox then
         ammobox_refresh_timer = ammobox_refresh_timer - director_interval
+        net.Start("Horde_AmmoboxCountdown")
+        net.WriteInt(ammobox_refresh_timer, 8)
+        net.Broadcast()
     end
     
     -- Check enemy
@@ -515,7 +518,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             end
             spawned_ammoboxes = {}
 
-            for i = 0, table.Count(player.GetAll()) + HORDE.difficulty_additional_ammoboxes[HORDE.difficulty] do
+            for i = 0, math.min(table.Count(player.GetAll()), HORDE.ammobox_max_count_limit) + HORDE.difficulty_additional_ammoboxes[HORDE.difficulty] do
                 local pos = table.Random(valid_nodes)
                 local spawned_ammobox = ents.Create("horde_ammobox")
                 spawned_ammobox:SetPos(pos)

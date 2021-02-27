@@ -1,4 +1,4 @@
-"coopgamemode"
+"horde"
 {
 	"base"		"sandbox"
 	"title"		"Horde"
@@ -13,7 +13,7 @@
 			"text"		"Endless Mode"
 			"type"		"CheckBox"
 			"default"	"0"
-			"singleplayer"
+			"singleplayer" ""
 		}
 		2
 		{
@@ -21,7 +21,7 @@
 			"text"		"Use default enenmy config."
 			"type"		"CheckBox"
 			"default"	"1"
-			"singleplayer"
+			"singleplayer" ""
 		}	
         3
 		{
@@ -29,7 +29,7 @@
 			"text"		"Use default item config."
 			"type"		"CheckBox"
 			"default"	"1"
-			"singleplayer"
+			"singleplayer" ""
 		}
 		4
 		{
@@ -37,7 +37,7 @@
 			"text"		"Use default class config."
 			"type"		"CheckBox"
 			"default"	"1"
-			"singleplayer"
+			"singleplayer" ""
 		}
 		5
 		{
@@ -45,7 +45,7 @@
 			"text"		"Name of external lua config to use. Leave it empty if you do not have one."
 			"type"		"Text"
 			"default"	""
-			"singleplayer"
+			"singleplayer" ""
 		}
 		6
 		{
@@ -53,7 +53,7 @@
 			"text"		"Max wave (1-10)"
 			"type"		"Numeric"
 			"default"	"5"
-			"singleplayer"
+			"singleplayer" ""
 		}
 		7
 		{
@@ -61,7 +61,7 @@
 			"text"		"Difficulty (0=Normal, 1=Hard, 2=Realism)"
 			"type"		"Numeric"
 			"default"	"0"
-			"singleplayer"
+			"singleplayer" ""
 		}
 		8
 		{
@@ -69,7 +69,7 @@
 			"text"		"Money given at start."
 			"type"		"Numeric"
 			"default"	"1000"
-			"singleplayer"
+			"singleplayer" ""
 		}
 		9
 		{
@@ -77,7 +77,7 @@
 			"text"		"Break time between waves (>10)"
 			"type"		"Numeric"
 			"default"	"60"
-			"singleplayer"
+			"singleplayer" ""
 		}
 		10
 		{
@@ -85,47 +85,55 @@
 			"text"		"Enables shop menu"
 			"type"		"CheckBox"
 			"default"	"1"
-			"singleplayer"
+			"singleplayer" ""
 		}
 		11
+		{
+			"name"		"horde_enable_ammobox"
+			"text"		"Enables ammobox spawns"
+			"type"		"CheckBox"
+			"default"	"1"
+			"singleplayer" ""
+		}
+		12
 		{
 			"name"		"horde_enable_sandbox"
 			"text"		"Enables sandbox/cheat features"
 			"type"		"CheckBox"
 			"default"	"0"
-			"singleplayer"
+			"singleplayer" ""
 		}
-		12
+		13
 		{
 			"name"		"horde_max_spawn_z_distance"
 			"text"		"Maximum enemy spawn height difference."
 			"type"		"Numeric"
 			"default"	"500"
-			"singleplayer"
+			"singleplayer" ""
 		}
-		13
+		14
 		{
 			"name"		"horde_corpse_cleanup"
 			"text"		"Remove corpses."
 			"type"		"CheckBox"
 			"default"	"0"
-			"singleplayer"
+			"singleplayer" ""
 		}
-		14
+		15
 		{
 			"name"		"horde_base_walkspeed"
 			"text"		"Base Walkspeed"
 			"type"		"Numeric"
 			"default"	"180"
-			"singleplayer"
+			"singleplayer" ""
 		}
-		15
+		16
 		{
 			"name"		"horde_base_runspeed"
 			"text"		"Base Runspeed"
 			"type"		"Numeric"
 			"default"	"220"
-			"singleplayer"
+			"singleplayer" ""
 		}
 	}
 	
