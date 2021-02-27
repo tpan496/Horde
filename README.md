@@ -34,16 +34,16 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_disable_difficulty_voting(0/1) - Disable difficulty voting. 0 by default.
 - horde_enable_ammobox(0/1) - Enable ammobox respawns or not. 1 by default.
 
-### UI Settings
+#### UI Settings
 - horde_enable_scoreboard(0/1) - Enables built-in scoreboard. 1 by default.
 - horde_enable_shop(0/1) - Enables shop menu or not. 1 by default.
 - horde_enable_client_gui(0/1) - Enables client information ui or not. 1 by default.
 
-### Optimization Settings
+#### Optimization Settings
 - horde_npc_cleanup(0/1) - Kills all NPCs after a wave. 1 by default.
 - horde_corpse_cleanup(0/1) - Enable corpse removal or not. 0 by default. On 1, enemy corpses despawn immediately.
 
-### Spawn Settings
+#### Spawn Settings
 - horde_max_spawn_distance - Maximum enemy respawn distance. 2000 by default.
 - horde_min_spawn_distance - Minimum enemy respawn distance. 400 by default.
 - horde_max_spawn_z_distance - Maximum enemy respawn height difference from players. 500 by default. If your map is huge and enemies spawn in extreme positions, turn this smaller.
