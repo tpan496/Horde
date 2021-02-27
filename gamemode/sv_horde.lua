@@ -182,20 +182,25 @@ function SpawnEnemy(enemy, pos)
         spawned_enemy:SetNPCState(NPC_STATE_COMBAT)
     end
 
-    if enemy.is_elite then
-        spawned_enemy:SetVar("is_elite", true)
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, players_count * 0.75))
-        spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
-    end
-
     if enemy.model_scale then
         spawned_enemy:SetModelScale(enemy.model_scale)
     end
 
+    -- Health settings
+    if enemy.is_elite then
+        spawned_enemy:SetVar("is_elite", true)
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, players_count * 0.75))
+    end
+
     if enemy.health_scale then
         spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * enemy.health_scale)
-        spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
     end
+
+    if HORDE.endless == 1 then
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.endless_health_multiplier)
+    end
+
+    spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
 
     if enemy.reward_scale then
         spawned_enemy:SetVar("reward_scale", enemy.reward_scale)
@@ -340,12 +345,29 @@ timer.Create("Horde_Main", director_interval, 0, function ()
 
         players_count = table.Count(player.GetAll())
         local difficulty_coefficient = HORDE.difficulty * 0.05
-        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
+        
+        if HORDE.endless == 0 then
+            -- No endless
+            HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
+        else
+            if HORDE.total_enemies_per_wave[HORDE.current_wave] then
+                 -- If we have enough waves, still use them
+                 HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
+            else
+                -- Use wave 10 settings scaled
+                HORDE.total_enemies_this_wave = (HORDE.total_enemies_per_wave[HORDE.max_max_waves] + 5 * (HORDE.current_wave - HORDE.max_max_waves)) * math.ceil(players_count * (0.75 + difficulty_coefficient))
+                -- Scale damage and health
+                HORDE.endless_damage_multiplier = 1 + 0.1 * (HORDE.current_wave - HORDE.max_max_waves)
+                HORDE.endless_health_multiplier = 1 + 0.05 * (HORDE.current_wave - HORDE.max_max_waves)
+            end
+        end
+
+        
         HORDE.total_enemies_this_wave_fixed = HORDE.total_enemies_this_wave
         local max_enemies_alive_base = GetConVarNumber("horde_max_enemies_alive_base")
         local scale = GetConVarNumber("horde_max_enemies_alive_scale_factor")
         local max_enemies_alive_max = GetConVarNumber("horde_max_enemies_alive_max")
-        HORDE.max_enemies_alive = math.min(max_enemies_alive_max, max_enemies_alive_base + scale * players_count)
+        HORDE.max_enemies_alive = math.floor(math.min(max_enemies_alive_max, max_enemies_alive_base * HORDE.difficulty_max_enemies_alive_scale_factor + scale * players_count))
         HORDE.alive_enemies_this_wave = 0
         HORDE.current_break_time = -1
         HORDE.killed_enemies_this_wave = 0
@@ -430,7 +452,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
 
     --Spawn enemies
     if #valid_nodes > 0 then
-        for i = 0, math.random(4 + math.floor(players_count/2), 5 + players_count) do
+        for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack + math.floor(players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack + players_count) do
             if (#enemies + 1 <= HORDE.max_enemies_alive) and (HORDE.total_enemies_this_wave > 0) then
                 local pos = table.Random(valid_nodes)
                 if pos ~= nil then
@@ -471,7 +493,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             end
         end
 
-        if HORDE.current_wave == HORDE.max_waves then
+        if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
             BroadcastMessage("Final Wave Completed! You have survived!")
             HORDE.GameEnd("Victory")
         else

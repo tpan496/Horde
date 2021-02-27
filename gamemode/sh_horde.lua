@@ -26,6 +26,7 @@ CreateConVar("horde_base_runspeed", 220, SERVER_CAN_EXECUTE, "Base runspeed.")
 
 CreateConVar("horde_difficulty", 0, SERVER_CAN_EXECUTE, "Difficulty.")
 CreateConVar("horde_difficulty_voting", 1, SERVER_CAN_EXECUTE, "Enable difficulty voting or not.")
+CreateConVar("horde_faked_player_count", 0, SERVER_CAN_EXECUTE, "Fakes the number of total players.")
 
 if SERVER then
 util.AddNetworkString("Horde_PlayerInit")
@@ -46,7 +47,8 @@ HORDE.color_crimson_dark = Color(100,0,0)
 HORDE.color_hollow = Color(40,40,40,225)
 HORDE.color_hollow_dim = Color(80, 80, 80, 225)
 HORDE.start_game = false
-HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42}
+HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42, 45}
+--HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0}
 HORDE.total_enemies_this_wave = 0
 HORDE.alive_enemies_this_wave = 0
 HORDE.killed_enemies_this_wave = 0
@@ -54,6 +56,7 @@ HORDE.current_wave = 0
 HORDE.total_break_time = math.max(10, GetConVarNumber("horde_break_time"))
 HORDE.first_break_time = 10
 HORDE.current_break_time = HORDE.first_break_time
+
 HORDE.max_spawn_distance = math.max(100, GetConVarNumber("horde_max_spawn_distance"))
 HORDE.min_spawn_distance = math.max(100, GetConVarNumber("horde_min_spawn_distance"))
 HORDE.max_enemies_alive = 20
@@ -61,8 +64,12 @@ HORDE.spawned_enemies = {}
 HORDE.ai_nodes = {}
 HORDE.found_ai_nodes = false
 HORDE.enemy_spawn_z = 6
+HORDE.min_base_enemy_spawns_per_think = 4
+HORDE.max_base_enemy_spawns_per_think = 5
+
 HORDE.player_ready = {}
-HORDE.max_waves = math.min(10, math.max(1, GetConVarNumber("horde_max_wave")))
+HORDE.max_max_waves = 10
+HORDE.max_waves = math.min(HORDE.max_max_waves, math.max(1, GetConVarNumber("horde_max_wave")))
 HORDE.difficulty = math.min(2, math.max(0, GetConVarNumber("horde_difficulty")))
 HORDE.enable_shop = GetConVarNumber("horde_enable_shop")
 HORDE.start_money = math.max(0, GetConVarNumber("horde_start_money"))
