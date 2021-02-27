@@ -193,7 +193,7 @@ function SpawnEnemy(enemy, pos)
     -- Health settings
     if enemy.is_elite then
         spawned_enemy:SetVar("is_elite", true)
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, players_count * 0.75))
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, players_count * 0.60))
     end
 
     if enemy.health_scale then
@@ -355,8 +355,8 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                 -- Use wave 10 settings scaled
                 HORDE.total_enemies_this_wave = (HORDE.total_enemies_per_wave[HORDE.max_max_waves] + 5 * (HORDE.current_wave - HORDE.max_max_waves)) * math.ceil(players_count * (0.75 + difficulty_coefficient))
                 -- Scale damage and health
-                HORDE.endless_damage_multiplier = 1 + 0.1 * (HORDE.current_wave - HORDE.max_max_waves)
-                HORDE.endless_health_multiplier = 1 + 0.05 * (HORDE.current_wave - HORDE.max_max_waves)
+                HORDE.endless_damage_multiplier = 1 + 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves)
+                HORDE.endless_health_multiplier = 1 + 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves)
             end
         end
         
