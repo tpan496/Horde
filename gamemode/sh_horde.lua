@@ -26,6 +26,7 @@ CreateConVar("horde_base_walkspeed", 180, SERVER_CAN_EXECUTE, "Base walkspeed.")
 CreateConVar("horde_base_runspeed", 220, SERVER_CAN_EXECUTE, "Base runspeed.")
 
 CreateConVar("horde_difficulty", 0, SERVER_CAN_EXECUTE, "Difficulty.")
+CreateConVar("horde_disable_difficulty_voting", 0, SERVER_CAN_EXECUTE, "Disable difficulty voting.")
 CreateConVar("horde_endless", 0, SERVER_CAN_EXECUTE, "Endless.")
 CreateConVar("horde_difficulty_voting", 1, SERVER_CAN_EXECUTE, "Enable difficulty voting or not.")
 CreateConVar("horde_total_enemies_scaling", 0, SERVER_CAN_EXECUTE, "Forces the gamemode to multiply maximum enemy count by this.")
@@ -49,8 +50,8 @@ HORDE.color_crimson_dark = Color(100,0,0)
 HORDE.color_hollow = Color(40,40,40,225)
 HORDE.color_hollow_dim = Color(80, 80, 80, 225)
 HORDE.start_game = false
-HORDE.total_enemies_per_wave = {0, 19, 23, 27, 30, 33, 36, 39, 42, 45}
---HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0}
+HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42, 45}
+--HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 -- Director
 HORDE.difficulty = 1
@@ -102,10 +103,8 @@ HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM"}
 
 -- Functions required on both sides
 HORDE.GiveAmmo = function (ply, wpn, count)
-    print(ply, wpn, count)
     local clip_size = wpn:GetMaxClip1()
     local ammo_id = wpn:GetPrimaryAmmoType()
-    print(ammo_id, clip_size)
 
     if clip_size > 0 then -- block melee
 	    ply:GiveAmmo(clip_size * count, ammo_id, false)

@@ -21,7 +21,7 @@ end
 HORDE.NormalizeEnemiesWeight = function ()
     if table.IsEmpty(HORDE.enemies) then return end
     -- NormalizeHORDE.NormalizeE
-    for wave = 1, HORDE.max_waves do
+    for wave = 1, HORDE.max_max_waves do
         HORDE.enemies_normalized[wave] = {}
         local total_weight = 0
         for _, enemy in pairs(HORDE.enemies) do

@@ -160,7 +160,9 @@ function PANEL:Init()
         summary_activated = false
         summary_panel:SetVisible(false)
         votemap_panel:SetVisible(true)
-        votediff_panel:SetVisible(true)
+        if GetConVar("horde_disable_difficulty_voting"):GetInt() ~= 1 then
+            votediff_panel:SetVisible(true)
+        end
         surface.PlaySound("UI/buttonclick.wav")
     end
 

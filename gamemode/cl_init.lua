@@ -41,7 +41,7 @@ timer.Simple(5, function ()
             end
             draw.SimpleText(name .. " | " .. math.min(99999,LocalPlayer():GetHordeMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-            local mat = Material("materials/" .. name .. ".png")
+            local mat = Material("materials/" .. name .. ".png", "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
             surface.DrawTexturedRect(150 - 40 - string.len(name) * 7 - 30, 5, 40, 40)
         else
@@ -135,8 +135,6 @@ net.Receive("Horde_HighlightEntities", function (len, ply)
             halo.Add(ents.FindByClass("npc*"), Color(255, 0, 0), 1, 1, 2, true, true)
         end)
     elseif render == HORDE.render_highlight_ammoboxes then
-        print("Render ammo")
-        print(ents.FindByClass("horde_ammobox"))
         hook.Add("PreDrawHalos", "Horde_AddAmmoBoxHalos", function()
             halo.Add(ents.FindByClass("horde_ammobox"), Color(0, 255, 0), 1, 1, 2, true, true)
         end)
