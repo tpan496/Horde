@@ -24,7 +24,7 @@ You need to change these BEFORE your game/server starts to take effect.
 #### Game Settings
 - horde_difficulty(0/1/2) - Difficulty. Normal, hard, realism. 0 by default.
 - horde_endless(0/1) - Enable endless. 0 by default.
-- - horde_enable_sandbox(0/1) - Enable sandbox/cheat features or not. 0 by default.
+- horde_enable_sandbox(0/1) - Enable sandbox/cheat features or not. 0 by default.
 - horde_max_wave(1-10) - Max waves. 10 by default.
 - horde_break_time(10-60) - Break time between waves. 60 by default.
 - horde_start_money - Money given at start. 1000 by default.
