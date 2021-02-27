@@ -19,6 +19,8 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_default_item_config(0/1) - Use default item config settings. 1 by default.
 - horde_default_class_config(0/1) - Use default class config settings. 1 by default.
 - horde_external_lua_config("") - Name of the lua config file to use. Leave this empty if you do not have one.
+- horde_difficulty(0/1/2) - Difficulty. Normal, hard, realism. 0 by default.
+- horde_endless(0/1) - Enable endless. 0 by default.
 
 - horde_max_wave(1-10) - Max waves. 10 by default.
 - horde_break_time(10-60) - Break time between waves. 60 by default.
@@ -31,9 +33,11 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_base_player_runspeed - Base runspeed. 220 by default.
 - horde_enable_sandbox(0/1) - Enable sandbox/cheat features or not. 0 by default.
 - horde_corpse_cleanup(0/1) - Enable corpse removal or not. 0 by default. On 1, enemy corpses despawn immediately.
+- horde_total_enemies_scaling - Forces the gamemode to multiply maximum enemy count by this. You can only INCREASE the number of enemies. 0 by default (disabled).
+- horde_disable_difficulty_voting(0/1) - Disable difficulty voting. 0 by default.
+- horde_enable_ammobox(0/1) - Enable ammobox respawns or not. 1 by default.
 
 Change these with caution:
-- horde_difficulty(0/1/2) - Difficulty. 0 by default. *experimental*
 - horde_max_spawn_distance - Maximum enemy respawn distance. 2000 by default.
 - horde_min_spawn_distance - Minimum enemy respawn distance. 400 by default.
 - horde_max_spawn_z_distance - Maximum enemy respawn height difference from players. 500 by default. If your map is huge and enemies spawn in extreme positions, turn this smaller.
