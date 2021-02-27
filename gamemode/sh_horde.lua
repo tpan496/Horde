@@ -79,7 +79,6 @@ HORDE.start_money = math.max(0, GetConVarNumber("horde_start_money"))
 HORDE.total_enemies_this_wave_fixed = 0
 HORDE.kill_reward_base = 100
 HORDE.game_ended = false
-HORDE.player_custom_enemy_count_scaling = GetConVar("horde_total_enemies_scaling"):GetInt()
 
 -- Ammobox
 HORDE.ammobox_max_count_limit = 9

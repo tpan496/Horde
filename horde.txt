@@ -18,7 +18,7 @@
 		2
 		{
 			"name"		"horde_default_enemy_config"
-			"text"		"Use default enenmy config."
+			"text"		"Use default enemy config."
 			"type"		"CheckBox"
 			"default"	"1"
 			"singleplayer" ""
@@ -105,13 +105,29 @@
 		}
 		13
 		{
+			"name"		"horde_max_spawn_distance"
+			"text"		"Maximum enenmy respawn distance."
+			"type"		"Numeric"
+			"default"	"2000"
+			"singleplayer" ""
+		}
+		14
+		{
+			"name"		"horde_min_spawn_distance"
+			"text"		"Minimum enenmy respawn distance."
+			"type"		"Numeric"
+			"default"	"400"
+			"singleplayer" ""
+		}
+		15
+		{
 			"name"		"horde_max_spawn_z_distance"
 			"text"		"Maximum enemy spawn height difference."
 			"type"		"Numeric"
 			"default"	"500"
 			"singleplayer" ""
 		}
-		14
+		16
 		{
 			"name"		"horde_corpse_cleanup"
 			"text"		"Remove corpses."
@@ -119,7 +135,7 @@
 			"default"	"0"
 			"singleplayer" ""
 		}
-		15
+		17
 		{
 			"name"		"horde_base_walkspeed"
 			"text"		"Base Walkspeed"
@@ -127,12 +143,20 @@
 			"default"	"180"
 			"singleplayer" ""
 		}
-		16
+		18
 		{
 			"name"		"horde_base_runspeed"
 			"text"		"Base Runspeed"
 			"type"		"Numeric"
 			"default"	"220"
+			"singleplayer" ""
+		}
+		19
+		{
+			"name"		"horde_total_enemies_scaling"
+			"text"		"Forced enemy scaling multiplier"
+			"type"		"Numeric"
+			"default"	"0"
 			"singleplayer" ""
 		}
 	}
