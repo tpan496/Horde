@@ -49,7 +49,11 @@ function PANEL:Init()
     end
 
     local votemap_panel = vgui.Create("DScrollPanel", self)
-    votemap_panel:SetSize(768, 550)
+    if GetConVar("horde_disable_difficulty_voting"):GetInt() ~= 1 then
+        votemap_panel:SetSize(768, 550)
+    else
+        votemap_panel:SetSize(1024, 550)
+    end
     votemap_panel:SetPos(256,50)
     votemap_panel:SetBackgroundColor(Color(0,0,0,0))
 

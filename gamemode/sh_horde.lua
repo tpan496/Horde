@@ -28,7 +28,6 @@ CreateConVar("horde_base_runspeed", 220, SERVER_CAN_EXECUTE, "Base runspeed.")
 CreateConVar("horde_difficulty", 0, SERVER_CAN_EXECUTE, "Difficulty.")
 CreateConVar("horde_disable_difficulty_voting", 0, SERVER_CAN_EXECUTE, "Disable difficulty voting.")
 CreateConVar("horde_endless", 0, SERVER_CAN_EXECUTE, "Endless.")
-CreateConVar("horde_difficulty_voting", 1, SERVER_CAN_EXECUTE, "Enable difficulty voting or not.")
 CreateConVar("horde_total_enemies_scaling", 0, SERVER_CAN_EXECUTE, "Forces the gamemode to multiply maximum enemy count by this.")
 
 if SERVER then
@@ -37,6 +36,7 @@ util.AddNetworkString("Horde_SyncItems")
 util.AddNetworkString("Horde_SyncEnemies")
 util.AddNetworkString("Horde_SyncClasses")
 util.AddNetworkString("Horde_PlayerReadySync")
+util.AddNetworkString("Horde_AmmoboxCountdown")
 end
 
 HORDE = {}
@@ -51,7 +51,7 @@ HORDE.color_hollow = Color(40,40,40,225)
 HORDE.color_hollow_dim = Color(80, 80, 80, 225)
 HORDE.start_game = false
 HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42, 45}
---HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+-- HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 -- Director
 HORDE.difficulty = 1
@@ -82,6 +82,7 @@ HORDE.game_ended = false
 HORDE.player_custom_enemy_count_scaling = GetConVar("horde_total_enemies_scaling"):GetInt()
 
 -- Ammobox
+HORDE.ammobox_max_count_limit = 9
 HORDE.ammobox_refresh_interval = 60
 HORDE.enable_ammobox = GetConVar("horde_enable_ammobox"):GetInt()
 

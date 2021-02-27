@@ -5,6 +5,11 @@ if CLIENT then return end
 -- 0 - normal, 1 - hard, 2 - realism
 
 HORDE.difficulty = GetConVar("horde_difficulty"):GetInt() + 1
+if GetConVar("horde_endless"):GetBool() then
+    HORDE.endless = 1
+else
+    HORDE.endless = 0
+end
 HORDE.endless = GetConVar("horde_endless"):GetInt()
 HORDE.additional_pack = 0
 

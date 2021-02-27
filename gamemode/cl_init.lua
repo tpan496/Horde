@@ -22,18 +22,22 @@ include("gui/cl_scoreboard.lua")
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
 
 local center_panel = vgui.Create("DPanel")
-center_panel:SetSize(300, 50)
+center_panel:SetSize(350, 50)
 center_panel:SetPos(25, 80)
 center_panel.Paint = function () end
 
+local ammobox_refresh_count = 0
+net.Receive("Horde_AmmoboxCountdown", function ()
+    ammobox_refresh_count = 60 - net.ReadInt(8)
+end)
 local corner_panel = vgui.Create("DPanel")
-corner_panel:SetSize(300, 50)
+corner_panel:SetSize(350, 50)
 corner_panel:SetPos(25, 25)
 corner_panel.Paint = function () end
 timer.Simple(5, function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     corner_panel.Paint = function ()
-        draw.RoundedBox(10, 0, 0, 300, 50, Color(40,40,40,200))
+        draw.RoundedBox(10, 0, 0, 280, 50, Color(40,40,40,200))
         if LocalPlayer():Alive() then
             local name = "Survivor"
             if LocalPlayer():GetHordeClass() then
@@ -43,10 +47,18 @@ timer.Simple(5, function ()
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
             local mat = Material("materials/" .. name .. ".png", "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
-            surface.DrawTexturedRect(150 - 40 - string.len(name) * 7 - 30, 5, 40, 40)
+            surface.DrawTexturedRect(140 - 40 - string.len(name) * 7 - 25, 5, 40, 40)
         else
             draw.SimpleText("Spectating", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
+        draw.RoundedBox(10, 285, 0, 50, 50, Color(40,40,40,200))
+        if ammobox_refresh_count > 5 then
+            draw.RoundedBox(10, 285, 50 - ammobox_refresh_count / HORDE.ammobox_refresh_interval * 50, 50, ammobox_refresh_count / HORDE.ammobox_refresh_interval * 50, HORDE.color_crimson_dark)
+        end
+        surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
+        local mat = Material("materials/ammo.png", "mips smooth")
+        surface.SetMaterial(mat) -- Use our cached material
+        surface.DrawTexturedRect(290, 5, 40, 40)
     end
 end)
 
@@ -218,8 +230,8 @@ net.Receive('Horde_RenderCenterText', function ()
     end
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     center_panel.Paint = function (w, h)
-        draw.RoundedBox(10, 0, 0, 300, 50, Color(40,40,40,200))
-        draw.SimpleText(str, "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.RoundedBox(10, 0, 0, 280 + 5 + 50, 50, Color(40,40,40,200))
+        draw.SimpleText(str, "Trebuchet24", (280 + 5 + 50) / 2, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 end)
 
