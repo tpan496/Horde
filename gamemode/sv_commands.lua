@@ -14,7 +14,11 @@ function BroadcastMessage(msg, delay)
     for _, ply in pairs(player.GetAll()) do
         net.Start("Horde_RenderCenterText")
         net.WriteString(msg)
-        net.WriteInt(delay,16)
+        if delay then
+            net.WriteInt(delay,16)
+        else
+            net.WriteInt(0,16)
+        end
         net.Send(ply)
     end
 end

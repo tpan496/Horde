@@ -2,11 +2,14 @@ if CLIENT then return end
 -- Manages player spawn/death settings
 
 util.AddNetworkString("Horde_Votemap")
+util.AddNetworkString("Horde_Votediff")
 util.AddNetworkString("Horde_VotemapSync")
+util.AddNetworkString("Horde_VotediffSync")
 util.AddNetworkString("Horde_RemainingTime")
 
 local map_list = {}
 local map_votes = {}
+local diff_votes = {}
 
 HORDE.GameEnd = function (status)
     local randomplayer = table.Random(player.GetAll())
@@ -111,6 +114,8 @@ HORDE.GameEnd = function (status)
 
     net.Start("Horde_GameEnd")
 
+    net.WriteString(status)
+
     net.WriteEntity(mvp_player)
     net.WriteInt(mvp_damage, 32)
     net.WriteInt(mvp_kills, 32)
@@ -181,6 +186,38 @@ HORDE.GameEnd = function (status)
                 end
             end
 
+            local chosen_diff = HORDE.difficulty
+            local chosen_diff_count = 0
+
+            local diff_collect = {}
+            for _, diff in ipairs(HORDE.difficulty_text) do
+                diff_collect[diff] = 0
+            end
+
+            for ply, diff_voted in pairs(diff_votes) do
+                for diff, count in pairs(diff_collect) do
+                    if diff == diff_voted then
+                        diff_collect[diff] = count + 1
+                    end
+                end
+            end
+
+            for diff, count in pairs(diff_collect) do
+                if count > chosen_diff_count then
+                    chosen_diff = diff
+                    chosen_diff_count = count
+                end
+            end
+
+            if chosen_diff == "NORMAL" then
+                GetConVar("horde_difficulty"):SetInt(0)
+            elseif chosen_diff == "HARD" then
+                GetConVar("horde_difficulty"):SetInt(1)
+            else
+                GetConVar("horde_difficulty"):SetInt(2)
+            end
+            
+            
             timer.Simple(0, function() RunConsoleCommand("changelevel", chosen_map) end)
         end
         net.Start("Horde_RemainingTime")
@@ -208,6 +245,26 @@ net.Receive("Horde_Votemap", function (len, ply)
 
     net.Start("Horde_VotemapSync")
     net.WriteTable(map_collect)
+    net.Broadcast()
+end)
+
+net.Receive("Horde_Votediff", function (len, ply)
+    diff_votes[ply] = net.ReadString()
+
+    local diff_collect = {}
+    for _, diff in ipairs(HORDE.difficulty_text) do
+        diff_collect[diff] = 0
+    end
+
+    for ply, diff_voted in pairs(diff_votes) do
+        for diff, count in pairs(diff_collect) do
+            if diff == diff_voted then
+                diff_collect[diff] = count + 1
+            end
+        end
+    end
+    net.Start("Horde_VotediffSync")
+    net.WriteTable(diff_collect)
     net.Broadcast()
 end)
 
@@ -278,7 +335,7 @@ function CheckAlivePlayers()
         net.WriteString("All players are dead! Restarting...")
         net.WriteInt(1,2)
         net.Broadcast()
-        HORDE.GameEnd("Defeat")
+        HORDE.GameEnd("DEFEAT!")
     end
 end
 

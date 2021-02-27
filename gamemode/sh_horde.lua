@@ -11,6 +11,7 @@ CreateConVar("horde_min_spawn_distance", 400, SERVER_CAN_EXECUTE, "Minimum enenm
 CreateConVar("horde_max_spawn_z_distance", 500, SERVER_CAN_EXECUTE, "Maximum enemy respawn height difference with players.")
 
 CreateConVar("horde_start_money", 1000, SERVER_CAN_EXECUTE, "Money given at start.")
+CreateConVar("horde_enable_ammobox", 1, SERVER_CAN_EXECUTE, "Enable ammobox spawns.")
 CreateConVar("horde_npc_cleanup", 1, SERVER_CAN_EXECUTE, "Kills all NPCs after a wave.")
 CreateConVar("horde_enable_scoreboard", 1, SERVER_CAN_EXECUTE, "Enables built-in scoreboard.")
 CreateConVar("horde_external_lua_config", "", SERVER_CAN_EXECUTE, "Name of external config to load. This will take over the configs if exists.")
@@ -25,8 +26,9 @@ CreateConVar("horde_base_walkspeed", 180, SERVER_CAN_EXECUTE, "Base walkspeed.")
 CreateConVar("horde_base_runspeed", 220, SERVER_CAN_EXECUTE, "Base runspeed.")
 
 CreateConVar("horde_difficulty", 0, SERVER_CAN_EXECUTE, "Difficulty.")
+CreateConVar("horde_endless", 0, SERVER_CAN_EXECUTE, "Endless.")
 CreateConVar("horde_difficulty_voting", 1, SERVER_CAN_EXECUTE, "Enable difficulty voting or not.")
-CreateConVar("horde_faked_player_count", 0, SERVER_CAN_EXECUTE, "Fakes the number of total players.")
+CreateConVar("horde_total_enemies_scaling", 0, SERVER_CAN_EXECUTE, "Forces the gamemode to multiply maximum enemy count by this.")
 
 if SERVER then
 util.AddNetworkString("Horde_PlayerInit")
@@ -38,7 +40,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.0.5"
+HORDE.version = "1.0.1.0"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -47,8 +49,11 @@ HORDE.color_crimson_dark = Color(100,0,0)
 HORDE.color_hollow = Color(40,40,40,225)
 HORDE.color_hollow_dim = Color(80, 80, 80, 225)
 HORDE.start_game = false
-HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42, 45}
+HORDE.total_enemies_per_wave = {0, 19, 23, 27, 30, 33, 36, 39, 42, 45}
 --HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0}
+
+-- Director
+HORDE.difficulty = 1
 HORDE.total_enemies_this_wave = 0
 HORDE.alive_enemies_this_wave = 0
 HORDE.killed_enemies_this_wave = 0
@@ -66,25 +71,34 @@ HORDE.found_ai_nodes = false
 HORDE.enemy_spawn_z = 6
 HORDE.min_base_enemy_spawns_per_think = 4
 HORDE.max_base_enemy_spawns_per_think = 5
-
-HORDE.player_ready = {}
+HORDE.spawn_radius = 75
 HORDE.max_max_waves = 10
 HORDE.max_waves = math.min(HORDE.max_max_waves, math.max(1, GetConVarNumber("horde_max_wave")))
-HORDE.difficulty = math.min(2, math.max(0, GetConVarNumber("horde_difficulty")))
-HORDE.enable_shop = GetConVarNumber("horde_enable_shop")
 HORDE.start_money = math.max(0, GetConVarNumber("horde_start_money"))
 HORDE.total_enemies_this_wave_fixed = 0
 HORDE.kill_reward_base = 100
 HORDE.game_ended = false
-HORDE.player_vote_map_change = {}
-HORDE.spawn_radius = 75
+HORDE.player_custom_enemy_count_scaling = GetConVar("horde_total_enemies_scaling"):GetInt()
+
+-- Ammobox
+HORDE.ammobox_refresh_interval = 60
+HORDE.enable_ammobox = GetConVar("horde_enable_ammobox"):GetInt()
 
 -- Statistics
+HORDE.player_ready = {}
 HORDE.player_damage = {}
 HORDE.player_damage_taken = {}
 HORDE.player_money_earned = {}
 HORDE.player_headshots = {}
 HORDE.player_elite_kills = {}
+HORDE.player_vote_map_change = {}
+
+-- Render / Gui
+HORDE.render_highlight_disable = 0
+HORDE.render_highlight_enemies = 1
+HORDE.render_highlight_ammoboxes = 2
+HORDE.enable_shop = GetConVarNumber("horde_enable_shop")
+HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM"}
 
 -- Functions required on both sides
 HORDE.GiveAmmo = function (ply, wpn, count)

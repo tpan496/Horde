@@ -172,11 +172,16 @@ function PANEL:Paint()
     surface.SetDrawColor(HORDE.color_hollow)
     surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     if self.item then
-        draw.DrawText(self.item.name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
         if self.item.fixed_description and self.item.extra_description then
+            draw.DrawText(self.item.name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             draw.DrawText(self.item.fixed_description .. self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
+            local mat = Material("materials/" .. self.item.name .. ".png")
+            surface.SetMaterial(mat) -- Use our cached material
+            surface.DrawTexturedRect(self:GetWide() / 2 + string.len(self.item.name) * 2 + 20, 28, 40, 40)
         else
             draw.DrawText(self.item.description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            draw.DrawText(self.item.name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
         end
 
         -- Check if this is a class or an item
