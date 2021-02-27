@@ -361,8 +361,8 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         end
         
         -- Additional custom scaling
-        if HORDE.player_custom_enemy_count_scaling > 1 then
-            HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave * HORDE.player_custom_enemy_count_scaling
+        if GetConVar("horde_total_enemies_scaling"):GetInt() > 1 then
+            HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave * GetConVar("horde_total_enemies_scaling"):GetInt()
         end
 
         
