@@ -5,6 +5,7 @@ util.AddNetworkString("Horde_HighlightEnemies")
 util.AddNetworkString("Horde_GameEnd")
 
 local players_count = 0
+local spawned_ammoboxes = {}
 
 hook.Add("Initialize", "Horde_Init", function()
     HORDE.ai_nodes = {}
@@ -473,6 +474,10 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                             break
                         end
                     end
+
+                    local spawned_ammobox = ents.Create("horde_ammobox")
+                    spawned_ammobox:SetPos(pos)
+                    spawned_ammobox:Spawn()
                     HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
                     HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
                     --print("OnSpawn", "[HORDE] Spawning ", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)

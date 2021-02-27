@@ -42,6 +42,11 @@ function Player:GetHordeMoney()
     return self.money
 end
 
+function Player:GiveHordeAmmoBox()
+    print("ok")
+    return
+end
+
 function Player:DropHordeMoney()
     if self:GetHordeMoney() >= 50 then
         self:AddHordeMoney(-50)
@@ -378,26 +383,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
     if ply:GetHordeMoney() >= price then
         ply:AddHordeMoney(-price)
         local wpn = ply:GetWeapon(class)
-        local clip_size = wpn:GetMaxClip1()
-        local ammo_id = wpn:GetPrimaryAmmoType()
-
-        if clip_size > 0 then -- block melee
-			ply:GiveAmmo(clip_size * count, ammo_id , false)
-        else
-            -- Give 1 piece of this ammo since clip size do not apply
-            local rpg_round = 8
-            local smg1_grenade = 9
-            local ar2altfire = 2
-            local xbowbolt = 6
-            local grenade = 10
-            local slam = 11
-
-            -- Some ammo type from mods
-            local rust_syringe = 40
-            if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam or ammo_id == rust_syringe then
-                ply:GiveAmmo(count, ammo_id, false)
-            end
-		end
+        HORDE.GiveAmmo(ply, wpn, count)
         ply:SyncEconomy()
     end
 end)
