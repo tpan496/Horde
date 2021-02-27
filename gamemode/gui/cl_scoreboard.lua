@@ -12,7 +12,7 @@ function scoreboard:show()
     title:SetSize(1000, 100)
     title:SetPos(ScrW()/2 - 1000 / 2, ScrH()/5 - 50)
     function title:Paint(w, h)
-        draw.SimpleText("Horde - " .. game.GetMap(), "Title", 0, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
+        draw.SimpleText("Horde - " .. game.GetMap() .. " - " .. HORDE.difficulty_text[HORDE.difficulty], "Title", 0, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
         draw.SimpleText(GetHostName(), "Title", 1000, 12, HORDE.color_crimson_dim, TEXT_ALIGN_RIGHT)
     end
 
@@ -36,16 +36,16 @@ function scoreboard:show()
     header:DockMargin(0,0,0,10)
     function header:Paint(w,h)
         draw.RoundedBox(5, 0, 0, w, 40, Color(40,40,40,200), true, true, false, false )
-        draw.DrawText("Name", "Content", 51, 9, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText("Class", "Content", 200, 9, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText("Kill", "Content", 871, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-        draw.DrawText("Death", "Content", 921, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-        draw.DrawText("Ping", "Content", 971, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
+        draw.DrawText("Name", "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
+        draw.DrawText("Class", "Content", 225, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
+        draw.DrawText("Kill", "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+        draw.DrawText("Death", "Content", 921, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+        draw.DrawText("Ping", "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
     end
 
     for _, ply in ipairs(player.GetAll()) do
         if not ply:IsValid() then goto cont end
-        local class = ""
+        local class = "Survivor"
         if ply:GetHordeClass() then class = ply:GetHordeClass().name end
 
         local list = lists:Add("DPanel")
@@ -58,11 +58,15 @@ function scoreboard:show()
             else
                 draw.RoundedBox(5, 0, 0, w, 40, Color(100,0,0,200), true, true, false, false)
             end
-            draw.DrawText(ply:Name():sub(1,20), "Content", 51, 9, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-            draw.DrawText(class, "Content", 200, 9, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-            draw.DrawText(tostring(ply:Frags()), "Content", 871, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-            draw.DrawText(tostring(ply:Deaths()), "Content", 921, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-            draw.DrawText(tostring(ply:Ping()), "Content", 971, 9, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
+            draw.DrawText(ply:Name():sub(1,20), "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
+            surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
+            local mat = Material("materials/" .. class .. ".png")
+            surface.SetMaterial(mat) -- Use our cached material
+            surface.DrawTexturedRect(200, 2, 38, 38)
+            draw.DrawText(class, "Content", 250, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
+            draw.DrawText(tostring(ply:Frags()), "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+            draw.DrawText(tostring(ply:Deaths()), "Content", 921, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+            draw.DrawText(tostring(ply:Ping()), "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
         end
 
         local avatar = lists:Add("AvatarImage")

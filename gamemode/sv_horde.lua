@@ -1,11 +1,12 @@
 if CLIENT then return end
 -- HORDE SERVER
 
-util.AddNetworkString("Horde_HighlightEnemies")
+util.AddNetworkString("Horde_HighlightEntities")
 util.AddNetworkString("Horde_GameEnd")
 
 local players_count = 0
 local spawned_ammoboxes = {}
+local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 
 hook.Add("Initialize", "Horde_Init", function()
     HORDE.ai_nodes = {}
@@ -48,9 +49,8 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
         --print("OnKill", "[HORDE] Killing ", HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
         HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
-            --print("Highlight")
-            net.Start("Horde_HighlightEnemies")
-            net.WriteInt(1, 2)
+            net.Start("Horde_HighlightEntities")
+            net.WriteInt(HORDE.render_highlight_enemies, 3)
             net.Broadcast()
         end
         BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
@@ -330,7 +330,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         if (HORDE.enemies_normalized == nil) or table.IsEmpty(HORDE.enemies_normalized) then
             HardReset()
             net.Start("Horde_LegacyNotification")
-            net.WriteString("Enemies list is empy. Config the enemyy list or no enemies wil spawn.")
+            net.WriteString("Enemies list is empty. Config the enemy list or no enemies wil spawn.")
             net.WriteInt(1,2)
             net.Broadcast()
             HORDE.start_game = false
@@ -362,6 +362,11 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                 HORDE.endless_health_multiplier = 1 + 0.05 * (HORDE.current_wave - HORDE.max_max_waves)
             end
         end
+        
+        -- Additional custom scaling
+        if HORDE.player_custom_enemy_count_scaling > 1 then
+            HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave * HORDE.player_custom_enemy_count_scaling
+        end
 
         
         HORDE.total_enemies_this_wave_fixed = HORDE.total_enemies_this_wave
@@ -372,15 +377,21 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         HORDE.alive_enemies_this_wave = 0
         HORDE.current_break_time = -1
         HORDE.killed_enemies_this_wave = 0
+
+        ammobox_refresh_timer = HORDE.ammobox_refresh_interval
         BroadcastMessage("Wave: " .. tostring(HORDE.current_wave) .. "  Enemies: " .. HORDE.total_enemies_this_wave)
         -- Close all the shop menus
         net.Start("Horde_ForceCloseShop")
         net.Broadcast()
     end
 
-    local enemies = ScanEnemies()
-
+    -- Decrease ammobox refresh timer
+    if HORDE.enable_ammobox then
+        ammobox_refresh_timer = ammobox_refresh_timer - director_interval
+    end
+    
     -- Check enemy
+    local enemies = ScanEnemies()
     for _, enemy in pairs(enemies) do
         local closest = 99999
         local closest_z = 99999
@@ -451,9 +462,9 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         ::cont::
     end
 
-    --Spawn enemies
     if #valid_nodes > 0 then
-        for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack + math.floor(players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack + players_count) do
+        --Spawn enemies
+        for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + math.floor(players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + players_count) do
             if (#enemies + 1 <= HORDE.max_enemies_alive) and (HORDE.total_enemies_this_wave > 0) then
                 local pos = table.Random(valid_nodes)
                 if pos ~= nil then
@@ -474,10 +485,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                             break
                         end
                     end
-
-                    local spawned_ammobox = ents.Create("horde_ammobox")
-                    spawned_ammobox:SetPos(pos)
-                    spawned_ammobox:Spawn()
+                    
                     HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
                     HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
                     --print("OnSpawn", "[HORDE] Spawning ", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
@@ -485,6 +493,30 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             else
                 break
             end
+        end
+        
+        -- Spawn AmmoBox
+        if ammobox_refresh_timer <= 0 then
+            for _, box in pairs(spawned_ammoboxes) do
+                if box:IsValid() then box:Remove() end
+            end
+            spawned_ammoboxes = {}
+
+            for i = 0, table.Count(player.GetAll()) + HORDE.difficulty_additional_ammoboxes[HORDE.difficulty] do
+                local pos = table.Random(valid_nodes)
+                local spawned_ammobox = ents.Create("horde_ammobox")
+                spawned_ammobox:SetPos(pos)
+                spawned_ammobox:Spawn()
+                table.insert(spawned_ammoboxes, spawned_ammobox)
+            end
+    
+            if table.Count(spawned_ammoboxes) > 0 then
+                net.Start("Horde_HighlightEntities")
+                net.WriteInt(HORDE.render_highlight_ammoboxes, 3)
+                net.Broadcast()
+            end
+
+            ammobox_refresh_timer = HORDE.ammobox_refresh_interval
         end
     end
 
@@ -500,7 +532,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
 
         if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
             BroadcastMessage("Final Wave Completed! You have survived!")
-            HORDE.GameEnd("Victory")
+            HORDE.GameEnd("VICTORY!")
         else
             BroadcastMessage("Wave Completed!")
             net.Start("Horde_LegacyNotification")
@@ -509,8 +541,8 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             net.Broadcast()
         end
 
-        net.Start("Horde_HighlightEnemies")
-        net.WriteInt(0, 2)
+        net.Start("Horde_HighlightEntities")
+        net.WriteInt(HORDE.render_highlight_disable, 3)
         net.Broadcast()
 
         for _, ply in pairs(player.GetAll()) do

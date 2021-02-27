@@ -1,14 +1,20 @@
 if SERVER then return end
 
+surface.CreateFont("LargeTitle", { font = 'arial bold', size = 35 })
 surface.CreateFont("Title", { font = 'arial bold', size = 25 })
 surface.CreateFont("Content", { font = 'arial bold', size = 20 })
 
 local PANEL = {}
-local players_votes = {}
+local players_map_votes = {}
+local players_diff_votes = {}
 local remaining_time = 60
 
 net.Receive("Horde_VotemapSync", function (len)
-    players_votes = net.ReadTable()
+    players_map_votes = net.ReadTable()
+end)
+
+net.Receive("Horde_VotediffSync", function (len)
+    players_diff_votes = net.ReadTable()
 end)
 
 net.Receive("Horde_RemainingTime", function (len)
@@ -23,6 +29,7 @@ function PANEL:Init()
     local summary_panel = vgui.Create("DPanel", self)
     summary_panel:SetSize(1024, 600)
     summary_panel:SetBackgroundColor(Color(0,0,0,0))
+    self.summary_panel = summary_panel
 
     local summary_btn = vgui.Create("DButton", self)
     local summary_activated = true
@@ -42,9 +49,74 @@ function PANEL:Init()
     end
 
     local votemap_panel = vgui.Create("DScrollPanel", self)
-    votemap_panel:SetSize(1024, 550)
-    votemap_panel:SetPos(0,50)
+    votemap_panel:SetSize(768, 550)
+    votemap_panel:SetPos(256,50)
     votemap_panel:SetBackgroundColor(Color(0,0,0,0))
+
+    local votediff_panel = vgui.Create("DScrollPanel", self)
+    votediff_panel:SetSize(256, 550)
+    votediff_panel:SetPos(0,50)
+    votediff_panel:SetBackgroundColor(Color(0,0,0,0))
+    votediff_panel:SetVisible(false)
+
+    self.diff_btns = {}
+    self.create_diff_panel = function (diff)
+        local vote_btn = vgui.Create("DButton", votediff_panel)
+        local vote_btn_hovered = false
+        vote_btn:DockMargin(10, 5, 10, 5)
+        vote_btn:SetSize(self:GetParent():GetWide(), 50)
+        vote_btn:Dock(TOP)
+        vote_btn:SetText("")
+        vote_btn.Paint = function ()
+            if vote_btn_hovered or (self.diff_btns[vote_btn] == 1) then draw.RoundedBox(0, 0, 10, self:GetWide(), self:GetTall(), HORDE.color_crimson) return end
+            draw.RoundedBox(0, 0, 0, self:GetWide(), self:GetTall(), HORDE.color_hollow)
+        end
+        vote_btn.OnCursorEntered = function ()
+            vote_btn_hovered = true
+            surface.PlaySound("UI/buttonrollover.wav")
+        end
+        vote_btn.OnCursorExited = function ()
+            vote_btn_hovered = false
+        end
+        vote_btn.DoClick = function ()
+            votemap_panel:GetParent():Votediff(vote_btn, diff)
+            surface.PlaySound("UI/buttonclick.wav")
+        end
+
+        players_diff_votes[diff] = 0
+
+        local name_label = vgui.Create("DLabel", vote_btn)
+        name_label:Dock(LEFT)
+        name_label:SetText("")
+        name_label:SetSize(250, 80)
+        name_label:SetColor(Color(255,255,255))
+        name_label:SetFont("Content")
+        name_label.Paint = function ()
+            if (players_diff_votes[diff] <= 0) or vote_btn_hovered or (self.diff_btns[vote_btn] == 1) then
+                draw.SimpleText(diff, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
+            else
+                draw.SimpleText(diff, "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
+            end
+        end
+
+        local count_label = vgui.Create("DLabel", vote_btn)
+        count_label:Dock(RIGHT)
+        count_label:SetSize(50, 80)
+        count_label:SetColor(Color(255,255,255))
+        count_label:SetFont("Content")
+        count_label:SetText("")
+        count_label.Paint = function ()
+            if players_diff_votes[diff] then
+                if (players_diff_votes[diff] <= 0) or vote_btn_hovered or (self.diff_btns[vote_btn] == 1) then
+                    draw.SimpleText(tostring(players_diff_votes[diff]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, Color(255,255,255))
+                else
+                    draw.SimpleText(tostring(players_diff_votes[diff]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, HORDE.color_crimson)
+                end
+            end
+        end
+
+        self.diff_btns[vote_btn] = 0
+    end
 
     local maps_panel = vgui.Create("DScrollPanel", votemap_panel)
     maps_panel:Dock(FILL)
@@ -71,6 +143,7 @@ function PANEL:Init()
         summary_activated = true
         summary_panel:SetVisible(true)
         votemap_panel:SetVisible(false)
+        votediff_panel:SetVisible(false)
         surface.PlaySound("UI/buttonclick.wav")
     end
 
@@ -87,6 +160,7 @@ function PANEL:Init()
         summary_activated = false
         summary_panel:SetVisible(false)
         votemap_panel:SetVisible(true)
+        votediff_panel:SetVisible(true)
         surface.PlaySound("UI/buttonclick.wav")
     end
 
@@ -119,7 +193,7 @@ function PANEL:Init()
         name_label:SetFont("Title")
 
         local award_label = vgui.Create("DLabel", panel)
-        award_label:SetPos(200, -20)
+        award_label:SetPos(220, -20)
         award_label:SetText(award)
         award_label:SetSize(250, 80)
         award_label:SetColor(HORDE.color_crimson)
@@ -159,7 +233,7 @@ function PANEL:Init()
             surface.PlaySound("UI/buttonclick.wav")
         end
 
-        players_votes[map] = 0
+        players_map_votes[map] = 0
 
         local name_label = vgui.Create("DLabel", vote_btn)
         name_label:Dock(LEFT)
@@ -168,7 +242,7 @@ function PANEL:Init()
         name_label:SetColor(Color(255,255,255))
         name_label:SetFont("Content")
         name_label.Paint = function ()
-            if (players_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
+            if (players_map_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
                 draw.SimpleText(map, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
             else
                 draw.SimpleText(map, "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
@@ -182,11 +256,11 @@ function PANEL:Init()
         count_label:SetFont("Content")
         count_label:SetText("")
         count_label.Paint = function ()
-            if players_votes[map] then
-                if (players_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
-                    draw.SimpleText(tostring(players_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, Color(255,255,255))
+            if players_map_votes[map] then
+                if (players_map_votes[map] <= 0) or vote_btn_hovered or (self.map_btns[vote_btn] == 1) then
+                    draw.SimpleText(tostring(players_map_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, Color(255,255,255))
                 else
-                    draw.SimpleText(tostring(players_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, HORDE.color_crimson)
+                    draw.SimpleText(tostring(players_map_votes[map]) .. "/" .. tostring(table.Count(player.GetAll())), "Content", 0, 20, HORDE.color_crimson)
                 end
             end
         end
@@ -208,9 +282,20 @@ function PANEL:Votemap(vote_btn, map)
         self.map_btns[btn] = 0
     end
     self.map_btns[vote_btn] = 1
--- Send vote to server
+    -- Send vote to server
     net.Start("Horde_Votemap")
     net.WriteString(map)
+    net.SendToServer()
+end
+
+function PANEL:Votediff(vote_btn, diff)
+    for btn, _ in pairs(self.diff_btns) do
+        self.diff_btns[btn] = 0
+    end
+    self.diff_btns[vote_btn] = 1
+    -- Send vote to server
+    net.Start("Horde_Votediff")
+    net.WriteString(diff)
     net.SendToServer()
 end
 
@@ -218,22 +303,35 @@ function Round2(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
 end
 
-function PANEL:SetData(mvp_player, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
+function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
     local percentage = 0
     if total_damage > 0 then
         percentage = Round2(mvp_damage / total_damage, 2) * 100
     end
-    self.create_player_panel({x=512 - 240,y=100}, mvp_player, "MVP", tostring(mvp_kills) .. " Kills, " .. tostring(mvp_damage) .. " Damage (" .. tostring(percentage) .. "%)")
-    self.create_player_panel({x=512 - 480 - 5,y=220}, damage_player, "Most Damage Dealt", tostring(most_damage) .. " Damage")
-    self.create_player_panel({x=512 + 5, y=220}, kills_player, "Most Kills", tostring(most_kills) .. " Kills")
-    self.create_player_panel({x=512 - 480 - 5,y=340}, damage_taken_player, "Most Damage Taken", tostring(most_damage_taken) .. " Damage Taken")
-    self.create_player_panel({x=512 + 5,y=340}, elite_kill_player, "Elite Killer", tostring(most_elite_kills) .. " Elite Kills")
-    self.create_player_panel({x=512 + 5,y=460}, money_player, "Money Bag", tostring(most_money) .. "$ Earned")
-    self.create_player_panel({x=512 - 480 - 5,y=460}, headshot_player, "SharpShooter", tostring(most_headshots) .. " Headshots")
+    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              "                           MVP", tostring(mvp_kills) .. " Kills, " .. tostring(mvp_damage) .. " Damage (" .. tostring(percentage) .. "%)")
+    self.create_player_panel({x=512 - 480 - 5,y=280}, damage_player,       "Most Damage Dealt", tostring(most_damage) .. " Damage")
+    self.create_player_panel({x=512 + 5, y=280}, kills_player,             "                 Most Kills", tostring(most_kills) .. " Kills")
+    self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, " Most Damage Taken", tostring(most_damage_taken) .. " Damage Taken")
+    self.create_player_panel({x=512 + 5,y=390}, elite_kill_player,         "                Elite Killer", tostring(most_elite_kills) .. " Elite Kills")
+    self.create_player_panel({x=512 + 5,y=500}, money_player,              "                Money Bag", tostring(most_money) .. "$ Earned")
+    self.create_player_panel({x=512 - 480 - 5,y=500}, headshot_player,     "           SharpShooter", tostring(most_headshots) .. " Headshots")
 
     for _, map in pairs(maps) do
         self.create_map_panel(map)
     end
+
+    local summary_label = vgui.Create("DLabel", self.summary_panel)
+    summary_label:SetSize(512,100)
+    summary_label:SetPos(512 - 256,100)
+    summary_label:SetText("")
+    summary_label:SetTextColor(Color(255,255,255))
+    summary_label.Paint = function ()
+            draw.SimpleText(status .. " " .. game.GetMap() .. " - " .. HORDE.difficulty_text[HORDE.difficulty], "LargeTitle", 256, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
+    end
+
+    self.create_diff_panel("NORMAL")
+    self.create_diff_panel("HARD")
+    self.create_diff_panel("REALISM")
 
     gui.EnableScreenClicker(true)
 end

@@ -5,7 +5,7 @@ if CLIENT then return end
 -- 0 - normal, 1 - hard, 2 - realism
 
 HORDE.difficulty = GetConVar("horde_difficulty"):GetInt() + 1
-HORDE.endless = 0
+HORDE.endless = GetConVar("horde_endless"):GetInt()
 HORDE.additional_pack = 0
 
 -- Difficulty Stuff
@@ -26,7 +26,8 @@ local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25}
 local difficulty_ammo_box_spawn_chance_multiplier = {1, 0.75, 0.5}
 
 -- Flat modifiers
-local difficulty_additional_pack = {0, 1, 2}
+HORDE.difficulty_additional_pack = {0, 1, 2}
+HORDE.difficulty_additional_ammoboxes = {2, 1, 0}
 
 -- Endless stuff
 HORDE.endless_health_multiplier = 1
@@ -98,9 +99,6 @@ HORDE.start_money = math.floor(HORDE.start_money * difficulty_start_money_multip
 
 -- Spawn density scaling
 HORDE.spawn_radius = math.floor(HORDE.spawn_radius * difficulty_spawn_radiuis_multiplier[HORDE.difficulty])
-
--- Additional spawns
-HORDE.difficulty_additional_pack = difficulty_additional_pack[HORDE.difficulty]
 
 -- Maximum enemies alive scaling
 HORDE.difficulty_max_enemies_alive_scale_factor = difficulty_max_enemies_alive_scale_factor[HORDE.difficulty]

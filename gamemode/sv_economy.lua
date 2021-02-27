@@ -15,6 +15,7 @@ util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
 util.AddNetworkString("Horde_SynchronizeEconomy")
 util.AddNetworkString("Horde_LegacyNotification")
+util.AddNetworkString("Horde_SyncDifficulty")
 
 local Player = FindMetaTable('Player')
 
@@ -101,6 +102,10 @@ net.Receive("Horde_PlayerInit", function (len, ply)
 
     net.Start("Horde_SyncClasses")
     net.WriteTable(HORDE.classes)
+    net.Send(ply)
+
+    net.Start("Horde_SyncDifficulty")
+    net.WriteInt(HORDE.difficulty,3)
     net.Send(ply)
 
     if not HORDE.start_game then
