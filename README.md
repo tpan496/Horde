@@ -35,7 +35,7 @@ You need to change these BEFORE your game/server starts to take effect.
 Change these with caution:
 - horde_difficulty(0/1/2) - Difficulty. 0 by default. *experimental*
 - horde_max_spawn_distance - Maximum enemy respawn distance. 2000 by default.
-- horde_min_spawn_distance - Minimum enemy respawn distance. 500 by default.
+- horde_min_spawn_distance - Minimum enemy respawn distance. 400 by default.
 - horde_max_spawn_z_distance - Maximum enemy respawn height difference from players. 500 by default. If your map is huge and enemies spawn in extreme positions, turn this smaller.
 
 - horde_director_interval - How often the game director checks the state of the game (e.g. spawns stuff) in seconds. Default is 5.
