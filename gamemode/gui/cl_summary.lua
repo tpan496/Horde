@@ -327,12 +327,12 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     end
 
     local summary_label = vgui.Create("DLabel", self.summary_panel)
-    summary_label:SetSize(512,100)
-    summary_label:SetPos(512 - 256,100)
+    summary_label:SetSize(900,100)
+    summary_label:SetPos(512 - 450,100)
     summary_label:SetText("")
     summary_label:SetTextColor(Color(255,255,255))
     summary_label.Paint = function ()
-            draw.SimpleText(status .. " " .. game.GetMap() .. " - " .. HORDE.difficulty_text[HORDE.difficulty], "LargeTitle", 256, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
+            draw.SimpleText(status .. " " .. game.GetMap() .. " - " .. HORDE.difficulty_text[HORDE.difficulty], "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
     end
 
     self.create_diff_panel("NORMAL")
