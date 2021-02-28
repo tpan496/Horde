@@ -60,8 +60,7 @@ HORDE.alive_enemies_this_wave = 0
 HORDE.killed_enemies_this_wave = 0
 HORDE.current_wave = 0
 HORDE.total_break_time = math.max(10, GetConVarNumber("horde_break_time"))
-HORDE.first_break_time = 10
-HORDE.current_break_time = HORDE.first_break_time
+HORDE.current_break_time = HORDE.total_break_time
 
 HORDE.max_spawn_distance = math.max(100, GetConVarNumber("horde_max_spawn_distance"))
 HORDE.min_spawn_distance = math.max(100, GetConVarNumber("horde_min_spawn_distance"))
@@ -126,4 +125,9 @@ HORDE.GiveAmmo = function (ply, wpn, count)
         end
     end
     return false
+end
+
+-- Why the fuck does lua not even have round function?
+HORDE.Round2 = function(num, numDecimalPlaces)
+    return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
 end

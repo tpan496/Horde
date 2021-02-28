@@ -7,6 +7,8 @@ util.AddNetworkString("Horde_VotemapSync")
 util.AddNetworkString("Horde_VotediffSync")
 util.AddNetworkString("Horde_RemainingTime")
 
+HORDE.vote_remaining_time = 60
+
 local map_list = {}
 local map_votes = {}
 local diff_votes = {}
@@ -158,9 +160,8 @@ HORDE.GameEnd = function (status)
     timer.Remove("Horder_Counter")
     BroadcastMessage(status .. " Wave: " .. HORDE.current_wave)
 
-    local remaining_time = 60
     timer.Create("Horde_MapVoteCountdown", 1, 0, function ()
-        if remaining_time == 0 then
+        if HORDE.vote_remaining_time <= 0 then
             timer.Remove("Horde_MapVoteCountdown")
 
             local chosen_map = game.GetMapNext()
@@ -221,9 +222,9 @@ HORDE.GameEnd = function (status)
             timer.Simple(0, function() RunConsoleCommand("changelevel", chosen_map) end)
         end
         net.Start("Horde_RemainingTime")
-        net.WriteInt(remaining_time, 8)
+        net.WriteInt(HORDE.vote_remaining_time, 8)
         net.Broadcast()
-        remaining_time = remaining_time - 1
+        HORDE.vote_remaining_time = HORDE.vote_remaining_time - 1
     end)
 end
 
@@ -240,6 +241,16 @@ net.Receive("Horde_Votemap", function (len, ply)
             if map == map_voted then
                 map_collect[map] = count + 1
             end
+        end
+    end
+
+    local total_players = table.Count(player.GetAll())
+    for map, count in pairs(map_collect) do
+        if count == total_players then
+            HORDE.vote_remaining_time = math.min(HORDE.vote_remaining_time, 10)
+        elseif count >= HORDE.Round2(total_players * 2 / 3) then
+            HORDE.vote_remaining_time = math.min(HORDE.vote_remaining_time, 30)
+            break
         end
     end
 

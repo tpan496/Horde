@@ -48,25 +48,31 @@ function Ready(ply)
         net.Send(ply)
         return
     end
-    if HORDE.start_game then return end
+    
     HORDE.player_ready[ply] = 1
     local ready_count = 0
     local total_player = 0
-    for _, ply in pairs(player.GetAll()) do
-        if HORDE.player_ready[ply] == 1 then
+    for _, ready_ply in pairs(player.GetAll()) do
+        if HORDE.player_ready[ready_ply] == 1 then
             ready_count = ready_count + 1
         end
         total_player = total_player + 1
     end
-   
-    if total_player == ready_count then
+    
+    if ready_count >= total_player then
         HORDE.start_game = true
+        HORDE.current_break_time = math.min(HORDE.current_break_time, 10)
+    elseif ready_count >= HORDE.Round2(total_player / 2) then
+        HORDE.start_game = true
+        HORDE.current_break_time = math.min(HORDE.current_break_time, HORDE.total_break_time)
     end
-    BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
 
     net.Start("Horde_PlayerReadySync")
     net.WriteTable(HORDE.player_ready)
     net.Broadcast()
+
+    if HORDE.start_game then return end
+    BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
 end
 
 function End(ply)

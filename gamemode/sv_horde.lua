@@ -7,6 +7,7 @@ util.AddNetworkString("Horde_GameEnd")
 local players_count = 0
 local spawned_ammoboxes = {}
 local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
+local in_break = false
 
 hook.Add("Initialize", "Horde_Init", function()
     HORDE.ai_nodes = {}
@@ -148,7 +149,8 @@ function HardReset()
     HORDE.total_enemies_this_wave = 0
     HORDE.alive_enemies_this_wave = 0
     HORDE.current_wave = 0
-    HORDE.current_break_time = HORDE.first_break_time
+    HORDE.current_break_time = HORDE.total_break_time
+    in_break = false
     -- TODO: clean up all the spawned enemies
 end
 
@@ -244,6 +246,8 @@ function ScanEnemies()
 end
 
 function StartBreak()
+    if in_break then return end
+    in_break = true
     timer.Create("Horder_Counter", 1, 0, function ()
         if not HORDE.start_game then return end
         BroadcastWaveMessage("Next wave starts in " .. HORDE.current_break_time, HORDE.current_break_time)
@@ -256,7 +260,7 @@ function StartBreak()
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
             BroadcastWaveMessage("Wave " .. HORDE.current_wave .. " has started!", 0)
-
+            in_break = false
             timer.Remove("Horder_Counter")
         end
     end)
@@ -317,7 +321,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         print("Enemies may not spawn well on this map, please try another.")
     end
 
-    if (HORDE.current_wave == 0 and HORDE.current_break_time == HORDE.first_break_time) or (HORDE.current_break_time == HORDE.total_break_time) then
+    if HORDE.current_break_time > 0 and HORDE.current_break_time <= HORDE.total_break_time then
         StartBreak()
     end
 
@@ -540,6 +544,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
 
     if HORDE.total_enemies_this_wave <= 0 and HORDE.alive_enemies_this_wave <= 0 then
         HORDE.current_break_time = HORDE.total_break_time
+        in_break = false
         StartBreak()
         enemies = ScanEnemies()
         if not table.IsEmpty(enemies) then
