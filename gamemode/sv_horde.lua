@@ -207,7 +207,6 @@ function SpawnEnemy(enemy, pos)
     spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.difficulty_health_multiplier[HORDE.difficulty])
 
     spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
-    print(spawned_enemy:GetClass(), spawned_enemy:Health())
 
     if enemy.reward_scale then
         spawned_enemy:SetVar("reward_scale", enemy.reward_scale)
@@ -390,7 +389,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
     end
 
     -- Decrease ammobox refresh timer
-    if HORDE.enable_ammobox then
+    if HORDE.enable_ammobox == 1 then
         ammobox_refresh_timer = ammobox_refresh_timer - director_interval
         net.Start("Horde_AmmoboxCountdown")
         net.WriteInt(ammobox_refresh_timer, 8)
