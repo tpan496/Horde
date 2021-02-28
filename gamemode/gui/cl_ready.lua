@@ -74,6 +74,7 @@ net.Receive("Horde_PlayerReadySync", function ()
         end
     end
 
+    if not HORDE.PlayerReadyPanel:IsValid() then return end
     HORDE.PlayerReadyPanel:ResetReadyPanel()
     for _, ply in pairs(unready_players) do
         if ply:IsValid() then

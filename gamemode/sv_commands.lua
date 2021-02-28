@@ -41,6 +41,7 @@ function Start(ply)
 end
 
 function Ready(ply)
+    if HORDE.current_wave > 0 then return end
     if not ply:Alive() then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You can't get ready when you are dead!")
@@ -71,7 +72,7 @@ function Ready(ply)
     net.WriteTable(HORDE.player_ready)
     net.Broadcast()
 
-    if HORDE.start_game then return end
+    if HORDE.start_game and HORDE.current_wave > 0 then return end
     BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
 end
 
