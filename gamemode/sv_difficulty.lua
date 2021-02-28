@@ -23,7 +23,7 @@ local difficulty_realism = 2
 local difficulty_damage_multiplier = {1, 1.25, 1.75}
 local difficulty_enemy_count_multiplier = {1, 1.3, 1.5}
 local difficulty_reward_base_multiplier = {1, 0.8, 0.6}
-local difficulty_health_multiplier = {1, 1.1, 1.25}
+HORDE.difficulty_health_multiplier = {1, 1.25, 1.5}
 local difficulty_start_money_multiplier = {1, 0.9, 0.8}
 local difficulty_spawn_radiuis_multiplier = {1, 0.75, 0.5}
 local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25}
@@ -31,6 +31,7 @@ local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25}
 local difficulty_ammo_box_spawn_chance_multiplier = {1, 0.75, 0.5}
 
 -- Flat modifiers
+HORDE.difficulty_elite_health_scale_add = {0, 0.15, 0.30}
 HORDE.difficulty_additional_pack = {0, 1, 2}
 HORDE.difficulty_additional_ammoboxes = {2, 1, 0}
 
@@ -53,9 +54,9 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             end
             
             if HORDE.endless == 1 then
-                dmg:ScaleDamage(math.floor(difficulty_damage_multiplier[HORDE.difficulty]) * HORDE.endless_damage_multiplier)
+                dmg:ScaleDamage(difficulty_damage_multiplier[HORDE.difficulty] * HORDE.endless_damage_multiplier)
             else
-                dmg:ScaleDamage(math.floor(difficulty_damage_multiplier[HORDE.difficulty]))
+                dmg:ScaleDamage(difficulty_damage_multiplier[HORDE.difficulty])
             end
 
             if dmg:GetAttacker():GetVar("damage_scale") then
@@ -79,16 +80,6 @@ hook.Add("GetFallDamage", "RealisticDamage", function(ply, speed)
         -- css fall damage
         return math.max(0, math.ceil(0.2418 * speed - 141.75))
     end
-end)
-
--- Health scaling
-hook.Add("OnEntityCreated", "Horde_OnEntityCreated", function (entity)
-    timer.Simple(0.01, function ()
-        if entity:IsValid() and entity:IsNPC() then
-            entity:SetMaxHealth(math.floor(entity:GetMaxHealth() * difficulty_health_multiplier[HORDE.difficulty]))
-            entity:SetHealth(math.floor(entity:GetMaxHealth() * difficulty_health_multiplier[HORDE.difficulty]))
-        end
-    end)
 end)
 
 -- Non-hook settings
