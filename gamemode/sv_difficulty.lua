@@ -31,7 +31,7 @@ local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25}
 local difficulty_ammo_box_spawn_chance_multiplier = {1, 0.75, 0.5}
 
 -- Flat modifiers
-HORDE.difficulty_elite_health_scale_add = {0, 0.15, 0.30}
+HORDE.difficulty_elite_health_scale_add = {0, 0.10, 0.25}
 HORDE.difficulty_additional_pack = {0, 1, 2}
 HORDE.difficulty_additional_ammoboxes = {2, 1, 0}
 
