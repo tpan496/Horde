@@ -207,6 +207,7 @@ function SpawnEnemy(enemy, pos)
     spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.difficulty_health_multiplier[HORDE.difficulty])
 
     spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
+    print(spawned_enemy:GetClass(), spawned_enemy:Health())
 
     if enemy.reward_scale then
         spawned_enemy:SetVar("reward_scale", enemy.reward_scale)
