@@ -9,6 +9,7 @@ local spawned_ammoboxes = {}
 local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local in_break = false
 
+-- Gmod Hooks
 hook.Add("Initialize", "Horde_Init", function()
     HORDE.ai_nodes = {}
     HORDE.spawned_enemies = {}
@@ -400,6 +401,9 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         -- Close all the shop menus
         net.Start("Horde_ForceCloseShop")
         net.Broadcast()
+
+        -- Run hook
+        hook.Run("HordeWaveStart", HORDE.current_wave)
     end
 
     -- Decrease ammobox refresh timer
@@ -591,6 +595,8 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                 end
             end
         end
+
+        hook.Run("HordeWaveEnd", HORDE.current_wave)
     end
     end)
 
