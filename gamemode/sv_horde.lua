@@ -195,7 +195,7 @@ function SpawnEnemy(enemy, pos)
     -- Health settings
     if enemy.is_elite then
         spawned_enemy:SetVar("is_elite", true)
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, players_count * (0.60 + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, math.min(8, players_count) * (0.60 + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
     end
 
     if enemy.health_scale then
