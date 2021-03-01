@@ -82,7 +82,8 @@ function PANEL:Init()
             for wpn, _ in pairs(list.Get("Weapon")) do
                 editor:AddChoice(wpn)
             end
-            editor:AddChoice("")
+            editor:AddChoice("_gmod_default")
+            editor:AddChoice("_gmod_none")
             return editor
         else
             local editor = vgui.Create("DTextEntry", panel)
@@ -121,6 +122,7 @@ function PANEL:Init()
     damage_editor:SetValue("1")
     reward_editor:SetValue("1")
     model_scale_editor:SetValue("1")
+    weapon_editor:SetValue("_gmod_default")
 
     local btn_panel = vgui.Create("DPanel", self)
     btn_panel:SetPos(self:GetWide() - 210, 50)
@@ -142,7 +144,7 @@ function PANEL:Init()
             color = color_editor.color_editor:GetColor()
         end
         local weapon = nil
-        if weapon_editor and weapon_editor:GetText() ~= "" then
+        if weapon_editor and weapon_editor:GetText() ~= "_gmod_none" and weapon_editor:GetText() ~= "" then
             weapon = weapon_editor:GetText()
         end
         HORDE.CreateEnemy(
@@ -204,7 +206,7 @@ function PANEL:Init()
             color = color_editor.color_editor:GetColor()
         end
         local weapon = nil
-        if weapon_editor and weapon_editor:GetText() ~= "" then
+        if weapon_editor and weapon_editor:GetText() ~= "_gmod_none" and weapon_editor:GetText() ~= "" then
             weapon = weapon_editor:GetText()
         end
 
@@ -312,10 +314,10 @@ function PANEL:Init()
             else
                 color_editor.enabled_editor:SetChecked(false)
             end
-            if enemy.weapon then
+            if enemy.weapon and enemy.weapon ~= "_gmod_none" and enemy.weapon ~= "" then
                 weapon_editor:SetValue(enemy.weapon)
             else
-                weapon_editor:SetValue("")
+                weapon_editor:SetValue("_gmod_none")
             end
         end)
 

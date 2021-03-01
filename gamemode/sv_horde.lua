@@ -223,8 +223,18 @@ function SpawnEnemy(enemy, pos)
         spawned_enemy:SetRenderMode(RENDERMODE_TRANSCOLOR)
     end
 
-    if enemy.weapon and enemy.weapon ~= "" then
-        spawned_enemy:Give(enemy.weapon)
+    if enemy.weapon then
+        if enemy.weapon == "" then
+            -- Do nothing
+        elseif enemy.weapon == "_gmod_default" then
+            if npc_info["Weapons"] then
+                local wpns = npc_info["Weapons"]
+                local wpn = wpns[math.random(#wpns)]
+                spawned_enemy:Give(wpn)
+            end
+        else
+            spawned_enemy:Give(enemy.weapon)
+        end
     end
 
     -- This is experimental
