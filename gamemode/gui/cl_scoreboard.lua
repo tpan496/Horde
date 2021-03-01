@@ -95,11 +95,9 @@ function scoreboard:show()
 end
 
 function GM:ScoreboardShow()
-    if HORDE.game_ended then return end
 	scoreboard:show()
 end
 
 function GM:ScoreboardHide()
-    if HORDE.game_ended then return end
 	scoreboard:hide()
 end
