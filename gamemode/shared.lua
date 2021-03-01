@@ -63,3 +63,10 @@ function GM:ShowTeam(ply) ConfigMenu(ply) end
 function GM:ShowSpare1(ply) Shop(ply) end
 
 function GM:ShowSpare2(ply) Ready(ply) end
+
+--[[
+local groups = {"group01", "group03", "group03m"}
+local sex = {"female", "male"}
+local nums = {"_01", "_02", "_03", "_04", "_05", "_06"}
+
+function GM:PlayerSetModel(ply) return ply:SetModel("models/player/" .. table.Random(groups) .. "/" .. table.Random(sex) .. table.Random(nums) .. ".mdl") end]]--
