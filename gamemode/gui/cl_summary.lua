@@ -334,8 +334,6 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     self.create_diff_panel("NORMAL")
     self.create_diff_panel("HARD")
     self.create_diff_panel("REALISM")
-
-    gui.EnableScreenClicker(true)
 end
 
 function PANEL:Paint(w, h)
@@ -344,6 +342,8 @@ function PANEL:Paint(w, h)
 
     -- Cover
     draw.RoundedBox(0, 0, 50, w, h, HORDE.color_hollow)
+
+    gui.EnableScreenClicker(true)
 end
 
 vgui.Register('HordeSummaryPanel', PANEL, 'DPanel')
