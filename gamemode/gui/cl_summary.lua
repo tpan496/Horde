@@ -23,7 +23,7 @@ end)
 
 function PANEL:Init()
     self:SetSize(1024, 600)
-	self:SetPos(ScrW()/2 - (self:GetWide() / 2), ScrH()/2 - (self:GetTall() / 2))
+    self:SetPos(ScrW()/2 - (self:GetWide() / 2), ScrH()/2 - (self:GetTall() / 2))
     self:SetBackgroundColor(Color(0,0,0,0))
 
     local summary_panel = vgui.Create("DPanel", self)
@@ -310,13 +310,13 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     if total_damage > 0 then
         percentage = HORDE.Round2(mvp_damage / total_damage, 2) * 100
     end
-    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              "                           MVP", tostring(mvp_kills) .. " Kills, " .. tostring(mvp_damage) .. " Damage (" .. tostring(percentage) .. "%)")
+    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              "MVP", tostring(mvp_kills) .. " Kills, " .. tostring(mvp_damage) .. " Damage (" .. tostring(percentage) .. "%)")
     self.create_player_panel({x=512 - 480 - 5,y=280}, damage_player,       "Most Damage Dealt", tostring(most_damage) .. " Damage")
-    self.create_player_panel({x=512 + 5, y=280}, kills_player,             "                 Most Kills", tostring(most_kills) .. " Kills")
+    self.create_player_panel({x=512 + 5, y=280}, kills_player,             "Most Kills", tostring(most_kills) .. " Kills")
     self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, " Most Damage Taken", tostring(most_damage_taken) .. " Damage Taken")
-    self.create_player_panel({x=512 + 5,y=390}, elite_kill_player,         "                Elite Killer", tostring(most_elite_kills) .. " Elite Kills")
-    self.create_player_panel({x=512 + 5,y=500}, money_player,              "                Money Bag", tostring(most_money) .. "$ Earned")
-    self.create_player_panel({x=512 - 480 - 5,y=500}, headshot_player,     "           SharpShooter", tostring(most_headshots) .. " Headshots")
+    self.create_player_panel({x=512 + 5,y=390}, elite_kill_player,         "Elite Killer", tostring(most_elite_kills) .. " Elite Kills")
+    self.create_player_panel({x=512 + 5,y=500}, money_player,              "Money Bag", tostring(most_money) .. "$ Earned")
+    self.create_player_panel({x=512 - 480 - 5,y=500}, headshot_player,     "SharpShooter", tostring(most_headshots) .. " Headshots")
 
     for _, map in pairs(maps) do
         self.create_map_panel(map)
@@ -340,7 +340,7 @@ end
 
 function PANEL:Paint(w, h)
     -- Entire Panel
-	draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
+    draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
 
     -- Cover
     draw.RoundedBox(0, 0, 50, w, h, HORDE.color_hollow)
