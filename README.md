@@ -81,8 +81,9 @@ CONFIG.items = {
 
 CONFIG.enemies = {
     -- key and name must be the same!
-    HugeZombie = {
-        name = "HugeZombie",
+    -- Since key has to be unique, you can use npc name + wave for the key.
+    HugeZombie1 = {
+        name = "HugeZombie1",
         class = "npc_zombie",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 1,
@@ -94,11 +95,24 @@ CONFIG.enemies = {
         color = Color(0,255,0),
         weapon = ""
     },
-    HugeCombine = {
-        name = "HugeCombine",
+    HugeCombine1 = {
+        name = "HugeCombine1",
         class = "npc_combine_s",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 1,
+        is_elite = true,
+        health_scale = 2,
+        damage_scale = 1,
+        reward_scale = 100,
+        model_scale = 2,
+        color = Color(255,0,0),
+        weapon = ""
+    },
+    HugeCombine2 = {
+        name = "HugeCombine2",
+        class = "npc_combine_s",
+        weight = 1, -- Relative weight to other enemies in the same wave.
+        wave = 2,
         is_elite = true,
         health_scale = 2,
         damage_scale = 1,
