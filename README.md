@@ -81,6 +81,7 @@ CONFIG.items = {
 
 CONFIG.enemies = {
     -- key and name must be the same!
+    -- Since key has to be unique, you can use npc name + wave for the key.
     HugeZombie1 = {
         name = "HugeZombie1",
         class = "npc_zombie",
