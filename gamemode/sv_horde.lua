@@ -224,7 +224,7 @@ function SpawnEnemy(enemy, pos)
     end
 
     if enemy.weapon then
-        if enemy.weapon == "" then
+        if enemy.weapon == "" or enemy.weapon == "_gmod_none" then
             -- Do nothing
         elseif enemy.weapon == "_gmod_default" then
             if npc_info["Weapons"] then

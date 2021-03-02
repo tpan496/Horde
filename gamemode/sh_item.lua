@@ -1,7 +1,11 @@
 -- Economy variables
 HORDE.items = {}
 
-HORDE.CreateItem = function (category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price)
+HORDE.ENTITY_PROPERTY_WPN = 0
+HORDE.ENTITY_PROPERTY_GIVE = 1
+HORDE.ENTITY_PROPERTY_BUILD = 2
+
+HORDE.CreateItem = function (category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price, entity_properties)
     if category == nil or name == nil or class == nil or price == nil or weight == nil or description == nil then return end
     if name == "" or class == "" or whitelist == nil then return end
     if category ~= "Melee" and category ~= "Pistol" and category ~= "SMG" and category ~= "MG" and category ~= "Shotgun" and category ~= "Rifle" and category ~= "Explosive" and category ~= "Special" and category ~= "Equipment" then return end
@@ -17,6 +21,11 @@ HORDE.CreateItem = function (category, name, class, price, weight, description, 
     item.whitelist = whitelist
     item.ammo_price = ammo_price
     item.secondary_ammo_price = secondary_ammo_price
+    if entity_properties then
+        item.entity_properties = entity_properties
+    else
+        item.entity_properties = {type=HORDE.ENTITY_PROPERTY_WPN}
+    end
     HORDE.items[item.class] = item
     HORDE.SetItemsData()
 end
