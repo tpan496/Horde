@@ -122,7 +122,8 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:SyncEconomy()
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
-    
+
+
     if HORDE.start_game then return end
     
     local ready_count = 0
@@ -315,6 +316,8 @@ net.Receive("Horde_SelectClass", function (len, ply)
             if not ply:IsValid() then return end
             if npc:IsValid() and dmg:GetAttacker():IsPlayer() and dmg:GetAttacker():SteamID() == ply:SteamID() then
                 if hitgroup == HITGROUP_HEAD then
+                    dmg:ScaleDamage(1.5)
+                elseif npc:GetClass() == "npc_vj_zss_zhulk" and hitgroup == HITGROUP_GENERIC then
                     dmg:ScaleDamage(1.5)
                 end
             end

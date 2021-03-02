@@ -9,7 +9,6 @@ local spawned_ammoboxes = {}
 local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local in_break = false
 
--- Gmod Hooks
 hook.Add("Initialize", "Horde_Init", function()
     HORDE.ai_nodes = {}
     HORDE.spawned_enemies = {}
@@ -97,7 +96,7 @@ end
 
 -- Record statistics
 hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
-    if took then
+     if took then
         if ent:IsNPC() and dmg:GetAttacker():IsPlayer() then
             local id = dmg:GetAttacker():SteamID()
             if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
