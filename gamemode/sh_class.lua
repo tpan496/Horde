@@ -73,8 +73,8 @@ HORDE.CreateClasses = function()
 
     HORDE.CreateClass(
         "Ghost",
-        "50% increased headshot damage. Applies to headshot immune enemies.\n\n",
-        "Have access to sniper rifles and selected light weapons.",
+        "50% increased headshot damage.\n\n",
+        "Increased headshot damage applies to headshot-immune enemies.\n\nHave access to sniper rifles and selected light weapons.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),

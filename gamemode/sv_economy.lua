@@ -224,11 +224,26 @@ net.Receive("Horde_BuyItem", function (len, ply)
             ply:AddHordeMoney(-price)
             ply:SyncEconomy()
         else
-            local wpns = list.Get("Weapon")
-            if not wpns[class] then return end
-            ply:AddHordeMoney(-price)
-            ply:Give(class)
-            ply:SelectWeapon(class)
+            local item = HORDE.items[class]
+            if item.entity_properties then
+                if item.entity_properties.type == HORDE.ENTITY_PROPERTY_WPN then
+                    local wpns = list.Get("Weapon")
+                    if not wpns[class] then return end
+                    ply:AddHordeMoney(-price)
+                    ply:Give(class)
+                    ply:SelectWeapon(class)
+                elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
+                elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_BUILD then
+                end
+            else
+                -- Fallback solution: no property is a weapon
+                -- Technically this shouldn't happen
+                local wpns = list.Get("Weapon")
+                if not wpns[class] then return end
+                ply:AddHordeMoney(-price)
+                ply:Give(class)
+                ply:SelectWeapon(class)
+            end
         end
     end
 end)
