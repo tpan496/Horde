@@ -239,6 +239,7 @@ function SpawnEnemy(enemy, pos)
 
     -- This is experimental
     --spawned_enemy:SetSquad("horde")
+    --spawned_enemy:AddRelationship("player D_HT 99")
 
     return spawned_enemy
 end
