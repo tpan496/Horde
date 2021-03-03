@@ -11,7 +11,7 @@ PERK.Hooks = {}
 PERK.Hooks.Hook_BulletHit = function(wep, data)
     local attacker = wep:GetOwner()
     if SERVER and IsValid(attacker) and attacker:IsPlayer()
-            and data.tr.HitGroup == HITGROUP_HEAD and attacker:Horde_GetPerk(PERK.ClassName) then
-        data.damage = data.damage * (1 + attacker:Horde_GetPerkParam(PERK.ClassName, "percent"))
+            and data.tr.HitGroup == HITGROUP_HEAD and attacker:Horde_GetPerk("arccw_damage_headshot") then
+        data.damage = data.damage * (1 + attacker:Horde_GetPerkParam("arccw_damage_headshot", "percent"))
     end
 end

@@ -15,11 +15,15 @@ elseif CLIENT then
         ply.Horde_Perks = ply.Horde_Perks or {}
         if mode == HORDE.NET_PERK_SET then
             local perk = net.ReadString()
-            ply.Horde_Perks[perk] = net.ReadTable()
+            local params = net.ReadTable()
+            hook.Run("Horde_OnSetPerk", ply, perk, params)
+            ply.Horde_Perks[perk] = params
         elseif mode == HORDE.NET_PERK_UNSET then
             local perk = net.ReadString()
+           hook.Run("Horde_OnUnsetPerk", ply, perk)
             ply.Horde_Perks[perk] = {}
         elseif mode == HORDE.NET_PERK_CLEAR then
+            hook.Run("Horde_OnClearPerks", ply)
             ply.Horde_Perks = {}
         end
     end)
@@ -28,7 +32,6 @@ end
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_GetPerk(perk)
-    print(self, "Horde_GetPerk", perk)
     return self.Horde_Perks and self.Horde_Perks[perk] or nil
 end
 
@@ -54,6 +57,7 @@ function plymeta:Horde_SetPerk(perk, params, shared)
         end
     end
 
+    hook.Run("Horde_OnSetPerk", self, perk, params)
     self.Horde_Perks[perk] = params
 
     if SERVER and not shared then
@@ -69,6 +73,8 @@ end
 function plymeta:Horde_UnsetPerk(perk, shared)
     self.Horde_Perks = self.Horde_Perks or {}
 
+    hook.Run("Horde_OnUnsetPerk", ply, perk)
+
     self.Horde_Perks[perk] = nil
 
     if SERVER and not shared then
@@ -81,6 +87,8 @@ function plymeta:Horde_UnsetPerk(perk, shared)
 end
 
 function plymeta:Horde_ClearPerks(shared)
+
+    hook.Run("Horde_OnClearPerks", self)
     self.Horde_Perks = {}
 
     if SERVER and not shared then
@@ -99,19 +107,19 @@ function Horde_LoadPerks()
         AddCSLuaFile(prefix .. f)
         include(prefix .. f)
         if PERK.Ignore then continue end
-        local name = string.lower(PERK.ClassName or string.Explode(".", f)[1])
-        PERK.ClassName = name
+        PERK.ClassName = string.lower(PERK.ClassName or string.Explode(".", f)[1])
         PERK.SortOrder = PERK.SortOrder or 0
 
-        hook.Run("Horde_LoadPerk", PERK)
+        hook.Run("Horde_OnLoadPerk", PERK)
 
-        HORDE.perk[name] = PERK
+        HORDE.perk[PERK.ClassName] = PERK
 
         for k, v in pairs(PERK.Hooks or {}) do
-            hook.Add(k, "horde_perk_" .. name, v)
+            hook.Add(k, "horde_perk_" .. PERK.ClassName, v)
         end
 
-        if dev then print("[Horde] Loaded perk '" .. name .. "'.") end
+        if dev then print("[Horde] Loaded perk '" .. PERK.ClassName .. "'.") end
     end
+    PERK = nil
 end
 Horde_LoadPerks()
