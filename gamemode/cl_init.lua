@@ -214,18 +214,22 @@ end)
 net.Receive('Horde_RenderCenterText', function ()
     local str = net.ReadString()
     local num = net.ReadInt(8)
-    if num and num >= 0 and num <= 10 then
-        if HORDE.PlayerReadyPanel then
-            HORDE.PlayerReadyPanel:Remove()
-        end
-        if num == 10 then
-            surface.PlaySound("HL1/fvox/ten.wav")
-        elseif num == 5 then
-            surface.PlaySound("HL1/fvox/five.wav")
-        elseif num == 0 then
-            surface.PlaySound("ambient/alarms/manhack_alert_pass1.wav")
-        else
-            surface.PlaySound("cd/" .. tostring(num) ..".mp3")
+    if num then
+        if num >= 0 and num <= 10 then
+            if HORDE.PlayerReadyPanel then
+                HORDE.PlayerReadyPanel:Remove()
+            end
+            if num == 10 then
+                surface.PlaySound("HL1/fvox/ten.wav")
+            elseif num == 5 then
+                surface.PlaySound("HL1/fvox/five.wav")
+            elseif num == 0 then
+                surface.PlaySound("ambient/alarms/manhack_alert_pass1.wav")
+            else
+                surface.PlaySound("cd/" .. tostring(num) ..".mp3")
+            end
+        elseif num == -2 then
+            surface.PlaySound("HL1/fvox/blip.wav")
         end
     end
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
