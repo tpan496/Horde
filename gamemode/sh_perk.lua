@@ -12,6 +12,7 @@ elseif CLIENT then
     net.Receive("Horde_Perk", function()
         local mode = net.ReadUInt(HORDE.NET_PERK_BITS)
         local ply = net.ReadEntity()
+        ply.Horde_Perks = ply.Horde_Perks or {}
         if mode == HORDE.NET_PERK_SET then
             local perk = net.ReadString()
             ply.Horde_Perks[perk] = net.ReadTable()
@@ -27,6 +28,7 @@ end
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_GetPerk(perk)
+    print(self, "Horde_GetPerk", perk)
     return self.Horde_Perks and self.Horde_Perks[perk] or nil
 end
 
@@ -39,15 +41,16 @@ function plymeta:Horde_GetPerkParam(perk, param)
 end
 
 function plymeta:Horde_SetPerk(perk, params, shared)
-    if not HORDE.perks[perk] then error("Tried to use nonexistent perk '" .. perk .. "' in Horde_SetPerk!") return end
+    if not HORDE.perk[perk] then error("Tried to use nonexistent perk '" .. perk .. "' in Horde_SetPerk!") return end
     self.Horde_Perks = self.Horde_Perks or {}
+    params = params or {}
 
     -- Set default values and clamp
-    for k, v in pairs(HORDE.perks[perk].Parameters or {}) do
+    for k, v in pairs(HORDE.perk[perk].Parameters or {}) do
         if not params[k] then
             params[k] = v.default
         elseif (v.type == "i" or v.type == "f") then
-            params[k] = math.Clamp(params[k] or v.default, v.min or math.min, v.max or math.max)
+            params[k] = math.Clamp(params[k] or v.default, v.min or -math.huge, v.max or math.huge)
         end
     end
 
@@ -95,8 +98,9 @@ function Horde_LoadPerks()
         PERK = {}
         AddCSLuaFile(prefix .. f)
         include(prefix .. f)
-        local name = string.lower(PERK.ClassName or string.Explode(".", f)[1])
         if PERK.Ignore then continue end
+        local name = string.lower(PERK.ClassName or string.Explode(".", f)[1])
+        PERK.ClassName = name
         PERK.SortOrder = PERK.SortOrder or 0
 
         hook.Run("Horde_LoadPerk", PERK)
@@ -110,6 +114,4 @@ function Horde_LoadPerks()
         if dev then print("[Horde] Loaded perk '" .. name .. "'.") end
     end
 end
-Horde_LoadPerks() -- TODO find a better place to load?
-
-print("horde sh_perk.lua")
+Horde_LoadPerks()

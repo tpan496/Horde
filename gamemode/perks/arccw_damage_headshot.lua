@@ -12,6 +12,6 @@ PERK.Hooks.Hook_BulletHit = function(wep, data)
     local attacker = wep:GetOwner()
     if SERVER and IsValid(attacker) and attacker:IsPlayer()
             and data.tr.HitGroup == HITGROUP_HEAD and attacker:Horde_GetPerk(PERK.ClassName) then
-        dmginfo:ScaleDamage(1 + attacker:Horde_GetPerkParam(PERK.ClassName, "percent"))
+        data.damage = data.damage * (1 + attacker:Horde_GetPerkParam(PERK.ClassName, "percent"))
     end
 end

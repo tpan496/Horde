@@ -8,6 +8,6 @@ PERK.Parameters = {
 PERK.Hooks = {}
 PERK.Hooks.EntityTakeDamage = function(target, dmginfo)
     if target:IsPlayer() and target:Horde_GetPerk(PERK.ClassName) then
-        dmginfo:ScaleDamage(1 - attacker:Horde_GetPerkParam(PERK.ClassName, "percent"))
+        dmginfo:ScaleDamage(1 - target:Horde_GetPerkParam(PERK.ClassName, "percent"))
     end
 end
