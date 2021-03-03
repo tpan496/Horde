@@ -16,15 +16,12 @@ elseif CLIENT then
         if mode == HORDE.NET_PERK_SET then
             local perk = net.ReadString()
             local params = net.ReadTable()
-            hook.Run("Horde_OnSetPerk", ply, perk, params)
-            ply.Horde_Perks[perk] = params
+            ply:Horde_SetPerk(perk, params)
         elseif mode == HORDE.NET_PERK_UNSET then
             local perk = net.ReadString()
-           hook.Run("Horde_OnUnsetPerk", ply, perk)
-            ply.Horde_Perks[perk] = {}
+            ply:Horde_UnsetPerk(perk)
         elseif mode == HORDE.NET_PERK_CLEAR then
-            hook.Run("Horde_OnClearPerks", ply)
-            ply.Horde_Perks = {}
+            ply:Horde_ClearPerks()
         end
     end)
 end
@@ -89,7 +86,13 @@ end
 function plymeta:Horde_ClearPerks(shared)
 
     hook.Run("Horde_OnClearPerks", self)
-    self.Horde_Perks = {}
+    --self.Horde_Perks = {}
+
+    if not shared then
+        for k, v in pairs(self.Horde_Perks or {}) do
+            self:Horde_UnsetPerk(k, shared)
+        end
+    end
 
     if SERVER and not shared then
         net.Start("Horde_Perk")
