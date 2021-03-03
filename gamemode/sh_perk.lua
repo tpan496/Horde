@@ -4,6 +4,8 @@ HORDE.NET_PERK_CLEAR = 3
 
 HORDE.NET_PERK_BITS = 2
 
+HORDE.perk = HORDE.perk or {}
+
 if SERVER then
     util.AddNetworkString("Horde_Perk")
 elseif CLIENT then
@@ -25,7 +27,7 @@ end
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_GetPerk(perk)
-    return self.Horde_Perks[perk]
+    return self.Horde_Perks and self.Horde_Perks[perk] or nil
 end
 
 function plymeta:Horde_GetPerkParam(perk, param)
@@ -86,7 +88,7 @@ function plymeta:Horde_ClearPerks(shared)
     end
 end
 
-local prefix = "gamemodes/horde/gamemode/perks/"
+local prefix = "horde/gamemode/perks/"
 function Horde_LoadPerks()
     local dev = GetConVar("developer"):GetBool()
     for _, f in ipairs(file.Find(prefix .. "*", "LUA")) do
