@@ -11,6 +11,7 @@ CreateConVar("horde_min_spawn_distance", 400, SERVER_CAN_EXECUTE, "Minimum enenm
 CreateConVar("horde_max_spawn_z_distance", 500, SERVER_CAN_EXECUTE, "Maximum enemy respawn height difference with players.")
 
 CreateConVar("horde_start_money", 1000, SERVER_CAN_EXECUTE, "Money given at start.")
+CreateConVar("horde_round_bonus", 500, SERVER_CAN_EXECUTE, "Round bonus given at the end of the round.")
 CreateConVar("horde_enable_ammobox", 1, SERVER_CAN_EXECUTE, "Enable ammobox spawns.")
 CreateConVar("horde_npc_cleanup", 1, SERVER_CAN_EXECUTE, "Kills all NPCs after a wave.")
 CreateConVar("horde_enable_scoreboard", 1, SERVER_CAN_EXECUTE, "Enables built-in scoreboard.")
@@ -76,7 +77,8 @@ HORDE.max_max_waves = 10
 HORDE.max_waves = math.min(HORDE.max_max_waves, math.max(1, GetConVarNumber("horde_max_wave")))
 HORDE.start_money = math.max(0, GetConVarNumber("horde_start_money"))
 HORDE.total_enemies_this_wave_fixed = 0
-HORDE.kill_reward_base = 100
+HORDE.kill_reward_base = 90
+HORDE.round_bonus_base = GetConVar("horde_round_bonus"):GetInt()
 HORDE.game_ended = false
 
 -- Ammobox

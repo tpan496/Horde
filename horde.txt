@@ -52,7 +52,7 @@
 			"name"		"horde_max_wave"
 			"text"		"Max wave (1-10)"
 			"type"		"Numeric"
-			"default"	"5"
+			"default"	"10"
 			"singleplayer" ""
 		}
 		7
@@ -66,12 +66,20 @@
 		8
 		{
 			"name"		"horde_start_money"
-			"text"		"Money given at start."
+			"text"		"Starting money (base)."
 			"type"		"Numeric"
 			"default"	"1000"
 			"singleplayer" ""
 		}
 		9
+		{
+			"name"		"horde_round_bonus"
+			"text"		"Round bonus (base)."
+			"type"		"Numeric"
+			"default"	"500"
+			"singleplayer" ""
+		}
+		10
 		{
 			"name"		"horde_break_time"
 			"text"		"Break time between waves (>10)"
@@ -79,7 +87,7 @@
 			"default"	"60"
 			"singleplayer" ""
 		}
-		10
+		11
 		{
 			"name"		"horde_enable_shop"
 			"text"		"Enables shop menu"
@@ -87,7 +95,7 @@
 			"default"	"1"
 			"singleplayer" ""
 		}
-		11
+		12
 		{
 			"name"		"horde_enable_ammobox"
 			"text"		"Enables ammobox spawns"
@@ -95,7 +103,7 @@
 			"default"	"1"
 			"singleplayer" ""
 		}
-		12
+		13
 		{
 			"name"		"horde_enable_sandbox"
 			"text"		"Enables sandbox/cheat features"
@@ -103,7 +111,7 @@
 			"default"	"0"
 			"singleplayer" ""
 		}
-		13
+		14
 		{
 			"name"		"horde_max_spawn_distance"
 			"text"		"Maximum enenmy respawn distance."
@@ -111,7 +119,7 @@
 			"default"	"2000"
 			"singleplayer" ""
 		}
-		14
+		15
 		{
 			"name"		"horde_min_spawn_distance"
 			"text"		"Minimum enenmy respawn distance."
@@ -119,7 +127,7 @@
 			"default"	"400"
 			"singleplayer" ""
 		}
-		15
+		16
 		{
 			"name"		"horde_max_spawn_z_distance"
 			"text"		"Maximum enemy spawn height difference."
@@ -127,7 +135,7 @@
 			"default"	"500"
 			"singleplayer" ""
 		}
-		16
+		17
 		{
 			"name"		"horde_corpse_cleanup"
 			"text"		"Remove corpses."
@@ -135,7 +143,7 @@
 			"default"	"0"
 			"singleplayer" ""
 		}
-		17
+		18
 		{
 			"name"		"horde_base_walkspeed"
 			"text"		"Base Walkspeed"
@@ -143,7 +151,7 @@
 			"default"	"180"
 			"singleplayer" ""
 		}
-		18
+		19
 		{
 			"name"		"horde_base_runspeed"
 			"text"		"Base Runspeed"
@@ -151,7 +159,7 @@
 			"default"	"220"
 			"singleplayer" ""
 		}
-		19
+		20
 		{
 			"name"		"horde_total_enemies_scaling"
 			"text"		"Forced enemy scaling multiplier"
