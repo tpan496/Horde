@@ -88,6 +88,7 @@ end
 
 -- Kill reward scaling
 HORDE.kill_reward_base = math.floor(HORDE.kill_reward_base * difficulty_reward_base_multiplier[HORDE.difficulty])
+HORDE.round_bonus_base = math.floor(HORDE.round_bonus_base * difficulty_reward_base_multiplier[HORDE.difficulty])
 
 -- Start money scaling
 HORDE.start_money = math.floor(HORDE.start_money * difficulty_start_money_multiplier[HORDE.difficulty])

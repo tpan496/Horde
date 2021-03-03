@@ -52,7 +52,7 @@
 			"name"		"horde_max_wave"
 			"text"		"Max wave (1-10)"
 			"type"		"Numeric"
-			"default"	"5"
+			"default"	"10"
 			"singleplayer" ""
 		}
 		7

@@ -595,6 +595,12 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             end
         end
 
+        -- Global Wave End Bonus
+        for _, ply in pairs(player.GetAll()) do
+            ply:AddHordeMoney(HORDE.round_bonus_base)
+            ply:SyncEconomy()
+        end
+
         hook.Run("HordeWaveEnd", HORDE.current_wave)
     end
     end)

@@ -76,7 +76,8 @@ HORDE.max_max_waves = 10
 HORDE.max_waves = math.min(HORDE.max_max_waves, math.max(1, GetConVarNumber("horde_max_wave")))
 HORDE.start_money = math.max(0, GetConVarNumber("horde_start_money"))
 HORDE.total_enemies_this_wave_fixed = 0
-HORDE.kill_reward_base = 100
+HORDE.kill_reward_base = 90
+HORDE.round_bonus_base = 500
 HORDE.game_ended = false
 
 -- Ammobox
