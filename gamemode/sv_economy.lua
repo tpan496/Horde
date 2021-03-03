@@ -233,8 +233,10 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     ply:Give(class)
                     ply:SelectWeapon(class)
                 elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
+                    ply:AddHordeMoney(-price)
                     ply:Give(class)
                 elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
+                    ply:AddHordeMoney(-price)
                     local ent = ents.Create(class)
                     local pos = ply:GetPos()
                     local dir = (ply:GetEyeTrace().HitPos - pos)
@@ -242,6 +244,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     local drop_pos = pos + dir * item.entity_properties.x
                     drop_pos.z = pos.z + item.entity_properties.z
                     ent:SetPos(drop_pos)
+                    ent:SetAngles(Angle(0, ply:GetAngles().y + item.entity_properties.yaw, 0))
                     ent:DropToFloor()
                     ent:Spawn()
                     if ent:IsNPC() then

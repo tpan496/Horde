@@ -20,6 +20,8 @@ function PANEL:Init()
     modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
     modify_tab:SetPos(self:GetWide() / 2, 40)
 
+    local ammo_price_editor
+    local secondary_ammo_price_editor
     local function create_property_editor(name, height)
         local panel = vgui.Create("DPanel", modify_tab)
         panel:DockPadding(10, 5, 10, 5)
@@ -102,10 +104,10 @@ function PANEL:Init()
             hor_editor:DockMargin(5, 0, 5, 0)
             hor_editor:Dock(LEFT)
             hor_editor:SetNumeric(true)
-            hor_editor:SetValue(10)
+            hor_editor:SetValue(50)
 
             local ver_label = vgui.Create("DLabel", drop_editors)
-            ver_label:SetText("y")
+            ver_label:SetText("z")
             ver_label:SetSize(10, height/3)
             ver_label:SetTextColor(Color(0,0,0))
             ver_label:DockMargin(5, 0, 5, 0)
@@ -116,7 +118,21 @@ function PANEL:Init()
             ver_editor:DockMargin(5, 0, 5, 0)
             ver_editor:Dock(LEFT)
             ver_editor:SetNumeric(true)
-            ver_editor:SetValue(10)
+            ver_editor:SetValue(15)
+
+            local yaw_label = vgui.Create("DLabel", drop_editors)
+            yaw_label:SetText("yaw")
+            yaw_label:SetSize(25, height/3)
+            yaw_label:SetTextColor(Color(0,0,0))
+            yaw_label:DockMargin(5, 0, 5, 0)
+            yaw_label:Dock(LEFT)
+
+            local yaw_editor = vgui.Create("DTextEntry", drop_editors)
+            yaw_editor:SetSize(25, height/3)
+            yaw_editor:DockMargin(5, 0, 5, 0)
+            yaw_editor:Dock(LEFT)
+            yaw_editor:SetNumeric(true)
+            yaw_editor:SetValue(0)
 
             local start_pos = 0
             for _, type in pairs(entity_types) do
@@ -143,6 +159,8 @@ function PANEL:Init()
                             weapon_editor:SetVisible(true)
                             entity_editor:SetVisible(false)
                             drop_editors:SetVisible(false)
+                            ammo_price_editor:SetVisible(true)
+                            secondary_ammo_price_editor:SetVisible(true)
                         else
                             weapon_editor:SetVisible(false)
                             entity_editor:SetVisible(true)
@@ -151,6 +169,8 @@ function PANEL:Init()
                             else
                                 drop_editors:SetVisible(false)
                             end
+                            ammo_price_editor:SetVisible(false)
+                            secondary_ammo_price_editor:SetVisible(false)
                         end
                     else
                         checkbox:SetChecked(false)
@@ -158,7 +178,7 @@ function PANEL:Init()
                 end
             end
 
-            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, entity_editor=entity_editor, drop_editor_x = hor_editor, drop_editor_z = ver_editor}}
+            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, entity_editor=entity_editor, drop_editors=drop_editors, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor}}
         elseif name == "whitelist" then
             local editors = {}
             local start_pos = 70
@@ -190,8 +210,8 @@ function PANEL:Init()
     local weight_editor = create_property_editor("weight", 40)
     local description_editor = create_property_editor("description", 100)
     local whitelist_editors = create_property_editor("whitelist", 40)
-    local ammo_price_editor = create_property_editor("ammo price", 40)
-    local secondary_ammo_price_editor = create_property_editor("secondary ammo price", 40)
+    ammo_price_editor = create_property_editor("ammo price", 40)
+    secondary_ammo_price_editor = create_property_editor("secondary ammo price", 40)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -233,6 +253,7 @@ function PANEL:Init()
                     class_type = HORDE.ENTITY_PROPERTY_DROP
                     entity_properties.x = class_editor.drop_editor_x:GetFloat()
                     entity_properties.z = class_editor.drop_editor_z:GetFloat()
+                    entity_properties.yaw = class_editor.drop_editor_yaw:GetFloat()
                 end
                 
                 entity_properties.type = class_type
@@ -253,7 +274,6 @@ function PANEL:Init()
             end
         end
         if not category_editor:GetValue() or not name_editor:GetValue() or class == "" then return end
-        print(class)
 
         HORDE.CreateItem(
             category_editor:GetText(),
@@ -336,16 +356,23 @@ function PANEL:Init()
     item_list.OnClickLine = function(parent, line, selected)
         local item = line.item
         local class_checkboxes = class_editors.checkboxes
-        local class_type = HORDE.ENTITY_PROPERTY_WPN
+        local class_type = line.item.entity_properties.type
         local class_editor = class_editors.editors
         local entity_properties = line.item.entity_properties
 
         local menu = DermaMenu()
 
         menu:AddOption("Modify", function()
-            for i, checkbox in ipairs(class_checkboxes) do
-                if i == entity_properties.type then
+            for type, checkbox in pairs(class_checkboxes) do
+                if entity_properties.type == HORDE.ENTITY_PROPERTY_WPN and type == "weapon_entity" then
                     checkbox:SetChecked(true)
+                    class_editor.drop_editors:SetVisible(false)
+                elseif entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE and type == "give_entity" then
+                    checkbox:SetChecked(true)
+                    class_editor.drop_editors:SetVisible(false)
+                elseif entity_properties.type == HORDE.ENTITY_PROPERTY_DROP and type == "drop_entity" then
+                    checkbox:SetChecked(true)
+                    class_editor.drop_editors:SetVisible(true)
                 else
                     checkbox:SetChecked(false)
                 end
@@ -359,6 +386,7 @@ function PANEL:Init()
                 if class_type == HORDE.ENTITY_PROPERTY_DROP then
                     class_editor.drop_editor_x:SetValue(item.entity_properties.x)
                     class_editor.drop_editor_z:SetValue(item.entity_properties.z)
+                    class_editor.drop_editor_yaw:SetValue(item.entity_properties.yaw)
                 end
                 class_editor.weapon_editor:SetVisible(false)
                 class_editor.entity_editor:SetValue(item.class)
