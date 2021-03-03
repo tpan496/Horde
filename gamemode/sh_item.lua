@@ -1,9 +1,9 @@
 -- Economy variables
 HORDE.items = {}
 
-HORDE.ENTITY_PROPERTY_WPN = 0
-HORDE.ENTITY_PROPERTY_GIVE = 1
-HORDE.ENTITY_PROPERTY_BUILD = 2
+HORDE.ENTITY_PROPERTY_WPN = 1
+HORDE.ENTITY_PROPERTY_GIVE = 2
+HORDE.ENTITY_PROPERTY_DROP = 3
 
 HORDE.CreateItem = function (category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price, entity_properties)
     if category == nil or name == nil or class == nil or price == nil or weight == nil or description == nil then return end
