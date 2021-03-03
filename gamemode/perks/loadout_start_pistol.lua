@@ -12,9 +12,9 @@ PERK.Hooks = {}
 PERK.Hooks.HordeWaveStart = function(wave)
     if wave == 1 then
         for _, ply in pairs(player.GetAll()) do
-            if ply:Alive() and ply:Horde_GetPerk(PERK.ClassName) then
-                ply:Give(ply:Horde_GetPerkParam(PERK.ClassName, "weapon"))
-                ply:GiveAmmo(ply:Horde_GetPerkParam(PERK.ClassName, "ammo"), "pistol")
+            if ply:Alive() and ply:Horde_GetPerk("loadout_start_pistol") then
+                ply:Give(ply:Horde_GetPerkParam("loadout_start_pistol", "weapon"))
+                ply:GiveAmmo(ply:Horde_GetPerkParam("loadout_start_pistol", "ammo"), "pistol")
             end
         end
     end
