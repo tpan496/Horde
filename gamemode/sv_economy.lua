@@ -53,7 +53,7 @@ function Player:DropHordeMoney()
         local drop_pos = pos + dir * 50
         drop_pos.z = pos.z + 15
         money:SetPos(drop_pos)
-        --money:DropToFloor()
+        money:DropToFloor()
         money:Spawn()
         self:SyncEconomy()
     end
@@ -235,6 +235,18 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
                     ply:Give(class)
                 elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
+                    local ent = ents.Create(class)
+                    local pos = ply:GetPos()
+                    local dir = (ply:GetEyeTrace().HitPos - pos)
+                    dir:Normalize()
+                    local drop_pos = pos + dir * item.entity_properties.x
+                    drop_pos.z = pos.z + item.entity_properties.z
+                    ent:SetPos(drop_pos)
+                    ent:DropToFloor()
+                    ent:Spawn()
+                    if ent:IsNPC() then
+                        ent:AddRelationship("player D_LI 99")
+                    end
                 end
             else
                 -- Fallback solution: no property is a weapon
