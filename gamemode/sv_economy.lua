@@ -233,7 +233,8 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     ply:Give(class)
                     ply:SelectWeapon(class)
                 elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
-                elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_BUILD then
+                    ply:Give(class)
+                elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
                 end
             else
                 -- Fallback solution: no property is a weapon
