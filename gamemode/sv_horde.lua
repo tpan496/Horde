@@ -567,10 +567,11 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         end
 
         if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
-            BroadcastMessage("Final Wave Completed! You have survived!")
+            -- TODO: change this magic number
+            BroadcastWaveMessage("Final Wave Completed! You have survived!", -2)
             HORDE.GameEnd("VICTORY!")
         else
-            BroadcastMessage("Wave Completed!")
+            BroadcastWaveMessage("Wave Completed!", -2)
             net.Start("Horde_LegacyNotification")
             net.WriteString("Wave Completed!")
             net.WriteInt(0,2)
