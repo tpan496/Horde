@@ -3,7 +3,7 @@ GM.Author = "tpan496"
 GM.Email = "N/A"
 GM.Website = "N/A"
 
-CreateConVar("horde_enable_sandbox", 0, SERVER_CAN_EXECUTE, "Enables sandbox/cheat features.")
+CreateConVar("horde_enable_sandbox", 0, FCVAR_SERVER_CAN_EXECUTE, "Enables sandbox/cheat features.")
 
 DeriveGamemode("sandbox")
 

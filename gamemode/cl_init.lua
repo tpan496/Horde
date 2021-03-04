@@ -296,11 +296,11 @@ net.Receive("Horde_GameEnd", function ()
 end)
 
 net.Receive("Horde_SyncItems", function ()
-	HORDE.items = net.ReadTable()
+    HORDE.items = net.ReadTable()
 end)
 
 net.Receive("Horde_SyncEnemies", function ()
-	HORDE.enemies = net.ReadTable()
+    HORDE.enemies = net.ReadTable()
 end)
 
 net.Receive("Horde_SyncClasses", function ()
@@ -318,6 +318,6 @@ hook.Add("HUDShouldDraw", "Horde_RemoveRetardRedScreen", function(name)
 end)
 
 hook.Add("InitPostEntity", "Horde_PlayerInit", function()
-	net.Start("Horde_PlayerInit")
-	net.SendToServer()
+    net.Start("Horde_PlayerInit")
+    net.SendToServer()
 end )
