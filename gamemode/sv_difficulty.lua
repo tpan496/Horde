@@ -40,8 +40,16 @@ HORDE.endless_damage_multiplier = 1
 -- Hook settings
 -- Damage scaling/handling
 hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
-    if target:IsValid() and target:IsPlayer() then
+    print(dmg)
+    if not target:IsValid() then return end
+    if target:IsPlayer() then
         if dmg:GetAttacker():IsNPC() then
+            if dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
+                -- Prevent pvp
+                dmg:ScaleDamage(0)
+                dmg:SetDamageForce(Vector(0,0,0))
+                return
+            end
             if dmg:GetDamageType() == DAMAGE_CRUSH then
                 -- Cap bullshit physics damage that can sometimes occur
                 dmg:SetDamage(math.min(dmg:GetDamage(),20))
@@ -62,12 +70,24 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             end
         elseif dmg:GetAttacker():IsPlayer() and dmg:GetAttacker() ~= target then
             dmg:SetDamage(0)
+            dmg:SetDamageForce(Vector(0,0,0))
         elseif dmg:GetDamageType() == DAMAGE_CRUSH then
             dmg:SetDamage(math.min(dmg:GetDamage(), math.floor(20 * difficulty_damage_multiplier[HORDE.difficulty])))
         end
+    elseif target:GetNWEntity("HordeOwner"):IsPlayer() and dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
+        -- Prevent player minions from damaging each other
+        dmg:ScaleDamage(0)
+        dmg:SetDamageForce(Vector(0,0,0))
     end
 end)
-
+--[[
+hook.Add("EntityTakeDamage", "Horde_VJRPGBuff", function (target, dmg)
+    if not target:IsValid() then return end
+    if target:IsNPC() and dmg:GetAttacker():IsPlayer() and dmg:GetAttacker():GetActiveWeapon():GetClass() == "weapon_vj_rpg" then
+        dmg:ScaleDamage(5)
+        print(dmg)
+    end
+end)]]--
 -- Fall damage handling
 hook.Add("GetFallDamage", "RealisticDamage", function(ply, speed)
     if HORDE.difficulty == difficulty_normal then

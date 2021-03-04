@@ -22,7 +22,11 @@ function PANEL:Init()
 
     local ammo_price_editor
     local secondary_ammo_price_editor
-    local function create_property_editor(name, height)
+    local category_editor
+    local weapon_categories = {"Melee", "Pistol", "SMG", "Shotgun", "Rifle", "MG", "Explosive", "Special", "Equipment"}
+    local entity_categories = {"Special", "Equipment"}
+    local weight_editor
+    local function create_property_editor(name, height, categories)
         local panel = vgui.Create("DPanel", modify_tab)
         panel:DockPadding(10, 5, 10, 5)
         panel:SetSize(modify_tab:GetWide(), height)
@@ -45,15 +49,9 @@ function PANEL:Init()
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
             editor:SetSortItems(false)
-            editor:AddChoice("Melee")
-            editor:AddChoice("Pistol")
-            editor:AddChoice("SMG")
-            editor:AddChoice("Shotgun")
-            editor:AddChoice("Rifle")
-            editor:AddChoice("MG")
-            editor:AddChoice("Explosive")
-            editor:AddChoice("Special")
-            editor:AddChoice("Equipment")
+            for _, category in pairs(categories) do
+                editor:AddChoice(category)
+            end
             return editor
         elseif name == "class" then
             -- Entiy selector
@@ -134,6 +132,20 @@ function PANEL:Init()
             yaw_editor:SetNumeric(true)
             yaw_editor:SetValue(0)
 
+            local limit_label = vgui.Create("DLabel", drop_editors)
+            limit_label:SetText("limit")
+            limit_label:SetSize(25, height/3)
+            limit_label:SetTextColor(Color(0,0,0))
+            limit_label:DockMargin(5, 0, 5, 0)
+            limit_label:Dock(LEFT)
+
+            local limit_editor = vgui.Create("DTextEntry", drop_editors)
+            limit_editor:SetSize(25, height/3)
+            limit_editor:DockMargin(5, 0, 5, 0)
+            limit_editor:Dock(LEFT)
+            limit_editor:SetNumeric(true)
+            limit_editor:SetValue(5)
+
             local start_pos = 0
             for _, type in pairs(entity_types) do
                 local checkbox = vgui.Create("DCheckBoxLabel", entity_checkboxes_panel)
@@ -161,6 +173,11 @@ function PANEL:Init()
                             drop_editors:SetVisible(false)
                             ammo_price_editor:SetVisible(true)
                             secondary_ammo_price_editor:SetVisible(true)
+                            weight_editor:SetVisible(true)
+                            category_editor:Clear()
+                            for _, category in pairs(weapon_categories) do
+                                category_editor:AddChoice(category)
+                            end
                         else
                             weapon_editor:SetVisible(false)
                             entity_editor:SetVisible(true)
@@ -171,6 +188,11 @@ function PANEL:Init()
                             end
                             ammo_price_editor:SetVisible(false)
                             secondary_ammo_price_editor:SetVisible(false)
+                            weight_editor:SetVisible(false)
+                            category_editor:Clear()
+                            for _, category in pairs(entity_categories) do
+                                category_editor:AddChoice(category)
+                            end
                         end
                     else
                         checkbox:SetChecked(false)
@@ -178,7 +200,7 @@ function PANEL:Init()
                 end
             end
 
-            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, entity_editor=entity_editor, drop_editors=drop_editors, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor}}
+            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, entity_editor=entity_editor, drop_editors=drop_editors, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor, drop_editor_limit = limit_editor}}
         elseif name == "whitelist" then
             local editors = {}
             local start_pos = 70
@@ -204,10 +226,10 @@ function PANEL:Init()
     end
 
     local class_editors = create_property_editor("class", 40 * 3)
-    local category_editor = create_property_editor("category", 40)
+    category_editor = create_property_editor("category", 40, weapon_categories)
     local name_editor = create_property_editor("name", 40)
     local price_editor = create_property_editor("price", 40)
-    local weight_editor = create_property_editor("weight", 40)
+    weight_editor = create_property_editor("weight", 40)
     local description_editor = create_property_editor("description", 100)
     local whitelist_editors = create_property_editor("whitelist", 40)
     ammo_price_editor = create_property_editor("ammo price", 40)
@@ -254,6 +276,7 @@ function PANEL:Init()
                     entity_properties.x = class_editor.drop_editor_x:GetFloat()
                     entity_properties.z = class_editor.drop_editor_z:GetFloat()
                     entity_properties.yaw = class_editor.drop_editor_yaw:GetFloat()
+                    entity_properties.limit = class_editor.drop_editor_limit:GetInt()
                 end
                 
                 entity_properties.type = class_type
@@ -356,22 +379,25 @@ function PANEL:Init()
     item_list.OnClickLine = function(parent, line, selected)
         local item = line.item
         local class_checkboxes = class_editors.checkboxes
-        local class_type = line.item.entity_properties.type
+        local class_type = HORDE.ENTITY_PROPERTY_WPN
+        if item.entity_properties then class_type = item.entity_properties.type end
         local class_editor = class_editors.editors
-        local entity_properties = line.item.entity_properties
 
         local menu = DermaMenu()
 
         menu:AddOption("Modify", function()
             for type, checkbox in pairs(class_checkboxes) do
-                if entity_properties.type == HORDE.ENTITY_PROPERTY_WPN and type == "weapon_entity" then
+                if class_type == HORDE.ENTITY_PROPERTY_WPN and type == "weapon_entity" then
                     checkbox:SetChecked(true)
+                    checkbox:OnChange()
                     class_editor.drop_editors:SetVisible(false)
-                elseif entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE and type == "give_entity" then
+                elseif class_type == HORDE.ENTITY_PROPERTY_GIVE and type == "give_entity" then
                     checkbox:SetChecked(true)
+                    checkbox:OnChange()
                     class_editor.drop_editors:SetVisible(false)
-                elseif entity_properties.type == HORDE.ENTITY_PROPERTY_DROP and type == "drop_entity" then
+                elseif class_type == HORDE.ENTITY_PROPERTY_DROP and type == "drop_entity" then
                     checkbox:SetChecked(true)
+                    checkbox:OnChange()
                     class_editor.drop_editors:SetVisible(true)
                 else
                     checkbox:SetChecked(false)
@@ -387,6 +413,7 @@ function PANEL:Init()
                     class_editor.drop_editor_x:SetValue(item.entity_properties.x)
                     class_editor.drop_editor_z:SetValue(item.entity_properties.z)
                     class_editor.drop_editor_yaw:SetValue(item.entity_properties.yaw)
+                    class_editor.drop_editor_limit:SetValue(item.entity_properties.limit)
                 end
                 class_editor.weapon_editor:SetVisible(false)
                 class_editor.entity_editor:SetValue(item.class)
