@@ -1,6 +1,6 @@
 if SERVER then return end
 
-surface.CreateFont("Item", { font = 'arial bold', size = 20 })
+surface.CreateFont("Item", { font = "arial bold", size = 20 })
 
 local PANEL = {}
 

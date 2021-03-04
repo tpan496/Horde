@@ -1,4 +1,4 @@
-PERK.PrintName = "Pyromaniac"
+PERK.PrintName = "Bonus Fire Damage"
 PERK.Description = "Do {percent} extra fire damage."
 
 PERK.Parameters = {

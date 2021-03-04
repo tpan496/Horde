@@ -1,8 +1,8 @@
 if SERVER then return end
 
-surface.CreateFont("LargeTitle", { font = 'arial bold', size = 35 })
-surface.CreateFont("Title", { font = 'arial bold', size = 25 })
-surface.CreateFont("Content", { font = 'arial bold', size = 20 })
+surface.CreateFont("LargeTitle", { font = "arial bold", size = 35 })
+surface.CreateFont("Title", { font = "arial bold", size = 25 })
+surface.CreateFont("Content", { font = "arial bold", size = 20 })
 
 local PANEL = {}
 local players_map_votes = {}

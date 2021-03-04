@@ -77,12 +77,12 @@ end
 
 function Player:SyncEconomy()
     net.Start('Horde_SynchronizeEconomy')
-	net.WriteEntity(self)
-	net.WriteInt(self.money, 32)
+    net.WriteEntity(self)
+    net.WriteInt(self.money, 32)
     net.WriteInt(self.weight, 32)
     net.WriteString(self.class.name)
     net.WriteInt(self.class_variant, 8)
-	net.Broadcast()
+    net.Broadcast()
 end
 
 -- Player Spawn Initialize
@@ -109,15 +109,16 @@ net.Receive("Horde_PlayerInit", function (len, ply)
         net.WriteTable(HORDE.player_ready)
         net.Broadcast()
     end
-    
+
     if HORDE.start_game then
         ply:SetHordeMoney(HORDE.start_money + math.max(0, HORDE.current_wave - 1) * 150)
     else
         ply:SetHordeMoney(HORDE.start_money)
     end
-    
+
     ply:SetHordeWeight(15)
     ply:SetHordeClass(HORDE.classes["Survivor"])
+    ply:Horde_ApplyPerksForClass()
     ply:SetClassSkill(-1)
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:SyncEconomy()
@@ -125,16 +126,16 @@ net.Receive("Horde_PlayerInit", function (len, ply)
 
 
     if HORDE.start_game then return end
-    
+
     local ready_count = 0
     local total_player = 0
-    for _, ply in pairs(player.GetAll()) do
-        if HORDE.player_ready[ply] == 1 then
+    for _, p in pairs(player.GetAll()) do
+        if HORDE.player_ready[p] == 1 then
             ready_count = ready_count + 1
         end
         total_player = total_player + 1
     end
-    
+
     if total_player == ready_count then
         HORDE.start_game = true
     end
@@ -152,7 +153,7 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
         net.WriteTable(HORDE.player_ready)
         net.Broadcast()
     end
-    
+
     if not ply:IsValid() then return end
 
     -- Remove all his class abilities
@@ -278,6 +279,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     local name = net.ReadString()
     local class = HORDE.classes[name]
     ply:SetHordeClass(class)
+    ply:Horde_ApplyPerksForClass()
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
@@ -363,7 +365,7 @@ net.Receive("Horde_SelectClassSkillVariant", function (len, ply)
             ply:SetMaxHealth(150)
         else
             hook.Add("EntityTakeDamage", "Horde_Medic_B", function (target, dmg)
-                
+
             end)
         end
     elseif class == "Demolition" then
@@ -397,7 +399,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         net.Send(ply)
         return
     end
-    
+
     if ply:GetHordeMoney() >= price then
         ply:AddHordeMoney(-price)
         local wpn = ply:GetWeapon(class)
@@ -417,13 +419,13 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         net.Send(ply)
         return
     end
-    
+
     if ply:GetHordeMoney() >= price then
         ply:AddHordeMoney(-price)
         local wpn = ply:GetWeapon(class)
         local ammo_id = wpn:GetSecondaryAmmoType()
         if ammo_id >= 0 then
-			ply:GiveAmmo(1, ammo_id, false)
+            ply:GiveAmmo(1, ammo_id, false)
             ply:SyncEconomy()
         end
     end
