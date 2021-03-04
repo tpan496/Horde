@@ -59,7 +59,8 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
         else
             BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         end
-        if killer:IsPlayer() then
+        if killer:IsPlayer() or killer:GetNWEntity("HordeOwner"):IsPlayer() then
+            if killer:GetNWEntity("HordeOwner"):IsPlayer() then killer = killer:GetNWEntity("HordeOwner") end
             local scale = 1
             if victim:GetVar("reward_scale") then
                 scale = victim:GetVar("reward_scale")
@@ -95,18 +96,29 @@ else
 end
 
 -- Record statistics
-hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
-     if took then
-        if ent:IsNPC() and dmg:GetAttacker():IsPlayer() then
-            local id = dmg:GetAttacker():SteamID()
-            if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
-            HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
-        elseif ent:IsPlayer() and dmg:GetAttacker():IsNPC() then
-            local id = ent:SteamID()
-            if not HORDE.player_damage_taken[id] then HORDE.player_damage_taken[id] = 0 end
-            HORDE.player_damage_taken[id] = HORDE.player_damage_taken[id] + dmg:GetDamage()
+hook.Add("EntityTakeDamage", "Horde_MinionDamageBelongsToOwner", function (target, dmg)
+    if target:IsNPC() then
+        local owner = dmg:GetAttacker():GetNWEntity("HordeOwner")
+        if owner and owner:IsPlayer() then
+            dmg:SetAttacker(owner)
         end
     end
+end)
+
+hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
+    if took then
+       if ent:IsNPC() then
+            if dmg:GetAttacker():IsPlayer() then
+                local id = dmg:GetAttacker():SteamID()
+                if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
+                HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
+            end
+       elseif ent:IsPlayer() and dmg:GetAttacker():IsNPC() then
+           local id = ent:SteamID()
+           if not HORDE.player_damage_taken[id] then HORDE.player_damage_taken[id] = 0 end
+           HORDE.player_damage_taken[id] = HORDE.player_damage_taken[id] + dmg:GetDamage()
+       end
+   end
 end)
 
 hook.Add("ScaleNPCDamage", "Horde_HeadshotCounter", function (npc, hitgroup, dmg)
@@ -591,7 +603,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
 
         if GetConVarNumber("horde_npc_cleanup") == 1 then
             for _, ent in pairs(ents.GetAll()) do
-                if ent:IsNPC() then
+                if ent:IsNPC() and not ent:GetNWEntity("HordeOwner"):IsPlayer() then
                     ent:Remove()
                 end
             end

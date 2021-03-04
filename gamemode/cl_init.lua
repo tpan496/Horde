@@ -139,12 +139,32 @@ function HORDE:ToggleConfigMenu()
     end
 end
 
+if GetConVarNumber("horde_enable_halo") == 1 then
+    hook.Add("PreDrawHalos", "Horde_AddMinionHalos", function()
+        local minions = ents.FindByClass("npc*")
+        for key, minion in pairs(minions) do
+            if not minion:GetNWEntity("HordeOwner") or minion:GetNWEntity("HordeOwner") ~= LocalPlayer() then
+                -- Do not highlight minions
+                minions[key] = nil
+            end
+        end
+        halo.Add(minions, Color(0, 255, 0), 1, 1, 2, true, true)
+    end)
+end
+
 net.Receive("Horde_HighlightEntities", function (len, ply)
     if GetConVarNumber("horde_enable_halo") == 0 then return end
     local render = net.ReadInt(3)
     if render == HORDE.render_highlight_enemies then
         hook.Add("PreDrawHalos", "Horde_AddEnemyHalos", function()
-            halo.Add(ents.FindByClass("npc*"), Color(255, 0, 0), 1, 1, 2, true, true)
+            local enemies = ents.FindByClass("npc*")
+            for key, enemy in pairs(enemies) do
+                if enemy:GetNWEntity("HordeOwner"):IsPlayer() then
+                    -- Do not highlight minions
+                    enemies[key] = nil
+                end
+            end
+            halo.Add(enemies, Color(255, 0, 0), 1, 1, 2, true, true)
         end)
     elseif render == HORDE.render_highlight_ammoboxes then
         hook.Add("PreDrawHalos", "Horde_AddAmmoBoxHalos", function()
