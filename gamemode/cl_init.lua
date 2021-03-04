@@ -139,12 +139,13 @@ function HORDE:ToggleConfigMenu()
     end
 end
 
+-- Entity Highlights
 if GetConVarNumber("horde_enable_halo") == 1 then
     hook.Add("PreDrawHalos", "Horde_AddMinionHalos", function()
         local minions = ents.FindByClass("npc*")
         for key, minion in pairs(minions) do
             if not minion:GetNWEntity("HordeOwner") or minion:GetNWEntity("HordeOwner") ~= LocalPlayer() then
-                -- Do not highlight minions
+                -- Do not highlight minions if they do not belong to you
                 minions[key] = nil
             end
         end
@@ -160,7 +161,7 @@ net.Receive("Horde_HighlightEntities", function (len, ply)
             local enemies = ents.FindByClass("npc*")
             for key, enemy in pairs(enemies) do
                 if enemy:GetNWEntity("HordeOwner"):IsPlayer() then
-                    -- Do not highlight minions
+                    -- Do not highlight friendly minions
                     enemies[key] = nil
                 end
             end
