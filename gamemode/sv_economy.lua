@@ -35,9 +35,10 @@ function Player:SetHordeDropEntities(entities)
     self.drop_entities = entities
 end
 
-function Player:AddHordeDropEntity(ent)
-    if not ent:IsValid() then return end
-    local class = ent:GetClass()
+function Player:AddHordeDropEntity(class)
+    if not self.drop_entities then
+        self.drop_entities = {}
+    end
     if self.drop_entities[class] then
         self.drop_entities[class] = self.drop_entities[class] + 1
     else
@@ -45,10 +46,8 @@ function Player:AddHordeDropEntity(ent)
     end
 end
 
-function Player:RemoveHordeDropEntity(ent)
-    if not ent:IsValid() or self:IsValid() then return end
-    local class = ent:GetClass()
-    if self.drop_entities[class] then
+function Player:RemoveHordeDropEntity(class)
+    if self.drop_entities and self.drop_entities[class] then
         self.drop_entities[class] = self.drop_entities[class] - 1
         if self.drop_entities[class] == 0 then
             self.drop_entities[class] = nil
@@ -283,7 +282,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     ent:SetAngles(Angle(0, ply:GetAngles().y + item.entity_properties.yaw, 0))
                     --ent:DropToFloor()
                     ent:Spawn()
-                    ply:AddHordeDropEntity(ent)
+                    ply:AddHordeDropEntity(ent:GetClass())
                     ent:SetNWEntity("HordeOwner", ply)
                     if ent:IsNPC() then
                         -- Minions have no player collsion
@@ -291,9 +290,9 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
                     end
                     ent:CallOnRemove("Horde_EntityRemoved", function()
-                        if IsValid(ent) and IsValid(ply) then
+                        if ent:IsValid() and ply:IsValid() then
                             hook.Remove("PlayerUse", "Horde_PlayerUse" .. ent:GetCreationID())
-                            ent:GetNWEntity("HordeOwner"):RemoveHordeDropEntity(ent)
+                            ent:GetNWEntity("HordeOwner"):RemoveHordeDropEntity(ent:GetClass())
                             ent:GetNWEntity("HordeOwner"):SyncEconomy()
                         end
                     end)

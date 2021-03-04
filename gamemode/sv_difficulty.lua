@@ -40,12 +40,11 @@ HORDE.endless_damage_multiplier = 1
 -- Hook settings
 -- Damage scaling/handling
 hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
-    print(dmg)
     if not target:IsValid() then return end
     if target:IsPlayer() then
         if dmg:GetAttacker():IsNPC() then
             if dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
-                -- Prevent pvp
+                -- Prevent minions from hurting players
                 dmg:ScaleDamage(0)
                 dmg:SetDamageForce(Vector(0,0,0))
                 return
@@ -69,13 +68,14 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
                 dmg:ScaleDamage(dmg:GetAttacker():GetVar("damage_scale"))
             end
         elseif dmg:GetAttacker():IsPlayer() and dmg:GetAttacker() ~= target then
+            -- Prevent PVP
             dmg:SetDamage(0)
             dmg:SetDamageForce(Vector(0,0,0))
         elseif dmg:GetDamageType() == DAMAGE_CRUSH then
-            dmg:SetDamage(math.min(dmg:GetDamage(), math.floor(20 * difficulty_damage_multiplier[HORDE.difficulty])))
+            dmg:SetDamage(math.min(dmg:GetDamage(), 20))
         end
-    elseif target:GetNWEntity("HordeOwner"):IsPlayer() and dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
-        -- Prevent player minions from damaging each other
+    elseif target:GetNWEntity("HordeOwner"):IsPlayer() and (dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer()) then
+        -- Prevent player / player minions from damaging minions
         dmg:ScaleDamage(0)
         dmg:SetDamageForce(Vector(0,0,0))
     end
@@ -85,7 +85,6 @@ hook.Add("EntityTakeDamage", "Horde_VJRPGBuff", function (target, dmg)
     if not target:IsValid() then return end
     if target:IsNPC() and dmg:GetAttacker():IsPlayer() and dmg:GetAttacker():GetActiveWeapon():GetClass() == "weapon_vj_rpg" then
         dmg:ScaleDamage(5)
-        print(dmg)
     end
 end)]]--
 -- Fall damage handling
