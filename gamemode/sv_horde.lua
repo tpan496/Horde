@@ -401,6 +401,10 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         net.Start("Horde_ForceCloseShop")
         net.Broadcast()
 
+        for _, p in pairs(player.GetAll()) do
+            p:Horde_ApplyPerksForClass()
+        end
+
         -- Run hook
         hook.Run("HordeWaveStart", HORDE.current_wave)
     end

@@ -1,4 +1,4 @@
-PERK.PrintName = "Damage Bonus"
+PERK.PrintName = "DPS Maniac"
 PERK.Description = "All damage dealt is increased by {percent}."
 
 PERK.Parameters = {

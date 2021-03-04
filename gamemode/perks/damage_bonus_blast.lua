@@ -1,4 +1,4 @@
-PERK.PrintName = "High Explosives"
+PERK.PrintName = "High Explosive"
 PERK.Description = "Do {percent} extra blast damage."
 
 PERK.Parameters = {

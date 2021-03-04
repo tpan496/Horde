@@ -1,4 +1,4 @@
-PERK.PrintName = "Rip and Tear"
+PERK.PrintName = "Bonus Melee Damage"
 PERK.Description = "Do {percent} extra melee (clubbing, slashing) damage."
 
 PERK.Parameters = {

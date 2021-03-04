@@ -4,11 +4,9 @@ HORDE.NET_PERK_CLEAR = 3
 
 HORDE.NET_PERK_BITS = 2
 
-HORDE.perk = HORDE.perk or {}
+HORDE.perks = HORDE.perks or {}
 
-if SERVER then
-    util.AddNetworkString("Horde_Perk")
-elseif CLIENT then
+if CLIENT then
     net.Receive("Horde_Perk", function()
         local mode = net.ReadUInt(HORDE.NET_PERK_BITS)
         local ply = net.ReadEntity()
@@ -26,6 +24,11 @@ elseif CLIENT then
     end)
 end
 
+function Horde_GetWaveForPerk(perk_level)
+    return math.Round((perk_level - 1) * GetConVar("horde_perk_scaling"):GetFloat())
+end
+
+
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_GetPerk(perk)
@@ -41,12 +44,12 @@ function plymeta:Horde_GetPerkParam(perk, param)
 end
 
 function plymeta:Horde_SetPerk(perk, params, shared)
-    if not HORDE.perk[perk] then error("Tried to use nonexistent perk '" .. perk .. "' in Horde_SetPerk!") return end
+    if not HORDE.perks[perk] then error("Tried to use nonexistent perk '" .. perk .. "' in Horde_SetPerk!") return end
     self.Horde_Perks = self.Horde_Perks or {}
     params = params or {}
 
     -- Set default values and clamp
-    for k, v in pairs(HORDE.perk[perk].Parameters or {}) do
+    for k, v in pairs(HORDE.perks[perk].Parameters or {}) do
         if not params[k] then
             params[k] = v.default
         elseif (v.type == "i" or v.type == "f") then
@@ -56,6 +59,7 @@ function plymeta:Horde_SetPerk(perk, params, shared)
 
     hook.Run("Horde_OnSetPerk", self, perk, params)
     self.Horde_Perks[perk] = params
+    --print(self, "SetPerk", perk, params)
 
     if SERVER and not shared then
         net.Start("Horde_Perk")
@@ -70,7 +74,7 @@ end
 function plymeta:Horde_UnsetPerk(perk, shared)
     self.Horde_Perks = self.Horde_Perks or {}
 
-    hook.Run("Horde_OnUnsetPerk", ply, perk)
+    hook.Run("Horde_OnUnsetPerk", self, perk)
 
     self.Horde_Perks[perk] = nil
 
@@ -115,7 +119,7 @@ function Horde_LoadPerks()
 
         hook.Run("Horde_OnLoadPerk", PERK)
 
-        HORDE.perk[PERK.ClassName] = PERK
+        HORDE.perks[PERK.ClassName] = PERK
 
         for k, v in pairs(PERK.Hooks or {}) do
             hook.Add(k, "horde_perk_" .. PERK.ClassName, v)

@@ -1,4 +1,3 @@
-if SERVER then return end
 include("shared.lua")
 include("sh_horde.lua")
 include("sh_item.lua")
@@ -18,6 +17,7 @@ include("gui/cl_configmenu.lua")
 include("gui/cl_shop.lua")
 include("gui/cl_summary.lua")
 include("gui/cl_scoreboard.lua")
+include("gui/cl_perkbutton.lua")
 
 -- Some users report severe lag with halo
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
@@ -31,6 +31,7 @@ local ammobox_refresh_count = 0
 net.Receive("Horde_AmmoboxCountdown", function ()
     ammobox_refresh_count = 60 - net.ReadInt(8)
 end)
+
 local corner_panel = vgui.Create("DPanel")
 corner_panel:SetSize(350, 50)
 corner_panel:SetPos(25, 25)
@@ -68,7 +69,7 @@ function HORDE:ToggleShop()
         HORDE.ShopGUI = vgui.Create('HordeShop')
         HORDE.ShopGUI:SetVisible(false)
     end
-    
+
     if HORDE.ShopGUI:IsVisible() then
         HORDE.ShopGUI:Hide()
         gui.EnableScreenClicker(false)
@@ -85,7 +86,7 @@ function HORDE:ToggleItemConfig()
         HORDE.ItemConfigGUI = vgui.Create('HordeItemConfig')
         HORDE.ItemConfigGUI:SetVisible(false)
     end
-    
+
     if HORDE.ItemConfigGUI:IsVisible() then
         HORDE.ItemConfigGUI:Hide()
         gui.EnableScreenClicker(false)
@@ -100,7 +101,7 @@ function HORDE:ToggleEnemyConfig()
         HORDE.EnemyConfigGUI = vgui.Create('HordeEnemyConfig')
         HORDE.EnemyConfigGUI:SetVisible(false)
     end
-    
+
     if HORDE.EnemyConfigGUI:IsVisible() then
         HORDE.EnemyConfigGUI:Hide()
         gui.EnableScreenClicker(false)
@@ -115,7 +116,7 @@ function HORDE:ToggleClassConfig()
         HORDE.ClassConfigGUI = vgui.Create('HordeClassConfig')
         HORDE.ClassConfigGUI:SetVisible(false)
     end
-    
+
     if HORDE.ClassConfigGUI:IsVisible() then
         HORDE.ClassConfigGUI:Hide()
         gui.EnableScreenClicker(false)
@@ -186,7 +187,7 @@ net.Receive("Horde_ForceCloseShop", function ()
             HORDE.ShopGUI:Hide()
         end
     end
-    
+
     if HORDE.ItemConfigGUI then
         if HORDE.ItemConfigGUI:IsVisible() then
             HORDE.ItemConfigGUI:Hide()
@@ -252,7 +253,7 @@ net.Receive('Horde_GameEnd', function ()
 
     local kills_player = net.ReadEntity()
     local most_kills = net.ReadInt(32)
-    
+
     local money_player = net.ReadEntity()
     local most_money = net.ReadInt(32)
 
@@ -264,7 +265,7 @@ net.Receive('Horde_GameEnd', function ()
 
     local damage_taken_player = net.ReadEntity()
     local most_damage_taken = net.ReadInt(32)
-    
+
     local total_damage = net.ReadInt(32)
 
     local maps = net.ReadTable()
@@ -276,11 +277,11 @@ net.Receive('Horde_GameEnd', function ()
 end)
 
 net.Receive("Horde_SyncItems", function ()
-	HORDE.items = net.ReadTable()
+    HORDE.items = net.ReadTable()
 end)
 
 net.Receive("Horde_SyncEnemies", function ()
-	HORDE.enemies = net.ReadTable()
+    HORDE.enemies = net.ReadTable()
 end)
 
 net.Receive("Horde_SyncClasses", function ()
@@ -291,13 +292,13 @@ net.Receive("Horde_SyncDifficulty", function ()
     HORDE.difficulty = net.ReadInt(3)
 end)
 
-hook.Add("HUDShouldDraw", "Horde_RemoveRetardRedScreen", function(name) 
+hook.Add("HUDShouldDraw", "Horde_RemoveRetardRedScreen", function(name)
     if (name == "CHudDamageIndicator") then
        return false
     end
 end)
 
 hook.Add("InitPostEntity", "Horde_PlayerInit", function()
-	net.Start("Horde_PlayerInit")
-	net.SendToServer()
+    net.Start("Horde_PlayerInit")
+    net.SendToServer()
 end )
