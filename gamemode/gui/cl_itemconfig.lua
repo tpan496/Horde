@@ -323,7 +323,7 @@ function PANEL:Init()
     load_btn:SetTall(30)
     load_btn:SetText("OVERWRITE with Default Config")
     load_btn.DoClick = function ()
-        Derma_Query('Overwrite?', 'Overwrite with Default Config',
+        Derma_Query("Overwrite?", "Overwrite with Default Config",
             "Yes",
             function()
                 HORDE.items = {}
@@ -345,7 +345,7 @@ function PANEL:Init()
     del_btn:SetTall(30)
     del_btn:SetText("Delete Everything")
     del_btn.DoClick = function ()
-        Derma_Query('Delete Everything?', 'Delete Everything',
+        Derma_Query("Delete Everything?", "Delete Everything",
             "Yes",
             function()
                 HORDE.items = {}

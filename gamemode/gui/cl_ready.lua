@@ -1,6 +1,6 @@
 if SERVER then return end
 
-surface.CreateFont('Content', { font = 'arial bold', size = 20 })
+surface.CreateFont("Content", { font = "arial bold", size = 20 })
 
 local PANEL = {}
 
@@ -12,7 +12,7 @@ end
 
 function PANEL:ResetReadyPanel()
     if self.ready_layout then self.ready_layout:Remove() end
-    self.ready_layout = vgui.Create('DIconLayout', self)
+    self.ready_layout = vgui.Create("DIconLayout", self)
     self.ready_layout:Dock(FILL)
     self.ready_layout:SetBorder(5)
     self.ready_layout:SetSpaceX(5)
@@ -20,15 +20,15 @@ function PANEL:ResetReadyPanel()
 end
 
 function PANEL:CreateReadyPanel(ply, status)
-    local panel = vgui.Create('DPanel')
+    local panel = vgui.Create("DPanel")
     self.ready_layout:Add(panel)
     panel:SetSize(230,32)
     panel:SetBackgroundColor(HORDE.color_hollow)
-    local avatar = vgui.Create('AvatarImage', panel)
+    local avatar = vgui.Create("AvatarImage", panel)
     avatar:Dock(LEFT)
     avatar:SetSize(32,32)
     avatar:SetPlayer(ply, 32)
-    local name_label = vgui.Create('DPanel', panel)
+    local name_label = vgui.Create("DPanel", panel)
     name_label:Dock(LEFT)
     name_label:SetSize(130-32,32)
     name_label.Paint = function ()
@@ -36,7 +36,7 @@ function PANEL:CreateReadyPanel(ply, status)
         draw.SimpleText(ply:GetName(), "Content", 10, 8, Color(255,255,255))
     end
 
-    local status_label = vgui.Create('DPanel', panel)
+    local status_label = vgui.Create("DPanel", panel)
     status_label:SetSize(90,32)
     status_label:Dock(RIGHT)
     status_label.Paint = function ()
@@ -53,10 +53,10 @@ function PANEL:Paint(w,h)
 	draw.RoundedBox(10, 0, 0, w, h, HORDE.color_hollow)
 end
 
-vgui.Register('HordePlayerReadyPanel', PANEL, 'DPanel')
+vgui.Register("HordePlayerReadyPanel", PANEL, "DPanel")
 
 
-HORDE.PlayerReadyPanel = vgui.Create('HordePlayerReadyPanel')
+HORDE.PlayerReadyPanel = vgui.Create("HordePlayerReadyPanel")
 HORDE.PlayerReadyPanel:SetVisible(true)
 
 net.Receive("Horde_PlayerReadySync", function ()

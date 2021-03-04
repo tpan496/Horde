@@ -17,7 +17,7 @@ util.AddNetworkString("Horde_SyncEconomy")
 util.AddNetworkString("Horde_LegacyNotification")
 util.AddNetworkString("Horde_SyncDifficulty")
 
-local Player = FindMetaTable('Player')
+local Player = FindMetaTable("Player")
 
 function Player:SetHordeWeight(weight)
     self.weight = weight
@@ -104,13 +104,13 @@ function Player:GetClassSkill()
 end
 
 function Player:SyncEconomy()
-    net.Start('Horde_SyncEconomy')
-	net.WriteEntity(self)
-	net.WriteInt(self.money, 32)
+    net.Start("Horde_SyncEconomy")
+    net.WriteEntity(self)
+    net.WriteInt(self.money, 32)
     net.WriteInt(self.weight, 32)
     net.WriteString(self.class.name)
     net.WriteTable(self.drop_entities)
-	net.Broadcast()
+    net.Broadcast()
 end
 
 -- Player Spawn Initialize
@@ -513,7 +513,7 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         local wpn = ply:GetWeapon(class)
         local ammo_id = wpn:GetSecondaryAmmoType()
         if ammo_id >= 0 then
-			ply:GiveAmmo(1, ammo_id, false)
+            ply:GiveAmmo(1, ammo_id, false)
             ply:SyncEconomy()
         end
     end

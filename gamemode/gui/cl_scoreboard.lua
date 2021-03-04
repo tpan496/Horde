@@ -4,8 +4,8 @@ if GetConVarNumber("horde_enable_scoreboard") == 0 then return end
 
 local scoreboard = {}
 
-surface.CreateFont("Title", { font = 'arial bold', size = 30 })
-surface.CreateFont("Content", { font = 'arial bold', size = 20 })
+surface.CreateFont("Title", { font = "arial bold", size = 30 })
+surface.CreateFont("Content", { font = "arial bold", size = 20 })
 
 function scoreboard:show()
     local title = vgui.Create("DPanel")
