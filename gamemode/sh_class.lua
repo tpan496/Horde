@@ -82,14 +82,16 @@ HORDE.CreateClasses = function()
         R = "Headshot damage stacks,\ndealing 10% increased damage each stack."}
     )
 
-    --[[
     HORDE.CreateClass(
         "Engineer",
-        "No bonus.\n\nHave access to special weapons and equipment.",
+        "100% increased minion health and damage.\n\n",
+        "Turrets you build have a base damage of 10.\n\nHave access to special weapons and equipment.",
         100,
-        180,
-        220
-    )]]--
+        GetConVar("horde_base_walkspeed"):GetInt(),
+        GetConVar("horde_base_runspeed"):GetInt(),
+        {L = "",
+        R = ""}
+    )
 end
 
 function SyncClasses()
@@ -122,19 +124,6 @@ function GetClassData()
         
         if file.Read("horde/class.txt", "DATA") then
             local t = util.JSONToTable(file.Read("horde/class.txt", "DATA"))
-
-            -- Integrity
-            for _, class in pairs(t) do
-                if class.name == nil or class.name == "" or class.perks == nil then
-                    if CLIENT then
-                        hook.Add("InitPostEntity", "Horde_Class_Invalidation", function ()
-                            timer.Simple(5, function() notification.AddLegacy("Class config file validation failed! Please reset using !classconfig.", NOTIFY_ERROR, 5) end)
-                            timer.Simple(5, function() notification.AddLegacy("Default class descriptions are loaded.", NOTIFY_ERROR, 5) end)
-                        end)
-                    end
-                    return
-                end
-            end
 
             for _, class in pairs(t) do
                 -- Fallback notice

@@ -1,9 +1,9 @@
 -- Economy variables
 HORDE.items = {}
 
-HORDE.ENTITY_PROPERTY_WPN = 0
-HORDE.ENTITY_PROPERTY_GIVE = 1
-HORDE.ENTITY_PROPERTY_BUILD = 2
+HORDE.ENTITY_PROPERTY_WPN = 1
+HORDE.ENTITY_PROPERTY_GIVE = 2
+HORDE.ENTITY_PROPERTY_DROP = 3
 
 HORDE.CreateItem = function (category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price, entity_properties)
     if category == nil or name == nil or class == nil or price == nil or weight == nil or description == nil then return end
@@ -80,16 +80,16 @@ function GetItemsData()
 end
 
 HORDE.GetDefaultItemsData = function()
-    HORDE.CreateItem("Melee",      "Stunstick",      "weapon_stunstick",     100,  1, "Electric baton.",
+    HORDE.CreateItem("Melee",      "Stunstick",      "weapon_stunstick",     100,  0, "Electric baton.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     HORDE.CreateItem("Melee",      "Crowbar",        "weapon_crowbar",       100,  0, "A rusty crowbar.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     HORDE.CreateItem("Melee",      "Combat Knife",   "arccw_go_melee_knife", 500,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
 
-    HORDE.CreateItem("Pistol",     "9mm",            "weapon_pistol",     200,  0, "Combine standard sidearm.",
+    HORDE.CreateItem("Pistol",     "9mm",            "weapon_pistol",     150,  0, "Combine standard sidearm.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
-    HORDE.CreateItem("Pistol",     "357",            "weapon_357",        500,  2, "Colt python magnum pistol.",
+    HORDE.CreateItem("Pistol",     "357",            "weapon_357",        300,  2, "Colt python magnum pistol.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     HORDE.CreateItem("Pistol",     "Glock",          "arccw_go_glock",    750,  3, "The Glock 18 is a selective-fire variant of the Glock 17.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
@@ -100,9 +100,11 @@ HORDE.GetDefaultItemsData = function()
     HORDE.CreateItem("Pistol",     "P250",           "arccw_go_p250",     750,  3, "A low-recoil firearm with a high rate of fire.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
     HORDE.CreateItem("Pistol",     "R8 Revolver",    "arccw_go_r8",       750,  3, "Delivers a highly accurate and powerful round,\nbut at the expense of a lengthy trigger-pull.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
-    HORDE.CreateItem("Pistol",     "Deagle",         "arccw_go_deagle",   750,  3, "Night Hawk .50C.\nAn iconic pistol that is diffuclt to master.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
+    HORDE.CreateItem("Pistol",     "Deagle",         "arccw_go_deagle",   750,  3, "Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
+    HORDE.CreateItem("Pistol",     "M1911",          "arccw_mw2_m1911",   750,  3, "Colt 1911.\nStandard-issue sidearm for the United States Armed Forces.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
     HORDE.CreateItem("Pistol",     "FiveSeven",      "arccw_go_fiveseven",750,  3, "ES Five-seven.\nA Belgian semi-automatic pistol made by FN Herstal",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
     HORDE.CreateItem("Pistol",     "CZ75",           "arccw_go_cz75",     750,  3, "A fully automatic variant of the CZ75.",
@@ -115,21 +117,21 @@ HORDE.GetDefaultItemsData = function()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
 
     HORDE.CreateItem("SMG",        "MP7",            "weapon_smg1",       1250, 4, "A compact, fully automatic firearm.\nArmed with an M203 launcher.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, 75)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, 75)
     HORDE.CreateItem("SMG",        "Mac10",          "arccw_go_mac10",    1500, 5, "MAC-10 SMG boasts a high rate of fire,\nwith poor spread accuracy and high recoil as trade-offs.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("SMG",        "MP9",            "arccw_go_mp9",      1500, 5, "Manufactured in Switzerland,\nthe MP9 is favored by private security firms world-wide.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("SMG",        "MP5",            "arccw_go_mp5",      1750, 5, "Often imitated but never equaled,\nthe MP5 is perhaps the most versatile SMG in the world.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("SMG",        "UMP45",          "arccw_go_ump",      1750, 5, "KM UMP45.\nA lighter and cheaper successor to the MP5.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("SMG",        "PP Bizon",       "arccw_go_bizon",    1750, 6, "PP-19 Bizon.\nOffers a high-capacity magazine that reloads quickly.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("SMG",        "P90",            "arccw_go_p90",      2000, 6, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
-    HORDE.CreateItem("SMG",        "Vector",         "arccw_mw2_vector",  2000, 6, "KRISS Vector Gen I.\nUses an unconventional delayed blowback system.",
     {Medic=true, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
+    HORDE.CreateItem("SMG",        "Vector",         "arccw_mw2_vector",  2000, 6, "KRISS Vector Gen I.\nUses an unconventional delayed blowback system.",
+    {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
 
     HORDE.CreateItem("Shotgun",    "SPAS12",         "weapon_shotgun",    1250, 7, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
@@ -163,7 +165,7 @@ HORDE.GetDefaultItemsData = function()
     HORDE.CreateItem("Rifle",      "Tavor",          "arccw_mw2_tavor",   2250, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
 
-    HORDE.CreateItem("Rifle",      "AWP",            "arccw_go_awp",      2000, 7, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
+    HORDE.CreateItem("Rifle",      "AWP",            "arccw_go_awp",      1750, 7, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1)
     HORDE.CreateItem("Rifle",      "ACR",            "arccw_mw2_acr",     2150, 7, "Remington Adaptive Combat Rifle.\nA modular semi-Auto rifle.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
@@ -173,23 +175,23 @@ HORDE.GetDefaultItemsData = function()
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
 
     HORDE.CreateItem("MG",         "M249",           "arccw_go_m249para",  2250, 10, "M249 light machine gun.\nA gas operated and air-cooled weapon of destruction.",
-    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
+    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 20, -1)
     HORDE.CreateItem("MG",         "Negev",          "arccw_go_negev",     2250, 10, "IWI Negev.\nA 5.56×45mm NATO light machine gun developed by the IWI.",
-    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
+    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 20, -1)
 
-    HORDE.CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,   0, "A standard grenade.\nDoes its job well.",
+    HORDE.CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,   0, "A standard frag grenade.\nGood for crowd control.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 100, -1)
     HORDE.CreateItem("Explosive",  "Incendiary Grenade",   "arccw_go_nade_incendiary",        1500,   1, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 100, -1)
+    {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 100, -1)
     HORDE.CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         2000, 7, "Laser-guided rocket propulsion device.",
     {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    HORDE.CreateItem("Explosive",  "SLAM",           "weapon_slam",        500,  2, "Selectable Lightweight Attack Munition.\nRMB to detonate.",
+    HORDE.CreateItem("Explosive",  "SLAM",           "weapon_slam",        400,  2, "Selectable Lightweight Attack Munition.\nRMB to detonate.",
     {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 0, 100)
 
-    HORDE.CreateItem("Special",    "Heat Crossbow",  "weapon_crossbow",    1250, 5, "Improvised sniper weapon.\nShoots scorching rebars.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=true}, 10, -1)
-    HORDE.CreateItem("Special",    "Gravity Gun",  "weapon_physcannon",    1500, 5, "Zero Point Energy Field Manipulator.\nPinnacle of theoretical physics.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 10, -1)
+    HORDE.CreateItem("Special",    "Heat Crossbow",  "weapon_crossbow",    800, 5, "Improvised sniper weapon.\nShoots scorching rebars.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=true}, 2, -1)
+    HORDE.CreateItem("Special",    "Turret",  "npc_turret_floor",          1000, 0, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=5})
 
     HORDE.CreateItem("Equipment",  "Medkit",         "weapon_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)

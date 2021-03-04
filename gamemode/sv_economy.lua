@@ -13,7 +13,7 @@ util.AddNetworkString("Horde_BuyItemAmmoPrimary")
 util.AddNetworkString("Horde_BuyItemAmmoSecondary")
 util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
-util.AddNetworkString("Horde_SynchronizeEconomy")
+util.AddNetworkString("Horde_SyncEconomy")
 util.AddNetworkString("Horde_LegacyNotification")
 util.AddNetworkString("Horde_SyncDifficulty")
 
@@ -31,6 +31,31 @@ function Player:SetHordeClass(class)
     self.class = class
 end
 
+function Player:SetHordeDropEntities(entities)
+    self.drop_entities = entities
+end
+
+function Player:AddHordeDropEntity(ent)
+    if not ent:IsValid() then return end
+    local class = ent:GetClass()
+    if self.drop_entities[class] then
+        self.drop_entities[class] = self.drop_entities[class] + 1
+    else
+        self.drop_entities[class] = 1
+    end
+end
+
+function Player:RemoveHordeDropEntity(ent)
+    if not ent:IsValid() or self:IsValid() then return end
+    local class = ent:GetClass()
+    if self.drop_entities[class] then
+        self.drop_entities[class] = self.drop_entities[class] - 1
+        if self.drop_entities[class] == 0 then
+            self.drop_entities[class] = nil
+        end
+    end
+end
+
 function Player:AddHordeMoney(money)
     self.money = self.money + money
 end
@@ -43,6 +68,10 @@ function Player:GetHordeMoney()
     return self.money
 end
 
+function Player:GetHordeDropEntities()
+    return self.drop_entities
+end
+
 function Player:DropHordeMoney()
     if self:GetHordeMoney() >= 50 then
         self:AddHordeMoney(-50)
@@ -53,7 +82,7 @@ function Player:DropHordeMoney()
         local drop_pos = pos + dir * 50
         drop_pos.z = pos.z + 15
         money:SetPos(drop_pos)
-        --money:DropToFloor()
+        money:DropToFloor()
         money:Spawn()
         self:SyncEconomy()
     end
@@ -76,12 +105,12 @@ function Player:GetClassSkill()
 end
 
 function Player:SyncEconomy()
-    net.Start('Horde_SynchronizeEconomy')
+    net.Start('Horde_SyncEconomy')
 	net.WriteEntity(self)
 	net.WriteInt(self.money, 32)
     net.WriteInt(self.weight, 32)
     net.WriteString(self.class.name)
-    net.WriteInt(self.class_variant, 8)
+    net.WriteTable(self.drop_entities)
 	net.Broadcast()
 end
 
@@ -116,6 +145,7 @@ net.Receive("Horde_PlayerInit", function (len, ply)
         ply:SetHordeMoney(HORDE.start_money)
     end
     
+    ply:SetHordeDropEntities({})
     ply:SetHordeWeight(15)
     ply:SetHordeClass(HORDE.classes["Survivor"])
     ply:SetClassSkill(-1)
@@ -233,7 +263,49 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     ply:Give(class)
                     ply:SelectWeapon(class)
                 elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
-                elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_BUILD then
+                    ply:AddHordeMoney(-price)
+                    ply:Give(class)
+                elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
+                    local drop_entities = ply:GetHordeDropEntities()
+                    if drop_entities[item.class] then
+                        if drop_entities[item.class] > item.entity_properties.limit then
+                            return
+                        end
+                    end
+                    ply:AddHordeMoney(-price)
+                    local ent = ents.Create(class)
+                    local pos = ply:GetPos()
+                    local dir = (ply:GetEyeTrace().HitPos - pos)
+                    dir:Normalize()
+                    local drop_pos = pos + dir * item.entity_properties.x
+                    drop_pos.z = pos.z + item.entity_properties.z
+                    ent:SetPos(drop_pos)
+                    ent:SetAngles(Angle(0, ply:GetAngles().y + item.entity_properties.yaw, 0))
+                    --ent:DropToFloor()
+                    ent:Spawn()
+                    ply:AddHordeDropEntity(ent)
+                    ent:SetNWEntity("HordeOwner", ply)
+                    if ent:IsNPC() then
+                        -- Minions have no player collsion
+                        ent:AddRelationship("player D_LI 99")
+                        ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+                    end
+                    ent:CallOnRemove("Horde_EntityRemoved", function()
+                        if IsValid(ent) and IsValid(ply) then
+                            hook.Remove("PlayerUse", "Horde_PlayerUse" .. ent:GetCreationID())
+                            ent:GetNWEntity("HordeOwner"):RemoveHordeDropEntity(ent)
+                            ent:GetNWEntity("HordeOwner"):SyncEconomy()
+                        end
+                    end)
+                    hook.Add("PlayerUse", "Horde_PlayerUse" .. ent:GetCreationID(), function (other_ply, target)
+                        if ent == target then
+                            if other_ply == ent:GetNWEntity("HordeOwner") then
+                                return true
+                            else
+                                return false
+                            end
+                        end
+                    end)
                 end
             else
                 -- Fallback solution: no property is a weapon
@@ -244,6 +316,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 ply:Give(class)
                 ply:SelectWeapon(class)
             end
+            ply:SyncEconomy()
         end
     end
 end)
@@ -294,7 +367,8 @@ net.Receive("Horde_SelectClass", function (len, ply)
     timer.Remove("Horde_Demolition" .. ply:SteamID())
     hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
     hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
-
+    hook.Remove("ScaleNPCDamage", "Horde_Engineer" .. ply:SteamID())
+    hook.Remove("OnEntityCreated", "Horde_Engineer" .. ply:SteamID())
 
     if class.name == "Assault" then
         --timer.Create("Horde_Assault" .. ply:SteamID(), 0.01, 0, function ()
@@ -335,6 +409,23 @@ net.Receive("Horde_SelectClass", function (len, ply)
                 elseif npc:GetClass() == "npc_vj_zss_zhulk" and hitgroup == HITGROUP_GENERIC then
                     dmg:ScaleDamage(1.5)
                 end
+            end
+        end)
+    elseif class.name == "Engineer" then
+        hook.Add("ScaleNPCDamage", "Horde_Engineer" .. ply:SteamID(), function (npc, hitgroup, dmg)
+            if not ply:IsValid() then return end
+            if npc:IsValid() and dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
+                if dmg:GetAttacker():GetClass() == "npc_turret_floor" then
+                    dmg:SetDamage(10)
+                end
+                dmg:ScaleDamage(2)
+            end
+        end)
+        hook.Add("OnEntityCreated", "Horde_Engineer" .. ply:SteamID(), function (ent)
+            if not ent:IsValid() then return end
+            if ent:GetNWEntity("HordeOwner") == ply and ent:IsNPC() then
+                ent:SetMaxHealth(ent:MaxHealth() * 2)
+                ent:SetHealth(ent:SetMaxHealth())
             end
         end)
     end
