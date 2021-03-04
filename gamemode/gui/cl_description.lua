@@ -1,7 +1,7 @@
 if SERVER then return end
-surface.CreateFont("Title", { font = 'arial bold', size = 30 })
-surface.CreateFont("Warning", { font = 'arial bold', size = 30, strikeout = true })
-surface.CreateFont("Content", { font = 'arial bold', size = 20 })
+surface.CreateFont("Title", { font = "arial bold", size = 30 })
+surface.CreateFont("Warning", { font = "arial bold", size = 30, strikeout = true })
+surface.CreateFont("Content", { font = "arial bold", size = 20 })
 
 local PANEL = {}
 
@@ -102,7 +102,7 @@ function PANEL:DoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
     if not self.item.class then
-        Derma_Query('Changing class will remove all your items!', 'Change Class',
+        Derma_Query("Changing class will remove all your items!", "Change Class",
             "Yes",
             function()
                 net.Start("Horde_SelectClass")
@@ -154,7 +154,7 @@ function PANEL:SellDoClick()
     if not self.item then return end
     if not self.item.class then return end
     if not LocalPlayer():HasWeapon(self.item.class) then return end
-    Derma_Query('Sell Item?!', "Sell",
+    Derma_Query("Sell Item?!", "Sell",
             "Yes",
             function()
                 -- Sell the item
