@@ -115,6 +115,8 @@ function PANEL:DoClick()
         return
     end
     if LocalPlayer():GetHordeMoney() < self.item.price or LocalPlayer():GetHordeWeight() < self.item.weight then return end
+    local drop_entities = LocalPlayer():GetHordeDropEntities()
+    if self.item.entity_properties and self.item.entity_properties.limit and self.item.entity_properties.limit > 0 and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP and drop_entities[self.item.class] and drop_entities[self.item.class] >= self.item.entity_properties.limit then return end
     -- Buy the item
     net.Start("Horde_BuyItem")
     net.WriteString(self.item.class)
@@ -284,8 +286,14 @@ function PANEL:Paint()
             self.current_ammo_panel.Paint = function () end
             self.sell_btn:SetVisible(false)
         else
-            self.buy_btn:SetTextColor(Color(255,255,255))
             self.buy_btn:SetText("Buy Item")
+            if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
+                local drop_entities = LocalPlayer():GetHordeDropEntities()
+                if drop_entities[self.item.class] then
+                    self.buy_btn:SetText("Buy Item " .. drop_entities[self.item.class] .. "/" .. self.item.entity_properties.limit)
+                end
+            end
+            self.buy_btn:SetTextColor(Color(255,255,255))
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
