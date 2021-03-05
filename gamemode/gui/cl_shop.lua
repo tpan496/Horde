@@ -1,11 +1,12 @@
 if SERVER then return end
 surface.CreateFont("Heading", { font = "arial bold", size = 22 })
 surface.CreateFont("Category", { font = "arial bold", size = 22 })
+surface.CreateFont("Item", { font = "arial bold", size = 20 })
 
 local PANEL = {}
 
 function PANEL:Init()
-    self:SetSize(ScrW() / 1.5, ScrH() / 1.5)
+    self:SetSize(ScrW() / 1.25, ScrH() / 1.5)
 	self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
 
 	local close_btn = vgui.Create("DButton", self)
@@ -123,14 +124,14 @@ function PANEL:Init()
 		return btn
 	end
 
-    local categories = {"Melee", "Pistol", "SMG", "Shotgun", "Rifle", "MG", "Explosive", "Special", "Equipment"}
 	local class = LocalPlayer():GetHordeClass()
+	local attachments = {}
 
-	for _, CATEGORY in pairs(categories) do
+	for _, category in pairs(HORDE.categories) do
 		local items = {}
 
 		for _, item in pairs(HORDE.items) do
-			if item.category == CATEGORY and item.whitelist and item.whitelist[class.name] then
+			if item.category == category and item.whitelist and item.whitelist[class.name] then
 				if LocalPlayer():HasWeapon(item.class) then
 					item.cmp = -1
 				else
@@ -150,52 +151,109 @@ function PANEL:Init()
 			end
 		end)
 
-		local ShopCategoryTab = vgui.Create("DPanel")
+		local ShopCategoryTab = vgui.Create("DPanel", self)
+		ShopCategoryTab.Paint = function () end
 
-		local DScrollPanel = vgui.Create("DScrollPanel", ShopCategoryTab)
-		DScrollPanel:Dock(FILL)
+		if category ~= "Attachment" then
+			local DScrollPanel = vgui.Create("DScrollPanel", ShopCategoryTab)
+			DScrollPanel:Dock(FILL)
+			local ShopCategoryTabLayout = vgui.Create("DIconLayout", DScrollPanel)
+			ShopCategoryTabLayout:Dock(FILL)
+			ShopCategoryTabLayout:SetBorder(8)
+			ShopCategoryTabLayout:SetSpaceX(8)
+			ShopCategoryTabLayout:SetSpaceY(8)
 
-		local ShopCategoryTabLayout = vgui.Create("DIconLayout", DScrollPanel)
-		ShopCategoryTabLayout:Dock(FILL)
-		ShopCategoryTabLayout:SetBorder(8)
-		ShopCategoryTabLayout:SetSpaceX(8)
-		ShopCategoryTabLayout:SetSpaceY(8)
+			DScrollPanel:AddItem(ShopCategoryTabLayout)
 
-		DScrollPanel:AddItem(ShopCategoryTabLayout)
+			for _, item in pairs(items) do
+				if item.category == category then
+					local model = vgui.Create("HordeShopItem")
+					model:SetSize(container:GetWide() - 16, 40)
+					model:SetData(item, description_panel)
+					ShopCategoryTabLayout:Add(model)
+				end
+			end
 
-		for _, item in pairs(items) do
-			if item.category == CATEGORY then
-				local model = vgui.Create("HordeShopItem")
-				model:SetSize(container:GetWide() - 16, 40)
-				model:SetData(item, description_panel)
-				ShopCategoryTabLayout:Add(model)
+			createBtn(category, ShopCategoryTab, LEFT)
+		else
+			for _, item in pairs(items) do
+				if item.entity_properties and item.entity_properties.is_arccw_attachment then
+					if not attachments[item.entity_properties.arccw_attachment_type] then attachments[item.entity_properties.arccw_attachment_type] = {} end
+					table.insert(attachments[item.entity_properties.arccw_attachment_type], item)
+				end
 			end
 		end
 
-		createBtn(CATEGORY, ShopCategoryTab, LEFT)
-
 		::cont::
-	end
+	end	
 
 	-- Class tab
-	local ClassTab = vgui.Create("DPanel")
-	local DScrollPanel = vgui.Create("DScrollPanel", ClassTab)
-	DScrollPanel:Dock(FILL)
+	local ClassTab = vgui.Create("DPanel", self)
+	local ClassScrollPanel = vgui.Create("DScrollPanel", ClassTab)
+	ClassScrollPanel:Dock(FILL)
 
-	local ClassTabLayout = vgui.Create("DIconLayout", DScrollPanel)
+	local ClassTabLayout = vgui.Create("DIconLayout", ClassScrollPanel)
 	ClassTabLayout:Dock(FILL)
 	ClassTabLayout:SetBorder(8)
 	ClassTabLayout:SetSpaceX(8)
 	ClassTabLayout:SetSpaceY(8)
 
-	for _, class in pairs(HORDE.classes) do
+	for _, horde_class in pairs(HORDE.classes) do
 		local model = vgui.Create("HordeClass")
 		model:SetSize(container:GetWide() - 16, 40)
-		model:SetData(class, description_panel)
+		model:SetData(horde_class, description_panel)
 		ClassTabLayout:Add(model)
 	end
 
 	createBtn("Select Class", ClassTab, RIGHT)
+	
+	-- ArcCW Attachment Tab
+	if ArcCWInstalled and not table.IsEmpty(attachments) then
+		local AttachmentTab = vgui.Create("DPanel", self)
+		AttachmentTab.Paint = function () end
+		
+		local AttachmentTabLayout = vgui.Create("DCategoryList", AttachmentTab)
+		AttachmentTabLayout:Dock(FILL)
+		AttachmentTabLayout:DockMargin(8,8,8,8)
+		AttachmentTabLayout.Paint = function () end
+
+		for _, attachment_category in pairs(HORDE.arccw_attachment_categories) do
+			local cat = AttachmentTabLayout:Add(attachment_category)
+			cat:SetHeaderHeight(40)
+			cat:SetPaintBackground(false)
+			cat:SetExpanded(false)
+			cat.Paint = function ()
+				surface.SetDrawColor(50, 50, 50, 255)
+				surface.DrawRect(0, 0, self:GetWide(), 40)
+			end
+			cat.Header:SetFont("Item")
+			cat.Header:SetTextColor(Color(255,255,255))
+			cat.Header:SetSize(container:GetWide() - 16, 40)
+
+			local ShopCategoryTabLayout = vgui.Create("DIconLayout")
+			ShopCategoryTabLayout:SetBorder(8)
+			ShopCategoryTabLayout:SetSpaceX(8)
+			ShopCategoryTabLayout:SetSpaceY(8)
+			
+			if attachments[attachment_category] then
+				for _, item in pairs(attachments[attachment_category]) do
+					local model = vgui.Create("HordeShopItem")
+					model:SetSize(cat.Header:GetWide() - 16, 40)
+					model:SetData(item, description_panel)
+					ShopCategoryTabLayout:Add(model)
+				end
+				cat:SetContents(ShopCategoryTabLayout)
+				local tall = 40
+				if attachments[attachment_category] then
+					tall = 40 * (#attachments[attachment_category])
+				end
+				cat:SetTall(tall)
+			end
+		end
+		AttachmentTabLayout:InvalidateLayout(true)
+
+		createBtn("Attachment", AttachmentTab, LEFT)
+	end
 end
 
 function PANEL:Paint(w, h)

@@ -31,6 +31,8 @@ CreateConVar("horde_disable_difficulty_voting", 0, FCVAR_SERVER_CAN_EXECUTE, "Di
 CreateConVar("horde_endless", 0, FCVAR_SERVER_CAN_EXECUTE, "Endless.")
 CreateConVar("horde_total_enemies_scaling", 0, FCVAR_SERVER_CAN_EXECUTE, "Forces the gamemode to multiply maximum enemy count by this.")
 
+CreateConVar("horde_arccw_attinv_free", 0, FCVAR_SERVER_CAN_EXECUTE, "Free ArcCW attachments.")
+
 if SERVER then
 util.AddNetworkString("Horde_PlayerInit")
 util.AddNetworkString("Horde_SyncItems")
@@ -53,6 +55,12 @@ HORDE.color_hollow_dim = Color(80, 80, 80, 225)
 HORDE.start_game = false
 HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42, 45}
 -- HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+
+-- Economy
+-- Check if user has ArcCW
+HORDE.categories = {"Melee", "Pistol", "SMG", "Shotgun", "Rifle", "MG", "Explosive", "Special", "Equipment", "Attachment"}
+HORDE.entity_categories = {"Special", "Equipment"}
+HORDE.arccw_attachment_categories = {"Optic", "Underbarrel", "Tactical", "Barrel", "Muzzle", "Magazine", "Stock", "AmmoType"}
 
 -- Director
 HORDE.difficulty = 1
@@ -108,7 +116,7 @@ HORDE.GiveAmmo = function (ply, wpn, count)
     local ammo_id = wpn:GetPrimaryAmmoType()
 
     if clip_size > 0 then -- block melee
-	    ply:GiveAmmo(clip_size * count, ammo_id, false)
+        ply:GiveAmmo(clip_size * count, ammo_id, false)
         return true
     else
         -- Give 1 piece of this ammo since clip size do not apply
@@ -132,4 +140,11 @@ end
 -- Why the fuck does lua not even have round function?
 HORDE.Round2 = function(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
+end
+
+-- ArcCW Attachments
+if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
+    RunConsoleCommand("arccw_attinv_free", "0")
+else
+    RunConsoleCommand("arccw_attinv_free", "1")
 end
