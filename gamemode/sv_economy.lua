@@ -263,7 +263,13 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     ply:SelectWeapon(class)
                 elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
                     ply:AddHordeMoney(-price)
-                    ply:Give(class)
+                    if item.entity_properties.is_arccw_attachment and item.entity_properties.is_arccw_attachment == true then
+                        -- ArcCW support
+                        ArcCW:PlayerGiveAtt(ply, class, 1)
+                        ArcCW:PlayerSendAttInv(ply)
+                    else
+                        ply:Give(class)
+                    end
                 elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
                     local drop_entities = ply:GetHordeDropEntities()
                     if drop_entities[item.class] then

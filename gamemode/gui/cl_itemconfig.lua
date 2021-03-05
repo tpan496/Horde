@@ -23,8 +23,8 @@ function PANEL:Init()
     local ammo_price_editor
     local secondary_ammo_price_editor
     local category_editor
-    local weapon_categories = {"Melee", "Pistol", "SMG", "Shotgun", "Rifle", "MG", "Explosive", "Special", "Equipment"}
-    local entity_categories = {"Special", "Equipment"}
+    local weapon_categories = HORDE.categories
+    local entity_categories = HORDE.entity_categories
     local weight_editor
     local function create_property_editor(name, height, categories)
         local panel = vgui.Create("DPanel", modify_tab)
@@ -79,9 +79,41 @@ function PANEL:Init()
 
             local entity_editor = vgui.Create("DTextEntry", editor_panel)
             entity_editor:SetSize(200, height/3)
-            entity_editor:DockPadding(10, 10, 10, 10)
+            entity_editor:DockPadding(0, 10, 0, 10)
             entity_editor:Dock(LEFT)
             entity_editor:SetVisible(false)
+
+            local give_editors = vgui.Create("DPanel", panel)
+            give_editors:Dock(TOP)
+            give_editors:DockPadding(0, 5, 0, 5)
+            give_editors:SetSize(300, height/3-5)
+            give_editors.Paint = function() end
+            give_editors:SetVisible(false)
+
+            local arccw_attachment_editor = vgui.Create("DCheckBoxLabel", give_editors)
+            arccw_attachment_editor:SetSize(100, height/3)
+            arccw_attachment_editor:DockPadding(5, 0, 5, 0)
+            arccw_attachment_editor:Dock(LEFT)
+            arccw_attachment_editor:SetVisible(false)
+            arccw_attachment_editor:SetTextColor(Color(0,0,0))
+            arccw_attachment_editor:SetText("ArcCW Attachment")
+            arccw_attachment_editor:SetChecked(false)
+
+            local arccw_attachment_type_editor = vgui.Create("DComboBox", give_editors)
+            arccw_attachment_type_editor:SetSize(100, height/3)
+            arccw_attachment_type_editor:DockPadding(5, 0, 5, 0)
+            arccw_attachment_type_editor:Dock(LEFT)
+            arccw_attachment_type_editor:SetVisible(false)
+            arccw_attachment_type_editor:SetTextColor(Color(0,0,0))
+            arccw_attachment_type_editor:SetVisible(false)
+
+            for _, category in pairs(HORDE.arccw_attachment_categories) do
+                arccw_attachment_type_editor:AddChoice(category)
+            end
+
+            arccw_attachment_editor.OnChange = function (bVal)
+                arccw_attachment_type_editor:SetVisible(bVal)
+            end
 
             local drop_editors = vgui.Create("DPanel", panel)
             drop_editors:Dock(TOP)
@@ -178,13 +210,16 @@ function PANEL:Init()
                             for _, category in pairs(weapon_categories) do
                                 category_editor:AddChoice(category)
                             end
+                            arccw_attachment_editor:SetVisible(false)
                         else
                             weapon_editor:SetVisible(false)
                             entity_editor:SetVisible(true)
                             if type == "drop_entity" then
                                 drop_editors:SetVisible(true)
+                                arccw_attachment_editor:SetVisible(false)
                             else
                                 drop_editors:SetVisible(false)
+                                arccw_attachment_editor:SetVisible(true)
                             end
                             ammo_price_editor:SetVisible(false)
                             secondary_ammo_price_editor:SetVisible(false)
@@ -200,7 +235,7 @@ function PANEL:Init()
                 end
             end
 
-            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, entity_editor=entity_editor, drop_editors=drop_editors, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor, drop_editor_limit = limit_editor}}
+            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, entity_editor=entity_editor, give_editors=give_editors, give_arccw_attachment_editor=arccw_attachment_editor, give_arccw_attachment_type_editor=arccw_attachment_type_editor, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor, drop_editor_limit = limit_editor}}
         elseif name == "whitelist" then
             local editors = {}
             local start_pos = 70
@@ -271,6 +306,10 @@ function PANEL:Init()
                     class_type = HORDE.ENTITY_PROPERTY_WPN
                 elseif type == "give_entity" then
                     class_type = HORDE.ENTITY_PROPERTY_GIVE
+                    entity_properties.is_arccw_attachment = class_editor.arccw_attachment_editor:GetChecked()
+                    if entity_properties.is_arccw_attachment == true then
+                        entity_properties.arccw_attachment_type = class_editor.arccw_attachment_type_editor:GetValue()
+                    end
                 elseif type == "drop_entity" then
                     class_type = HORDE.ENTITY_PROPERTY_DROP
                     entity_properties.x = class_editor.drop_editor_x:GetFloat()
@@ -414,6 +453,13 @@ function PANEL:Init()
                     class_editor.drop_editor_z:SetValue(item.entity_properties.z)
                     class_editor.drop_editor_yaw:SetValue(item.entity_properties.yaw)
                     class_editor.drop_editor_limit:SetValue(item.entity_properties.limit)
+                elseif class_type == HORDE.ENTITY_PROPERTY_GIVE then
+                    if item.entity_properties.is_arccw_attachment and item.entity_properties.is_arccw_attachment == true then
+                        class_editor.give_arccw_attachment_editor:SetChecked(true)
+                        class_editor.give_arccw_attachment_type_editor:SetValue(item.entity_properties.arccw_attachment_type)
+                    else
+                        class_editor.give_arccw_attachment_editor:SetChecked(false)
+                    end
                 end
                 class_editor.weapon_editor:SetVisible(false)
                 class_editor.entity_editor:SetValue(item.class)
