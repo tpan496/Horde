@@ -140,7 +140,13 @@ function HORDE:ToggleConfigMenu()
 end
 
 -- Entity Highlights
+-- This seems expensive
+--[[
+local highlight_entities = {}
 if GetConVarNumber("horde_enable_halo") == 1 then
+    hook.Add("PreDrawHalos", "Horde_AddMinionHalos", function()
+        halo.Add(highlight_entities, Color(0, 255, 0), 1, 1, 2, true, true)
+    end)
     hook.Add("PreDrawHalos", "Horde_AddMinionHalos", function()
         local minions = ents.FindByClass("npc*")
         for key, minion in pairs(minions) do
@@ -149,9 +155,9 @@ if GetConVarNumber("horde_enable_halo") == 1 then
                 minions[key] = nil
             end
         end
-        halo.Add(minions, Color(0, 255, 0), 1, 1, 2, true, true)
+        halo.Add(minions, Color(0, 255, 0), 1, 1, 1, true, true)
     end)
-end
+end]]--
 
 net.Receive("Horde_HighlightEntities", function (len, ply)
     if GetConVarNumber("horde_enable_halo") == 0 then return end
@@ -165,11 +171,11 @@ net.Receive("Horde_HighlightEntities", function (len, ply)
                     enemies[key] = nil
                 end
             end
-            halo.Add(enemies, Color(255, 0, 0), 1, 1, 2, true, true)
+            halo.Add(enemies, Color(255, 0, 0), 1, 1, 1, true, true)
         end)
     elseif render == HORDE.render_highlight_ammoboxes then
         hook.Add("PreDrawHalos", "Horde_AddAmmoBoxHalos", function()
-            halo.Add(ents.FindByClass("horde_ammobox"), Color(0, 255, 0), 1, 1, 2, true, true)
+            halo.Add(ents.FindByClass("horde_ammobox"), Color(0, 255, 0), 1, 1, 1, true, true)
         end)
         timer.Simple(10, function ()
             hook.Remove("PreDrawHalos", "Horde_AddAmmoBoxHalos")
@@ -296,7 +302,10 @@ net.Receive("Horde_GameEnd", function ()
 end)
 
 net.Receive("Horde_SyncItems", function ()
-    HORDE.items = net.ReadTable()
+    local len = net.ReadUInt(32)
+    local data = net.ReadData(len)
+    local str = util.Decompress(data)
+    HORDE.items = util.JSONToTable(str)
 end)
 
 net.Receive("Horde_SyncEnemies", function ()

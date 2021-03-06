@@ -56,12 +56,6 @@ HORDE.start_game = false
 HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42, 45}
 -- HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
--- Economy
--- Check if user has ArcCW
-HORDE.categories = {"Melee", "Pistol", "SMG", "Shotgun", "Rifle", "MG", "Explosive", "Special", "Equipment", "Attachment"}
-HORDE.entity_categories = {"Special", "Equipment"}
-HORDE.arccw_attachment_categories = {"Optic", "Underbarrel", "Tactical", "Barrel", "Muzzle", "Magazine", "Stock", "AmmoType"}
-
 -- Director
 HORDE.difficulty = 1
 HORDE.total_enemies_this_wave = 0
@@ -95,6 +89,9 @@ HORDE.ammobox_refresh_interval = 60
 HORDE.enable_ammobox = GetConVar("horde_enable_ammobox"):GetInt()
 
 -- Statistics
+-- Keep track of entities separately, so we don't have to network entities across
+-- the network.
+HORDE.player_drop_entities = {}
 HORDE.player_ready = {}
 HORDE.player_damage = {}
 HORDE.player_damage_taken = {}

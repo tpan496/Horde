@@ -96,6 +96,18 @@ function PANEL:Paint()
 		surface.SetTextColor(Color(255,255,255))
 		surface.SetTextPos(10, self:GetTall() / 2 - 10)
 		surface.DrawText(self.name)
+
+		if self.item.entity_properties and self.item.entity_properties.is_arccw_attachment and ArcCW.AttachmentTable[self.item.class] then
+			local icon = ArcCW.AttachmentTable[self.item.class].Icon
+			if icon then
+				surface.SetDrawColor(255, 255, 255, 255)
+				surface.SetMaterial(icon)
+				surface.DrawTexturedRect(self:GetWide() - 64, -10, 60, 60)
+			end
+			self.weight_panel:SetVisible(false)
+		else
+			self.weight_panel:SetVisible(true)
+		end
 	end
 end
 
