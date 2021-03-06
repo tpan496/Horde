@@ -101,7 +101,7 @@ CONFIG.items = {
         ammo_price=0,           -- Does not matter for entities
         secondary_ammo_price=-1, -- Does not matter for entities
         entity_properties={type=3, x=50, z=15, yaw=0, limit=5} -- Drop Entity type is 3.
-    },
+    }
 }
 
 CONFIG.enemies = {
