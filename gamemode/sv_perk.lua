@@ -8,6 +8,15 @@ function plymeta:Horde_ApplyPerksForClass()
 
     --print(self, "Horde_ApplyPerksForClass", class)
 
+    -- Only do this *after* we receive good perks from client
+    -- If we don't have them yet, ask for it
+    if not self.Horde_ChoiceReceived then
+        net.Start("Horde_PerkChoice")
+        net.Send(self)
+        return
+    end
+    self.Horde_ChoiceReceived = false
+
     self:Horde_ClearPerks()
 
     self.Horde_PerkChoices = self.Horde_PerkChoices or {}
@@ -15,27 +24,28 @@ function plymeta:Horde_ApplyPerksForClass()
 
     for perk_level, v in pairs(HORDE.classes[class].perks) do
         if HORDE.current_wave < Horde_GetWaveForPerk(perk_level) then continue end
-        local choice = v.choices[self.Horde_PerkChoices[class][perk_level] or 1] -- TODO get and respect player's choice in perks
+        local choice = v.choices[self.Horde_PerkChoices[class][perk_level] or 1]
         if not choice then error("Invalid choice in perk level " .. perk_level .. " for " .. class .. "!") return end
         for perk, params in pairs(choice.perks) do
             if self:Horde_GetPerk(perk) then continue end
             self:Horde_SetPerk(perk, params)
         end
     end
-
-    self.Horde_PerksSet = true
 end
 
 net.Receive("Horde_PerkChoice", function(len, ply)
+    ply.Horde_ChoiceReceived = true
     local class = net.ReadString()
     ply.Horde_PerkChoices = ply.Horde_PerkChoices or {}
-    ply.Horde_PerkChoices[class] = {}
     local level = net.ReadUInt(4)
     if level == 0 then
-        for perk_level, choices in pairs(HORDE.classes[class].perks) do
+        ply.Horde_PerkChoices[class] = {}
+        for perk_level, choices in SortedPairs(HORDE.classes[class].perks) do
             ply.Horde_PerkChoices[class][perk_level] = net.ReadUInt(4)
         end
+        ply:Horde_ApplyPerksForClass()
     else
+        ply.Horde_PerkChoices[class] = ply.Horde_PerkChoices[class] or {}
         ply.Horde_PerkChoices[class][level] = net.ReadUInt(4)
     end
     if HORDE.current_break_time > 0 then

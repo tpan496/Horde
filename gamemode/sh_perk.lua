@@ -22,6 +22,26 @@ if CLIENT then
             ply:Horde_ClearPerks()
         end
     end)
+
+    -- Get our saved choice and send it to the server
+    local function SendSavedChoice()
+        local tbl = LocalPlayer().Horde_PerkChoices
+        if not tbl or tbl == {} then
+            local f = file.Read("horde/perk_choices.txt", "DATA")
+            if f then LocalPlayer().Horde_PerkChoices = util.JSONToTable(f) end
+        end
+        local class = (LocalPlayer():GetHordeClass() or {}).name
+        if not class or not tbl[class] then return end
+        net.Start("Horde_PerkChoice")
+            net.WriteString(class)
+            net.WriteUInt(0, 4)
+            for perk_level, choices in SortedPairs(HORDE.classes[class].perks) do
+                net.WriteUInt(tbl[class][perk_level] or 1, 4)
+            end
+        net.SendToServer()
+    end
+    net.Receive("Horde_PerkChoice", SendSavedChoice)
+    hook.Add("InitPostEntity", "Horde_SendPerkChoice", SendSavedChoice)
 end
 
 function Horde_GetWaveForPerk(perk_level)
