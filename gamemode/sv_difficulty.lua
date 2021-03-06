@@ -39,6 +39,9 @@ HORDE.endless_damage_multiplier = 1
 
 -- Hook settings
 -- Damage scaling/handling
+-- Turrets should not be one-shot
+function VJ_DestroyCombineTurret() end
+
 hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
     if not target:IsValid() then return end
     if target:IsPlayer() then
@@ -74,10 +77,19 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
         elseif dmg:GetDamageType() == DAMAGE_CRUSH then
             dmg:SetDamage(math.min(dmg:GetDamage(), 20))
         end
-    elseif target:GetNWEntity("HordeOwner"):IsPlayer() and (dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer()) then
-        -- Prevent player / player minions from damaging minions
-        dmg:ScaleDamage(0)
-        dmg:SetDamageForce(Vector(0,0,0))
+    elseif target:GetNWEntity("HordeOwner"):IsPlayer() then
+        if (dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer()) then
+            -- Prevent player / player minions from damaging minions
+            dmg:ScaleDamage(0)
+        else
+            if target:GetClass() == "npc_turret_floor" then
+                dmg:SetDamageForce(Vector(0,0,0))
+                target:SetHealth(target:Health() - dmg:GetDamage())
+                if target:Health() <= 0 then
+                    target:Fire("selfdestruct")
+                end
+            end
+        end
     end
 end)
 --[[

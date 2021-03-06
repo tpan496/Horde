@@ -220,7 +220,6 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     elseif text == "!rtv" then
         HORDE.VoteChangeMap(ply)
     end
-    return input
 end)
 
 -- Console variants
