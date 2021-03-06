@@ -225,6 +225,7 @@ function PANEL:Paint()
                 for _, con in pairs(cons) do
                     description = description .. con .. "\n"
                 end
+                description = description .. "\n\nEquip by Pressing C."
             end
             if atttbl.Icon then 
                 icon = ArcCW.AttachmentTable[self.item.class].Icon

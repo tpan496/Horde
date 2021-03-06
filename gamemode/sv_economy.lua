@@ -36,6 +36,7 @@ function Player:SetHordeDropEntities(entities)
 end
 
 function Player:AddHordeDropEntity(class, entity)
+    if not self:IsValid() then return end
     if not self.drop_entities then
         self.drop_entities = {}
     end
@@ -51,6 +52,7 @@ function Player:AddHordeDropEntity(class, entity)
 end
 
 function Player:RemoveHordeDropEntity(class, entity_creation_id)
+    if not self:IsValid() then return end
     if self.drop_entities and self.drop_entities[class] then
         self.drop_entities[class] = self.drop_entities[class] - 1
         if self.drop_entities[class] == 0 then
