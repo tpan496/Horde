@@ -12,11 +12,11 @@ PERK.Hooks = {}
 PERK.Hooks.HordeWaveStart = function(wave)
     for _, ply in pairs(player.GetAll()) do
         if ply:Alive() and ply:Horde_GetPerk("loadout_wave_grenade") then
-            local wep = ply:Horde_GetPerkParam("loadout_wave_grenade", "weapon")
-            if ply:HasWeapon(wep) then
+            local wpn = ply:Horde_GetPerkParam("loadout_wave_grenade", "weapon")
+            if ply:HasWeapon(wpn) then
                 ply:GiveAmmo(1, ply:Horde_GetPerkParam("loadout_wave_grenade", "ammotype"))
             else
-                ply:Give(wep)
+                ply:Give(wpn)
             end
         end
     end
