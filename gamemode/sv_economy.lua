@@ -59,7 +59,9 @@ function Player:RemoveHordeDropEntity(class, entity_creation_id)
             self.drop_entities[class] = nil
         end
     end
-    HORDE.player_drop_entities[self:SteamID()][entity_creation_id] = nil
+    if HORDE.player_drop_entities[self:SteamID()] then
+        HORDE.player_drop_entities[self:SteamID()][entity_creation_id] = nil
+    end
 end
 
 function Player:AddHordeMoney(money)
@@ -111,6 +113,8 @@ function Player:GetClassSkill()
 end
 
 function Player:SyncEconomy()
+    if not self:IsValid() then return end
+    if not self.money or not self.weight or not self.class then return end
     net.Start("Horde_SyncEconomy")
     net.WriteEntity(self)
     net.WriteInt(self.money, 32)
@@ -123,8 +127,7 @@ end
 -- Player Spawn Initialize
 net.Receive("Horde_PlayerInit", function (len, ply)
     net.Start("Horde_SyncItems")
-    local tab = util.TableToJSON(HORDE.items)
-    local str = util.Compress(tab)
+    local str = HORDE.GetCachedHordeItems()
     net.WriteUInt(string.len(str), 32)
     net.WriteData(str, string.len(str))
     net.Send(ply)
@@ -200,6 +203,10 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
     timer.Remove("Horde_Demolition" .. ply:SteamID())
     hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
     hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
+    -- Remove all the entities he owns
+    for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+        if ent:IsValid() then ent:Remove() end
+    end
 end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
@@ -307,7 +314,9 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         -- Minions have no player collsion
                         ent:AddRelationship("player D_LI 99")
                         ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-                        timer.Create("Horde_MinionCollision" .. ent:GetCreationID(), 1, 0, function ()
+                        local id = ent:GetCreationID()
+                        timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
+                            if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
                             ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
                         end)
                     end
@@ -338,6 +347,11 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 ply:Give(class)
                 ply:SelectWeapon(class)
             end
+
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("You bought " .. item.name .. ".")
+            net.WriteInt(0,2)
+            net.Send(ply)
             ply:SyncEconomy()
         end
     end

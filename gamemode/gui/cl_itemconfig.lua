@@ -3,7 +3,11 @@ if SERVER then return end
 local PANEL = {}
 
 function PANEL:Init()
-    self:SetSize(ScrW() / 1.5, ScrH() / 1.5)
+    local scale = 1.5
+    if ScrW() <= 1300 then
+        scale = 1.25
+    end
+    self:SetSize(ScrW() / scale, ScrH() / 1.5)
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
@@ -253,15 +257,25 @@ function PANEL:Init()
         elseif name == "whitelist" then
             local editors = {}
             local start_pos = 70
+            -- TODO:
+            -- This looks like shit. imma fix this later
+            local start_pos_2 = 70
+            local i = 1
             for _, class in pairs(HORDE.classes) do
                 local editor = vgui.Create("DCheckBoxLabel", panel)
-                editor:SetSize(75, height)
-                editor:SetPos(start_pos, 15)
+                editor:SetSize(75, height / 2)
+                if i < 4 then
+                    editor:SetPos(start_pos, 15)
+                    start_pos = start_pos + 75
+                else
+                    editor:SetPos(start_pos_2, 35)
+                    start_pos_2 = start_pos_2 + 75
+                end
                 editor:SetText(class.name)
                 editor:SetTextColor(Color(0,0,0))
                 editor:SetChecked(true)
-                start_pos = start_pos + 75
                 table.insert(editors, editor)
+                i = i +1
             end
 
             return editors
@@ -280,7 +294,7 @@ function PANEL:Init()
     local price_editor = create_property_editor("price", 40)
     weight_editor = create_property_editor("weight", 40)
     local description_editor = create_property_editor("description", 100)
-    local whitelist_editors = create_property_editor("whitelist", 40)
+    local whitelist_editors = create_property_editor("whitelist", 40 * 2)
     ammo_price_editor = create_property_editor("ammo price", 40)
     secondary_ammo_price_editor = create_property_editor("secondary ammo price", 40)
 
