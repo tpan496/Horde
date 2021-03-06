@@ -54,12 +54,16 @@ HORDE.CreateClasses = function()
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
         {
-            [1] = {title = "Grenade Case", choices = {
-                {name = "Always One More", perks = {["loadout_wave_grenade"] = {}}},
-                {name = "Beer Party", perks = {["loadout_start_weaponammo"] = {weapon = "arccw_go_nade_molotov", ammoamount = 5}}},
-            }},
-            [2] = {title = "Frag Modification", choices = {
+            [1] = {title = "Frag Technique", choices = {
                 {name = "Impact Detonation", perks = {["frag_impact"] = {}}},
+                {name = "Sticky Bombs", perks = {["frag_sticky"] = {}}},
+            }},
+            [2] = {title = "Incendiary Loadout", choices = {
+                {name = "Professional Package", perks = {["loadout_wave_grenade"] = {weapon = "arccw_go_nade_incendiary", ammotype = "arccw_go_nade_incendiary"}}},
+                {name = "Beer Party", perks = {["loadout_wave_grenade"] = {weapon = "arccw_go_nade_molotov", ammotype = "arccw_go_nade_molotov"}}},
+            }},
+            [3] = {title = "Frag Payload", choices = {
+                {name = "Pressure Blast", perks = {["frag_double"] = {}}},
                 {name = "Cluster Bombs", perks = {["frag_cluster"] = {}}},
             }},
         }

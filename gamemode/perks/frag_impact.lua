@@ -2,7 +2,7 @@ PERK.PrintName = "Impact Detonation"
 PERK.Description = "Grenades explode with {damage} damage on enemy impact.\nImpact blast radius is reduced to {radius}."
 
 PERK.Parameters = {
-    ["damage"] = {type = "i", default = 300, min = 0},
+    ["damage"] = {type = "i", default = 200, min = 0},
     ["radius"] = {type = "i", default = 150, min = 0},
 }
 
