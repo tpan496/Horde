@@ -3,7 +3,7 @@ PERK.Description = "ArcCW weapons with >= {threshold} magazine capacity get {per
 
 PERK.Parameters = {
     ["threshold"] = {type = "i", default = 60, min = 0},
-    ["percent"] = {type = "f", default = 0.25, min = 0, percent = true},
+    ["percent"] = {type = "f", default = 0.5, min = 0, percent = true},
 }
 
 PERK.Hooks = {}

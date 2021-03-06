@@ -58,6 +58,10 @@ HORDE.CreateClasses = function()
                 {name = "Always One More", perks = {["loadout_wave_grenade"] = {}}},
                 {name = "Beer Party", perks = {["loadout_start_weaponammo"] = {weapon = "arccw_go_nade_molotov", ammoamount = 5}}},
             }},
+            [2] = {title = "Frag Modification", choices = {
+                {name = "Impact Detonation", perks = {["frag_impact"] = {}}},
+                {name = "Cluster Bombs", perks = {["frag_cluster"] = {}}},
+            }},
         }
     )
 
@@ -80,13 +84,13 @@ HORDE.CreateClasses = function()
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
         {
-            [1] = {title = "Magazine Mods", choices = {
-                {name = "Loaded", perks = {["arccw_mg_magazine"] = {}}},
-                {name = "Agile", perks = {["arccw_mg_reload"] = {}}},
-            }},
             [2] = {title = "Shotgun Munitions", choices = {
                 {name = "Salvo", perks = {["arccw_shotgun_damage"] = {}}},
                 {name = "Punch", perks = {["arccw_shotgun_penetration"] = {}}},
+            }},
+            [3] = {title = "Magazine Mods", choices = {
+                {name = "Loaded", perks = {["arccw_mg_magazine"] = {}}},
+                {name = "Agile", perks = {["arccw_mg_reload"] = {}}},
             }},
         }
     )
