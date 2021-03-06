@@ -94,7 +94,6 @@ function PANEL:Init()
             arccw_attachment_editor:SetSize(100, height/3)
             arccw_attachment_editor:DockPadding(5, 0, 5, 0)
             arccw_attachment_editor:Dock(LEFT)
-            arccw_attachment_editor:SetVisible(false)
             arccw_attachment_editor:SetTextColor(Color(0,0,0))
             arccw_attachment_editor:SetText("ArcCW Attachment")
             arccw_attachment_editor:SetChecked(false)
@@ -111,8 +110,21 @@ function PANEL:Init()
                 arccw_attachment_type_editor:AddChoice(category)
             end
 
-            arccw_attachment_editor.OnChange = function (bVal)
-                arccw_attachment_type_editor:SetVisible(bVal)
+            function arccw_attachment_editor:OnChange(bVal)
+                if bVal == false then
+                    category_editor:Clear()
+                    for _, category in pairs(entity_categories) do
+                        category_editor:AddChoice(category)
+                    end
+                    arccw_attachment_type_editor:SetVisible(false)
+                else
+                    category_editor:Clear()
+                    for _, category in pairs(entity_categories) do
+                        category_editor:AddChoice(category)
+                    end
+                    category_editor:AddChoice("Attachment")
+                    arccw_attachment_type_editor:SetVisible(true)
+                end
             end
 
             local drop_editors = vgui.Create("DPanel", panel)
@@ -193,8 +205,8 @@ function PANEL:Init()
                 else
                     checkbox:SetChecked(false)
                 end
-                checkbox.OnChange = function (bVal)
-                    if bVal then
+                function checkbox:OnChange(bVal)
+                    if bVal == true then
                         for _, box in pairs(entity_checkboxes) do
                             box:SetChecked(false)
                         end
@@ -210,24 +222,26 @@ function PANEL:Init()
                             for _, category in pairs(weapon_categories) do
                                 category_editor:AddChoice(category)
                             end
-                            arccw_attachment_editor:SetVisible(false)
+                            drop_editors:SetVisible(false)
+                            give_editors:SetVisible(false)
                         else
                             weapon_editor:SetVisible(false)
                             entity_editor:SetVisible(true)
                             if type == "drop_entity" then
                                 drop_editors:SetVisible(true)
-                                arccw_attachment_editor:SetVisible(false)
+                                give_editors:SetVisible(false)
+                                category_editor:Clear()
+                                for _, category in pairs(entity_categories) do
+                                    category_editor:AddChoice(category)
+                                end
                             else
                                 drop_editors:SetVisible(false)
-                                arccw_attachment_editor:SetVisible(true)
+                                give_editors:SetVisible(true)
+                                arccw_attachment_editor:OnChange()
                             end
                             ammo_price_editor:SetVisible(false)
                             secondary_ammo_price_editor:SetVisible(false)
                             weight_editor:SetVisible(false)
-                            category_editor:Clear()
-                            for _, category in pairs(entity_categories) do
-                                category_editor:AddChoice(category)
-                            end
                         end
                     else
                         checkbox:SetChecked(false)
@@ -235,7 +249,7 @@ function PANEL:Init()
                 end
             end
 
-            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, entity_editor=entity_editor, give_editors=give_editors, give_arccw_attachment_editor=arccw_attachment_editor, give_arccw_attachment_type_editor=arccw_attachment_type_editor, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor, drop_editor_limit = limit_editor}}
+            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, entity_editor=entity_editor, give_editors=give_editors, give_arccw_attachment_editor=arccw_attachment_editor, give_arccw_attachment_type_editor=arccw_attachment_type_editor, drop_editors=drop_editors, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor, drop_editor_limit = limit_editor}}
         elseif name == "whitelist" then
             local editors = {}
             local start_pos = 70
@@ -306,9 +320,9 @@ function PANEL:Init()
                     class_type = HORDE.ENTITY_PROPERTY_WPN
                 elseif type == "give_entity" then
                     class_type = HORDE.ENTITY_PROPERTY_GIVE
-                    entity_properties.is_arccw_attachment = class_editor.arccw_attachment_editor:GetChecked()
+                    entity_properties.is_arccw_attachment = class_editor.give_arccw_attachment_editor:GetChecked()
                     if entity_properties.is_arccw_attachment == true then
-                        entity_properties.arccw_attachment_type = class_editor.arccw_attachment_type_editor:GetValue()
+                        entity_properties.arccw_attachment_type = class_editor.give_arccw_attachment_type_editor:GetValue()
                     end
                 elseif type == "drop_entity" then
                     class_type = HORDE.ENTITY_PROPERTY_DROP
@@ -351,7 +365,10 @@ function PANEL:Init()
         )
         -- Reload from disk
         net.Start("Horde_SetItemsData")
-        net.WriteTable(HORDE.items)
+        local tab = util.TableToJSON(HORDE.items)
+        local str = util.Compress(tab)
+        net.WriteUInt(string.len(str), 32)
+        net.WriteData(str, string.len(str))
         net.SendToServer()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
@@ -370,7 +387,10 @@ function PANEL:Init()
                 HORDE.GetSpecialItems()
 
                 net.Start("Horde_SetItemsData")
-                net.WriteTable(HORDE.items)
+                local tab = util.TableToJSON(HORDE.items)
+                local str = util.Compress(tab)
+                net.WriteUInt(string.len(str), 32)
+                net.WriteData(str, string.len(str))
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
@@ -391,7 +411,10 @@ function PANEL:Init()
                 HORDE.GetSpecialItems()
 
                 net.Start("Horde_SetItemsData")
-                net.WriteTable(HORDE.items)
+                local tab = util.TableToJSON(HORDE.items)
+                local str = util.Compress(tab)
+                net.WriteUInt(string.len(str), 32)
+                net.WriteData(str, string.len(str))
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
@@ -428,16 +451,16 @@ function PANEL:Init()
             for type, checkbox in pairs(class_checkboxes) do
                 if class_type == HORDE.ENTITY_PROPERTY_WPN and type == "weapon_entity" then
                     checkbox:SetChecked(true)
-                    checkbox:OnChange()
                     class_editor.drop_editors:SetVisible(false)
+                    class_editor.give_editors:SetVisible(false)
                 elseif class_type == HORDE.ENTITY_PROPERTY_GIVE and type == "give_entity" then
                     checkbox:SetChecked(true)
-                    checkbox:OnChange()
                     class_editor.drop_editors:SetVisible(false)
+                    class_editor.give_editors:SetVisible(true)
                 elseif class_type == HORDE.ENTITY_PROPERTY_DROP and type == "drop_entity" then
                     checkbox:SetChecked(true)
-                    checkbox:OnChange()
                     class_editor.drop_editors:SetVisible(true)
+                    class_editor.give_editors:SetVisible(false)
                 else
                     checkbox:SetChecked(false)
                 end
@@ -457,6 +480,7 @@ function PANEL:Init()
                     if item.entity_properties.is_arccw_attachment and item.entity_properties.is_arccw_attachment == true then
                         class_editor.give_arccw_attachment_editor:SetChecked(true)
                         class_editor.give_arccw_attachment_type_editor:SetValue(item.entity_properties.arccw_attachment_type)
+                        class_editor.give_arccw_attachment_type_editor:SetVisible(true)
                     else
                         class_editor.give_arccw_attachment_editor:SetChecked(false)
                     end
@@ -489,7 +513,10 @@ function PANEL:Init()
             HORDE.items[item.class] = nil
 
 			net.Start("Horde_SetItemsData")
-            net.WriteTable(HORDE.items)
+            local tab = util.TableToJSON(HORDE.items)
+            local str = util.Compress(tab)
+            net.WriteUInt(string.len(str), 32)
+            net.WriteData(str, string.len(str))
         	net.SendToServer()
 			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
         end)

@@ -38,7 +38,10 @@ HORDE.SyncItems = function ()
     if player then
         for _, ply in pairs(player.GetAll()) do
             net.Start("Horde_SyncItems")
-            net.WriteTable(HORDE.items)
+            local tab = util.TableToJSON(HORDE.items)
+            local str = util.Compress(tab)
+            net.WriteUInt(string.len(str), 32)
+            net.WriteData(str, string.len(str))
             net.Send(ply)
         end
     end
@@ -582,7 +585,10 @@ if SERVER then
 
 
     net.Receive("Horde_SetItemsData", function ()
-        HORDE.items = net.ReadTable()
+        local len = net.ReadUInt(32)
+        local data = net.ReadData(len)
+        local str = util.Decompress(data)
+        HORDE.items = util.JSONToTable(str)
         HORDE.SetItemsData()
     end)
 

@@ -140,24 +140,17 @@ function HORDE:ToggleConfigMenu()
 end
 
 -- Entity Highlights
--- This seems expensive
---[[
-local highlight_entities = {}
 if GetConVarNumber("horde_enable_halo") == 1 then
     hook.Add("PreDrawHalos", "Horde_AddMinionHalos", function()
-        halo.Add(highlight_entities, Color(0, 255, 0), 1, 1, 2, true, true)
-    end)
-    hook.Add("PreDrawHalos", "Horde_AddMinionHalos", function()
-        local minions = ents.FindByClass("npc*")
-        for key, minion in pairs(minions) do
-            if not minion:GetNWEntity("HordeOwner") or minion:GetNWEntity("HordeOwner") ~= LocalPlayer() then
+        local ent = util.TraceLine(util.GetPlayerTrace(LocalPlayer())).Entity
+        if ent and ent:IsValid() then
+            if ent:GetNWEntity("HordeOwner") and ent:GetNWEntity("HordeOwner") == LocalPlayer() then
                 -- Do not highlight minions if they do not belong to you
-                minions[key] = nil
+                halo.Add({ent}, Color(0, 255, 0), 1, 1, 1, true, true)
             end
         end
-        halo.Add(minions, Color(0, 255, 0), 1, 1, 1, true, true)
     end)
-end]]--
+end
 
 net.Receive("Horde_HighlightEntities", function (len, ply)
     if GetConVarNumber("horde_enable_halo") == 0 then return end

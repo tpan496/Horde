@@ -19,7 +19,7 @@ HORDE.CreateClasses = function()
     HORDE.CreateClass(
         "Survivor",
         "No bonus.\n\n",
-        "Have access to all weapons except for special weapons.",
+        "Have access to all weapons except for special weapons.\n\nLimited access to attachments.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -74,7 +74,7 @@ HORDE.CreateClasses = function()
     HORDE.CreateClass(
         "Ghost",
         "50% increased headshot damage.\n\n",
-        "Increased headshot damage applies to headshot-immune enemies.\n\nHave access to sniper rifles and selected light weapons.",
+        "Increased headshot damage applies to headshot-immune enemies.\n\nHave access to sniper rifles and selected light weapons.\n\nHave access to suppressors and sniper scopes.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
