@@ -164,7 +164,7 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:SyncEconomy()
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
-
+    ply:SetTeam(1)
 
     if HORDE.start_game then return end
     
@@ -307,17 +307,17 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     ent:SetPos(drop_pos)
                     ent:SetAngles(Angle(0, ply:GetAngles().y + item.entity_properties.yaw, 0))
                     --ent:DropToFloor()
-                    ent:Spawn()
                     ply:AddHordeDropEntity(ent:GetClass(), ent)
                     ent:SetNWEntity("HordeOwner", ply)
+                    ent:Spawn()
                     if ent:IsNPC() then
                         -- Minions have no player collsion
                         ent:AddRelationship("player D_LI 99")
-                        ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+                        ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
                         local id = ent:GetCreationID()
                         timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
                             if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
-                            ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+                            ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
                         end)
                     end
                     ent:CallOnRemove("Horde_EntityRemoved", function()
@@ -466,17 +466,22 @@ net.Receive("Horde_SelectClass", function (len, ply)
             if not ply:IsValid() then return end
             if npc:IsValid() and dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
                 if dmg:GetAttacker():GetClass() == "npc_turret_floor" then
-                    dmg:SetDamage(10)
+                    dmg:SetDamage(20)
                 end
                 dmg:ScaleDamage(2)
             end
         end)
         hook.Add("OnEntityCreated", "Horde_Engineer" .. ply:SteamID(), function (ent)
             if not ent:IsValid() then return end
-            if ent:GetNWEntity("HordeOwner") == ply and ent:IsNPC() then
-                ent:SetMaxHealth(ent:MaxHealth() * 2)
-                ent:SetHealth(ent:SetMaxHealth())
-            end
+            timer.Simple(0, function()
+                if ent:GetNWEntity("HordeOwner") == ply and ent:IsNPC() then
+                    if ent:GetClass() == "npc_turret_floor" then
+                        ent:SetMaxHealth(300)
+                    end
+                    ent:SetMaxHealth(ent:GetMaxHealth() * 2)
+                    ent:SetHealth(ent:GetMaxHealth())
+                end
+            end)
         end)
     end
 
