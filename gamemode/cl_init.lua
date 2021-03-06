@@ -66,7 +66,7 @@ end)
 
 function HORDE:ToggleShop()
     if not HORDE.ShopGUI then
-        HORDE.ShopGUI = vgui.Create('HordeShop')
+        HORDE.ShopGUI = vgui.Create("HordeShop")
         HORDE.ShopGUI:SetVisible(false)
     end
 
@@ -75,7 +75,7 @@ function HORDE:ToggleShop()
         gui.EnableScreenClicker(false)
     else
         HORDE.ShopGUI:Remove()
-        HORDE.ShopGUI = vgui.Create('HordeShop')
+        HORDE.ShopGUI = vgui.Create("HordeShop")
         HORDE.ShopGUI:Show()
         gui.EnableScreenClicker(true)
     end
@@ -83,7 +83,7 @@ end
 
 function HORDE:ToggleItemConfig()
     if not HORDE.ItemConfigGUI then
-        HORDE.ItemConfigGUI = vgui.Create('HordeItemConfig')
+        HORDE.ItemConfigGUI = vgui.Create("HordeItemConfig")
         HORDE.ItemConfigGUI:SetVisible(false)
     end
 
@@ -98,7 +98,7 @@ end
 
 function HORDE:ToggleEnemyConfig()
     if not HORDE.EnemyConfigGUI then
-        HORDE.EnemyConfigGUI = vgui.Create('HordeEnemyConfig')
+        HORDE.EnemyConfigGUI = vgui.Create("HordeEnemyConfig")
         HORDE.EnemyConfigGUI:SetVisible(false)
     end
 
@@ -113,7 +113,7 @@ end
 
 function HORDE:ToggleClassConfig()
     if not HORDE.ClassConfigGUI then
-        HORDE.ClassConfigGUI = vgui.Create('HordeClassConfig')
+        HORDE.ClassConfigGUI = vgui.Create("HordeClassConfig")
         HORDE.ClassConfigGUI:SetVisible(false)
     end
 
@@ -128,7 +128,7 @@ end
 
 function HORDE:ToggleConfigMenu()
     if not HORDE.ConfigMenuGUI then
-        HORDE.ConfigMenuGUI = vgui.Create('HordeConfigMenu')
+        HORDE.ConfigMenuGUI = vgui.Create("HordeConfigMenu")
         HORDE.ConfigMenuGUI:SetVisible(false)
     end
 
@@ -141,16 +141,36 @@ function HORDE:ToggleConfigMenu()
     end
 end
 
+-- Entity Highlights
+if GetConVarNumber("horde_enable_halo") == 1 then
+    hook.Add("PreDrawHalos", "Horde_AddMinionHalos", function()
+        local ent = util.TraceLine(util.GetPlayerTrace(LocalPlayer())).Entity
+        if ent and ent:IsValid() then
+            if ent:GetNWEntity("HordeOwner") and ent:GetNWEntity("HordeOwner") == LocalPlayer() then
+                -- Do not highlight minions if they do not belong to you
+                halo.Add({ent}, Color(0, 255, 0), 1, 1, 1, true, true)
+            end
+        end
+    end)
+end
+
 net.Receive("Horde_HighlightEntities", function (len, ply)
     if GetConVarNumber("horde_enable_halo") == 0 then return end
     local render = net.ReadInt(3)
     if render == HORDE.render_highlight_enemies then
         hook.Add("PreDrawHalos", "Horde_AddEnemyHalos", function()
-            halo.Add(ents.FindByClass("npc*"), Color(255, 0, 0), 1, 1, 2, true, true)
+            local enemies = ents.FindByClass("npc*")
+            for key, enemy in pairs(enemies) do
+                if enemy:GetNWEntity("HordeOwner"):IsPlayer() then
+                    -- Do not highlight friendly minions
+                    enemies[key] = nil
+                end
+            end
+            halo.Add(enemies, Color(255, 0, 0), 1, 1, 1, true, true)
         end)
     elseif render == HORDE.render_highlight_ammoboxes then
         hook.Add("PreDrawHalos", "Horde_AddAmmoBoxHalos", function()
-            halo.Add(ents.FindByClass("horde_ammobox"), Color(0, 255, 0), 1, 1, 2, true, true)
+            halo.Add(ents.FindByClass("horde_ammobox"), Color(0, 255, 0), 1, 1, 1, true, true)
         end)
         timer.Simple(10, function ()
             hook.Remove("PreDrawHalos", "Horde_AddAmmoBoxHalos")
@@ -203,7 +223,7 @@ net.Receive("Horde_ForceCloseShop", function ()
     gui.EnableScreenClicker(false)
 end)
 
-net.Receive('Horde_LegacyNotification', function(length)
+net.Receive("Horde_LegacyNotification", function(length)
     local str = net.ReadString()
     local type = net.ReadInt(2)
     if type == 0 then
@@ -213,7 +233,7 @@ net.Receive('Horde_LegacyNotification', function(length)
     end
 end)
 
-net.Receive('Horde_RenderCenterText', function ()
+net.Receive("Horde_RenderCenterText", function ()
     local str = net.ReadString()
     local num = net.ReadInt(8)
     if num then
@@ -241,7 +261,7 @@ net.Receive('Horde_RenderCenterText', function ()
     end
 end)
 
-net.Receive('Horde_GameEnd', function ()
+net.Receive("Horde_GameEnd", function ()
     local status = net.ReadString()
 
     local mvp = net.ReadEntity()
@@ -277,7 +297,10 @@ net.Receive('Horde_GameEnd', function ()
 end)
 
 net.Receive("Horde_SyncItems", function ()
-    HORDE.items = net.ReadTable()
+    local len = net.ReadUInt(32)
+    local data = net.ReadData(len)
+    local str = util.Decompress(data)
+    HORDE.items = util.JSONToTable(str)
 end)
 
 net.Receive("Horde_SyncEnemies", function ()

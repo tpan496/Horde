@@ -346,4 +346,4 @@ function PANEL:Paint(w, h)
     gui.EnableScreenClicker(true)
 end
 
-vgui.Register('HordeSummaryPanel', PANEL, 'DPanel')
+vgui.Register("HordeSummaryPanel", PANEL, "DPanel")
