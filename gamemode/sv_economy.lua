@@ -307,9 +307,13 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         -- Minions have no player collsion
                         ent:AddRelationship("player D_LI 99")
                         ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+                        timer.Create("Horde_MinionCollision" .. ent:GetCreationID(), 1, 0, function ()
+                            ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+                        end)
                     end
                     ent:CallOnRemove("Horde_EntityRemoved", function()
                         if ent:IsValid() and ply:IsValid() then
+                            timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
                             hook.Remove("PlayerUse", "Horde_PlayerUse" .. ent:GetCreationID())
                             ent:GetNWEntity("HordeOwner"):RemoveHordeDropEntity(ent:GetClass(), ent:GetCreationID())
                             ent:GetNWEntity("HordeOwner"):SyncEconomy()
