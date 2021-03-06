@@ -153,28 +153,95 @@ function PANEL:SellDoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
     if not self.item.class then return end
-    if not LocalPlayer():HasWeapon(self.item.class) then return end
-    Derma_Query("Sell Item?!", "Sell",
-            "Yes",
-            function()
-                -- Sell the item
-                net.Start("Horde_SellItem")
-                net.WriteString(self.item.class)
-                net.SendToServer()
-            end,
-            "No", function() end
-        )
+    if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP) then
+        Derma_Query("Sell Item?!", "Sell",
+                "Yes",
+                function()
+                    -- Sell the item
+                    net.Start("Horde_SellItem")
+                    net.WriteString(self.item.class)
+                    net.SendToServer()
+                end,
+                "No", function() end
+            )
+    end
 end
 
 function PANEL:SetData(item)
     self.item = item
 end
 
+-- Copied from ArcCW
+local function multlinetext(text, maxw, font)
+    local content = ""
+    local tline = ""
+    local x = 0
+    surface.SetFont(font)
+
+    local newlined = string.Split(text, "\n")
+
+    for _, line in pairs(newlined) do
+        local words = string.Split(line, " ")
+
+        for _, word in pairs(words) do
+            local tx = surface.GetTextSize(word)
+
+            if x + tx >= maxw then
+                content = content .. "\n" .. tline
+                tline = ""
+                x = surface.GetTextSize(word)
+            end
+
+            tline = tline .. word .. " "
+
+            x = x + surface.GetTextSize(word .. " ")
+        end
+
+        content = content .. "\n" .. tline
+        tline = ""
+        x = 0
+    end
+    return content
+end
+
 function PANEL:Paint()
     surface.SetDrawColor(HORDE.color_hollow)
     surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     if self.item then
-        if self.item.fixed_description and self.item.extra_description then
+        if self.item.entity_properties and self.item.entity_properties.is_arccw_attachment then
+            local icon = nil
+            local description = ""
+            local atttbl = ArcCW.AttachmentTable[self.item.class]
+            if atttbl.Description then
+                description = multlinetext(ArcCW.AttachmentTable[self.item.class].Description, self:GetWide() - 64, "Item")
+                -- TODO: This should take two parameters. Second one seems useless?
+                local pros, cons = ArcCW:GetProsCons(atttbl)
+                description = description .. "\n\n"
+                description = description .. "Pros: \n\n"
+                for _, pro in pairs(pros) do
+                    description = description .. pro .. "\n"
+                end
+                description = description .. "\n\nCons: \n\n"
+                for _, con in pairs(cons) do
+                    description = description .. con .. "\n"
+                end
+            end
+            if atttbl.Icon then 
+                icon = ArcCW.AttachmentTable[self.item.class].Icon
+                draw.DrawText(self.item.name, "Title", self:GetWide() / 2 - 64, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+                draw.DrawText(description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                if icon then
+                    surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
+                    local mat = icon
+                    surface.SetMaterial(mat) -- Use our cached material
+                    surface.DrawTexturedRect(self:GetWide() / 2 + surface.GetTextSize(self.item.name) / 2, 15, 64, 64)
+                end
+            else
+                draw.DrawText(self.item.name, "Title", self:GetWide() / 2 , 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+                draw.DrawText(description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            end
+            
+        elseif self.item.fixed_description and self.item.extra_description then
             draw.DrawText(self.item.name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             draw.DrawText(self.item.fixed_description .. self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
@@ -291,7 +358,18 @@ function PANEL:Paint()
                 local drop_entities = LocalPlayer():GetHordeDropEntities()
                 if drop_entities[self.item.class] then
                     self.buy_btn:SetText("Buy Item " .. drop_entities[self.item.class] .. "/" .. self.item.entity_properties.limit)
+                    self.sell_btn:SetVisible(true)
+                    self.sell_btn:SetTextColor(Color(255,255,255))
+                    self.sell_btn:SetText("Sell All for " .. tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class])) .. "$")
+                    self.sell_btn.Paint = function ()
+                        surface.SetDrawColor(HORDE.color_crimson)
+                        surface.DrawRect(0, 0, self:GetWide(), 200)
+                    end
+                else
+                    self.sell_btn:SetVisible(false)
                 end
+            else
+                self.sell_btn:SetVisible(false)
             end
             self.buy_btn:SetTextColor(Color(255,255,255))
             self.buy_btn.Paint = function ()
@@ -303,7 +381,6 @@ function PANEL:Paint()
             self.ammo_ten_btn:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
-            self.sell_btn:SetVisible(false)
         end
     end
 

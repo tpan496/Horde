@@ -38,6 +38,7 @@ function PANEL:Init()
 
     local btns = {}
 	local firstBtn = true
+	local attachments = {}
 	local function createBtn(text, panel, dock)
 		panel:SetParent(container)
 		panel:Dock(FILL)
@@ -105,6 +106,10 @@ function PANEL:Init()
 			for k, v in pairs(btns) do v:SetActive(false) v:OnDeactivate() end
 			pnl:SetActive(true) pnl:OnActivate()
 			surface.PlaySound("UI/buttonclick.wav")
+			if text == "Attachment" then
+				-- Reload attachments everytime a player click this
+				self:ReloadAttachments(attachments, container, description_panel)
+			end
 		end
 
 		btn.OnDeactivate = function()
@@ -125,7 +130,6 @@ function PANEL:Init()
 	end
 
 	local class = LocalPlayer():GetHordeClass()
-	local attachments = {}
 
 	for _, category in pairs(HORDE.categories) do
 		local items = {}
@@ -145,7 +149,11 @@ function PANEL:Init()
 
 		table.sort(items, function(a, b)
 			if a.cmp == b.cmp then
-				return a.weight < b.weight
+				if a.weight == b.weight then
+					return a.name < b.name
+				else
+					return a.weight < b.weight
+				end
 			else
 				return a.cmp < b.cmp
 			end
@@ -209,51 +217,60 @@ function PANEL:Init()
 	
 	-- ArcCW Attachment Tab
 	if ArcCWInstalled and not table.IsEmpty(attachments) then
-		local AttachmentTab = vgui.Create("DPanel", self)
-		AttachmentTab.Paint = function () end
-		
-		local AttachmentTabLayout = vgui.Create("DCategoryList", AttachmentTab)
-		AttachmentTabLayout:Dock(FILL)
-		AttachmentTabLayout:DockMargin(8,8,8,8)
-		AttachmentTabLayout.Paint = function () end
-
-		for _, attachment_category in pairs(HORDE.arccw_attachment_categories) do
-			local cat = AttachmentTabLayout:Add(attachment_category)
-			cat:SetHeaderHeight(40)
-			cat:SetPaintBackground(false)
-			cat:SetExpanded(false)
-			cat.Paint = function ()
-				surface.SetDrawColor(50, 50, 50, 255)
-				surface.DrawRect(0, 0, self:GetWide(), 40)
-			end
-			cat.Header:SetFont("Item")
-			cat.Header:SetTextColor(Color(255,255,255))
-			cat.Header:SetSize(container:GetWide() - 16, 40)
-
-			local ShopCategoryTabLayout = vgui.Create("DIconLayout")
-			ShopCategoryTabLayout:SetBorder(8)
-			ShopCategoryTabLayout:SetSpaceX(8)
-			ShopCategoryTabLayout:SetSpaceY(8)
-			
-			if attachments[attachment_category] then
-				for _, item in pairs(attachments[attachment_category]) do
-					local model = vgui.Create("HordeShopItem")
-					model:SetSize(cat.Header:GetWide() - 16, 40)
-					model:SetData(item, description_panel)
-					ShopCategoryTabLayout:Add(model)
-				end
-				cat:SetContents(ShopCategoryTabLayout)
-				local tall = 40
-				if attachments[attachment_category] then
-					tall = 40 * (#attachments[attachment_category])
-				end
-				cat:SetTall(tall)
-			end
-		end
-		AttachmentTabLayout:InvalidateLayout(true)
-
-		createBtn("Attachment", AttachmentTab, LEFT)
+		self.AttachmentTab = vgui.Create("DPanel", self)
+		self.AttachmentTab.Paint = function () end
+		self.AttachmentTabLayout = vgui.Create("DCategoryList", self.AttachmentTab)
+		self.AttachmentTabLayout:Dock(FILL)
+		self.AttachmentTabLayout:DockMargin(8,8,8,8)
+		self.AttachmentTabLayout.Paint = function () end
+		self:ReloadAttachments(attachments, container, description_panel)
+		createBtn("Attachment", self.AttachmentTab, LEFT)
 	end
+end
+
+function PANEL:ReloadAttachments(attachments, container, description_panel)
+	self.AttachmentTabLayout:Clear()
+	for _, attachment_category in pairs(HORDE.arccw_attachment_categories) do
+		local cat = self.AttachmentTabLayout:Add(attachment_category)
+		cat:SetHeaderHeight(40)
+		cat:SetPaintBackground(false)
+		cat:SetExpanded(false)
+		cat.Paint = function ()
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(0, 0, self:GetWide(), 40)
+		end
+		cat.Header:SetFont("Item")
+		cat.Header:SetTextColor(Color(255,255,255))
+		cat.Header:SetSize(container:GetWide() - 16, 40)
+
+		local ShopCategoryTabLayout = vgui.Create("DIconLayout")
+		ShopCategoryTabLayout:SetBorder(8)
+		ShopCategoryTabLayout:SetSpaceX(8)
+		ShopCategoryTabLayout:SetSpaceY(8)
+		
+		if attachments[attachment_category] then
+			for _, item in pairs(attachments[attachment_category]) do
+				if item.entity_properties.arccw_attachment_wpn then
+					if not LocalPlayer():HasWeapon(item.entity_properties.arccw_attachment_wpn) then
+						goto cont
+					end
+				end
+				local model = vgui.Create("HordeShopItem")
+				model:SetSize(cat.Header:GetWide() - 16, 40)
+				model:SetData(item, description_panel)
+				ShopCategoryTabLayout:Add(model)
+
+				::cont::
+			end
+			cat:SetContents(ShopCategoryTabLayout)
+			local tall = 40
+			if attachments[attachment_category] then
+				tall = 40 * (#attachments[attachment_category])
+			end
+			cat:SetTall(tall)
+		end
+	end
+	self.AttachmentTabLayout:InvalidateLayout(true)
 end
 
 function PANEL:Paint(w, h)
