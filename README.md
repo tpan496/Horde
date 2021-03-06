@@ -67,6 +67,7 @@ CONFIG = {}
 CONFIG.name = "custom_config" -- YOU MUST NAME IT! Used for horde_external_lua_config.
 CONFIG.items = {
     -- key and class must be the same!
+    -- Weapon Entity Example:
     weapon_crowbar = {
         class="weapon_crowbar",
         category="Melee", -- You can find out the full list in !itemconfig
@@ -76,6 +77,30 @@ CONFIG.items = {
         whitelist = {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true},
         ammo_price=0,           -- Leave it as 0 if it does not have primary ammo
         secondary_ammo_price=-1 -- Leave it as -1 if it does not have secondary ammo
+    },
+    -- Give Entity Example
+    item_healthvial = {
+        class="item_healthvial",
+        category="Special", -- You can find out the full list in !itemconfig
+        name="Health Vial",
+        price=50, weight=0,
+        description="Heals you",
+        whitelist = {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true},
+        ammo_price=0,           -- Does not matter for entities
+        secondary_ammo_price=-1, -- Does not matter for entities
+        entity_properties={type=2} -- Give Entity type is 2.
+    },
+    -- Drop Entity Example
+    item_healthvial = {
+        class="item_healthvial",
+        category="Equipment", -- You can find out the full list in !itemconfig
+        name="Health Vial",
+        price=50, weight=0,
+        description="Drops onto the ground when purchased.",
+        whitelist = {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true},
+        ammo_price=0,           -- Does not matter for entities
+        secondary_ammo_price=-1, -- Does not matter for entities
+        entity_properties={type=3, x=50, z=15, yaw=0, limit=5} -- Drop Entity type is 3.
     }
 }
 
