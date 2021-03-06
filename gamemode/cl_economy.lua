@@ -14,9 +14,14 @@ function Player:GetHordeClass()
     return self.class
 end
 
-net.Receive("Horde_SynchronizeEconomy", function(length)
-	local ply = net.ReadEntity()
-	ply.money = net.ReadInt(32)
+function Player:GetHordeDropEntities()
+    return self.drop_entities
+end
+
+net.Receive("Horde_SyncEconomy", function(length)
+    local ply = net.ReadEntity()
+    ply.money = net.ReadInt(32)
     ply.weight = net.ReadInt(32)
     ply.class = HORDE.classes[net.ReadString()]
+    ply.drop_entities = net.ReadTable()
 end)
