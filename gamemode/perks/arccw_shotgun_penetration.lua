@@ -12,9 +12,9 @@ PERK.Hooks = {}
 --[[]
 local recalc = function(ply, perk)
     if perk == "arccw_shotgun_penetration" then
-        for _, wep in pairs(ply:GetWeapons()) do
-            if wep.ArcCW then
-                wep:RecalcAllBuffs()
+        for _, wpn in pairs(ply:GetWeapons()) do
+            if wpn.ArcCW then
+                wpn:RecalcAllBuffs()
             end
         end
     end
@@ -26,9 +26,9 @@ PERK.Hooks.Horde_OnUnsetPerk = recalc
 -- You can modify ArcCW weapon stats with specially named hooks.
 -- Specifically: O_Hook_STAT for overrides, M_Hook_STAT for multipliers and A_Hook_STAT for addition.
 -- Edit the value in data.current
-PERK.Hooks.O_Hook_Override_Penetration = function(wep, data)
-    local ply = wep:GetOwner()
-    if IsValid(ply) and ply:IsPlayer() and wep:GetIsShotgun() and ply:Horde_GetPerk("arccw_shotgun_penetration") then
+PERK.Hooks.O_Hook_Override_Penetration = function(wpn, data)
+    local ply = wpn:GetOwner()
+    if IsValid(ply) and ply:IsPlayer() and wpn:GetIsShotgun() and ply:Horde_GetPerk("arccw_shotgun_penetration") then
         data.current = (data.current or 0) + ply:Horde_GetPerkParam("arccw_shotgun_penetration", "amount")
     end
 end
