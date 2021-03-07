@@ -219,7 +219,7 @@ HORDE.GetDefaultItemsData = function()
     {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=5})
     
     if ArcCWInstalled == true and GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
-        print("[HORDE] ArcCW detected. Loading attachments.")
+        print("[HORDE] ArcCW detected. Loading attachments into shop.")
         HORDE.GetArcCWAttachments()
     end
 

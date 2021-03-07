@@ -176,7 +176,7 @@ net.Receive("Horde_PlayerInit", function (len, ply)
         total_player = total_player + 1
     end
     
-    if total_player == ready_count then
+    if total_player > 0 and total_player == ready_count then
         HORDE.start_game = true
     end
 
@@ -202,6 +202,7 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
     timer.Remove("Horde_Demolition" .. ply:SteamID())
     hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
     hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
+    
     -- Remove all the entities he owns
     if HORDE.player_drop_entities[ply:SteamID()] then
         for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
