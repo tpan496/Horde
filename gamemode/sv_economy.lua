@@ -400,10 +400,21 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
     local name = net.ReadString()
     local class = HORDE.classes[name]
+
+    -- Drop all weapons
     ply:SetHordeClass(class)
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
+
+    -- Remove all entities
+    if HORDE.player_drop_entities[ply:SteamID()] then
+        for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+            if ent:IsValid() then ent:Remove() end
+        end
+    end
+    HORDE.player_drop_entities[ply:SteamID()] = {}
+
     ply:SetHordeWeight(HORDE.max_weight)
     ply:SetMaxHealth(class.max_hp)
     net.Start("Horde_ToggleShop")
@@ -476,7 +487,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
             timer.Simple(0.1, function()
                 if ent:GetNWEntity("HordeOwner") == ply and ent:IsNPC() then
                     if ent:GetClass() == "npc_turret_floor" then
-                        ent:SetMaxHealth(300)
+                        ent:SetMaxHealth(500)
                     end
                     ent:SetMaxHealth(ent:GetMaxHealth() * 2)
                     ent:SetHealth(ent:GetMaxHealth())
