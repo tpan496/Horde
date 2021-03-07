@@ -164,7 +164,6 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:SyncEconomy()
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
-    ply:SetTeam(1)
 
     if HORDE.start_game then return end
     
@@ -212,6 +211,7 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
 end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
+    ply:SetCustomCollisionCheck(true)
     if not ply:IsValid() then return end
     if not ply:GetHordeClass() then return end
     if ply:GetHordeClass().Name == "Heavy" then
