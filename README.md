@@ -76,7 +76,8 @@ CONFIG.items = {
         description="A cheap crowbar",
         whitelist = {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true},
         ammo_price=0,           -- Leave it as 0 if it does not have primary ammo
-        secondary_ammo_price=-1 -- Leave it as -1 if it does not have secondary ammo
+        secondary_ammo_price=-1, -- Leave it as -1 if it does not have secondary ammo
+        entity_properties={type=1} --Weapon Entity type is 1.
     },
     -- Give Entity Example
     item_healthvial = {
