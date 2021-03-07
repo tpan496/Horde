@@ -69,3 +69,12 @@ local sex = {"female", "male"}
 local nums = {"_01", "_02", "_03", "_04", "_05", "_06"}
 
 function GM:PlayerSetModel(ply) return ply:SetModel("models/player/" .. table.Random(groups) .. "/" .. table.Random(sex) .. table.Random(nums) .. ".mdl") end
+
+function GM:ShouldCollide(ent1, ent2)   -- Yes, this does prevents bullets from colliding with teammates somehow
+    if ent1:IsPlayer() or ent2:IsPlayer() then
+        if ent1:IsPlayer() and ent2:IsPlayer() then return false end    -- Should players collide with each other? Probably make this to be a convar, idk
+        if ent1:GetClass() == "prop_combine_ball" or ent2:GetClass() == "prop_combine_ball" then return false end   -- No combine balls
+    end
+
+    return true
+end
