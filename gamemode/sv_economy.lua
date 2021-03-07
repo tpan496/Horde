@@ -473,7 +473,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
         end)
         hook.Add("OnEntityCreated", "Horde_Engineer" .. ply:SteamID(), function (ent)
             if not ent:IsValid() then return end
-            timer.Simple(0, function()
+            timer.Simple(0.1, function()
                 if ent:GetNWEntity("HordeOwner") == ply and ent:IsNPC() then
                     if ent:GetClass() == "npc_turret_floor" then
                         ent:SetMaxHealth(300)

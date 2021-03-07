@@ -85,7 +85,7 @@ HORDE.CreateClasses = function()
     HORDE.CreateClass(
         "Engineer",
         "100% increased minion health and damage.\n\n",
-        "Turrets you build have a base damage of 10.\n\nHave access to special weapons and equipment.",
+        "Turrets you build have a base damage of 20.\n\nHave access to special weapons and equipment.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
