@@ -156,7 +156,9 @@ function BroadcastWaveMessage(msg, wave)
     net.Broadcast()
 end
 
-function HardReset()
+-- This resets the director.
+HORDE.HardResetDirector = function ()
+    HORDE.start_game = false
     HORDE.killed_enemies_this_wave = 0
     HORDE.total_enemies_this_wave = 0
     HORDE.alive_enemies_this_wave = 0
@@ -164,6 +166,16 @@ function HardReset()
     HORDE.current_break_time = HORDE.total_break_time
     in_break = false
     -- TODO: clean up all the spawned enemies
+end
+
+-- This resets the enemies.
+HORDE.HardResetEnemies = function ()
+    local enemies = ScanEnemies()
+    if not table.IsEmpty(enemies) then
+        for _, enemy in pairs(enemies) do
+            enemy:Remove()
+        end
+    end
 end
 
 function SpawnEnemy(enemy, pos)
@@ -299,20 +311,17 @@ end
 timer.Create("Horde_Main", director_interval, 0, function ()
     local status, err = pcall( function()
     local valid_nodes = {}
+
     if table.Count(player.GetAll()) <= 0 then
-        timer.Remove("Horde")
-        HardReset()
-        return
+        -- Reset game state
+        HORDE.HardResetDirector()
+        HORDE.HardResetEnemies()
+        HORDE.player_ready = {}
     end
 
     if not HORDE.start_game then
-        HardReset()
-        local enemies = ScanEnemies()
-        if not table.IsEmpty(enemies) then
-            for _, enemy in pairs(enemies) do
-                enemy:Remove()
-            end
-        end
+        HORDE.HardResetDirector()
+        HORDE.HardResetEnemies()
 
         local ready_count = 0
         local total_player = 0
@@ -323,7 +332,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             total_player = total_player + 1
         end
 
-        if total_player == ready_count then
+        if total_player > 0 and total_player == ready_count then
             HORDE.start_game = true
         else
             BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
@@ -355,7 +364,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
     -- Start round
     if HORDE.current_break_time == 0 then
         if (HORDE.enemies_normalized == nil) or table.IsEmpty(HORDE.enemies_normalized) then
-            HardReset()
+            HORDE.HardResetDirector()
             net.Start("Horde_LegacyNotification")
             net.WriteString("Enemies list is empty. Config the enemy list or no enemies wil spawn.")
             net.WriteInt(1,2)
@@ -363,6 +372,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             HORDE.start_game = false
             return
         end
+        
         if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
             net.Start("Horde_LegacyNotification")
             net.WriteString("No enemy config set for this wave. Falling back to previous wave settings.")
