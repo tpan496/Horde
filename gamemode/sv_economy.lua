@@ -204,8 +204,10 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
     hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
     hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
     -- Remove all the entities he owns
-    for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-        if ent:IsValid() then ent:Remove() end
+    if HORDE.player_drop_entities[ply:SteamID()] then
+        for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+            if ent:IsValid() then ent:Remove() end
+        end
     end
 end)
 
