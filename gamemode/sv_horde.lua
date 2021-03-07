@@ -9,6 +9,15 @@ local spawned_ammoboxes = {}
 local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local in_break = false
 
+local entmeta = FindMetaTable("Entity")
+function entmeta:SetHordeMostRecentAttacker(attacker)
+	self.most_recent_attacker = attacker
+end
+
+function entmeta:GetHordeMostRecentAttacker()
+	return self.most_recent_attacker
+end
+
 hook.Add("Initialize", "Horde_Init", function()
     HORDE.ai_nodes = {}
     HORDE.spawned_enemies = {}
@@ -43,7 +52,7 @@ hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
     end
 end)
 
-hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
+HORDE.OnNPCKilled = function (victim, killer, weapon)
     if HORDE.spawned_enemies[victim:EntIndex()] then
         HORDE.spawned_enemies[victim:EntIndex()] = nil
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
@@ -78,7 +87,12 @@ hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
             killer:AddFrags(1)
             killer:SyncEconomy()
         end
+        victim:SetHordeMostRecentAttacker(nil)
     end
+end
+
+hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
+    HORDE.OnNPCKilled(victim, killer, weapon)
 end)
 
 -- Corpse settings
@@ -87,7 +101,10 @@ if GetConVar("horde_corpse_cleanup"):GetInt() == 1 then
     hook.Add("OnEntityCreated", "Horde_CorpseRemoval", function(ent)
         if ent:IsRagdoll() then
             timer.Simple(0, function ()
-                if ent:IsValid() then ent:Remove() end
+                if ent:IsValid() then
+                    ent:SetHordeMostRecentAttacker(nil)
+                    ent:Remove()
+                end
             end)
         end
     end)
@@ -112,6 +129,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                 local id = dmg:GetAttacker():SteamID()
                 if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
+                ent:SetHordeMostRecentAttacker(dmg:GetAttacker())
             end
        elseif ent:IsPlayer() and dmg:GetAttacker():IsNPC() then
            local id = ent:SteamID()
@@ -130,11 +148,15 @@ hook.Add("ScaleNPCDamage", "Horde_HeadshotCounter", function (npc, hitgroup, dmg
 end)
 
 hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
-    if HORDE.spawned_enemies[ent:EntIndex()] then
-        HORDE.spawned_enemies[ent:EntIndex()] = nil
-        HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
-        HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
-        --print("OnRemove", "[HORDE] Remove ", ent:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+    if ent:IsNPC() and ent:GetHordeMostRecentAttacker() then
+        HORDE.OnNPCKilled(ent, ent:GetHordeMostRecentAttacker())
+    else
+        if HORDE.spawned_enemies[ent:EntIndex()] then
+            HORDE.spawned_enemies[ent:EntIndex()] = nil
+            HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
+            HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
+            --print("OnRemove", "[HORDE] Remove ", ent:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+        end
     end
 end)
 
@@ -173,6 +195,7 @@ HORDE.HardResetEnemies = function ()
     local enemies = ScanEnemies()
     if not table.IsEmpty(enemies) then
         for _, enemy in pairs(enemies) do
+            enemy:SetHordeMostRecentAttacker(nil)
             enemy:Remove()
         end
     end
@@ -462,6 +485,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         if closest > HORDE.max_spawn_distance or (closest_z > GetConVarNumber("horde_max_spawn_z_distance")) then
             table.RemoveByValue(enemies, enemy)
             if enemy:IsValid() then
+                enemy:SetHordeMostRecentAttacker(nil)
                 enemy:Remove()
             end
         else
@@ -585,6 +609,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         enemies = ScanEnemies()
         if not table.IsEmpty(enemies) then
             for _, enemy in pairs(enemies) do
+                enemy:SetHordeMostRecentAttacker(nil)
                 enemy:Remove()
             end
         end
