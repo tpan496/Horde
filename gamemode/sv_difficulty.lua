@@ -80,7 +80,7 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
     elseif target:GetNWEntity("HordeOwner"):IsPlayer() then
         if (dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer()) then
             -- Prevent player / player minions from damaging minions
-            dmg:ScaleDamage(0)
+            return true
         else
             if target:GetClass() == "npc_turret_floor" then
                 dmg:SetDamageForce(Vector(0,0,0))
