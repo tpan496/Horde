@@ -31,7 +31,7 @@ CreateConVar("horde_disable_difficulty_voting", 0, FCVAR_SERVER_CAN_EXECUTE, "Di
 CreateConVar("horde_endless", 0, FCVAR_SERVER_CAN_EXECUTE, "Endless.")
 CreateConVar("horde_total_enemies_scaling", 0, FCVAR_SERVER_CAN_EXECUTE, "Forces the gamemode to multiply maximum enemy count by this.")
 
-CreateConVar("horde_arccw_attinv_free", 0, FCVAR_SERVER_CAN_EXECUTE, "Free ArcCW attachments.")
+CreateConVar("horde_arccw_attinv_free", 1, FCVAR_SERVER_CAN_EXECUTE, "Free ArcCW attachments.")
 
 if SERVER then
 util.AddNetworkString("Horde_PlayerInit")

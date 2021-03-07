@@ -334,6 +334,9 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     hook.Add("PlayerUse", "Horde_PlayerUse" .. ent:GetCreationID(), function (other_ply, target)
                         if ent == target then
                             if other_ply == ent:GetNWEntity("HordeOwner") then
+                                if ent:GetClass() == "npc_turret_floor" then
+                                    ent:GetPhysicsObject():EnableMotion(true)
+                                end
                                 return true
                             else
                                 return false
@@ -357,6 +360,16 @@ net.Receive("Horde_BuyItem", function (len, ply)
             net.Send(ply)
             ply:SyncEconomy()
         end
+    end
+end)
+
+hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
+    if ent:GetNWEntity("HordeOwner") and ent:GetClass() == "npc_turret_floor" then
+        -- Turrets should always stay straight.
+        local a = ent:GetAngles()
+        ent:SetAngles(Angle(0, a.y, 0))
+        ent:DropToFloor()
+        timer.Simple(0.5, function() ent:GetPhysicsObject():EnableMotion(false) end)
     end
 end)
 
@@ -494,6 +507,8 @@ net.Receive("Horde_SelectClass", function (len, ply)
                     end
                     ent:SetMaxHealth(ent:GetMaxHealth() * 2)
                     ent:SetHealth(ent:GetMaxHealth())
+                    ent:GetPhysicsObject():EnableMotion(false)
+                    ent:DropToFloor()
                 end
             end)
         end)
