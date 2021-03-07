@@ -609,8 +609,17 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             end
         end
 
-        -- Global Wave End Bonus
+        -- Global Wave End Effects
         for _, ply in pairs(player.GetAll()) do
+            -- Minion life recovery
+            if HORDE.player_drop_entities[ply:SteamID()] then
+                for _, ent in pairs(HORDE.player_drop_entities) do
+                    if ent:IsNPC() then
+                        ent:SetHealth(ent:GetMaxHealth())
+                    end
+                end
+            end
+            -- Round bonus
             ply:AddHordeMoney(HORDE.round_bonus_base)
             ply:SyncEconomy()
         end
