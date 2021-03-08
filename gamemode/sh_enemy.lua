@@ -329,7 +329,8 @@ if SERVER then
         GetEnemiesData()
     end
 
-    net.Receive("Horde_SetEnemiesData", function ()
+    net.Receive("Horde_SetEnemiesData", function (len, ply)
+        if not ply:IsSuperAdmin() then return end
         HORDE.enemies = net.ReadTable()
         HORDE.SetEnemiesData()
     end)

@@ -85,7 +85,7 @@ HORDE.CreateClasses = function()
     HORDE.CreateClass(
         "Engineer",
         "100% increased minion health and damage.\n\n",
-        "Turrets you build have 500 base health and deals 20 base damage.\n\nHave access to special weapons and equipment.",
+        "Turrets you build have 500 base health and deals 18 base damage.\n\nHave access to special weapons and equipment.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -156,7 +156,8 @@ if SERVER then
 
     SyncClasses()
     
-    net.Receive("Horde_SetClassData", function ()
+    net.Receive("Horde_SetClassData", function (len, ply)
+        if not ply:IsSuperAdmin() then return end
         HORDE.classes = net.ReadTable()
         HORDE.SetClassData()
         SyncClasses()
