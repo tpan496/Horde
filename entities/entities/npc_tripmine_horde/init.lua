@@ -5,12 +5,14 @@ ENT.Damage = 200
 ENT.Radius = 200
 
 function ENT:Detonate()
+	self.Detonated = true
+	local pos = self:GetPos()
 	local eff = EffectData()
-    eff:SetStart(self:GetPos())
-    eff:SetOrigin(self:GetPos())
+    eff:SetStart(pos)
+    eff:SetOrigin(pos)
     util.Effect("Explosion", eff)
 
-	util.BlastDamage(self, self:GetHordeOwner(), self:GetPos(), self.Radius, self.Damage)
+	util.BlastDamage(self, self:GetHordeOwner(), pos, self.Radius, self.Damage)
 	self:Remove()
 end
 
@@ -24,7 +26,7 @@ function ENT:Trigger()
 end
 
 function ENT:OnTakeDamage(dmginfo)
-	if not self.Armed then return end
+	if not self.Armed or self.Detonated then return end
 	local attacker, inflictor = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 
 	if not IsValid(inflictor) or inflictor == self then return end
@@ -35,7 +37,7 @@ function ENT:OnTakeDamage(dmginfo)
 		return
 	end
 
-	if IsValid(attacker) and (attacker:IsNPC() or attacker == owner) then
+	if IsValid(attacker) and (attacker:IsNPC() and not IsValid(attacker:GetNWEntity("HordeOwner")) or attacker == owner) then
 		self:Detonate()
 	end
 end
