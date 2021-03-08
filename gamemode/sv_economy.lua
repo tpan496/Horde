@@ -493,7 +493,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
             if not ply:IsValid() then return end
             if npc:IsValid() and dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
                 if dmg:GetAttacker():GetClass() == "npc_turret_floor" then
-                    dmg:SetDamage(20)
+                    dmg:SetDamage(18)
                 end
                 dmg:ScaleDamage(2)
             end
