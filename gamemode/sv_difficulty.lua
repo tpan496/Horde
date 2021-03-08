@@ -77,15 +77,14 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             dmg:SetDamage(math.min(dmg:GetDamage(), 20))
         end
     elseif target:GetNWEntity("HordeOwner"):IsPlayer() then
-        if dmg:GetDamageType() == DMG_POISON or dmg:GetDamageType() == DMG_NERVEGAS then
-            dmg:SetDamage(math.min(dmg:GetDamage(), difficulty_poison_headcrab_damage[HORDE.difficulty]))
-            return
-        end
-
         if (dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer()) then
             -- Prevent player / player minions from damaging minions
             return true
         else
+            if dmg:GetDamageType() == DMG_POISON or dmg:GetDamageType() == DMG_NERVEGAS then
+                dmg:SetDamage(math.min(dmg:GetDamage(), difficulty_poison_headcrab_damage[HORDE.difficulty]))
+            end
+            
             if target:GetClass() == "npc_turret_floor" then
                 dmg:SetDamageForce(Vector(0,0,0))
                 target:SetHealth(target:Health() - dmg:GetDamage())
