@@ -1,7 +1,6 @@
 AddCSLuaFile()
 
 ENT.Type = "anim"
-ENT.SWEP = "weapon_slam"
 
 function ENT:Initialize()
 	timer.Simple(2, function()

@@ -1,6 +1,7 @@
 AddCSLuaFile("cl_init.lua")
 include("shared.lua")
 
+ENT.SWEP = "weapon_slam"
 ENT.Damage = 200
 ENT.Radius = 200
 
@@ -19,7 +20,7 @@ end
 local snd = Sound("npc/roller/mine/rmine_predetonate.wav")
 function ENT:Trigger()
 	self:SetTriggered(true)
-	self:EmitSound(snd)
+	self:EmitSound(snd, 65)
 	timer.Simple(1, function()
 		if IsValid(self) then self:Detonate() end
 	end)
@@ -60,6 +61,7 @@ hook.Add("OnEntityCreated", "Horde_TripMineReplacement", function(ent)
 end)
 
 local reuse = CreateConVar("horde_tripmine_reusable", 1, FCVAR_SERVER_CAN_EXECUTE, "Can tripwire mines(SLAM's) be picked up after being armed?")
+local defuse = Sound("weapons/c4/c4_disarm.wav")
 function ENT:Use(ply)
 	local owner = self:GetHordeOwner()
 	if reuse:GetBool() == false then return end
@@ -71,8 +73,9 @@ function ENT:Use(ply)
 	local item = HORDE.items[self.SWEP]
 	if not item or ply:GetHordeWeight() - item.weight < 0 or not item.whitelist[ply:GetHordeClass().name] then return end
 
+	self:EmitSound(defuse, 60)
 	self:Remove()
-	ply:GiveAmmo(1, "slam")
+	ply:GiveAmmo(1, "slam", true)
 	if not IsValid(ply:GetWeapon(self.SWEP)) then
 		ply:Give(self.SWEP, true)
 	end
