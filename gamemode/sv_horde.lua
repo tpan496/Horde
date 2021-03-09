@@ -1,6 +1,3 @@
-if CLIENT then return end
--- HORDE SERVER
-
 util.AddNetworkString("Horde_HighlightEntities")
 util.AddNetworkString("Horde_GameEnd")
 

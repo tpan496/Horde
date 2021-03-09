@@ -1,5 +1,3 @@
-if CLIENT then return end
-
 util.AddNetworkString("Horde_ForceCloseShop")
 util.AddNetworkString("Horde_ToggleShop")
 util.AddNetworkString("Horde_ToggleConfigMenu")

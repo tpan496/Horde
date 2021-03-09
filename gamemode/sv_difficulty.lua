@@ -1,5 +1,3 @@
-if CLIENT then return end
-
 -- Difficulty settings
 -- Rule: scale as difficulty/endless.
 -- 0 - normal, 1 - hard, 2 - realism

@@ -9,6 +9,9 @@ HORDE.categories = {"Melee", "Pistol", "SMG", "Shotgun", "Rifle", "MG", "Explosi
 HORDE.entity_categories = {"Special", "Equipment"}
 HORDE.arccw_attachment_categories = {"Optic", "Underbarrel", "Tactical", "Barrel", "Muzzle", "Magazine", "Stock", "Ammo Type", "Perk"}
 
+HORDE.max_weight = 15
+HORDE.default_ammo_price = 10
+
 HORDE.CreateItem = function (category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price, entity_properties)
     if category == nil or name == nil or class == nil or price == nil or weight == nil or description == nil then return end
     if name == "" or class == "" or whitelist == nil then return end
@@ -611,6 +614,3 @@ if SERVER then
     end)
 
 end
-
-HORDE.max_weight = 15
-HORDE.default_ammo_price = 10

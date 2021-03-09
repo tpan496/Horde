@@ -1,4 +1,3 @@
-if CLIENT then return end
 -- Manages player spawn/death settings
 
 util.AddNetworkString("Horde_Votemap")

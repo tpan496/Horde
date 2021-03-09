@@ -1,5 +1,3 @@
-if SERVER then return end
-
 if GetConVarNumber("horde_enable_scoreboard") == 0 then return end
 
 local scoreboard = {}

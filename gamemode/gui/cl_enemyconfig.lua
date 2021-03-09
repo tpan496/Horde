@@ -1,5 +1,3 @@
-if SERVER then return end
-
 local PANEL = {}
 
 function PANEL:Init()

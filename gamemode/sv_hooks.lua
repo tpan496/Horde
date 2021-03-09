@@ -1,5 +1,3 @@
-if CLIENT then return end
-
 -- Custom Horde Hooks for developers
 
 -- Called when a wave starts.
