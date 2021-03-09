@@ -49,7 +49,7 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_min_spawn_distance - Minimum enemy respawn distance. 400 by default.
 - horde_max_spawn_z_distance - Maximum enemy respawn height difference from players. 500 by default. If your map is huge and enemies spawn in extreme positions, turn this smaller.
 
-- horde_director_interval - How often the game director checks the state of the game (e.g. spawns stuff) in seconds. Default is 5.
+- horde_director_interval(>0, <10) - How often the game director checks the state of the game (e.g. spawns stuff) in seconds. Default is 5.
 
 **True maximum number of enemies alive = Minimum of (Max, Base + Scale Factor * PlayerCount)**
 - horde_max_enemies_alive_base - Base. Default is 20.
