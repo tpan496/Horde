@@ -7,7 +7,7 @@ function ENT:Initialize()
 
     if IsMounted("cstrike") then
         self:SetModel("models/props/cs_assault/Money.mdl")
-        self:PhysicsInit(SOLID_VPHYSICS)
+        self:PhysicsInitBox(Vector(-1, -1, -1), Vector(1, 1, 1))
     else
         self:SetColor(Color(0, 255, 0))
         self:SetModel("models/items/flare.mdl")
