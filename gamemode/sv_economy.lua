@@ -1,5 +1,3 @@
-if CLIENT then return end
-
 concommand.Add("horde_drop_money", function (ply, cmd, args)
     ply:DropHordeMoney()
 end)

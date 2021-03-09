@@ -1,4 +1,3 @@
-if SERVER then return end
 surface.CreateFont("Title", { font = "arial bold", size = 30 })
 surface.CreateFont("Warning", { font = "arial bold", size = 30, strikeout = true })
 surface.CreateFont("Content", { font = "arial bold", size = 20 })

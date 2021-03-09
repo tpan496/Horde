@@ -1,5 +1,3 @@
-if SERVER then return end
-
 local Player = FindMetaTable("Player")
 
 function Player:GetHordeMoney()
