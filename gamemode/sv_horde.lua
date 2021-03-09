@@ -323,7 +323,7 @@ end
 -- Referenced some spawning mechanics from Zombie Invasion+
 local director_interval = 5
 if GetConVarNumber("horde_director_interval") then
-    director_interval = GetConVarNumber("horde_director_interval")
+    director_interval = math.max(9, GetConVarNumber("horde_director_interval"))
 end
 
 -- Game Director. The CORE of this addon.

@@ -267,8 +267,8 @@ end)
 net.Receive("Horde_BuyItem", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
-    local price = net.ReadInt(16)
-    local weight = net.ReadInt(16)
+    local price = HORDE.items[class].price
+    local weight = HORDE.items[class].weight
     if ply:GetHordeMoney() >= price and ply:GetHordeWeight() >= weight then
         if class == "armor" then
             ply:SetArmor(100)
@@ -572,7 +572,6 @@ end)
 net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
-    local price = net.ReadInt(16)
     local count = net.ReadInt(16)
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
@@ -582,6 +581,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         return
     end
     
+    local price = HORDE.items[class].ammo_price * count
     if ply:GetHordeMoney() >= price then
         ply:AddHordeMoney(-price)
         local wpn = ply:GetWeapon(class)
@@ -593,7 +593,6 @@ end)
 net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
-    local price = net.ReadInt(16)
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You don't have this weapon!")
@@ -602,6 +601,7 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         return
     end
     
+    local price = HORDE.items[class].secondary_ammo_price
     if ply:GetHordeMoney() >= price then
         ply:AddHordeMoney(-price)
         local wpn = ply:GetWeapon(class)
