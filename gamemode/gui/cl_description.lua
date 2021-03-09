@@ -140,7 +140,7 @@ function PANEL:AmmoDoClick(count)
     -- Buy the item
     net.Start("Horde_BuyItemAmmoPrimary")
     net.WriteString(self.item.class)
-    net.WriteInt(count,16)
+    net.WriteInt(count,4)
     net.SendToServer()
 end
 
