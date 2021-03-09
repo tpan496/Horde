@@ -169,8 +169,8 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     
     local ready_count = 0
     local total_player = 0
-    for _, ply in pairs(player.GetAll()) do
-        if HORDE.player_ready[ply] == 1 then
+    for _, other_ply in pairs(player.GetAll()) do
+        if HORDE.player_ready[other_ply] == 1 then
             ready_count = ready_count + 1
         end
         total_player = total_player + 1

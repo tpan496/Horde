@@ -285,9 +285,8 @@ function SpawnEnemy(enemy, pos)
     end
 
     -- This is experimental
-    --spawned_enemy:SetSquad("horde")
     --spawned_enemy:AddRelationship("player D_HT 99")
-
+    hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy
 end
 
@@ -648,7 +647,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
         for _, ply in pairs(player.GetAll()) do
             -- Minion life recovery
             if HORDE.player_drop_entities[ply:SteamID()] then
-                for _, ent in pairs(HORDE.player_drop_entities) do
+                for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
                     if ent:IsNPC() then
                         ent:SetHealth(ent:GetMaxHealth())
                     end

@@ -117,16 +117,7 @@ HORDE.GiveAmmo = function (ply, wpn, count)
         return true
     else
         -- Give 1 piece of this ammo since clip size do not apply
-        local rpg_round = 8
-        local smg1_grenade = 9
-        local ar2altfire = 2
-        local xbowbolt = 6
-        local grenade = 10
-        local slam = 11
-
-        -- Some ammo type from mods
-        local rust_syringe = 40
-        if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam or ammo_id == rust_syringe then
+        if ammo_id >= 1 then
             ply:GiveAmmo(count, ammo_id, false)
             return true
         end
