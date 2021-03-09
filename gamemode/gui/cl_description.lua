@@ -119,8 +119,6 @@ function PANEL:DoClick()
     -- Buy the item
     net.Start("Horde_BuyItem")
     net.WriteString(self.item.class)
-    net.WriteInt(self.item.price, 16)
-    net.WriteInt(self.item.weight, 16)
     net.SendToServer()
 end
 
@@ -133,7 +131,6 @@ function PANEL:AmmoDoClick(count)
         -- Buy the item
         net.Start("Horde_BuyItemAmmoSecondary")
         net.WriteString(self.item.class)
-        net.WriteInt(self.item.secondary_ammo_price,16)
         net.SendToServer()
         return
     end
@@ -143,7 +140,6 @@ function PANEL:AmmoDoClick(count)
     -- Buy the item
     net.Start("Horde_BuyItemAmmoPrimary")
     net.WriteString(self.item.class)
-    net.WriteInt(price,16)
     net.WriteInt(count,16)
     net.SendToServer()
 end
