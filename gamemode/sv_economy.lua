@@ -226,10 +226,14 @@ end)
 hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
     if not ply:IsValid() then return end
     if ply:IsNPC() then return end
-    if HORDE.items[wpn:GetClass()] then
-        local item = HORDE.items[wpn:GetClass()]
+    local class = wpn:GetClass()
+    if HORDE.items[class] then
+        local item = HORDE.items[class]
         ply:AddHordeWeight(item.weight)
         ply:SyncEconomy()
+    end
+    if ply:GetHordeClass().name == "Demolition" and class == "weapon_frag" then
+        wpn:Remove()
     end
 end)
 
@@ -468,7 +472,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
         timer.Create("Horde_Demolition" .. ply:SteamID(), 30, 0, function ()
             if not ply:IsValid() then return end
             if not ply:HasWeapon("weapon_frag") then
-                ply:Give("weapon_frag")
+                ply:Give("weapon_frag", ply:GetAmmoCount("Grenade") > 0)
             end
         end)
         hook.Add("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID(), function (target, dmg)
