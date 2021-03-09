@@ -224,10 +224,14 @@ end)
 hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
     if not ply:IsValid() then return end
     if ply:IsNPC() then return end
-    if HORDE.items[wpn:GetClass()] then
-        local item = HORDE.items[wpn:GetClass()]
+    local class = wpn:GetClass()
+    if HORDE.items[class] then
+        local item = HORDE.items[class]
         ply:AddHordeWeight(item.weight)
         ply:SyncEconomy()
+    end
+    if ply:GetHordeClass().name == "Demolition" and class == "weapon_frag" then
+        wpn:Remove()
     end
 end)
 
@@ -374,7 +378,14 @@ end)
 net.Receive("Horde_SellItem", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
-    
+    local canSell, why = hook.Call("CanSell", HORDE, ply, class)
+    if canSell == false then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString(why or "You can't sell this.")
+        net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
     if ply:HasWeapon(class) then
         local item = HORDE.items[class]
         ply:AddHordeMoney(math.floor(item.price * 0.25))
@@ -466,7 +477,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
         timer.Create("Horde_Demolition" .. ply:SteamID(), 30, 0, function ()
             if not ply:IsValid() then return end
             if not ply:HasWeapon("weapon_frag") then
-                ply:Give("weapon_frag")
+                ply:Give("weapon_frag", ply:GetAmmoCount("Grenade") > 0)
             end
         end)
         hook.Add("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID(), function (target, dmg)
@@ -601,3 +612,11 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         end
     end
 end)
+
+function HORDE:CanSell(ply, class)
+    if ply:GetHordeClass().name == "Demolition" and class == "weapon_frag" then
+        return false, "You can't sell grenades as Demolition class!"
+    end
+
+    return true
+end
