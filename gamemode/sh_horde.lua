@@ -5,7 +5,6 @@ CreateConVar("horde_max_wave", 10, FCVAR_SERVER_CAN_EXECUTE, "Max waves.")
 CreateConVar("horde_break_time", 60, FCVAR_SERVER_CAN_EXECUTE, "Break time between waves.")
 CreateConVar("horde_enable_shop", 1, FCVAR_SERVER_CAN_EXECUTE, "Enables shop menu or not.")
 CreateConVar("horde_enable_client_gui", 1, FCVAR_SERVER_CAN_EXECUTE, "Enables client information ui or not.")
---CreateConVar("horde_enable_respawn", 0, FCVAR_SERVER_CAN_EXECUTE, "Players can respawn after death during a wave.")
 CreateConVar("horde_max_spawn_distance", 2000, FCVAR_SERVER_CAN_EXECUTE, "Maximum enenmy respawn distance.")
 CreateConVar("horde_min_spawn_distance", 400, FCVAR_SERVER_CAN_EXECUTE, "Minimum enenmy respawn distance.")
 CreateConVar("horde_max_spawn_z_distance", 500, FCVAR_SERVER_CAN_EXECUTE, "Maximum enemy respawn height difference with players.")
@@ -32,6 +31,8 @@ CreateConVar("horde_endless", 0, FCVAR_SERVER_CAN_EXECUTE, "Endless.")
 CreateConVar("horde_total_enemies_scaling", 0, FCVAR_SERVER_CAN_EXECUTE, "Forces the gamemode to multiply maximum enemy count by this.")
 
 CreateConVar("horde_arccw_attinv_free", 1, FCVAR_SERVER_CAN_EXECUTE, "Free ArcCW attachments.")
+
+CreateConVar("horde_ready_countdown_percentage", 0.5, FCVAR_SERVER_CAN_EXECUTE, "Percentage of players required to start the 60 second countdown (0-1).")
 
 if SERVER then
 util.AddNetworkString("Horde_PlayerInit")
