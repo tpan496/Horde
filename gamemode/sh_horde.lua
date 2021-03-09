@@ -32,7 +32,7 @@ CreateConVar("horde_total_enemies_scaling", 0, FCVAR_SERVER_CAN_EXECUTE, "Forces
 
 CreateConVar("horde_arccw_attinv_free", 1, FCVAR_SERVER_CAN_EXECUTE, "Free ArcCW attachments.")
 
-CreateConVar("horde_ready_countdown_percentage", 0.5, FCVAR_SERVER_CAN_EXECUTE, "Percentage of players required to start the 60 second countdown (0-1).")
+CreateConVar("horde_ready_countdown_ratio", 0.5, FCVAR_SERVER_CAN_EXECUTE, "Ratio of players required to start the 60 second countdown (0-1).")
 
 if SERVER then
 util.AddNetworkString("Horde_PlayerInit")
