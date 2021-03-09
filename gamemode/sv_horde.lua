@@ -285,9 +285,8 @@ function SpawnEnemy(enemy, pos)
     end
 
     -- This is experimental
-    --spawned_enemy:SetSquad("horde")
     --spawned_enemy:AddRelationship("player D_HT 99")
-
+    hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy
 end
 
