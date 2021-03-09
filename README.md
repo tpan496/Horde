@@ -56,6 +56,9 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_max_enemies_alive_scale_factor - Scale factor. Default is 5.
 - horde_max_enemies_alive_max - Max. Default is 50.
 
+#### Voting Settings
+- horde_ready_countdown_ratio(0-1) - Ratio of players required to start the game (0-1).
+
 ## Creating Config Addons
 Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily. Note that class descriptions changes are not available yet in external lua configs, because they may be subject to huge changes.
 
