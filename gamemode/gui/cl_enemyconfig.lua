@@ -119,9 +119,52 @@ function PANEL:Init()
             editor:SetPos(110, 10)
             return editor
         elseif name == "is boss" then
+            local editors = {}
             local editor = vgui.Create("DCheckBox", panel)
             editor:SetPos(110, 10)
-            return editor
+            editor:DockMargin(0,37,0,37)
+            editor:Dock(LEFT)
+            function editor:OnChange(bVal)
+                for _, other_editor in pairs(editors) do
+                    other_editor:SetVisible(bVal)
+                end
+            end
+
+            local end_wave_toggle = vgui.Create("DCheckBoxLabel", panel)
+            end_wave_toggle:SetText("End wave after defeated")
+            end_wave_toggle:SetPos(100 + 50, 23)
+            end_wave_toggle:SetTextColor(color_black)
+            end_wave_toggle:SetVisible(false)
+            table.insert(editors, end_wave_toggle)
+
+            local unlimited_enemies_spawn_editor = vgui.Create("DCheckBoxLabel", panel)
+            unlimited_enemies_spawn_editor:SetText("Unlimited enemies spawn during wave")
+            unlimited_enemies_spawn_editor:SetPos(100 + 50, 43)
+            unlimited_enemies_spawn_editor:SetTextColor(color_black)
+            unlimited_enemies_spawn_editor:SetVisible(false)
+            table.insert(editors, unlimited_enemies_spawn_editor)
+
+            local enemies_spawn_threshold_label = vgui.Create("DLabel", panel)
+            enemies_spawn_threshold_label:SetText("Spawn enemies after health dropped to ")
+            enemies_spawn_threshold_label:SetPos(100 + 50, 63)
+            enemies_spawn_threshold_label:SetTextColor(color_black)
+            enemies_spawn_threshold_label:SetWide(200)
+            enemies_spawn_threshold_label:SetVisible(false)
+            table.insert(editors, enemies_spawn_threshold_label)
+            local enemies_spawn_threshold_editor = vgui.Create("DTextEntry", panel)
+            enemies_spawn_threshold_editor:SetNumeric(true)
+            enemies_spawn_threshold_editor:SetPos(100 + 45 + 200, 63)
+            enemies_spawn_threshold_editor:SetWide(25)
+            enemies_spawn_threshold_editor:SetVisible(false)
+            table.insert(editors, enemies_spawn_threshold_editor)
+            local enemies_spawn_threshold_percentage_label = vgui.Create("DLabel", panel)
+            enemies_spawn_threshold_percentage_label:SetText("* max health")
+            enemies_spawn_threshold_percentage_label:SetPos(100 + 50 + 200 + 25, 63)
+            enemies_spawn_threshold_percentage_label:SetTextColor(color_black)
+            enemies_spawn_threshold_percentage_label:SetVisible(false)
+            table.insert(editors, enemies_spawn_threshold_percentage_label)
+
+            return {editor=editor, unlimited_enemies_spawn_editor=unlimited_enemies_spawn_editor, enemies_spawn_threshold_editor=enemies_spawn_threshold_editor}
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(150, height)
@@ -145,7 +188,7 @@ function PANEL:Init()
     local color_editor = create_property_editor("color", 130, basic_modifier_panel)
     
     local elite_editor = create_property_editor("is elite", 35, elite_modifier_panel)
-    local boss_editor = create_property_editor("is boss", 35, elite_modifier_panel)
+    local boss_editor = create_property_editor("is boss", 100, elite_modifier_panel)
 
     if GetConVarNumber("horde_default_enemy_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
