@@ -70,6 +70,7 @@ HORDE.max_spawn_distance = math.max(100, GetConVarNumber("horde_max_spawn_distan
 HORDE.min_spawn_distance = math.max(100, GetConVarNumber("horde_min_spawn_distance"))
 HORDE.max_enemies_alive = 20
 HORDE.spawned_enemies = {}
+HORDE.spawned_enemies_count = {}
 HORDE.ai_nodes = {}
 HORDE.found_ai_nodes = false
 HORDE.enemy_spawn_z = 6
