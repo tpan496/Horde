@@ -201,7 +201,7 @@ end
 function SpawnEnemy(enemy, pos)
     local npc_info = list.Get("NPC")[enemy.class]
     if not npc_info then
-        print("NPC does not exist in ", list.Get("NPC"))
+        print("[HORDE] NPC does not exist in ", list.Get("NPC"))
     end
 
     local spawned_enemy = ents.Create(enemy.class)
@@ -271,8 +271,8 @@ function SpawnEnemy(enemy, pos)
         if enemy.weapon == "" or enemy.weapon == "_gmod_none" then
             -- Do nothing
         elseif enemy.weapon == "_gmod_default" then
-            if npc_info["Weapons"] then
-                local wpns = npc_info["Weapons"]
+            local wpns = npc_info["Weapons"]
+            if wpns then
                 local wpn = wpns[math.random(#wpns)]
                 spawned_enemy:Give(wpn)
             end
