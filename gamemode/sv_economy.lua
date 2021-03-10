@@ -319,6 +319,17 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
                         ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
                     end)
+
+                    local npc_info = list.Get("NPC")[ent:GetClass()]
+                    if not npc_info then
+                        print("[HORDE] NPC does not exist in ", list.Get("NPC"))
+                    end
+
+                    local wpns = npc_info["Weapons"]
+                    if wpns then
+                        local wpn = wpns[math.random(#wpns)]
+                        ent:Give(wpn)
+                    end
                 end
                 ent:CallOnRemove("Horde_EntityRemoved", function()
                     if ent:IsValid() and ply:IsValid() then
