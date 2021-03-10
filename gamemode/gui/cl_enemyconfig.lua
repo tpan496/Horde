@@ -425,7 +425,7 @@ function PANEL:Paint(w, h)
     surface.SetDrawColor(Color(17,148,240))
     surface.DrawRect(0, 0, w, 40)
 
-    draw.SimpleText("Enemy Config (Some settings require restart to take effect)", "DermaLarge", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Enemy Config (Some settings require restart to take effect)", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("HordeEnemyConfig", PANEL, "EditablePanel")

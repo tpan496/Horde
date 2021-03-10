@@ -96,11 +96,6 @@ HORDE.OnNPCKilled = function (victim, killer, weapon)
             killer:SyncEconomy()
         end
 
-        local count = HORDE.spawned_enemies_count[victim:GetHordeName()]
-        if count and count > 0 then
-            HORDE.spawned_enemies_count[victim:GetHordeName()] = count - 1
-        end
-
         victim:SetHordeMostRecentAttacker(nil)
     end
 end
@@ -170,6 +165,10 @@ hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
             HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
             HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
             --print("OnRemove", "[HORDE] Remove ", ent:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+            local count = HORDE.spawned_enemies_count[ent:GetHordeName()]
+            if count and count > 0 then
+                HORDE.spawned_enemies_count[ent:GetHordeName()] = count - 1
+            end
         end
     end
 end)
@@ -213,6 +212,7 @@ HORDE.HardResetEnemies = function ()
             enemy:Remove()
         end
     end
+    HORDE.spawned_enemies_count = {}
 end
 
 function SpawnEnemy(enemy, name, pos)
