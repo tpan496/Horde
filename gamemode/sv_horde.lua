@@ -558,6 +558,10 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                         p_cum = p_cum + weight
                         if p <= p_cum then
                             local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
+                            if enemy.spawn_limit and enemy.spawn_limit > 0 then
+                                -- Do not spawn if exceeds spawn limit
+                                
+                            end
                             spawned_enemy = SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
                             table.insert(enemies, spawned_enemy)
                             break
