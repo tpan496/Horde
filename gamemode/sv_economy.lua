@@ -330,6 +330,11 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         local wpn = wpns[math.random(#wpns)]
                         ent:Give(wpn)
                     end
+
+                    -- Special case for turrets
+                    if ent:GetClass() == "npc_turret_floor" then
+                        HORDE:DropTurret(ent)
+                    end
                 end
                 ent:CallOnRemove("Horde_EntityRemoved", function()
                     if ent:IsValid() and ply:IsValid() then
@@ -363,7 +368,7 @@ end)
 
 function GM:PlayerUse(other_ply, target)    -- This will make it to be default behaviour, that can be overridden by other addons hooks. Let's hope they won't return true >.>
     local owner = target:GetNWEntity("HordeOwner")
-    if not IsValid(owner) or other_ply != owner then return false end   -- If owner disconnected/not valid, why would we care about ownership?
+    if not IsValid(owner) or other_ply ~= owner then return false end   -- If owner disconnected/not valid, why would we care about ownership?
 
     if target:GetClass() == "npc_turret_floor" then
         target:GetPhysicsObject():EnableMotion(true)
@@ -372,13 +377,31 @@ function GM:PlayerUse(other_ply, target)    -- This will make it to be default b
     return true
 end
 
+function HORDE:DropTurret(ent)
+    local turret_pos = ent:GetPos()
+    local tr = util.TraceLine({
+        start = turret_pos,
+        endpos = turret_pos + Vector(0,0,-1) * 1000,
+        filter = ent,
+        collisiongroup =  COLLISION_GROUP_WORLD
+    })
+    
+    if IsValid(tr.Entity) or tr.HitWorld then
+        local dist_sqr = turret_pos:DistToSqr(tr.HitPos)
+        -- If you drop turrets from somewhere too high, they will just fall over.
+        if dist_sqr >= 40000 then return end
+        ent:SetPos(Vector(turret_pos.x, turret_pos.y, tr.HitPos.z + 15))
+        ent:DropToFloor()
+        timer.Simple(0.5, function() ent:GetPhysicsObject():EnableMotion(false) end)
+    end
+end
+
 hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
     if ent:GetNWEntity("HordeOwner") and ent:GetClass() == "npc_turret_floor" then
         -- Turrets should always stay straight.
         local a = ent:GetAngles()
         ent:SetAngles(Angle(0, a.y, 0))
-        ent:DropToFloor()
-        timer.Simple(0.5, function() ent:GetPhysicsObject():EnableMotion(false) end)
+        HORDE:DropTurret(ent)
     end
 end)
 
@@ -523,8 +546,6 @@ net.Receive("Horde_SelectClass", function (len, ply)
                     end
                     ent:SetMaxHealth(ent:GetMaxHealth() * 2)
                     ent:SetHealth(ent:GetMaxHealth())
-                    ent:GetPhysicsObject():EnableMotion(false)
-                    ent:DropToFloor()
                 end
             end)
         end)
