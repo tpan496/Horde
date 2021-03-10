@@ -20,6 +20,7 @@ include("gui/cl_scoreboard.lua")
 -- Some users report severe lag with halo
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
 
+-- Basic user ui
 local center_panel = vgui.Create("DPanel")
 center_panel:SetSize(350, 50)
 center_panel:SetPos(25, 80)
@@ -60,6 +61,15 @@ timer.Simple(5, function ()
         surface.DrawTexturedRect(290, 5, 40, 40)
     end
 end)
+
+local boss_hp_bar = vgui.Create("DPanel")
+boss_hp_bar:SetSize(ScrW() - 400 * 2, 60)
+boss_hp_bar:SetPos(ScrW() / 2 - boss_hp_bar:GetWide() / 2, 25)
+boss_hp_bar.Paint = function()
+    draw.RoundedBox(10, 0, 0, boss_hp_bar:GetWide(), 35, HORDE.color_hollow)
+    draw.RoundedBox(10, 0, 0, boss_hp_bar:GetWide() * 2 /3, 35, HORDE.color_crimson)
+    draw.SimpleTextOutlined("Alpha Gonome", "Trebuchet24", boss_hp_bar:GetWide() / 2, 50, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 5, color_black)
+end
 
 function HORDE:ToggleShop()
     if not HORDE.ShopGUI then
