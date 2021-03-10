@@ -579,7 +579,7 @@ end)
 net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
-    local count = net.ReadInt(4)
+    local count = net.ReadUInt(4)
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You don't have this weapon!")

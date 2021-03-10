@@ -314,7 +314,7 @@ hook.Add("Move", "Horde_move", function (ply, mv)
     end
 end)
 
-hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", function(victim, inflictor, attacker)
+local function Horde_DeathSpectatingFunction(victim, inflictor, attacker)
     if not HORDE.start_game or HORDE.current_break_time > 0 then return end
     timer.Simple(1, function()
         if victim:IsValid() then
@@ -322,7 +322,9 @@ hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", function(victim, inflic
             victim:SetMoveType(MOVETYPE_OBSERVER)
         end
     end)
-end)
+end
+hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
+hook.Add("PlayerSilentDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
 
 function CheckAlivePlayers()
     local aliveplayers = 0
@@ -352,7 +354,7 @@ end
 hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function (ply)
     if HORDE.start_game and HORDE.current_break_time <= 0 then
         if ply:IsValid() then
-            ply:Kill()
+            ply:KillSilent()
             net.Start("Horde_LegacyNotification")
             net.WriteString("You will respawn next wave.")
             net.Send(ply)
