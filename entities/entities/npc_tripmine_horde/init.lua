@@ -47,7 +47,7 @@ end
 
 hook.Add("OnEntityCreated", "Horde_TripMineReplacement", function(ent)
     if ent:GetClass() == "npc_tripmine" then
-        timer.Simple(0, function()
+        timer.Simple(0.5, function()
             if not IsValid(ent) then return end
             local owner = ent:GetInternalVariable("m_hOwner")
             local ent2 = ents.Create("npc_tripmine_horde")
