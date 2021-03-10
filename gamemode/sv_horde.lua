@@ -15,6 +15,14 @@ function entmeta:GetHordeMostRecentAttacker()
 	return self.most_recent_attacker
 end
 
+function entmeta:SetHordeName(name)
+    self.horde_name = name
+end
+
+function entmeta:GetHordeName()
+    return self.horde_name
+end
+
 hook.Add("Initialize", "Horde_Init", function()
     HORDE.ai_nodes = {}
     HORDE.spawned_enemies = {}
@@ -55,16 +63,19 @@ HORDE.OnNPCKilled = function (victim, killer, weapon)
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
         --print("OnKill", "[HORDE] Killing ", HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
         HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
+        
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
             net.Start("Horde_HighlightEntities")
             net.WriteInt(HORDE.render_highlight_enemies, 3)
             net.Broadcast()
         end
+        
         if HORDE.endless == 1 then
             BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         else
             BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         end
+        
         if killer:IsPlayer() or killer:GetNWEntity("HordeOwner"):IsPlayer() then
             if killer:GetNWEntity("HordeOwner"):IsPlayer() then killer = killer:GetNWEntity("HordeOwner") end
             local scale = 1
@@ -84,6 +95,12 @@ HORDE.OnNPCKilled = function (victim, killer, weapon)
             killer:AddFrags(1)
             killer:SyncEconomy()
         end
+
+        local count = HORDE.spawned_enemies_count[victim:GetHordeName()]
+        if count and count > 0 then
+            HORDE.spawned_enemies_count[victim:GetHordeName()] = count - 1
+        end
+
         victim:SetHordeMostRecentAttacker(nil)
     end
 end
@@ -198,7 +215,7 @@ HORDE.HardResetEnemies = function ()
     end
 end
 
-function SpawnEnemy(enemy, pos)
+function SpawnEnemy(enemy, name, pos)
     local npc_info = list.Get("NPC")[enemy.class]
     if not npc_info then
         print("NPC does not exist in ", list.Get("NPC"))
@@ -210,6 +227,7 @@ function SpawnEnemy(enemy, pos)
     spawned_enemy:Spawn()
 
     HORDE.spawned_enemies[spawned_enemy:EntIndex()] = true
+    spawned_enemy:SetHordeName(name)
 
     if npc_info["Model"] then
         spawned_enemy:SetModel(npc_info["Model"])
@@ -560,12 +578,26 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                             local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
                             if enemy.spawn_limit and enemy.spawn_limit > 0 then
                                 -- Do not spawn if exceeds spawn limit
-                                
+                                local count = HORDE.spawned_enemies_count[name]
+                                if count and count >= enemy.spawn_limit then
+                                    goto cont
+                                else
+                                    spawned_enemy = SpawnEnemy(enemy, name, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                                    table.insert(enemies, spawned_enemy)
+                                    if count then
+                                        HORDE.spawned_enemies_count[name] = count + 1
+                                    else
+                                        HORDE.spawned_enemies_count[name] = 1
+                                    end
+                                end
+                            else
+                                spawned_enemy = SpawnEnemy(enemy, name, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                                table.insert(enemies, spawned_enemy)
                             end
-                            spawned_enemy = SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
-                            table.insert(enemies, spawned_enemy)
+                            
                             break
                         end
+                        ::cont::
                     end
                     
                     HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
@@ -658,6 +690,8 @@ timer.Create("Horde_Main", director_interval, 0, function ()
             ply:AddHordeMoney(HORDE.round_bonus_base)
             ply:SyncEconomy()
         end
+
+        HORDE.spawned_enemies_count = {}
 
         hook.Run("HordeWaveEnd", HORDE.current_wave)
     end
