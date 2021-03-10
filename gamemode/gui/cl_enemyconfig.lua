@@ -14,13 +14,26 @@ function PANEL:Init()
     close_btn:SetPos(self:GetWide() - 40, 6)
     close_btn.DoClick = function() HORDE:ToggleEnemyConfig() end
 
-    local modify_tab = vgui.Create("DScrollPanel", self)
-    modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
+    local modify_tab = vgui.Create("DCategoryList", self)
+    modify_tab:SetBackgroundColor(Color(230, 230, 230))
+    modify_tab:SetSize(self:GetWide() / 2 - 210, self:GetTall() - 40)
     modify_tab:SetPos(self:GetWide() / 2, 40)
 
-    local function create_property_editor(name, height)
-        local panel = vgui.Create("DPanel", modify_tab)
-        panel:DockPadding(10, 10, 10, 10)
+    local required_cat = modify_tab:Add("Required")
+    local required_panel = vgui.Create("DPanel", modify_tab)
+    required_cat:SetContents(required_panel)
+    local basic_modifier_cat = modify_tab:Add("Basic Modifiers")
+    local basic_modifier_panel = vgui.Create("DPanel", modify_tab)
+    basic_modifier_cat:SetContents(basic_modifier_panel)
+    basic_modifier_cat:SetExpanded(false)
+    local elite_modifier_cat = modify_tab:Add("Elite/Boss Modifiers")
+    local elite_modifier_panel = vgui.Create("DPanel", modify_tab)
+    elite_modifier_cat:SetContents(elite_modifier_panel)
+    elite_modifier_cat:SetExpanded(false)
+
+    local function create_property_editor(name, height, cat_panel)
+        local panel = vgui.Create("DPanel", cat_panel)
+        panel:DockPadding(10, 5, 10, 5)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
         panel.Paint = function ()
@@ -44,6 +57,30 @@ function PANEL:Init()
             for class, _ in pairs(npcs) do
                 editor:AddChoice(class)
             end
+
+            local editor_manual = vgui.Create("DTextEntry", panel)
+            editor_manual:SetSize(150, height-10)
+            editor_manual:SetPos(110, 5)
+            editor_manual:SetVisible(false)
+            function editor_manual:OnChange()
+                editor:SetValue(editor_manual:GetValue())
+            end
+
+            local manual_toggle = vgui.Create("DCheckBoxLabel", panel)
+            manual_toggle:SetText("Manual Input")
+            manual_toggle:SetPos(150 + 100 + 20, 10)
+            manual_toggle:SetTextColor(Color(0,0,0))
+
+            function manual_toggle:OnChange(bVal)
+                if bVal then
+                    editor_manual:SetVisible(true)
+                    editor:SetVisible(false)
+                else
+                    editor_manual:SetVisible(false)
+                    editor:SetVisible(true)
+                end
+            end
+
             return editor
         elseif name == "wave" then
             local editor = vgui.Create("DComboBox", panel)
@@ -54,12 +91,6 @@ function PANEL:Init()
             for i = 1, 10 do
                 editor:AddChoice(i)
             end
-            return editor
-        elseif name == "elite" then
-            local editor = vgui.Create("DCheckBox", panel)
-            editor:DockPadding(10, 10, 10, 10)
-            editor:Dock(LEFT)
-            editor:SetWide(30)
             return editor
         elseif name == "color" then
             local editor1 = vgui.Create("DCheckBoxLabel", panel)
@@ -83,6 +114,14 @@ function PANEL:Init()
             editor:AddChoice("_gmod_default")
             editor:AddChoice("_gmod_none")
             return editor
+        elseif name == "is elite" then
+            local editor = vgui.Create("DCheckBox", panel)
+            editor:SetPos(110, 10)
+            return editor
+        elseif name == "is boss" then
+            local editor = vgui.Create("DCheckBox", panel)
+            editor:SetPos(110, 10)
+            return editor
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(150, height)
@@ -92,17 +131,21 @@ function PANEL:Init()
         end
     end
 
-    local name_editor = create_property_editor("name", 45)
-    local class_editor = create_property_editor("class", 45)
-    local weight_editor = create_property_editor("weight", 45)
-    local wave_editor = create_property_editor("wave", 45)
-    local elite_editor = create_property_editor("elite", 45)
-    local health_editor = create_property_editor("health scaling", 45)
-    local damage_editor = create_property_editor("damage scaling", 45)
-    local reward_editor = create_property_editor("reward scaling", 45)
-    local model_scale_editor = create_property_editor("model scaling", 45)
-    local weapon_editor = create_property_editor("weapon", 45)
-    local color_editor = create_property_editor("color", 130)
+    local name_editor = create_property_editor("name", 35, required_panel)
+    local class_editor = create_property_editor("class", 35, required_panel)
+    local weight_editor = create_property_editor("spawn weight", 35, required_panel)
+    local wave_editor = create_property_editor("wave", 35, required_panel)
+
+    local health_editor = create_property_editor("health scaling", 35, basic_modifier_panel)
+    local damage_editor = create_property_editor("damage scaling", 35, basic_modifier_panel)
+    local reward_editor = create_property_editor("reward scaling", 35, basic_modifier_panel)
+    local model_scale_editor = create_property_editor("model scaling", 35, basic_modifier_panel)
+    local weapon_editor = create_property_editor("weapon", 35, basic_modifier_panel)
+    local spawn_limit_editor = create_property_editor("spawn limit", 35, basic_modifier_panel)
+    local color_editor = create_property_editor("color", 130, basic_modifier_panel)
+    
+    local elite_editor = create_property_editor("is elite", 35, elite_modifier_panel)
+    local boss_editor = create_property_editor("is boss", 35, elite_modifier_panel)
 
     if GetConVarNumber("horde_default_enemy_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -120,6 +163,7 @@ function PANEL:Init()
     damage_editor:SetValue("1")
     reward_editor:SetValue("1")
     model_scale_editor:SetValue("1")
+    spawn_limit_editor:SetValue("0")
     weapon_editor:SetValue("_gmod_default")
 
     local btn_panel = vgui.Create("DPanel", self)
@@ -156,7 +200,9 @@ function PANEL:Init()
             reward_editor:GetFloat(),
             model_scale_editor:GetFloat(),
             color,
-            weapon
+            weapon,
+            spawn_limit_editor:GetInt(),
+            boss_editor:GetChecked()
         )
 
         -- Reload from disk
@@ -301,7 +347,6 @@ function PANEL:Init()
             class_editor:SetValue(enemy.class)
             weight_editor:SetValue(enemy.weight)
             wave_editor:SetValue(enemy.wave)
-            elite_editor:SetChecked(enemy.is_elite)
             health_editor:SetValue(enemy.health_scale and enemy.health_scale or 1)
             damage_editor:SetValue(enemy.damage_scale and enemy.damage_scale or 1)
             reward_editor:SetValue(enemy.reward_scale and enemy.reward_scale or 1)
@@ -317,6 +362,9 @@ function PANEL:Init()
             else
                 weapon_editor:SetValue("_gmod_none")
             end
+            elite_editor:SetChecked(enemy.is_elite)
+            boss_editor:SetChecked(enemy.is_boss and enemy.is_boss or false)
+            spawn_limit_editor:SetValue(enemy.spawn_limit and enemy.spawn_limit or 0)
         end)
 
         menu:AddOption("Delete", function()
@@ -369,17 +417,15 @@ function PANEL:Think()
 end
 
 function PANEL:Paint(w, h)
-    -- Derma_DrawBackgroundBlur(self)
-
     -- Entire Panel
     surface.SetDrawColor(Color(230, 230, 230))
     surface.DrawRect(0, 0, w, h)
 
     -- Background
-    surface.SetDrawColor(Color(40, 40, 40))
-    surface.DrawRect(0, 0, w, 48)
+    surface.SetDrawColor(Color(17,148,240))
+    surface.DrawRect(0, 0, w, 40)
 
-    draw.SimpleText("Enemy Config (Some settings require restarting current game to take effect)", "Heading", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Enemy Config (Some settings require restart to take effect)", "DermaLarge", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("HordeEnemyConfig", PANEL, "EditablePanel")
