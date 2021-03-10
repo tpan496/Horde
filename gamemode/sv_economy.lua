@@ -281,6 +281,10 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 ply:SelectWeapon(class)
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
                 -- Give entity
+                if GetConVar("horde_default_item_config"):GetInt() == 1 and class == "item_battery" then
+                    -- Prevent distribution of batteries.
+                    if ply:Armor() >= ply:GetMaxArmor() then return end
+                end
                 ply:AddHordeMoney(-price)
                 if item.entity_properties.is_arccw_attachment and item.entity_properties.is_arccw_attachment == true then
                     -- ArcCW support
@@ -344,6 +348,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     end
                 end)
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_ARMOR then
+                if ply:Armor() >= ply:GetMaxArmor() then return end
                 ply:SetArmor(item.entity_properties.armor)
                 ply:AddHordeMoney(-price)
                 ply:SyncEconomy()
