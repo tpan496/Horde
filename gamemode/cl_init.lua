@@ -62,13 +62,19 @@ timer.Simple(5, function ()
     end
 end)
 
-local boss_hp_bar = vgui.Create("DPanel")
-boss_hp_bar:SetSize(ScrW() - 400 * 2, 60)
-boss_hp_bar:SetPos(ScrW() / 2 - boss_hp_bar:GetWide() / 2, 25)
-boss_hp_bar.Paint = function()
-    draw.RoundedBox(10, 0, 0, boss_hp_bar:GetWide(), 35, HORDE.color_hollow)
-    draw.RoundedBox(10, 0, 0, boss_hp_bar:GetWide() * 2 /3, 35, HORDE.color_crimson)
-    draw.SimpleTextOutlined("Alpha Gonome", "Trebuchet24", boss_hp_bar:GetWide() / 2, 50, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 5, color_black)
+local delayed_boss_health = 0
+local boss_name = ""
+local boss_health = 0
+local boss_max_health = 0
+local boss_health_bar = vgui.Create("DPanel")
+boss_health_bar:SetSize(ScrW() - 400 * 2, 60)
+boss_health_bar:SetPos(ScrW() / 2 - boss_health_bar:GetWide() / 2, 25)
+boss_health_bar.Paint = function()
+    if boss_health <= 0 or boss_max_health <= 0 then return end
+    draw.RoundedBox(10, 0, 0, boss_health_bar:GetWide(), 35, HORDE.color_hollow)
+    draw.RoundedBox(10, 0, 0, boss_health_bar:GetWide() * delayed_boss_health / boss_max_health, 35, Color(255,255,255,225))
+    draw.RoundedBox(10, 0, 0, boss_health_bar:GetWide() * boss_health / boss_max_health, 35, Color(220, 20, 60))
+    draw.SimpleTextOutlined(boss_name, "Trebuchet24", boss_health_bar:GetWide() / 2, 50, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 5, color_black)
 end
 
 function HORDE:ToggleShop()
@@ -322,6 +328,25 @@ net.Receive("Horde_SyncDifficulty", function ()
     HORDE.difficulty = net.ReadInt(3)
 end)
 
+net.Receive("Horde_SyncBossMaxHealth", function ()
+    boss_name = net.ReadString()
+    boss_max_health = net.ReadInt(16)
+    boss_health = net.ReadInt(16)
+    delayed_boss_health = boss_health
+    timer.Create("Horde_BossHealthDelayedDisplay", 0.1, 0, function ()
+        if delayed_boss_health ~= boss_health then
+            delayed_boss_health = delayed_boss_health - (delayed_boss_health - boss_health) / 2.5
+        end
+    end)
+end)
+
+net.Receive("Horde_SyncBossHealth", function ()
+    boss_health = net.ReadInt(16)
+    if boss_health <= 0 then
+        timer.Remove("Horde_BossHealthDelayedDisplay")
+    end
+end)
+
 hook.Add("HUDShouldDraw", "Horde_RemoveRetardRedScreen", function(name) 
     if (name == "CHudDamageIndicator") then
        return false
@@ -331,4 +356,4 @@ end)
 hook.Add("InitPostEntity", "Horde_PlayerInit", function()
     net.Start("Horde_PlayerInit")
     net.SendToServer()
-end )
+end)
