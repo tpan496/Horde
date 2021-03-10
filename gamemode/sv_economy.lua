@@ -373,7 +373,7 @@ end)
 
 function GM:PlayerUse(other_ply, target)    -- This will make it to be default behaviour, that can be overridden by other addons hooks. Let's hope they won't return true >.>
     local owner = target:GetNWEntity("HordeOwner")
-    if not IsValid(owner) or other_ply ~= owner then return false end   -- If owner disconnected/not valid, why would we care about ownership?
+    if IsValid(owner) and other_ply ~= owner then return false end   -- If owner disconnected/not valid, why would we care about ownership?
 
     if target:GetClass() == "npc_turret_floor" then
         target:GetPhysicsObject():EnableMotion(true)
