@@ -41,6 +41,8 @@ util.AddNetworkString("Horde_SyncEnemies")
 util.AddNetworkString("Horde_SyncClasses")
 util.AddNetworkString("Horde_PlayerReadySync")
 util.AddNetworkString("Horde_AmmoboxCountdown")
+util.AddNetworkString("Horde_SyncBossMaxHealth")
+util.AddNetworkString("Horde_SyncBossHealth")
 end
 
 HORDE = {}

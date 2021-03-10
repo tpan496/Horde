@@ -5,6 +5,7 @@ local players_count = 0
 local spawned_ammoboxes = {}
 local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local in_break = false
+local boss_spawned = false
 
 local entmeta = FindMetaTable("Entity")
 function entmeta:SetHordeMostRecentAttacker(attacker)
@@ -21,6 +22,14 @@ end
 
 function entmeta:GetHordeName()
     return self.horde_name
+end
+
+function entmeta:SetHordeIsBoss()
+    self.horde_is_boss = true
+end
+
+function entmeta:GetHordeIsBoss()
+    return self.horde_is_boss
 end
 
 hook.Add("Initialize", "Horde_Init", function()
@@ -96,6 +105,11 @@ HORDE.OnNPCKilled = function (victim, killer, weapon)
             killer:SyncEconomy()
         end
 
+        if victim:GetHordeIsBoss() and victim:GetHordeIsBoss() == true then
+            -- End the round because boss is dead
+            WaveEnd()
+        end
+
         victim:SetHordeMostRecentAttacker(nil)
     end
 end
@@ -139,6 +153,11 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                 if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
                 ent:SetHordeMostRecentAttacker(dmg:GetAttacker())
+            end
+            if ent:GetHordeIsBoss() and ent:GetHordeIsBoss() == true then
+                net.Start("Horde_SyncBossHealth")
+                net.WriteInt(ent:Health(), 16)
+                net.Broadcast()
             end
        elseif ent:IsPlayer() and dmg:GetAttacker():IsNPC() then
            local id = ent:SteamID()
@@ -215,7 +234,7 @@ HORDE.HardResetEnemies = function ()
     HORDE.spawned_enemies_count = {}
 end
 
-function SpawnEnemy(enemy, name, pos)
+function SpawnEnemy(enemy, pos)
     local npc_info = list.Get("NPC")[enemy.class]
     if not npc_info then
         print("[HORDE] NPC does not exist in ", list.Get("NPC"))
@@ -227,7 +246,7 @@ function SpawnEnemy(enemy, name, pos)
     spawned_enemy:Spawn()
 
     HORDE.spawned_enemies[spawned_enemy:EntIndex()] = true
-    spawned_enemy:SetHordeName(name)
+    spawned_enemy:SetHordeName(enemy.name)
 
     if npc_info["Model"] then
         spawned_enemy:SetModel(npc_info["Model"])
@@ -252,6 +271,10 @@ function SpawnEnemy(enemy, name, pos)
 
     if enemy.model_scale then
         spawned_enemy:SetModelScale(enemy.model_scale)
+    end
+
+    if enemy.is_boss and enemy.is_boss == true then
+        spawned_enemy:SetHordeIsBoss(enemy.is_boss)
     end
 
     -- Health settings
@@ -336,6 +359,69 @@ function StartBreak()
             timer.Remove("Horder_Counter")
         end
     end)
+end
+
+function WaveEnd()
+    HORDE.current_break_time = HORDE.total_break_time
+    in_break = false
+    boss_spawned = false
+    StartBreak()
+    local enemies = ScanEnemies()
+    if not table.IsEmpty(enemies) then
+        for _, enemy in pairs(enemies) do
+            enemy:SetHordeMostRecentAttacker(nil)
+            enemy:Remove()
+        end
+    end
+
+    if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
+        -- TODO: change this magic number
+        BroadcastWaveMessage("Final Wave Completed! You have survived!", -2)
+        HORDE.GameEnd("VICTORY!")
+    else
+        BroadcastWaveMessage("Wave Completed!", -2)
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("Wave Completed!")
+        net.WriteInt(0,2)
+        net.Broadcast()
+    end
+
+    net.Start("Horde_HighlightEntities")
+    net.WriteInt(HORDE.render_highlight_disable, 3)
+    net.Broadcast()
+
+    for _, ply in pairs(player.GetAll()) do
+        if not ply:Alive() then ply:Spawn() end
+        HORDE.player_class_changed[ply:SteamID()] = false
+        HORDE.player_ready[ply] = 0
+    end
+
+    if GetConVarNumber("horde_npc_cleanup") == 1 then
+        for _, ent in pairs(ents.GetAll()) do
+            if ent:IsNPC() and not ent:GetNWEntity("HordeOwner"):IsPlayer() then
+                ent:Remove()
+            end
+        end
+    end
+
+    -- Global Wave End Effects
+    for _, ply in pairs(player.GetAll()) do
+        -- Minion life recovery
+        if HORDE.player_drop_entities[ply:SteamID()] then
+            for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+                if ent:IsNPC() then
+                    ent:SetHealth(ent:GetMaxHealth())
+                end
+            end
+        end
+        -- Round bonus
+        ply:AddHordeMoney(HORDE.round_bonus_base)
+        ply:SyncEconomy()
+    end
+
+    HORDE.spawned_enemies_count = {}
+
+    hook.Run("HordeWaveEnd", HORDE.current_wave)
 end
 
 -- Referenced some spawning mechanics from Zombie Invasion+
@@ -576,22 +662,39 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                         p_cum = p_cum + weight
                         if p <= p_cum then
                             local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
+                            
+                            -- Boss is unique
+                            if enemy.is_boss and enemy.is_boss == true then
+                                if boss_spawned then goto cont end
+                                enemy.spawn_limit = 1
+                                enemy.is_elite = true
+                            end
+                            
                             if enemy.spawn_limit and enemy.spawn_limit > 0 then
                                 -- Do not spawn if exceeds spawn limit
                                 local count = HORDE.spawned_enemies_count[name]
                                 if count and count >= enemy.spawn_limit then
                                     goto cont
                                 else
-                                    spawned_enemy = SpawnEnemy(enemy, name, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                                    spawned_enemy = SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
                                     table.insert(enemies, spawned_enemy)
                                     if count then
                                         HORDE.spawned_enemies_count[name] = count + 1
                                     else
                                         HORDE.spawned_enemies_count[name] = 1
                                     end
+
+                                    if enemy.is_boss and enemy.is_boss == true then
+                                        boss_spawned = true
+                                        net.Start("Horde_SyncBossMaxHealth")
+                                        net.WriteString(enemy.name)
+                                        net.WriteInt(spawned_enemy:GetMaxHealth(),16)
+                                        net.WriteInt(spawned_enemy:Health(),16)
+                                        net.Broadcast()
+                                    end
                                 end
                             else
-                                spawned_enemy = SpawnEnemy(enemy, name, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                                spawned_enemy = SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
                                 table.insert(enemies, spawned_enemy)
                             end
                             
@@ -635,65 +738,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
     end
 
     if HORDE.total_enemies_this_wave <= 0 and HORDE.alive_enemies_this_wave <= 0 then
-        HORDE.current_break_time = HORDE.total_break_time
-        in_break = false
-        StartBreak()
-        enemies = ScanEnemies()
-        if not table.IsEmpty(enemies) then
-            for _, enemy in pairs(enemies) do
-                enemy:SetHordeMostRecentAttacker(nil)
-                enemy:Remove()
-            end
-        end
-
-        if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
-            -- TODO: change this magic number
-            BroadcastWaveMessage("Final Wave Completed! You have survived!", -2)
-            HORDE.GameEnd("VICTORY!")
-        else
-            BroadcastWaveMessage("Wave Completed!", -2)
-            net.Start("Horde_LegacyNotification")
-            net.WriteString("Wave Completed!")
-            net.WriteInt(0,2)
-            net.Broadcast()
-        end
-
-        net.Start("Horde_HighlightEntities")
-        net.WriteInt(HORDE.render_highlight_disable, 3)
-        net.Broadcast()
-
-        for _, ply in pairs(player.GetAll()) do
-            if not ply:Alive() then ply:Spawn() end
-            HORDE.player_class_changed[ply:SteamID()] = false
-            HORDE.player_ready[ply] = 0
-        end
-
-        if GetConVarNumber("horde_npc_cleanup") == 1 then
-            for _, ent in pairs(ents.GetAll()) do
-                if ent:IsNPC() and not ent:GetNWEntity("HordeOwner"):IsPlayer() then
-                    ent:Remove()
-                end
-            end
-        end
-
-        -- Global Wave End Effects
-        for _, ply in pairs(player.GetAll()) do
-            -- Minion life recovery
-            if HORDE.player_drop_entities[ply:SteamID()] then
-                for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-                    if ent:IsNPC() then
-                        ent:SetHealth(ent:GetMaxHealth())
-                    end
-                end
-            end
-            -- Round bonus
-            ply:AddHordeMoney(HORDE.round_bonus_base)
-            ply:SyncEconomy()
-        end
-
-        HORDE.spawned_enemies_count = {}
-
-        hook.Run("HordeWaveEnd", HORDE.current_wave)
+        WaveEnd()
     end
     end)
 
