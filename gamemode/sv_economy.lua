@@ -381,7 +381,7 @@ function HORDE:DropTurret(ent)
     local turret_pos = ent:GetPos()
     local tr = util.TraceLine({
         start = turret_pos,
-        endpos = turret_pos + Vector(0,0,-1) * 1000,
+        endpos = turret_pos + Vector(0,0,-1) * 10000,
         filter = ent,
         collisiongroup =  COLLISION_GROUP_WORLD
     })
