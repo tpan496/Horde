@@ -296,7 +296,7 @@ HORDE.VoteChangeMap = function (ply)
     end
 end
 
-hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function(ply)
+hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
     if ply:IsValid() then
         ply:SetCollisionGroup(15)
         ply:SetCanZoom(false)
@@ -351,7 +351,7 @@ function CheckAlivePlayers()
     end
 end
 
-hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function (ply)
+hook.Add("PlayerSpawn", "Horde_PlayerSpawnMidWave", function (ply)
     if HORDE.start_game and HORDE.current_break_time <= 0 then
         if ply:IsValid() then
             ply:KillSilent()
