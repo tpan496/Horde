@@ -328,7 +328,7 @@ net.Receive("Horde_SyncDifficulty", function ()
     HORDE.difficulty = net.ReadInt(3)
 end)
 
-net.Receive("Horde_SyncBossMaxHealth", function ()
+net.Receive("Horde_SyncBossSpawned", function ()
     boss_name = net.ReadString()
     boss_max_health = net.ReadInt(16)
     boss_health = net.ReadInt(16)

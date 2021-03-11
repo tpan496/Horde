@@ -14,3 +14,8 @@ end)
 hook.Add("HordeEnemySpawn", "Horde_EnemySpawn", function(enemy)
     return
 end)
+
+-- Called when Horde spawns a Boss NPC.
+hook.Add("HordeBossSpawn", "Horde_BossSpawn", function (enemy)
+    return
+end)
