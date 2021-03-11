@@ -4,6 +4,7 @@ HORDE.items = {}
 HORDE.ENTITY_PROPERTY_WPN = 1
 HORDE.ENTITY_PROPERTY_GIVE = 2
 HORDE.ENTITY_PROPERTY_DROP = 3
+HORDE.ENTITY_PROPERTY_ARMOR = 4
 
 HORDE.categories = {"Melee", "Pistol", "SMG", "Shotgun", "Rifle", "MG", "Explosive", "Special", "Equipment", "Attachment"}
 HORDE.entity_categories = {"Special", "Equipment"}
@@ -125,7 +126,7 @@ HORDE.GetDefaultItemsData = function()
     HORDE.CreateItem("Pistol",     "Deagle",         "arccw_go_deagle",   750,  3, "Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 5, -1)
     HORDE.CreateItem("Pistol",     "M1911",          "arccw_mw2_m1911",   750,  3, "Colt 1911.\nStandard-issue sidearm for the United States Armed Forces.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 5, -1)
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 5, -1)
     HORDE.CreateItem("Pistol",     "FiveSeven",      "arccw_go_fiveseven",750,  3, "ES Five-seven.\nA Belgian semi-automatic pistol made by FN Herstal",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
     HORDE.CreateItem("Pistol",     "CZ75",           "arccw_go_cz75",     750,  3, "A fully automatic variant of the CZ75.",
@@ -198,7 +199,7 @@ HORDE.GetDefaultItemsData = function()
     HORDE.CreateItem("MG",         "Negev",          "arccw_go_negev",     2250, 10, "IWI Negev.\nA 5.56×45mm NATO light machine gun developed by the IWI.",
     {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 25, -1)
     HORDE.CreateItem("MG",         "M240B",          "arccw_mw2_m240",     2250, 10, "M240 Bravo.\nFires 7.62mm NATO ammunition. Equipped by U.S. Armed Forces.",
-    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 25, -1)
+    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 25, -1)
 
     HORDE.CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,   0, "A standard frag grenade.\nGood for crowd control.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 100, -1)
@@ -220,19 +221,21 @@ HORDE.GetDefaultItemsData = function()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
     HORDE.CreateItem("Equipment",  "Health Vial",    "item_healthvial",    20,   1, "A capsule filled with sticky green liquid.\nHeals instantly when picked up.",
     {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=5})
-    
+    HORDE.CreateItem("Equipment", "Kevlar Armor Battery", "item_battery", 160, 0, "Armor battery.\nEach one provides 15 armor. Personal use only.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE})
+    HORDE.CreateItem("Equipment", "Full Kevlar Armor", "armor100", 1000, 0, "Full kevlar armor set.\nFills up 100% of your armor bar.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=100})
+    --[[
+    HORDE.CreateItem("Equipment", "Kaom's Heart", "armor_glorious_plate", 10000, 0, "The warrior who fears will fall.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=931})
+    ]]
+
     if ArcCWInstalled == true and GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
         print("[HORDE] ArcCW detected. Loading attachments into shop.")
         HORDE.GetArcCWAttachments()
     end
 
     print("[HORDE] - Loaded default item config.")
-end
-
-HORDE.GetSpecialItems = function ()
-    -- Some built-in special items
-    HORDE.CreateItem("Equipment", "Kevlar Armor", "armor", 1000, 0, "Full kevlar armor set.\nFills up 100% of your armor bar.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
 end
 
 HORDE.GetArcCWAttachments = function ()
@@ -595,10 +598,8 @@ if SERVER then
 
     if GetConVarNumber("horde_default_item_config") == 0 then
         GetItemsData()
-        HORDE.GetSpecialItems()
     else
         HORDE.GetDefaultItemsData()
-        HORDE.GetSpecialItems()
         HORDE.SyncItems()
     end
 
