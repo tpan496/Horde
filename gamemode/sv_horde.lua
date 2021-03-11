@@ -343,6 +343,182 @@ function HORDE:ScanEnemies()
     return enemies
 end
 
+-- Removes enemies that are too far away from players.
+function HORDE:RemoveDistantEnemies(enemies)
+    for _, enemy in pairs(enemies) do
+        local closest = 99999
+        local closest_z = 99999
+        local closest_ply = nil
+        local enemy_pos = enemy:GetPos()
+
+        for _, ply in pairs(player.GetAll()) do
+            if ply:Alive() then
+                local dist = enemy_pos:Distance(ply:GetPos())
+                local z_dist = math.abs(ply:GetPos().z - enemy_pos.z)
+
+                if dist < closest then
+                    closest_ply = ply
+                    closest = dist
+                end
+                if z_dist < closest_z then
+                    closest_z = z_dist
+                end
+            end
+        end
+
+        if closest > HORDE.max_spawn_distance or (closest_z > GetConVarNumber("horde_max_spawn_z_distance")) then
+            table.RemoveByValue(enemies, enemy)
+            if enemy:IsValid() then
+                enemy:SetHordeMostRecentAttacker(nil)
+                enemy:Remove()
+            end
+        else
+            if enemy:IsValid() and enemy:IsNPC() then
+                enemy:SetLastPosition(closest_ply:GetPos())
+                enemy:SetTarget(closest_ply)
+            end
+        end
+    end
+end
+
+function HORDE:GetValidNodes(enemies)
+    local valid_nodes = {}
+    for _, node in pairs(HORDE.ai_nodes) do
+        local valid = false
+        local z_dist
+
+        for _, ply in pairs(player.GetAll()) do
+            if ply:Alive() then
+                local dist = node["pos"]:Distance(ply:GetPos())
+                z_dist = math.abs(node["pos"].z - ply:GetPos().z)
+
+                if (dist <= HORDE.min_spawn_distance) or (z_dist >= GetConVarNumber("horde_max_spawn_z_distance")) then
+                    valid = false
+                    break
+                elseif dist < HORDE.max_spawn_distance then
+                    valid = true
+                end
+            end
+        end
+
+        if not valid then goto cont end
+
+        for _, enemy in pairs(enemies) do
+            local dist = node["pos"]:Distance(enemy:GetPos())
+            if dist <= HORDE.spawn_radius then
+                valid = false
+                break
+            end
+        end
+
+        if valid then
+            table.insert(valid_nodes, node["pos"])
+        end
+
+        ::cont::
+    end
+    return valid_nodes
+end
+
+function HORDE:SpawnEnemies(enemies, valid_nodes)
+    for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + math.floor(players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + players_count) do
+        if (#enemies + 1 <= HORDE.max_enemies_alive) and (HORDE.total_enemies_this_wave > 0) then
+            local pos = table.Random(valid_nodes)
+            if pos ~= nil then
+                table.RemoveByValue(valid_nodes, pos)
+                local p = math.random()
+                local p_cum = 0
+                local spawned_enemy
+                local enemy_wave = HORDE.current_wave
+                
+                -- This in fact should not happen
+                if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
+                    enemy_wave = enemy_wave - 1
+                end
+                
+                -- Endless
+                if HORDE.endless == 1 and enemy_wave > HORDE.max_max_waves then
+                    enemy_wave = HORDE.max_max_waves
+                end
+                
+                for name, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
+                    p_cum = p_cum + weight
+                    if p <= p_cum then
+                        local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
+                        
+                        -- Boss is unique
+                        if enemy.boss_properties and enemy.boss_properties.is_boss == true then
+                            if boss_spawned then goto cont end
+                            enemy.spawn_limit = 1
+                            enemy.is_elite = true
+                        end
+                        
+                        if enemy.spawn_limit and enemy.spawn_limit > 0 then
+                            -- Do not spawn if exceeds spawn limit
+                            local count = HORDE.spawned_enemies_count[name]
+                            if count and count >= enemy.spawn_limit then
+                                goto cont
+                            else
+                                spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                                table.insert(enemies, spawned_enemy)
+                                if count then
+                                    HORDE.spawned_enemies_count[name] = count + 1
+                                else
+                                    HORDE.spawned_enemies_count[name] = 1
+                                end
+
+                                if enemy.boss_properties and enemy.boss_properties.is_boss == true then
+                                    boss_spawned = true
+                                    net.Start("Horde_SyncBossMaxHealth")
+                                    net.WriteString(enemy.name)
+                                    net.WriteInt(spawned_enemy:GetMaxHealth(),16)
+                                    net.WriteInt(spawned_enemy:Health(),16)
+                                    net.Broadcast()
+                                end
+                            end
+                        else
+                            spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                            table.insert(enemies, spawned_enemy)
+                        end
+                        
+                        break
+                    end
+                    ::cont::
+                end
+                
+                HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
+                HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
+                --print("OnSpawn", "[HORDE] Spawning ", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
+            end
+        else
+            break
+        end
+    end
+end
+
+function HORDE:SpawnAmmoboxes(spawned_ammoboxes, valid_nodes)
+    for _, box in pairs(spawned_ammoboxes) do
+        if box:IsValid() then box:Remove() end
+    end
+    spawned_ammoboxes = {}
+
+    for i = 0, math.min(table.Count(player.GetAll()), HORDE.ammobox_max_count_limit) + HORDE.difficulty_additional_ammoboxes[HORDE.difficulty] do
+        local pos = table.Random(valid_nodes)
+        local spawned_ammobox = ents.Create("horde_ammobox")
+        spawned_ammobox:SetPos(pos)
+        spawned_ammobox:Spawn()
+        table.insert(spawned_ammoboxes, spawned_ammobox)
+    end
+
+    if table.Count(spawned_ammoboxes) > 0 then
+        net.Start("Horde_HighlightEntities")
+        net.WriteInt(HORDE.render_highlight_ammoboxes, 3)
+        net.Broadcast()
+    end
+
+    ammobox_refresh_timer = HORDE.ammobox_refresh_interval
+end
+
 -- Start's a break between waves.
 function HORDE:StartBreak()
     if in_break then return end
@@ -502,7 +678,6 @@ end
 -- 1. spawning enemies/ammoboxes.
 -- 2. updating player/wave states.
 function HORDE:Direct()
-    local valid_nodes = {}
 
     if table.Count(player.GetAll()) <= 0 then
         -- Reset game state
@@ -556,8 +731,6 @@ function HORDE:Direct()
     -- Start round
     if HORDE.current_break_time == 0 then
         HORDE:WaveStart()
-
-        -- Run hook
         hook.Run("HordeWaveStart", HORDE.current_wave)
     end
 
@@ -571,179 +744,21 @@ function HORDE:Direct()
     
     -- Check enemy
     local enemies = HORDE:ScanEnemies()
-    for _, enemy in pairs(enemies) do
-        local closest = 99999
-        local closest_z = 99999
-        local closest_ply = nil
-        local enemy_pos = enemy:GetPos()
-
-        for _, ply in pairs(player.GetAll()) do
-            if ply:Alive() then
-                local dist = enemy_pos:Distance(ply:GetPos())
-                local z_dist = math.abs(ply:GetPos().z - enemy_pos.z)
-
-                if dist < closest then
-                    closest_ply = ply
-                    closest = dist
-                end
-                if z_dist < closest_z then
-                    closest_z = z_dist
-                end
-            end
-        end
-
-        if closest > HORDE.max_spawn_distance or (closest_z > GetConVarNumber("horde_max_spawn_z_distance")) then
-            table.RemoveByValue(enemies, enemy)
-            if enemy:IsValid() then
-                enemy:SetHordeMostRecentAttacker(nil)
-                enemy:Remove()
-            end
-        else
-            if enemy:IsValid() and enemy:IsNPC() then
-                enemy:SetLastPosition(closest_ply:GetPos())
-                enemy:SetTarget(closest_ply)
-            end
-        end
-    end
+    HORDE:RemoveDistantEnemies()
 
     if #enemies >= HORDE.max_enemies_alive then
         return
     end
 
     --Get valid nodes
-    for _, node in pairs(HORDE.ai_nodes) do
-        local valid = false
-        local z_dist
-
-        for _, ply in pairs(player.GetAll()) do
-            if ply:Alive() then
-                local dist = node["pos"]:Distance(ply:GetPos())
-                z_dist = math.abs(node["pos"].z - ply:GetPos().z)
-
-                if (dist <= HORDE.min_spawn_distance) or (z_dist >= GetConVarNumber("horde_max_spawn_z_distance")) then
-                    valid = false
-                    break
-                elseif dist < HORDE.max_spawn_distance then
-                    valid = true
-                end
-            end
-        end
-
-        if not valid then goto cont end
-
-        for _, enemy in pairs(enemies) do
-            local dist = node["pos"]:Distance(enemy:GetPos())
-            if dist <= HORDE.spawn_radius then
-                valid = false
-                break
-            end
-        end
-
-        if valid then
-            table.insert(valid_nodes, node["pos"])
-        end
-
-        ::cont::
-    end
-
+    local valid_nodes = HORDE:GetValidNodes()
     if #valid_nodes > 0 then
         --Spawn enemies
-        for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + math.floor(players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + players_count) do
-            if (#enemies + 1 <= HORDE.max_enemies_alive) and (HORDE.total_enemies_this_wave > 0) then
-                local pos = table.Random(valid_nodes)
-                if pos ~= nil then
-                    table.RemoveByValue(valid_nodes, pos)
-                    local p = math.random()
-                    local p_cum = 0
-                    local spawned_enemy
-                    local enemy_wave = HORDE.current_wave
-                    
-                    -- This in fact should not happen
-                    if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
-                        enemy_wave = enemy_wave - 1
-                    end
-                    
-                    -- Endless
-                    if HORDE.endless == 1 and enemy_wave > HORDE.max_max_waves then
-                        enemy_wave = HORDE.max_max_waves
-                    end
-                    
-                    for name, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
-                        p_cum = p_cum + weight
-                        if p <= p_cum then
-                            local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
-                            
-                            -- Boss is unique
-                            if enemy.boss_properties and enemy.boss_properties.is_boss == true then
-                                if boss_spawned then goto cont end
-                                enemy.spawn_limit = 1
-                                enemy.is_elite = true
-                            end
-                            
-                            if enemy.spawn_limit and enemy.spawn_limit > 0 then
-                                -- Do not spawn if exceeds spawn limit
-                                local count = HORDE.spawned_enemies_count[name]
-                                if count and count >= enemy.spawn_limit then
-                                    goto cont
-                                else
-                                    spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
-                                    table.insert(enemies, spawned_enemy)
-                                    if count then
-                                        HORDE.spawned_enemies_count[name] = count + 1
-                                    else
-                                        HORDE.spawned_enemies_count[name] = 1
-                                    end
-
-                                    if enemy.boss_properties and enemy.boss_properties.is_boss == true then
-                                        boss_spawned = true
-                                        net.Start("Horde_SyncBossMaxHealth")
-                                        net.WriteString(enemy.name)
-                                        net.WriteInt(spawned_enemy:GetMaxHealth(),16)
-                                        net.WriteInt(spawned_enemy:Health(),16)
-                                        net.Broadcast()
-                                    end
-                                end
-                            else
-                                spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
-                                table.insert(enemies, spawned_enemy)
-                            end
-                            
-                            break
-                        end
-                        ::cont::
-                    end
-                    
-                    HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
-                    HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
-                    --print("OnSpawn", "[HORDE] Spawning ", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
-                end
-            else
-                break
-            end
-        end
+        HORDE:SpawnEnemies(enemies, valid_nodes)
         
         -- Spawn AmmoBox
         if ammobox_refresh_timer <= 0 then
-            for _, box in pairs(spawned_ammoboxes) do
-                if box:IsValid() then box:Remove() end
-            end
-            spawned_ammoboxes = {}
-
-            for i = 0, math.min(table.Count(player.GetAll()), HORDE.ammobox_max_count_limit) + HORDE.difficulty_additional_ammoboxes[HORDE.difficulty] do
-                local pos = table.Random(valid_nodes)
-                local spawned_ammobox = ents.Create("horde_ammobox")
-                spawned_ammobox:SetPos(pos)
-                spawned_ammobox:Spawn()
-                table.insert(spawned_ammoboxes, spawned_ammobox)
-            end
-    
-            if table.Count(spawned_ammoboxes) > 0 then
-                net.Start("Horde_HighlightEntities")
-                net.WriteInt(HORDE.render_highlight_ammoboxes, 3)
-                net.Broadcast()
-            end
-
-            ammobox_refresh_timer = HORDE.ammobox_refresh_interval
+            HORDE:SpawnAmmoboxes(spawned_ammoboxes, valid_nodes)
         end
     end
 
