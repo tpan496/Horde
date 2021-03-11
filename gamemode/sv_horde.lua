@@ -6,6 +6,8 @@ local spawned_ammoboxes = {}
 local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local in_break = false
 local boss_spawned = false
+local boss_reposition = false
+local boss = nil
 
 local entmeta = FindMetaTable("Entity")
 function entmeta:SetHordeMostRecentAttacker(attacker)
@@ -24,12 +26,12 @@ function entmeta:GetHordeName()
     return self.horde_name
 end
 
-function entmeta:SetHordeIsBoss()
-    self.horde_is_boss = true
+function entmeta:SetHordeBossProperties(boss_properties)
+    self.horde_boss_properties = boss_properties
 end
 
-function entmeta:GetHordeIsBoss()
-    return self.horde_is_boss
+function entmeta:GetHordeBossProperties()
+    return self.horde_boss_properties
 end
 
 hook.Add("Initialize", "Horde_Init", function()
@@ -66,7 +68,7 @@ hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
     end
 end)
 
-HORDE.OnNPCKilled = function (victim, killer, weapon)
+function HORDE:OnEnemyKilled(victim, killer, weapon)
     if HORDE.spawned_enemies[victim:EntIndex()] then
         HORDE.spawned_enemies[victim:EntIndex()] = nil
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
@@ -105,17 +107,20 @@ HORDE.OnNPCKilled = function (victim, killer, weapon)
             killer:SyncEconomy()
         end
 
-        if victim:GetHordeIsBoss() and victim:GetHordeIsBoss() == true then
-            -- End the round because boss is dead
-            WaveEnd()
+        -- When a boss is killed.
+        local boss_properties = victim:GetHordeBossProperties()
+        if boss_properties then
+            if boss_properties.end_wave and boss_properties.end_wave == true then
+                HORDE:WaveEnd()
+            end
         end
 
         victim:SetHordeMostRecentAttacker(nil)
     end
 end
 
-hook.Add("OnNPCKilled", "Horde_OnNPCKilled", function(victim, killer, weapon)
-    HORDE.OnNPCKilled(victim, killer, weapon)
+hook.Add("OnNPCKilled", "Horde_OnEnemyKilled", function(victim, killer, weapon)
+    HORDE:OnEnemyKilled(victim, killer, weapon)
 end)
 
 -- Corpse settings
@@ -154,7 +159,8 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
                 ent:SetHordeMostRecentAttacker(dmg:GetAttacker())
             end
-            if ent:GetHordeIsBoss() and ent:GetHordeIsBoss() == true then
+            local boss_properties = ent:GetHordeBossProperties()
+            if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
                 net.Start("Horde_SyncBossHealth")
                 net.WriteInt(ent:Health(), 16)
                 net.Broadcast()
@@ -177,7 +183,7 @@ end)
 
 hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
     if ent:IsNPC() and ent:GetHordeMostRecentAttacker() then
-        HORDE.OnNPCKilled(ent, ent:GetHordeMostRecentAttacker())
+        HORDE:OnEnemyKilled(ent, ent:GetHordeMostRecentAttacker())
     else
         if HORDE.spawned_enemies[ent:EntIndex()] then
             HORDE.spawned_enemies[ent:EntIndex()] = nil
@@ -276,7 +282,7 @@ function HORDE:SpawnEnemy(enemy, pos)
     end
 
     if enemy.boss_properties and enemy.boss_properties.is_boss == true then
-        spawned_enemy:SetHordeIsBoss(true)
+        spawned_enemy:SetHordeBossProperties(enemy.boss_properties)
     end
 
     -- Health settings
@@ -346,6 +352,12 @@ end
 -- Removes enemies that are too far away from players.
 function HORDE:RemoveDistantEnemies(enemies)
     for _, enemy in pairs(enemies) do
+        local boss_properties = enemy:GetHordeBossProperties()
+        -- Do not remove bosses, change their positions instead.
+        if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
+            boss_reposition = true
+            return
+        end
         local closest = 99999
         local closest_z = 99999
         local closest_ply = nil
@@ -420,6 +432,8 @@ function HORDE:GetValidNodes(enemies)
     return valid_nodes
 end
 
+-- Loops over valid nodes and spawn enemies.
+-- Boss should not be spawned in this function.
 function HORDE:SpawnEnemies(enemies, valid_nodes)
     for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + math.floor(players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + players_count) do
         if (#enemies + 1 <= HORDE.max_enemies_alive) and (HORDE.total_enemies_this_wave > 0) then
@@ -445,14 +459,6 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                     p_cum = p_cum + weight
                     if p <= p_cum then
                         local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
-                        
-                        -- Boss is unique
-                        if enemy.boss_properties and enemy.boss_properties.is_boss == true then
-                            if boss_spawned then goto cont end
-                            enemy.spawn_limit = 1
-                            enemy.is_elite = true
-                        end
-                        
                         if enemy.spawn_limit and enemy.spawn_limit > 0 then
                             -- Do not spawn if exceeds spawn limit
                             local count = HORDE.spawned_enemies_count[name]
@@ -465,15 +471,6 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                                     HORDE.spawned_enemies_count[name] = count + 1
                                 else
                                     HORDE.spawned_enemies_count[name] = 1
-                                end
-
-                                if enemy.boss_properties and enemy.boss_properties.is_boss == true then
-                                    boss_spawned = true
-                                    net.Start("Horde_SyncBossMaxHealth")
-                                    net.WriteString(enemy.name)
-                                    net.WriteInt(spawned_enemy:GetMaxHealth(),16)
-                                    net.WriteInt(spawned_enemy:Health(),16)
-                                    net.Broadcast()
                                 end
                             end
                         else
@@ -496,7 +493,55 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
     end
 end
 
-function HORDE:SpawnAmmoboxes(spawned_ammoboxes, valid_nodes)
+-- Spawns a Horde boss. Boss is unique.
+function HORDE:SpawnBoss(enemies, valid_nodes)
+    if (#enemies + 1 <= HORDE.max_enemies_alive) and (not boss) and (HORDE.total_enemies_this_wave > 0) then
+        -- Boss is unique
+        local pos = table.Random(valid_nodes)
+        if not pos then return end
+        table.RemoveByValue(valid_nodes, pos)
+        local p = math.random()
+        local p_cum = 0
+        local spawned_enemy
+        local enemy_wave = HORDE.current_wave
+        -- This in fact should not happen
+        if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
+            enemy_wave = enemy_wave - 1
+        end
+        
+        -- Endless
+        -- Boss only spawns on multiples of 10.
+        if HORDE.endless == 1 and enemy_wave > HORDE.max_max_waves then
+            enemy_wave = HORDE.max_max_waves
+        end
+        
+        for name, weight in pairs(HORDE.bosses_normalized[enemy_wave]) do
+            p_cum = p_cum + weight
+            if p <= p_cum then
+                local enemy = HORDE.bosses[name .. tostring(enemy_wave)]
+                spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                boss = spawned_enemy
+                boss_reposition = false
+                table.insert(enemies, spawned_enemy)
+                net.Start("Horde_SyncBossSpawned")
+                net.WriteString(enemy.name)
+                net.WriteInt(spawned_enemy:GetMaxHealth(),16)
+                net.WriteInt(spawned_enemy:Health(),16)
+                net.Broadcast()
+                break
+            end
+        end
+    end
+end
+
+function HORDE:RepositionBoss(valid_nodes)
+    if (not boss) or (not boss_spawned) then return end
+    local pos = table.Random(valid_nodes)
+    if not pos then return end
+    boss:SetPos(pos)
+end
+
+function HORDE:SpawnAmmoboxes(valid_nodes)
     for _, box in pairs(spawned_ammoboxes) do
         if box:IsValid() then box:Remove() end
     end
@@ -594,6 +639,11 @@ function HORDE:WaveStart()
     HORDE.current_break_time = -1
     HORDE.killed_enemies_this_wave = 0
 
+    local has_boss = HORDE.bosses_normalized[HORDE.current_wave]
+    if has_boss then
+        local boss = HORDE.bosses[]
+    end
+
     ammobox_refresh_timer = HORDE.ammobox_refresh_interval
     if HORDE.endless == 1 then
         BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
@@ -678,7 +728,6 @@ end
 -- 1. spawning enemies/ammoboxes.
 -- 2. updating player/wave states.
 function HORDE:Direct()
-
     if table.Count(player.GetAll()) <= 0 then
         -- Reset game state
         HORDE:HardResetDirector()
@@ -744,21 +793,32 @@ function HORDE:Direct()
     
     -- Check enemy
     local enemies = HORDE:ScanEnemies()
-    HORDE:RemoveDistantEnemies()
+    HORDE:RemoveDistantEnemies(enemies)
 
     if #enemies >= HORDE.max_enemies_alive then
         return
     end
 
     --Get valid nodes
-    local valid_nodes = HORDE:GetValidNodes()
+    local valid_nodes = HORDE:GetValidNodes(enemies)
     if #valid_nodes > 0 then
         --Spawn enemies
         HORDE:SpawnEnemies(enemies, valid_nodes)
+
+        -- Spawn boss
+        local has_boss = HORDE.bosses_normalized[HORDE.current_wave]
+        if has_boss and (not boss_spawned) and (not boss) then
+            HORDE:SpawnBoss(enemies, valid_nodes)
+            hook.Run("HordeBossSpawn", boss)
+            boss_spawned = true
+        elseif boss_reposition then
+            HORDE:RepositionBoss(valid_nodes)
+            boss_reposition = false
+        end
         
-        -- Spawn AmmoBox
+        -- Spawn ammoboxes
         if ammobox_refresh_timer <= 0 then
-            HORDE:SpawnAmmoboxes(spawned_ammoboxes, valid_nodes)
+            HORDE:SpawnAmmoboxes(valid_nodes)
         end
     end
 
