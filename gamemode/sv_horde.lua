@@ -211,7 +211,7 @@ function BroadcastWaveMessage(msg, wave)
 end
 
 -- This resets the director.
-HORDE.HardResetDirector = function ()
+function HORDE:HardResetDirector()
     HORDE.start_game = false
     HORDE.killed_enemies_this_wave = 0
     HORDE.total_enemies_this_wave = 0
@@ -223,8 +223,8 @@ HORDE.HardResetDirector = function ()
 end
 
 -- This resets the enemies.
-HORDE.HardResetEnemies = function ()
-    local enemies = ScanEnemies()
+function HORDE:HardResetEnemies()
+    local enemies = HORDE:ScanEnemies()
     if not table.IsEmpty(enemies) then
         for _, enemy in pairs(enemies) do
             enemy:SetHordeMostRecentAttacker(nil)
@@ -234,7 +234,9 @@ HORDE.HardResetEnemies = function ()
     HORDE.spawned_enemies_count = {}
 end
 
-function SpawnEnemy(enemy, pos)
+-- Spawns a Horde enemy at the give position.
+-- The enemy is tracked by Horde.
+function HORDE:SpawnEnemy(enemy, pos)
     local npc_info = list.Get("NPC")[enemy.class]
     if not npc_info then
         print("[HORDE] NPC does not exist in ", list.Get("NPC"))
@@ -273,8 +275,8 @@ function SpawnEnemy(enemy, pos)
         spawned_enemy:SetModelScale(enemy.model_scale)
     end
 
-    if enemy.is_boss and enemy.is_boss == true then
-        spawned_enemy:SetHordeIsBoss(enemy.is_boss)
+    if enemy.boss_properties and enemy.boss_properties.is_boss == true then
+        spawned_enemy:SetHordeIsBoss(true)
     end
 
     -- Health settings
@@ -328,7 +330,8 @@ function SpawnEnemy(enemy, pos)
     return spawned_enemy
 end
 
-function ScanEnemies()
+-- Scan for Horde enemies.
+function HORDE:ScanEnemies()
     local enemies = {}
     for ent_idx, _ in pairs(HORDE.spawned_enemies) do
         if not IsValid(Entity(ent_idx)) then
@@ -340,7 +343,8 @@ function ScanEnemies()
     return enemies
 end
 
-function StartBreak()
+-- Start's a break between waves.
+function HORDE:StartBreak()
     if in_break then return end
     in_break = true
     timer.Create("Horder_Counter", 1, 0, function ()
@@ -361,12 +365,77 @@ function StartBreak()
     end)
 end
 
-function WaveEnd()
+-- Starts a wave.
+function HORDE:WaveStart()
+    if (HORDE.enemies_normalized == nil) or table.IsEmpty(HORDE.enemies_normalized) then
+        HORDE:HardResetDirector()
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("Enemies list is empty. Config the enemy list or no enemies wil spawn.")
+        net.WriteInt(1,2)
+        net.Broadcast()
+        HORDE.start_game = false
+        return
+    end
+    
+    if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("No enemy config set for this wave. Falling back to previous wave settings.")
+        net.WriteInt(1,2)
+        net.Broadcast()
+    end
+
+    players_count = table.Count(player.GetAll())
+    local difficulty_coefficient = HORDE.difficulty * 0.05
+    
+    if HORDE.endless == 0 then
+        -- No endless
+        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
+    else
+        if HORDE.total_enemies_per_wave[HORDE.current_wave] ~= nil then
+             -- If we have enough waves, still use them
+             HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
+        else
+            -- Use wave 10 settings scaled
+            HORDE.total_enemies_this_wave = (HORDE.total_enemies_per_wave[HORDE.max_max_waves] + 5 * (HORDE.current_wave - HORDE.max_max_waves)) * math.ceil(players_count * (0.75 + difficulty_coefficient))
+            -- Scale damage and health
+            HORDE.endless_damage_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
+            HORDE.endless_health_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
+        end
+    end
+    
+    -- Additional custom scaling
+    if GetConVar("horde_total_enemies_scaling"):GetInt() > 1 then
+        HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave * GetConVar("horde_total_enemies_scaling"):GetInt()
+    end
+
+    
+    HORDE.total_enemies_this_wave_fixed = HORDE.total_enemies_this_wave
+    local max_enemies_alive_base = GetConVarNumber("horde_max_enemies_alive_base")
+    local scale = GetConVarNumber("horde_max_enemies_alive_scale_factor")
+    local max_enemies_alive_max = GetConVarNumber("horde_max_enemies_alive_max")
+    HORDE.max_enemies_alive = math.floor(math.min(max_enemies_alive_max, max_enemies_alive_base * HORDE.difficulty_max_enemies_alive_scale_factor + scale * players_count))
+    HORDE.alive_enemies_this_wave = 0
+    HORDE.current_break_time = -1
+    HORDE.killed_enemies_this_wave = 0
+
+    ammobox_refresh_timer = HORDE.ammobox_refresh_interval
+    if HORDE.endless == 1 then
+        BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+    else
+        BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+    end
+    -- Close all the shop menus
+    net.Start("Horde_ForceCloseShop")
+    net.Broadcast()
+end
+
+-- Ends a wave.
+function HORDE:WaveEnd()
     HORDE.current_break_time = HORDE.total_break_time
     in_break = false
     boss_spawned = false
-    StartBreak()
-    local enemies = ScanEnemies()
+    HORDE:StartBreak()
+    local enemies = HORDE:ScanEnemies()
     if not table.IsEmpty(enemies) then
         for _, enemy in pairs(enemies) do
             enemy:SetHordeMostRecentAttacker(nil)
@@ -420,8 +489,6 @@ function WaveEnd()
     end
 
     HORDE.spawned_enemies_count = {}
-
-    hook.Run("HordeWaveEnd", HORDE.current_wave)
 end
 
 -- Referenced some spawning mechanics from Zombie Invasion+
@@ -430,21 +497,23 @@ if GetConVarNumber("horde_director_interval") then
     director_interval = math.max(9, GetConVarNumber("horde_director_interval"))
 end
 
--- Game Director. The CORE of this addon.
-timer.Create("Horde_Main", director_interval, 0, function ()
-    local status, err = pcall( function()
+-- Game Director. Executes at every given interval.
+-- The director is responsible for:
+-- 1. spawning enemies/ammoboxes.
+-- 2. updating player/wave states.
+function HORDE:Direct()
     local valid_nodes = {}
 
     if table.Count(player.GetAll()) <= 0 then
         -- Reset game state
-        HORDE.HardResetDirector()
-        HORDE.HardResetEnemies()
+        HORDE:HardResetDirector()
+        HORDE:HardResetEnemies()
         HORDE.player_ready = {}
     end
 
     if not HORDE.start_game then
-        HORDE.HardResetDirector()
-        HORDE.HardResetEnemies()
+        HORDE:HardResetDirector()
+        HORDE:HardResetEnemies()
 
         local ready_count = 0
         local total_player = 0
@@ -477,7 +546,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
     end
 
     if HORDE.current_break_time > 0 and HORDE.current_break_time <= HORDE.total_break_time then
-        StartBreak()
+        HORDE:StartBreak()
     end
 
     if HORDE.current_break_time > 0 then
@@ -486,66 +555,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
 
     -- Start round
     if HORDE.current_break_time == 0 then
-        if (HORDE.enemies_normalized == nil) or table.IsEmpty(HORDE.enemies_normalized) then
-            HORDE.HardResetDirector()
-            net.Start("Horde_LegacyNotification")
-            net.WriteString("Enemies list is empty. Config the enemy list or no enemies wil spawn.")
-            net.WriteInt(1,2)
-            net.Broadcast()
-            HORDE.start_game = false
-            return
-        end
-        
-        if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
-            net.Start("Horde_LegacyNotification")
-            net.WriteString("No enemy config set for this wave. Falling back to previous wave settings.")
-            net.WriteInt(1,2)
-            net.Broadcast()
-        end
-
-        players_count = table.Count(player.GetAll())
-        local difficulty_coefficient = HORDE.difficulty * 0.05
-        
-        if HORDE.endless == 0 then
-            -- No endless
-            HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
-        else
-            if HORDE.total_enemies_per_wave[HORDE.current_wave] ~= nil then
-                 -- If we have enough waves, still use them
-                 HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
-            else
-                -- Use wave 10 settings scaled
-                HORDE.total_enemies_this_wave = (HORDE.total_enemies_per_wave[HORDE.max_max_waves] + 5 * (HORDE.current_wave - HORDE.max_max_waves)) * math.ceil(players_count * (0.75 + difficulty_coefficient))
-                -- Scale damage and health
-                HORDE.endless_damage_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
-                HORDE.endless_health_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
-            end
-        end
-        
-        -- Additional custom scaling
-        if GetConVar("horde_total_enemies_scaling"):GetInt() > 1 then
-            HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave * GetConVar("horde_total_enemies_scaling"):GetInt()
-        end
-
-        
-        HORDE.total_enemies_this_wave_fixed = HORDE.total_enemies_this_wave
-        local max_enemies_alive_base = GetConVarNumber("horde_max_enemies_alive_base")
-        local scale = GetConVarNumber("horde_max_enemies_alive_scale_factor")
-        local max_enemies_alive_max = GetConVarNumber("horde_max_enemies_alive_max")
-        HORDE.max_enemies_alive = math.floor(math.min(max_enemies_alive_max, max_enemies_alive_base * HORDE.difficulty_max_enemies_alive_scale_factor + scale * players_count))
-        HORDE.alive_enemies_this_wave = 0
-        HORDE.current_break_time = -1
-        HORDE.killed_enemies_this_wave = 0
-
-        ammobox_refresh_timer = HORDE.ammobox_refresh_interval
-        if HORDE.endless == 1 then
-            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
-        else
-            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
-        end
-        -- Close all the shop menus
-        net.Start("Horde_ForceCloseShop")
-        net.Broadcast()
+        HORDE:WaveStart()
 
         -- Run hook
         hook.Run("HordeWaveStart", HORDE.current_wave)
@@ -560,7 +570,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
     end
     
     -- Check enemy
-    local enemies = ScanEnemies()
+    local enemies = HORDE:ScanEnemies()
     for _, enemy in pairs(enemies) do
         local closest = 99999
         local closest_z = 99999
@@ -664,7 +674,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                             local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
                             
                             -- Boss is unique
-                            if enemy.is_boss and enemy.is_boss == true then
+                            if enemy.boss_properties and enemy.boss_properties.is_boss == true then
                                 if boss_spawned then goto cont end
                                 enemy.spawn_limit = 1
                                 enemy.is_elite = true
@@ -676,7 +686,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                                 if count and count >= enemy.spawn_limit then
                                     goto cont
                                 else
-                                    spawned_enemy = SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                                    spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
                                     table.insert(enemies, spawned_enemy)
                                     if count then
                                         HORDE.spawned_enemies_count[name] = count + 1
@@ -684,7 +694,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                                         HORDE.spawned_enemies_count[name] = 1
                                     end
 
-                                    if enemy.is_boss and enemy.is_boss == true then
+                                    if enemy.boss_properties and enemy.boss_properties.is_boss == true then
                                         boss_spawned = true
                                         net.Start("Horde_SyncBossMaxHealth")
                                         net.WriteString(enemy.name)
@@ -694,7 +704,7 @@ timer.Create("Horde_Main", director_interval, 0, function ()
                                     end
                                 end
                             else
-                                spawned_enemy = SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                                spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
                                 table.insert(enemies, spawned_enemy)
                             end
                             
@@ -738,9 +748,13 @@ timer.Create("Horde_Main", director_interval, 0, function ()
     end
 
     if HORDE.total_enemies_this_wave <= 0 and HORDE.alive_enemies_this_wave <= 0 then
-        WaveEnd()
+        HORDE:WaveEnd()
+        hook.Run("HordeWaveEnd", HORDE.current_wave)
     end
-    end)
+end
+
+timer.Create("Horde_Main", director_interval, 0, function ()
+    local status, err = pcall(function() HORDE:Direct() end)
 
     if not status then
         print(err)

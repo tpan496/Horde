@@ -125,17 +125,23 @@ function PANEL:Init()
             editor:DockMargin(0,37,0,37)
             editor:Dock(LEFT)
             function editor:OnChange(bVal)
-                for _, other_editor in pairs(editors) do
-                    other_editor:SetVisible(bVal)
+                if bVal then
+                    for _, other_editor in pairs(editors) do
+                        other_editor:SetVisible(true)
+                    end
+                else
+                    for _, other_editor in pairs(editors) do
+                        other_editor:SetVisible(false)
+                    end
                 end
             end
 
-            local end_wave_toggle = vgui.Create("DCheckBoxLabel", panel)
-            end_wave_toggle:SetText("End wave after defeated")
-            end_wave_toggle:SetPos(100 + 50, 23)
-            end_wave_toggle:SetTextColor(color_black)
-            end_wave_toggle:SetVisible(false)
-            table.insert(editors, end_wave_toggle)
+            local end_wave_editor = vgui.Create("DCheckBoxLabel", panel)
+            end_wave_editor:SetText("End wave after defeated")
+            end_wave_editor:SetPos(100 + 50, 23)
+            end_wave_editor:SetTextColor(color_black)
+            end_wave_editor:SetVisible(false)
+            table.insert(editors, end_wave_editor)
 
             local unlimited_enemies_spawn_editor = vgui.Create("DCheckBoxLabel", panel)
             unlimited_enemies_spawn_editor:SetText("Unlimited enemies spawn during wave")
@@ -155,6 +161,7 @@ function PANEL:Init()
             enemies_spawn_threshold_editor:SetNumeric(true)
             enemies_spawn_threshold_editor:SetPos(100 + 45 + 200, 63)
             enemies_spawn_threshold_editor:SetWide(25)
+            enemies_spawn_threshold_editor:SetValue(0.5)
             enemies_spawn_threshold_editor:SetVisible(false)
             table.insert(editors, enemies_spawn_threshold_editor)
             local enemies_spawn_threshold_percentage_label = vgui.Create("DLabel", panel)
@@ -164,7 +171,7 @@ function PANEL:Init()
             enemies_spawn_threshold_percentage_label:SetVisible(false)
             table.insert(editors, enemies_spawn_threshold_percentage_label)
 
-            return {editor=editor, unlimited_enemies_spawn_editor=unlimited_enemies_spawn_editor, enemies_spawn_threshold_editor=enemies_spawn_threshold_editor}
+            return {is_boss_editor=editor, end_wave_editor=end_wave_editor, unlimited_enemies_spawn_editor=unlimited_enemies_spawn_editor, enemies_spawn_threshold_editor=enemies_spawn_threshold_editor}
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(150, height)
@@ -188,7 +195,7 @@ function PANEL:Init()
     local color_editor = create_property_editor("color", 130, basic_modifier_panel)
     
     local elite_editor = create_property_editor("is elite", 35, elite_modifier_panel)
-    local boss_editor = create_property_editor("is boss", 100, elite_modifier_panel)
+    local boss_editors = create_property_editor("is boss", 100, elite_modifier_panel)
 
     if GetConVarNumber("horde_default_enemy_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -232,6 +239,12 @@ function PANEL:Init()
         if weapon_editor and weapon_editor:GetText() ~= "_gmod_none" and weapon_editor:GetText() ~= "" then
             weapon = weapon_editor:GetText()
         end
+        local boss_properties = {}
+        boss_properties.is_boss = boss_editors.is_boss_editor:GetChecked()
+        boss_properties.end_wave = boss_editors.end_wave_editor:GetChecked()
+        boss_properties.unlimited_enemies_spawn = boss_editors.unlimited_enemies_spawn_editor:GetChecked()
+        boss_properties.enemies_spawn_threshold = tonumber(boss_editors.enemies_spawn_threshold_editor:GetText())
+
         HORDE.CreateEnemy(
             name_editor:GetText(),
             class_editor:GetText(),
@@ -245,7 +258,7 @@ function PANEL:Init()
             color,
             weapon,
             spawn_limit_editor:GetInt(),
-            boss_editor:GetChecked()
+            boss_properties
         )
 
         -- Reload from disk
@@ -297,6 +310,12 @@ function PANEL:Init()
             weapon = weapon_editor:GetText()
         end
 
+        local boss_properties = {}
+        boss_editors.is_boss = boss_editors.is_boss_editor:GetChecked()
+        boss_editors.end_wave = boss_editors.end_wave_toggle:GetChecked()
+        boss_editors.unlimited_enemies_spawn = boss_editors.unlimited_enemies_spawn_editor:GetChecked()
+        boss_editors.enemies_spawn_threshold = boss_editors.enemies_spawn_threshold_editor:GetInt()
+
         local start_wave = tonumber(wave_start_box:GetText())
         local end_wave = tonumber(wave_end_box:GetText())
         if start_wave > end_wave then return end
@@ -313,7 +332,8 @@ function PANEL:Init()
             reward_editor:GetFloat(),
             model_scale_editor:GetFloat(),
             color,
-            weapon
+            weapon,
+            boss_properties
         )
         end
 
@@ -406,8 +426,18 @@ function PANEL:Init()
                 weapon_editor:SetValue("_gmod_none")
             end
             elite_editor:SetChecked(enemy.is_elite)
-            boss_editor:SetChecked(enemy.is_boss and enemy.is_boss or false)
             spawn_limit_editor:SetValue(enemy.spawn_limit and enemy.spawn_limit or 0)
+            local boss_properties = enemy.boss_properties
+            if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
+                boss_editors.is_boss_editor:SetChecked(true)
+                boss_editors.is_boss_editor:OnChange(true)
+                boss_editors.end_wave_editor:SetChecked(boss_properties.end_wave)
+                boss_editors.unlimited_enemies_spawn_editor:SetChecked(boss_properties.unlimited_enemies_spawn)
+                boss_editors.enemies_spawn_threshold_editor:SetValue(boss_properties.enemies_spawn_threshold)
+            else
+                boss_editors.is_boss_editor:OnChange(false)
+                boss_editors.is_boss_editor:SetChecked(false)
+            end
         end)
 
         menu:AddOption("Delete", function()

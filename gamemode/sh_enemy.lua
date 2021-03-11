@@ -1,7 +1,7 @@
 -- Enemies
 HORDE.enemies = {}
 HORDE.enemies_normalized = {}
-HORDE.CreateEnemy = function (name, class, weight, wave, is_elite, health_scale, damage_scale, reward_scale, model_scale, color, weapon, spawn_limit, is_boss)
+HORDE.CreateEnemy = function (name, class, weight, wave, is_elite, health_scale, damage_scale, reward_scale, model_scale, color, weapon, spawn_limit, boss_properties)
     if name == nil or class == nil or wave == nil or wave <= 0 or name == "" or class == "" then return end
     local enemy = {}
     enemy.name = name
@@ -16,7 +16,7 @@ HORDE.CreateEnemy = function (name, class, weight, wave, is_elite, health_scale,
     enemy.weapon = weapon
     enemy.spawn_limit = spawn_limit and spawn_limit or 0
     enemy.is_elite = is_elite and is_elite or 0
-    enemy.is_boss = is_boss and is_boss or 0
+    enemy.boss_properties = boss_properties and boss_properties or 0
     HORDE.enemies[name .. tostring(enemy.wave)] = enemy
 end
 
