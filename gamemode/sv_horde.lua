@@ -5,9 +5,12 @@ local players_count = 0
 local spawned_ammoboxes = {}
 local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local in_break = false
-local boss_spawned = false
-local boss_reposition = false
-local boss = nil
+
+local horde_boss_spawned = false
+local horde_boss_reposition = false
+local horde_boss_name = nil
+local horde_boss = nil
+local horde_boss_properties = nil
 
 local entmeta = FindMetaTable("Entity")
 function entmeta:SetHordeMostRecentAttacker(attacker)
@@ -71,9 +74,11 @@ end)
 function HORDE:OnEnemyKilled(victim, killer, weapon)
     if HORDE.spawned_enemies[victim:EntIndex()] then
         HORDE.spawned_enemies[victim:EntIndex()] = nil
-        HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
+        if (not horde_boss) or (horde_boss and (not horde_boss_properties.unlimited_enemies_spawn)) then
+            HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
+            HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
+        end
         --print("OnKill", "[HORDE] Killing ", HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
-        HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
         
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
             net.Start("Horde_HighlightEntities")
@@ -82,9 +87,17 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         end
         
         if HORDE.endless == 1 then
-            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            if horde_boss and horde_boss:IsValid() and horde_boss:Health() > 0 then
+                BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞ BOSS")
+            else
+                BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            end
         else
-            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            if horde_boss and horde_boss:IsValid() and horde_boss:Health() > 0 then
+                BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  BOSS")
+            else
+                BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            end
         end
         
         if killer:IsPlayer() or killer:GetNWEntity("HordeOwner"):IsPlayer() then
@@ -110,6 +123,9 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         -- When a boss is killed.
         local boss_properties = victim:GetHordeBossProperties()
         if boss_properties then
+            -- There could only be 1 boss.
+            horde_boss = nil
+            horde_boss_properties = nil
             if boss_properties.end_wave and boss_properties.end_wave == true then
                 HORDE:WaveEnd()
             end
@@ -353,11 +369,6 @@ end
 function HORDE:RemoveDistantEnemies(enemies)
     for _, enemy in pairs(enemies) do
         local boss_properties = enemy:GetHordeBossProperties()
-        -- Do not remove bosses, change their positions instead.
-        if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
-            boss_reposition = true
-            return
-        end
         local closest = 99999
         local closest_z = 99999
         local closest_ply = nil
@@ -379,10 +390,15 @@ function HORDE:RemoveDistantEnemies(enemies)
         end
 
         if closest > HORDE.max_spawn_distance or (closest_z > GetConVarNumber("horde_max_spawn_z_distance")) then
-            table.RemoveByValue(enemies, enemy)
-            if enemy:IsValid() then
-                enemy:SetHordeMostRecentAttacker(nil)
-                enemy:Remove()
+            -- Do not remove bosses, change their positions instead.
+            if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
+                horde_boss_reposition = true
+            else
+                table.RemoveByValue(enemies, enemy)
+                if enemy:IsValid() then
+                    enemy:SetHordeMostRecentAttacker(nil)
+                    enemy:Remove()
+                end
             end
         else
             if enemy:IsValid() and enemy:IsNPC() then
@@ -500,8 +516,6 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         local pos = table.Random(valid_nodes)
         if not pos then return end
         table.RemoveByValue(valid_nodes, pos)
-        local p = math.random()
-        local p_cum = 0
         local spawned_enemy
         local enemy_wave = HORDE.current_wave
         -- This in fact should not happen
@@ -515,30 +529,27 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
             enemy_wave = HORDE.max_max_waves
         end
         
-        for name, weight in pairs(HORDE.bosses_normalized[enemy_wave]) do
-            p_cum = p_cum + weight
-            if p <= p_cum then
-                local enemy = HORDE.bosses[name .. tostring(enemy_wave)]
-                spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
-                boss = spawned_enemy
-                boss_reposition = false
-                table.insert(enemies, spawned_enemy)
-                net.Start("Horde_SyncBossSpawned")
-                net.WriteString(enemy.name)
-                net.WriteInt(spawned_enemy:GetMaxHealth(),16)
-                net.WriteInt(spawned_enemy:Health(),16)
-                net.Broadcast()
-                break
-            end
-        end
+        local enemy = HORDE.bosses[horde_boss_name .. tostring(enemy_wave)]
+        spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+        horde_boss = spawned_enemy
+        horde_boss_reposition = false
+        table.insert(enemies, spawned_enemy)
+        net.Start("Horde_SyncBossSpawned")
+        net.WriteString(enemy.name)
+        net.WriteInt(spawned_enemy:GetMaxHealth(),16)
+        net.WriteInt(spawned_enemy:Health(),16)
+        net.Broadcast()
+
+        HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
+        HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
     end
 end
 
 function HORDE:RepositionBoss(valid_nodes)
-    if (not boss) or (not boss_spawned) then return end
+    if (not horde_boss) or (not horde_boss_spawned) then return end
     local pos = table.Random(valid_nodes)
     if not pos then return end
-    boss:SetPos(pos)
+    horde_boss:SetPos(pos)
 end
 
 function HORDE:SpawnAmmoboxes(valid_nodes)
@@ -587,6 +598,8 @@ function HORDE:StartBreak()
 end
 
 -- Starts a wave.
+-- 1. Sets the spawn configuration for the current wave.
+-- 2. Decides the boss to spawn, if there is one available.
 function HORDE:WaveStart()
     if (HORDE.enemies_normalized == nil) or table.IsEmpty(HORDE.enemies_normalized) then
         HORDE:HardResetDirector()
@@ -639,16 +652,40 @@ function HORDE:WaveStart()
     HORDE.current_break_time = -1
     HORDE.killed_enemies_this_wave = 0
 
+    -- Decides the boss to spawn.
     local has_boss = HORDE.bosses_normalized[HORDE.current_wave]
     if has_boss then
-        local boss = HORDE.bosses[]
+        local p = math.random()
+        local p_cum = 0
+        for name, weight in pairs(HORDE.bosses_normalized[HORDE.current_wave]) do
+            p_cum = p_cum + weight
+            if p <= p_cum then
+                horde_boss_name = name
+                break
+            end
+        end
+
+        horde_boss_properties = HORDE.bosses[horde_boss_name .. HORDE.current_wave].boss_properties
+        if horde_boss_properties.enemies_spawn_threshold <= 0 then
+            -- No enemies will spawn, just the boss.
+            HORDE.total_enemies_this_wave = 1
+            HORDE.total_enemies_this_wave_fixed = 1
+        end
     end
 
     ammobox_refresh_timer = HORDE.ammobox_refresh_interval
     if HORDE.endless == 1 then
-        BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        if horde_boss_properties then
+            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  BOSS")
+        else
+            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        end
     else
-        BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        if horde_boss_properties then
+            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  BOSS")
+        else
+            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+        end
     end
     -- Close all the shop menus
     net.Start("Horde_ForceCloseShop")
@@ -659,7 +696,7 @@ end
 function HORDE:WaveEnd()
     HORDE.current_break_time = HORDE.total_break_time
     in_break = false
-    boss_spawned = false
+    horde_boss_spawned = false
     HORDE:StartBreak()
     local enemies = HORDE:ScanEnemies()
     if not table.IsEmpty(enemies) then
@@ -803,17 +840,23 @@ function HORDE:Direct()
     local valid_nodes = HORDE:GetValidNodes(enemies)
     if #valid_nodes > 0 then
         --Spawn enemies
-        HORDE:SpawnEnemies(enemies, valid_nodes)
+        if (not horde_boss_properties) then
+            HORDE:SpawnEnemies(enemies, valid_nodes)
+        else
+            if horde_boss and (horde_boss:Health() <= horde_boss_properties.enemies_spawn_threshold * horde_boss:GetMaxHealth()) then
+                HORDE:SpawnEnemies(enemies, valid_nodes)
+            end
+        end
 
         -- Spawn boss
         local has_boss = HORDE.bosses_normalized[HORDE.current_wave]
-        if has_boss and (not boss_spawned) and (not boss) then
+        if has_boss and (not horde_boss_spawned) and (not horde_boss) then
             HORDE:SpawnBoss(enemies, valid_nodes)
-            hook.Run("HordeBossSpawn", boss)
-            boss_spawned = true
-        elseif boss_reposition then
+            hook.Run("HordeBossSpawn", horde_boss)
+            horde_boss_spawned = true
+        elseif horde_boss_reposition then
             HORDE:RepositionBoss(valid_nodes)
-            boss_reposition = false
+            horde_boss_reposition = false
         end
         
         -- Spawn ammoboxes
