@@ -78,6 +78,7 @@ function PANEL:Init()
             for wpn, _ in pairs(list.Get("Weapon")) do
                 weapon_editor:AddChoice(wpn)
             end
+            weapon_editor:AddChoice("_horde_armor_100")
 
             local entity_editor = vgui.Create("DTextEntry", editor_panel)
             entity_editor:SetSize(200, height/3)
