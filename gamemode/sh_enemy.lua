@@ -19,6 +19,12 @@ HORDE.CreateEnemy = function (name, class, weight, wave, is_elite, health_scale,
     enemy.spawn_limit = spawn_limit and spawn_limit or 0
     enemy.is_elite = is_elite and is_elite or 0
     enemy.boss_properties = boss_properties and boss_properties or {}
+    -- Prevent infinite rounds
+    if enemy.boss_properties then
+        if enemy.boss_properties.unlimited_enemies_spawn and (not enemy.boss_properties.end_wave) then
+            enemy.boss_properties.end_wave = true
+        end
+    end
     HORDE.enemies[name .. tostring(enemy.wave)] = enemy
 end
 
@@ -254,7 +260,7 @@ HORDE.GetDefaultEnemiesData = function ()
     HORDE.CreateEnemy("zombie fast vj", "npc_vj_zss_cfastzombie",0.25, 6, false, 0.4, 0.5, 1, 1.25, nil)
     HORDE.CreateEnemy("red zombie fast", "npc_fastzombie",       0.25, 6, true, 1.25, 1.5, 1.25, 1.25, Color(255,0,0))
     HORDE.CreateEnemy("zombie hulk", "npc_vj_zss_zhulk",         0.05, 6, true, 0.8, 1, 1, 1, nil)
-    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie", 0.25, 6, true, 1.5, 1.5, 1.5, 1.5, Color(0,0,0))
+    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie", 0.25, 6, true, 1.25, 1.5, 1.5, 1.5, Color(0,0,0))
     HORDE.CreateEnemy("zombie vj guard", "npc_vj_zss_zombguard", 0.25, 6, false, 1, 1, 1, 1, nil)
 
     HORDE.CreateEnemy("black zombie", "npc_zombie", 0.1, 7, true, 1.5, 1.25, 1.25, 1.25, Color(0,0,0))
@@ -274,10 +280,10 @@ HORDE.GetDefaultEnemiesData = function ()
     HORDE.CreateEnemy("zombe panic 1", "npc_vj_zss_zp1",         0.25, 7, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie poison vj", "npc_vj_zss_cpzombie", 0.25, 7, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie fast vj", "npc_vj_zss_cfastzombie",0.25, 7, false, 0.4, 0.5, 1, 1.25, nil)
-    HORDE.CreateEnemy("burnt", "npc_vj_zss_burnzie",             0.20, 7, false, 1, 1, 1, 1, nil)
+    HORDE.CreateEnemy("burnt", "npc_vj_zss_burnzie",             0.20, 7, false, 0.8, 1, 1, 1, nil)
     HORDE.CreateEnemy("red zombie fast", "npc_fastzombie",       0.25, 7, true, 1.25, 1.5, 1.25, 1.25, Color(255,0,0))
     HORDE.CreateEnemy("zombie hulk", "npc_vj_zss_zhulk",         0.05, 7, true, 0.8, 1, 1, 1, nil)
-    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie", 0.25, 7, true, 1.5, 1.5, 1.5, 1.5, Color(0,0,0))
+    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie", 0.25, 7, true, 1.25, 1.5, 1.5, 1.5, Color(0,0,0))
 
     HORDE.CreateEnemy("black zombie", "npc_zombie", 0.1, 8, true, 1.5, 1.25, 1.25, 1.25, Color(0,0,0))
     HORDE.CreateEnemy("zombie vj",        "npc_vj_zss_czombie",  0.1, 8,  false, 0.4, 1, 1, 1, nil)
@@ -296,11 +302,11 @@ HORDE.GetDefaultEnemiesData = function ()
     HORDE.CreateEnemy("zombe panic 1", "npc_vj_zss_zp1",         0.25, 8, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie poison vj", "npc_vj_zss_cpzombie", 0.25, 8, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie fast vj", "npc_vj_zss_cfastzombie",0.25, 8, false, 0.4, 0.5, 1, 1.25, nil)
-    HORDE.CreateEnemy("burnt", "npc_vj_zss_burnzie",             0.20, 8, false, 1, 1, 1, 1, nil)
+    HORDE.CreateEnemy("burnt", "npc_vj_zss_burnzie",             0.20, 8, false, 0.8, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie vj guard", "npc_vj_zss_zombguard", 0.25, 8, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("red zombie fast", "npc_fastzombie",       0.25, 8, true, 1.25, 1.5, 1.25, 1.25, Color(255,0,0))
     HORDE.CreateEnemy("zombie hulk", "npc_vj_zss_zhulk",         0.05, 8, true, 0.8, 1, 1, 1, nil)
-    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie", 0.25, 8, true, 1.5, 1.5, 1.5, 1.5, Color(0,0,0))
+    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie", 0.25, 8, true, 1.25, 1.5, 1.5, 1.5, Color(0,0,0))
 
     HORDE.CreateEnemy("zombie vj",        "npc_vj_zss_czombie",  0.1, 9, false, 0.4, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie vj slow1",  "npc_vj_zss_zombie1",  0.1, 9, false, 0.4, 1, 1, 1, nil)
@@ -318,11 +324,11 @@ HORDE.GetDefaultEnemiesData = function ()
     HORDE.CreateEnemy("zombe panic 1",    "npc_vj_zss_zp1",      0.25, 9, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie poison vj", "npc_vj_zss_cpzombie", 0.25, 9, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie fast vj",   "npc_vj_zss_cfastzombie",0.25, 9, false, 0.4, 0.5, 1, 1.25, nil)
-    HORDE.CreateEnemy("burnt", "npc_vj_zss_burnzie",             0.20, 9, false, 1, 1, 1, 1, nil)
+    HORDE.CreateEnemy("burnt", "npc_vj_zss_burnzie",             0.20, 9, false, 0.8, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie vj guard", "npc_vj_zss_zombguard", 0.25, 9, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("red zombie fast", "npc_fastzombie",       0.15, 9, true, 1.25, 1.5, 1.25, 1.25, Color(255,0,0))
     HORDE.CreateEnemy("zombie hulk", "npc_vj_zss_zhulk",         0.05, 9, true, 0.8, 1, 1, 1, nil)
-    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie", 0.25, 9, true, 1.5, 1.5, 1.5, 1.5, Color(0,0,0))
+    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie", 0.25, 9, true, 1.25, 1.5, 1.5, 1.5, Color(0,0,0))
     HORDE.CreateEnemy("zombie vj fast black", "npc_vj_zss_cfastzombie", 0.05, 9, true, 1.25, 1.25, 1.25, 1.1, Color(0,0,0))
 
     HORDE.CreateEnemy("zombie vj",        "npc_vj_zss_czombie",      0.1, 10, false, 0.4, 1, 1, 1, nil)
@@ -340,12 +346,12 @@ HORDE.GetDefaultEnemiesData = function ()
     HORDE.CreateEnemy("zombie vj slow12", "npc_vj_zss_zombie12",     0.1, 10, false, 0.4, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombe panic 1",    "npc_vj_zss_zp1",          0.25, 10, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie fast vj", "npc_vj_zss_cfastzombie",    0.25, 10, false, 0.4, 0.5, 1, 1.25, nil)
-    HORDE.CreateEnemy("burnt", "npc_vj_zss_burnzie",                 0.20, 10, false, 1, 1, 1, 1, nil)
+    HORDE.CreateEnemy("burnt", "npc_vj_zss_burnzie",                 0.20, 10, false, 0.8, 1, 1, 1, nil)
     HORDE.CreateEnemy("zombie vj guard", "npc_vj_zss_zombguard",     0.25, 10, false, 1, 1, 1, 1, nil)
     HORDE.CreateEnemy("red zombie fast",  "npc_fastzombie",          0.15, 10, true, 1.25, 1.5, 1.25, 1.25, Color(255,0,0))
     HORDE.CreateEnemy("zombie hulk red",  "npc_vj_zss_zhulk",        0.025, 10, true, 1, 1.5, 1.5, 1, Color(255,0,0))
     HORDE.CreateEnemy("zombie hulk black", "npc_vj_zss_zhulk",       0.025, 10, true, 1, 2, 2, 1, Color(0,0,0))
-    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie",     0.25, 10, true, 1.5, 1.5, 1.5, 1.5, Color(0,0,0))
+    HORDE.CreateEnemy("black zombie poison", "npc_poisonzombie",     0.25, 10, true, 1.25, 1.5, 1.5, 1.5, Color(0,0,0))
     HORDE.CreateEnemy("zombie vj fast black", "npc_vj_zss_cfastzombie", 0.05, 10, true, 1.25, 1.25, 1.25, 1.1, Color(0,0,0))
     
     HORDE.NormalizeEnemiesWeight()

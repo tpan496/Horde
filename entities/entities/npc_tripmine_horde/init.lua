@@ -67,7 +67,7 @@ function ENT:Use(ply)
     local owner = self:GetHordeOwner()
     if reuse:GetBool() == false then return end
     if self:GetTriggered() then return end
-    if IsValid(owner) and owner != ply then return end    -- feel free to steal disconnected player mines
+    if IsValid(owner) and owner ~= ply then return end    -- feel free to steal disconnected player mines
 
     -- I don't want player to be able to difuse mines with wrong class >:c
     -- btw, saboteur class when?

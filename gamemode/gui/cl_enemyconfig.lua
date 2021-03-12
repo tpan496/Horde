@@ -137,17 +137,28 @@ function PANEL:Init()
             end
 
             local end_wave_editor = vgui.Create("DCheckBoxLabel", panel)
+            local unlimited_enemies_spawn_editor = vgui.Create("DCheckBoxLabel", panel)
+            
             end_wave_editor:SetText("End wave after defeated")
             end_wave_editor:SetPos(100 + 50, 23)
             end_wave_editor:SetTextColor(color_black)
             end_wave_editor:SetVisible(false)
+            function end_wave_editor:OnChange(bVal)
+                if not bVal then
+                    unlimited_enemies_spawn_editor:SetChecked(false)
+                end
+            end
             table.insert(editors, end_wave_editor)
 
-            local unlimited_enemies_spawn_editor = vgui.Create("DCheckBoxLabel", panel)
             unlimited_enemies_spawn_editor:SetText("Unlimited enemies spawn during wave")
             unlimited_enemies_spawn_editor:SetPos(100 + 50, 43)
             unlimited_enemies_spawn_editor:SetTextColor(color_black)
             unlimited_enemies_spawn_editor:SetVisible(false)
+            function unlimited_enemies_spawn_editor:OnChange(bVal)
+                if bVal then
+                    end_wave_editor:SetChecked(true)
+                end
+            end
             table.insert(editors, unlimited_enemies_spawn_editor)
 
             local enemies_spawn_threshold_label = vgui.Create("DLabel", panel)
