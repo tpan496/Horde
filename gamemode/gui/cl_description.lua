@@ -77,6 +77,7 @@ function PANEL:Init()
     self.current_ammo_panel.Paint = function () end
 
     function self.buy_btn:DoClick()
+        if self:GetText() == "OWNED" then return end
         self:GetParent():DoClick()
     end
 
