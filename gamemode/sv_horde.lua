@@ -4,7 +4,7 @@ util.AddNetworkString("Horde_GameEnd")
 local players_count = 0
 local spawned_ammoboxes = {}
 local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
-local in_break = false
+local horde_in_break = false
 
 local horde_boss_spawned = false
 local horde_boss_reposition = false
@@ -240,7 +240,12 @@ function HORDE:HardResetDirector()
     HORDE.alive_enemies_this_wave = 0
     HORDE.current_wave = 0
     HORDE.current_break_time = HORDE.total_break_time
-    in_break = false
+    horde_in_break = false
+    horde_boss_spawned = false
+    horde_boss = nil
+    horde_boss_properties = nil
+    horde_boss_reposition = false
+    horde_boss_name = nil
     -- TODO: clean up all the spawned enemies
 end
 
@@ -511,17 +516,13 @@ end
 
 -- Spawns a Horde boss. Boss is unique.
 function HORDE:SpawnBoss(enemies, valid_nodes)
-    if (#enemies + 1 <= HORDE.max_enemies_alive) and (not boss) and (HORDE.total_enemies_this_wave > 0) then
+    if (#enemies + 1 <= HORDE.max_enemies_alive) and (not horde_boss) and (HORDE.total_enemies_this_wave > 0) then
         -- Boss is unique
         local pos = table.Random(valid_nodes)
         if not pos then return end
         table.RemoveByValue(valid_nodes, pos)
         local spawned_enemy
         local enemy_wave = HORDE.current_wave
-        -- This in fact should not happen
-        if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
-            enemy_wave = enemy_wave - 1
-        end
         
         -- Endless
         -- Boss only spawns on multiples of 10.
@@ -534,10 +535,11 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         horde_boss = spawned_enemy
         horde_boss_reposition = false
         table.insert(enemies, spawned_enemy)
+        
         net.Start("Horde_SyncBossSpawned")
-        net.WriteString(enemy.name)
-        net.WriteInt(spawned_enemy:GetMaxHealth(),16)
-        net.WriteInt(spawned_enemy:Health(),16)
+            net.WriteString(enemy.name)
+            net.WriteInt(spawned_enemy:GetMaxHealth(),16)
+            net.WriteInt(spawned_enemy:Health(),16)
         net.Broadcast()
 
         HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
@@ -577,8 +579,8 @@ end
 
 -- Start's a break between waves.
 function HORDE:StartBreak()
-    if in_break then return end
-    in_break = true
+    if horde_in_break then return end
+    horde_in_break = true
     timer.Create("Horder_Counter", 1, 0, function ()
         if not HORDE.start_game then return end
         BroadcastWaveMessage("Next wave starts in " .. HORDE.current_break_time, HORDE.current_break_time)
@@ -591,7 +593,7 @@ function HORDE:StartBreak()
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
             BroadcastWaveMessage("Wave " .. HORDE.current_wave .. " has started!", 0)
-            in_break = false
+            horde_in_break = false
             timer.Remove("Horder_Counter")
         end
     end)
@@ -695,8 +697,13 @@ end
 -- Ends a wave.
 function HORDE:WaveEnd()
     HORDE.current_break_time = HORDE.total_break_time
-    in_break = false
+    horde_in_break = false
     horde_boss_spawned = false
+    horde_boss = nil
+    horde_boss_properties = nil
+    horde_boss_reposition = false
+    horde_boss_name = nil
+
     HORDE:StartBreak()
     local enemies = HORDE:ScanEnemies()
     if not table.IsEmpty(enemies) then
@@ -839,15 +846,6 @@ function HORDE:Direct()
     --Get valid nodes
     local valid_nodes = HORDE:GetValidNodes(enemies)
     if #valid_nodes > 0 then
-        --Spawn enemies
-        if (not horde_boss_properties) then
-            HORDE:SpawnEnemies(enemies, valid_nodes)
-        else
-            if horde_boss and (horde_boss:Health() <= horde_boss_properties.enemies_spawn_threshold * horde_boss:GetMaxHealth()) then
-                HORDE:SpawnEnemies(enemies, valid_nodes)
-            end
-        end
-
         -- Spawn boss
         local has_boss = HORDE.bosses_normalized[HORDE.current_wave]
         if has_boss and (not horde_boss_spawned) and (not horde_boss) then
@@ -857,6 +855,15 @@ function HORDE:Direct()
         elseif horde_boss_reposition then
             HORDE:RepositionBoss(valid_nodes)
             horde_boss_reposition = false
+        end
+
+        --Spawn enemies
+        if (not horde_boss_properties) then
+            HORDE:SpawnEnemies(enemies, valid_nodes)
+        else
+            if horde_boss and (horde_boss:Health() <= horde_boss_properties.enemies_spawn_threshold * horde_boss:GetMaxHealth()) then
+                HORDE:SpawnEnemies(enemies, valid_nodes)
+            end
         end
         
         -- Spawn ammoboxes
