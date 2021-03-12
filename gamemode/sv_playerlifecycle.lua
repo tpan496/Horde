@@ -12,7 +12,7 @@ local map_list = {}
 local map_votes = {}
 local diff_votes = {}
 
-HORDE.GameEnd = function (status)
+function HORDE:GameEnd(status)
     local randomplayer = table.Random(player.GetAll())
 
     local mvp_player = randomplayer
@@ -141,11 +141,7 @@ HORDE.GameEnd = function (status)
 
     net.WriteInt(total_damage, 32)
 
-    local maps = file.Find( "maps/*.bsp", "GAME")
-    for _, map in ipairs( maps ) do
-        map = map:sub(1, -5) -- Take off .bsp
-        table.insert(map_list, map)
-    end
+    map_list = HORDE:GetNextMaps()
 
     if not map_list then
         map_list = {game.GetMapNext()}
@@ -286,7 +282,7 @@ HORDE.VoteChangeMap = function (ply)
         net.WriteInt(0,2)
         net.Broadcast()
         timer.Simple(5, function ()
-            HORDE.GameEnd("Change Map")
+            HORDE:GameEnd("Change Map")
         end)
     else
         net.Start("Horde_LegacyNotification")
@@ -347,7 +343,7 @@ function CheckAlivePlayers()
         net.WriteString("All players are dead! Restarting...")
         net.WriteInt(1,2)
         net.Broadcast()
-        HORDE.GameEnd("DEFEAT!")
+        HORDE:GameEnd("DEFEAT!")
     end
 end
 

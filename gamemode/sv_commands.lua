@@ -4,6 +4,7 @@ util.AddNetworkString("Horde_ToggleConfigMenu")
 util.AddNetworkString("Horde_ToggleItemConfig")
 util.AddNetworkString("Horde_ToggleEnemyConfig")
 util.AddNetworkString("Horde_ToggleClassConfig")
+util.AddNetworkString("Horde_ToggleMapConfig")
 util.AddNetworkString("Horde_RenderCenterText")
 util.AddNetworkString("Horde_Console_Commands")
 
@@ -169,6 +170,26 @@ function ClassConfig(ply)
     end
 end
 
+function MapConfig(ply)
+    if HORDE.start_game then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("You cannot open config after a wave has started.")
+        net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
+    if ply:IsSuperAdmin() then
+        HORDE:SyncMapsTo(ply)
+        net.Start("Horde_ToggleMapConfig")
+        net.Send(ply)
+    else
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("You do not have access to this command.")
+        net.WriteInt(1,2)
+        net.Send(ply)
+    end
+end
+
 function ConfigMenu(ply)
     if HORDE.start_game then
         net.Start("Horde_LegacyNotification")
@@ -211,6 +232,8 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         EnemyConfig(ply)
     elseif text == "!classconfig" then
         ClassConfig(ply)
+    elseif text == "!mapconfig" then
+        MapConfig(ply)
     elseif text == "!drop" then
         ply:DropWeapon()
     elseif text == "!throwmoney" then
@@ -247,4 +270,8 @@ end)
 
 concommand.Add("horde_class_config", function (ply, cmd, args)
     ClassConfig(ply)
+end)
+
+concommand.Add("horde_map_config", function (ply, cmd, args)
+    MapConfig(ply)
 end)
