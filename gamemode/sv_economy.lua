@@ -316,7 +316,6 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 if ent:IsNPC() then
                     -- Minions have no player collsion
                     ent:AddRelationship("player D_LI 99")
-                    ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
                     local npc_info = list.Get("NPC")[ent:GetClass()]
                     if not npc_info then
                         print("[HORDE] NPC does not exist in ", list.Get("NPC"))
@@ -329,14 +328,20 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     end
 
                     -- Special case for turrets
+                    local id = ent:GetCreationID()
                     if ent:GetClass() == "npc_turret_floor" then
-                        local id = ent:GetCreationID()
                         ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
                         timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
                             if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
                             ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
                         end)
                         HORDE:DropTurret(ent)
+                    else
+                        ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+                        timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
+                            if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+                            ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+                        end)
                     end
                 end
                 ent:CallOnRemove("Horde_EntityRemoved", function()
