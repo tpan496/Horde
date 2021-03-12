@@ -12,6 +12,7 @@ include("gui/cl_item.lua")
 include("gui/cl_itemconfig.lua")
 include("gui/cl_classconfig.lua")
 include("gui/cl_enemyconfig.lua")
+include("gui/cl_mapconfig.lua")
 include("gui/cl_configmenu.lua")
 include("gui/cl_shop.lua")
 include("gui/cl_summary.lua")
@@ -139,6 +140,21 @@ function HORDE:ToggleClassConfig()
     end
 end
 
+function HORDE:ToggleMapConfig()
+    if not HORDE.MapConfigGUI then
+        HORDE.MapConfigGUI = vgui.Create("HordeMapConfig")
+        HORDE.MapConfigGUI:SetVisible(false)
+    end
+    
+    if HORDE.MapConfigGUI:IsVisible() then
+        HORDE.MapConfigGUI:Hide()
+        gui.EnableScreenClicker(false)
+    else
+        HORDE.MapConfigGUI:Show()
+        gui.EnableScreenClicker(true)
+    end
+end
+
 function HORDE:ToggleConfigMenu()
     if not HORDE.ConfigMenuGUI then
         HORDE.ConfigMenuGUI = vgui.Create("HordeConfigMenu")
@@ -261,7 +277,7 @@ net.Receive("Horde_RenderCenterText", function ()
             elseif num == 0 then
                 surface.PlaySound("ambient/alarms/manhack_alert_pass1.wav")
             else
-                surface.PlaySound("cd/" .. tostring(num) ..".mp3")
+                surface.PlaySound("horde/cd/" .. tostring(num) ..".mp3")
             end
         elseif num == -2 then
             surface.PlaySound("HL1/fvox/blip.wav")

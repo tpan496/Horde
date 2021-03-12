@@ -122,7 +122,7 @@ function PANEL:Init()
             local editors = {}
             local editor = vgui.Create("DCheckBox", panel)
             editor:SetPos(110, 10)
-            editor:DockMargin(0,37,0,37)
+            editor:DockMargin(0,57,0,57)
             editor:Dock(LEFT)
             function editor:OnChange(bVal)
                 if bVal then
@@ -182,7 +182,34 @@ function PANEL:Init()
             enemies_spawn_threshold_percentage_label:SetVisible(false)
             table.insert(editors, enemies_spawn_threshold_percentage_label)
 
-            return {is_boss_editor=editor, end_wave_editor=end_wave_editor, unlimited_enemies_spawn_editor=unlimited_enemies_spawn_editor, enemies_spawn_threshold_editor=enemies_spawn_threshold_editor}
+            local music_label = vgui.Create("DLabel", panel)
+            music_label:SetText("Boss Music")
+            music_label:SetTextColor(color_black)
+            music_label:SetWide(100)
+            music_label:SetPos(100 + 50, 83)
+            music_label:SetVisible(false)
+            table.insert(editors, music_label)
+            local music_editor = vgui.Create("DTextEntry", panel)
+            music_editor:SetWide(100)
+            music_editor:SetPos(100 + 50 + 60, 83)
+            music_editor:SetVisible(false)
+            table.insert(editors, music_editor)
+
+            local music_duration_label = vgui.Create("DLabel", panel)
+            music_duration_label:SetText("Music Duration (seconds)")
+            music_duration_label:SetTextColor(color_black)
+            music_duration_label:SetWide(100)
+            music_duration_label:SetPos(100 + 50, 103)
+            music_duration_label:SetVisible(false)
+            table.insert(editors, music_duration_label)
+            local music_duration_editor = vgui.Create("DTextEntry", panel)
+            music_duration_editor:SetWide(100)
+            music_duration_editor:SetPos(100 + 50 + 60, 103)
+            music_duration_editor:SetNumeric()
+            music_duration_editor:SetVisible(false)
+            table.insert(editors, music_duration_editor)
+
+            return {is_boss_editor=editor, end_wave_editor=end_wave_editor, unlimited_enemies_spawn_editor=unlimited_enemies_spawn_editor, enemies_spawn_threshold_editor=enemies_spawn_threshold_editor, music_editor=music_editor, music_duration_editor=music_duration_editor}
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(150, height)
@@ -206,7 +233,7 @@ function PANEL:Init()
     local color_editor = create_property_editor("color", 130, basic_modifier_panel)
     
     local elite_editor = create_property_editor("is elite", 35, elite_modifier_panel)
-    local boss_editors = create_property_editor("is boss", 100, elite_modifier_panel)
+    local boss_editors = create_property_editor("is boss", 140, elite_modifier_panel)
 
     if GetConVarNumber("horde_default_enemy_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -255,6 +282,8 @@ function PANEL:Init()
         boss_properties.end_wave = boss_editors.end_wave_editor:GetChecked()
         boss_properties.unlimited_enemies_spawn = boss_editors.unlimited_enemies_spawn_editor:GetChecked()
         boss_properties.enemies_spawn_threshold = tonumber(boss_editors.enemies_spawn_threshold_editor:GetText())
+        boss_properties.music = boss_editors.music_editor:GetText()
+        boss_properties.music_duration = tonumber(boss_editors.music_duration_editor:GetText())
 
         HORDE.CreateEnemy(
             name_editor:GetText(),
@@ -445,6 +474,8 @@ function PANEL:Init()
                 boss_editors.end_wave_editor:SetChecked(boss_properties.end_wave)
                 boss_editors.unlimited_enemies_spawn_editor:SetChecked(boss_properties.unlimited_enemies_spawn)
                 boss_editors.enemies_spawn_threshold_editor:SetValue(boss_properties.enemies_spawn_threshold)
+                boss_editors.music_editor:SetValue(boss_properties.music and boss_properties.music or "")
+                boss_editors.music_duration_editor:SetValue(boss_properties.music_duration and boss_properties.music_duration or "")
             else
                 boss_editors.is_boss_editor:OnChange(false)
                 boss_editors.is_boss_editor:SetChecked(false)

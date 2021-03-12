@@ -3,7 +3,7 @@ local PANEL = {}
 surface.CreateFont("Heading", { font = "arial bold", size = 22 })
 
 function PANEL:Init()
-    self:SetSize(256, 256)
+    self:SetSize(256, 320)
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
@@ -50,6 +50,17 @@ function PANEL:Init()
     classconfig:SetFont("Heading")
     classconfig.DoClick = function()
         HORDE:ToggleClassConfig()
+        HORDE:ToggleConfigMenu()
+    end
+
+    local mapconfig = vgui.Create("DButton", self)
+    mapconfig:SetSize(700, 64)
+    mapconfig:Dock(TOP)
+    mapconfig:DockMargin(10, 4, 10, 0)
+    mapconfig:SetText("Map Config")
+    mapconfig:SetFont("Heading")
+    mapconfig.DoClick = function()
+        HORDE:ToggleMapConfig()
         HORDE:ToggleConfigMenu()
     end
 end

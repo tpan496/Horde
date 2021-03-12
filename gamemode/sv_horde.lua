@@ -1,9 +1,9 @@
 util.AddNetworkString("Horde_HighlightEntities")
 util.AddNetworkString("Horde_GameEnd")
 
-local players_count = 0
-local spawned_ammoboxes = {}
-local ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
+local horde_players_count = 0
+local horde_spawned_ammoboxes = {}
+local horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local horde_in_break = false
 
 local horde_boss_spawned = false
@@ -11,6 +11,10 @@ local horde_boss_reposition = false
 local horde_boss_name = nil
 local horde_boss = nil
 local horde_boss_properties = nil
+local boss_music_loop = nil
+
+-- These are for horde default bosses only,
+local horde_boss_critical = nil
 
 local entmeta = FindMetaTable("Entity")
 function entmeta:SetHordeMostRecentAttacker(attacker)
@@ -129,6 +133,10 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             if boss_properties.end_wave and boss_properties.end_wave == true then
                 HORDE:WaveEnd()
             end
+            timer.Remove("Horde_BossMusic")
+            if boss_music_loop then
+                boss_music_loop:Stop()
+            end
         end
 
         victim:SetHordeMostRecentAttacker(nil)
@@ -180,6 +188,18 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                 net.Start("Horde_SyncBossHealth")
                 net.WriteInt(ent:Health(), 16)
                 net.Broadcast()
+                if not horde_boss_critical and ent:Health() < ent:GetMaxHealth() / 2 then
+                    timer.Remove("Horde_BossMusic")
+                    boss_music_loop:Stop()
+                    boss_music_loop = CreateSound(game.GetWorld(), "horde/boss/boss_critical.ogg")
+                    boss_music_loop:SetSoundLevel(0)
+                    timer.Create("Horde_BossMusic", 192, 0, function()
+                        boss_music_loop:Stop()
+                        boss_music_loop:Play()
+                    end)
+                    boss_music_loop:Play()
+                    horde_boss_critical = true
+                end
             end
        elseif ent:IsPlayer() and dmg:GetAttacker():IsNPC() then
            local id = ent:SteamID()
@@ -309,7 +329,7 @@ function HORDE:SpawnEnemy(enemy, pos)
     -- Health settings
     if enemy.is_elite then
         spawned_enemy:SetVar("is_elite", true)
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, math.min(8, players_count) * (0.60 + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, math.min(8, horde_players_count) * (0.60 + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
     end
 
     if enemy.health_scale then
@@ -456,7 +476,7 @@ end
 -- Loops over valid nodes and spawn enemies.
 -- Boss should not be spawned in this function.
 function HORDE:SpawnEnemies(enemies, valid_nodes)
-    for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + math.floor(players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + players_count) do
+    for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + math.floor(horde_players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + horde_players_count) do
         if (#enemies + 1 <= HORDE.max_enemies_alive) and (HORDE.total_enemies_this_wave > 0) then
             local pos = table.Random(valid_nodes)
             if pos ~= nil then
@@ -540,6 +560,17 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
             net.WriteString(enemy.name)
             net.WriteInt(spawned_enemy:GetMaxHealth(),16)
             net.WriteInt(spawned_enemy:Health(),16)
+            if enemy.boss_properties.music then
+                boss_music_loop = CreateSound(game.GetWorld(), enemy.boss_properties.music)
+                boss_music_loop:SetSoundLevel(0)
+                if enemy.boss_properties.music_duration then
+                    timer.Create("Horde_BossMusic", enemy.boss_properties.music_duration, 0, function()
+                        boss_music_loop:Stop()
+                        boss_music_loop:Play()
+                    end)
+                end
+                boss_music_loop:Play()
+            end
         net.Broadcast()
 
         HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
@@ -555,26 +586,26 @@ function HORDE:RepositionBoss(valid_nodes)
 end
 
 function HORDE:SpawnAmmoboxes(valid_nodes)
-    for _, box in pairs(spawned_ammoboxes) do
+    for _, box in pairs(horde_spawned_ammoboxes) do
         if box:IsValid() then box:Remove() end
     end
-    spawned_ammoboxes = {}
+    horde_spawned_ammoboxes = {}
 
     for i = 0, math.min(table.Count(player.GetAll()), HORDE.ammobox_max_count_limit) + HORDE.difficulty_additional_ammoboxes[HORDE.difficulty] do
         local pos = table.Random(valid_nodes)
         local spawned_ammobox = ents.Create("horde_ammobox")
         spawned_ammobox:SetPos(pos)
         spawned_ammobox:Spawn()
-        table.insert(spawned_ammoboxes, spawned_ammobox)
+        table.insert(horde_spawned_ammoboxes, spawned_ammobox)
     end
 
-    if table.Count(spawned_ammoboxes) > 0 then
+    if table.Count(horde_spawned_ammoboxes) > 0 then
         net.Start("Horde_HighlightEntities")
         net.WriteInt(HORDE.render_highlight_ammoboxes, 3)
         net.Broadcast()
     end
 
-    ammobox_refresh_timer = HORDE.ammobox_refresh_interval
+    horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval
 end
 
 -- Start's a break between waves.
@@ -620,19 +651,19 @@ function HORDE:WaveStart()
         net.Broadcast()
     end
 
-    players_count = table.Count(player.GetAll())
+    horde_players_count = table.Count(player.GetAll())
     local difficulty_coefficient = HORDE.difficulty * 0.05
     
     if HORDE.endless == 0 then
         -- No endless
-        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
+        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(horde_players_count * (0.75 + difficulty_coefficient))
     else
         if HORDE.total_enemies_per_wave[HORDE.current_wave] ~= nil then
              -- If we have enough waves, still use them
-             HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(players_count * (0.75 + difficulty_coefficient))
+             HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(horde_players_count * (0.75 + difficulty_coefficient))
         else
             -- Use wave 10 settings scaled
-            HORDE.total_enemies_this_wave = (HORDE.total_enemies_per_wave[HORDE.max_max_waves] + 5 * (HORDE.current_wave - HORDE.max_max_waves)) * math.ceil(players_count * (0.75 + difficulty_coefficient))
+            HORDE.total_enemies_this_wave = (HORDE.total_enemies_per_wave[HORDE.max_max_waves] + 5 * (HORDE.current_wave - HORDE.max_max_waves)) * math.ceil(horde_players_count * (0.75 + difficulty_coefficient))
             -- Scale damage and health
             HORDE.endless_damage_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
             HORDE.endless_health_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
@@ -649,7 +680,7 @@ function HORDE:WaveStart()
     local max_enemies_alive_base = GetConVarNumber("horde_max_enemies_alive_base")
     local scale = GetConVarNumber("horde_max_enemies_alive_scale_factor")
     local max_enemies_alive_max = GetConVarNumber("horde_max_enemies_alive_max")
-    HORDE.max_enemies_alive = math.floor(math.min(max_enemies_alive_max, max_enemies_alive_base * HORDE.difficulty_max_enemies_alive_scale_factor + scale * players_count))
+    HORDE.max_enemies_alive = math.floor(math.min(max_enemies_alive_max, max_enemies_alive_base * HORDE.difficulty_max_enemies_alive_scale_factor + scale * horde_players_count))
     HORDE.alive_enemies_this_wave = 0
     HORDE.current_break_time = -1
     HORDE.killed_enemies_this_wave = 0
@@ -675,7 +706,7 @@ function HORDE:WaveStart()
         end
     end
 
-    ammobox_refresh_timer = HORDE.ammobox_refresh_interval
+    horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval
     if HORDE.endless == 1 then
         if horde_boss_properties then
             BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  BOSS")
@@ -703,6 +734,7 @@ function HORDE:WaveEnd()
     horde_boss_properties = nil
     horde_boss_reposition = false
     horde_boss_name = nil
+    horde_boss_critical = false
 
     HORDE:StartBreak()
     local enemies = HORDE:ScanEnemies()
@@ -829,9 +861,9 @@ function HORDE:Direct()
 
     -- Decrease ammobox refresh timer
     if HORDE.enable_ammobox == 1 then
-        ammobox_refresh_timer = ammobox_refresh_timer - director_interval
+        horde_ammobox_refresh_timer = horde_ammobox_refresh_timer - director_interval
         net.Start("Horde_AmmoboxCountdown")
-        net.WriteInt(ammobox_refresh_timer, 8)
+        net.WriteInt(horde_ammobox_refresh_timer, 8)
         net.Broadcast()
     end
     
@@ -867,7 +899,7 @@ function HORDE:Direct()
         end
         
         -- Spawn ammoboxes
-        if ammobox_refresh_timer <= 0 then
+        if horde_ammobox_refresh_timer <= 0 then
             HORDE:SpawnAmmoboxes(valid_nodes)
         end
     end
