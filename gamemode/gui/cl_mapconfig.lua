@@ -10,117 +10,253 @@ function PANEL:Init()
     self:MakePopup()
 
     local close_btn = vgui.Create("DButton", self)
+    local close_btn_color = HORDE.color_config_btn
     close_btn:SetFont("marlett")
     close_btn:SetText("r")
-    close_btn.Paint = function() end
+    close_btn.Paint = function() draw.RoundedBox(10, 0, 0, 40, 32, close_btn_color) end
     close_btn:SetColor(Color(255, 255, 255))
-    close_btn:SetSize(32, 32)
-    close_btn:SetPos(self:GetWide() - 40, 8)
-    close_btn.DoClick = function() HORDE:ToggleItemConfig() end
+    close_btn:SetSize(40, 32)
+    close_btn:SetPos(self:GetWide() - 45, 4)
+    close_btn.OnCursorEntered = function ()
+        close_btn_color = HORDE.color_crimson
+    end
+    close_btn.OnCursorExited = function ()
+        close_btn_color = HORDE.color_config_btn
+    end
+    close_btn.DoClick = function() HORDE:ToggleMapConfig() end
 
-    local modify_tab = vgui.Create("DScrollPanel", self)
-    modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
-    modify_tab:SetPos(self:GetWide() / 2, 40)
+    local q_btn = vgui.Create("DButton", self)
+    local q_btn_color = HORDE.color_config_btn
+    q_btn:SetFont("Trebuchet24")
+    q_btn:SetText("?")
+    q_btn.Paint = function() draw.RoundedBox(10, 0, 0, 40, 32, q_btn_color) end
+    q_btn:SetColor(Color(255, 255, 255))
+    q_btn:SetSize(40, 32)
+    q_btn:SetPos(self:GetWide() - 45 - 45, 4)
+    q_btn.OnCursorEntered = function ()
+        q_btn_color = HORDE.color_crimson
+    end
+    q_btn.OnCursorExited = function ()
+        q_btn_color = HORDE.color_config_btn
+    end
+    q_btn.DoClick = function() gui.OpenURL("https://github.com/tpan496/Horde/wiki/Map-Config") end
 
-    local save_btn = vgui.Create("DButton", modify_tab)
-    save_btn:Dock(TOP)
-    save_btn:DockMargin(10,10,10,10)
-    save_btn:SetTall(30)
-    save_btn:SetText("Save Item")
-    save_btn.DoClick = function ()
-        -- Reload from disk
-        net.Start("Horde_SetItemsData")
-        local tab = util.TableToJSON(HORDE.items)
-        local str = util.Compress(tab)
-        net.WriteUInt(string.len(str), 32)
-        net.WriteData(str, string.len(str))
+    local whitelist_tab = vgui.Create("DPanel", self)
+    whitelist_tab:SetSize(self:GetWide() / 4, self:GetTall() - 55 - 10)
+    whitelist_tab:SetPos(self:GetWide() / 4, 50)
+    whitelist_tab:SetBackgroundColor(HORDE.color_config_content_bg)
+
+    local whitelist_editor = vgui.Create("DTextEntry", whitelist_tab)
+    whitelist_editor:Dock(TOP)
+    whitelist_editor:DockMargin(10,10,10,10)
+    whitelist_editor:SetTall(30)
+    whitelist_editor:SetTextColor(color_black)
+
+    local whitelist_btn = vgui.Create("DButton", whitelist_tab)
+    whitelist_btn:Dock(TOP)
+    whitelist_btn:DockMargin(10,5,10,5)
+    whitelist_btn:SetTall(30)
+    whitelist_btn:SetText("<-- Add to whitelist")
+    whitelist_btn.DoClick = function ()
+        HORDE.map_whitelist[whitelist_editor:GetText()] = whitelist_editor:GetText()
+        net.Start("Horde_SetMapsWhitelistData")
+            if HORDE.map_whitelist then net.WriteTable(HORDE.map_whitelist) else net.WriteTable({}) return end
         net.SendToServer()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
 
-    local settings_tab = vgui.Create("DPanel", self)
-    settings_tab:SetPos(0, 40)
-    settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
-    local item_list = vgui.Create("DListView", settings_tab)
-    item_list:DockMargin(10, 10, 10, 10)
-    item_list:Dock(FILL)
+    local whitelist_del_btn = vgui.Create("DButton", whitelist_tab)
+    whitelist_del_btn:Dock(BOTTOM)
+    whitelist_del_btn:DockMargin(10,5,10,10)
+    whitelist_del_btn:SetTall(30)
+    whitelist_del_btn:SetText("Delete Whitelist")
+    whitelist_del_btn.DoClick = function ()
+        Derma_Query("Delete Everything?", "Delete Everything",
+            "Yes",
+            function()
+                HORDE.map_whitelist = {}
 
-    item_list:SetMultiSelect(false)
-    item_list:AddColumn("Map")
+                net.Start("Horde_SetMapsWhitelistData")
+                    net.WriteTable({})
+                net.SendToServer()
+                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+            end,
+            "No", function() end
+        )
+    end
 
-    item_list:SetDataHeight(20)
+    local whitelist_list_tab = vgui.Create("DPanel", self)
+    whitelist_list_tab:SetPos(0, 40)
+    whitelist_list_tab:SetSize(self:GetWide() / 4, self:GetTall() - 40 - 3)
+    whitelist_list_tab:SetBackgroundColor(HORDE.color_none)
+    
+    local whitelist_list = vgui.Create("DListView", whitelist_list_tab)
+    whitelist_list:DockMargin(10, 10, 10, 10)
+    whitelist_list:Dock(FILL)
 
-    item_list.OnClickLine = function(parent, line, selected)
-        local item = line.item
+    whitelist_list:SetMultiSelect(false)
+    whitelist_list:AddColumn("Map")
 
+    whitelist_list:SetDataHeight(20)
+
+    whitelist_list.OnClickLine = function(parent, line, selected)
         local menu = DermaMenu()
+        local map = line.map
 
         menu:AddOption("Modify", function()
-            
+            whitelist_editor:SetText(map)
         end)
 
         menu:AddOption("Delete", function()
-            
-
-			net.Start("Horde_SetItemsData")
-            local tab = util.TableToJSON(HORDE.items)
-            local str = util.Compress(tab)
-            net.WriteUInt(string.len(str), 32)
-            net.WriteData(str, string.len(str))
-        	net.SendToServer()
+            HORDE.map_whitelist[map] = nil
+			net.Start("Horde_SetMapsWhitelistData")
+                if HORDE.map_whitelist then net.WriteTable(HORDE.map_whitelist) else net.WriteTable({}) return end
+            net.SendToServer()
 			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
         end)
 
         menu:AddSpacer()
-
         menu:Open()
     end
 
-    self.item_list = item_list
+    self.whitelist_list = whitelist_list
+
+    local blacklist_tab = vgui.Create("DPanel", self)
+    blacklist_tab:SetSize(self:GetWide() / 4, self:GetTall() - 55 - 10)
+    blacklist_tab:SetPos(self:GetWide() * 3 / 4, 50)
+    blacklist_tab:SetBackgroundColor(HORDE.color_config_content_bg)
+
+    local blacklist_editor = vgui.Create("DTextEntry", blacklist_tab)
+    blacklist_editor:Dock(TOP)
+    blacklist_editor:DockMargin(10,10,10,10)
+    blacklist_editor:SetTall(30)
+    blacklist_editor:SetTextColor(color_black)
+
+    local blacklist_btn = vgui.Create("DButton", blacklist_tab)
+    blacklist_btn:Dock(TOP)
+    blacklist_btn:DockMargin(10,5,10,5)
+    blacklist_btn:SetTall(30)
+    blacklist_btn:SetText("<-- Add to blacklist")
+    blacklist_btn.DoClick = function ()
+        net.Start("Horde_SetMapsBlacklistData")
+        HORDE.map_blacklist[blacklist_editor:GetText()] = blacklist_editor:GetText()
+            if HORDE.map_blacklist then net.WriteTable(HORDE.map_blacklist) return end
+        net.SendToServer()
+        notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+    end
+
+    local blacklist_del_btn = vgui.Create("DButton", blacklist_tab)
+    blacklist_del_btn:Dock(BOTTOM)
+    blacklist_del_btn:DockMargin(10,5,10,10)
+    blacklist_del_btn:SetTall(30)
+    blacklist_del_btn:SetText("Delete Blacklist")
+    blacklist_del_btn.DoClick = function ()
+        Derma_Query("Delete Everything?", "Delete Everything",
+            "Yes",
+            function()
+                HORDE.map_blacklist = {}
+
+                net.Start("Horde_SetMapsBlacklistData")
+                    net.WriteTable({})
+                net.SendToServer()
+                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+            end,
+            "No", function() end
+        )
+    end
+
+    local blacklist_list_tab = vgui.Create("DPanel", self)
+    blacklist_list_tab:SetPos(self:GetWide() / 2, 40)
+    blacklist_list_tab:SetSize(self:GetWide() / 4, self:GetTall() - 40 - 3)
+    blacklist_list_tab:SetBackgroundColor(HORDE.color_none)
+    
+    local blacklist_list = vgui.Create("DListView", blacklist_list_tab)
+    blacklist_list:DockMargin(10, 10, 10, 10)
+    blacklist_list:Dock(FILL)
+
+    blacklist_list:SetMultiSelect(false)
+    blacklist_list:AddColumn("Map")
+
+    blacklist_list:SetDataHeight(20)
+
+    blacklist_list.OnClickLine = function(parent, line, selected)
+        local menu = DermaMenu()
+        local map = line.map
+
+        menu:AddOption("Modify", function()
+            blacklist_editor:SetText(map)
+        end)
+
+        menu:AddOption("Delete", function()
+            HORDE.map_blacklist[map] = nil
+			net.Start("Horde_SetMapsBlacklistData")
+                if HORDE.map_blacklist then net.WriteTable(HORDE.map_blacklist) else net.WriteTable({}) return end
+            net.SendToServer()
+			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+        end)
+
+        menu:AddSpacer()
+        menu:Open()
+    end
+
+    self.blacklist_list = blacklist_list
 end
 
 function PANEL:Think()
-    local lines = self.item_list:GetLines()
-
-    for _, item in pairs(HORDE.items) do
-        local found = false
-        for _, line in pairs(lines) do
-            if line.item == item then
-                found = true
+    local whitelist_lines = self.whitelist_list:GetLines()
+    if HORDE.map_whitelist then
+        for _, map in pairs(HORDE.map_whitelist) do
+            local found = false
+            for _, line in pairs(whitelist_lines) do
+                if line.map == map then
+                    found = true
+                end
+            end
+            if not found then
+                self.whitelist_list:AddLine(map).map = map
             end
         end
-        if not found then
-            self.item_list:AddLine(item.category, item.name, item.class, item.price, item.weight).item = item
+
+        for i, line in pairs(whitelist_lines) do
+            if table.HasValue(HORDE.map_whitelist, line.map) then
+                line:SetValue(1, line.map)
+            else
+                self.whitelist_list:RemoveLine(i)
+            end
         end
     end
+    local blacklist_lines = self.blacklist_list:GetLines()
+    if HORDE.map_blacklist then
+        for _, map in pairs(HORDE.map_blacklist) do
+            local found = false
+            for _, line in pairs(blacklist_lines) do
+                if line.map == map then
+                    found = true
+                end
+            end
+            if not found then
+                self.blacklist_list:AddLine(map).map = map
+            end
+        end
 
-    for i, line in pairs(lines) do
-        if table.HasValue(HORDE.items, line.item) then
-            local item = line.item
-
-            line:SetValue(1, item.class)
-            line:SetValue(2, item.category)
-            line:SetValue(3, item.name)
-            line:SetValue(4, item.price)
-            line:SetValue(5, item.weight)
-        else
-            self.item_list:RemoveLine(i)
+        for i, line in pairs(blacklist_lines) do
+            if table.HasValue(HORDE.map_blacklist, line.map) then
+                line:SetValue(1, line.map)
+            else
+                self.blacklist_list:RemoveLine(i)
+            end
         end
     end
 end
 
 function PANEL:Paint(w, h)
-    -- Derma_DrawBackgroundBlur(self)
-
     -- Entire Panel
-    surface.SetDrawColor(Color(230, 230, 230, 255))
-    surface.DrawRect(0, 0, w, h)
+    draw.RoundedBox(10, 0, 0, w, h, HORDE.color_config_bg)
 
     -- Background
-    surface.SetDrawColor(Color(40, 40, 40, 255))
-    surface.DrawRect(0, 0, w, 48)
+    draw.RoundedBox(10, 0, 0, w, 40, HORDE.color_config_bar)
 
-    draw.SimpleText("Item Config (Some settings require restarting current game to take effect)", "Heading", 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Horde Map Blacklist/Whitelist Configuration", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
-vgui.Register("HordeItemConfig", PANEL, "EditablePanel")
+vgui.Register("HordeMapConfig", PANEL, "EditablePanel")

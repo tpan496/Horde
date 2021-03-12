@@ -536,7 +536,7 @@ end
 
 -- Spawns a Horde boss. Boss is unique.
 function HORDE:SpawnBoss(enemies, valid_nodes)
-    if (#enemies + 1 <= HORDE.max_enemies_alive) and (not horde_boss) and (HORDE.total_enemies_this_wave > 0) then
+    if (horde_boss_name) and (#enemies + 1 <= HORDE.max_enemies_alive) and (not horde_boss) and (HORDE.total_enemies_this_wave > 0) then
         -- Boss is unique
         local pos = table.Random(valid_nodes)
         if not pos then return end
@@ -686,7 +686,7 @@ function HORDE:WaveStart()
     HORDE.killed_enemies_this_wave = 0
 
     -- Decides the boss to spawn.
-    local has_boss = HORDE.bosses_normalized[HORDE.current_wave]
+    local has_boss = HORDE.bosses_normalized[HORDE.current_wave] and not table.IsEmpty(HORDE.bosses_normalized[HORDE.current_wave])
     if has_boss then
         local p = math.random()
         local p_cum = 0
@@ -748,7 +748,7 @@ function HORDE:WaveEnd()
     if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
         -- TODO: change this magic number
         BroadcastWaveMessage("Final Wave Completed! You have survived!", -2)
-        HORDE.GameEnd("VICTORY!")
+        HORDE:GameEnd("VICTORY!")
     else
         BroadcastWaveMessage("Wave Completed!", -2)
         net.Start("Horde_LegacyNotification")

@@ -3,7 +3,7 @@ local PANEL = {}
 surface.CreateFont("Heading", { font = "arial bold", size = 22 })
 
 function PANEL:Init()
-    self:SetSize(256, 320)
+    self:SetSize(256, 325)
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
@@ -13,7 +13,7 @@ function PANEL:Init()
     close_btn.Paint = function() end
     close_btn:SetColor(Color(255, 255, 255))
     close_btn:SetSize(32, 32)
-    close_btn:SetPos(self:GetWide() - 40, 8)
+    close_btn:SetPos(self:GetWide() - 40, 5)
 
     close_btn.DoClick = function()
         HORDE:ToggleConfigMenu()
@@ -27,7 +27,7 @@ function PANEL:Init()
     itemconfig:SetText("Item Config")
     itemconfig:SetFont("Heading")
     itemconfig.DoClick = function()
-        HORDE:ToggleItemConfig()
+        RunConsoleCommand("horde_item_config")
         HORDE:ToggleConfigMenu()
     end
 
@@ -38,7 +38,7 @@ function PANEL:Init()
     enemyconfig:SetText("Enemy Config")
     enemyconfig:SetFont("Heading")
     enemyconfig.DoClick = function()
-        HORDE:ToggleEnemyConfig()
+        RunConsoleCommand("horde_enemy_config")
         HORDE:ToggleConfigMenu()
     end
 
@@ -49,7 +49,7 @@ function PANEL:Init()
     classconfig:SetText("Class Config")
     classconfig:SetFont("Heading")
     classconfig.DoClick = function()
-        HORDE:ToggleClassConfig()
+        RunConsoleCommand("horde_class_config")
         HORDE:ToggleConfigMenu()
     end
 
@@ -60,7 +60,7 @@ function PANEL:Init()
     mapconfig:SetText("Map Config")
     mapconfig:SetFont("Heading")
     mapconfig.DoClick = function()
-        HORDE:ToggleMapConfig()
+        RunConsoleCommand("horde_map_config")
         HORDE:ToggleConfigMenu()
     end
 end
@@ -69,14 +69,14 @@ function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
     -- Entire Panel
-    surface.SetDrawColor(Color(40, 40, 40))
+    surface.SetDrawColor(HORDE.color_config_bar)
     surface.DrawRect(0, 0, w, h)
 
     -- Background
-    surface.SetDrawColor(Color(40, 40, 40))
-    surface.DrawRect(0, 0, w, 48)
+    surface.SetDrawColor(HORDE.color_config_bar)
+    surface.DrawRect(0, 0, w, 40)
 
-    draw.SimpleText("Configuration Menu", "Heading", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Configuration Menu", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("HordeConfigMenu", PANEL, "Panel")

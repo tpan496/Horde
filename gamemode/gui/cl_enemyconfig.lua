@@ -6,40 +6,63 @@ function PANEL:Init()
     self:MakePopup()
 
     local close_btn = vgui.Create("DButton", self)
+    local close_btn_color = HORDE.color_config_btn
     close_btn:SetFont("marlett")
     close_btn:SetText("r")
-    close_btn.Paint = function() end
+    close_btn.Paint = function() draw.RoundedBox(10, 0, 0, 40, 32, close_btn_color) end
     close_btn:SetColor(Color(255, 255, 255))
-    close_btn:SetSize(32, 32)
-    close_btn:SetPos(self:GetWide() - 40, 6)
+    close_btn:SetSize(40, 32)
+    close_btn:SetPos(self:GetWide() - 45, 4)
+    close_btn.OnCursorEntered = function ()
+        close_btn_color = HORDE.color_crimson
+    end
+    close_btn.OnCursorExited = function ()
+        close_btn_color = HORDE.color_config_btn
+    end
     close_btn.DoClick = function() HORDE:ToggleEnemyConfig() end
 
+    local q_btn = vgui.Create("DButton", self)
+    local q_btn_color = HORDE.color_config_btn
+    q_btn:SetFont("Trebuchet24")
+    q_btn:SetText("?")
+    q_btn.Paint = function() draw.RoundedBox(10, 0, 0, 40, 32, q_btn_color) end
+    q_btn:SetColor(Color(255, 255, 255))
+    q_btn:SetSize(40, 32)
+    q_btn:SetPos(self:GetWide() - 45 - 45, 4)
+    q_btn.OnCursorEntered = function ()
+        q_btn_color = HORDE.color_crimson
+    end
+    q_btn.OnCursorExited = function ()
+        q_btn_color = HORDE.color_config_btn
+    end
+    q_btn.DoClick = function() gui.OpenURL("https://github.com/tpan496/Horde/wiki/Enemy-Config") end
+
     local modify_tab = vgui.Create("DCategoryList", self)
-    modify_tab:SetBackgroundColor(Color(230, 230, 230))
-    modify_tab:SetSize(self:GetWide() / 2 - 210, self:GetTall() - 40)
+    modify_tab:SetBackgroundColor(HORDE.color_config_content_bg)
+    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 40 - 12)
     modify_tab:SetPos(self:GetWide() / 2, 40)
 
     local required_cat = modify_tab:Add("Required")
     local required_panel = vgui.Create("DPanel", modify_tab)
     required_cat:SetContents(required_panel)
+    required_panel:SetBackgroundColor(HORDE.color_none)
     local basic_modifier_cat = modify_tab:Add("Basic Modifiers")
     local basic_modifier_panel = vgui.Create("DPanel", modify_tab)
     basic_modifier_cat:SetContents(basic_modifier_panel)
     basic_modifier_cat:SetExpanded(false)
+    basic_modifier_panel:SetBackgroundColor(HORDE.color_none)
     local elite_modifier_cat = modify_tab:Add("Elite/Boss Modifiers")
     local elite_modifier_panel = vgui.Create("DPanel", modify_tab)
     elite_modifier_cat:SetContents(elite_modifier_panel)
     elite_modifier_cat:SetExpanded(false)
+    elite_modifier_panel:SetBackgroundColor(HORDE.color_none)
 
     local function create_property_editor(name, height, cat_panel)
         local panel = vgui.Create("DPanel", cat_panel)
         panel:DockPadding(10, 5, 10, 5)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
-        panel.Paint = function ()
-            surface.SetDrawColor(Color(230,230,230))
-            surface.DrawRect(0, 0, modify_tab:GetWide(), height)
-        end
+        panel:SetBackgroundColor(HORDE.color_none)
 
         local label = vgui.Create("DLabel", panel)
         label:SetText(name)
@@ -191,12 +214,12 @@ function PANEL:Init()
             table.insert(editors, music_label)
             local music_editor = vgui.Create("DTextEntry", panel)
             music_editor:SetWide(100)
-            music_editor:SetPos(100 + 50 + 60, 83)
+            music_editor:SetPos(100 + 50 + 90, 83)
             music_editor:SetVisible(false)
             table.insert(editors, music_editor)
 
             local music_duration_label = vgui.Create("DLabel", panel)
-            music_duration_label:SetText("Music Duration (seconds)")
+            music_duration_label:SetText("Music Duration (s)")
             music_duration_label:SetTextColor(color_black)
             music_duration_label:SetWide(100)
             music_duration_label:SetPos(100 + 50, 103)
@@ -204,7 +227,7 @@ function PANEL:Init()
             table.insert(editors, music_duration_label)
             local music_duration_editor = vgui.Create("DTextEntry", panel)
             music_duration_editor:SetWide(100)
-            music_duration_editor:SetPos(100 + 50 + 60, 103)
+            music_duration_editor:SetPos(100 + 50 + 90, 103)
             music_duration_editor:SetNumeric()
             music_duration_editor:SetVisible(false)
             table.insert(editors, music_duration_editor)
@@ -255,17 +278,17 @@ function PANEL:Init()
     weapon_editor:SetValue("_gmod_default")
 
     local btn_panel = vgui.Create("DPanel", self)
-    btn_panel:SetPos(self:GetWide() - 210, 50)
-    btn_panel:SetSize(200, self:GetTall() - 200)
+    btn_panel:SetPos(self:GetWide() - 200, 50)
+    btn_panel:SetSize(200, self:GetTall() - 58)
     btn_panel.Paint = function ()
-        surface.SetDrawColor(Color(230,230,230,0))
+        surface.SetDrawColor(HORDE.color_none)
         surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     end
 
     local save_btn = vgui.Create("DButton", btn_panel)
     save_btn:SetText("Save Enemy")
-    save_btn:SetTall(40)
-    save_btn:DockMargin(10, 10, 10, 10)
+    save_btn:SetTall(30)
+    save_btn:DockMargin(10, 5, 10, 5)
     save_btn:Dock(TOP)
     save_btn.DoClick = function ()
         if not name_editor:GetValue() or not class_editor:GetValue() then return end
@@ -310,22 +333,25 @@ function PANEL:Init()
 
     local save_for_waves = vgui.Create("DPanel", btn_panel)
     save_for_waves:Dock(TOP)
-    save_for_waves:DockMargin(10, 10, 10, 10)
+    save_for_waves:DockMargin(10, 0, 10, 0)
     save_for_waves:SetTall(90)
     save_for_waves.Paint = function () end
 
     local boxes_pane = vgui.Create("DPanel", save_for_waves)
     boxes_pane:Dock(BOTTOM)
-    boxes_pane.Paint = function () end
     boxes_pane:SetTall(50)
+    boxes_pane:SetBackgroundColor(HORDE.color_none)
+
     local wave_start_box = vgui.Create("DComboBox", boxes_pane)
     wave_start_box:SetPos(10,10)
     wave_start_box:SetSize(50,30)
     wave_start_box:SetSortItems(false)
+    
     local to_label = vgui.Create("DLabel", boxes_pane)
     to_label:SetText("to")
     to_label:SetTextColor(Color(0,0,0))
     to_label:SetPos(80,15)
+    
     local wave_end_box = vgui.Create("DComboBox", boxes_pane)
     wave_end_box:SetPos(120,10)
     wave_end_box:SetSize(50,30)
@@ -338,7 +364,7 @@ function PANEL:Init()
     local save_after_btn = vgui.Create("DButton", save_for_waves)
     save_after_btn:Dock(BOTTOM)
     save_after_btn:SetText("Save Enemy From Wave A to B:")
-    save_after_btn:SetTall(40)
+    save_after_btn:SetTall(30)
     save_after_btn.DoClick = function ()
         if not name_editor:GetValue() or not class_editor:GetValue() then return end
         local color = nil
@@ -384,10 +410,10 @@ function PANEL:Init()
     end
 
     local load_btn = vgui.Create("DButton", btn_panel)
-    load_btn:Dock(TOP)
-    load_btn:DockMargin(10, 10, 10, 10)
+    load_btn:Dock(BOTTOM)
+    load_btn:DockMargin(10, 5, 10, 5)
     load_btn:SetText("OVERWRITE with Default Config")
-    load_btn:SetTall(40)
+    load_btn:SetTall(30)
     load_btn.DoClick = function ()
         Derma_Query("Overwrite?", "Overwrite with Default Config",
             "Yes",
@@ -405,10 +431,10 @@ function PANEL:Init()
     end
 
     local del_btn = vgui.Create("DButton", btn_panel)
-    del_btn:Dock(TOP)
-    del_btn:DockMargin(10, 10, 10, 10)
+    del_btn:Dock(BOTTOM)
+    del_btn:DockMargin(10, 5, 10, 5)
     del_btn:SetText("Delete Everything")
-    del_btn:SetTall(40)
+    del_btn:SetTall(30)
     del_btn.DoClick = function ()
         Derma_Query("Delete Everything?", "Delete Everything",
             "Yes",
@@ -426,7 +452,8 @@ function PANEL:Init()
 
     local settings_tab = vgui.Create("DPanel", self)
     settings_tab:SetPos(0, 40)
-    settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
+    settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40 - 3)
+    settings_tab:SetBackgroundColor(HORDE.color_none)
 
     local enemy_list = vgui.Create("DListView", settings_tab)
     enemy_list:DockMargin(10, 10, 10, 10)
@@ -533,14 +560,12 @@ end
 
 function PANEL:Paint(w, h)
     -- Entire Panel
-    surface.SetDrawColor(Color(230, 230, 230))
-    surface.DrawRect(0, 0, w, h)
+    draw.RoundedBox(10, 0, 0, w, h, HORDE.color_config_bg)
 
     -- Background
-    surface.SetDrawColor(Color(17,148,240))
-    surface.DrawRect(0, 0, w, 40)
+    draw.RoundedBox(10, 0, 0, w, 40, HORDE.color_config_bar)
 
-    draw.SimpleText("Enemy Config (Some settings require restart to take effect)", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Horde Enemy Configuration", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("HordeEnemyConfig", PANEL, "EditablePanel")
