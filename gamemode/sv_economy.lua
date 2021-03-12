@@ -63,10 +63,12 @@ function Player:RemoveHordeDropEntity(class, entity_creation_id)
 end
 
 function Player:AddHordeMoney(money)
+    if not self:IsValid() and not money then return end
     self.money = self.money + money
 end
 
 function Player:AddHordeWeight(weight)
+    if not self:IsValid() then return end
     self.weight = self.weight + weight
 end
 
