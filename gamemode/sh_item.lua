@@ -34,6 +34,9 @@ HORDE.CreateItem = function (category, name, class, price, weight, description, 
     else
         item.entity_properties = {type=HORDE.ENTITY_PROPERTY_WPN}
     end
+    if item.class == "_horde_armor_100" then
+        item.entity_properties = {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=100}
+    end
     HORDE.items[item.class] = item
     HORDE.SetItemsData()
 end
