@@ -46,11 +46,25 @@ function PANEL:Init()
     whitelist_tab:SetPos(self:GetWide() / 4, 50)
     whitelist_tab:SetBackgroundColor(HORDE.color_config_content_bg)
 
+    local whitelist_label = vgui.Create("DLabel", whitelist_tab)
+    whitelist_label:Dock(TOP)
+    whitelist_label:DockMargin(10,10,10,10)
+    whitelist_label:SetTextColor(color_black)
+    whitelist_label:SetFont("Trebuchet18")
+    whitelist_label:SetText("Whitelist Settings")
+
     local whitelist_editor = vgui.Create("DTextEntry", whitelist_tab)
     whitelist_editor:Dock(TOP)
     whitelist_editor:DockMargin(10,10,10,10)
     whitelist_editor:SetTall(30)
     whitelist_editor:SetTextColor(color_black)
+
+    local whitelist_eg_label = vgui.Create("DLabel", whitelist_tab)
+    whitelist_eg_label:Dock(TOP)
+    whitelist_eg_label:DockMargin(10,0,10,0)
+    whitelist_eg_label:SetTall(30)
+    whitelist_eg_label:SetText("e.g. zs_heat")
+    whitelist_eg_label:SetTextColor(color_black)
 
     local whitelist_btn = vgui.Create("DButton", whitelist_tab)
     whitelist_btn:Dock(TOP)
@@ -71,7 +85,7 @@ function PANEL:Init()
     whitelist_del_btn:SetTall(30)
     whitelist_del_btn:SetText("Delete Whitelist")
     whitelist_del_btn.DoClick = function ()
-        Derma_Query("Delete Everything?", "Delete Everything",
+        Derma_Query("Delete Everything?", "Delete Whitelist",
             "Yes",
             function()
                 HORDE.map_whitelist = {}
@@ -126,11 +140,26 @@ function PANEL:Init()
     blacklist_tab:SetPos(self:GetWide() * 3 / 4, 50)
     blacklist_tab:SetBackgroundColor(HORDE.color_config_content_bg)
 
+    local blacklist_label = vgui.Create("DLabel", blacklist_tab)
+    blacklist_label:Dock(TOP)
+    blacklist_label:DockMargin(10,5,10,5)
+    blacklist_label:SetTall(30)
+    blacklist_label:SetTextColor(color_black)
+    blacklist_label:SetFont("Trebuchet18")
+    blacklist_label:SetText("Blacklist Settings")
+
     local blacklist_editor = vgui.Create("DTextEntry", blacklist_tab)
     blacklist_editor:Dock(TOP)
     blacklist_editor:DockMargin(10,10,10,10)
     blacklist_editor:SetTall(30)
     blacklist_editor:SetTextColor(color_black)
+    
+    local blacklist_eg_label = vgui.Create("DLabel", blacklist_tab)
+    blacklist_eg_label:Dock(TOP)
+    blacklist_eg_label:DockMargin(10,0,10,0)
+    blacklist_eg_label:SetTall(30)
+    blacklist_eg_label:SetText("e.g. gm_construct")
+    blacklist_eg_label:SetTextColor(color_black)
 
     local blacklist_btn = vgui.Create("DButton", blacklist_tab)
     blacklist_btn:Dock(TOP)
@@ -151,7 +180,7 @@ function PANEL:Init()
     blacklist_del_btn:SetTall(30)
     blacklist_del_btn:SetText("Delete Blacklist")
     blacklist_del_btn.DoClick = function ()
-        Derma_Query("Delete Everything?", "Delete Everything",
+        Derma_Query("Delete Everything?", "Delete Blacklist",
             "Yes",
             function()
                 HORDE.map_blacklist = {}
@@ -256,7 +285,7 @@ function PANEL:Paint(w, h)
     -- Background
     draw.RoundedBox(10, 0, 0, w, 40, HORDE.color_config_bar)
 
-    draw.SimpleText("Horde Map Blacklist/Whitelist Configuration", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Horde Map Configuration", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("HordeMapConfig", PANEL, "EditablePanel")
