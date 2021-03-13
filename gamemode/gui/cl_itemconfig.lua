@@ -39,8 +39,8 @@ function PANEL:Init()
 
     local modify_tab = vgui.Create("DCategoryList", self)
     modify_tab:SetBackgroundColor(HORDE.color_config_content_bg)
-    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 40 - 12)
-    modify_tab:SetPos(self:GetWide() / 2, 40)
+    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 50 - 12)
+    modify_tab:SetPos(self:GetWide() / 2, 50)
 
     local entity_type_cat = modify_tab:Add("Entity Type")
     local entity_type_panel = vgui.Create("DPanel", modify_tab)
