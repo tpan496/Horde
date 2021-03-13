@@ -18,7 +18,7 @@ function ENT:Detonate()
 
     local targets = {}
     for k,v in pairs(ents.FindInSphere(pos, self.Radius)) do
-        if v:IsPlayer() then
+        if v:IsNPC() then
             table.insert(targets, v)
         end
     end

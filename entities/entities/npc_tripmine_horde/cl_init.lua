@@ -1,5 +1,6 @@
 include("shared.lua")
 killicon.AddAlias("npc_tripmine_horde", "npc_tripmine")
+killicon.AddAlias("weapon_slam", "npc_tripmine")
 
 local lmat = Material("trails/laser")
 local color_armed, color_enemy = Color(0, 200, 200), Color(255, 0, 0)

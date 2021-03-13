@@ -52,7 +52,7 @@ function metapoison:RemoveTarget(ent)
     table.RemoveByValue(self.targets, ent)
     local stacks = ent:GetPoisonStacks()
 
-    for k,v in pairs(stacks) do
+    for idx,v in pairs(stacks) do
         if v == self then
             stacks[idx] = nil
             return
