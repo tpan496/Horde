@@ -14,6 +14,7 @@ util.AddNetworkString("Horde_SelectClass")
 util.AddNetworkString("Horde_SyncEconomy")
 util.AddNetworkString("Horde_LegacyNotification")
 util.AddNetworkString("Horde_SyncDifficulty")
+util.AddNetworkString("Horde_RemoveReadyPanel")
 
 local Player = FindMetaTable("Player")
 
@@ -152,7 +153,16 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     end
     
     if HORDE.start_game then
+        net.Start("Horde_RemoveReadyPanel")
+        net.Send(ply)
         ply:SetHordeMoney(HORDE.start_money + math.max(0, HORDE.current_wave - 1) * 150)
+        if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss_name then
+            net.Start("Horde_SyncBossSpawned")
+                net.WriteString(HORDE.horde_boss_name)
+                net.WriteInt(HORDE.horde_boss:GetMaxHealth(),64)
+                net.WriteInt(HORDE.horde_boss:Health(),64)
+            net.Send(ply)
+        end
     else
         ply:SetHordeMoney(HORDE.start_money)
     end

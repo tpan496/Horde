@@ -6,10 +6,10 @@ local horde_spawned_ammoboxes = {}
 local horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local horde_in_break = false
 
+HORDE.horde_boss = nil
+HORDE.horde_boss_name = nil
 local horde_boss_spawned = false
 local horde_boss_reposition = false
-local horde_boss_name = nil
-local horde_boss = nil
 local horde_boss_properties = nil
 local boss_music_loop = nil
 
@@ -78,7 +78,7 @@ end)
 function HORDE:OnEnemyKilled(victim, killer, weapon)
     if HORDE.spawned_enemies[victim:EntIndex()] then
         HORDE.spawned_enemies[victim:EntIndex()] = nil
-        if (not horde_boss) or (horde_boss and (not horde_boss_properties.unlimited_enemies_spawn)) then
+        if (not HORDE.horde_boss) or (HORDE.horde_boss and (not horde_boss_properties.unlimited_enemies_spawn)) then
             HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
             HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
         end
@@ -91,13 +91,13 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         end
         
         if HORDE.endless == 1 then
-            if horde_boss and horde_boss:IsValid() and horde_boss:Health() > 0 then
+            if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
                 BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞ BOSS")
             else
                 BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
             end
         else
-            if horde_boss and horde_boss:IsValid() and horde_boss:Health() > 0 then
+            if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
                 BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  BOSS")
             else
                 BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
@@ -138,7 +138,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         -- When a boss is killed.
         if boss_properties then
             -- There could only be 1 boss.
-            horde_boss = nil
+            HORDE.horde_boss = nil
             horde_boss_properties = nil
             if boss_properties.end_wave and boss_properties.end_wave == true then
                 HORDE:WaveEnd()
@@ -202,7 +202,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
             local boss_properties = ent:GetHordeBossProperties()
             if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
                 net.Start("Horde_SyncBossHealth")
-                net.WriteInt(ent:Health(), 16)
+                net.WriteInt(ent:Health(), 64)
                 net.Broadcast()
 
                 -- Some special music for horde default boss.
@@ -211,7 +211,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                     boss_music_loop:Stop()
                     boss_music_loop = CreateSound(game.GetWorld(), "music/hl1_song10.mp3")
                     boss_music_loop:SetSoundLevel(0)
-                    timer.Create("Horde_BossMusic", 105, 0, function()
+                    timer.Create("Horde_BossMusic", 103, 0, function()
                         boss_music_loop:Stop()
                         boss_music_loop:Play()
                     end)
@@ -280,10 +280,14 @@ function HORDE:HardResetDirector()
     HORDE.current_break_time = HORDE.total_break_time
     horde_in_break = false
     horde_boss_spawned = false
-    horde_boss = nil
+    HORDE.horde_boss = nil
     horde_boss_properties = nil
     horde_boss_reposition = false
-    horde_boss_name = nil
+    HORDE.horde_boss_name = nil
+    if boss_music_loop then
+        boss_music_loop:Stop()
+        boss_music_loop = nil
+    end
 end
 
 -- This resets the enemies.
@@ -350,7 +354,7 @@ function HORDE:SpawnEnemy(enemy, pos)
         local add
         if enemy.boss_properties and enemy.boss_properties.is_boss == true then
             scale = horde_players_count
-            add = 0.70
+            add = 0.75
         else
             scale = math.min(8, horde_players_count)
             add = 0.60
@@ -564,7 +568,7 @@ end
 
 -- Spawns a Horde boss. Boss is unique.
 function HORDE:SpawnBoss(enemies, valid_nodes)
-    if (horde_boss_name) and (#enemies + 1 <= HORDE.max_enemies_alive) and (not horde_boss) and (HORDE.total_enemies_this_wave > 0) then
+    if (HORDE.horde_boss_name) and (#enemies + 1 <= HORDE.max_enemies_alive) and (not HORDE.horde_boss) and (HORDE.total_enemies_this_wave > 0) then
         -- Boss is unique
         local pos = table.Random(valid_nodes)
         if not pos then return end
@@ -578,16 +582,16 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
             enemy_wave = HORDE.max_max_waves
         end
         
-        local enemy = HORDE.bosses[horde_boss_name .. tostring(enemy_wave)]
+        local enemy = HORDE.bosses[HORDE.horde_boss_name .. tostring(enemy_wave)]
         spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
-        horde_boss = spawned_enemy
+        HORDE.horde_boss = spawned_enemy
         horde_boss_reposition = false
         table.insert(enemies, spawned_enemy)
         
         net.Start("Horde_SyncBossSpawned")
             net.WriteString(enemy.name)
-            net.WriteInt(spawned_enemy:GetMaxHealth(),16)
-            net.WriteInt(spawned_enemy:Health(),16)
+            net.WriteInt(spawned_enemy:GetMaxHealth(),64)
+            net.WriteInt(spawned_enemy:Health(),64)
             if enemy.boss_properties.music then
                 boss_music_loop = CreateSound(game.GetWorld(), enemy.boss_properties.music)
                 boss_music_loop:SetSoundLevel(0)
@@ -601,27 +605,37 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
             end
         net.Broadcast()
 
+        net.Start("Horde_HighlightEntities")
+        net.WriteInt(HORDE.render_highlight_enemies, 3)
+        net.Broadcast()
+
+        timer.Simple(5, function()
+            net.Start("Horde_HighlightEntities")
+            net.WriteInt(HORDE.render_highlight_disable, 3)
+            net.Broadcast()
+        end)
+
         HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
     end
 end
 
 function HORDE:RepositionBoss(valid_nodes)
-    if (not horde_boss) or (not horde_boss_spawned) then return end
+    if (not HORDE.horde_boss) or (not horde_boss_spawned) then return end
     local pos = table.Random(valid_nodes)
     if not pos then return end
-    horde_boss:SetPos(pos)
+    HORDE.horde_boss:SetPos(pos)
 end
 
 function HORDE:CheckBossStuck()
-    if (not horde_boss) or (not horde_boss_spawned) then return end
-    local pos = horde_boss:GetPos()
+    if (not HORDE.horde_boss) or (not horde_boss_spawned) then return end
+    local pos = HORDE.horde_boss:GetPos()
     local tr = util.TraceHull({
         start = pos,
         endpos = pos,
-        filter = horde_boss,
-        mins = horde_boss:OBBMins(),
-        maxs = horde_boss:OBBMaxs(),
+        filter = HORDE.horde_boss,
+        mins = HORDE.horde_boss:OBBMins(),
+        maxs = HORDE.horde_boss:OBBMaxs(),
     })
     if tr.Hit then
         horde_boss_reposition = true
@@ -743,13 +757,13 @@ function HORDE:WaveStart()
         for name, weight in pairs(HORDE.bosses_normalized[current_boss_wave]) do
             p_cum = p_cum + weight
             if p <= p_cum then
-                horde_boss_name = name
+                HORDE.horde_boss_name = name
                 break
             end
         end
 
-        horde_boss_properties = HORDE.bosses[horde_boss_name .. current_boss_wave].boss_properties
-        if horde_boss_properties.enemies_spawn_threshold <= 0 then
+        horde_boss_properties = HORDE.bosses[HORDE.horde_boss_name .. current_boss_wave].boss_properties
+        if horde_boss_properties.enemies_spawn_threshold <= 0 and horde_boss_properties.end_wave == true then
             -- No enemies will spawn, just the boss.
             HORDE.total_enemies_this_wave = 1
             HORDE.total_enemies_this_wave_fixed = 1
@@ -778,12 +792,12 @@ end
 -- Ends a wave.
 function HORDE:WaveEnd()
     HORDE.current_break_time = HORDE.total_break_time
+    HORDE.horde_boss = nil
+    HORDE.horde_boss_name = nil
     horde_in_break = false
     horde_boss_spawned = false
-    horde_boss = nil
     horde_boss_properties = nil
     horde_boss_reposition = false
-    horde_boss_name = nil
     horde_boss_critical = false
 
     HORDE:StartBreak()
@@ -799,6 +813,7 @@ function HORDE:WaveEnd()
     if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
         -- TODO: change this magic number
         BroadcastWaveMessage("Final Wave Completed! You have survived!", -2)
+        if boss_music_loop then boss_music_loop:Stop() end
         HORDE:GameEnd("VICTORY!")
     else
         BroadcastWaveMessage("Wave Completed!", -2)
@@ -932,9 +947,9 @@ function HORDE:Direct()
 
         -- Spawn boss
         local has_boss = HORDE.bosses_normalized[HORDE.current_wave]
-        if has_boss and (not horde_boss_spawned) and (not horde_boss) then
+        if has_boss and (not horde_boss_spawned) and (not HORDE.horde_boss) then
             HORDE:SpawnBoss(enemies, valid_nodes)
-            hook.Run("HordeBossSpawn", horde_boss)
+            hook.Run("HordeBossSpawn", HORDE.horde_boss)
             horde_boss_spawned = true
         elseif horde_boss_reposition then
             HORDE:RepositionBoss(valid_nodes)
@@ -945,7 +960,7 @@ function HORDE:Direct()
         if (not horde_boss_properties) then
             HORDE:SpawnEnemies(enemies, valid_nodes)
         else
-            if horde_boss and (horde_boss:Health() <= horde_boss_properties.enemies_spawn_threshold * horde_boss:GetMaxHealth()) then
+            if HORDE.horde_boss and (HORDE.horde_boss:Health() <= horde_boss_properties.enemies_spawn_threshold * HORDE.horde_boss:GetMaxHealth()) then
                 HORDE:SpawnEnemies(enemies, valid_nodes)
             end
         end
