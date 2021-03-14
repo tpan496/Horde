@@ -69,4 +69,4 @@ end
     without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 
-VJ.AddNPC("Mutated Hulk","npc_vj_corrupted_hulk", "Zombies")
+VJ.AddNPC("Mutated Hulk","npc_vj_mutated_hulk", "Zombies")
