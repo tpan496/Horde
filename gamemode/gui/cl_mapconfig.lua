@@ -169,7 +169,7 @@ function PANEL:Init()
     blacklist_btn.DoClick = function ()
         net.Start("Horde_SetMapsBlacklistData")
         HORDE.map_blacklist[blacklist_editor:GetText()] = blacklist_editor:GetText()
-            if HORDE.map_blacklist then net.WriteTable(HORDE.map_blacklist) return end
+            if HORDE.map_blacklist then net.WriteTable(HORDE.map_blacklist) else net.WriteTable({}) return end
         net.SendToServer()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end

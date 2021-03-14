@@ -147,7 +147,7 @@ else
 end
 
 -- Disable Surgical Shot because it is way too overpowered.
-if ArcCWInstalled then
+if GetConVar("horde_default_item_config"):GetInt() == 1 and ArcCWInstalled then
     ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
     ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
 end

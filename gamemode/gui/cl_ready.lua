@@ -84,3 +84,9 @@ net.Receive("Horde_PlayerReadySync", function ()
         end
     end
 end)
+
+net.Receive("Horde_RemoveReadyPanel", function()
+    if HORDE.PlayerReadyPanel then
+        HORDE.PlayerReadyPanel:Remove()
+    end
+end)

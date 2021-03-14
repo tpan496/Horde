@@ -385,10 +385,12 @@ function PANEL:Init()
         end
 
         local boss_properties = {}
-        boss_editors.is_boss = boss_editors.is_boss_editor:GetChecked()
-        boss_editors.end_wave = boss_editors.end_wave_toggle:GetChecked()
-        boss_editors.unlimited_enemies_spawn = boss_editors.unlimited_enemies_spawn_editor:GetChecked()
-        boss_editors.enemies_spawn_threshold = boss_editors.enemies_spawn_threshold_editor:GetInt()
+        boss_properties.is_boss = boss_editors.is_boss_editor:GetChecked()
+        boss_properties.end_wave = boss_editors.end_wave_editor:GetChecked()
+        boss_properties.unlimited_enemies_spawn = boss_editors.unlimited_enemies_spawn_editor:GetChecked()
+        boss_properties.enemies_spawn_threshold = tonumber(boss_editors.enemies_spawn_threshold_editor:GetText())
+        boss_properties.music = boss_editors.music_editor:GetText()
+        boss_properties.music_duration = tonumber(boss_editors.music_duration_editor:GetText())
 
         local start_wave = tonumber(wave_start_box:GetText())
         local end_wave = tonumber(wave_end_box:GetText())
@@ -407,6 +409,7 @@ function PANEL:Init()
             model_scale_editor:GetFloat(),
             color,
             weapon,
+            spawn_limit_editor:GetInt(),
             boss_properties
         )
         end
