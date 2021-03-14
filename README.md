@@ -151,7 +151,7 @@ CONFIG.enemies = {
         color = Color(255,0,0),
         weapon = "",
         spawn_limit = nil, -- optional
-        {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song24.mp3", music_duration=105} -- optional, boss settings
+        boss_properties = {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song24.mp3", music_duration=105} -- optional, boss settings
     }
 }
 ```
