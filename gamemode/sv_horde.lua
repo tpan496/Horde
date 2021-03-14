@@ -579,7 +579,8 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         -- Endless
         -- Boss only spawns on multiples of 10.
         if HORDE.endless == 1 and enemy_wave > HORDE.max_max_waves then
-            enemy_wave = HORDE.max_max_waves
+            enemy_wave = enemy_wave % HORDE.max_max_waves
+            if enemy_wave == 0 then enemy_wave = 10 end
         end
         
         local enemy = HORDE.bosses[HORDE.horde_boss_name .. tostring(enemy_wave)]
