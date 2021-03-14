@@ -95,7 +95,6 @@ if SERVER then
         HORDE.map_whitelist = net.ReadTable()
         HORDE:SetMapWhitelist()
         HORDE:SyncMapsTo(ply)
-        PrintTable(HORDE.map_whitelist)
     end)
 
     net.Receive("Horde_SetMapsBlacklistData", function(len, ply)
