@@ -55,7 +55,6 @@ vgui.Register("HordePlayerReadyPanel", PANEL, "DPanel")
 
 
 HORDE.PlayerReadyPanel = vgui.Create("HordePlayerReadyPanel")
-HORDE.PlayerReadyPanel:SetVisible(false)
 
 net.Receive("Horde_PlayerReadySync", function ()
     HORDE.player_ready = net.ReadTable()

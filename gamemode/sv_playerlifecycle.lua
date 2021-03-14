@@ -14,6 +14,7 @@ local diff_votes = {}
 
 function HORDE:GameEnd(status)
     local randomplayer = table.Random(player.GetAll())
+    if not randomplayer then return end
 
     local mvp_player = randomplayer
     local mvp_damage = 0

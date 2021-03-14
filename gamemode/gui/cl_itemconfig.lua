@@ -227,7 +227,7 @@ function PANEL:Init()
                 checkbox:SetText(type)
                 checkbox:SetTextColor(Color(0,0,0))
                 checkbox:SetChecked(true)
-                start_pos = start_pos + 100
+                start_pos = start_pos + 110
                 entity_checkboxes[type] = checkbox
                 if type == "weapon_entity" then
                     checkbox:SetChecked(true)
@@ -312,14 +312,14 @@ function PANEL:Init()
     end
 
     local class_editors = create_property_editor("class", 40 * 3, entity_type_panel)
-    category_editor = create_property_editor("category", 40, entity_type_panel, weapon_categories)
-    local name_editor = create_property_editor("name", 40, entity_type_panel)
-    local price_editor = create_property_editor("price", 40, entity_properties_panel)
-    weight_editor = create_property_editor("weight", 40, entity_properties_panel)
+    category_editor = create_property_editor("category", 35, entity_type_panel, weapon_categories)
+    local name_editor = create_property_editor("name", 35, entity_type_panel)
+    local price_editor = create_property_editor("price", 35, entity_properties_panel)
+    weight_editor = create_property_editor("weight", 35, entity_properties_panel)
     local description_editor = create_property_editor("description", 100, entity_properties_panel)
     local whitelist_editors = create_property_editor("whitelist", 40 * 2, entity_properties_panel)
-    ammo_price_editor = create_property_editor("ammo price", 40, entity_properties_panel)
-    secondary_ammo_price_editor = create_property_editor("alt ammo price", 40, entity_properties_panel)
+    ammo_price_editor = create_property_editor("ammo price", 35, entity_properties_panel)
+    secondary_ammo_price_editor = create_property_editor("alt ammo price", 35, entity_properties_panel)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
