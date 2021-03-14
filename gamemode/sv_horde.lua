@@ -346,7 +346,16 @@ function HORDE:SpawnEnemy(enemy, pos)
     -- Health settings
     if enemy.is_elite then
         spawned_enemy:SetVar("is_elite", true)
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, math.min(8, horde_players_count) * (0.60 + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
+        local scale
+        local add
+        if enemy.boss_properties and enemy.boss_properties.is_boss == true then
+            scale = horde_players_count
+            add = 0.70
+        else
+            scale = math.min(8, horde_players_count)
+            add = 0.60
+        end
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, scale * (add + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
     end
 
     if enemy.health_scale then
@@ -724,6 +733,7 @@ function HORDE:WaveStart()
     local current_boss_wave = HORDE.current_wave
     if HORDE.endless == 1 then
         current_boss_wave = current_boss_wave % HORDE.max_max_waves
+        if current_boss_wave == 0 then current_boss_wave = 10 end
     end
 
     local has_boss = HORDE.bosses_normalized[current_boss_wave] and not table.IsEmpty(HORDE.bosses_normalized[HORDE.current_wave])
