@@ -794,6 +794,7 @@ function HORDE:WaveEnd()
             enemy:Remove()
         end
     end
+    HORDE.spawned_enemies_count = {}
 
     if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
         -- TODO: change this magic number
@@ -839,8 +840,6 @@ function HORDE:WaveEnd()
         ply:AddHordeMoney(HORDE.round_bonus_base)
         ply:SyncEconomy()
     end
-
-    HORDE.spawned_enemies_count = {}
 end
 
 -- Referenced some spawning mechanics from Zombie Invasion+
