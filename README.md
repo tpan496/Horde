@@ -138,8 +138,8 @@ CONFIG.enemies = {
         color = Color(255,0,0),
         weapon = ""
     },
-    HugeCombine2 = {
-        name = "HugeCombine2",
+    RaidBoss = {
+        name = "RaisBoss",
         class = "npc_combine_s",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 2,
@@ -149,7 +149,9 @@ CONFIG.enemies = {
         reward_scale = 100,
         model_scale = 2,
         color = Color(255,0,0),
-        weapon = ""
+        weapon = "",
+        spawn_limit = nil, -- optional
+        {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song24.mp3", music_duration=105} -- optional, boss settings
     }
 }
 ```
