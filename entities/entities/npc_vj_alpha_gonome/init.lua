@@ -153,7 +153,7 @@ ENT.DamageByPlayerPitch2 = "UseGeneralPitch"
 ENT.DeathSoundPitch1 = "UseGeneralPitch"
 ENT.DeathSoundPitch2 = "UseGeneralPitch"
 
-	-- ====== Sound File Paths ====== --
+    -- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {"horde/gonome/gonome_step1.wav","horde/gonome/gonome_step2.wav","horde/gonome/gonome_step3.wav","horde/gonome/gonome_step4.wav","horde/gonome/gonome_run.wav"}
 ENT.SoundTbl_Idle = {"horde/gonome/gonome_idle1.wav","horde/gonome/gonome_idle2.wav","horde/gonome/gonome_idle3.wav"}
@@ -166,8 +166,8 @@ ENT.SoundTbl_Pain = {"horde/gonome/gonome_pain1.wav","horde/gonome/gonome_pain2.
 ENT.SoundTbl_Death = {"horde/gonome/gonome_death1.wav","horde/gonome/gonome_death2.wav","horde/gonome/gonome_death3.wav","horde/gonome/gonome_death4.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-	self:SetCollisionBounds(Vector(20, 20, 85), Vector(-20, -20, 0))
-	self:SetSkin(1)
+    self:SetCollisionBounds(Vector(20, 20, 85), Vector(-20, -20, 0))
+    self:SetSkin(1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(TheProjectile)
@@ -176,14 +176,14 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Critical = false
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
-	if not self.Critical and self:Health() < self:GetMaxHealth() / 2 then
-		self.Critical = true
-		self.HasRangeAttack = false
-		self.HasLeapAttack = true
-		self.AnimationPlaybackRate = 1.75
-		self:SetColor(Color(255,0,0))
-		self:SetRenderMode(RENDERMODE_TRANSCOLOR)
-	end
+    if not self.Critical and self:Health() < self:GetMaxHealth() / 2 then
+        self.Critical = true
+        self.HasRangeAttack = false
+        self.HasLeapAttack = true
+        self.AnimationPlaybackRate = 1.75
+        self:SetColor(Color(255,0,0))
+        self:SetRenderMode(RENDERMODE_TRANSCOLOR)
+    end
 end
 
 VJ.AddNPC("Alpha Gonome","npc_vj_alpha_gonome", "Zombies")

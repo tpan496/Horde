@@ -1,9 +1,9 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2018 by DrVrej, All rights reserved. ***
-	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
-	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
+    *** Copyright (c) 2012-2018 by DrVrej, All rights reserved. ***
+    No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
+    without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/zombie/hulk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 6000
@@ -33,7 +33,7 @@ ENT.MeleeAttackKnockBack_Forward1 = 100 -- How far it will push you forward | Fi
 ENT.MeleeAttackKnockBack_Forward2 = 130 -- How far it will push you forward | Second in math.random
 ENT.MeleeAttackKnockBack_Up1 = 250 -- How far it will push you up | First in math.random
 ENT.MeleeAttackKnockBack_Up2 = 260 -- How far it will push you up | Second in math.random
-	-- ====== Sound File Paths ====== --
+    -- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {"npc/zombie/foot1.wav","npc/zombie/foot2.wav","npc/zombie/foot3.wav"}
 ENT.SoundTbl_Breath = {"npc/zombie_poison/pz_breathe_loop1.wav"}
@@ -53,20 +53,20 @@ ENT.FindEnemy_CanSeeThroughWalls = true -- Should it be able to see through wall
 ENT.AnimationPlaybackRate = 1.25
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-	self:SetCollisionBounds(Vector(18, 18, 90), Vector(-18, -18, 0))
-	self:SetSkin(math.random(0,3))
-	self:SetColor(Color(255,0,255))
-	self:SetRenderMode(RENDERMODE_TRANSCOLOR)
+    self:SetCollisionBounds(Vector(18, 18, 90), Vector(-18, -18, 0))
+    self:SetSkin(math.random(0,3))
+    self:SetColor(Color(255,0,255))
+    self:SetRenderMode(RENDERMODE_TRANSCOLOR)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
-	self.AnimTbl_Walk = {ACT_WALK}
-	self.AnimTbl_Run = {ACT_RUN}
+    self.AnimTbl_Walk = {ACT_WALK}
+    self.AnimTbl_Run = {ACT_RUN}
 end
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2018 by DrVrej, All rights reserved. ***
-	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
-	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
+    *** Copyright (c) 2012-2018 by DrVrej, All rights reserved. ***
+    No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
+    without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 
 VJ.AddNPC("Mutated Hulk","npc_vj_corrupted_hulk", "Zombies")
