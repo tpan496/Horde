@@ -139,7 +139,7 @@ CONFIG.enemies = {
         weapon = ""
     },
     RaidBoss = {
-        name = "RaisBoss",
+        name = "RaidBoss",
         class = "npc_combine_s",
         weight = 1, -- Relative weight to other enemies in the same wave.
         wave = 2,
