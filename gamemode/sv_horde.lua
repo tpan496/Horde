@@ -202,7 +202,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
             local boss_properties = ent:GetHordeBossProperties()
             if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
                 net.Start("Horde_SyncBossHealth")
-                net.WriteInt(ent:Health(), 64)
+                net.WriteInt(ent:Health(), 32)
                 net.Broadcast()
 
                 -- Some special music for horde default boss.
@@ -590,8 +590,8 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         
         net.Start("Horde_SyncBossSpawned")
             net.WriteString(enemy.name)
-            net.WriteInt(spawned_enemy:GetMaxHealth(),64)
-            net.WriteInt(spawned_enemy:Health(),64)
+            net.WriteInt(spawned_enemy:GetMaxHealth(),32)
+            net.WriteInt(spawned_enemy:Health(),32)
             if enemy.boss_properties.music then
                 boss_music_loop = CreateSound(game.GetWorld(), enemy.boss_properties.music)
                 boss_music_loop:SetSoundLevel(0)

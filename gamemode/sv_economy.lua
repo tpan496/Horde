@@ -159,8 +159,8 @@ net.Receive("Horde_PlayerInit", function (len, ply)
         if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss_name then
             net.Start("Horde_SyncBossSpawned")
                 net.WriteString(HORDE.horde_boss_name)
-                net.WriteInt(HORDE.horde_boss:GetMaxHealth(),64)
-                net.WriteInt(HORDE.horde_boss:Health(),64)
+                net.WriteInt(HORDE.horde_boss:GetMaxHealth(),32)
+                net.WriteInt(HORDE.horde_boss:Health(),32)
             net.Send(ply)
         end
     else

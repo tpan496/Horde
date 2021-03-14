@@ -356,8 +356,8 @@ end)
 
 net.Receive("Horde_SyncBossSpawned", function ()
     boss_name = net.ReadString()
-    boss_max_health = net.ReadInt(64)
-    boss_health = net.ReadInt(64)
+    boss_max_health = net.ReadInt(32)
+    boss_health = net.ReadInt(32)
     delayed_boss_health = boss_health
     timer.Create("Horde_BossHealthDelayedDisplay", 0.1, 0, function ()
         if delayed_boss_health ~= boss_health then
@@ -367,7 +367,7 @@ net.Receive("Horde_SyncBossSpawned", function ()
 end)
 
 net.Receive("Horde_SyncBossHealth", function ()
-    boss_health = net.ReadInt(64)
+    boss_health = net.ReadInt(32)
     if boss_health <= 0 then
         timer.Remove("Horde_BossHealthDelayedDisplay")
     end
