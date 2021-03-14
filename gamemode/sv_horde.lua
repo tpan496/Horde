@@ -398,6 +398,8 @@ function HORDE:SpawnEnemy(enemy, pos)
     end
 
     -- This is experimental
+    spawned_enemy:SetLagCompensated(true)
+
     --spawned_enemy:AddRelationship("player D_HT 99")
     hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy
@@ -695,7 +697,6 @@ function HORDE:WaveStart()
 
     horde_players_count = table.Count(player.GetAll())
     local difficulty_coefficient = HORDE.difficulty * 0.05
-    HORDE.current_wave = 5
     
     if HORDE.endless == 0 then
         -- No endless
