@@ -147,5 +147,7 @@ else
 end
 
 -- Disable Surgical Shot because it is way too overpowered.
-ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
-ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
+if ArcCWInstalled then
+    ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
+    ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
+end
