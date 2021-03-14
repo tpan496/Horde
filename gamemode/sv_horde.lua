@@ -211,7 +211,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                     boss_music_loop:Stop()
                     boss_music_loop = CreateSound(game.GetWorld(), "music/hl1_song10.mp3")
                     boss_music_loop:SetSoundLevel(0)
-                    timer.Create("Horde_BossMusic", 192, 0, function()
+                    timer.Create("Horde_BossMusic", 105, 0, function()
                         boss_music_loop:Stop()
                         boss_music_loop:Play()
                     end)
@@ -589,14 +589,13 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
             if enemy.boss_properties.music then
                 boss_music_loop = CreateSound(game.GetWorld(), enemy.boss_properties.music)
                 boss_music_loop:SetSoundLevel(0)
-                if enemy.boss_properties.music_duration then
+                if enemy.boss_properties.music_duration and enemy.boss_properties.music_duration > 0 then
                     timer.Create("Horde_BossMusic", enemy.boss_properties.music_duration, 0, function()
                         boss_music_loop:Stop()
                         boss_music_loop:Play()
                     end)
                 end
                 boss_music_loop:Play()
-                print(boss_music_loop)
             end
         net.Broadcast()
 
