@@ -39,7 +39,7 @@ function PANEL:Init()
 
     local modify_tab = vgui.Create("DCategoryList", self)
     modify_tab:SetBackgroundColor(HORDE.color_config_content_bg)
-    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 50 - 12)
+    modify_tab:SetSize(self:GetWide() / 2 - 150, self:GetTall() - 50 - 12)
     modify_tab:SetPos(self:GetWide() / 2, 50)
 
     local required_cat = modify_tab:Add("Required")
@@ -286,8 +286,8 @@ function PANEL:Init()
     weapon_editor:SetValue("_gmod_default")
 
     local btn_panel = vgui.Create("DPanel", self)
-    btn_panel:SetPos(self:GetWide() - 200, 50)
-    btn_panel:SetSize(200, self:GetTall() - 58)
+    btn_panel:SetPos(self:GetWide() - 150, 50)
+    btn_panel:SetSize(150, self:GetTall() - 58)
     btn_panel.Paint = function ()
         surface.SetDrawColor(HORDE.color_none)
         surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
@@ -351,17 +351,17 @@ function PANEL:Init()
     boxes_pane:SetBackgroundColor(HORDE.color_none)
 
     local wave_start_box = vgui.Create("DComboBox", boxes_pane)
-    wave_start_box:SetPos(10,10)
+    wave_start_box:SetPos(0,10)
     wave_start_box:SetSize(50,30)
     wave_start_box:SetSortItems(false)
     
     local to_label = vgui.Create("DLabel", boxes_pane)
     to_label:SetText("to")
     to_label:SetTextColor(Color(0,0,0))
-    to_label:SetPos(80,15)
+    to_label:SetPos(65,15)
     
     local wave_end_box = vgui.Create("DComboBox", boxes_pane)
-    wave_end_box:SetPos(120,10)
+    wave_end_box:SetPos(85,10)
     wave_end_box:SetSize(50,30)
     wave_end_box:SetSortItems(false)
     for i = 1, 10 do
@@ -371,7 +371,7 @@ function PANEL:Init()
 
     local save_after_btn = vgui.Create("DButton", save_for_waves)
     save_after_btn:Dock(BOTTOM)
-    save_after_btn:SetText("Save Enemy From Wave A to B:")
+    save_after_btn:SetText("Copy From Wave A to B:")
     save_after_btn:SetTall(30)
     save_after_btn.DoClick = function ()
         if not name_editor:GetValue() or not class_editor:GetValue() then return end
@@ -423,10 +423,10 @@ function PANEL:Init()
     local load_btn = vgui.Create("DButton", btn_panel)
     load_btn:Dock(BOTTOM)
     load_btn:DockMargin(10, 5, 10, 5)
-    load_btn:SetText("OVERWRITE with Default Config")
+    load_btn:SetText("OVERWRITE with Default")
     load_btn:SetTall(30)
     load_btn.DoClick = function ()
-        Derma_Query("Overwrite?", "Overwrite with Default Config",
+        Derma_Query("Overwrite?", "Overwrite with Default",
             "Yes",
             function()
                 HORDE.enemies = {}

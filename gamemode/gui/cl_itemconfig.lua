@@ -39,7 +39,7 @@ function PANEL:Init()
 
     local modify_tab = vgui.Create("DCategoryList", self)
     modify_tab:SetBackgroundColor(HORDE.color_config_content_bg)
-    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 50 - 12)
+    modify_tab:SetSize(self:GetWide() / 2 - 150, self:GetTall() - 50 - 12)
     modify_tab:SetPos(self:GetWide() / 2, 50)
 
     local entity_type_cat = modify_tab:Add("Entity Type")
@@ -227,7 +227,7 @@ function PANEL:Init()
                 checkbox:SetText(type)
                 checkbox:SetTextColor(Color(0,0,0))
                 checkbox:SetChecked(true)
-                start_pos = start_pos + 110
+                start_pos = start_pos + 100
                 entity_checkboxes[type] = checkbox
                 if type == "weapon_entity" then
                     checkbox:SetChecked(true)
@@ -342,8 +342,8 @@ function PANEL:Init()
     secondary_ammo_price_editor:SetValue("0")
 
     local btn_panel = vgui.Create("DPanel", self)
-    btn_panel:SetPos(self:GetWide() - 200, 50)
-    btn_panel:SetSize(200, self:GetTall() - 58)
+    btn_panel:SetPos(self:GetWide() - 150, 50)
+    btn_panel:SetSize(150, self:GetTall() - 58)
     btn_panel.Paint = function ()
         surface.SetDrawColor(HORDE.color_none)
         surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
@@ -423,9 +423,9 @@ function PANEL:Init()
     load_btn:Dock(BOTTOM)
     load_btn:DockMargin(10,5,10,5)
     load_btn:SetTall(30)
-    load_btn:SetText("OVERWRITE with Default Config")
+    load_btn:SetText("OVERWRITE with Default")
     load_btn.DoClick = function ()
-        Derma_Query("Overwrite?", "Overwrite with Default Config",
+        Derma_Query("Overwrite?", "Overwrite with Default",
             "Yes",
             function()
                 HORDE.items = {}
