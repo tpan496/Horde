@@ -145,3 +145,7 @@ if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
 else
     RunConsoleCommand("arccw_attinv_free", "1")
 end
+
+-- Disable Surgical Shot because it is way too overpowered.
+ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
+ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true

@@ -232,6 +232,14 @@ function PANEL:Init()
             music_duration_editor:SetVisible(false)
             table.insert(editors, music_duration_editor)
 
+            local boss_note_label = vgui.Create("DLabel", panel)
+            boss_note_label:SetText("*Note: Boss kill reward is global.")
+            boss_note_label:SetPos(100 + 50, 123)
+            boss_note_label:SetTextColor(color_black)
+            boss_note_label:SetVisible(false)
+            boss_note_label:SetWide(200)
+            table.insert(editors, boss_note_label)
+
             return {is_boss_editor=editor, end_wave_editor=end_wave_editor, unlimited_enemies_spawn_editor=unlimited_enemies_spawn_editor, enemies_spawn_threshold_editor=enemies_spawn_threshold_editor, music_editor=music_editor, music_duration_editor=music_duration_editor}
         else
             local editor = vgui.Create("DTextEntry", panel)

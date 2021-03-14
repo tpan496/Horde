@@ -3,11 +3,6 @@
 -- 0 - normal, 1 - hard, 2 - realism
 
 HORDE.difficulty = GetConVar("horde_difficulty"):GetInt() + 1
-if GetConVar("horde_endless"):GetBool() then
-    HORDE.endless = 1
-else
-    HORDE.endless = 0
-end
 HORDE.endless = GetConVar("horde_endless"):GetInt()
 HORDE.additional_pack = 0
 
@@ -109,6 +104,15 @@ hook.Add("GetFallDamage", "RealisticDamage", function(ply, speed)
     else
         -- css fall damage
         return math.max(0, math.ceil(0.2418 * speed - 141.75))
+    end
+end)
+
+-- Hulk hitbox fix
+hook.Add("ScaleNPCDamage", "Horde_HulkDamage", function (npc, hitgroup, dmg)
+    if npc:IsValid() and npc:GetClass() == "npc_vj_zss_zhulk" then
+        if hitgroup == HITGROUP_GENERIC then
+            dmg:ScaleDamage(1.5)
+        end
     end
 end)
 
