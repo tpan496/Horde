@@ -219,6 +219,8 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
             if ent:IsValid() then ent:Remove() end
         end
     end
+
+    timer.Simple(0, function() HORDE:CheckAlivePlayers() end)
 end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)

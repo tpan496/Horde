@@ -323,7 +323,7 @@ end
 hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
 hook.Add("PlayerSilentDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
 
-function CheckAlivePlayers()
+function HORDE:CheckAlivePlayers()
     local aliveplayers = 0
     local deadplayers = 0
     for _, ply in pairs(player.GetAll()) do
@@ -377,5 +377,5 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     for _, wpn in pairs(victim:GetWeapons()) do
         victim:DropWeapon(wpn)
     end
-    CheckAlivePlayers()
+    HORDE:CheckAlivePlayers()
 end)
