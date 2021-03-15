@@ -348,7 +348,7 @@ function HORDE:SpawnEnemy(enemy, pos)
     end
 
     -- Health settings
-    if enemy.is_elite then
+    if enemy.is_elite and enemy.is_elite == true then
         spawned_enemy:SetVar("is_elite", true)
         local scale
         local add
@@ -400,6 +400,7 @@ function HORDE:SpawnEnemy(enemy, pos)
             spawned_enemy:Give(enemy.weapon)
         end
     end
+
 
     -- This is experimental
     spawned_enemy:SetLagCompensated(true)
