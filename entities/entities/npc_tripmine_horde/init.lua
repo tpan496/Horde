@@ -4,8 +4,8 @@ include("shared.lua")
 local reuse = CreateConVar("horde_tripmine_reusable", 1, FCVAR_SERVER_CAN_EXECUTE, "Can tripwire mines(SLAM's) be picked up after being armed?")
 
 ENT.SWEP = "weapon_slam"
-ENT.Damage = 25
-ENT.Radius = 140
+ENT.Damage = 375
+ENT.Radius = 750
 
 -- btw, incendiary deals 75 spherical burn damage 4 times per seconds for 15 seconds
 function ENT:Detonate()
@@ -16,15 +16,7 @@ function ENT:Detonate()
     eff:SetOrigin(pos)
     util.Effect("Explosion", eff)
 
-    local targets = {}
-    for k,v in pairs(ents.FindInSphere(pos, self.Radius)) do
-        if v:IsNPC() then
-            table.insert(targets, v)
-        end
-    end
-    local owner = self:GetHordeOwner()
-    HORDE.Poison(targets, IsValid(owner) and owner:GetWeapon("weapon_slam"), owner, self.Damage, 20, 1)
-    util.BlastDamage(self, self:GetHordeOwner(), pos, self.Radius, 1)   -- chain explosion \o/
+    util.BlastDamage(self, self:GetHordeOwner(), pos, self.Radius, self.Damage)
     self:Remove()
 end
 
