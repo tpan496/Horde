@@ -237,7 +237,7 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     elseif text == "!drop" then
         ply:DropWeapon()
     elseif text == "!throwmoney" then
-        ply:DropHordeMoney()
+        ply:Horde_DropMoney()
     elseif text == "!rtv" then
         HORDE.VoteChangeMap(ply)
     end

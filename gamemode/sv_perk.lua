@@ -4,7 +4,7 @@ util.AddNetworkString("Horde_PerkChoice")
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_ApplyPerksForClass()
-    local class = self:GetHordeClass().name
+    local class = self:Horde_GetClass().name
 
     --print(self, "Horde_ApplyPerksForClass", class)
 

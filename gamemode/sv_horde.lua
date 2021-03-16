@@ -17,27 +17,27 @@ local boss_music_loop = nil
 local horde_boss_critical = nil
 
 local entmeta = FindMetaTable("Entity")
-function entmeta:SetHordeMostRecentAttacker(attacker)
+function entmeta:Horde_SetMostRecentAttacker(attacker)
 	self.most_recent_attacker = attacker
 end
 
-function entmeta:GetHordeMostRecentAttacker()
+function entmeta:Horde_GetMostRecentAttacker()
 	return self.most_recent_attacker
 end
 
-function entmeta:SetHordeName(name)
+function entmeta:Horde_SetName(name)
     self.horde_name = name
 end
 
-function entmeta:GetHordeName()
+function entmeta:Horde_GetName()
     return self.horde_name
 end
 
-function entmeta:SetHordeBossProperties(boss_properties)
+function entmeta:Horde_SetBossProperties(boss_properties)
     self.horde_boss_properties = boss_properties
 end
 
-function entmeta:GetHordeBossProperties()
+function entmeta:Horde_GetBossProperties()
     return self.horde_boss_properties
 end
 
@@ -104,7 +104,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             end
         end
         
-        local boss_properties = victim:GetHordeBossProperties()
+        local boss_properties = victim:Horde_GetBossProperties()
         local defer_reward = false
         local reward = 0
         if killer:IsPlayer() or killer:GetNWEntity("HordeOwner"):IsPlayer() then
@@ -120,7 +120,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
                 defer_reward = true
             end
             if not defer_reward then
-                killer:AddHordeMoney(reward)
+                killer:Horde_AddMoney(reward)
             end
             
             if not HORDE.player_money_earned[killer:SteamID()] then HORDE.player_money_earned[killer:SteamID()] = 0 end
@@ -132,7 +132,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             end
 
             killer:AddFrags(1)
-            killer:SyncEconomy()
+            killer:Horde_SyncEconomy()
         end
 
         -- When a boss is killed.
@@ -150,12 +150,12 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
 
             -- Boss reward is global.
             for _, ply in pairs(player.GetAll()) do
-                ply:AddHordeMoney(reward)
-                ply:SyncEconomy()
+                ply:Horde_AddMoney(reward)
+                ply:Horde_SyncEconomy()
             end
         end
 
-        victim:SetHordeMostRecentAttacker(nil)
+        victim:Horde_SetMostRecentAttacker(nil)
     end
 end
 
@@ -170,7 +170,7 @@ if GetConVar("horde_corpse_cleanup"):GetInt() == 1 then
         if ent:IsRagdoll() then
             timer.Simple(0, function ()
                 if ent:IsValid() then
-                    ent:SetHordeMostRecentAttacker(nil)
+                    ent:Horde_SetMostRecentAttacker(nil)
                     ent:Remove()
                 end
             end)
@@ -197,9 +197,9 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                 local id = dmg:GetAttacker():SteamID()
                 if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
-                ent:SetHordeMostRecentAttacker(dmg:GetAttacker())
+                ent:Horde_SetMostRecentAttacker(dmg:GetAttacker())
             end
-            local boss_properties = ent:GetHordeBossProperties()
+            local boss_properties = ent:Horde_GetBossProperties()
             if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
                 net.Start("Horde_SyncBossHealth")
                 net.WriteInt(ent:Health(), 32)
@@ -236,17 +236,17 @@ hook.Add("ScaleNPCDamage", "Horde_HeadshotCounter", function (npc, hitgroup, dmg
 end)
 
 hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
-    if ent:IsNPC() and ent:GetHordeMostRecentAttacker() then
-        HORDE:OnEnemyKilled(ent, ent:GetHordeMostRecentAttacker())
+    if ent:IsNPC() and ent:Horde_GetMostRecentAttacker() then
+        HORDE:OnEnemyKilled(ent, ent:Horde_GetMostRecentAttacker())
     else
         if HORDE.spawned_enemies[ent:EntIndex()] then
             HORDE.spawned_enemies[ent:EntIndex()] = nil
             HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
             HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
             --print("OnRemove", "[HORDE] Remove ", ent:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
-            local count = HORDE.spawned_enemies_count[ent:GetHordeName()]
+            local count = HORDE.spawned_enemies_count[ent:Horde_GetName()]
             if count and count > 0 then
-                HORDE.spawned_enemies_count[ent:GetHordeName()] = count - 1
+                HORDE.spawned_enemies_count[ent:Horde_GetName()] = count - 1
             end
         end
     end
@@ -295,7 +295,7 @@ function HORDE:HardResetEnemies()
     local enemies = HORDE:ScanEnemies()
     if not table.IsEmpty(enemies) then
         for _, enemy in pairs(enemies) do
-            enemy:SetHordeMostRecentAttacker(nil)
+            enemy:Horde_SetMostRecentAttacker(nil)
             enemy:Remove()
         end
     end
@@ -316,7 +316,7 @@ function HORDE:SpawnEnemy(enemy, pos)
     spawned_enemy:Spawn()
 
     HORDE.spawned_enemies[spawned_enemy:EntIndex()] = true
-    spawned_enemy:SetHordeName(enemy.name)
+    spawned_enemy:Horde_SetName(enemy.name)
 
     if npc_info["Model"] then
         spawned_enemy:SetModel(npc_info["Model"])
@@ -344,7 +344,7 @@ function HORDE:SpawnEnemy(enemy, pos)
     end
 
     if enemy.boss_properties and enemy.boss_properties.is_boss == true then
-        spawned_enemy:SetHordeBossProperties(enemy.boss_properties)
+        spawned_enemy:Horde_SetBossProperties(enemy.boss_properties)
     end
 
     -- Health settings
@@ -426,7 +426,7 @@ end
 -- Removes enemies that are too far away from players.
 function HORDE:RemoveDistantEnemies(enemies)
     for _, enemy in pairs(enemies) do
-        local boss_properties = enemy:GetHordeBossProperties()
+        local boss_properties = enemy:Horde_GetBossProperties()
         local closest = 99999
         local closest_z = 99999
         local closest_ply = nil
@@ -454,7 +454,7 @@ function HORDE:RemoveDistantEnemies(enemies)
             else
                 table.RemoveByValue(enemies, enemy)
                 if enemy:IsValid() then
-                    enemy:SetHordeMostRecentAttacker(nil)
+                    enemy:Horde_SetMostRecentAttacker(nil)
                     enemy:Remove()
                 end
             end
@@ -812,7 +812,7 @@ function HORDE:WaveEnd()
     local enemies = HORDE:ScanEnemies()
     if not table.IsEmpty(enemies) then
         for _, enemy in pairs(enemies) do
-            enemy:SetHordeMostRecentAttacker(nil)
+            enemy:Horde_SetMostRecentAttacker(nil)
             enemy:Remove()
         end
     end
@@ -860,8 +860,8 @@ function HORDE:WaveEnd()
             end
         end
         -- Round bonus
-        ply:AddHordeMoney(HORDE.round_bonus_base)
-        ply:SyncEconomy()
+        ply:Horde_AddMoney(HORDE.round_bonus_base)
+        ply:Horde_SyncEconomy()
     end
 end
 

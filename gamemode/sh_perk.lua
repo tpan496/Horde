@@ -30,7 +30,7 @@ if CLIENT then
             local f = file.Read("horde/perk_choices.txt", "DATA")
             if f then LocalPlayer().Horde_PerkChoices = util.JSONToTable(f) end
         end
-        local class = (LocalPlayer():GetHordeClass() or {}).name
+        local class = (LocalPlayer():Horde_GetClass() or {}).name
         if not class or not tbl[class] then return end
         net.Start("Horde_PerkChoice")
             net.WriteString(class)
@@ -47,7 +47,6 @@ end
 function Horde_GetWaveForPerk(perk_level)
     return math.Round((perk_level - 1) * GetConVar("horde_perk_scaling"):GetFloat())
 end
-
 
 local plymeta = FindMetaTable("Player")
 
