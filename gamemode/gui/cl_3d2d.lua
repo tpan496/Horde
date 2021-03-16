@@ -8,7 +8,7 @@ local function Render(bdepth, bskybox)
             goto cont
         end
 
-        local class = "Demolition"
+        local class = "Survivor"
         if ply:GetHordeClass() then class = ply:GetHordeClass().name end
 
         local attachment_id = ply:LookupAttachment("anim_attachment_head") or 0 -- Can't take any chances with nils here
