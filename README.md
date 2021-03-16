@@ -39,6 +39,7 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_enable_scoreboard(0/1) - Enables built-in scoreboard. 1 by default.
 - horde_enable_shop(0/1) - Enables shop menu or not. 1 by default.
 - horde_enable_client_gui(0/1) - Enables client information ui or not. 1 by default.
+- horde_enable_3d2d_icon(0/1) - Enables class 3D class icon renders or not. 1 by default.
 
 #### Optimization Settings
 - horde_npc_cleanup(0/1) - Kills all NPCs after a wave. 1 by default.
