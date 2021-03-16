@@ -585,6 +585,7 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         end
         
         local enemy = HORDE.bosses[HORDE.horde_boss_name .. tostring(enemy_wave)]
+        enemy.is_elite = true
         spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
         HORDE.horde_boss = spawned_enemy
         horde_boss_reposition = false
