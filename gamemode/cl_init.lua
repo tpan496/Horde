@@ -19,6 +19,7 @@ include("gui/cl_configmenu.lua")
 include("gui/cl_shop.lua")
 include("gui/cl_summary.lua")
 include("gui/cl_scoreboard.lua")
+include("gui/cl_3d2d.lua")
 include("gui/cl_perkbutton.lua")
 
 -- Some users report severe lag with halo
