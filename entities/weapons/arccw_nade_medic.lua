@@ -18,8 +18,8 @@ SWEP.NotForNPCs = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/arccw_go/v_eq_incendiarygrenade.mdl"
-SWEP.WorldModel = "models/weapons/arccw_go/w_eq_incendiarygrenade_thrown.mdl"
+SWEP.ViewModel = "models/weapons/arccw_go/v_eq_smokegrenade.mdl"
+SWEP.WorldModel = "models/weapons/arccw_go/w_eq_smokegrenade_thrown.mdl"
 SWEP.ViewModelFOV = 60
 
 SWEP.WorldModelOffset = {
@@ -27,16 +27,16 @@ SWEP.WorldModelOffset = {
     ang = Angle(-10, 0, 180)
 }
 
-SWEP.FuseTime = 5
+SWEP.FuseTime = 1
 
 SWEP.Throwing = true
 
 SWEP.Primary.ClipSize = 1
 
 SWEP.MuzzleVelocity = 1000
-SWEP.ShootEntity = "arccw_thr_go_incendiary"
+SWEP.ShootEntity = "arccw_thr_medicgrenade"
 
-SWEP.TTTWeaponType = "weapon_zm_molotov"
+SWEP.TTTWeaponType = "weapon_ttt_medicgrenade"
 SWEP.NPCWeaponType = "weapon_grenade"
 SWEP.NPCWeight = 50
 

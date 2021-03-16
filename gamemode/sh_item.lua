@@ -205,7 +205,7 @@ HORDE.GetDefaultItemsData = function()
     {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 25, -1)
 
     HORDE.CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,   0, "A standard frag grenade.\nGood for crowd control.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 100, -1)
+    {Medic=false, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 100, -1)
     HORDE.CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         2000,  7, "Laser-guided rocket propulsion device.",
     {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE.CreateItem("Explosive",  "SLAM",           "weapon_slam",        400,   2, "Selectable Lightweight Attack Munition.\nRMB to detonate. Attach to wall to active laser mode.",
@@ -219,6 +219,8 @@ HORDE.GetDefaultItemsData = function()
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=true}, 2, -1)
     HORDE.CreateItem("Special",    "Turret",         "npc_turret_floor",   900,  0, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3})
+    HORDE.CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,   0, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
+    {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 100, -1)
 
     HORDE.CreateItem("Equipment",  "Medkit",         "weapon_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
