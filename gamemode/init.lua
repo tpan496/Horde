@@ -20,6 +20,7 @@ AddCSLuaFile("gui/cl_configmenu.lua")
 AddCSLuaFile("gui/cl_shop.lua")
 AddCSLuaFile("gui/cl_summary.lua")
 AddCSLuaFile("gui/cl_scoreboard.lua")
+AddCSLuaFile("gui/cl_3d2d.lua")
 
 include("shared.lua")
 include("sh_horde.lua")

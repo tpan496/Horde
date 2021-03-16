@@ -18,6 +18,7 @@ include("gui/cl_configmenu.lua")
 include("gui/cl_shop.lua")
 include("gui/cl_summary.lua")
 include("gui/cl_scoreboard.lua")
+include("gui/cl_3d2d.lua")
 
 -- Some users report severe lag with halo
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
