@@ -763,6 +763,11 @@ function HORDE:WaveStart()
     -- Close all the shop menus
     net.Start("Horde_ForceCloseShop")
     net.Broadcast()
+    
+    -- Apply perks.
+    for _, p in pairs(player.GetAll()) do
+        p:Horde_ApplyPerksForClass()
+    end
 end
 
 -- Ends a wave.

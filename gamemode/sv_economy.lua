@@ -150,23 +150,23 @@ net.Receive("Horde_PlayerInit", function (len, ply)
         net.WriteTable(HORDE.player_ready)
         net.Broadcast()
     end
-    
+
     if HORDE.start_game then
         ply:SetHordeMoney(HORDE.start_money + math.max(0, HORDE.current_wave - 1) * 150)
     else
         ply:SetHordeMoney(HORDE.start_money)
     end
-    
     ply:SetHordeDropEntities({})
     ply:SetHordeWeight(15)
     ply:SetHordeClass(HORDE.classes["Survivor"])
+    ply:Horde_ApplyPerksForClass()
     ply:SetClassSkill(-1)
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:SyncEconomy()
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
 
     if HORDE.start_game then return end
-    
+
     local ready_count = 0
     local total_player = 0
     for _, other_ply in pairs(player.GetAll()) do
@@ -193,7 +193,7 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
         net.WriteTable(HORDE.player_ready)
         net.Broadcast()
     end
-    
+
     if not ply:IsValid() then return end
 
     -- Remove all his class abilities
@@ -469,6 +469,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
 
     -- Drop all weapons
     ply:SetHordeClass(class)
+    ply:Horde_ApplyPerksForClass()
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
@@ -586,7 +587,7 @@ net.Receive("Horde_SelectClassSkillVariant", function (len, ply)
             ply:SetMaxHealth(150)
         else
             hook.Add("EntityTakeDamage", "Horde_Medic_B", function (target, dmg)
-                
+
             end)
         end
     elseif class == "Demolition" then
