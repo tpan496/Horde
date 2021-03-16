@@ -1,3 +1,5 @@
+if not ArcCWInstalled then return end
+-- Referenced From GSO
 SWEP.Base = "arccw_base_nade"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - GSO (Gear)" -- edit this if you like
@@ -27,7 +29,7 @@ SWEP.WorldModelOffset = {
     ang = Angle(-10, 0, 180)
 }
 
-SWEP.FuseTime = 1
+SWEP.FuseTime = 2
 
 SWEP.Throwing = true
 

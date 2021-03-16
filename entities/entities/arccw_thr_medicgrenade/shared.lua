@@ -1,3 +1,5 @@
+if not ArcCWInstalled then return end
+-- Referenced From GSO
 ENT.Type = "anim"
 ENT.Base = "base_entity"
 ENT.PrintName = "Medic Grenade"
@@ -7,7 +9,7 @@ ENT.Spawnable = false
 ENT.AdminSpawnable = false
 
 ENT.Model = "models/weapons/arccw_go/w_eq_smokegrenade_thrown.mdl"
-ENT.FuseTime = 1
+ENT.FuseTime = 2
 ENT.ArmTime = 0
 ENT.Duration = 15
 ENT.ImpactFuse = false
@@ -24,7 +26,7 @@ AddCSLuaFile()
 
 local entmeta = FindMetaTable("Entity")
 
-function entmeta:Horde_AddEffect_MedicGrenade()
+function entmeta:Horde_AddEffect_MedicGrenade(ent)
     if self.horde_effect_medicgrenade then return end
     self.horde_effect_medicgrenade = true
     local id = self:GetCreationID()
@@ -33,7 +35,7 @@ function entmeta:Horde_AddEffect_MedicGrenade()
         if self:IsPlayer() then
             self:SetHealth(math.min(self:Health() + 5, self:GetMaxHealth()))
         elseif self:IsNPC() and (not self:GetNWEntity("HordeOwner"):IsValid()) then
-            self:TakeDamage(25, self.Owner, self)
+            self:TakeDamage(25, ent.Owner, ent)
         end
     end)
 end
@@ -60,7 +62,7 @@ function ENT:Initialize()
         self:SetSolid(SOLID_VPHYSICS)
         self:PhysicsInit(SOLID_VPHYSICS)
         self:DrawShadow(true)
-        self:SetCollisionBounds(Vector(-165,-165,-100), Vector(165,165,100))
+        self:SetCollisionBounds(Vector(-150,-150,-100), Vector(150,150,100))
         self:SetTrigger(true)
         self:UseTriggerBounds(true, 24)
 
@@ -98,7 +100,7 @@ function ENT:Touch(ent)
         if self.TouchedEntities[ent:GetCreationID()] then return end
         if self:GetArmed() and (ent:IsPlayer() or ent:IsNPC()) then
             self.TouchedEntities[ent:GetCreationID()] = ent
-            ent:Horde_AddEffect_MedicGrenade()
+            ent:Horde_AddEffect_MedicGrenade(self)
         end
     end
 end
@@ -182,16 +184,6 @@ function ENT:Detonate()
 
     self.Armed = true
     self:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 90, 100, 1, CHAN_AUTO)
-   
-    timer.Simple(self.Duration - 1, function()
-        if !IsValid(self) then return end
-    end)
-
-    timer.Simple(self.Duration, function()
-        if !IsValid(self) then return end
-
-        self:Remove()
-    end)
 end
 
 function ENT:DrawTranslucent()
