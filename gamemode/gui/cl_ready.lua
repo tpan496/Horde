@@ -1,5 +1,3 @@
-if SERVER then return end
-
 surface.CreateFont("Content", { font = "arial bold", size = 20 })
 
 local PANEL = {}
@@ -57,7 +55,6 @@ vgui.Register("HordePlayerReadyPanel", PANEL, "DPanel")
 
 
 HORDE.PlayerReadyPanel = vgui.Create("HordePlayerReadyPanel")
-HORDE.PlayerReadyPanel:SetVisible(true)
 
 net.Receive("Horde_PlayerReadySync", function ()
     HORDE.player_ready = net.ReadTable()

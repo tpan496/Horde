@@ -33,6 +33,7 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_total_enemies_scaling - Forces the gamemode to multiply maximum enemy count by this. You can only INCREASE the number of enemies. 0 by default (disabled).
 - horde_disable_difficulty_voting(0/1) - Disable difficulty voting. 0 by default.
 - horde_enable_ammobox(0/1) - Enable ammobox respawns or not. 1 by default.
+- horde_arccw_attinv_free(0/1) - Enables free ArcCW attachments or not. 1 by default.
 
 #### UI Settings
 - horde_enable_scoreboard(0/1) - Enables built-in scoreboard. 1 by default.
@@ -48,12 +49,15 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_min_spawn_distance - Minimum enemy respawn distance. 400 by default.
 - horde_max_spawn_z_distance - Maximum enemy respawn height difference from players. 500 by default. If your map is huge and enemies spawn in extreme positions, turn this smaller.
 
-- horde_director_interval - How often the game director checks the state of the game (e.g. spawns stuff) in seconds. Default is 5.
+- horde_director_interval(>0, <10) - How often the game director checks the state of the game (e.g. spawns stuff) in seconds. Default is 5.
 
 **True maximum number of enemies alive = Minimum of (Max, Base + Scale Factor * PlayerCount)**
 - horde_max_enemies_alive_base - Base. Default is 20.
 - horde_max_enemies_alive_scale_factor - Scale factor. Default is 5.
 - horde_max_enemies_alive_max - Max. Default is 50.
+
+#### Voting Settings
+- horde_ready_countdown_ratio(0-1) - Ratio of players required to start the game (0-1).
 
 ## Creating Config Addons
 Besides the client-side GUI configs, you can create lua config addons! This allows you to create multiple configurations easily. Note that class descriptions changes are not available yet in external lua configs, because they may be subject to huge changes.
@@ -76,7 +80,8 @@ CONFIG.items = {
         description="A cheap crowbar",
         whitelist = {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true},
         ammo_price=0,           -- Leave it as 0 if it does not have primary ammo
-        secondary_ammo_price=-1 -- Leave it as -1 if it does not have secondary ammo
+        secondary_ammo_price=-1, -- Leave it as -1 if it does not have secondary ammo
+        entity_properties={type=1} -- Weapon Entity type is 1.
     },
     -- Give Entity Example
     item_healthvial = {

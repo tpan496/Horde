@@ -5,7 +5,6 @@ CreateConVar("horde_max_wave", 10, FCVAR_SERVER_CAN_EXECUTE, "Max waves.")
 CreateConVar("horde_break_time", 60, FCVAR_SERVER_CAN_EXECUTE, "Break time between waves.")
 CreateConVar("horde_enable_shop", 1, FCVAR_SERVER_CAN_EXECUTE, "Enables shop menu or not.")
 CreateConVar("horde_enable_client_gui", 1, FCVAR_SERVER_CAN_EXECUTE, "Enables client information ui or not.")
---CreateConVar("horde_enable_respawn", 0, FCVAR_SERVER_CAN_EXECUTE, "Players can respawn after death during a wave.")
 CreateConVar("horde_max_spawn_distance", 2000, FCVAR_SERVER_CAN_EXECUTE, "Maximum enenmy respawn distance.")
 CreateConVar("horde_min_spawn_distance", 400, FCVAR_SERVER_CAN_EXECUTE, "Minimum enenmy respawn distance.")
 CreateConVar("horde_max_spawn_z_distance", 500, FCVAR_SERVER_CAN_EXECUTE, "Maximum enemy respawn height difference with players.")
@@ -32,7 +31,9 @@ CreateConVar("horde_endless", 0, FCVAR_SERVER_CAN_EXECUTE, "Endless.")
 CreateConVar("horde_total_enemies_scaling", 0, FCVAR_SERVER_CAN_EXECUTE, "Forces the gamemode to multiply maximum enemy count by this.")
 
 CreateConVar("horde_perk_scaling", 2, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "The multiplier to the level for which wave it is unlocked. e.g. at 1.5, perk level 4 is unlocked at wave 6.", 0)
-CreateConVar("horde_arccw_attinv_free", 0, FCVAR_SERVER_CAN_EXECUTE, "Free ArcCW attachments.")
+CreateConVar("horde_arccw_attinv_free", 1, FCVAR_SERVER_CAN_EXECUTE, "Free ArcCW attachments.")
+
+CreateConVar("horde_ready_countdown_ratio", 0.5, FCVAR_SERVER_CAN_EXECUTE, "Ratio of players required to start the 60 second countdown (0-1).")
 
 if SERVER then
 util.AddNetworkString("Horde_PlayerInit")
@@ -41,11 +42,13 @@ util.AddNetworkString("Horde_SyncEnemies")
 util.AddNetworkString("Horde_SyncClasses")
 util.AddNetworkString("Horde_PlayerReadySync")
 util.AddNetworkString("Horde_AmmoboxCountdown")
+util.AddNetworkString("Horde_SyncBossSpawned")
+util.AddNetworkString("Horde_SyncBossHealth")
 end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.2.0"
+HORDE.version = "1.0.3.0"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -53,6 +56,11 @@ HORDE.color_crimson_dim = Color(200, 0, 40)
 HORDE.color_crimson_dark = Color(100,0,0)
 HORDE.color_hollow = Color(40,40,40,225)
 HORDE.color_hollow_dim = Color(80, 80, 80, 225)
+HORDE.color_config_bar = Color(50, 50, 50, 200)
+HORDE.color_config_bg = Color(150, 150, 150, 200)
+HORDE.color_config_content_bg = Color(230,230,230)
+HORDE.color_none = Color(0,0,0,0)
+HORDE.color_config_btn = Color(40,40,40)
 HORDE.start_game = false
 HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42, 45}
 -- HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -70,6 +78,7 @@ HORDE.max_spawn_distance = math.max(100, GetConVarNumber("horde_max_spawn_distan
 HORDE.min_spawn_distance = math.max(100, GetConVarNumber("horde_min_spawn_distance"))
 HORDE.max_enemies_alive = 20
 HORDE.spawned_enemies = {}
+HORDE.spawned_enemies_count = {}
 HORDE.ai_nodes = {}
 HORDE.found_ai_nodes = false
 HORDE.enemy_spawn_z = 6
@@ -118,16 +127,7 @@ HORDE.GiveAmmo = function (ply, wpn, count)
         return true
     else
         -- Give 1 piece of this ammo since clip size do not apply
-        local rpg_round = 8
-        local smg1_grenade = 9
-        local ar2altfire = 2
-        local xbowbolt = 6
-        local grenade = 10
-        local slam = 11
-
-        -- Some ammo type from mods
-        local rust_syringe = 40
-        if ammo_id == rpg_round or ammo_id == xbowbolt or ammo_id == smg1_grenade or ammo_id == ar2altfire or ammo_id == grenade or ammo_id == slam or ammo_id == rust_syringe then
+        if ammo_id >= 1 then
             ply:GiveAmmo(count, ammo_id, false)
             return true
         end
@@ -145,4 +145,10 @@ if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
     RunConsoleCommand("arccw_attinv_free", "0")
 else
     RunConsoleCommand("arccw_attinv_free", "1")
+end
+
+-- Disable Surgical Shot because it is way too overpowered.
+if ArcCWInstalled then
+    ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
+    ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
 end

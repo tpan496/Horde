@@ -1,5 +1,3 @@
-if CLIENT then return end
-
 local M = {}
 
 --Taken from nodegraph

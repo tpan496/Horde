@@ -19,7 +19,7 @@ HORDE.CreateClasses = function()
     HORDE.CreateClass(
         "Survivor",
         "No bonus.\n\n",
-        "Have access to all weapons except for special weapons.\n\nLimited access to attachments.",
+        "Have access to all weapons except for exclusive and special weapons.\n\nLimited access to attachments.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -113,7 +113,7 @@ HORDE.CreateClasses = function()
     HORDE.CreateClass(
         "Engineer",
         "100% increased minion health and damage.\n\n",
-        "Turrets you build have a base damage of 10.\n\nHave access to special weapons and equipment.",
+        "Turrets you build have 500 base health and deals 18 base damage.\n\nHave access to special weapons and equipment.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -183,8 +183,9 @@ if SERVER then
     end
 
     SyncClasses()
-
-    net.Receive("Horde_SetClassData", function ()
+    
+    net.Receive("Horde_SetClassData", function (len, ply)
+        if not ply:IsSuperAdmin() then return end
         HORDE.classes = net.ReadTable()
         HORDE.SetClassData()
         SyncClasses()

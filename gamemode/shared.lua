@@ -4,6 +4,7 @@ GM.Email = "N/A"
 GM.Website = "N/A"
 
 CreateConVar("horde_enable_sandbox", 0, FCVAR_SERVER_CAN_EXECUTE, "Enables sandbox/cheat features.")
+CreateConVar("horde_enable_player_collision", 0, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED}, "Enables player collision.")
 
 DeriveGamemode("sandbox")
 
@@ -69,3 +70,14 @@ local sex = {"female", "male"}
 local nums = {"_01", "_02", "_03", "_04", "_05", "_06"}
 
 function GM:PlayerSetModel(ply) return ply:SetModel("models/player/" .. table.Random(groups) .. "/" .. table.Random(sex) .. table.Random(nums) .. ".mdl") end
+
+function GM:ShouldCollide(ent1, ent2)
+    -- Ulti: Yes, this does prevents bullets from colliding with teammates somehow
+    if ent1:IsPlayer() or ent2:IsPlayer() then
+        if GetConVar("horde_enable_player_collision"):GetInt() == 0 and ent1:IsPlayer() and ent2:IsPlayer() then return false end
+        -- No combine balls
+        if ent1:GetClass() == "prop_combine_ball" or ent2:GetClass() == "prop_combine_ball" then return false end
+    end
+
+    return true
+end

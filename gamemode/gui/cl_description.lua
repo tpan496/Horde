@@ -1,4 +1,3 @@
-if SERVER then return end
 surface.CreateFont("Horde_PerkTitle", { font = "arial bold", size = 24, bold = true })
 surface.CreateFont("Title", { font = "arial bold", size = 30 })
 surface.CreateFont("Warning", { font = "arial bold", size = 30, strikeout = true })
@@ -79,6 +78,7 @@ function PANEL:Init()
     self.current_ammo_panel.Paint = function () end
 
     function self.buy_btn:DoClick()
+        if self:GetText() == "OWNED" then return end
         self:GetParent():DoClick()
     end
 
@@ -97,10 +97,7 @@ function PANEL:Init()
     function self.sell_btn:DoClick()
         self:GetParent():SellDoClick()
     end
-
-    self.scroll_panel = vgui.Create("DScrollPanel", self)
-    self.scroll_panel:Dock(FILL)
-
+  
     self.perk_layout = vgui.Create("DIconLayout", self.scroll_panel)
     self.perk_layout:Dock(FILL)
     self.perk_layout:DockMargin(4, 256, 4, 0)
@@ -144,8 +141,6 @@ function PANEL:DoClick()
     -- Buy the item
     net.Start("Horde_BuyItem")
     net.WriteString(self.item.class)
-    net.WriteInt(self.item.price, 16)
-    net.WriteInt(self.item.weight, 16)
     net.SendToServer()
 end
 
@@ -158,7 +153,6 @@ function PANEL:AmmoDoClick(count)
         -- Buy the item
         net.Start("Horde_BuyItemAmmoSecondary")
         net.WriteString(self.item.class)
-        net.WriteInt(self.item.secondary_ammo_price,16)
         net.SendToServer()
         return
     end
@@ -168,8 +162,7 @@ function PANEL:AmmoDoClick(count)
     -- Buy the item
     net.Start("Horde_BuyItemAmmoPrimary")
     net.WriteString(self.item.class)
-    net.WriteInt(price,16)
-    net.WriteInt(count,16)
+    net.WriteUInt(count,4)
     net.SendToServer()
 end
 
