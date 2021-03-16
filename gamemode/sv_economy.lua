@@ -680,7 +680,7 @@ hook.Add("EntityFireBullets", "Horde_ModifyTurretBullet", function(ent, data)
         local enemy, owner = ent:GetEnemy(), ent:GetNWEntity("HordeOwner")
         if IsValid(enemy) and owner:IsPlayer() then
             data.Dir = enemy:BodyTarget(data.Src) - data.Src
-            data.Spread = VECTOR_CONE_10DEGREES * owner:GetMinionSpreadModifier()
+            data.Spread = VECTOR_CONE_10DEGREES * GetConVar("horde_turret_spread"):GetFloat()
             data.IgnoreEntity = owner   -- Well, why not?
             --data.Damage = owner:GetMinionDamageOverride() -- Btw you can override bullet damage here too instead of modifying CTakeDamageInfo
         end
