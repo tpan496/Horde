@@ -6,7 +6,7 @@ include('autorun/vj_controls.lua')
 -- Core
 ENT.Model = {"models/horde/gonome/gonome.mdl"}
 ENT.StartHealth = 7500
-ENT.HullType = HULL_WIDE_HUMAN
+ENT.HullType = HULL_MEDIUM_TALL
 
 ENT.SightDistance = 10000 -- How far it can see
 ENT.SightAngle = 100 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
@@ -14,7 +14,7 @@ ENT.TurningSpeed = 40 -- How fast it can turn
 ENT.MaxJumpLegalDistance = VJ_Set(400, 550) -- The max distance the NPC can jump (Usually from one node to another) | ( UP, DOWN )
 
 -- AI
-ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
+ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
 ENT.ConstantlyFaceEnemy_IfAttacking = true -- Should it face the enemy when attacking?
 ENT.ConstantlyFaceEnemy_Postures = "Standing" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
