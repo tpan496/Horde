@@ -849,6 +849,11 @@ function HORDE:WaveEnd()
         end
     end
 
+    -- Also turnoff boss health bar.
+    net.Start("Horde_SyncBossHealth")
+        net.WriteInt(0, 32)
+    net.Broadcast()
+
     -- Global Wave End Effects
     for _, ply in pairs(player.GetAll()) do
         -- Minion life recovery

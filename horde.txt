@@ -169,6 +169,14 @@
 		}
 		21
 		{
+			"name"		"horde_enable_3d2d_icon"
+			"text"		"Enable 3D Class Icon Renders"
+			"type"		"CheckBox"
+			"default"	"1"
+			"singleplayer" ""
+		}
+		22
+		{
 			"name"		"horde_arccw_attinv_free"
 			"text"		"(ArcCW Only) Free Attachments"
 			"type"		"CheckBox"

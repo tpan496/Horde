@@ -197,7 +197,7 @@ function PANEL:Init()
         name_label:SetFont("Title")
 
         local award_label = vgui.Create("DLabel", panel)
-        award_label:SetPos(220, -20)
+        award_label:SetPos(210, -20)
         award_label:SetText(award)
         award_label:SetSize(250, 80)
         award_label:SetColor(HORDE.color_crimson)
@@ -209,6 +209,15 @@ function PANEL:Init()
         reason_label:SetSize(400, 80)
         reason_label:SetColor(Color(255,255,255))
         reason_label:SetFont("Title")
+
+        local class_icon = vgui.Create("DPanel", panel)
+        class_icon:SetPos(430, 20)
+        class_icon:SetSize(45, 45)
+        class_icon.Paint = function ()
+            local mat = Material("materials/" .. ply:GetHordeClass().name .. ".png", "mips smooth")
+            surface.SetMaterial(mat) -- Use our cached material
+            surface.DrawTexturedRect(0, 0, 40, 40)
+        end
 
         return panel
     end
