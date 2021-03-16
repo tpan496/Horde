@@ -1,5 +1,3 @@
-if SERVER then return end
-
 local PANEL = {}
 
 function PANEL:Init()
@@ -8,27 +6,63 @@ function PANEL:Init()
     self:MakePopup()
 
     local close_btn = vgui.Create("DButton", self)
+    local close_btn_color = HORDE.color_config_btn
     close_btn:SetFont("marlett")
     close_btn:SetText("r")
-    close_btn.Paint = function() end
+    close_btn.Paint = function() draw.RoundedBox(10, 0, 0, 40, 32, close_btn_color) end
     close_btn:SetColor(Color(255, 255, 255))
-    close_btn:SetSize(32, 32)
-    close_btn:SetPos(self:GetWide() - 40, 6)
+    close_btn:SetSize(40, 32)
+    close_btn:SetPos(self:GetWide() - 45, 4)
+    close_btn.OnCursorEntered = function ()
+        close_btn_color = HORDE.color_crimson
+    end
+    close_btn.OnCursorExited = function ()
+        close_btn_color = HORDE.color_config_btn
+    end
     close_btn.DoClick = function() HORDE:ToggleEnemyConfig() end
 
-    local modify_tab = vgui.Create("DScrollPanel", self)
-    modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
-    modify_tab:SetPos(self:GetWide() / 2, 40)
+    local q_btn = vgui.Create("DButton", self)
+    local q_btn_color = HORDE.color_config_btn
+    q_btn:SetFont("Trebuchet24")
+    q_btn:SetText("?")
+    q_btn.Paint = function() draw.RoundedBox(10, 0, 0, 40, 32, q_btn_color) end
+    q_btn:SetColor(Color(255, 255, 255))
+    q_btn:SetSize(40, 32)
+    q_btn:SetPos(self:GetWide() - 45 - 45, 4)
+    q_btn.OnCursorEntered = function ()
+        q_btn_color = HORDE.color_crimson
+    end
+    q_btn.OnCursorExited = function ()
+        q_btn_color = HORDE.color_config_btn
+    end
+    q_btn.DoClick = function() gui.OpenURL("https://github.com/tpan496/Horde/wiki/Enemy-Config") end
 
-    local function create_property_editor(name, height)
-        local panel = vgui.Create("DPanel", modify_tab)
-        panel:DockPadding(10, 10, 10, 10)
+    local modify_tab = vgui.Create("DCategoryList", self)
+    modify_tab:SetBackgroundColor(HORDE.color_config_content_bg)
+    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 50 - 12)
+    modify_tab:SetPos(self:GetWide() / 2, 50)
+
+    local required_cat = modify_tab:Add("Required")
+    local required_panel = vgui.Create("DPanel", modify_tab)
+    required_cat:SetContents(required_panel)
+    required_panel:SetBackgroundColor(HORDE.color_none)
+    local basic_modifier_cat = modify_tab:Add("Basic Modifiers")
+    local basic_modifier_panel = vgui.Create("DPanel", modify_tab)
+    basic_modifier_cat:SetContents(basic_modifier_panel)
+    basic_modifier_cat:SetExpanded(false)
+    basic_modifier_panel:SetBackgroundColor(HORDE.color_none)
+    local elite_modifier_cat = modify_tab:Add("Elite/Boss Modifiers")
+    local elite_modifier_panel = vgui.Create("DPanel", modify_tab)
+    elite_modifier_cat:SetContents(elite_modifier_panel)
+    elite_modifier_cat:SetExpanded(false)
+    elite_modifier_panel:SetBackgroundColor(HORDE.color_none)
+
+    local function create_property_editor(name, height, cat_panel)
+        local panel = vgui.Create("DPanel", cat_panel)
+        panel:DockPadding(10, 5, 10, 5)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
-        panel.Paint = function ()
-            surface.SetDrawColor(Color(230,230,230))
-            surface.DrawRect(0, 0, modify_tab:GetWide(), height)
-        end
+        panel:SetBackgroundColor(HORDE.color_none)
 
         local label = vgui.Create("DLabel", panel)
         label:SetText(name)
@@ -46,6 +80,30 @@ function PANEL:Init()
             for class, _ in pairs(npcs) do
                 editor:AddChoice(class)
             end
+
+            local editor_manual = vgui.Create("DTextEntry", panel)
+            editor_manual:SetSize(150, height-10)
+            editor_manual:SetPos(110, 5)
+            editor_manual:SetVisible(false)
+            function editor_manual:OnChange()
+                editor:SetValue(editor_manual:GetValue())
+            end
+
+            local manual_toggle = vgui.Create("DCheckBoxLabel", panel)
+            manual_toggle:SetText("Manual Input")
+            manual_toggle:SetPos(150 + 100 + 20, 10)
+            manual_toggle:SetTextColor(Color(0,0,0))
+
+            function manual_toggle:OnChange(bVal)
+                if bVal then
+                    editor_manual:SetVisible(true)
+                    editor:SetVisible(false)
+                else
+                    editor_manual:SetVisible(false)
+                    editor:SetVisible(true)
+                end
+            end
+
             return editor
         elseif name == "wave" then
             local editor = vgui.Create("DComboBox", panel)
@@ -56,12 +114,6 @@ function PANEL:Init()
             for i = 1, 10 do
                 editor:AddChoice(i)
             end
-            return editor
-        elseif name == "elite" then
-            local editor = vgui.Create("DCheckBox", panel)
-            editor:DockPadding(10, 10, 10, 10)
-            editor:Dock(LEFT)
-            editor:SetWide(30)
             return editor
         elseif name == "color" then
             local editor1 = vgui.Create("DCheckBoxLabel", panel)
@@ -85,6 +137,110 @@ function PANEL:Init()
             editor:AddChoice("_gmod_default")
             editor:AddChoice("_gmod_none")
             return editor
+        elseif name == "is elite" then
+            local editor = vgui.Create("DCheckBox", panel)
+            editor:SetPos(110, 10)
+            return editor
+        elseif name == "is boss" then
+            local editors = {}
+            local editor = vgui.Create("DCheckBox", panel)
+            editor:SetPos(110, 10)
+            editor:DockMargin(0,57,0,57)
+            editor:Dock(LEFT)
+            function editor:OnChange(bVal)
+                if bVal then
+                    for _, other_editor in pairs(editors) do
+                        other_editor:SetVisible(true)
+                    end
+                else
+                    for _, other_editor in pairs(editors) do
+                        other_editor:SetVisible(false)
+                    end
+                end
+            end
+
+            local end_wave_editor = vgui.Create("DCheckBoxLabel", panel)
+            local unlimited_enemies_spawn_editor = vgui.Create("DCheckBoxLabel", panel)
+            
+            end_wave_editor:SetText("End wave after defeated")
+            end_wave_editor:SetPos(100 + 50, 23)
+            end_wave_editor:SetTextColor(color_black)
+            end_wave_editor:SetVisible(false)
+            function end_wave_editor:OnChange(bVal)
+                if not bVal then
+                    unlimited_enemies_spawn_editor:SetChecked(false)
+                end
+            end
+            table.insert(editors, end_wave_editor)
+
+            unlimited_enemies_spawn_editor:SetText("Unlimited enemies spawn during wave")
+            unlimited_enemies_spawn_editor:SetPos(100 + 50, 43)
+            unlimited_enemies_spawn_editor:SetTextColor(color_black)
+            unlimited_enemies_spawn_editor:SetVisible(false)
+            function unlimited_enemies_spawn_editor:OnChange(bVal)
+                if bVal then
+                    end_wave_editor:SetChecked(true)
+                end
+            end
+            table.insert(editors, unlimited_enemies_spawn_editor)
+
+            local enemies_spawn_threshold_label = vgui.Create("DLabel", panel)
+            enemies_spawn_threshold_label:SetText("Spawn enemies after health dropped to ")
+            enemies_spawn_threshold_label:SetPos(100 + 50, 63)
+            enemies_spawn_threshold_label:SetTextColor(color_black)
+            enemies_spawn_threshold_label:SetWide(200)
+            enemies_spawn_threshold_label:SetVisible(false)
+            table.insert(editors, enemies_spawn_threshold_label)
+            local enemies_spawn_threshold_editor = vgui.Create("DTextEntry", panel)
+            enemies_spawn_threshold_editor:SetNumeric(true)
+            enemies_spawn_threshold_editor:SetPos(100 + 45 + 200, 63)
+            enemies_spawn_threshold_editor:SetWide(25)
+            enemies_spawn_threshold_editor:SetValue(0.5)
+            enemies_spawn_threshold_editor:SetVisible(false)
+            table.insert(editors, enemies_spawn_threshold_editor)
+            local enemies_spawn_threshold_percentage_label = vgui.Create("DLabel", panel)
+            enemies_spawn_threshold_percentage_label:SetText("* max health")
+            enemies_spawn_threshold_percentage_label:SetPos(100 + 50 + 200 + 25, 63)
+            enemies_spawn_threshold_percentage_label:SetTextColor(color_black)
+            enemies_spawn_threshold_percentage_label:SetVisible(false)
+            table.insert(editors, enemies_spawn_threshold_percentage_label)
+
+            local music_label = vgui.Create("DLabel", panel)
+            music_label:SetText("Boss Music")
+            music_label:SetTextColor(color_black)
+            music_label:SetWide(100)
+            music_label:SetPos(100 + 50, 83)
+            music_label:SetVisible(false)
+            table.insert(editors, music_label)
+            local music_editor = vgui.Create("DTextEntry", panel)
+            music_editor:SetWide(100)
+            music_editor:SetPos(100 + 50 + 90, 83)
+            music_editor:SetVisible(false)
+            table.insert(editors, music_editor)
+
+            local music_duration_label = vgui.Create("DLabel", panel)
+            music_duration_label:SetText("Music Duration (s)")
+            music_duration_label:SetTextColor(color_black)
+            music_duration_label:SetWide(100)
+            music_duration_label:SetPos(100 + 50, 103)
+            music_duration_label:SetVisible(false)
+            table.insert(editors, music_duration_label)
+            local music_duration_editor = vgui.Create("DTextEntry", panel)
+            music_duration_editor:SetWide(100)
+            music_duration_editor:SetPos(100 + 50 + 90, 103)
+            music_duration_editor:SetNumeric()
+            music_duration_editor:SetVisible(false)
+            table.insert(editors, music_duration_editor)
+
+            local boss_note_label = vgui.Create("DLabel", panel)
+            boss_note_label:SetText("*Note: Boss kill reward is global.")
+            boss_note_label:SetPos(100 + 50, 123)
+            boss_note_label:SetTextColor(color_black)
+            boss_note_label:SetVisible(false)
+            boss_note_label:SetWide(200)
+            table.insert(editors, boss_note_label)
+
+            return {is_boss_editor=editor, end_wave_editor=end_wave_editor, unlimited_enemies_spawn_editor=unlimited_enemies_spawn_editor, enemies_spawn_threshold_editor=enemies_spawn_threshold_editor, music_editor=music_editor, music_duration_editor=music_duration_editor}
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(150, height)
@@ -94,17 +250,21 @@ function PANEL:Init()
         end
     end
 
-    local name_editor = create_property_editor("name", 45)
-    local class_editor = create_property_editor("class", 45)
-    local weight_editor = create_property_editor("weight", 45)
-    local wave_editor = create_property_editor("wave", 45)
-    local elite_editor = create_property_editor("elite", 45)
-    local health_editor = create_property_editor("health scaling", 45)
-    local damage_editor = create_property_editor("damage scaling", 45)
-    local reward_editor = create_property_editor("reward scaling", 45)
-    local model_scale_editor = create_property_editor("model scaling", 45)
-    local weapon_editor = create_property_editor("weapon", 45)
-    local color_editor = create_property_editor("color", 130)
+    local name_editor = create_property_editor("name", 35, required_panel)
+    local class_editor = create_property_editor("class", 35, required_panel)
+    local weight_editor = create_property_editor("spawn weight", 35, required_panel)
+    local wave_editor = create_property_editor("wave", 35, required_panel)
+
+    local health_editor = create_property_editor("health scaling", 35, basic_modifier_panel)
+    local damage_editor = create_property_editor("damage scaling", 35, basic_modifier_panel)
+    local reward_editor = create_property_editor("reward scaling", 35, basic_modifier_panel)
+    local model_scale_editor = create_property_editor("model scaling", 35, basic_modifier_panel)
+    local weapon_editor = create_property_editor("weapon", 35, basic_modifier_panel)
+    local spawn_limit_editor = create_property_editor("spawn limit", 35, basic_modifier_panel)
+    local color_editor = create_property_editor("color", 130, basic_modifier_panel)
+    
+    local elite_editor = create_property_editor("is elite", 35, elite_modifier_panel)
+    local boss_editors = create_property_editor("is boss", 140, elite_modifier_panel)
 
     if GetConVarNumber("horde_default_enemy_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -122,20 +282,21 @@ function PANEL:Init()
     damage_editor:SetValue("1")
     reward_editor:SetValue("1")
     model_scale_editor:SetValue("1")
+    spawn_limit_editor:SetValue("0")
     weapon_editor:SetValue("_gmod_default")
 
     local btn_panel = vgui.Create("DPanel", self)
-    btn_panel:SetPos(self:GetWide() - 210, 50)
-    btn_panel:SetSize(200, self:GetTall() - 200)
+    btn_panel:SetPos(self:GetWide() - 200, 50)
+    btn_panel:SetSize(200, self:GetTall() - 58)
     btn_panel.Paint = function ()
-        surface.SetDrawColor(Color(230,230,230,0))
+        surface.SetDrawColor(HORDE.color_none)
         surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     end
 
     local save_btn = vgui.Create("DButton", btn_panel)
     save_btn:SetText("Save Enemy")
-    save_btn:SetTall(40)
-    save_btn:DockMargin(10, 10, 10, 10)
+    save_btn:SetTall(30)
+    save_btn:DockMargin(10, 5, 10, 5)
     save_btn:Dock(TOP)
     save_btn.DoClick = function ()
         if not name_editor:GetValue() or not class_editor:GetValue() then return end
@@ -147,6 +308,14 @@ function PANEL:Init()
         if weapon_editor and weapon_editor:GetText() ~= "_gmod_none" and weapon_editor:GetText() ~= "" then
             weapon = weapon_editor:GetText()
         end
+        local boss_properties = {}
+        boss_properties.is_boss = boss_editors.is_boss_editor:GetChecked()
+        boss_properties.end_wave = boss_editors.end_wave_editor:GetChecked()
+        boss_properties.unlimited_enemies_spawn = boss_editors.unlimited_enemies_spawn_editor:GetChecked()
+        boss_properties.enemies_spawn_threshold = tonumber(boss_editors.enemies_spawn_threshold_editor:GetText())
+        boss_properties.music = boss_editors.music_editor:GetText()
+        boss_properties.music_duration = tonumber(boss_editors.music_duration_editor:GetText())
+
         HORDE.CreateEnemy(
             name_editor:GetText(),
             class_editor:GetText(),
@@ -158,7 +327,9 @@ function PANEL:Init()
             reward_editor:GetFloat(),
             model_scale_editor:GetFloat(),
             color,
-            weapon
+            weapon,
+            spawn_limit_editor:GetInt(),
+            boss_properties
         )
 
         -- Reload from disk
@@ -170,22 +341,25 @@ function PANEL:Init()
 
     local save_for_waves = vgui.Create("DPanel", btn_panel)
     save_for_waves:Dock(TOP)
-    save_for_waves:DockMargin(10, 10, 10, 10)
+    save_for_waves:DockMargin(10, 0, 10, 0)
     save_for_waves:SetTall(90)
     save_for_waves.Paint = function () end
 
     local boxes_pane = vgui.Create("DPanel", save_for_waves)
     boxes_pane:Dock(BOTTOM)
-    boxes_pane.Paint = function () end
     boxes_pane:SetTall(50)
+    boxes_pane:SetBackgroundColor(HORDE.color_none)
+
     local wave_start_box = vgui.Create("DComboBox", boxes_pane)
     wave_start_box:SetPos(10,10)
     wave_start_box:SetSize(50,30)
     wave_start_box:SetSortItems(false)
+    
     local to_label = vgui.Create("DLabel", boxes_pane)
     to_label:SetText("to")
     to_label:SetTextColor(Color(0,0,0))
     to_label:SetPos(80,15)
+    
     local wave_end_box = vgui.Create("DComboBox", boxes_pane)
     wave_end_box:SetPos(120,10)
     wave_end_box:SetSize(50,30)
@@ -198,7 +372,7 @@ function PANEL:Init()
     local save_after_btn = vgui.Create("DButton", save_for_waves)
     save_after_btn:Dock(BOTTOM)
     save_after_btn:SetText("Save Enemy From Wave A to B:")
-    save_after_btn:SetTall(40)
+    save_after_btn:SetTall(30)
     save_after_btn.DoClick = function ()
         if not name_editor:GetValue() or not class_editor:GetValue() then return end
         local color = nil
@@ -209,6 +383,12 @@ function PANEL:Init()
         if weapon_editor and weapon_editor:GetText() ~= "_gmod_none" and weapon_editor:GetText() ~= "" then
             weapon = weapon_editor:GetText()
         end
+
+        local boss_properties = {}
+        boss_editors.is_boss = boss_editors.is_boss_editor:GetChecked()
+        boss_editors.end_wave = boss_editors.end_wave_toggle:GetChecked()
+        boss_editors.unlimited_enemies_spawn = boss_editors.unlimited_enemies_spawn_editor:GetChecked()
+        boss_editors.enemies_spawn_threshold = boss_editors.enemies_spawn_threshold_editor:GetInt()
 
         local start_wave = tonumber(wave_start_box:GetText())
         local end_wave = tonumber(wave_end_box:GetText())
@@ -226,7 +406,8 @@ function PANEL:Init()
             reward_editor:GetFloat(),
             model_scale_editor:GetFloat(),
             color,
-            weapon
+            weapon,
+            boss_properties
         )
         end
 
@@ -237,10 +418,10 @@ function PANEL:Init()
     end
 
     local load_btn = vgui.Create("DButton", btn_panel)
-    load_btn:Dock(TOP)
-    load_btn:DockMargin(10, 10, 10, 10)
+    load_btn:Dock(BOTTOM)
+    load_btn:DockMargin(10, 5, 10, 5)
     load_btn:SetText("OVERWRITE with Default Config")
-    load_btn:SetTall(40)
+    load_btn:SetTall(30)
     load_btn.DoClick = function ()
         Derma_Query("Overwrite?", "Overwrite with Default Config",
             "Yes",
@@ -258,10 +439,10 @@ function PANEL:Init()
     end
 
     local del_btn = vgui.Create("DButton", btn_panel)
-    del_btn:Dock(TOP)
-    del_btn:DockMargin(10, 10, 10, 10)
+    del_btn:Dock(BOTTOM)
+    del_btn:DockMargin(10, 5, 10, 5)
     del_btn:SetText("Delete Everything")
-    del_btn:SetTall(40)
+    del_btn:SetTall(30)
     del_btn.DoClick = function ()
         Derma_Query("Delete Everything?", "Delete Everything",
             "Yes",
@@ -279,7 +460,8 @@ function PANEL:Init()
 
     local settings_tab = vgui.Create("DPanel", self)
     settings_tab:SetPos(0, 40)
-    settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
+    settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40 - 3)
+    settings_tab:SetBackgroundColor(HORDE.color_none)
 
     local enemy_list = vgui.Create("DListView", settings_tab)
     enemy_list:DockMargin(10, 10, 10, 10)
@@ -303,7 +485,6 @@ function PANEL:Init()
             class_editor:SetValue(enemy.class)
             weight_editor:SetValue(enemy.weight)
             wave_editor:SetValue(enemy.wave)
-            elite_editor:SetChecked(enemy.is_elite)
             health_editor:SetValue(enemy.health_scale and enemy.health_scale or 1)
             damage_editor:SetValue(enemy.damage_scale and enemy.damage_scale or 1)
             reward_editor:SetValue(enemy.reward_scale and enemy.reward_scale or 1)
@@ -318,6 +499,21 @@ function PANEL:Init()
                 weapon_editor:SetValue(enemy.weapon)
             else
                 weapon_editor:SetValue("_gmod_none")
+            end
+            elite_editor:SetChecked(enemy.is_elite)
+            spawn_limit_editor:SetValue(enemy.spawn_limit and enemy.spawn_limit or 0)
+            local boss_properties = enemy.boss_properties
+            if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
+                boss_editors.is_boss_editor:SetChecked(true)
+                boss_editors.is_boss_editor:OnChange(true)
+                boss_editors.end_wave_editor:SetChecked(boss_properties.end_wave)
+                boss_editors.unlimited_enemies_spawn_editor:SetChecked(boss_properties.unlimited_enemies_spawn)
+                boss_editors.enemies_spawn_threshold_editor:SetValue(boss_properties.enemies_spawn_threshold)
+                boss_editors.music_editor:SetValue(boss_properties.music and boss_properties.music or "")
+                boss_editors.music_duration_editor:SetValue(boss_properties.music_duration and boss_properties.music_duration or "")
+            else
+                boss_editors.is_boss_editor:OnChange(false)
+                boss_editors.is_boss_editor:SetChecked(false)
             end
         end)
 
@@ -371,17 +567,13 @@ function PANEL:Think()
 end
 
 function PANEL:Paint(w, h)
-    -- Derma_DrawBackgroundBlur(self)
-
     -- Entire Panel
-    surface.SetDrawColor(Color(230, 230, 230))
-    surface.DrawRect(0, 0, w, h)
+    draw.RoundedBox(10, 0, 0, w, h, HORDE.color_config_bg)
 
     -- Background
-    surface.SetDrawColor(Color(40, 40, 40))
-    surface.DrawRect(0, 0, w, 48)
+    draw.RoundedBox(10, 0, 0, w, 40, HORDE.color_config_bar)
 
-    draw.SimpleText("Enemy Config (Some settings require restarting current game to take effect)", "Heading", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Horde Enemy Configuration", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("HordeEnemyConfig", PANEL, "EditablePanel")

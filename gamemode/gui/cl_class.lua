@@ -1,5 +1,3 @@
-if SERVER then return end
-
 surface.CreateFont("Item", { font = "arial", size = 20 })
 
 local PANEL = {}

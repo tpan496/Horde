@@ -1,5 +1,3 @@
-if CLIENT then return end
-
 concommand.Add("horde_drop_money", function (ply, cmd, args)
     ply:DropHordeMoney()
 end)
@@ -59,14 +57,18 @@ function Player:RemoveHordeDropEntity(class, entity_creation_id)
             self.drop_entities[class] = nil
         end
     end
-    HORDE.player_drop_entities[self:SteamID()][entity_creation_id] = nil
+    if HORDE.player_drop_entities[self:SteamID()] then
+        HORDE.player_drop_entities[self:SteamID()][entity_creation_id] = nil
+    end
 end
 
 function Player:AddHordeMoney(money)
+    if not self:IsValid() and not money then return end
     self.money = self.money + money
 end
 
 function Player:AddHordeWeight(weight)
+    if not self:IsValid() then return end
     self.weight = self.weight + weight
 end
 
@@ -111,6 +113,8 @@ function Player:GetClassSkill()
 end
 
 function Player:SyncEconomy()
+    if not self:IsValid() then return end
+    if not self.money or not self.weight or not self.class then return end
     net.Start("Horde_SyncEconomy")
     net.WriteEntity(self)
     net.WriteInt(self.money, 32)
@@ -123,8 +127,7 @@ end
 -- Player Spawn Initialize
 net.Receive("Horde_PlayerInit", function (len, ply)
     net.Start("Horde_SyncItems")
-    local tab = util.TableToJSON(HORDE.items)
-    local str = util.Compress(tab)
+    local str = HORDE.GetCachedHordeItems()
     net.WriteUInt(string.len(str), 32)
     net.WriteData(str, string.len(str))
     net.Send(ply)
@@ -162,19 +165,18 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     ply:SyncEconomy()
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
 
-
     if HORDE.start_game then return end
 
     local ready_count = 0
     local total_player = 0
-    for _, p in pairs(player.GetAll()) do
-        if HORDE.player_ready[p] == 1 then
+    for _, other_ply in pairs(player.GetAll()) do
+        if HORDE.player_ready[other_ply] == 1 then
             ready_count = ready_count + 1
         end
         total_player = total_player + 1
     end
-
-    if total_player == ready_count then
+    
+    if total_player > 0 and total_player == ready_count then
         HORDE.start_game = true
     end
 
@@ -200,9 +202,17 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
     timer.Remove("Horde_Demolition" .. ply:SteamID())
     hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
     hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
+    
+    -- Remove all the entities he owns
+    if HORDE.player_drop_entities[ply:SteamID()] then
+        for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+            if ent:IsValid() then ent:Remove() end
+        end
+    end
 end)
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
+    ply:SetCustomCollisionCheck(true)
     if not ply:IsValid() then return end
     if not ply:GetHordeClass() then return end
     if ply:GetHordeClass().Name == "Heavy" then
@@ -216,10 +226,14 @@ end)
 hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
     if not ply:IsValid() then return end
     if ply:IsNPC() then return end
-    if HORDE.items[wpn:GetClass()] then
-        local item = HORDE.items[wpn:GetClass()]
+    local class = wpn:GetClass()
+    if HORDE.items[class] then
+        local item = HORDE.items[class]
         ply:AddHordeWeight(item.weight)
         ply:SyncEconomy()
+    end
+    if ply:GetHordeClass().name == "Demolition" and class == "weapon_frag" then
+        wpn:Remove()
     end
 end)
 
@@ -255,98 +269,164 @@ end)
 net.Receive("Horde_BuyItem", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
-    local price = net.ReadInt(16)
-    local weight = net.ReadInt(16)
+    local price = HORDE.items[class].price
+    local weight = HORDE.items[class].weight
     if ply:GetHordeMoney() >= price and ply:GetHordeWeight() >= weight then
-        if class == "armor" then
-            ply:SetArmor(100)
-            ply:AddHordeMoney(-price)
-            ply:SyncEconomy()
-        else
-            local item = HORDE.items[class]
-            if item.entity_properties then
-                if item.entity_properties.type == HORDE.ENTITY_PROPERTY_WPN then
-                    -- Weapon entity
-                    local wpns = list.Get("Weapon")
-                    if not wpns[class] then return end
-                    ply:AddHordeMoney(-price)
-                    ply:Give(class)
-                    ply:SelectWeapon(class)
-                elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
-                    -- Give entity
-                    ply:AddHordeMoney(-price)
-                    if item.entity_properties.is_arccw_attachment and item.entity_properties.is_arccw_attachment == true then
-                        -- ArcCW support
-                        ArcCW:PlayerGiveAtt(ply, class, 1)
-                        ArcCW:PlayerSendAttInv(ply)
-                    else
-                        ply:Give(class)
-                    end
-                elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
-                    -- Drop entity
-                    local drop_entities = ply:GetHordeDropEntities()
-                    if drop_entities[item.class] then
-                        if drop_entities[item.class] > item.entity_properties.limit then
-                            return
-                        end
-                    end
-                    ply:AddHordeMoney(-price)
-                    local ent = ents.Create(class)
-                    local pos = ply:GetPos()
-                    local dir = (ply:GetEyeTrace().HitPos - pos)
-                    dir:Normalize()
-                    local drop_pos = pos + dir * item.entity_properties.x
-                    drop_pos.z = pos.z + item.entity_properties.z
-                    ent:SetPos(drop_pos)
-                    ent:SetAngles(Angle(0, ply:GetAngles().y + item.entity_properties.yaw, 0))
-                    --ent:DropToFloor()
-                    ent:Spawn()
-                    ply:AddHordeDropEntity(ent:GetClass(), ent)
-                    ent:SetNWEntity("HordeOwner", ply)
-                    if ent:IsNPC() then
-                        -- Minions have no player collsion
-                        ent:AddRelationship("player D_LI 99")
-                        ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-                        timer.Create("Horde_MinionCollision" .. ent:GetCreationID(), 1, 0, function ()
-                            ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-                        end)
-                    end
-                    ent:CallOnRemove("Horde_EntityRemoved", function()
-                        if ent:IsValid() and ply:IsValid() then
-                            timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
-                            hook.Remove("PlayerUse", "Horde_PlayerUse" .. ent:GetCreationID())
-                            ent:GetNWEntity("HordeOwner"):RemoveHordeDropEntity(ent:GetClass(), ent:GetCreationID())
-                            ent:GetNWEntity("HordeOwner"):SyncEconomy()
-                        end
-                    end)
-                    hook.Add("PlayerUse", "Horde_PlayerUse" .. ent:GetCreationID(), function (other_ply, target)
-                        if ent == target then
-                            if other_ply == ent:GetNWEntity("HordeOwner") then
-                                return true
-                            else
-                                return false
-                            end
-                        end
-                    end)
-                end
-            else
-                -- Fallback solution: no property is a weapon
-                -- Technically this shouldn't happen
+        local item = HORDE.items[class]
+        if item.entity_properties then
+            if item.entity_properties.type == HORDE.ENTITY_PROPERTY_WPN then
+                -- Weapon entity
                 local wpns = list.Get("Weapon")
                 if not wpns[class] then return end
                 ply:AddHordeMoney(-price)
                 ply:Give(class)
                 ply:SelectWeapon(class)
+            elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
+                -- Give entity
+                if GetConVar("horde_default_item_config"):GetInt() == 1 and class == "item_battery" then
+                    -- Prevent distribution of batteries.
+                    if ply:Armor() >= ply:GetMaxArmor() then return end
+                end
+                ply:AddHordeMoney(-price)
+                if item.entity_properties.is_arccw_attachment and item.entity_properties.is_arccw_attachment == true then
+                    -- ArcCW support
+                    ArcCW:PlayerGiveAtt(ply, class, 1)
+                    ArcCW:PlayerSendAttInv(ply)
+                else
+                    ply:Give(class)
+                end
+            elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
+                -- Drop entity
+                local drop_entities = ply:GetHordeDropEntities()
+                if drop_entities[item.class] then
+                    if drop_entities[item.class] > item.entity_properties.limit then
+                        return
+                    end
+                end
+                ply:AddHordeMoney(-price)
+                local ent = ents.Create(class)
+                local pos = ply:GetPos()
+                local dir = (ply:GetEyeTrace().HitPos - pos)
+                dir:Normalize()
+                local drop_pos = pos + dir * item.entity_properties.x
+                drop_pos.z = pos.z + item.entity_properties.z
+                ent:SetPos(drop_pos)
+                ent:SetAngles(Angle(0, ply:GetAngles().y + item.entity_properties.yaw, 0))
+                ply:AddHordeDropEntity(ent:GetClass(), ent)
+                ent:SetNWEntity("HordeOwner", ply)
+                ent:Spawn()
+                if ent:IsNPC() then
+                    -- Minions have no player collsion
+                    ent:AddRelationship("player D_LI 99")
+                    local npc_info = list.Get("NPC")[ent:GetClass()]
+                    if not npc_info then
+                        print("[HORDE] NPC does not exist in ", list.Get("NPC"))
+                    end
+
+                    local wpns = npc_info["Weapons"]
+                    if wpns then
+                        local wpn = wpns[math.random(#wpns)]
+                        ent:Give(wpn)
+                    end
+
+                    -- Special case for turrets
+                    local id = ent:GetCreationID()
+                    if ent:GetClass() == "npc_turret_floor" then
+                        ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+                        timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
+                            if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+                            ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+                        end)
+                        HORDE:DropTurret(ent)
+                    else
+                        ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+                        timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
+                            if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+                            ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+                        end)
+                    end
+                end
+                ent:CallOnRemove("Horde_EntityRemoved", function()
+                    if ent:IsValid() and ply:IsValid() then
+                        timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
+                        ent:GetNWEntity("HordeOwner"):RemoveHordeDropEntity(ent:GetClass(), ent:GetCreationID())
+                        ent:GetNWEntity("HordeOwner"):SyncEconomy()
+                    end
+                end)
+            elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_ARMOR then
+                if ply:Armor() >= ply:GetMaxArmor() then return end
+                ply:SetArmor(item.entity_properties.armor)
+                ply:AddHordeMoney(-price)
+                ply:SyncEconomy()
             end
-            ply:SyncEconomy()
+        else
+            -- Fallback solution: no property is a weapon
+            -- Technically this shouldn't happen
+            local wpns = list.Get("Weapon")
+            if not wpns[class] then return end
+            ply:AddHordeMoney(-price)
+            ply:Give(class)
+            ply:SelectWeapon(class)
         end
+
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("You bought " .. item.name .. ".")
+        net.WriteInt(0,2)
+        net.Send(ply)
+        ply:SyncEconomy()
+    end
+end)
+
+function GM:PlayerUse(other_ply, target)    -- This will make it to be default behaviour, that can be overridden by other addons hooks. Let's hope they won't return true >.>
+    local owner = target:GetNWEntity("HordeOwner")
+    if IsValid(owner) and other_ply ~= owner then return false end   -- If owner disconnected/not valid, why would we care about ownership?
+
+    if target:GetClass() == "npc_turret_floor" then
+        target:GetPhysicsObject():EnableMotion(true)
+    end
+
+    return true
+end
+
+function HORDE:DropTurret(ent)
+    local turret_pos = ent:GetPos()
+    local tr = util.TraceLine({
+        start = turret_pos,
+        endpos = turret_pos + Vector(0,0,-1) * 10000,
+        filter = ent,
+        collisiongroup =  COLLISION_GROUP_WORLD
+    })
+    
+    if IsValid(tr.Entity) or tr.HitWorld then
+        local dist_sqr = turret_pos:DistToSqr(tr.HitPos)
+        -- If you drop turrets from somewhere too high, they will just fall over.
+        if dist_sqr >= 40000 then return end
+        ent:SetPos(Vector(turret_pos.x, turret_pos.y, tr.HitPos.z + 15))
+        ent:DropToFloor()
+        timer.Simple(0.5, function() ent:GetPhysicsObject():EnableMotion(false) end)
+    end
+end
+
+hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
+    if ent:GetNWEntity("HordeOwner") and ent:GetClass() == "npc_turret_floor" then
+        -- Turrets should always stay straight.
+        local a = ent:GetAngles()
+        ent:SetAngles(Angle(0, a.y, 0))
+        HORDE:DropTurret(ent)
     end
 end)
 
 net.Receive("Horde_SellItem", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
-    
+    local canSell, why = hook.Call("CanSell", HORDE, ply, class)
+    if canSell == false then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString(why or "You can't sell this.")
+        net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
     if ply:HasWeapon(class) then
         local item = HORDE.items[class]
         ply:AddHordeMoney(math.floor(item.price * 0.25))
@@ -386,11 +466,22 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
     local name = net.ReadString()
     local class = HORDE.classes[name]
+
+    -- Drop all weapons
     ply:SetHordeClass(class)
     ply:Horde_ApplyPerksForClass()
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
+
+    -- Remove all entities
+    if HORDE.player_drop_entities[ply:SteamID()] then
+        for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+            if ent:IsValid() then ent:Remove() end
+        end
+    end
+    HORDE.player_drop_entities[ply:SteamID()] = {}
+
     ply:SetHordeWeight(HORDE.max_weight)
     ply:SetMaxHealth(class.max_hp)
     net.Start("Horde_ToggleShop")
@@ -428,7 +519,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
         timer.Create("Horde_Demolition" .. ply:SteamID(), 30, 0, function ()
             if not ply:IsValid() then return end
             if not ply:HasWeapon("weapon_frag") then
-                ply:Give("weapon_frag")
+                ply:Give("weapon_frag", ply:GetAmmoCount("Grenade") > 0)
             end
         end)
         hook.Add("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID(), function (target, dmg)
@@ -453,17 +544,22 @@ net.Receive("Horde_SelectClass", function (len, ply)
             if not ply:IsValid() then return end
             if npc:IsValid() and dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
                 if dmg:GetAttacker():GetClass() == "npc_turret_floor" then
-                    dmg:SetDamage(10)
+                    dmg:SetDamage(18)
                 end
                 dmg:ScaleDamage(2)
             end
         end)
         hook.Add("OnEntityCreated", "Horde_Engineer" .. ply:SteamID(), function (ent)
             if not ent:IsValid() then return end
-            if ent:GetNWEntity("HordeOwner") == ply and ent:IsNPC() then
-                ent:SetMaxHealth(ent:MaxHealth() * 2)
-                ent:SetHealth(ent:SetMaxHealth())
-            end
+            timer.Simple(0.1, function()
+                if ent:GetNWEntity("HordeOwner") == ply and ent:IsNPC() then
+                    if ent:GetClass() == "npc_turret_floor" then
+                        ent:SetMaxHealth(500)
+                    end
+                    ent:SetMaxHealth(ent:GetMaxHealth() * 2)
+                    ent:SetHealth(ent:GetMaxHealth())
+                end
+            end)
         end)
     end
 
@@ -516,8 +612,7 @@ end)
 net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
-    local price = net.ReadInt(16)
-    local count = net.ReadInt(16)
+    local count = net.ReadUInt(4)
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You don't have this weapon!")
@@ -525,7 +620,8 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         net.Send(ply)
         return
     end
-
+    
+    local price = HORDE.items[class].ammo_price * count
     if ply:GetHordeMoney() >= price then
         ply:AddHordeMoney(-price)
         local wpn = ply:GetWeapon(class)
@@ -537,7 +633,6 @@ end)
 net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
-    local price = net.ReadInt(16)
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You don't have this weapon!")
@@ -545,7 +640,8 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         net.Send(ply)
         return
     end
-
+    
+    local price = HORDE.items[class].secondary_ammo_price
     if ply:GetHordeMoney() >= price then
         ply:AddHordeMoney(-price)
         local wpn = ply:GetWeapon(class)
@@ -556,3 +652,11 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         end
     end
 end)
+
+function HORDE:CanSell(ply, class)
+    if ply:GetHordeClass().name == "Demolition" and class == "weapon_frag" then
+        return false, "You can't sell grenades as Demolition class!"
+    end
+
+    return true
+end

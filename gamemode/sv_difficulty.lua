@@ -1,15 +1,8 @@
-if CLIENT then return end
-
 -- Difficulty settings
 -- Rule: scale as difficulty/endless.
 -- 0 - normal, 1 - hard, 2 - realism
 
 HORDE.difficulty = GetConVar("horde_difficulty"):GetInt() + 1
-if GetConVar("horde_endless"):GetBool() then
-    HORDE.endless = 1
-else
-    HORDE.endless = 0
-end
 HORDE.endless = GetConVar("horde_endless"):GetInt()
 HORDE.additional_pack = 0
 
@@ -27,6 +20,7 @@ HORDE.difficulty_health_multiplier = {1, 1.25, 1.5}
 local difficulty_start_money_multiplier = {1, 0.9, 0.8}
 local difficulty_spawn_radiuis_multiplier = {1, 0.75, 0.5}
 local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25}
+local difficulty_poison_headcrab_damage = {70, 85, 99}
 
 -- Flat modifiers
 HORDE.difficulty_elite_health_scale_add = {0, 0.05, 0.10}
@@ -39,15 +33,16 @@ HORDE.endless_damage_multiplier = 1
 
 -- Hook settings
 -- Damage scaling/handling
+-- Turrets should not be one-shot
+function VJ_DestroyCombineTurret() end
+
 hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
     if not target:IsValid() then return end
     if target:IsPlayer() then
         if dmg:GetAttacker():IsNPC() then
             if dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
                 -- Prevent minions from hurting players
-                dmg:ScaleDamage(0)
-                dmg:SetDamageForce(Vector(0,0,0))
-                return
+                return true
             end
             if dmg:GetDamageType() == DAMAGE_CRUSH then
                 -- Cap bullshit physics damage that can sometimes occur
@@ -55,6 +50,7 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             end
             if dmg:GetDamageType() == DMG_POISON or dmg:GetDamageType() == DMG_NERVEGAS then
                 -- Otherwise poison headcrabs can oneshot you
+                dmg:SetDamage(math.min(dmg:GetDamage(), difficulty_poison_headcrab_damage[HORDE.difficulty]))
                 return
             end
             
@@ -69,15 +65,27 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             end
         elseif dmg:GetAttacker():IsPlayer() and dmg:GetAttacker() ~= target then
             -- Prevent PVP
-            dmg:SetDamage(0)
-            dmg:SetDamageForce(Vector(0,0,0))
+            return true
         elseif dmg:GetDamageType() == DAMAGE_CRUSH then
             dmg:SetDamage(math.min(dmg:GetDamage(), 20))
         end
-    elseif target:GetNWEntity("HordeOwner"):IsPlayer() and (dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer()) then
-        -- Prevent player / player minions from damaging minions
-        dmg:ScaleDamage(0)
-        dmg:SetDamageForce(Vector(0,0,0))
+    elseif target:GetNWEntity("HordeOwner"):IsPlayer() then
+        if (dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer()) then
+            -- Prevent player / player minions from damaging minions
+            return true
+        else
+            if dmg:GetDamageType() == DMG_POISON or dmg:GetDamageType() == DMG_NERVEGAS then
+                dmg:SetDamage(math.min(dmg:GetDamage(), difficulty_poison_headcrab_damage[HORDE.difficulty]))
+            end
+            
+            if target:GetClass() == "npc_turret_floor" then
+                dmg:SetDamageForce(Vector(0,0,0))
+                target:SetHealth(target:Health() - dmg:GetDamage())
+                if target:Health() <= 0 then
+                    target:Fire("selfdestruct")
+                end
+            end
+        end
     end
 end)
 --[[
@@ -96,6 +104,15 @@ hook.Add("GetFallDamage", "RealisticDamage", function(ply, speed)
     else
         -- css fall damage
         return math.max(0, math.ceil(0.2418 * speed - 141.75))
+    end
+end)
+
+-- Hulk hitbox fix
+hook.Add("ScaleNPCDamage", "Horde_HulkDamage", function (npc, hitgroup, dmg)
+    if npc:IsValid() and npc:GetClass() == "npc_vj_zss_zhulk" then
+        if hitgroup == HITGROUP_GENERIC then
+            dmg:ScaleDamage(1.5)
+        end
     end
 end)
 

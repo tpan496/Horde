@@ -1,24 +1,55 @@
-if SERVER then return end
-
 local PANEL = {}
 
 function PANEL:Init()
-    self:SetSize(ScrW() / 1.5, ScrH() / 1.5)
+    self:SetSize(ScrW() / 1.25, ScrH() / 1.5)
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
     local close_btn = vgui.Create("DButton", self)
+    local close_btn_color = HORDE.color_config_btn
     close_btn:SetFont("marlett")
     close_btn:SetText("r")
-    close_btn.Paint = function() end
+    close_btn.Paint = function() draw.RoundedBox(10, 0, 0, 40, 32, close_btn_color) end
     close_btn:SetColor(Color(255, 255, 255))
-    close_btn:SetSize(32, 32)
-    close_btn:SetPos(self:GetWide() - 40, 8)
+    close_btn:SetSize(40, 32)
+    close_btn:SetPos(self:GetWide() - 45, 4)
+    close_btn.OnCursorEntered = function ()
+        close_btn_color = HORDE.color_crimson
+    end
+    close_btn.OnCursorExited = function ()
+        close_btn_color = HORDE.color_config_btn
+    end
     close_btn.DoClick = function() HORDE:ToggleItemConfig() end
 
-    local modify_tab = vgui.Create("DScrollPanel", self)
-    modify_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
-    modify_tab:SetPos(self:GetWide() / 2, 40)
+    local q_btn = vgui.Create("DButton", self)
+    local q_btn_color = HORDE.color_config_btn
+    q_btn:SetFont("Trebuchet24")
+    q_btn:SetText("?")
+    q_btn.Paint = function() draw.RoundedBox(10, 0, 0, 40, 32, q_btn_color) end
+    q_btn:SetColor(Color(255, 255, 255))
+    q_btn:SetSize(40, 32)
+    q_btn:SetPos(self:GetWide() - 45 - 45, 4)
+    q_btn.OnCursorEntered = function ()
+        q_btn_color = HORDE.color_crimson
+    end
+    q_btn.OnCursorExited = function ()
+        q_btn_color = HORDE.color_config_btn
+    end
+    q_btn.DoClick = function() gui.OpenURL("https://github.com/tpan496/Horde/wiki/Item-Config") end
+
+    local modify_tab = vgui.Create("DCategoryList", self)
+    modify_tab:SetBackgroundColor(HORDE.color_config_content_bg)
+    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 50 - 12)
+    modify_tab:SetPos(self:GetWide() / 2, 50)
+
+    local entity_type_cat = modify_tab:Add("Entity Type")
+    local entity_type_panel = vgui.Create("DPanel", modify_tab)
+    entity_type_cat:SetContents(entity_type_panel)
+    entity_type_panel:SetBackgroundColor(HORDE.color_none)
+    local entity_properties_cat = modify_tab:Add("Entity Properties")
+    local entity_properties_panel = vgui.Create("DPanel", modify_tab)
+    entity_properties_cat:SetContents(entity_properties_panel)
+    entity_properties_panel:SetBackgroundColor(HORDE.color_none)
 
     local ammo_price_editor
     local secondary_ammo_price_editor
@@ -26,22 +57,19 @@ function PANEL:Init()
     local weapon_categories = HORDE.categories
     local entity_categories = HORDE.entity_categories
     local weight_editor
-    local function create_property_editor(name, height, categories)
-        local panel = vgui.Create("DPanel", modify_tab)
+    local function create_property_editor(name, height, cat_panel, categories)
+        local panel = vgui.Create("DPanel", cat_panel)
         panel:DockPadding(10, 5, 10, 5)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
-        panel.Paint = function ()
-            surface.SetDrawColor(Color(230,230,230))
-            surface.DrawRect(0, 0, modify_tab:GetWide(), height)
-        end
+        panel:SetBackgroundColor(HORDE.color_none)
 
         local label = vgui.Create("DLabel", panel)
         label:SetText(name)
         label:SetTextColor(Color(0,0,0))
         label:DockPadding(10, 10, 10, 10)
         label:Dock(LEFT)
-        label:SetWide(150)
+        label:SetWide(80)
 
         if name == "category" then
             local editor = vgui.Create("DComboBox", panel)
@@ -76,6 +104,7 @@ function PANEL:Init()
             for wpn, _ in pairs(list.Get("Weapon")) do
                 weapon_editor:AddChoice(wpn)
             end
+            weapon_editor:AddChoice("_horde_armor_100")
 
             local entity_editor = vgui.Create("DTextEntry", editor_panel)
             entity_editor:SetSize(200, height/3)
@@ -198,7 +227,7 @@ function PANEL:Init()
                 checkbox:SetText(type)
                 checkbox:SetTextColor(Color(0,0,0))
                 checkbox:SetChecked(true)
-                start_pos = start_pos + 100
+                start_pos = start_pos + 110
                 entity_checkboxes[type] = checkbox
                 if type == "weapon_entity" then
                     checkbox:SetChecked(true)
@@ -253,15 +282,23 @@ function PANEL:Init()
         elseif name == "whitelist" then
             local editors = {}
             local start_pos = 70
+            local start_pos_2 = 70
+            local i = 1
             for _, class in pairs(HORDE.classes) do
                 local editor = vgui.Create("DCheckBoxLabel", panel)
-                editor:SetSize(75, height)
-                editor:SetPos(start_pos, 15)
+                editor:SetSize(75, height / 2)
+                if i < 4 then
+                    editor:SetPos(start_pos, 25)
+                    start_pos = start_pos + 75
+                else
+                    editor:SetPos(start_pos_2, 45)
+                    start_pos_2 = start_pos_2 + 75
+                end
                 editor:SetText(class.name)
                 editor:SetTextColor(Color(0,0,0))
                 editor:SetChecked(true)
-                start_pos = start_pos + 75
                 table.insert(editors, editor)
+                i = i +1
             end
 
             return editors
@@ -274,23 +311,24 @@ function PANEL:Init()
         end
     end
 
-    local class_editors = create_property_editor("class", 40 * 3)
-    category_editor = create_property_editor("category", 40, weapon_categories)
-    local name_editor = create_property_editor("name", 40)
-    local price_editor = create_property_editor("price", 40)
-    weight_editor = create_property_editor("weight", 40)
-    local description_editor = create_property_editor("description", 100)
-    local whitelist_editors = create_property_editor("whitelist", 40)
-    ammo_price_editor = create_property_editor("ammo price", 40)
-    secondary_ammo_price_editor = create_property_editor("secondary ammo price", 40)
+    local class_editors = create_property_editor("class", 40 * 3, entity_type_panel)
+    category_editor = create_property_editor("category", 35, entity_type_panel, weapon_categories)
+    local name_editor = create_property_editor("name", 35, entity_type_panel)
+    local price_editor = create_property_editor("price", 35, entity_properties_panel)
+    weight_editor = create_property_editor("weight", 35, entity_properties_panel)
+    local description_editor = create_property_editor("description", 100, entity_properties_panel)
+    local whitelist_editors = create_property_editor("whitelist", 40 * 2, entity_properties_panel)
+    ammo_price_editor = create_property_editor("ammo price", 35, entity_properties_panel)
+    secondary_ammo_price_editor = create_property_editor("alt ammo price", 35, entity_properties_panel)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
-        warning_label:DockPadding(10, 10, 10, 10)
+        warning_label:DockMargin(10, 10, 10, 10)
         warning_label:Dock(TOP)
-        warning_label:SetSize(modify_tab:GetWide(), 25)
+        warning_label:SetSize(modify_tab:GetWide(), 50)
         warning_label:SetTextColor(Color(255,0,0))
-        warning_label:SetText("You are using default/external config! Your data won't be saved!")
+        warning_label:SetText("You are using default/external config!\nYour data won't be saved!")
+        warning_label:SetFont("Heading")
     end
 
     price_editor:SetNumeric(true)
@@ -303,9 +341,17 @@ function PANEL:Init()
     secondary_ammo_price_editor:SetNumeric(true)
     secondary_ammo_price_editor:SetValue("0")
 
-    local save_btn = vgui.Create("DButton", modify_tab)
+    local btn_panel = vgui.Create("DPanel", self)
+    btn_panel:SetPos(self:GetWide() - 200, 50)
+    btn_panel:SetSize(200, self:GetTall() - 58)
+    btn_panel.Paint = function ()
+        surface.SetDrawColor(HORDE.color_none)
+        surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
+    end
+
+    local save_btn = vgui.Create("DButton", btn_panel)
     save_btn:Dock(TOP)
-    save_btn:DockMargin(10,10,10,10)
+    save_btn:DockMargin(10,5,10,5)
     save_btn:SetTall(30)
     save_btn:SetText("Save Item")
     save_btn.DoClick = function ()
@@ -373,9 +419,9 @@ function PANEL:Init()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
 
-    local load_btn = vgui.Create("DButton", modify_tab)
-    load_btn:Dock(TOP)
-    load_btn:DockMargin(10,10,10,10)
+    local load_btn = vgui.Create("DButton", btn_panel)
+    load_btn:Dock(BOTTOM)
+    load_btn:DockMargin(10,5,10,5)
     load_btn:SetTall(30)
     load_btn:SetText("OVERWRITE with Default Config")
     load_btn.DoClick = function ()
@@ -398,9 +444,9 @@ function PANEL:Init()
         )
     end
 
-    local del_btn = vgui.Create("DButton", modify_tab)
-    del_btn:Dock(TOP)
-    del_btn:DockMargin(10,10,10,10)
+    local del_btn = vgui.Create("DButton", btn_panel)
+    del_btn:Dock(BOTTOM)
+    del_btn:DockMargin(10,5,10,5)
     del_btn:SetTall(30)
     del_btn:SetText("Delete Everything")
     del_btn.DoClick = function ()
@@ -424,7 +470,9 @@ function PANEL:Init()
 
     local settings_tab = vgui.Create("DPanel", self)
     settings_tab:SetPos(0, 40)
-    settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40)
+    settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40 - 3)
+    settings_tab:SetBackgroundColor(HORDE.color_none)
+    
     local item_list = vgui.Create("DListView", settings_tab)
     item_list:DockMargin(10, 10, 10, 10)
     item_list:Dock(FILL)
@@ -492,7 +540,6 @@ function PANEL:Init()
 
             category_editor:SetValue(item.category)
             name_editor:SetValue(item.name)
-            --class_editor:SetValue(item.class)
             price_editor:SetValue(item.price)
             weight_editor:SetValue(item.weight)
             description_editor:SetValue(item.description)
@@ -560,17 +607,13 @@ function PANEL:Think()
 end
 
 function PANEL:Paint(w, h)
-    -- Derma_DrawBackgroundBlur(self)
-
     -- Entire Panel
-    surface.SetDrawColor(Color(230, 230, 230, 255))
-    surface.DrawRect(0, 0, w, h)
+    draw.RoundedBox(10, 0, 0, w, h, HORDE.color_config_bg)
 
     -- Background
-    surface.SetDrawColor(Color(40, 40, 40, 255))
-    surface.DrawRect(0, 0, w, 48)
+    draw.RoundedBox(10, 0, 0, w, 40, HORDE.color_config_bar)
 
-    draw.SimpleText("Item Config (Some settings require restarting current game to take effect)", "Heading", 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText("Horde Item Configuration", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("HordeItemConfig", PANEL, "EditablePanel")

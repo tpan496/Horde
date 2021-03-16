@@ -1,4 +1,3 @@
-if CLIENT then return end
 -- Manages player spawn/death settings
 
 util.AddNetworkString("Horde_Votemap")
@@ -13,8 +12,9 @@ local map_list = {}
 local map_votes = {}
 local diff_votes = {}
 
-HORDE.GameEnd = function (status)
+function HORDE:GameEnd(status)
     local randomplayer = table.Random(player.GetAll())
+    if not randomplayer then return end
 
     local mvp_player = randomplayer
     local mvp_damage = 0
@@ -142,11 +142,7 @@ HORDE.GameEnd = function (status)
 
     net.WriteInt(total_damage, 32)
 
-    local maps = file.Find( "maps/*.bsp", "GAME")
-    for _, map in ipairs( maps ) do
-        map = map:sub(1, -5) -- Take off .bsp
-        table.insert(map_list, map)
-    end
+    map_list = HORDE:GetNextMaps()
 
     if not map_list then
         map_list = {game.GetMapNext()}
@@ -287,7 +283,7 @@ HORDE.VoteChangeMap = function (ply)
         net.WriteInt(0,2)
         net.Broadcast()
         timer.Simple(5, function ()
-            HORDE.GameEnd("Change Map")
+            HORDE:GameEnd("Change Map")
         end)
     else
         net.Start("Horde_LegacyNotification")
@@ -297,7 +293,7 @@ HORDE.VoteChangeMap = function (ply)
     end
 end
 
-hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function(ply)
+hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
     if ply:IsValid() then
         ply:SetCollisionGroup(15)
         ply:SetCanZoom(false)
@@ -315,7 +311,7 @@ hook.Add("Move", "Horde_move", function (ply, mv)
     end
 end)
 
-hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", function(victim, inflictor, attacker)
+local function Horde_DeathSpectatingFunction(victim, inflictor, attacker)
     if not HORDE.start_game or HORDE.current_break_time > 0 then return end
     timer.Simple(1, function()
         if victim:IsValid() then
@@ -323,7 +319,9 @@ hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", function(victim, inflic
             victim:SetMoveType(MOVETYPE_OBSERVER)
         end
     end)
-end)
+end
+hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
+hook.Add("PlayerSilentDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
 
 function CheckAlivePlayers()
     local aliveplayers = 0
@@ -346,14 +344,14 @@ function CheckAlivePlayers()
         net.WriteString("All players are dead! Restarting...")
         net.WriteInt(1,2)
         net.Broadcast()
-        HORDE.GameEnd("DEFEAT!")
+        HORDE:GameEnd("DEFEAT!")
     end
 end
 
-hook.Add("PlayerSpawn", "Horde_PlayerSpawn", function (ply)
+hook.Add("PlayerSpawn", "Horde_PlayerSpawnMidWave", function (ply)
     if HORDE.start_game and HORDE.current_break_time <= 0 then
         if ply:IsValid() then
-            ply:Kill()
+            ply:KillSilent()
             net.Start("Horde_LegacyNotification")
             net.WriteString("You will respawn next wave.")
             net.Send(ply)
