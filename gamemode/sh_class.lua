@@ -23,8 +23,16 @@ HORDE.CreateClasses = function()
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
-        {L = "25% less damage taken.",
-        R = "25% increased damage."}
+        {
+            [1] = {title = "Mindset", choices = {
+                {name = "Live to Fight", perks = {["resistance_all"] = {percent = 0.2}}},
+                {name = "Fight to Live", perks = {["damage_bonus_all"] = {percent = 0.2}}},
+            }},
+            [2] = {title = "Strategy", choices = {
+                {name = "Lead Down Range", perks = {["damage_bonus_bullet"] = {percent = 0.25}}},
+                {name = "Fire And Brimstone", perks = {["damage_bonus_fire"] = {percent = 0.5}, ["damage_bonus_blast"] = {percent = 0.3}}},
+            }},
+        }
     )
 
     HORDE.CreateClass(
@@ -45,8 +53,20 @@ HORDE.CreateClasses = function()
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
-        {L = "50% increased explosive damage",
-        R = "Enemies you kill explode,\ndealing (100 + 10% of their health) as AOE damage."}
+        {
+            [1] = {title = "Frag Mod", choices = {
+                {name = "Impact Detonation", perks = {["frag_impact"] = {}}},
+                {name = "Sticky Bombs", perks = {["frag_sticky"] = {}}},
+            }},
+            [2] = {title = "Incendiary Loadout", choices = {
+                {name = "Professional Package", perks = {["loadout_wave_grenade"] = {weapon = "arccw_go_nade_incendiary", ammotype = "arccw_go_nade_incendiary"}}},
+                {name = "Beer Party", perks = {["loadout_wave_grenade"] = {weapon = "arccw_go_nade_molotov", ammotype = "arccw_go_nade_molotov"}}},
+            }},
+            [3] = {title = "Payload", choices = {
+                {name = "Pressure Blast", perks = {["frag_double"] = {}}},
+                {name = "Cluster Bombs", perks = {["frag_cluster"] = {}}},
+            }},
+        }
     )
 
     HORDE.CreateClass(
@@ -67,8 +87,16 @@ HORDE.CreateClasses = function()
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
-        {L = "Damage does not bypass Armor.",
-        R = "Enemies you hit are Pressured for 1 second.\nPressured enemies deal 25% less damage and take 25% increased damage."}
+        {
+            [2] = {title = "Shotgun Munitions", choices = {
+                {name = "Salvo", perks = {["arccw_shotgun_damage"] = {}}},
+                {name = "Punch", perks = {["arccw_shotgun_penetration"] = {}}},
+            }},
+            [3] = {title = "Magazine Mods", choices = {
+                {name = "Loaded", perks = {["arccw_mg_magazine"] = {}}},
+                {name = "Agile", perks = {["arccw_mg_reload"] = {}}},
+            }},
+        }
     )
 
     HORDE.CreateClass(
@@ -110,7 +138,7 @@ HORDE.SetClassData = function ()
         if not file.IsDir("horde", "DATA") then
             file.CreateDir("horde")
         end
-        
+
         file.Write("horde/class.txt", util.TableToJSON(HORDE.classes))
     end
 end
@@ -121,7 +149,7 @@ function GetClassData()
             file.CreateDir("horde")
             return
         end
-        
+
         if file.Read("horde/class.txt", "DATA") then
             local t = util.JSONToTable(file.Read("horde/class.txt", "DATA"))
 

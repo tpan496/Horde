@@ -1,3 +1,4 @@
+surface.CreateFont("Horde_PerkTitle", { font = "arial bold", size = 24, bold = true })
 surface.CreateFont("Title", { font = "arial bold", size = 30 })
 surface.CreateFont("Warning", { font = "arial bold", size = 30, strikeout = true })
 surface.CreateFont("Content", { font = "arial bold", size = 20 })
@@ -96,6 +97,26 @@ function PANEL:Init()
     function self.sell_btn:DoClick()
         self:GetParent():SellDoClick()
     end
+  
+    self.perk_layout = vgui.Create("DIconLayout", self.scroll_panel)
+    self.perk_layout:Dock(FILL)
+    self.perk_layout:DockMargin(4, 256, 4, 0)
+    self.perk_layout:SetSpaceY(8)
+
+    --[[]
+    for perk_level, v in ipairs(class.perks) do
+        if not v.choices then continue end
+        local cur_panel = self.perk_layout:Add("DIconLayout") --vgui.Create("DIconLayout", self.perk_panel)
+        cur_panel:SetSpaceX(4)
+        cur_panel:SetSize(self.perk_layout:GetWide(), ScrH() * 0.1)
+        cur_panel:Dock(TOP)
+        for choice, params in pairs(v.choices) do
+            local perkbutton = cur_panel:Add("HordePerkButton") --vgui.Create("HordePerkButton", cur_panel)
+            perkbutton:SetSize(cur_panel:GetWide() / #v.choices, ScrH() * 0.1)
+            perkbutton:SetData(class.name, perk_level, choice)
+        end
+    end
+    ]]
 end
 
 function PANEL:DoClick()
@@ -165,6 +186,40 @@ end
 
 function PANEL:SetData(item)
     self.item = item
+    for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end
+    self.perk_layout:Dock(FILL)
+    self.perk_layout:DockMargin(4, 256, 4, 0)
+    self.perk_layout:SetSpaceY(8)
+    if not self.item.class then
+        local class = self.item
+        for perk_level, v in SortedPairs(class.perks) do
+            if not v.choices then continue end
+            local title = self.perk_layout:Add("DLabel")
+            title:SetSize(self.perk_layout:GetWide(), 24)
+            title:Dock(TOP)
+            title:SetContentAlignment(0, 0, 0, 8)
+            title:SetFont("Horde_PerkTitle")
+
+            title:SetContentAlignment(5)
+            local cur_panel = self.perk_layout:Add("DIconLayout")
+            cur_panel:SetSpaceX(4)
+            cur_panel:SetSize(self.perk_layout:GetWide(), ScrH() * 0.05)
+            cur_panel:Dock(TOP)
+
+            local unlocked_level = Horde_GetWaveForPerk(perk_level)
+            if unlocked_level > 0 then
+                title:SetText("[WAVE " .. unlocked_level .. "] "  .. (v.title or ""))
+            else
+                title:SetText(v.title)
+            end
+
+            for choice, params in pairs(v.choices) do -- TODO grey out locked choices
+                local perkbutton = cur_panel:Add("HordePerkButton")
+                perkbutton:SetSize((cur_panel:GetWide() - 8) / #v.choices, ScrH() * 0.05)
+                perkbutton:SetData(class.name, perk_level, choice)
+            end
+        end
+    end
 end
 
 -- Copied from ArcCW
