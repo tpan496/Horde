@@ -184,6 +184,12 @@ function ENT:Detonate()
 
     self.Armed = true
     self:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 90, 100, 1, CHAN_AUTO)
+
+    timer.Simple(self.Duration, function()
+        if !IsValid(self) then return end
+
+        self:Remove()
+    end)
 end
 
 function ENT:DrawTranslucent()
