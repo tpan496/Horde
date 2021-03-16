@@ -72,7 +72,7 @@ function ENT:Use(ply)
     -- I don't want player to be able to difuse mines with wrong class >:c
     -- btw, saboteur class when?
     local item = HORDE.items[self.SWEP]
-    if not item or ply:GetHordeWeight() - item.weight < 0 or not item.whitelist[ply:GetHordeClass().name] then return end
+    if not item or ply:Horde_GetWeight() - item.weight < 0 or not item.whitelist[ply:Horde_GetClass().name] then return end
 
     self:EmitSound(defuse, 60)
     self:Remove()

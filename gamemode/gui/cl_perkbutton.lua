@@ -35,7 +35,7 @@ function PANEL:Init()
     self.button:SetText("")
     self.button.Paint = function() end
     self.button.DoClick = function()
-        if not self.info or self.info.class ~= LocalPlayer():GetHordeClass().name then return end
+        if not self.info or self.info.class ~= LocalPlayer():Horde_GetClass().name then return end
         net.Start("Horde_PerkChoice")
             net.WriteUInt(self.info.perk_level, 4)
             net.WriteUInt(self.info.choice, 4)
