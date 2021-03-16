@@ -672,15 +672,6 @@ function HORDE:CanSell(ply, class)
     return true
 end
 
-function Player:GetMinionSpreadModifier()   -- Placeholder for perks
-    return 0.5
-end
-
---[[
-function Player:GetMinionDamageOverride()   -- Placeholder for perks
-    return 17
-end
-]]
 --https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/hl2/npc_turret_floor.cpp
 local VECTOR_CONE_10DEGREES	= Vector(87.16, 87.16, 0)
 hook.Add("EntityFireBullets", "Horde_ModifyTurretBullet", function(ent, data)
