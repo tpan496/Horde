@@ -116,6 +116,15 @@ hook.Add("ScaleNPCDamage", "Horde_HulkDamage", function (npc, hitgroup, dmg)
     end
 end)
 
+-- Hulk hitbox fix
+hook.Add("ScaleNPCDamage", "Horde_MutatedHulkDamage", function (npc, hitgroup, dmg)
+    if npc:IsValid() and npc:GetClass() == "npc_vj_mutated_hulk" then
+        if hitgroup == HITGROUP_GENERIC then
+            dmg:ScaleDamage(1.5)
+        end
+    end
+end)
+
 -- Gonome headshot multiplier reduction
 hook.Add("ScaleNPCDamage", "Horde_GonomeDamage", function (npc, hitgroup, dmg)
     if npc:IsValid() and npc:GetClass() == "npc_vj_alpha_gonome" then

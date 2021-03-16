@@ -545,7 +545,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
             if npc:IsValid() and dmg:GetAttacker():IsPlayer() and dmg:GetAttacker():SteamID() == ply:SteamID() then
                 if hitgroup == HITGROUP_HEAD then
                     dmg:ScaleDamage(1.5)
-                elseif npc:GetClass() == "npc_vj_zss_zhulk" and hitgroup == HITGROUP_GENERIC then
+                elseif (npc:GetClass() == "npc_vj_zss_zhulk" or npc:GetClass() == "npc_vj_mutated_hulk") and hitgroup == HITGROUP_GENERIC then
                     dmg:ScaleDamage(1.5)
                 end
             end
