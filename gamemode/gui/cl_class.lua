@@ -1,6 +1,7 @@
 surface.CreateFont("Item", { font = "arial", size = 20 })
 
 local PANEL = {}
+local mat = {}
 
 function PANEL:Init()
     self.name = ""
@@ -29,6 +30,7 @@ function PANEL:SetData(class, description_panel)
     self.name = class.name
     self.description = class.description
     self.description_panel = description_panel
+    mat = {self.class, Material("materials/" .. self.name .. ".png", "mips smooth")}
 
     local btn = vgui.Create("DButton", self)
     btn:Dock(FILL)
@@ -64,8 +66,8 @@ function PANEL:Paint()
         surface.DrawText(self.name)
 
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-        local mat = Material("materials/" .. self.name .. ".png", "mips smooth")
-        surface.SetMaterial(mat) -- Use our cached material
+        if mat[1] ~= self.class then mat = {self.class, Material("materials/" .. self.name .. ".png", "mips smooth")} end
+        if mat then surface.SetMaterial(mat[2]) end
         surface.DrawTexturedRect(self:GetWide() - 50, 0, 40, 40)
     end
 end
