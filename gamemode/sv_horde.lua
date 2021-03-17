@@ -641,6 +641,8 @@ function HORDE:CheckBossStuck()
         maxs = HORDE.horde_boss:OBBMaxs(),
     })
     if tr.Hit then
+        local ent = tr.Entity
+        if ent:IsValid() and ent:GetClass() == "npc_turret_floor" then return end
         horde_boss_reposition = true
         print("[HORDE] Boss is stuck. Attempting to reposition...")
     end
