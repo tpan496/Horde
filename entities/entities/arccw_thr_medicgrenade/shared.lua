@@ -35,7 +35,13 @@ function entmeta:Horde_AddEffect_MedicGrenade(ent)
         if self:IsPlayer() then
             self:SetHealth(math.min(self:Health() + 5, self:GetMaxHealth()))
         elseif self:IsNPC() and (not self:GetNWEntity("HordeOwner"):IsValid()) then
-            self:TakeDamage(25, ent.Owner, ent)
+            local d = DamageInfo()
+            d:SetDamage(25)
+            d:SetAttacker(ent.Owner)
+            d:SetInflictor(ent)
+            d:SetDamageType(DMG_NERVEGAS)
+            self:TakeDamageInfo(d)
+            --self:TakeDamage(25, ent.Owner, ent)
         end
     end)
 end
@@ -184,6 +190,12 @@ function ENT:Detonate()
 
     self.Armed = true
     self:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 90, 100, 1, CHAN_AUTO)
+
+    timer.Simple(self.Duration, function()
+        if !IsValid(self) then return end
+
+        self:Remove()
+    end)
 end
 
 function ENT:DrawTranslucent()

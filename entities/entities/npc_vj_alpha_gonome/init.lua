@@ -37,7 +37,7 @@ ENT.Immune_AcidPoisonRadiation = true -- Makes the SNPC not get damage from Acid
 ENT.Immune_Physics = true
 
 -- Flinch
-ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
+ENT.CanFlinch = 0 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.NextFlinchTime = 2
 ENT.AnimTbl_Flinch = {ACT_FLINCH_PHYSICS} -- If it uses normal based animation, use this
 ENT.RunAwayOnUnknownDamage = false
