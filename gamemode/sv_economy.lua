@@ -164,6 +164,8 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     ply:Horde_ApplyPerksForClass()
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:Horde_SyncEconomy()
+    ply.Horde_DamageIncrease = {}
+    ply.Horde_DamageMore = {}
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
 
     if HORDE.start_game then return end

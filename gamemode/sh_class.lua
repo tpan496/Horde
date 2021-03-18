@@ -54,9 +54,9 @@ HORDE.CreateClasses = function()
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
         {
-            [1] = {title = "Frag Mod", choices = {
-                {name = "Impact Detonation", perks = {["frag_impact"] = {}}},
-                {name = "Sticky Bombs", perks = {["frag_sticky"] = {}}},
+            [1] = {title = "Grenade", choices = {
+                {name = "Impact Detonation", perks = {["demolition_frag_impact"] = {}}},
+                {name = "Cluster Bombs", perks = {["demolition_frag_cluster"] = {}}},
             }},
             [2] = {title = "Incendiary Loadout", choices = {
                 {name = "Professional Package", perks = {["loadout_wave_grenade"] = {weapon = "arccw_go_nade_incendiary", ammotype = "arccw_go_nade_incendiary"}}},
@@ -106,8 +106,12 @@ HORDE.CreateClasses = function()
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
-        {L = "100% increased damage with single shot weapons.",
-        R = "Headshot damage stacks,\ndealing 10% increased damage each stack."}
+        {
+            [1] = {title = "Mindset", choices = {
+                {name = "Headhunter", perks = {["ghost_headhunter"] = {}}},
+                {name = "Headhunter", perks = {["ghost_headhunter"] = {}}},
+            }},
+        }
     )
 
     HORDE.CreateClass(
