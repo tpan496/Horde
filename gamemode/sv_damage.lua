@@ -43,6 +43,7 @@ function plymeta:Horde_GetDamageMore(dmgtype)
     return self.Horde_DamageMore[dmgtype] or 0
 end
 
+-- Player damage.
 hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo)
     local ply = dmginfo:GetAttacker()
     if not npc:IsValid() or not ply:IsPlayer() then return end
@@ -63,4 +64,32 @@ hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo
     increase, more = hook.Run("Horde_ApplyAdditionalDamage", ply, increase, more, hitgroup)
     dmginfo:ScaleDamage(more * (1 + increase))
     --print(more * (1 + increase), dmginfo:GetDamage())
+end)
+
+-- Enemy damage.
+-- Hulk hitbox fix
+hook.Add("ScaleNPCDamage", "Horde_HulkDamage", function (npc, hitgroup, dmg)
+    if npc:IsValid() and npc:GetClass() == "npc_vj_zss_zhulk" then
+        if hitgroup == HITGROUP_GENERIC then
+            dmg:ScaleDamage(1.5)
+        end
+    end
+end)
+
+-- Hulk hitbox fix
+hook.Add("ScaleNPCDamage", "Horde_MutatedHulkDamage", function (npc, hitgroup, dmg)
+    if npc:IsValid() and npc:GetClass() == "npc_vj_mutated_hulk" then
+        if hitgroup == HITGROUP_GENERIC then
+            dmg:ScaleDamage(1.5)
+        end
+    end
+end)
+
+-- Gonome headshot multiplier reduction
+hook.Add("ScaleNPCDamage", "Horde_GonomeDamage", function (npc, hitgroup, dmg)
+    if npc:IsValid() and npc:GetClass() == "npc_vj_alpha_gonome" then
+        if hitgroup == HITGROUP_HEAD then
+            dmg:ScaleDamage(0.5)
+        end
+    end
 end)
