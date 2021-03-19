@@ -17,117 +17,6 @@ end
 -- Only allow 1 change per wave
 HORDE.player_class_changed = {}
 
-function HORDE:CreateClasses()
-    HORDE:CreateClass(
-        "Survivor",
-        "No bonus.\n\n",
-        "Have access to all weapons except for exclusive and special weapons.\n\nLimited access to attachments.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
-        {
-            [1] = {title = "Mindset", choices = {
-                {name = "Live to Fight", perks = {["resistance_all"] = {percent = 0.2}}},
-                {name = "Fight to Live", perks = {["damage_bonus_all"] = {percent = 0.2}}},
-            }},
-            [2] = {title = "Strategy", choices = {
-                {name = "Lead Down Range", perks = {["damage_bonus_bullet"] = {percent = 0.25}}},
-                {name = "Fire And Brimstone", perks = {["damage_bonus_fire"] = {percent = 0.5}, ["damage_bonus_blast"] = {percent = 0.3}}},
-            }},
-        }
-    )
-
-    HORDE:CreateClass(
-        "Medic",
-        "Regenerate 2% health per second.\n\n",
-        "Have acesss to most light weapons and medic grenades.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
-        {L = "50% increased maximum health.",
-        R = "Adds 25 Poison damage to each attack."}
-    )
-
-    HORDE:CreateClass(
-        "Demolition",
-        "75% less explosive damage taken.\n\nRegenerate 1 frag grenade every 30 seconds, if you do not have one.\n\n",
-        "Have full access to Explosive weapons.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
-        {
-            [1] = {title = "Grenade", choices = {
-                {name = "Impact Detonation", perks = {["demolition_frag_impact"] = {}}},
-                {name = "Cluster Bombs", perks = {["demolition_frag_cluster"] = {}}},
-            }},
-            [2] = {title = "Incendiary Loadout", choices = {
-                {name = "Professional Package", perks = {["loadout_wave_grenade"] = {weapon = "arccw_go_nade_incendiary", ammotype = "arccw_go_nade_incendiary"}}},
-                {name = "Beer Party", perks = {["loadout_wave_grenade"] = {weapon = "arccw_go_nade_molotov", ammotype = "arccw_go_nade_molotov"}}},
-            }},
-            [3] = {title = "Payload", choices = {
-                {name = "Pressure Blast", perks = {["frag_double"] = {}}},
-                {name = "Cluster Bombs", perks = {["frag_cluster"] = {}}},
-            }},
-        }
-    )
-
-    HORDE:CreateClass(
-        "Assault",
-        "25% increased movement speed.\n\n",
-        "Have full access to Rifles.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt() * 1.25,
-        GetConVar("horde_base_runspeed"):GetInt() * 1.25,
-        {L = "25% chance to not consume ammo while firing.",
-        R = "Each enemy you kill grants you 1 Frenzy charge.\nEach frenzy charge increases your damage and movespeed by 6%."}
-    )
-
-    HORDE:CreateClass(
-        "Heavy",
-        "+5 to maximum carrying capacity.\n\nRegenerate 1 armor per second, up to 25.\n\n",
-        "Have full access to Machine Guns and heavier weapons.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
-        {
-            [2] = {title = "Shotgun Munitions", choices = {
-                {name = "Salvo", perks = {["arccw_shotgun_damage"] = {}}},
-                {name = "Punch", perks = {["arccw_shotgun_penetration"] = {}}},
-            }},
-            [3] = {title = "Magazine Mods", choices = {
-                {name = "Loaded", perks = {["arccw_mg_magazine"] = {}}},
-                {name = "Agile", perks = {["arccw_mg_reload"] = {}}},
-            }},
-        }
-    )
-
-    HORDE:CreateClass(
-        "Ghost",
-        "50% increased headshot damage.\n\n",
-        "Increased headshot damage applies to headshot-immune enemies.\n\nHave access to sniper rifles and selected light weapons.\n\nHave access to suppressors and sniper scopes.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
-        {
-            [1] = {title = "Mindset", choices = {
-                {name = "Headhunter", perks = {["ghost_headhunter"] = {}}},
-                {name = "Headhunter", perks = {["ghost_headhunter"] = {}}},
-            }},
-        }
-    )
-
-    HORDE:CreateClass(
-        "Engineer",
-        "100% increased minion health and damage.\n\n",
-        "Turrets you build have 500 base health and deals 18 base damage.\n\nHave access to special weapons and equipment.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
-        {L = "",
-        R = ""}
-    )
-end
-
 function SyncClasses()
     if player then
         for _, ply in pairs(player.GetAll()) do
@@ -177,8 +66,18 @@ local function GetClassData()
     end
 end
 
+local prefix = "horde/gamemode/classes/"
+local function Horde_LoadClasses()
+    for _, f in ipairs(file.Find(prefix .. "*", "LUA")) do
+        PERK = {}
+        AddCSLuaFile(prefix .. f)
+        include(prefix .. f)
+    end
+    PERK = nil
+end
+
 -- Startup
-HORDE:CreateClasses()
+Horde_LoadClasses()
 if SERVER then
     util.AddNetworkString("Horde_SetClassData")
 

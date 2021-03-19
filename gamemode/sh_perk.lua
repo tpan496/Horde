@@ -126,7 +126,7 @@ function plymeta:Horde_ClearPerks(shared)
 end
 
 local prefix = "horde/gamemode/perks/"
-function Horde_LoadPerks()
+local function Horde_LoadPerks()
     local dev = GetConVar("developer"):GetBool()
     for _, f in ipairs(file.Find(prefix .. "*", "LUA")) do
         PERK = {}
