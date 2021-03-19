@@ -132,7 +132,7 @@ function Horde_LoadPerks()
         PERK = {}
         AddCSLuaFile(prefix .. f)
         include(prefix .. f)
-        if PERK.Ignore then continue end
+        if PERK.Ignore then goto cont end
         PERK.ClassName = string.lower(PERK.ClassName or string.Explode(".", f)[1])
         PERK.SortOrder = PERK.SortOrder or 0
 
@@ -145,6 +145,7 @@ function Horde_LoadPerks()
         end
 
         if dev then print("[Horde] Loaded perk '" .. PERK.ClassName .. "'.") end
+        ::cont::
     end
     PERK = nil
 end

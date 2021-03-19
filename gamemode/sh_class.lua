@@ -1,6 +1,8 @@
 -- Class
 HORDE.classes = {}
-HORDE.CreateClass = function(name, fixed_description, extra_description, max_hp, movespd, sprintspd, perks)
+
+-- Creates a Horde class
+function HORDE:CreateClass(name, fixed_description, extra_description, max_hp, movespd, sprintspd, perks)
     if name == nil or name == "" then return end
     local class = {}
     class.name = name
@@ -15,8 +17,8 @@ end
 -- Only allow 1 change per wave
 HORDE.player_class_changed = {}
 
-HORDE.CreateClasses = function()
-    HORDE.CreateClass(
+function HORDE:CreateClasses()
+    HORDE:CreateClass(
         "Survivor",
         "No bonus.\n\n",
         "Have access to all weapons except for exclusive and special weapons.\n\nLimited access to attachments.",
@@ -35,7 +37,7 @@ HORDE.CreateClasses = function()
         }
     )
 
-    HORDE.CreateClass(
+    HORDE:CreateClass(
         "Medic",
         "Regenerate 2% health per second.\n\n",
         "Have acesss to most light weapons and medic grenades.",
@@ -46,7 +48,7 @@ HORDE.CreateClasses = function()
         R = "Adds 25 Poison damage to each attack."}
     )
 
-    HORDE.CreateClass(
+    HORDE:CreateClass(
         "Demolition",
         "75% less explosive damage taken.\n\nRegenerate 1 frag grenade every 30 seconds, if you do not have one.\n\n",
         "Have full access to Explosive weapons.",
@@ -69,7 +71,7 @@ HORDE.CreateClasses = function()
         }
     )
 
-    HORDE.CreateClass(
+    HORDE:CreateClass(
         "Assault",
         "25% increased movement speed.\n\n",
         "Have full access to Rifles.",
@@ -80,7 +82,7 @@ HORDE.CreateClasses = function()
         R = "Each enemy you kill grants you 1 Frenzy charge.\nEach frenzy charge increases your damage and movespeed by 6%."}
     )
 
-    HORDE.CreateClass(
+    HORDE:CreateClass(
         "Heavy",
         "+5 to maximum carrying capacity.\n\nRegenerate 1 armor per second, up to 25.\n\n",
         "Have full access to Machine Guns and heavier weapons.",
@@ -99,7 +101,7 @@ HORDE.CreateClasses = function()
         }
     )
 
-    HORDE.CreateClass(
+    HORDE:CreateClass(
         "Ghost",
         "50% increased headshot damage.\n\n",
         "Increased headshot damage applies to headshot-immune enemies.\n\nHave access to sniper rifles and selected light weapons.\n\nHave access to suppressors and sniper scopes.",
@@ -114,7 +116,7 @@ HORDE.CreateClasses = function()
         }
     )
 
-    HORDE.CreateClass(
+    HORDE:CreateClass(
         "Engineer",
         "100% increased minion health and damage.\n\n",
         "Turrets you build have 500 base health and deals 18 base damage.\n\nHave access to special weapons and equipment.",
@@ -136,7 +138,7 @@ function SyncClasses()
     end
 end
 
-HORDE.SetClassData = function ()
+function HORDE:SetClassData()
     if SERVER then
         if GetConVar("horde_default_class_config"):GetInt() == 1 then return end
         if not file.IsDir("horde", "DATA") then
@@ -147,7 +149,7 @@ HORDE.SetClassData = function ()
     end
 end
 
-function GetClassData()
+local function GetClassData()
     if SERVER then
         if not file.IsDir("horde", "DATA") then
             file.CreateDir("horde")
@@ -176,7 +178,7 @@ function GetClassData()
 end
 
 -- Startup
-HORDE.CreateClasses()
+HORDE:CreateClasses()
 if SERVER then
     util.AddNetworkString("Horde_SetClassData")
 
@@ -191,7 +193,7 @@ if SERVER then
     net.Receive("Horde_SetClassData", function (len, ply)
         if not ply:IsSuperAdmin() then return end
         HORDE.classes = net.ReadTable()
-        HORDE.SetClassData()
+        HORDE:SetClassData()
         SyncClasses()
     end)
 end

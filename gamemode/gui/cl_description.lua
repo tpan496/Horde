@@ -193,7 +193,7 @@ function PANEL:SetData(item)
     if not self.item.class then
         local class = self.item
         for perk_level, v in SortedPairs(class.perks) do
-            if not v.choices then continue end
+            if not v.choices then goto cont end
             local title = self.perk_layout:Add("DLabel")
             title:SetSize(self.perk_layout:GetWide(), 24)
             title:Dock(TOP)
@@ -218,6 +218,7 @@ function PANEL:SetData(item)
                 perkbutton:SetSize((cur_panel:GetWide() - 8) / #v.choices, ScrH() * 0.05)
                 perkbutton:SetData(class.name, perk_level, choice)
             end
+            ::cont::
         end
     end
 end

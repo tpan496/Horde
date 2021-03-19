@@ -493,7 +493,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
     if ply:Horde_GetMoney() >= price then
         ply:Horde_AddMoney(-price)
         local wpn = ply:GetWeapon(class)
-        HORDE.GiveAmmo(ply, wpn, count)
+        HORDE:GiveAmmo(ply, wpn, count)
         ply:Horde_SyncEconomy()
     end
 end)

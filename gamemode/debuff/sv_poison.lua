@@ -81,9 +81,10 @@ function metapoison:ApplyDamage()
         for k,v in pairs(self.targets) do
             if not self:IsValidTarget(v) then
                 self:RemoveTarget(v)
-                continue
+                goto cont
             end
             v:TakeDamageInfo(dmginfo)
+            ::cont::
         end
     else
         self:Die()
@@ -113,9 +114,10 @@ function metapoison:Activate()
     for k,v in pairs(self.targets) do
         if not self:IsValidTarget(v) then
             self.targets[k] = nil
-            continue
+            goto cont
         end
         v:RegisterPoisonStack(self)
+        ::cont::
     end
     self.active = true
     hook.Add("Think", self, self.Think)

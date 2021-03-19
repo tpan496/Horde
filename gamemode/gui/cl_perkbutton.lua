@@ -99,11 +99,11 @@ function PANEL:SetData(classname, perk_level, choice)
 
     for perk, params in pairs(tbl.perks) do
         local perk_tbl = HORDE.perks[perk]
-        if not perk_tbl then error("Could not find perk '" .. perk .. "'!") continue end
+        if not perk_tbl then error("Could not find perk '" .. perk .. "'!") goto cont end
         local text = perk_tbl.Description
         for i, v in pairs(perk_tbl.Parameters) do
             local replaced = "{" .. i .. "}"
-            if not string.find(text, replaced) then continue end
+            if not string.find(text, replaced) then goto cont end
             local formatted = params[i] or v.default
             if v.percent then
                 formatted = math.Round(formatted * 100) .. "%"
@@ -117,6 +117,7 @@ function PANEL:SetData(classname, perk_level, choice)
             text = string.Replace(text, replaced, formatted)
         end
         self.desctext = self.desctext .. text .. "\n"
+        ::cont::
     end
 
     self.desc:SetText(self.desctext)
