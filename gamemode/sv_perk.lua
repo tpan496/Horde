@@ -23,13 +23,14 @@ function plymeta:Horde_ApplyPerksForClass()
     self.Horde_PerkChoices[class] = self.Horde_PerkChoices[class] or {}
 
     for perk_level, v in pairs(HORDE.classes[class].perks) do
-        if HORDE.current_wave < Horde_GetWaveForPerk(perk_level) then continue end
+        if HORDE.current_wave < Horde_GetWaveForPerk(perk_level) then goto cont end
         local choice = v.choices[self.Horde_PerkChoices[class][perk_level] or 1]
         if not choice then error("Invalid choice in perk level " .. perk_level .. " for " .. class .. "!") return end
         for perk, params in pairs(choice.perks) do
-            if self:Horde_GetPerk(perk) then continue end
+            if self:Horde_GetPerk(perk) then goto cont end
             self:Horde_SetPerk(perk, params)
         end
+        ::cont::
     end
 end
 

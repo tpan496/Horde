@@ -244,7 +244,7 @@ net.Receive("Horde_Votemap", function (len, ply)
     for map, count in pairs(map_collect) do
         if count >= total_players then
             HORDE.vote_remaining_time = math.min(HORDE.vote_remaining_time, 10)
-        elseif count >= HORDE.Round2(total_players * 2 / 3) then
+        elseif count >= HORDE:Round2(total_players * 2 / 3) then
             HORDE.vote_remaining_time = math.min(HORDE.vote_remaining_time, 30)
             break
         end

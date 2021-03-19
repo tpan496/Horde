@@ -24,7 +24,7 @@ function ENT:StartTouch(entity)
     if not self.Removing and entity:IsPlayer() and entity:Alive() and not entity:IsBot() then
         local given_ammo = false
         for _, wpn in pairs(entity:GetWeapons()) do
-            local given = HORDE.GiveAmmo(entity, wpn, 1)
+            local given = HORDE:GiveAmmo(entity, wpn, 1)
             given_ammo = given_ammo or given
         end
 

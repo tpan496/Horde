@@ -53,7 +53,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.3.0"
+HORDE.version = "1.0.4.0"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -122,8 +122,21 @@ HORDE.render_highlight_ammoboxes = 2
 HORDE.enable_shop = GetConVarNumber("horde_enable_shop")
 HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM"}
 
--- Functions required on both sides
-HORDE.GiveAmmo = function (ply, wpn, count)
+-- ArcCW Attachments
+if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
+    RunConsoleCommand("arccw_attinv_free", "0")
+else
+    RunConsoleCommand("arccw_attinv_free", "1")
+end
+
+-- Disable Surgical Shot because it is way too overpowered.
+if GetConVar("horde_default_item_config"):GetInt() == 1 and ArcCWInstalled then
+    ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
+    ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
+end
+
+-- Util functions
+function HORDE:GiveAmmo(ply, wpn, count)
     local clip_size = wpn:GetMaxClip1()
     local ammo_id = wpn:GetPrimaryAmmoType()
 
@@ -140,20 +153,6 @@ HORDE.GiveAmmo = function (ply, wpn, count)
     return false
 end
 
--- Why the fuck does lua not even have round function?
-HORDE.Round2 = function(num, numDecimalPlaces)
+function HORDE:Round2(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
-end
-
--- ArcCW Attachments
-if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
-    RunConsoleCommand("arccw_attinv_free", "0")
-else
-    RunConsoleCommand("arccw_attinv_free", "1")
-end
-
--- Disable Surgical Shot because it is way too overpowered.
-if GetConVar("horde_default_item_config"):GetInt() == 1 and ArcCWInstalled then
-    ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
-    ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
 end

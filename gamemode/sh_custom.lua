@@ -76,7 +76,7 @@ HORDE.LoadTempData = function ()
             -- Be careful of backwards compataiblity
             HORDE.items = t1
             HORDE.enemies = t2
-            HORDE.NormalizeEnemiesWeight()
+            HORDE:NormalizeEnemiesWeight()
         end
     end
 end

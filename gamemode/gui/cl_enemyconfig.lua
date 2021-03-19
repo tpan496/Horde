@@ -316,7 +316,7 @@ function PANEL:Init()
         boss_properties.music = boss_editors.music_editor:GetText()
         boss_properties.music_duration = tonumber(boss_editors.music_duration_editor:GetText())
 
-        HORDE.CreateEnemy(
+        HORDE:CreateEnemy(
             name_editor:GetText(),
             class_editor:GetText(),
             weight_editor:GetFloat(),
@@ -397,7 +397,7 @@ function PANEL:Init()
         if start_wave > end_wave then return end
 
         for i = start_wave, end_wave do
-            HORDE.CreateEnemy(
+            HORDE:CreateEnemy(
             name_editor:GetText(),
             class_editor:GetText(),
             weight_editor:GetFloat(),
@@ -430,7 +430,7 @@ function PANEL:Init()
             "Yes",
             function()
                 HORDE.enemies = {}
-                HORDE.GetDefaultEnemiesData()
+                HORDE:GetDefaultEnemiesData()
 
                 net.Start("Horde_SetEnemiesData")
                 net.WriteTable(HORDE.enemies)

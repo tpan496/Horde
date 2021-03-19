@@ -397,7 +397,7 @@ function PANEL:Init()
         end
         if not category_editor:GetValue() or not name_editor:GetValue() or class == "" then return end
 
-        HORDE.CreateItem(
+        HORDE:CreateItem(
             category_editor:GetText(),
             name_editor:GetText(),
             class,
@@ -429,7 +429,7 @@ function PANEL:Init()
             "Yes",
             function()
                 HORDE.items = {}
-                HORDE.GetDefaultItemsData()
+                HORDE:GetDefaultItemsData()
                 HORDE.GetSpecialItems()
 
                 net.Start("Horde_SetItemsData")
