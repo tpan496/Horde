@@ -255,6 +255,178 @@ net.Receive("Horde_Votemap", function (len, ply)
     net.Broadcast()
 end)
 
+-- Player Spawn Initialize
+net.Receive("Horde_PlayerInit", function (len, ply)
+    net.Start("Horde_SyncItems")
+    local str = HORDE.GetCachedHordeItems()
+    net.WriteUInt(string.len(str), 32)
+    net.WriteData(str, string.len(str))
+    net.Send(ply)
+
+    net.Start("Horde_SyncEnemies")
+    net.WriteTable(HORDE.enemies)
+    net.Send(ply)
+
+    net.Start("Horde_SyncClasses")
+    net.WriteTable(HORDE.classes)
+    net.Send(ply)
+
+    net.Start("Horde_SyncDifficulty")
+    net.WriteInt(HORDE.difficulty,3)
+    net.Send(ply)
+
+    if not HORDE.start_game then
+        HORDE.player_ready[ply] = 0
+        net.Start("Horde_PlayerReadySync")
+        net.WriteTable(HORDE.player_ready)
+        net.Broadcast()
+    end
+
+    if HORDE.start_game then
+        net.Start("Horde_RemoveReadyPanel")
+        net.Send(ply)
+        ply:Horde_SetMoney(HORDE.start_money + math.max(0, HORDE.current_wave - 1) * 150)
+        if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss_name then
+            net.Start("Horde_SyncBossSpawned")
+                net.WriteString(HORDE.horde_boss_name)
+                net.WriteInt(HORDE.horde_boss:GetMaxHealth(),32)
+                net.WriteInt(HORDE.horde_boss:Health(),32)
+            net.Send(ply)
+        end
+    else
+        ply:Horde_SetMoney(HORDE.start_money)
+    end
+    ply:Horde_SetDropEntities({})
+    ply:Horde_SetWeight(15)
+    ply:Horde_SetClass(HORDE.classes["Survivor"])
+    ply:Horde_ApplyPerksForClass()
+    HORDE.player_class_changed[ply:SteamID()] = false
+    ply:Horde_SyncEconomy()
+    ply.Horde_DamageIncrease = {}
+    ply.Horde_DamageMore = {}
+    ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
+
+    if HORDE.start_game then return end
+
+    local ready_count = 0
+    local total_player = 0
+    for _, other_ply in pairs(player.GetAll()) do
+        if HORDE.player_ready[other_ply] == 1 then
+            ready_count = ready_count + 1
+        end
+        total_player = total_player + 1
+    end
+    
+    if total_player > 0 and total_player == ready_count then
+        HORDE.start_game = true
+    end
+
+    BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
+end)
+
+-- Player Spawn Initialize
+function HORDE:PlayerInit(ply)
+    net.Start("Horde_SyncItems")
+    local str = HORDE.GetCachedHordeItems()
+    net.WriteUInt(string.len(str), 32)
+    net.WriteData(str, string.len(str))
+    net.Send(ply)
+
+    net.Start("Horde_SyncEnemies")
+    net.WriteTable(HORDE.enemies)
+    net.Send(ply)
+
+    net.Start("Horde_SyncClasses")
+    net.WriteTable(HORDE.classes)
+    net.Send(ply)
+
+    net.Start("Horde_SyncDifficulty")
+    net.WriteInt(HORDE.difficulty,3)
+    net.Send(ply)
+
+    if not HORDE.start_game then
+        HORDE.player_ready[ply] = 0
+        net.Start("Horde_PlayerReadySync")
+        net.WriteTable(HORDE.player_ready)
+        net.Broadcast()
+    end
+
+    if HORDE.start_game then
+        net.Start("Horde_RemoveReadyPanel")
+        net.Send(ply)
+        ply:Horde_SetMoney(HORDE.start_money + math.max(0, HORDE.current_wave - 1) * 150)
+        if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss_name then
+            net.Start("Horde_SyncBossSpawned")
+                net.WriteString(HORDE.horde_boss_name)
+                net.WriteInt(HORDE.horde_boss:GetMaxHealth(),32)
+                net.WriteInt(HORDE.horde_boss:Health(),32)
+            net.Send(ply)
+        end
+    else
+        ply:Horde_SetMoney(HORDE.start_money)
+    end
+    ply:Horde_SetDropEntities({})
+    ply:Horde_SetWeight(15)
+    ply:Horde_SetClass(HORDE.classes["Survivor"])
+    ply:Horde_ApplyPerksForClass()
+    HORDE.player_class_changed[ply:SteamID()] = false
+    ply:Horde_SyncEconomy()
+    ply.Horde_DamageIncrease = {}
+    ply.Horde_DamageMore = {}
+    ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
+
+    if HORDE.start_game then return end
+
+    local ready_count = 0
+    local total_player = 0
+    for _, other_ply in pairs(player.GetAll()) do
+        if HORDE.player_ready[other_ply] == 1 then
+            ready_count = ready_count + 1
+        end
+        total_player = total_player + 1
+    end
+    
+    if total_player > 0 and total_player == ready_count then
+        HORDE.start_game = true
+    end
+
+    BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
+end
+
+net.Receive("Horde_PlayerInit", function (len, ply)
+    HORDE:PlayerInit(ply)
+end)
+
+hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
+    if HORDE.player_vote_map_change[ply] then
+        HORDE.player_vote_map_change[ply] = nil
+    end
+    if (not HORDE.start_game) and HORDE.player_ready[ply] then
+        HORDE.player_ready[ply] = nil
+        net.Start("Horde_PlayerReadySync")
+        net.WriteTable(HORDE.player_ready)
+        net.Broadcast()
+    end
+
+    if not ply:IsValid() then return end
+
+    -- Remove all his class abilities
+    timer.Remove("Horde_Medic" .. ply:SteamID())
+    timer.Remove("Horde_Heavy" .. ply:SteamID())
+    timer.Remove("Horde_Demolition" .. ply:SteamID())
+    hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
+    hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
+    
+    -- Remove all the entities he owns
+    if HORDE.player_drop_entities[ply:SteamID()] then
+        for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+            if ent:IsValid() then ent:Remove() end
+        end
+    end
+
+    timer.Simple(0, function() HORDE:CheckAlivePlayers() end)
+end)
+
 net.Receive("Horde_Votediff", function (len, ply)
     diff_votes[ply] = net.ReadString()
 
@@ -263,7 +435,7 @@ net.Receive("Horde_Votediff", function (len, ply)
         diff_collect[diff] = 0
     end
 
-    for ply, diff_voted in pairs(diff_votes) do
+    for _, diff_voted in pairs(diff_votes) do
         for diff, count in pairs(diff_collect) do
             if diff == diff_voted then
                 diff_collect[diff] = count + 1
@@ -303,7 +475,7 @@ hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
     end
 end)
 
-hook.Add("Move", "Horde_move", function (ply, mv)
+hook.Add("Move", "Horde_PlayerMove", function (ply, mv)
     if ply:Horde_GetClass() then
         ply:SetWalkSpeed(ply:Horde_GetClass().movespd)
         ply:SetRunSpeed(ply:Horde_GetClass().sprintspd)
@@ -320,6 +492,7 @@ local function Horde_DeathSpectatingFunction(victim, inflictor, attacker)
         end
     end)
 end
+
 hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
 hook.Add("PlayerSilentDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
 

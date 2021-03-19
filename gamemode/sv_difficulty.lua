@@ -107,33 +107,6 @@ hook.Add("GetFallDamage", "RealisticDamage", function(ply, speed)
     end
 end)
 
--- Hulk hitbox fix
-hook.Add("ScaleNPCDamage", "Horde_HulkDamage", function (npc, hitgroup, dmg)
-    if npc:IsValid() and npc:GetClass() == "npc_vj_zss_zhulk" then
-        if hitgroup == HITGROUP_GENERIC then
-            dmg:ScaleDamage(1.5)
-        end
-    end
-end)
-
--- Hulk hitbox fix
-hook.Add("ScaleNPCDamage", "Horde_MutatedHulkDamage", function (npc, hitgroup, dmg)
-    if npc:IsValid() and npc:GetClass() == "npc_vj_mutated_hulk" then
-        if hitgroup == HITGROUP_GENERIC then
-            dmg:ScaleDamage(1.5)
-        end
-    end
-end)
-
--- Gonome headshot multiplier reduction
-hook.Add("ScaleNPCDamage", "Horde_GonomeDamage", function (npc, hitgroup, dmg)
-    if npc:IsValid() and npc:GetClass() == "npc_vj_alpha_gonome" then
-        if hitgroup == HITGROUP_HEAD then
-            dmg:ScaleDamage(0.5)
-        end
-    end
-end)
-
 -- Non-hook settings
 -- Wave count scaling
 for i, enemies_count in ipairs(HORDE.total_enemies_per_wave) do

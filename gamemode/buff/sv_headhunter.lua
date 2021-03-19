@@ -2,6 +2,9 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_AddHeadhunterStack()
     self.Horde_HeadhunterStack = math.min((self.Horde_HeadhunterStack or 0) + 1, self:Horde_GetMaxHeadhunterStack())
+    timer.Simple(self:Horde_GetHeadhunterStackDuration(), function ()
+        self:Horde_RemoveHeadhunterStack()
+    end)
 end
 
 function plymeta:Horde_RemoveHeadhunterStack()
@@ -24,16 +27,6 @@ function plymeta:Horde_ClearHeadhunterStack()
     self.Horde_HeadhunterStack = 0
 end
 
--- Call this function to give a headhunter stack to a player.
-function HORDE:HeadhunterStack(ply)
-    if ply:Horde_GetClass().name ~= "Ghost" then return end
-    ply:Horde_AddHeadhunterStack()
-    print(ply:Horde_GetHeadhunterStack())
-    timer.Simple(ply:Horde_GetHeadhunterStackDuration(), function ()
-        ply:Horde_RemoveHeadhunterStack()
-    end)
-end
-
 hook.Add("Horde_ApplyAdditionalDamage", "Horde_HeadhunterDamage", function (ply, increase, more, hitgroup)
     if ply:Horde_GetClass().name ~= "Ghost" then return increase, more end
     if hitgroup ~= HITGROUP_HEAD then return increase, more end
@@ -44,7 +37,7 @@ end)
 hook.Add("ScaleNPCDamage", "Horde_test", function(npc, hitgroup, dmginfo)
     local attacker = dmginfo:GetAttacker()
     if IsValid(attacker) and attacker:IsPlayer() and hitgroup == HITGROUP_HEAD then
-        HORDE:HeadhunterStack(attacker)
+        attacker:Horde_AddHeadhunterStack()
     else
         attacker:Horde_RemoveHeadhunterStack()
     end
