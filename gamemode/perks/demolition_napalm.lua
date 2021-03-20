@@ -1,5 +1,5 @@
 PERK.PrintName = "Napalm"
-PERK.Description = "25% increased damage fire damage.\n75% reduced fire damage taken."
+PERK.Description = "25% increased fire damage.\n75% reduced fire damage taken."
 
 PERK.Parameters = {}
 
