@@ -1,8 +1,16 @@
 -- Class
 HORDE.classes = {}
+HORDE.Class_Survivor = "Survivor"
+HORDE.Class_Assault = "Assault"
+HORDE.Class_Heavy = "Heavy"
+HORDE.Class_Medic = "Medic"
+HORDE.Class_Demolition = "Demolition"
+HORDE.Class_Ghost = "Ghost"
+HORDE.Class_Engineer = "Engineer"
+HORDE.Class_Berserker = "Berserker"
 
 -- Creates a Horde class
-function HORDE:CreateClass(name, fixed_description, extra_description, max_hp, movespd, sprintspd, perks)
+function HORDE:CreateClass(name, fixed_description, extra_description, max_hp, movespd, sprintspd, perks, order, display_name)
     if name == nil or name == "" then return end
     local class = {}
     class.name = name
@@ -12,6 +20,8 @@ function HORDE:CreateClass(name, fixed_description, extra_description, max_hp, m
     class.movespd = movespd
     class.sprintspd = sprintspd
     class.perks = perks
+    class.order = order
+    class.display_name = display_name or name
     HORDE.classes[class.name] = class
 end
 -- Only allow 1 change per wave

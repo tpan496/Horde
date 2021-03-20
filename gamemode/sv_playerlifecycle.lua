@@ -298,7 +298,7 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     end
     ply:Horde_SetDropEntities({})
     ply:Horde_SetWeight(15)
-    ply:Horde_SetClass(HORDE.classes["Survivor"])
+    ply:Horde_SetClass(HORDE.classes[HORDE.Class_Survivor])
     ply:Horde_ApplyPerksForClass()
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:Horde_SyncEconomy()
@@ -367,12 +367,15 @@ function HORDE:PlayerInit(ply)
     end
     ply:Horde_SetDropEntities({})
     ply:Horde_SetWeight(15)
-    ply:Horde_SetClass(HORDE.classes["Survivor"])
+    ply:Horde_SetClass(HORDE.classes[HORDE.Class_Survivor])
     ply:Horde_ApplyPerksForClass()
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:Horde_SyncEconomy()
+
+    hook.Run("Horde_ResetStatus", ply)
     ply.Horde_DamageIncrease = {}
     ply.Horde_DamageMore = {}
+    ply.Horde_Status = {}
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
 
     if HORDE.start_game then return end
@@ -480,6 +483,7 @@ hook.Add("Move", "Horde_PlayerMove", function (ply, mv)
         ply:SetWalkSpeed(ply:Horde_GetClass().movespd)
         ply:SetRunSpeed(ply:Horde_GetClass().sprintspd)
         ply:SetJumpPower(150)
+        hook.Run("Horde_PlayerMoveBonus", ply, mv)
     end
 end)
 
