@@ -1,6 +1,7 @@
 local PANEL = {}
 
-surface.CreateFont("Horde_PerkButton_Name", { font = "arial bold", size = 16, bold = true })
+surface.CreateFont("Horde_PerkButton_Name", { font = "arial bold", size = 20, bold = true })
+surface.CreateFont("Horde_PerkButton_Text", { font = "arial bold", size = 16, bold = true})
 
 local function getweaponname(class)
     if language.GetPhrase(class) ~= class then return language.GetPhrase(class) end
@@ -9,7 +10,7 @@ local function getweaponname(class)
 end
 
 function PANEL:Init()
-    local w, h = ScrW() * 0.1, ScrH() * 0.05
+    local w, h = ScrW() * 0.1, ScrH() * 0.075
     self:SetSize(w, h)
     self:SetText("")
 
@@ -23,30 +24,17 @@ function PANEL:Init()
     self.title:DockMargin(5, 5, 0, 0)
     self.title:SetFont("Horde_PerkButton_Name")
     self.title:SetText("Perk Name")
+    self.title:SetColor(color_white)
 
     self.desc = vgui.Create("DLabel", self)
     self.desc:Dock(FILL)
     self.desc:DockMargin(5, 5, 5, 5)
     self.desc:SetText("Perk Description")
-
-    --[[]
-    self.button = vgui.Create("DButton", self)
-    self.button:SetSize(w, h)
-    self.button:SetText("")
-    self.button.Paint = function() end
-    self.button.DoClick = function()
-        if not self.info or self.info.class ~= LocalPlayer():Horde_GetClass().name then return end
-        net.Start("Horde_PerkChoice")
-            net.WriteUInt(self.info.perk_level, 4)
-            net.WriteUInt(self.info.choice, 4)
-        net.SendToServer()
-        LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}
-        LocalPlayer().Horde_PerkChoices[self.info.class][self.info.perk_level] = self.info.choice
-    end
-    ]]
+    self.desc:SetColor(color_white)
 end
 
 function PANEL:DoClick()
+    surface.PlaySound("UI/buttonclick.wav")
     if not self.info then return end
     LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}
     LocalPlayer().Horde_PerkChoices[self.info.class] = LocalPlayer().Horde_PerkChoices[self.info.class] or {}
@@ -121,9 +109,10 @@ function PANEL:SetData(classname, perk_level, choice)
     end
 
     self.desc:SetText(self.desctext)
+    self.desc:SetFont("Horde_PerkButton_Text")
 
     if self.info and self.info.active then
-        self.bg_color = Color(50, 80, 50)
+        self.bg_color = Color(220, 20, 60, 150)
     else
         self.bg_color = Color(50, 50, 50)
     end
@@ -132,7 +121,7 @@ end
 function PANEL:Think()
     if not self.info then return end
     self.info.active = (LocalPlayer().Horde_PerkChoices[self.info.class][self.info.perk_level] or 1) == self.info.choice
-    self.bg_color = self.info.active and Color(50, 80, 50) or Color(50, 50, 50)
+    self.bg_color = self.info.active and Color(220, 20, 60, 150) or Color(50, 50, 50)
 end
 
 function PANEL:Paint(w,h)

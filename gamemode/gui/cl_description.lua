@@ -98,25 +98,13 @@ function PANEL:Init()
         self:GetParent():SellDoClick()
     end
 
-    self.perk_layout = vgui.Create("DIconLayout", self)
+    self.perk_panel = vgui.Create("DPanel", self)
+    self.perk_panel:Dock(FILL)
+    self.perk_panel:SetVisible(false)
+    self.perk_panel:SetBackgroundColor(Color(40,40,40))
+    self.perk_layout = vgui.Create("DIconLayout", self.perk_panel)
     self.perk_layout:Dock(FILL)
-    self.perk_layout:DockMargin(4, 256, 4, 0)
-    self.perk_layout:SetSpaceY(8)
-
-    --[[]
-    for perk_level, v in ipairs(class.perks) do
-        if not v.choices then continue end
-        local cur_panel = self.perk_layout:Add("DIconLayout") --vgui.Create("DIconLayout", self.perk_panel)
-        cur_panel:SetSpaceX(4)
-        cur_panel:SetSize(self.perk_layout:GetWide(), ScrH() * 0.1)
-        cur_panel:Dock(TOP)
-        for choice, params in pairs(v.choices) do
-            local perkbutton = cur_panel:Add("HordePerkButton") --vgui.Create("HordePerkButton", cur_panel)
-            perkbutton:SetSize(cur_panel:GetWide() / #v.choices, ScrH() * 0.1)
-            perkbutton:SetData(class.name, perk_level, choice)
-        end
-    end
-    ]]
+    self.perk_layout:DockMargin(4, 10, 4, 0)
 end
 
 function PANEL:DoClick()
@@ -169,7 +157,11 @@ end
 function PANEL:SellDoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
-    if not self.item.class then return end
+    if not self.item.class then
+        -- Toggle perks
+        self.perk_panel:SetVisible(not self.perk_panel:IsVisible())
+        return
+    end
     if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP) then
         Derma_Query("Sell Item?!", "Sell",
                 "Yes",
@@ -185,11 +177,11 @@ function PANEL:SellDoClick()
 end
 
 function PANEL:SetData(item)
+    self.perk_panel:SetSize(self:GetWide(), self:GetTall())
+    self.perk_layout:SetSize(self:GetWide() - 5, self:GetTall())
+    self.perk_layout:SetSpaceY(8)
     self.item = item
     for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end
-    self.perk_layout:Dock(FILL)
-    self.perk_layout:DockMargin(4, 256, 4, 0)
-    self.perk_layout:SetSpaceY(8)
     if not self.item.class then
         local class = self.item
         for perk_level, v in SortedPairs(class.perks) do
@@ -197,14 +189,17 @@ function PANEL:SetData(item)
             local title = self.perk_layout:Add("DLabel")
             title:SetSize(self.perk_layout:GetWide(), 24)
             title:Dock(TOP)
+            title:DockMargin(0, 10, 0, 0)
             title:SetContentAlignment(0, 0, 0, 8)
             title:SetFont("Horde_PerkTitle")
+            title:SetColor(color_white)
 
             title:SetContentAlignment(5)
             local cur_panel = self.perk_layout:Add("DIconLayout")
             cur_panel:SetSpaceX(4)
-            cur_panel:SetSize(self.perk_layout:GetWide(), ScrH() * 0.05)
+            cur_panel:SetSize(self.perk_layout:GetWide(), ScrH() * 0.075)
             cur_panel:Dock(TOP)
+            cur_panel:DockMargin(0, 10, 0, 0)
 
             local unlocked_level = Horde_GetWaveForPerk(perk_level)
             if unlocked_level > 0 then
@@ -215,7 +210,7 @@ function PANEL:SetData(item)
 
             for choice, params in pairs(v.choices) do -- TODO grey out locked choices
                 local perkbutton = cur_panel:Add("HordePerkButton")
-                perkbutton:SetSize((cur_panel:GetWide() - 8) / #v.choices, ScrH() * 0.05)
+                perkbutton:SetSize((cur_panel:GetWide() - 8) / #v.choices, ScrH() * 0.075)
                 perkbutton:SetData(class.name, perk_level, choice)
             end
             ::cont::
@@ -314,11 +309,29 @@ function PANEL:Paint()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
+
+            -- Use the sell button to toggle perks
+            self.sell_btn:SetVisible(true)
+            if self.perk_panel:IsVisible() then
+                self.sell_btn:SetText("Hide Class Perks")
+            else
+                self.sell_btn:SetText("Show Class Perks")
+            end
+            self.sell_btn:SetTextColor(Color(255,255,255))
+            self.sell_btn.Paint = function ()
+                surface.SetDrawColor(HORDE.color_crimson)
+                surface.DrawRect(0, 0, self:GetWide(), 200)
+                local mat = Material("materials/" .. self.item.name .. ".png", "mips smooth")
+                surface.SetDrawColor(color_white)
+                surface.SetMaterial(mat) -- Use our cached material
+                surface.DrawTexturedRect(self:GetWide() / 2 + 80, 5, 40, 40)
+            end
+
             self.ammo_one_btn:SetVisible(false)
             self.ammo_ten_btn:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel:SetVisible(false)
-            self.sell_btn:SetVisible(false)
+            
             return
         end
 

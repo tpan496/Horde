@@ -118,10 +118,11 @@ function plymeta:Horde_SyncEconomy()
 end
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
+    hook.Run("Horde_ResetStatus", ply)
     ply:SetCustomCollisionCheck(true)
     if not ply:IsValid() then return end
     if not ply:Horde_GetClass() then return end
-    if ply:Horde_GetClass().Name == "Heavy" then
+    if ply:Horde_GetClass().Name == HORDE.Class_Heavy then
         ply:Horde_SetWeight(20)
     else
         ply:Horde_SetWeight(15)
@@ -138,7 +139,7 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
         ply:Horde_AddWeight(item.weight)
         ply:Horde_SyncEconomy()
     end
-    if ply:Horde_GetClass().name == "Demolition" and class == "weapon_frag" then
+    if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
         wpn:Remove()
     end
 end)
@@ -404,16 +405,16 @@ net.Receive("Horde_SelectClass", function (len, ply)
     hook.Remove("ScaleNPCDamage", "Horde_Engineer" .. ply:SteamID())
     hook.Remove("OnEntityCreated", "Horde_Engineer" .. ply:SteamID())
 
-    if class.name == "Assault" then
+    if class.name == HORDE.Class_Assault then
         --timer.Create("Horde_Assault" .. ply:SteamID(), 0.01, 0, function ()
         --    GAMEMODE:SetPlayerSpeed(ply, class.movespd, class.sprintspd)
         --end)
-    elseif class.name == "Medic" then
+    elseif class.name == HORDE.Class_Medic then
         timer.Create("Horde_Medic" .. ply:SteamID(), 1, 0, function ()
             if not ply:IsValid() then return end
             ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + 0.02 * ply:GetMaxHealth()))
         end)
-    elseif class.name == "Heavy" then
+    elseif class.name == HORDE.Class_Heavy then
         timer.Create("Horde_Heavy" .. ply:SteamID(), 1, 0, function ()
             if not ply:IsValid() then return end
             if ply:Armor() < 25 then
@@ -421,7 +422,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
             end
         end)
         ply:Horde_SetWeight(HORDE.max_weight + 5)
-    elseif class.name == "Demolition" then
+    elseif class.name == HORDE.Class_Demolition then
         timer.Create("Horde_Demolition" .. ply:SteamID(), 30, 0, function ()
             if not ply:IsValid() then return end
             if not ply:HasWeapon("weapon_frag") then
@@ -434,7 +435,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
                 dmg:ScaleDamage(0.25)
             end
         end)
-    elseif class.name == "Ghost" then
+    elseif class.name == HORDE.Class_Ghost then
         hook.Add("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID(), function (npc, hitgroup, dmg)
             if not ply:IsValid() then return end
             if npc:IsValid() and dmg:GetAttacker():IsPlayer() and dmg:GetAttacker():SteamID() == ply:SteamID() then
@@ -445,7 +446,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
                 end
             end
         end)
-    elseif class.name == "Engineer" then
+    elseif class.name == HORDE.Class_Engineer then
         hook.Add("ScaleNPCDamage", "Horde_Engineer" .. ply:SteamID(), function (npc, hitgroup, dmg)
             if not ply:IsValid() then return end
             if npc:IsValid() and dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
@@ -522,7 +523,7 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
 end)
 
 function HORDE:CanSell(ply, class)
-    if ply:Horde_GetClass().name == "Demolition" and class == "weapon_frag" then
+    if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
         return false, "You can't sell grenades as Demolition class!"
     end
 

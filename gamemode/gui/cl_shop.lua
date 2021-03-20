@@ -109,6 +109,12 @@ function PANEL:Init()
                 -- Reload attachments everytime a player click this
                 self:ReloadAttachments(attachments, container, description_panel)
             end
+            description_panel:SetSize(self:GetWide() / 2, self:GetTall() - 100)
+            container:SetSize(self:GetWide() / 2, self:GetTall() - 100)
+            if text == "Select Class" then
+                description_panel:SetSize(self:GetWide() * 3 / 4, self:GetTall() - 100)
+                container:SetSize(self:GetWide() / 4, self:GetTall() - 100)
+            end
         end
 
         btn.OnDeactivate = function()
@@ -205,7 +211,14 @@ function PANEL:Init()
     ClassTabLayout:SetSpaceX(8)
     ClassTabLayout:SetSpaceY(8)
 
+    local classes = {}
     for _, horde_class in pairs(HORDE.classes) do
+        classes[horde_class.order] = horde_class
+    end
+    table.sort(classes, function(a, b)
+            return a.order < b.order
+        end)
+    for _, horde_class in pairs(classes) do
         local model = vgui.Create("HordeClass")
         model:SetSize(container:GetWide() - 16, 40)
         model:SetData(horde_class, description_panel)
@@ -280,7 +293,7 @@ function PANEL:Paint(w, h)
 
     -- Money
     draw.SimpleText("Class: " .. LocalPlayer():Horde_GetClass().name, 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-    if LocalPlayer():Horde_GetClass().name == "Heavy" then
+    if LocalPlayer():Horde_GetClass().name == HORDE.Class_Heavy then
         draw.SimpleText("Cash: " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight + 5 - LocalPlayer():Horde_GetWeight()) .. "/" .. HORDE.max_weight + 5 .. "]", 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
     else
         draw.SimpleText("Cash: " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight - LocalPlayer():Horde_GetWeight()) .. "/" .. HORDE.max_weight .. "]", "Heading", self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
