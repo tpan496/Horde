@@ -12,7 +12,7 @@ HORDE:CreateClass(
         }},
         [2] = {title = "Armor Protection", choices = {
             {name = "Fluid Armor", perks = {["heavy_fluid_armor"] = {}}, icon="materials/perks/fluid_armor.png"},
-            {name = "Nanomachine", perks = {["heavy_nanomachine"] = {}}, icon="materials/perks/nanomachine.png"},
+            {name = "Reactive Armor", perks = {["heavy_reactive_armor"] = {}}, icon="materials/perks/reactive_armor.png"},
         }},
         [3] = {title = "Psychology", choices = {
             {name = "Vanguard", perks = {["heavy_vanguard"] = {}}, icon="materials/perks/vanguard.png"},
