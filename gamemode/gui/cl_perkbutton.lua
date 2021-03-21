@@ -28,7 +28,7 @@ function PANEL:Init()
 
     self.desc = vgui.Create("DLabel", self)
     self.desc:Dock(FILL)
-    self.desc:DockMargin(5, 5, 5, 5)
+    self.desc:DockMargin(5, 3, 5, 0)
     self.desc:SetText("Perk Description")
     self.desc:SetColor(color_white)
 end

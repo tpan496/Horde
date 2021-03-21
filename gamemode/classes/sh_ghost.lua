@@ -8,7 +8,7 @@ HORDE:CreateClass(
     {
         [1] = {title = "Tactics", choices = {
             {name = "Headhunter", perks = {["ghost_headhunter"] = {}}, icon="materials/perks/headhunter.png"},
-            {name = "Sniper", perks = {["ghost_sniper"] = {}}, icon="materials/perks/headhunter.png"},
+            {name = "Sniper", perks = {["ghost_sniper"] = {}}, icon="materials/perks/sniper.png"},
         }},
         [2] = {title = "Reposition", choices = {
             {name = "Phase Walk", perks = {["ghost_phase_walk"] = {}}, icon="materials/perks/phase_walk.png"},
