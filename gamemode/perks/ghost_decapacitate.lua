@@ -1,5 +1,5 @@
 PERK.PrintName = "Decapacitate"
-PERK.Description = "25% increased damage against elite enemies when you have Camoflague.\n50% increased headshot damage against elite enemies when you have Camoflague."
+PERK.Description = "When you have Camoflague:\n  25% increased damage against elites.\n  50% increased headshot damage against elites."
 
 PERK.Parameters = {}
 

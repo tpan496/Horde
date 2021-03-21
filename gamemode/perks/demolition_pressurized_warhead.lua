@@ -1,5 +1,5 @@
 PERK.PrintName = "Pressurized Warhead"
-PERK.Description = "25% increased blast damage against elite enemies."
+PERK.Description = "25% increased blast damage against elites."
 
 PERK.Parameters = {}
 

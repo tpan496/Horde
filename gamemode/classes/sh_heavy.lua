@@ -11,12 +11,12 @@ HORDE:CreateClass(
             {name = "Crude Casing", perks = {["heavy_crude_casing"] = {}}, icon="materials/perks/crude_casing.png"},
         }},
         [2] = {title = "Armor Protection", choices = {
-            {name = "Fluid Armor", perks = {["heavy_fluid_armor"] = {}}, icon="materials/perks/fluid_armor.png"},
+            {name = "Fluid Armor", perks = {["heavy_liquid_armor"] = {}}, icon="materials/perks/liquid_armor.png"},
             {name = "Reactive Armor", perks = {["heavy_reactive_armor"] = {}}, icon="materials/perks/reactive_armor.png"},
         }},
-        [3] = {title = "Psychology", choices = {
-            {name = "Vanguard", perks = {["heavy_vanguard"] = {}}, icon="materials/perks/vanguard.png"},
-            {name = "Dominator", perks = {["heavy_dominator"] = {}}, icon="materials/perks/dominator.png"},
+        [3] = {title = "Technology", choices = {
+            {name = "Nanomachine", perks = {["heavy_nanomachine"] = {}}, icon="materials/perks/nanomachine.png"},
+            {name = "Ballistic Shock", perks = {["heavy_ballistic_shock"] = {}}, icon="materials/perks/ballistic_shock.png"},
         }},
     },
     2

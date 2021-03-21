@@ -25,28 +25,3 @@ PERK.Hooks.EntityTakeDamage = function(victim, dmginfo)
         ent:Remove()
     end
 end
-
---[[]
-PERK.Hooks.OnEntityCreated = function(ent)
-    timer.Simple(0, function()
-        local owner = ent:GetOwner()
-        if SERVER and ent:GetClass() == "npc_grenade_frag" and IsValid(owner)
-            and owner:IsPlayer() and owner:Horde_GetPerk("frag_impact") then
-            local dmg = owner:Horde_GetPerkParam("frag_impact", "damage")
-            local rad = owner:Horde_GetPerkParam("frag_impact", "radius")
-            ent:AddCallback("PhysicsCollide", function(ent2, data)
-                local hit = data.HitEntity
-                if not hit:IsWorld() then print(hit) end
-                if hit:IsNPC() or hit:IsNextBot() then
-                    -- Create a bigger explosion
-                    local e = EffectData()
-                    e:SetOrigin(ent2:GetPos())
-                    util.Effect("Explosion", e)
-                    util.BlastDamage(ent2, owner, ent2:GetPos(), rad, dmg)
-                    ent2:Remove()
-                end
-            end)
-        end
-    end)
-end
-]]
