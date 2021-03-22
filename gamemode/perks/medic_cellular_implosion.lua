@@ -17,5 +17,6 @@ hook.Add("OnNPCKilled", "Horde_CellularImplosionKill", function(victim, killer, 
         ent:Detonate()
         ent:SetModel(nil)
         ent:GetPhysicsObject():EnableMotion(false)
+        timer.Simple(5, function() if ent:IsValid() then ent:Remove() end end)
     end
 end)
