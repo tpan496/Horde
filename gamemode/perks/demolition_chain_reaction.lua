@@ -1,5 +1,5 @@
 PERK.PrintName = "Chain Reaction"
-PERK.Description = "Enemies you kill have 20% chance to explode,\ndealing 25% of their health as blast damage."
+PERK.Description = "Enemies you kill have 20% chance to explode,\ndealing 25% of their health as radiation damage."
 
 PERK.Parameters = {}
 
