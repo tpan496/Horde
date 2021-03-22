@@ -1,11 +1,7 @@
 PERK.PrintName = "Cluster Bombs"
-PERK.Description = "Grenades and SLAMs spawn {amount} {damage}dmg mini-nades on detonation."
+PERK.Description = "Grenades and SLAMs spawn 3 mini-nades on detonation.\nMini-nades do 20% less damage."
 
-PERK.Parameters = {
-    ["amount"] = {type = "i", default = 3, min = 1},
-    ["damage"] = {type = "i", default = 150, min = 0},
-    ["radius"] = {type = "i", default = 400, min = 0},
-}
+PERK.Parameters = {}
 
 local exp = {npc_grenade_frag = true, npc_satchel = true, npc_tripmine = true}
 PERK.Hooks = {}
@@ -14,9 +10,9 @@ PERK.Hooks.EntityRemoved = function(ent)
     if not owner then ent = ent:GetInternalVariable("m_hOwner") end
     if SERVER and IsValid(ent) and exp[ent:GetClass()] and IsValid(owner)
             and owner:IsPlayer() and owner:Horde_GetPerk("frag_cluster") then
-        local dmg = owner:Horde_GetPerkParam("frag_cluster", "damage")
-        local rad = owner:Horde_GetPerkParam("frag_cluster", "radius")
-        for i = 1, (owner:Horde_GetPerkParam("frag_cluster", "amount") or 0) do
+        local dmg = 100
+        local rad = 150
+        for i = 1, 3 do
             local prop = ents.Create("prop_physics")
             prop:SetModel("models/Combine_Helicopter/helicopter_bomb01.mdl")
             prop:SetModelScale(0.25, 0)

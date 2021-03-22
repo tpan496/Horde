@@ -28,7 +28,7 @@ function plymeta:Horde_SetMaxAdrenalineStack(stack)
 end
 
 function plymeta:Horde_GetMaxAdrenalineStack()
-    return self.Horde_MaxAdrenalineStack or 1
+    return self.Horde_MaxAdrenalineStack or 0
 end
 
 function plymeta:Horde_SetAdrenalineStackDuration(duration)
@@ -48,12 +48,12 @@ function plymeta:Horde_SetAdrenalineEnabled(enabled)
 end
 
 hook.Add("Horde_ApplyAdditionalDamage", "Horde_AdrenalineStackDamage", function (ply, npc, bonus, hitgroup)
-    if not ply:Horde_GetAdrenalineEnabled() then return end
-    bonus.increase = bonus.increase + ply:Horde_GetAdrenalineStack() * 0.05
+    if ply:Horde_GetAdrenalineStack() > 0 then
+        bonus.increase = bonus.increase + ply:Horde_GetAdrenalineStack() * 0.05
+    end
 end)
 
 hook.Add("Horde_PlayerMoveBonus", "Horde_AdrenalineStackMovespeed", function(ply, mv)
-    if not ply:Horde_GetAdrenalineEnabled() then return end
     if ply:Horde_GetAdrenalineStack() > 0 then
         local bonus = (1 + ply:Horde_GetAdrenalineStack() * 0.05)
         ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus)
@@ -63,13 +63,16 @@ end)
 
 hook.Add("OnNPCKilled", "Horde_AdrenalineApply", function(victim, killer, wpn)
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
-    if not killer:Horde_GetAdrenalineEnabled() then return end
+    if not killer:Horde_GetMaxHeadhunterStack() > 0 then return end
     killer:Horde_AddAdrenalineStack()
 end)
 
 hook.Add("Horde_ResetStatus", "Horde_AdrenalineReset", function(ply)
-    if not ply:Horde_GetAdrenalineEnabled() then return end
     ply.Horde_AdrenalineStack = 0
-    ply.Horde_MaxAdrenalineStack = 1
+    if ply:GetClass().name == "Assault" then
+        ply.Horde_MaxAdrenalineStack = 1
+    else
+        ply.Horde_MaxAdrenalineStack = 0
+    end
     ply.Horde_AdrenalineStackDuration = 5
 end)

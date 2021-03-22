@@ -11,7 +11,7 @@ HORDE:CreateClass(
             {name = "Crude Casing", perks = {["heavy_crude_casing"] = {}}, icon="materials/perks/crude_casing.png"},
         }},
         [2] = {title = "Armor Protection", choices = {
-            {name = "Fluid Armor", perks = {["heavy_liquid_armor"] = {}}, icon="materials/perks/liquid_armor.png"},
+            {name = "Liquid Armor", perks = {["heavy_liquid_armor"] = {}}, icon="materials/perks/liquid_armor.png"},
             {name = "Reactive Armor", perks = {["heavy_reactive_armor"] = {}}, icon="materials/perks/reactive_armor.png"},
         }},
         [3] = {title = "Technology", choices = {

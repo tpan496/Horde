@@ -8,7 +8,7 @@ HORDE:CreateClass(
     {
         [1] = {title = "Medicine", choices = {
             {name = "Antibiotics", perks = {["medic_antibiotics"] = {}}, icon="materials/perks/antibiotics.png"},
-            {name = "Steroid", perks = {["medic_steroid"] = {}}, icon="materials/perks/steroid.png"},
+            {name = "Painkillers", perks = {["medic_painkillers"] = {}}, icon="materials/perks/painkillers.png"},
         }},
         [2] = {title = "Bio-Engineering", choices = {
             {name = "Berserk", perks = {["medic_berserk"] = {}}, icon="materials/perks/berserk.png"},

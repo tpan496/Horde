@@ -1,22 +1,22 @@
 HORDE:CreateClass(
     HORDE.Class_Engineer,
-    "100% increased minion health and damage.\n\n",
+    "50% increased minion health and damage.\n\n",
     "Turrets you build have 500 base health and deals 18 base damage.\n\nHave access to special weapons and equipment.",
     100,
     GetConVar("horde_base_walkspeed"):GetInt(),
     GetConVar("horde_base_runspeed"):GetInt(),
     {
-        [1] = {title = "Tools", choices = {
-            {name = "Repair Kit", perks = {["engineer_repair"] = {}}, icon="materials/perks/repair_kit.png"},
-            {name = "Device Carrier", perks = {["engineer_carrier"] = {}}, icon="materials/perks/carrier.png"},
+        [1] = {title = "Clockwork", choices = {
+            {name = "Tinkerer", perks = {["engineer_tinkerer"] = {}}, icon="materials/perks/tinkerer.png"},
+            {name = "Manhack", perks = {["engineer_manhack"] = {}}, icon="materials/perks/manhack.png"},
         }},
-        [2] = {title = "Development", choices = {
-            {name = "Berserk", perks = {["engineer_"] = {}}, icon="materials/perks/berserk.png"},
-            {name = "Sentinel", perks = {["engineer_sentinel"] = {}}, icon="materials/perks/fortify.png"},
+        [2] = {title = "Prototype", choices = {
+            {name = "Golem", perks = {["engineer_golem"] = {}}, icon="materials/perks/golem.png"},
+            {name = "Spectre", perks = {["engineer_spectre"] = {}}, icon="materials/perks/spectre.png"},
         }},
-        [3] = {title = "Natural Selection", choices = {
-            {name = "Cellular Implosion", perks = {["medic_cellular_implosion"] = {}}, icon="materials/perks/cellular_implosion.png"},
-            {name = "Accelerated Healing Factor", perks = {["medic_xcele"] = {}}, icon="materials/perks/xcele.png"},
+        [3] = {title = "Extension", choices = {
+            {name = "Symbiosis", perks = {["engineer_symbiosis"] = {}}, icon="materials/perks/symbiosis.png"},
+            {name = "Volatile Dead", perks = {["engineer_volatile_dead"] = {}}, icon="materials/perks/volatile_dead.png"},
         }},
     },
     6

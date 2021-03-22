@@ -1,5 +1,5 @@
 PERK.PrintName = "Crude Casing"
-PERK.Description = "Enemies you hit are Weakened.\nWeakened enemies deal 10% reduced damage and receive 10% increased damage."
+PERK.Description = "Enemies you hit are Weakened.\nWeakened enemies deal 10% reduced damage.\nWeakened enemies receive 10% increased damage."
 
 PERK.Parameters = {}
 

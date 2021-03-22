@@ -1,5 +1,5 @@
 PERK.PrintName = "Cellular Implosion"
-PERK.Description = "Enemies you killed have 20% chance to generating a healing cloud."
+PERK.Description = "Enemies you killed have 20% chance to generate a healing cloud."
 
 PERK.Parameters = {}
 
