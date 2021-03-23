@@ -19,9 +19,9 @@ local function DrawStatus(status, stack, displacement)
     if stack <= 0 then return end
     draw.RoundedBox(10, 0 + displacement, 0, 50, 50, Color(40,40,40,200))
 
-    local mat = Material("materials/status/" .. HORDE.Status_String[status] .. ".png", "mips smooth")
+    local mat = Material(HORDE.Status_Icon[status], "mips smooth")
     surface.SetMaterial(mat) -- Use our cached material
-    surface.SetDrawColor(HORDE.color_crimson)
+    surface.SetDrawColor(color_white)
     surface.DrawTexturedRect(5 + displacement, 5, 40, 40)
 
     if stack > 0 and HORDE:IsStatusStackable(status) then

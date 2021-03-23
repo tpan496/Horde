@@ -394,29 +394,6 @@ net.Receive("Horde_SelectClass", function (len, ply)
     net.Start("Horde_ToggleShop")
     net.Send(ply)
 
-    -- Class Settings
-    timer.Remove("Horde_Medic" .. ply:SteamID())
-    --timer.Remove("Horde_Survivor" .. ply:SteamID())
-    --timer.Remove("Horde_Assault" .. ply:SteamID())
-    hook.Remove("ScaleNPCDamage", "Horde_Engineer" .. ply:SteamID())
-    hook.Remove("OnEntityCreated", "Horde_Engineer" .. ply:SteamID())
-
-    if class.name == HORDE.Class_Assault then
-        --timer.Create("Horde_Assault" .. ply:SteamID(), 0.01, 0, function ()
-        --    GAMEMODE:SetPlayerSpeed(ply, class.movespd, class.sprintspd)
-        --end)
-    elseif class.name == HORDE.Class_Medic then
-        timer.Create("Horde_Medic" .. ply:SteamID(), 1, 0, function ()
-            if not ply:IsValid() then return end
-            ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + 0.02 * ply:GetMaxHealth()))
-        end)
-    elseif class.name == HORDE.Class_Heavy then
-    elseif class.name == HORDE.Class_Demolition then
-    elseif class.name == HORDE.Class_Ghost then
-    elseif class.name == HORDE.Class_Engineer then
-
-    end
-
     net.Start("Horde_LegacyNotification")
     net.WriteString("You changed class to " .. class.name)
     net.WriteInt(0,2)

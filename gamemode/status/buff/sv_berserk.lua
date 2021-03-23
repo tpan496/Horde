@@ -1,11 +1,14 @@
 local plymeta = FindMetaTable("Player")
 
-function plymeta:Horde_AddBerserk()
-    if self.Horde_Berserk == 1 then return end
-    self.Horde_Berserk = 1
-    timer.Simple(self:Horde_GetBerserkDuration(), function ()
+function plymeta:Horde_AddBerserk(duration)
+    timer.Remove("Horde_RemoveBerserk" .. self:SteamID())
+    timer.Create("Horde_RemoveBerserk" .. self:SteamID(), duration, 1, function ()
         self:Horde_RemoveBerserk()
     end)
+
+    if self.Horde_Berserk == 1 then return end
+
+    self.Horde_Berserk = 1
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Berserk, 8)
         net.WriteUInt(1, 3)
@@ -25,21 +28,17 @@ function plymeta:Horde_GetBerserk()
     return self.Horde_Berserk or 0
 end
 
-function plymeta:Horde_GetBerserkDuration()
-    return self.Horde_BerserkDuration or 5
-end
-
-function plymeta:Horde_GetBerserkEnabled()
-    return self.Horde_BerserkEnabled
-end
-
-function plymeta:Horde_SetBerserkEnabled(enabled)
-    self.Horde_BerserkEnabled = enabled
-end
-
-hook.Add("Horde_ApplyAdditionalDamage", "Horde_AdrenalineStackDamage", function (ply, npc, bonus, hitgroup)
+hook.Add("Horde_ApplyAdditionalDamage", "Horde_BerserkDamage", function (ply, npc, bonus, hitgroup)
     if ply:Horde_GetBerserk() == 1 then
-        bonus.increase = bonus.increase + 0.15
+        bonus.increase = bonus.increase + 0.10 * ply:Horde_GetApplyBuffMore()
+    end
+end)
+
+hook.Add("Horde_PlayerMoveBonus", "Horde_BerserkMovespeed", function(ply, mv)
+    if ply:Horde_GetBerserk() == 1 then
+        local bonus = (1 + 0.10 * ply:Horde_GetApplyBuffMore())
+        ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus)
+        ply:SetRunSpeed(ply:Horde_GetClass().sprintspd * bonus)
     end
 end)
 

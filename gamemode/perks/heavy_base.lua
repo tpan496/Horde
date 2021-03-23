@@ -14,8 +14,8 @@ end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
     if SERVER and perk == "heavy_base" then
-        ply:Horde_SetArmorRegenEnabled(false)
+        ply:Horde_SetArmorRegenEnabled(nil)
         ply:Horde_SetWeight(HORDE.max_weight)
-        ply:Horde_SetArmor(0)
+        ply:SetArmor(0)
     end
 end
