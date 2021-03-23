@@ -5,6 +5,14 @@ PERK.Parameters = {}
 
 PERK.Hooks = {}
 
-hook.Add("", "", function ()
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
+    if SERVER and perk == "berserker_breathing_technique" then
+        ply:Horde_SetHealthRegenEnabled(true)
+    end
+end
 
-end)
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
+    if SERVER and perk == "berserker_breathing_technique" then
+        ply:Horde_SetHealthRegenEnabled(nil)
+    end
+end

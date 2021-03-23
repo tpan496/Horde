@@ -6,7 +6,8 @@ PERK.Parameters = {}
 PERK.Hooks = {}
 
 PERK.Hooks.PostEntityTakeDamage = function (ent, dmg, took)
-    if took and ent:IsNPC() and dmg:GetAttacker():IsPlayer() then
+    local attacker = dmg:GetAttacker()
+    if took and ent:IsNPC() and attacker:IsPlayer() and attacker:Horde_GetPerk("berserker_bloodlust") then
         local leech = math.min(10, dmg:GetDamage() * 0.1)
         local ply = dmg:GetAttacker()
         ply:SetHealth(math.max(ply:GetMaxHealth(), leech + ply:Health()))

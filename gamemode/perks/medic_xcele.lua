@@ -1,11 +1,20 @@
 PERK.PrintName = "Accelerated Healing Factor"
-PERK.Description = "100% increased health regeneration per second.\nBuffs you apply are 100% more effective."
+PERK.Description = "50% increased health regeneration per second.\nBuffs you apply are 100% more effective."
 
 PERK.Parameters = {}
 
 PERK.Hooks = {}
 
-hook.Add("Horde_ApplyAdditionalDamage", "Horde_SniperDamage", function (ply, npc, bonus, hitgroup)
-    if not ply:Horde_GetPerk("ghost_sniper") or not ply:Crouching() then return end
-    bonus.increase = bonus.increase + 0.25
-end)
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
+    if SERVER and perk == "medic_xcele" then
+        ply:Horde_SetApplyBuffMore(ply:Horde_GetApplyBuffMore() * 2)
+        ply:Horde_SetHealthRegenPercentage(ply:Horde_GetHealthRegenPercentage() * 1.5)
+    end
+end
+
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
+    if SERVER and perk == "medic_xcele" then
+        ply:Horde_SetApplyBuffMore(ply:Horde_GetApplyBuffMore() / 2)
+        ply:Horde_SetHealthRegenPercentage(ply:Horde_GetHealthRegenPercentage() / 1.5)
+    end
+end

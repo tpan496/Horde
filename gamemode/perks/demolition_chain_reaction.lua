@@ -5,7 +5,7 @@ PERK.Parameters = {}
 
 PERK.Hooks = {}
 
-hook.Add("OnNPCKilled", "Horde_ChainReactionKill", function(victim, killer, inflictor)
+PERK.Hooks.OnNPCKilled = function(victim, killer, inflictor)
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
     if not killer:Horde_GetPerk("demolition_chain_reaction") then return end
     if inflictor:IsNPC() then return end -- Prevent infinite chains
@@ -18,4 +18,4 @@ hook.Add("OnNPCKilled", "Horde_ChainReactionKill", function(victim, killer, infl
         util.Effect("Explosion", e)
         util.BlastDamage(victim, killer, victim:GetPos(), rad, dmg)
     end
-end)
+end

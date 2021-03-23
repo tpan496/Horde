@@ -33,7 +33,8 @@ function entmeta:Horde_AddEffect_MedicGrenade(ent)
     timer.Create("Horde_MedicGrenadeEffect" .. id, 0.5, 0, function ()
         if not self:IsValid() then timer.Remove("Horde_MedicGrenadeEffect" .. id) return end
         if self:IsPlayer() then
-            self:SetHealth(math.min(self:Health() + 5, self:GetMaxHealth()))
+            local healinfo = HealInfo:New({amount=5, healer=ent.Owner})
+            HORDE:OnPlayerHeal(self, healinfo)
         elseif self:IsNPC() and (not self:GetNWEntity("HordeOwner"):IsValid()) then
             local d = DamageInfo()
             d:SetDamage(25)
@@ -41,7 +42,6 @@ function entmeta:Horde_AddEffect_MedicGrenade(ent)
             d:SetInflictor(ent)
             d:SetDamageType(DMG_NERVEGAS)
             self:TakeDamageInfo(d)
-            --self:TakeDamage(25, ent.Owner, ent)
         end
     end)
 end

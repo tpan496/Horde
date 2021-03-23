@@ -5,5 +5,9 @@ PERK.Parameters = {}
 
 PERK.Hooks = {}
 
-hook.Add("", "", function ()
-end)
+PERK.Hooks.Horde_ApplyHeal = function(ply, healinfo)
+    local healer = healinfo:GetHealer()
+    if healer:IsPlayer() and healer:Horde_GetPerk("medic_fortify") then
+        ply:Horde_AddFortify(healer:Horde_GetApplyBuffDuration())
+    end
+end

@@ -5,7 +5,9 @@ PERK.Parameters = {}
 
 PERK.Hooks = {}
 
-hook.Add("Horde_ApplyAdditionalDamage", "Horde_SniperDamage", function (ply, npc, bonus, hitgroup)
-    if not ply:Horde_GetPerk("ghost_sniper") or not ply:Crouching() then return end
-    bonus.increase = bonus.increase + 0.25
-end)
+PERK.Hooks.Horde_ApplyHeal = function(ply, healinfo)
+    local healer = healinfo:GetHealer()
+    if healer:IsPlayer() and healer:Horde_GetPerk("medic_antibiotics") then
+        healinfo:SetHealAmount(healinfo:GetHealAmount() * 1.15)
+    end
+end

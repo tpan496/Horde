@@ -1,11 +1,14 @@
 local plymeta = FindMetaTable("Player")
 
-function plymeta:Horde_AddFortify()
-    if self.Horde_Fortify == 1 then return end
-    self.Horde_Fortify = 1
-    timer.Simple(self:Horde_GetFortifyDuration(), function ()
+function plymeta:Horde_AddFortify(duration)
+    timer.Remove("Horde_RemoveFortify" .. self:SteamID())
+    timer.Create("Horde_RemoveFortify" .. self:SteamID(), duration, 1, function ()
         self:Horde_RemoveFortify()
     end)
+
+    if self.Horde_Fortify == 1 then return end
+
+    self.Horde_Fortify = 1
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Fortify, 8)
         net.WriteUInt(1, 3)
@@ -25,21 +28,9 @@ function plymeta:Horde_GetFortify()
     return self.Horde_Fortify or 0
 end
 
-function plymeta:Horde_GetFortifyDuration()
-    return self.Horde_FortifyDuration or 5
-end
-
-function plymeta:Horde_GetFortifyEnabled()
-    return self.Horde_FortifyEnabled
-end
-
-function plymeta:Horde_SetFortifyEnabled(enabled)
-    self.Horde_FortifyEnabled = enabled
-end
-
 hook.Add("EntityTakeDamage", "Horde_FortifyDamageTaken", function(target, dmg)
-    if target:IsPlayer() then
-        dmg:ScaleDamage(0.85)
+    if target:IsPlayer() and target:Horde_GetFortify() == 1 then
+        dmg:ScaleDamage(1 - 0.15 * target:Horde_GetApplyBuffMore())
     end
 end)
 
