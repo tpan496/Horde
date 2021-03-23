@@ -5,6 +5,8 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_ApplyPerksForClass()
     local class = self:Horde_GetClass().name
+    -- Apply class base perks
+    self:Horde_SetPerk(string.lower(class) .. "_base", {})
 
     --print(self, "Horde_ApplyPerksForClass", class)
 
@@ -18,6 +20,8 @@ function plymeta:Horde_ApplyPerksForClass()
     self.Horde_ChoiceReceived = false
 
     self:Horde_ClearPerks()
+    -- Apply class base perks
+    self:Horde_SetPerk(string.lower(class) .. "_base", {})
 
     self.Horde_PerkChoices = self.Horde_PerkChoices or {}
     self.Horde_PerkChoices[class] = self.Horde_PerkChoices[class] or {}
@@ -32,6 +36,7 @@ function plymeta:Horde_ApplyPerksForClass()
         end
         ::cont::
     end
+    print("perks set")
 end
 
 net.Receive("Horde_PerkChoice", function(len, ply)

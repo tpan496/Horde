@@ -396,12 +396,8 @@ net.Receive("Horde_SelectClass", function (len, ply)
 
     -- Class Settings
     timer.Remove("Horde_Medic" .. ply:SteamID())
-    timer.Remove("Horde_Heavy" .. ply:SteamID())
     --timer.Remove("Horde_Survivor" .. ply:SteamID())
     --timer.Remove("Horde_Assault" .. ply:SteamID())
-    timer.Remove("Horde_Demolition" .. ply:SteamID())
-    hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
-    hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
     hook.Remove("ScaleNPCDamage", "Horde_Engineer" .. ply:SteamID())
     hook.Remove("OnEntityCreated", "Horde_Engineer" .. ply:SteamID())
 
@@ -415,59 +411,10 @@ net.Receive("Horde_SelectClass", function (len, ply)
             ply:SetHealth(math.min(ply:GetMaxHealth(), ply:Health() + 0.02 * ply:GetMaxHealth()))
         end)
     elseif class.name == HORDE.Class_Heavy then
-        timer.Create("Horde_Heavy" .. ply:SteamID(), 1, 0, function ()
-            if not ply:IsValid() then return end
-            if ply:Armor() < 25 then
-                ply:SetArmor(math.min(25, ply:Armor() + 1))
-            end
-        end)
-        ply:Horde_SetWeight(HORDE.max_weight + 5)
     elseif class.name == HORDE.Class_Demolition then
-        timer.Create("Horde_Demolition" .. ply:SteamID(), 30, 0, function ()
-            if not ply:IsValid() then return end
-            if not ply:HasWeapon("weapon_frag") then
-                ply:Give("weapon_frag", ply:GetAmmoCount("Grenade") > 0)
-            end
-        end)
-        hook.Add("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID(), function (target, dmg)
-            if not ply:IsValid() then return end
-            if target:IsValid() and target:IsPlayer() and dmg:GetDamageType() ==  DMG_BLAST and target:SteamID() == ply:SteamID() then
-                dmg:ScaleDamage(0.25)
-            end
-        end)
     elseif class.name == HORDE.Class_Ghost then
-        hook.Add("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID(), function (npc, hitgroup, dmg)
-            if not ply:IsValid() then return end
-            if npc:IsValid() and dmg:GetAttacker():IsPlayer() and dmg:GetAttacker():SteamID() == ply:SteamID() then
-                if hitgroup == HITGROUP_HEAD then
-                    dmg:ScaleDamage(1.5)
-                elseif (npc:GetClass() == "npc_vj_zss_zhulk" or npc:GetClass() == "npc_vj_mutated_hulk") and hitgroup == HITGROUP_GENERIC then
-                    dmg:ScaleDamage(1.5)
-                end
-            end
-        end)
     elseif class.name == HORDE.Class_Engineer then
-        hook.Add("ScaleNPCDamage", "Horde_Engineer" .. ply:SteamID(), function (npc, hitgroup, dmg)
-            if not ply:IsValid() then return end
-            if npc:IsValid() and dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
-                if dmg:GetAttacker():GetClass() == "npc_turret_floor" then
-                    dmg:SetDamage(18)
-                end
-                dmg:ScaleDamage(2)
-            end
-        end)
-        hook.Add("OnEntityCreated", "Horde_Engineer" .. ply:SteamID(), function (ent)
-            if not ent:IsValid() then return end
-            timer.Simple(0.1, function()
-                if ent:GetNWEntity("HordeOwner") == ply and ent:IsNPC() then
-                    if ent:GetClass() == "npc_turret_floor" then
-                        ent:SetMaxHealth(500)
-                    end
-                    ent:SetMaxHealth(ent:GetMaxHealth() * 2)
-                    ent:SetHealth(ent:GetMaxHealth())
-                end
-            end)
-        end)
+
     end
 
     net.Start("Horde_LegacyNotification")

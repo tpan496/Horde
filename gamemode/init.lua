@@ -39,6 +39,8 @@ include("sh_custom.lua")
 include("status/buff/sv_headhunter.lua")
 include("status/buff/sv_camoflague.lua")
 include("status/buff/sv_adrenaline.lua")
+include("status/buff/sv_health_regen.lua")
+include("status/buff/sv_armor_regen.lua")
 include("sv_damage.lua")
 
 include("sh_status.lua")

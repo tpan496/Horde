@@ -6,13 +6,13 @@ PERK.Parameters = {}
 PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
-    if perk == "ghost_headhunter" and ply:GetClass().name == HORDE.Class_Ghost then
+    if SERVER and perk == "ghost_headhunter" then
         ply:Horde_SetHeadHunterEnabled(true)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
-    if perk == "ghost_headhunter" and ply:GetClass().name == HORDE.Class_Ghost then
+    if SERVER and perk == "ghost_headhunter" then
         ply:Horde_SetHeadHunterEnabled(nil)
     end
 end

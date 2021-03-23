@@ -2,7 +2,7 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_AddCamoflague()
     if self.Horde_Camoflague == 1 then return end
-    self.Horde_Camoflauge = 1
+    self.Horde_Camoflague = 1
     self:Horde_SetEvasion(self:Horde_GetEvasion() + 0.2)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Camoflague, 8)
@@ -12,7 +12,7 @@ end
 
 function plymeta:Horde_RemoveCamoflague()
     if self.Horde_Camoflague == 0 then return end
-    self.Horde_Camoflauge = 0
+    self.Horde_Camoflague = 0
     self:Horde_SetEvasion(self:Horde_GetEvasion() - 0.2)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Camoflague, 8)
@@ -21,15 +21,15 @@ function plymeta:Horde_RemoveCamoflague()
 end
 
 function plymeta:Horde_GetCamoflague()
-    return self.Horde_Camoflauge or 0
+    return self.Horde_Camoflague or 0
 end
 
 function plymeta:Horde_SetCamoflagueActivationTime(time)
-    self.Horde_CamoflaugeActivationTime = time
+    self.Horde_CamoflagueActivationTime = time
 end
 
 function plymeta:Horde_GetCamoflagueActivationTime()
-    return self.Horde_CamoflaugeActivationTime or 0.5
+    return self.Horde_CamoflagueActivationTime or 0.5
 end
 
 function plymeta:Horde_SetRemoveCamoflagueOnRun(remove)
@@ -78,6 +78,6 @@ hook.Add("PlayerTick", "Horde_CamoflagueOn", function(ply, mv)
 end)
 
 hook.Add("Horde_ResetStatus", "Horde_CamoflagueReset", function(ply)
-    ply.Horde_Camoflauge = 0
-    ply.Horde_CamoflaugeActivationTime = 0.5
+    ply.Horde_Camoflague = 0
+    ply.Horde_CamoflagueActivationTime = 0.5
 end)

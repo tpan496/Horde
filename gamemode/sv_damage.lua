@@ -1,87 +1,21 @@
 local plymeta = FindMetaTable("Player")
 
--- All damage output
-function plymeta:Horde_SetGlobalDamageIncrease(increase)
-    self.Horde_GlobalDamageIncrease = increase
-end
-
-function plymeta:Horde_SetGlobalDamageMore(more)
-    self.GlobalDamageMore = more
-end
-
-function plymeta:Horde_GetGlobalDamageIncrease()
-    return self.GlobalDamageIncrease or 0
-end
-
-function plymeta:Horde_GetGlobalDamageMore()
-    return self.GlobalDamageMore or 0
-end
-
--- Headshot damage
-function plymeta:Horde_SetHeadshotDamageIncrease(increase)
-    self.Horde_HeadshotDamageIncrease = increase
-end
-
-function plymeta:Horde_SetHeadshotDamageMore(more)
-    self.Horde_HeadshotDamageMore = more
-end
-
-function plymeta:Horde_GetHeadshotDamageIncrease()
-    return self.Horde_HeadshotDamageIncrease or 0
-end
-
-function plymeta:Horde_GetHeadshotDamageMore()
-    return self.Horde_HeadshotDamageMore or 0
-end
-
--- Certain damage type
-function plymeta:Horde_SetDamageIncrease(dmgtype, increase)
-    self.Horde_DamageIncrease[dmgtype] = increase
-end
-
-function plymeta:Horde_SetDamageMore(dmgtype, increase)
-    self.Horde_DamageMore[dmgtype] = increase
-end
-
-function plymeta:Horde_GetDamageIncrease(dmgtype)
-    return self.Horde_DamageIncrease[dmgtype] or 0
-end
-
-function plymeta:Horde_GetDamageMore(dmgtype)
-    return self.Horde_DamageMore[dmgtype] or 0
-end
-
 -- Player damage.
 hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo)
     local ply = dmginfo:GetAttacker()
     if not npc:IsValid() or not ply:IsPlayer() then return end
 
-    local increase = ply:Horde_GetGlobalDamageIncrease()
-    local more = 1 + ply:Horde_GetGlobalDamageMore()
-    
-    if hitgroup == HITGROUP_HEAD then
-        increase = increase + ply:Horde_GetHeadshotDamageIncrease()
-        more = more * (1 + ply:Horde_GetHeadshotDamageMore())
-    end
-
-    local dmgtype = dmginfo:GetDamageType()
-    increase = increase + ply:Horde_GetDamageIncrease(dmgtype)
-    more = more * (1 + ply:Horde_GetDamageMore(dmgtype))
+    local increase = 0
+    local more = 1
 
     -- Now find buffs that will affect damage.
     local bonus = {increase=increase, more=more}
-    hook.Run("Horde_ApplyAdditionalDamage", ply, npc, bonus, hitgroup)
+    hook.Run("Horde_ApplyAdditionalDamage", ply, npc, bonus, hitgroup, dmginfo:GetDamageType())
     dmginfo:ScaleDamage(bonus.more * (1 + bonus.increase))
     --print(more * (1 + increase), dmginfo:GetDamage())
 end)
 
 hook.Add("Horde_ResetStatus", "Horde_ResetDamage", function(ply)
-    ply:Horde_SetGlobalDamageIncrease(0)
-    ply:Horde_SetGlobalDamageMore(0)
-    ply:Horde_SetHeadshotDamageIncrease(0)
-    ply:Horde_SetHeadshotDamageMore(0)
-    ply.Horde_DamageIncrease = {}
-    ply.Horde_DamageMore = {}
 end)
 
 -- Evasion
@@ -116,16 +50,21 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if not target:IsValid() or not target:IsPlayer() then return end
     local ply = target
 
+    -- Prevent damage from skill explosions (e.g. Chain Reaction, Volatile Dead)
+    if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end
+
     -- Apply evasion
-    local evade = math.random()
-    if evade <= ply:Horde_GetEvasion() then return true end
+    if ply:Horde_GetEvasion() > 0 then
+        local evade = math.random()
+        if evade <= ply:Horde_GetEvasion() then return true end
+    end
 
     -- Apply resistance
     local total_resistance = ply:Horde_GetGlobalDamageResistance() + ply:Horde_GetDamageResistance(dmg:GetDamageType())
+    local resistance = {resistance=total_resistance}
+    hook.Run("Horde_ApplyAdditionalDamageTaken", ply, dmg, resistance)
 
-    hook.Run("Horde_ApplyAdditionalDamageTaken", ply, dmg, {resistance=total_resistance})
-
-    dmg:ScaleDamage(1 - total_resistance)
+    dmg:ScaleDamage(1 - resistance.resistance)
 end)
 
 hook.Add("Horde_ResetStatus", "Horde_ResetDamageTaken", function(ply)
