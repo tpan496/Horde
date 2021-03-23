@@ -6,13 +6,13 @@ PERK.Parameters = {}
 PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
-    if perk == "ghost_ghost_veil" then
-        ply:Horde_SetCamoflagueActivationTime(ply:Horde_GetCamoflagueActivationTime() / 2)
+    if SERVER and perk == "ghost_ghost_veil" then
+        ply:Horde_SetCamoflagueActivationTime(0.25)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
-    if perk == "ghost_ghost_veil" then
-        ply:Horde_SetCamoflagueActivationTime(ply:Horde_GetCamoflagueActivationTime() * 2)
+    if SERVER and perk == "ghost_ghost_veil" then
+        ply:Horde_SetCamoflagueActivationTime(0.5)
     end
 end

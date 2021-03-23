@@ -191,7 +191,7 @@ hook.Add("EntityTakeDamage", "Horde_MinionDamageBelongsToOwner", function (targe
 end)
 
 hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
-    if took then
+     if took then
        if ent:IsNPC() then
             if dmg:GetAttacker():IsPlayer() then
                 local id = dmg:GetAttacker():SteamID()

@@ -5,6 +5,10 @@ PERK.Parameters = {}
 
 PERK.Hooks = {}
 
-hook.Add("", "", function ()
-
-end)
+PERK.Hooks.PostEntityTakeDamage = function (ent, dmg, took)
+    if took and ent:IsNPC() and dmg:GetAttacker():IsPlayer() then
+        local leech = math.min(10, dmg:GetDamage() * 0.1)
+        local ply = dmg:GetAttacker()
+        ply:SetHealth(math.max(ply:GetMaxHealth(), leech + ply:Health()))
+    end
+end

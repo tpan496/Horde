@@ -10,7 +10,7 @@ HORDE:CreateClass(
             {name = "Breathing Technique", perks = {["berserker_breathing_technique"] = {}}, icon="materials/perks/breathing_technique.png"},
             {name = "Bloodlust", perks = {["berserker_bloodlust"] = {}}, icon="materials/perks/bloodlust.png"},
         }},
-        [2] = {title = "Paradigm", choices = {
+        [2] = {title = "Technique", choices = {
             {name = "Bushido", perks = {["berserker_bushido"] = {}}, icon="materials/perks/bushido.png"},
             {name = "Savagery", perks = {["berserker_savagery"] = {}}, icon="materials/perks/savagery.png"},
         }},

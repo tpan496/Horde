@@ -1,4 +1,4 @@
-PERK.PrintName = "Anabolism"
+PERK.PrintName = "Painkillers"
 PERK.Description = "You can overheal player's health by 15%."
 
 PERK.Parameters = {}

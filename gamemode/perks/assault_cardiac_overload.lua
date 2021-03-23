@@ -6,18 +6,18 @@ PERK.Parameters = {}
 PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
-    if perk == "assault_cardiac_overload" and ply:GetClass().name == HORDE.Class_Assault then
+    if SERVER and perk == "assault_cardiac_overload" then
         ply:Horde_SetMaxAdrenalineStack(ply:Horde_GetMaxAdrenalineStack() + 2)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
-    if perk == "assault_cardiac_overload" and ply:GetClass().name == HORDE.Class_Assault then
+    if SERVER and perk == "assault_cardiac_overload" then
         ply:Horde_SetMaxAdrenalineStack(ply:Horde_GetMaxAdrenalineStack() - 2)
     end
 end
 
-hook.Add("ScaleNPCDamage", "Horde_CardiacOverloadDamage", function(npc, hitgroup, dmginfo)
+PERK.Hooks.ScaleNPCDamage = function(npc, hitgroup, dmginfo)
     local attacker = dmginfo:GetAttacker()
     if not attacker:IsValid() or not attacker:IsPlayer() then return end
     if not attacker:Horde_GetPerk("assault_cardiac_overload")  then return end
@@ -27,4 +27,4 @@ hook.Add("ScaleNPCDamage", "Horde_CardiacOverloadDamage", function(npc, hitgroup
             attacker:Horde_AddAdrenalineStack()
         end
     end
-end)
+end

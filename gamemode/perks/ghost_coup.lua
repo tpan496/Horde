@@ -5,7 +5,7 @@ PERK.Parameters = {}
 
 PERK.Hooks = {}
 
-hook.Add("ScaleNPCDamage", "Horde_CoupDeGraceDamage", function(npc, hitgroup, dmg)
+PERK.Hooks.ScaleNPCDamage = function(npc, hitgroup, dmg)
     local attacker = dmg:GetAttacker()
     if not attacker:IsValid() or not attacker:IsPlayer() then return end
     if not attacker:Horde_GetPerk("ghost_coup")  then return end
@@ -13,4 +13,4 @@ hook.Add("ScaleNPCDamage", "Horde_CoupDeGraceDamage", function(npc, hitgroup, dm
         dmg:SetDamage(0.2 * npc:GetMaxHealth() + 1)
         return true
     end
-end)
+end

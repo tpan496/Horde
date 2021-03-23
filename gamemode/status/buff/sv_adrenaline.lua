@@ -63,7 +63,7 @@ end)
 
 hook.Add("OnNPCKilled", "Horde_AdrenalineApply", function(victim, killer, wpn)
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
-    if not killer:Horde_GetMaxHeadhunterStack() > 0 then return end
+    if killer:Horde_GetMaxAdrenalineStack() <= 0 then return end
     killer:Horde_AddAdrenalineStack()
 end)
 

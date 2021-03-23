@@ -1,5 +1,5 @@
 PERK.PrintName = "Aegis"
-PERK.Description = "Minions have 15% increased health.\n5% reduced damage taken for each minion alive."
+PERK.Description = "Minions have 15% increased health.\n5% less damage taken for each minion alive."
 
 PERK.Parameters = {}
 
