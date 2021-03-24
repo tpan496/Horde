@@ -11,6 +11,7 @@ function plymeta:Horde_AddArmorRegen()
 end
 
 function plymeta:Horde_RemoveArmorRegen()
+    if not self:IsValid() then return end
     if self.Horde_ArmorRegen == 0 then return end
     self.Horde_ArmorRegen = 0
     self.Horde_ArmorRegenCurTime = CurTime()

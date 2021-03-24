@@ -11,6 +11,7 @@ function plymeta:Horde_AddHealthRegen()
 end
 
 function plymeta:Horde_RemoveHealthRegen()
+    if not self:IsValid() then return end
     if self.Horde_HealthRegen == 0 then return end
     self.Horde_HealthRegen = 0
     self.Horde_HealthRegenCurTime = CurTime()

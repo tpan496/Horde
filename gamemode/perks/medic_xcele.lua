@@ -7,14 +7,14 @@ PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
     if SERVER and perk == "medic_xcele" then
-        ply:Horde_SetApplyBuffMore(ply:Horde_GetApplyBuffMore() * 2)
+        ply:Horde_SetApplyBuffMore(1)
         ply:Horde_SetHealthRegenPercentage(ply:Horde_GetHealthRegenPercentage() * 1.5)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
     if SERVER and perk == "medic_xcele" then
-        ply:Horde_SetApplyBuffMore(ply:Horde_GetApplyBuffMore() / 2)
+        ply:Horde_SetApplyBuffMore(0)
         ply:Horde_SetHealthRegenPercentage(ply:Horde_GetHealthRegenPercentage() / 1.5)
     end
 end

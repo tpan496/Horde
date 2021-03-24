@@ -16,6 +16,7 @@ function plymeta:Horde_AddBerserk(duration)
 end
 
 function plymeta:Horde_RemoveBerserk()
+    if not self:IsValid() then return end
     if self.Horde_Berserk == 0 then return end
     self.Horde_Berserk = 0
     net.Start("Horde_SyncStatus")

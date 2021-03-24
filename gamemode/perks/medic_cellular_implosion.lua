@@ -13,9 +13,12 @@ PERK.Hooks.OnNPCKilled = function(victim, killer, inflictor)
     if p <= 0.2 then
         local ent = ents.Create("arccw_thr_medicgrenade")
         ent:SetPos(victim:GetPos())
-        ent:SetModel(nil)
+        ent:SetOwner(killer)
+        ent.Owner = killer
+        ent.Inflictor = victim
         ent:Spawn()
-        ent:Detonate()
+        ent:Activate()
+        timer.Simple(0, function() ent:Detonate() ent:SetArmed(true) end)
         ent:GetPhysicsObject():EnableMotion(false)
         timer.Simple(2.5, function() if ent:IsValid() then ent:Remove() end end)
     end

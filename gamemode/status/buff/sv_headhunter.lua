@@ -13,6 +13,7 @@ function plymeta:Horde_AddHeadhunterStack()
 end
 
 function plymeta:Horde_RemoveHeadhunterStack()
+    if not self:IsValid() then return end
     if self.Horde_HeadhunterStack == 0 then return end
     self.Horde_HeadhunterStack = math.max(0, self.Horde_HeadhunterStack - 1)
     net.Start("Horde_SyncStatus")
