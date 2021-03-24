@@ -13,5 +13,5 @@ function plymeta:Horde_SetApplyBuffMore(more)
 end
 
 function plymeta:Horde_GetApplyBuffMore()
-    return self.Horde_ApplyBuffMore or 1
+    return self.Horde_ApplyBuffMore or 0
 end

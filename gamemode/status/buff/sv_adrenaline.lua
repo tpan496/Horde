@@ -12,6 +12,7 @@ function plymeta:Horde_AddAdrenalineStack()
 end
 
 function plymeta:Horde_RemoveAdrenalineStack()
+    if not self:IsValid() then return end
     self.Horde_AdrenalineStack = math.max(0, self.Horde_AdrenalineStack - 1)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Adrenaline, 8)

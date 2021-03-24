@@ -45,6 +45,8 @@ include("status/buff/sv_armor_regen.lua")
 include("status/buff/sv_fortify.lua")
 include("status/buff/sv_berserk.lua")
 include("status/debuff/sv_debuff.lua")
+include("status/debuff/sv_slow.lua")
+include("status/debuff/sv_weaken.lua")
 include("sv_damage.lua")
 include("sv_heal.lua")
 

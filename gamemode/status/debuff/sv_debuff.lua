@@ -13,5 +13,5 @@ function plymeta:Horde_SetApplyDebuffMore(more)
 end
 
 function plymeta:Horde_GetApplyDebuffMore()
-    return self.Horde_ApplyDebuffMore or 1
+    return self.Horde_ApplyDebuffMore or 0
 end

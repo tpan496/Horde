@@ -16,7 +16,7 @@ HORDE:CreateClass(
         }},
         [3] = {title = "Extension", choices = {
             {name = "Symbiosis", perks = {["engineer_symbiosis"] = {}}, icon="materials/perks/symbiosis.png"},
-            {name = "Volatile Dead", perks = {["engineer_volatile_dead"] = {}}, icon="materials/perks/volatile_dead.png"},
+            {name = "Kamikaze", perks = {["engineer_kamikaze"] = {}}, icon="materials/perks/volatile_dead.png"},
         }},
     },
     6

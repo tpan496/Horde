@@ -39,7 +39,7 @@ function entmeta:Horde_AddEffect_MedicGrenade(ent)
             local d = DamageInfo()
             d:SetDamage(25)
             d:SetAttacker(ent.Owner)
-            d:SetInflictor(ent)
+            d:SetInflictor(ent.Inflictor)
             d:SetDamageType(DMG_NERVEGAS)
             self:TakeDamageInfo(d)
         end

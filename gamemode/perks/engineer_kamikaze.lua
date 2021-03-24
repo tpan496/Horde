@@ -1,4 +1,4 @@
-PERK.PrintName = "Volatile Dead"
+PERK.PrintName = "Kamikaze"
 PERK.Description = "Minions deal 200% of their max health as blast damage when killed."
 
 PERK.Parameters = {}

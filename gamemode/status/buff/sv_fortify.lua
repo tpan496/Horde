@@ -16,6 +16,7 @@ function plymeta:Horde_AddFortify(duration)
 end
 
 function plymeta:Horde_RemoveFortify()
+    if not self:IsValid() then return end
     if self.Horde_Fortify == 0 then return end
     self.Horde_Fortify = 0
     net.Start("Horde_SyncStatus")
@@ -30,7 +31,7 @@ end
 
 hook.Add("EntityTakeDamage", "Horde_FortifyDamageTaken", function(target, dmg)
     if target:IsPlayer() and target:Horde_GetFortify() == 1 then
-        dmg:ScaleDamage(1 - 0.15 * target:Horde_GetApplyBuffMore())
+        dmg:ScaleDamage(1 - 0.15 * (1 + target:Horde_GetApplyBuffMore()))
     end
 end)
 
