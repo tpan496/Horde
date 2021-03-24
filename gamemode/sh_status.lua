@@ -1,4 +1,5 @@
 -- Status Mapping
+-- Please use the variable names instead of the values!
 
 HORDE.Status_Camoflague = 0
 HORDE.Status_Adrenaline = 1
