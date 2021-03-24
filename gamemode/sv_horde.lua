@@ -1,6 +1,14 @@
 util.AddNetworkString("Horde_HighlightEntities")
 util.AddNetworkString("Horde_GameEnd")
 
+game.AddParticles("particles/gmod_effects.pcf")
+game.AddParticles( "particles/vortigaunt_fx.pcf" )
+game.AddParticles( "particles/fire_01.pcf" )
+game.AddParticles( "particles/blood_impact.pcf" )
+PrecacheParticleSystem("generic_smoke")
+PrecacheParticleSystem("vortigaunt_hand_glow")
+PrecacheParticleSystem("blood_zombie_split")
+
 local horde_players_count = 0
 local horde_spawned_ammoboxes = {}
 local horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
@@ -404,6 +412,15 @@ function HORDE:SpawnEnemy(enemy, pos)
 
     -- This is experimental
     spawned_enemy:SetLagCompensated(true)
+
+    -- Mutation
+    local id = spawned_enemy:GetCreationID()
+    timer.Create("Mutation_" .. id, 1, 0, function()
+        if not spawned_enemy:IsValid() then timer.Remove("Mutation_" .. id) return end
+        ParticleEffectAttach("blood_zombie_split", PATTACH_ABSORIGIN_FOLLOW, spawned_enemy, 0)
+    end)
+    
+    --p:SetParent(spawned_enemy)
 
     --spawned_enemy:AddRelationship("player D_HT 99")
     hook.Run("HordeEnemySpawn", spawned_enemy)

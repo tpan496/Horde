@@ -1,0 +1,8 @@
+-- Simliar to player perks, Horde enemies can have mutations
+-- Mutated monsters have 25% increased health and deal 25% increased damage.
+-- Nemesis: Explode when killed, acid damage.
+-- Regenerator: Regenerates 2% health per second.
+-- Adaptor: When attacked using same type of damage, gain 25% damage resistance to that damage type.
+-- Slasher: 25% increased action speed.
+-- Maddening Prescence: Damaging aura.
+-- Shadow: Turns invisible sometimes.

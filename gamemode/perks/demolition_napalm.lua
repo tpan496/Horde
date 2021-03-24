@@ -5,10 +5,11 @@ PERK.Parameters = {}
 
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_ApplyAdditionalDamage = function (ply, npc, bonus, hitgroup)
+PERK.Hooks.Horde_ApplyAdditionalDamage = function (ply, npc, bonus, hitgroup, dmgtype)
     if not ply:Horde_GetPerk("demolition_napalm")  then return end
-    ply:Horde_SetDamageIncrease(DMG_FIRE, ply:Horde_GetDamageIncrease(DMG_FIRE) + 0.25)
-    ply:Horde_SetDamageIncrease(DMG_BURN, ply:Horde_GetDamageIncrease(DMG_BURN) + 0.25)
+    if dmgtype == DMG_FIRE or dmgtype == DMG_BURN then
+        bonus.increase = bonus.increase + 0.25
+    end
 end
 
 PERK.Hooks.Horde_ApplyAdditionalDamageTaken = function (ply, dmg, resistance)
