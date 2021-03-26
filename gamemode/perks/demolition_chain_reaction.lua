@@ -2,10 +2,7 @@ PERK.PrintName = "Chain Reaction"
 PERK.Description = "Enemies you kill have 25% chance to explode,\ndealing 25% of their health as radiation damage."
 PERK.Icon = "materials/perks/chain_reaction.png"
 
- = {}
-
 PERK.Hooks = {}
-
 PERK.Hooks.OnNPCKilled = function(victim, killer, inflictor)
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
     if not killer:Horde_GetPerk("demolition_chain_reaction") then return end

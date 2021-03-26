@@ -2,8 +2,6 @@ PERK.PrintName = "Aegis"
 PERK.Description = "Minions have 15% increased health.\n5% less damage taken for each minion alive."
 PERK.Icon = "materials/perks/symbiosis.png"
 
- = {}
-
 PERK.Hooks = {}
 
 hook.Add("Horde_ApplyAdditionalDamage", "Horde_PressurizedWarheadDamage", function (ply, npc, bonus, hitgroup)

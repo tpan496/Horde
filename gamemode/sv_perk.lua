@@ -55,11 +55,11 @@ net.Receive("Horde_PerkChoice", function(len, ply)
     end
     if HORDE.current_break_time > 0 then
         -- Set the current perk choice and unset all others
-        for c, v in pairs(HORDE.classes[class].perks[level].choices) do
+        for c, perk in pairs(HORDE.classes[class].perks[level].choices) do
             if c == ply.Horde_PerkChoices[class][level] then
-                for perk, _ in pairs(v.perks) do ply:Horde_SetPerk(perk) end
+                ply:Horde_SetPerk(perk)
             else
-                for perk, _ in pairs(v.perks) do ply:Horde_UnsetPerk(perk) end
+                ply:Horde_UnsetPerk(perk)
             end
         end
     end

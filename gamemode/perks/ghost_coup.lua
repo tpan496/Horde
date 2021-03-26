@@ -2,10 +2,7 @@ PERK.PrintName = "Coup De Grace"
 PERK.Description = "Instantly kills enemies with less than 20% health."
 PERK.Icon = "materials/perks/coup.png"
 
- = {}
-
 PERK.Hooks = {}
-
 PERK.Hooks.EntityTakeDamage = function(target, dmg)
     local attacker = dmg:GetAttacker()
     if not attacker:IsValid() or not attacker:IsPlayer() then return end

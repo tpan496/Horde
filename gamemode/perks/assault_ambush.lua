@@ -2,8 +2,6 @@ PERK.PrintName = "Ambush"
 PERK.Description = "15% increased headshot damage."
 PERK.Icon = "materials/perks/ambush.png"
 
- = {}
-
 PERK.Hooks = {}
 
 PERK.Hooks.Horde_ApplyAdditionalDamage = function (ply, npc, bonus, hitgroup)

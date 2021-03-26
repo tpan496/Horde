@@ -68,8 +68,11 @@ function PANEL:SetData(classname, perk_level, choice)
     local perk_choice = HORDE.classes[classname].perks[perk_level].choices[choice]
     if not perk_choice then error("Could not find choice! class: " .. classname .. ", level: " .. perk_level .. ", choice: " .. choice) return end
     self.info = {class = classname, perk_level = perk_level, choice = choice}
-    local icon = HORDE.perks[classname].Icon
 
+    local perk = HORDE.perks[perk_choice]
+    if not perk then error("Could not find perk '" .. perk .. "'!") return end
+
+    local icon = perk.Icon
     if icon then
         self.icon:SetMaterial(Material(icon, "mips smooth"))
     else
@@ -81,11 +84,8 @@ function PANEL:SetData(classname, perk_level, choice)
     local tbl_choices = LocalPlayer().Horde_PerkChoices[classname]
 
     self.info.active = (tbl_choices[perk_level] or 1) == choice
-
-    local perk = HORDE.perks[perk_choice]
-    if not perk then error("Could not find perk '" .. perk .. "'!") return end
     
-    self.title:SetText(perk.ClassName or "Unnamed Perk")
+    self.title:SetText(perk.PrintName or "Unnamed Perk")
     self.desctext = ""
     local text = perk.Description
     self.desctext = self.desctext .. text .. "\n"

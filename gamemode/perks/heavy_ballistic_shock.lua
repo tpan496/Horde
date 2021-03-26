@@ -2,10 +2,7 @@ PERK.PrintName = "Ballistic Shock"
 PERK.Description = "Debuffs you apply have 100% increased effect.\nDebuffs you apply have 100% increased duration."
 PERK.Icon = "materials/perks/ballistic_shock.png"
 
- = {}
-
 PERK.Hooks = {}
-
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "heavy_ballistic_shock" then
         ply:Horde_SetApplyDebuffMore(1)
