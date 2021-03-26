@@ -18,15 +18,17 @@ timer.Simple(5, function ()
     corner_panel.Paint = function ()
         draw.RoundedBox(10, 0, 0, 280, 50, Color(40,40,40,200))
         if LocalPlayer():Alive() then
-            local name = HORDE.Class_Survivor
+            local class = HORDE.classes[HORDE.Class_Survivor]
+            local name = class.name
+            local display_name = class.display_name
             if LocalPlayer():Horde_GetClass() then
-                name = LocalPlayer():Horde_GetClass().name
+                display_name = LocalPlayer():Horde_GetClass().display_name
             end
-            draw.SimpleText(name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(display_name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-            local mat = Material("materials/" .. name .. ".png", "mips smooth")
+            local mat = Material(HORDE.classes[name].icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
-            surface.DrawTexturedRect(140 - 40 - string.len(name) * 7 - 25, 5, 40, 40)
+            surface.DrawTexturedRect(140 - 40 - string.len(display_name) * 7 - 25, 5, 40, 40)
         else
             draw.SimpleText("Spectating", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end

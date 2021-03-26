@@ -214,7 +214,7 @@ function PANEL:Init()
         class_icon:SetPos(430, 20)
         class_icon:SetSize(45, 45)
         class_icon.Paint = function ()
-            local mat = Material("materials/" .. ply:Horde_GetClass().name .. ".png", "mips smooth")
+            local mat = Material(ply:Horde_GetClass().icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
             surface.DrawTexturedRect(0, 0, 40, 40)
         end

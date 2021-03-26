@@ -33,12 +33,16 @@ if CLIENT then
             end
         end
         local class = (LocalPlayer():Horde_GetClass() or {}).name
-        if not class or not tbl or not tbl[class] then return end
+        if not class then return end
         net.Start("Horde_PerkChoice")
             net.WriteString(class)
             net.WriteUInt(0, 4)
             for perk_level, choices in SortedPairs(HORDE.classes[class].perks) do
-                net.WriteUInt(tbl[class][perk_level] or 1, 4)
+                if not tbl or not tbl[class] then
+                    net.WriteUInt(1, 4)
+                else
+                    net.WriteUInt(tbl[class][perk_level] or 1, 4)
+                end
             end
         net.SendToServer()
     end

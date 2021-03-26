@@ -195,6 +195,7 @@ hook.Add("EntityTakeDamage", "Horde_MinionDamageBelongsToOwner", function (targe
     if target:IsNPC() then
         local owner = dmg:GetAttacker():GetNWEntity("HordeOwner")
         if owner and owner:IsPlayer() then
+            dmg:SetInflictor(dmg:GetAttacker())
             dmg:SetAttacker(owner)
         end
     end

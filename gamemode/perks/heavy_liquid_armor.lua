@@ -1,5 +1,5 @@
 PERK.PrintName = "Liquid Armor"
-PERK.Description = "While you have at least 5 armor:\n  75% increasaed physical damage resistance."
+PERK.Description = "While you have at least 5 armor:\n  75% increasaed Physical damage resistance."
 PERK.Icon = "materials/perks/liquid_armor.png"
 
 PERK.Hooks = {}

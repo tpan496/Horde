@@ -8,13 +8,7 @@ function plymeta:Horde_ApplyPerksForClass()
     -- Apply class base perks
     self:Horde_SetPerk(self:Horde_GetClass().base_perk)
 
-    --print(self, "Horde_ApplyPerksForClass", class)
-
-    -- Only do this *after* we receive good perks from client
-    -- If we don't have them yet, ask for it
     if not self.Horde_ChoiceReceived then
-        net.Start("Horde_PerkChoice")
-        net.Send(self)
         return
     end
     self.Horde_ChoiceReceived = false
@@ -30,10 +24,8 @@ function plymeta:Horde_ApplyPerksForClass()
         if HORDE.current_wave < Horde_GetWaveForPerk(perk_level) then goto cont end
         local choice = v.choices[self.Horde_PerkChoices[class][perk_level] or 1]
         if not choice then error("Invalid choice in perk level " .. perk_level .. " for " .. class .. "!") return end
-        for perk, _ in pairs(choice.perks) do
-            if self:Horde_GetPerk(perk) then goto cont end
-            self:Horde_SetPerk(perk)
-        end
+        if self:Horde_GetPerk(choice) then goto cont end
+        self:Horde_SetPerk(choice)
         ::cont::
     end
 end

@@ -28,6 +28,9 @@ end
 
 function plymeta:Horde_SetClass(class)
     self.class = class
+    if HORDE.classes[class.name].model and HORDE.classes[class.name].model ~= "" then
+        self:SetModel(HORDE.classes[class.name].model)
+    end
 end
 
 function plymeta:Horde_SetDropEntities(entities)
@@ -61,6 +64,18 @@ function plymeta:Horde_RemoveDropEntity(class, entity_creation_id)
     if HORDE.player_drop_entities[self:SteamID()] then
         HORDE.player_drop_entities[self:SteamID()][entity_creation_id] = nil
     end
+end
+
+function plymeta:Horde_SetMinionCount(count)
+    self.Horde_MinionCount = count
+    net.Start("Horde_SyncStatus")
+        net.WriteUInt(HORDE.Status_Minion, 8)
+        net.WriteUInt(self.Horde_MinionCount, 3)
+    net.Send(self)
+end
+
+function plymeta:Horde_GetMinionCount()
+    return self.Horde_MinionCount or 0
 end
 
 function plymeta:Horde_AddMoney(money)
@@ -253,12 +268,16 @@ net.Receive("Horde_BuyItem", function (len, ply)
                             ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
                         end)
                     end
+
+                    -- Count Minions
+                    ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() + 1)
                 end
                 ent:CallOnRemove("Horde_EntityRemoved", function()
                     if ent:IsValid() and ply:IsValid() then
                         timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
                         ent:GetNWEntity("HordeOwner"):Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
                         ent:GetNWEntity("HordeOwner"):Horde_SyncEconomy()
+                        ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
                     end
                 end)
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_ARMOR then
@@ -344,7 +363,7 @@ net.Receive("Horde_SellItem", function (len, ply)
         local item = HORDE.items[class]
         local drop_entities = ply:GetHordeDropEntities()
         if drop_entities and drop_entities[class] then
-            ply:Horde_AddMoney(math.floor(item.price * drop_entities[class]))
+            ply:Horde_AddMoney(math.floor(0.25 * item.price * drop_entities[class]))
             -- Remove all the drop entiies of this player
             for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
                 if ent:GetClass() == class then
