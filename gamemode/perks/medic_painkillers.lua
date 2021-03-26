@@ -1,5 +1,6 @@
 PERK.PrintName = "Painkillers"
 PERK.Description = "You can overheal player's health by 15%."
+PERK.Icon = "materials/perks/painkillers.png"
 
 PERK.Parameters = {}
 

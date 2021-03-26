@@ -1,5 +1,6 @@
 PERK.PrintName = "Savagery"
 PERK.Description = "25% increased blunt damage.\n20% increased maximum health."
+PERK.Icon = "materials/perks/savagery.png"
 
 PERK.Parameters = {}
 

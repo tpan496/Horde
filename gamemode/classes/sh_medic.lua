@@ -6,18 +6,9 @@ HORDE:CreateClass(
     GetConVar("horde_base_walkspeed"):GetInt(),
     GetConVar("horde_base_runspeed"):GetInt(),
     {
-        [1] = {title = "Medicine", choices = {
-            {name = "Antibiotics", perks = {["medic_antibiotics"] = {}}, icon="materials/perks/antibiotics.png"},
-            {name = "Painkillers", perks = {["medic_painkillers"] = {}}, icon="materials/perks/painkillers.png"},
-        }},
-        [2] = {title = "Bio-Engineering", choices = {
-            {name = "Berserk", perks = {["medic_berserk"] = {}}, icon="materials/perks/berserk.png"},
-            {name = "Fortify", perks = {["medic_fortify"] = {}}, icon="materials/perks/fortify.png"},
-        }},
-        [3] = {title = "Natural Selection", choices = {
-            {name = "Cellular Implosion", perks = {["medic_cellular_implosion"] = {}}, icon="materials/perks/cellular_implosion.png"},
-            {name = "Accelerated Healing Factor", perks = {["medic_xcele"] = {}}, icon="materials/perks/xcele.png"},
-        }},
+        [1] = {title = "Medicine", choices = {"medic_antibiotics", "medic_painkillers"}},
+        [2] = {title = "Bio-Engineering", choices = {"medic_berserk", "medic_fortify"}},
+        [3] = {title = "Natural Selection", choices = {"medic_cellular_implosion", "medic_xcele"}},
     },
     3
 )

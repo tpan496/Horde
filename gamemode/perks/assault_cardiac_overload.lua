@@ -1,5 +1,6 @@
 PERK.PrintName = "Cardiac Overload"
 PERK.Description = "25% chance to add 1 Adrenaline stack on headshot.\nAdds 2 maximum Adrenaline stacks."
+PERK.Icon = "materials/perks/cardiac_overload.png"
 
 PERK.Parameters = {}
 

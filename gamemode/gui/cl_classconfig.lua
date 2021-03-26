@@ -1,7 +1,7 @@
 local PANEL = {}
 
 function PANEL:Init()
-    self:SetSize(ScrW() / 1.5, ScrH() / 1.5)
+    self:SetSize(ScrW() / 1.25, ScrH() / 1.5)
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
@@ -37,13 +37,23 @@ function PANEL:Init()
     end
     q_btn.DoClick = function() gui.OpenURL("https://github.com/tpan496/Horde/wiki/Class-Config") end
 
-    local modify_tab = vgui.Create("DPanel", self)
+    local modify_tab = vgui.Create("DCategoryList", self)
     modify_tab:SetBackgroundColor(HORDE.color_config_content_bg)
-    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 40 - 12 - 10)
+    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 50 - 12)
     modify_tab:SetPos(self:GetWide() / 2, 50)
 
-    local function create_property_editor(name, height)
-        local panel = vgui.Create("DPanel", modify_tab)
+    local basic_cat = modify_tab:Add("Basic")
+    local basic_panel = vgui.Create("DPanel", modify_tab)
+    basic_cat:SetContents(basic_panel)
+    basic_panel:SetBackgroundColor(HORDE.color_none)
+
+    local perks_cat = modify_tab:Add("Perks")
+    local perks_panel = vgui.Create("DPanel", modify_tab)
+    perks_cat:SetContents(perks_panel)
+    perks_panel:SetBackgroundColor(HORDE.color_none)
+
+    local function create_property_editor(name, height, cat_panel)
+        local panel = vgui.Create("DPanel", cat_panel)
         panel:DockPadding(10, 10, 10, 10)
         panel:SetSize(modify_tab:GetWide(), height)
         panel:Dock(TOP)
@@ -55,19 +65,69 @@ function PANEL:Init()
         label:DockPadding(10, 10, 10, 10)
         label:SetWide(100)
         label:Dock(LEFT)
+        if name == "class name" then
+            local editor = vgui.Create("DLabel", panel)
+            editor:SetSize(200, height)
+            editor:DockPadding(10, 10, 10, 10)
+            editor:Dock(LEFT)
+            editor:SetTextColor(Color(0,0,0))
+            return editor
+        elseif name == "Tier 0" then
+            local editor = vgui.Create("DComboBox", panel)
+            editor:SetSize(200, 30)
+            editor:SetPos(110, 10)
+            for class,perk in pairs(HORDE.perks) do
+                editor:AddChoice(class)
+            end
+        elseif name == "Tier 1" or name == "Tier 2" or name == "Tier 3" then
+            local label_left = vgui.Create("DLabel", panel)
+            label_left:SetText("L")
+            label_left:SetTextColor(Color(0,0,0))
+            label_left:SetPos(90, 15)
 
-        local editor = vgui.Create("DTextEntry", panel)
-        editor:SetSize(200, height)
-        editor:DockPadding(10, 10, 10, 10)
-        editor:Dock(LEFT)
-        return editor
+            local editor_left = vgui.Create("DComboBox", panel)
+            editor_left:SetSize(200, 30)
+            editor_left:SetPos(110, 10)
+            for class,perk in pairs(HORDE.perks) do
+                editor_left:AddChoice(class)
+            end
+
+            local label_right = vgui.Create("DLabel", panel)
+            label_right:SetText("R")
+            label_right:SetTextColor(Color(0,0,0))
+            label_right:SetPos(90, 50)
+
+            local editor_right = vgui.Create("DComboBox", panel)
+            editor_right:SetSize(200, 30)
+            editor_right:SetPos(110, 45)
+            for class,perk in pairs(HORDE.perks) do
+                editor_right:AddChoice(class)
+            end
+
+            local editors = {editor_left=editor_left, editor_right=editor_right}
+            return editors
+        else
+            local editor = vgui.Create("DTextEntry", panel)
+            editor:SetSize(200, height)
+            editor:DockPadding(10, 10, 10, 10)
+            editor:Dock(LEFT)
+            return editor
+        end
     end
 
-    local name_editor = create_property_editor("name", 50)
-    local description_editor = create_property_editor("extra description", 300)
+    local name_editor = create_property_editor("class name", 50, basic_panel)
+    local display_name_editor = create_property_editor("display name", 50, basic_panel)
+    local description_editor = create_property_editor("extra description", 300, basic_panel)
+    local model_editor = create_property_editor("player model", 50, basic_panel)
+    local perks0_editor = create_property_editor("Tier 0", 50, perks_panel)
+    local perks1_editors = create_property_editor("Tier 1", 75, perks_panel)
+    local perks2_editors = create_property_editor("Tier 2", 75, perks_panel)
+    local perks3_editors = create_property_editor("Tier 3", 75, perks_panel)
 
-    name_editor:SetEditable(false)
+    name_editor:SetText("")
+    display_name_editor:SetText("")
     description_editor:SetMultiline(true)
+    model_editor:SetText("")
 
     if GetConVarNumber("horde_default_class_config") == 1 then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -77,7 +137,7 @@ function PANEL:Init()
         warning_label:SetTextColor(Color(255,0,0))
         warning_label:SetText("You are using default config!\nYour data won't be saved!")
         warning_label:SetFont("Heading")
-    end  
+    end
 
     local btn_panel = vgui.Create("DPanel", self)
     btn_panel:SetPos(self:GetWide() - 200, 50)
@@ -92,9 +152,12 @@ function PANEL:Init()
     save_btn.DoClick = function ()
         if GetConVarNumber("horde_default_class_config") == 1 then return end
         local name = name_editor:GetValue()
-        local extra_description = description_editor:GetValue()
-        if name and HORDE.classes[name] and extra_description then
-            HORDE.classes[name].extra_description = extra_description
+        local model = nil
+        if model_editor:GetValue() ~= "" then model = model_editor:GetValue() end
+        if name and HORDE.classes[name] then
+            HORDE.classes[name].display_name = display_name_editor:GetValue()
+            HORDE.classes[name].extra_description = description_editor:GetValue()
+            HORDE.classes[name].model = model
 
             net.Start("Horde_SetClassData")
             net.WriteTable(HORDE.classes)
@@ -128,10 +191,17 @@ function PANEL:Init()
     class_list:Dock(FILL)
 
     class_list:SetMultiSelect(false)
-    class_list:AddColumn("Name")
+    class_list:AddColumn("Display Name")
     class_list:AddColumn("Description")
 
     class_list:SetDataHeight(40)
+
+    function LoadPerks(class, editors, i)
+        local p1l = class.perks[i].choices[1].perks
+        local p1r = class.perks[i].choices[2].perks
+        for perk, param in pairs(p1l) do editors.editor_left:SetValue(perk) end
+        for perk, param in pairs(p1r) do editors.editor_right:SetValue(perk) end
+    end
 
     class_list.OnClickLine = function(parent, line, selected)
         local class = line.class
@@ -139,8 +209,13 @@ function PANEL:Init()
         local menu = DermaMenu()
 
         menu:AddOption("Modify", function()
-            name_editor:SetValue(class.name)
+            name_editor:SetText(class.name)
+            display_name_editor:SetValue(class.display_name)
             description_editor:SetValue(class.extra_description)
+            model_editor:SetValue(class.model or "")
+            LoadPerks(class, perks1_editors, 1)
+            LoadPerks(class, perks2_editors, 2)
+            LoadPerks(class, perks3_editors, 3)
         end)
 
         menu:AddSpacer()
@@ -162,7 +237,7 @@ function PANEL:Think()
             end
         end
         if not found then
-            self.class_list:AddLine(class.name, class.description).class = class
+            self.class_list:AddLine(class.display_name, class.description).class = class
         end
     end
 
@@ -170,7 +245,7 @@ function PANEL:Think()
         if table.HasValue(HORDE.classes, line.class) then
             local class = line.class
 
-            line:SetValue(1, class.name)
+            line:SetValue(1, class.display_name)
             line:SetValue(2, class.extra_description)
         else
             self.class_list:RemoveLine(i)

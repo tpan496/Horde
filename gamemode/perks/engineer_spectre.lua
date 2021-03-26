@@ -1,5 +1,6 @@
 PERK.PrintName = "Spectre"
 PERK.Description = "Minions leech 10% of damage dealt.\nMinions deal 15% increased damage on full health."
+PERK.Icon = "materials/perks/spectre.png"
 
 PERK.Parameters = {}
 

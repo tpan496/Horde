@@ -68,8 +68,9 @@ function PANEL:SetData(classname, perk_level, choice)
     local tbl = HORDE.classes[classname].perks[perk_level].choices[choice]
     if not tbl then error("Could not find choice! class: " .. classname .. ", level: " .. perk_level .. ", choice: " .. choice) return end
     self.info = {class = classname, perk_level = perk_level, choice = choice}
+    local icon = HORDE.perks[classname].Icon
 
-    if tbl.icon then
+    if icon then
         self.icon:SetMaterial(Material(tbl.icon, "mips smooth"))
     else
         self.icon:SetMaterial(Material("materials/" .. classname .. ".png", "mips smooth"))

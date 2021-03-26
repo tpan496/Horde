@@ -1,5 +1,6 @@
 PERK.PrintName = "Sniper"
 PERK.Description = "25% increased damage while crouching."
+PERK.Icon = "materials/perks/sniper.png"
 
 PERK.Parameters = {}
 

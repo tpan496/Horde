@@ -1,5 +1,6 @@
 PERK.PrintName = "Sticky Compound"
 PERK.Description = "Enemies you hit with Ballistic damage are Slowed.\nSlowed enemies have 15% reduced action speed."
+PERK.Icon = "materials/perks/sticky_compound.png"
 
 PERK.Parameters = {}
 

@@ -6,18 +6,9 @@ HORDE:CreateClass(
     GetConVar("horde_base_walkspeed"):GetInt(),
     GetConVar("horde_base_runspeed"):GetInt(),
     {
-        [1] = {title = "Tactics", choices = {
-            {name = "Headhunter", perks = {["ghost_headhunter"] = {}}, icon="materials/perks/headhunter.png"},
-            {name = "Sniper", perks = {["ghost_sniper"] = {}}, icon="materials/perks/sniper.png"},
-        }},
-        [2] = {title = "Reposition", choices = {
-            {name = "Phase Walk", perks = {["ghost_phase_walk"] = {}}, icon="materials/perks/phase_walk.png"},
-            {name = "Ghost Veil", perks = {["ghost_ghost_veil"] = {}}, icon="materials/perks/ghost_veil.png"},
-        }},
-        [3] = {title = "Disposal", choices = {
-            {name = "Coup De Grace", perks = {["ghost_coup"] = {}}, icon="materials/perks/coup.png"},
-            {name = "Decapacitate", perks = {["ghost_decapacitate"] = {}}, icon="materials/perks/decapacitate.png"},
-        }},
+        [1] = {title = "Tactics", choices = {"ghost_headhunter", "ghost_sniper"}},
+        [2] = {title = "Reposition", choices = {"ghost_phase_walk", "ghost_ghost_veil"}},
+        [3] = {title = "Disposal", choices = {"ghost_coup", "ghost_decapacitate"}},
     },
     5
 )

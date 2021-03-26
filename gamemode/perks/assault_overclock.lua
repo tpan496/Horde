@@ -1,5 +1,6 @@
 PERK.PrintName = "Overclock"
 PERK.Description = "Adrenaline duration increased by 50%.\nAdds 2 maximum Adrenaline stacks."
+PERK.Icon = "materials/perks/overclock.png"
 
 PERK.Parameters = {}
 

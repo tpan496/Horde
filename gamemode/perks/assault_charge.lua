@@ -1,5 +1,6 @@
 PERK.PrintName = "Charge"
 PERK.Description = "Each Adrenaline stack increases damage and speed by 5%.\nAdds 2 maximum Adrenaline stacks."
+PERK.Icon = "materials/perks/charge.png"
 
 PERK.Parameters = {}
 
