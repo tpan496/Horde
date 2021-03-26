@@ -1,5 +1,6 @@
 PERK.PrintName = "Ballistic Shock"
 PERK.Description = "Debuffs you apply have 100% increased effect.\nDebuffs you apply have 100% increased duration."
+PERK.Icon = "materials/perks/ballistic_shock.png"
 
 PERK.Parameters = {}
 

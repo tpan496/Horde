@@ -1,5 +1,6 @@
 PERK.PrintName = "Crude Casing"
 PERK.Description = "Enemies you hit with Ballistic damage are Weakened.\nWeakened enemies deal 10% reduced damage.\nWeakened enemies receive 10% increased damage."
+PERK.Icon = "materials/perks/crude_casing.png"
 
 PERK.Parameters = {}
 

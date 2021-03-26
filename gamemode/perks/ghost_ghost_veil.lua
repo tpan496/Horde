@@ -1,5 +1,6 @@
 PERK.PrintName = "Ghost Veil"
 PERK.Description = "100% increased Camoflague activation speed."
+PERK.Icon = "materials/perks/ghost_veil.png"
 
 PERK.Parameters = {}
 

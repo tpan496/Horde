@@ -6,18 +6,9 @@ HORDE:CreateClass(
     GetConVar("horde_base_walkspeed"):GetInt(),
     GetConVar("horde_base_runspeed"):GetInt(),
     {
-        [1] = {title = "Grenade", choices = {
-            {name = "Impact Detonation", perks = {["demolition_frag_impact"] = {}}, icon="materials/perks/frag_impact.png"},
-            {name = "Cluster Bombs", perks = {["demolition_frag_cluster"] = {}}, icon="materials/perks/frag_cluster.png"},
-        }},
-        [2] = {title = "Approach", choices = {
-            {name = "Fragmentation", perks = {["demolition_fragmentation"] = {}}, icon="materials/perks/fragmentation.png"},
-            {name = "Napalm", perks = {["demolition_napalm"] = {}}, icon="materials/perks/napalm.png"},
-        }},
-        [3] = {title = "Destruction", choices = {
-            {name = "Pressurized Warhead", perks = {["demolition_pressurized_warhead"] = {}}, icon="materials/perks/pressurized_warhead.png"},
-            {name = "Chain Reaction", perks = {["demolition_chain_reaction"] = {}}, icon="materials/perks/chain_reaction.png"},
-        }},
+        [1] = {title = "Grenade", choices = {"demolition_frag_impact", "demolition_frag_cluster"}},
+        [2] = {title = "Approach", choices = {"demolition_fragmentation", "demolition_napalm"}},
+        [3] = {title = "Destruction", choices = {"demolition_pressurized_warhead", "demolition_chain_reaction"}},
     },
     4
 )

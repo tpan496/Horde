@@ -1,5 +1,6 @@
 PERK.PrintName = "Drain"
 PERK.Description = "15% increased headshot damage when on full health.\nRecover 2% health for each enemy you killed."
+PERK.Icon = "materials/perks/drain.png"
 
 PERK.Parameters = {}
 

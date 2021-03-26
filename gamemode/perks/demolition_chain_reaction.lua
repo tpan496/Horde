@@ -1,5 +1,6 @@
 PERK.PrintName = "Chain Reaction"
 PERK.Description = "Enemies you kill have 25% chance to explode,\ndealing 25% of their health as radiation damage."
+PERK.Icon = "materials/perks/chain_reaction.png"
 
 PERK.Parameters = {}
 

@@ -1,5 +1,6 @@
 PERK.PrintName = "Fragmentation"
 PERK.Description = "25% increased damage against enemies on full health."
+PERK.Icon = "materials/perks/fragmentation.png"
 
 PERK.Parameters = {}
 

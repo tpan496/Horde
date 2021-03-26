@@ -1,5 +1,6 @@
 PERK.PrintName = "Impact Detonation"
 PERK.Description = "Grenades explode on enemy impact.\nGrenade damage increased by 50%."
+PERK.Icon = "materials/perks/frag_impact.png"
 
 PERK.Parameters = {}
 

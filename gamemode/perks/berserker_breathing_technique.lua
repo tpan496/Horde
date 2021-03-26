@@ -1,5 +1,6 @@
 PERK.PrintName = "Breathing Technique"
 PERK.Description = "Regenerate 2% health per second."
+PERK.Icon = "materials/perks/breathing_technique.png"
 
 PERK.Parameters = {}
 

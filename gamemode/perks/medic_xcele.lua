@@ -1,5 +1,6 @@
 PERK.PrintName = "Accelerated Healing Factor"
 PERK.Description = "50% increased health regeneration per second.\nBuffs you apply are 100% more effective."
+PERK.Icon = "materials/perks/xcele.png"
 
 PERK.Parameters = {}
 

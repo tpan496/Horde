@@ -1,5 +1,6 @@
 PERK.PrintName = "Ambush"
 PERK.Description = "15% increased headshot damage."
+PERK.Icon = "materials/perks/ambush.png"
 
 PERK.Parameters = {}
 

@@ -6,18 +6,9 @@ HORDE:CreateClass(
     GetConVar("horde_base_walkspeed"):GetInt(),
     GetConVar("horde_base_runspeed"):GetInt(),
     {
-        [1] = {title = "Clockwork", choices = {
-            {name = "Tinkerer", perks = {["engineer_tinkerer"] = {}}, icon="materials/perks/tinkerer.png"},
-            {name = "Manhack", perks = {["engineer_manhack"] = {}}, icon="materials/perks/manhack.png"},
-        }},
-        [2] = {title = "Prototype", choices = {
-            {name = "Golem", perks = {["engineer_golem"] = {}}, icon="materials/perks/golem.png"},
-            {name = "Spectre", perks = {["engineer_spectre"] = {}}, icon="materials/perks/spectre.png"},
-        }},
-        [3] = {title = "Extension", choices = {
-            {name = "Symbiosis", perks = {["engineer_symbiosis"] = {}}, icon="materials/perks/symbiosis.png"},
-            {name = "Kamikaze", perks = {["engineer_kamikaze"] = {}}, icon="materials/perks/volatile_dead.png"},
-        }},
+        [1] = {title = "Clockwork", choices = {"engineer_tinkerer", "engineer_manhack"}},
+        [2] = {title = "Prototype", choices = {"engineer_golem", "engineer_spectre"}},
+        [3] = {title = "Extension", choices = {"engineer_symbiosis", "engineer_kamikaze"}},
     },
     6
 )

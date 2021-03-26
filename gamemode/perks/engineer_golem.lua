@@ -1,5 +1,6 @@
 PERK.PrintName = "Golem"
 PERK.Description = "Minions regenerate 2% health per second.\nMinion attacks have increased knockback."
+PERK.Icon = "materials/perks/golem.png"
 
 PERK.Parameters = {}
 
