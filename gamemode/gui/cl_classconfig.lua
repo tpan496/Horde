@@ -79,6 +79,7 @@ function PANEL:Init()
             for class,perk in pairs(HORDE.perks) do
                 editor:AddChoice(class)
             end
+            return editor
         elseif name == "Tier 1" or name == "Tier 2" or name == "Tier 3" then
             local label_left = vgui.Create("DLabel", panel)
             label_left:SetText("L")
@@ -197,10 +198,8 @@ function PANEL:Init()
     class_list:SetDataHeight(40)
 
     function LoadPerks(class, editors, i)
-        local p1l = class.perks[i].choices[1].perks
-        local p1r = class.perks[i].choices[2].perks
-        for perk, _ in pairs(p1l) do editors.editor_left:SetValue(perk) end
-        for perk, _ in pairs(p1r) do editors.editor_right:SetValue(perk) end
+        editors.editor_left:SetValue(class.perks[i].choices[1])
+        editors.editor_right:SetValue(class.perks[i].choices[2])
     end
 
     class_list.OnClickLine = function(parent, line, selected)
@@ -213,6 +212,7 @@ function PANEL:Init()
             display_name_editor:SetValue(class.display_name)
             description_editor:SetValue(class.extra_description)
             model_editor:SetValue(class.model or "")
+            perks0_editor:SetValue(class.base_perk)
             LoadPerks(class, perks1_editors, 1)
             LoadPerks(class, perks2_editors, 2)
             LoadPerks(class, perks3_editors, 3)

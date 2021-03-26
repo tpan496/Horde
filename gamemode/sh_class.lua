@@ -10,15 +10,15 @@ HORDE.Class_Engineer = "Engineer"
 HORDE.Class_Berserker = "Berserker"
 
 -- Creates a Horde class
-function HORDE:CreateClass(name, fixed_description, extra_description, max_hp, movespd, sprintspd, perks, order, display_name, model)
+function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, base_perk, perks, order, display_name, model)
     if name == nil or name == "" then return end
     local class = {}
     class.name = name
-    class.fixed_description = fixed_description
     class.extra_description = extra_description
     class.max_hp = max_hp
     class.movespd = movespd
     class.sprintspd = sprintspd
+    class.base_perk = base_perk
     class.perks = perks
     class.order = order
     class.display_name = display_name or name

@@ -255,6 +255,8 @@ function PANEL:Paint()
     surface.SetDrawColor(HORDE.color_hollow)
     surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
     if self.item then
+        self.buy_btn:SetVisible(true)
+        self.sell_btn:SetVisible(true)
         if self.item.entity_properties and self.item.entity_properties.is_arccw_attachment then
             local icon = nil
             local description = ""
@@ -289,9 +291,9 @@ function PANEL:Paint()
                 draw.DrawText(description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             end
             
-        elseif self.item.fixed_description and self.item.extra_description then
+        elseif self.item.extra_description then
             draw.DrawText(self.item.name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
-            draw.DrawText(self.item.fixed_description .. self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            draw.DrawText(HORDE.perks[self.item.base_perk].Description .. "\n\n" .. self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
             local mat = Material("materials/" .. self.item.name .. ".png", "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
@@ -321,6 +323,7 @@ function PANEL:Paint()
             self.sell_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
+                if not self.item then return end
                 local mat = Material("materials/" .. self.item.name .. ".png", "mips smooth")
                 surface.SetDrawColor(color_white)
                 surface.SetMaterial(mat) -- Use our cached material
@@ -448,6 +451,12 @@ function PANEL:Paint()
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
         end
+    else
+        self.buy_btn:SetVisible(false)
+        self.sell_btn:SetVisible(false)
+        self.ammo_one_btn:SetVisible(false)
+        self.ammo_ten_btn:SetVisible(false)
+        self.ammo_secondary_btn:SetVisible(false)
     end
 
 end
