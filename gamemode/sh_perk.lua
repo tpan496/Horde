@@ -13,8 +13,7 @@ if CLIENT then
         ply.Horde_Perks = ply.Horde_Perks or {}
         if mode == HORDE.NET_PERK_SET then
             local perk = net.ReadString()
-            local params = net.ReadTable()
-            ply:Horde_SetPerk(perk, params)
+            ply:Horde_SetPerk(perk)
         elseif mode == HORDE.NET_PERK_UNSET then
             local perk = net.ReadString()
             ply:Horde_UnsetPerk(perk)
@@ -57,38 +56,17 @@ function plymeta:Horde_GetPerk(perk)
     return self.Horde_Perks and self.Horde_Perks[perk] or nil
 end
 
-function plymeta:Horde_GetPerkParam(perk, param)
-    if self.Horde_Perks[perk] then
-        return self.Horde_Perks[perk][param]
-    else
-        return nil
-    end
-end
-
-function plymeta:Horde_SetPerk(perk, params, shared)
+function plymeta:Horde_SetPerk(perk, shared)
     if not HORDE.perks[perk] then error("Tried to use nonexistent perk '" .. perk .. "' in Horde_SetPerk!") return end
     self.Horde_Perks = self.Horde_Perks or {}
-    params = params or {}
 
-    -- Set default values and clamp
-    for k, v in pairs(HORDE.perks[perk].Parameters or {}) do
-        if not params[k] then
-            params[k] = v.default
-        elseif (v.type == "i" or v.type == "f") then
-            params[k] = math.Clamp(params[k] or v.default, v.min or -math.huge, v.max or math.huge)
-        end
-    end
-
-    hook.Run("Horde_OnSetPerk", self, perk, params)
-    self.Horde_Perks[perk] = params
-    --print(self, "SetPerk", perk, params)
+    hook.Run("Horde_OnSetPerk", self, perk)
 
     if SERVER and not shared then
         net.Start("Horde_Perk")
             net.WriteUInt(HORDE.NET_PERK_SET, HORDE.NET_PERK_BITS)
             net.WriteEntity(self)
             net.WriteString(perk)
-            net.WriteTable(params)
         net.Broadcast()
     end
 end

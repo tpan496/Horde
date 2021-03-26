@@ -199,8 +199,8 @@ function PANEL:Init()
     function LoadPerks(class, editors, i)
         local p1l = class.perks[i].choices[1].perks
         local p1r = class.perks[i].choices[2].perks
-        for perk, param in pairs(p1l) do editors.editor_left:SetValue(perk) end
-        for perk, param in pairs(p1r) do editors.editor_right:SetValue(perk) end
+        for perk, _ in pairs(p1l) do editors.editor_left:SetValue(perk) end
+        for perk, _ in pairs(p1r) do editors.editor_right:SetValue(perk) end
     end
 
     class_list.OnClickLine = function(parent, line, selected)

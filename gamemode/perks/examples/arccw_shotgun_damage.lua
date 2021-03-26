@@ -1,7 +1,7 @@
 PERK.PrintName = "Shotgun Salvo"
 PERK.Description = "ArcCW shotguns do {percent} extra damage."
 
-PERK.Parameters = {
+ = {
     ["percent"] = {type = "f", default = 0.5, min = 0, percent = true},
 }
 

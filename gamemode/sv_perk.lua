@@ -30,9 +30,9 @@ function plymeta:Horde_ApplyPerksForClass()
         if HORDE.current_wave < Horde_GetWaveForPerk(perk_level) then goto cont end
         local choice = v.choices[self.Horde_PerkChoices[class][perk_level] or 1]
         if not choice then error("Invalid choice in perk level " .. perk_level .. " for " .. class .. "!") return end
-        for perk, params in pairs(choice.perks) do
+        for perk, _ in pairs(choice.perks) do
             if self:Horde_GetPerk(perk) then goto cont end
-            self:Horde_SetPerk(perk, params)
+            self:Horde_SetPerk(perk)
         end
         ::cont::
     end
@@ -57,9 +57,9 @@ net.Receive("Horde_PerkChoice", function(len, ply)
         -- Set the current perk choice and unset all others
         for c, v in pairs(HORDE.classes[class].perks[level].choices) do
             if c == ply.Horde_PerkChoices[class][level] then
-                for perk, param in pairs(v.perks) do ply:Horde_SetPerk(perk, param) end
+                for perk, _ in pairs(v.perks) do ply:Horde_SetPerk(perk) end
             else
-                for perk, param in pairs(v.perks) do ply:Horde_UnsetPerk(perk) end
+                for perk, _ in pairs(v.perks) do ply:Horde_UnsetPerk(perk) end
             end
         end
     end

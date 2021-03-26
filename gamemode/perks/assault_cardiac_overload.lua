@@ -2,17 +2,17 @@ PERK.PrintName = "Cardiac Overload"
 PERK.Description = "25% chance to add 1 Adrenaline stack on headshot.\nAdds 2 maximum Adrenaline stacks."
 PERK.Icon = "materials/perks/cardiac_overload.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "assault_cardiac_overload" then
         ply:Horde_SetMaxAdrenalineStack(ply:Horde_GetMaxAdrenalineStack() + 2)
     end
 end
 
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "assault_cardiac_overload" then
         ply:Horde_SetMaxAdrenalineStack(ply:Horde_GetMaxAdrenalineStack() - 2)
     end

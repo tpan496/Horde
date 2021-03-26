@@ -1,7 +1,7 @@
 PERK.PrintName = "Bone Breaker"
 PERK.Description = "ArcCW weapons do {percent} extra damage on arms and legs."
 
-PERK.Parameters = {
+ = {
     ["percent"] = {type = "f", default = 0.5, min = 0, percent = true},
 }
 
@@ -14,6 +14,6 @@ PERK.Hooks.Hook_BulletHit = function(wpn, data)
     if SERVER and IsValid(attacker) and attacker:IsPlayer()
             and (table.HasValue(limbs, data.tr.HitGroup))
             and attacker:Horde_GetPerk("arccw_damage_limbs") then
-        data.damage = data.damage * (1 + attacker:Horde_GetPerkParam("arccw_damage_limbs", "percent"))
+        data.damage = data.damage * 1.5
     end
 end

@@ -1,7 +1,7 @@
 PERK.PrintName = "Came Prepared"
 PERK.Description = "Start the first wave with a {weapon} and {ammoamount} ammo for it."
 
-PERK.Parameters = {
+ = {
     ["weapon"] = {type = "s", default = "weapon_pistol", weapon = true},
     ["ammoamount"] = {type = "i", default = 40, min = 0},
 }

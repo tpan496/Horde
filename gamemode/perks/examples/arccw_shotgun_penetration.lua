@@ -1,7 +1,7 @@
 PERK.PrintName = "Shotgun Punch"
 PERK.Description = "ArcCW shotguns have {amount}mm extra penetration."
 
-PERK.Parameters = {
+ = {
     ["amount"] = {type = "i", default = 20, min = 0},
 }
 

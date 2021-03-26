@@ -1,7 +1,7 @@
 PERK.PrintName = "Sticky Grenade"
 PERK.Description = "Grenades stick to enemies and surfaces."
 
-PERK.Parameters = {
+ = {
 }
 
 PERK.Hooks = {}

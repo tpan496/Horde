@@ -2,19 +2,19 @@ PERK.PrintName = "Savagery"
 PERK.Description = "25% increased blunt damage.\n20% increased maximum health."
 PERK.Icon = "materials/perks/savagery.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 
 -- TODO: Hardcoded for now, since zerker only has 1 health skill this is fine.
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "berserker_savagery" then
         ply:SetMaxHealth(120)
         ply:SetHealth(120)
     end
 end
 
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "berserker_savagery" then
         ply:SetMaxHealth(100)
         ply:SetHealth(100)

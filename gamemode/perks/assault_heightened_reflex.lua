@@ -2,7 +2,7 @@ PERK.PrintName = "Heightened Reflex"
 PERK.Description = "15% increased headshot damage.\n20% increased global damage resistance on full health."
 PERK.Icon = "materials/perks/heightened_reflex.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 

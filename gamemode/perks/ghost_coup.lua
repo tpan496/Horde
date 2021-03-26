@@ -2,7 +2,7 @@ PERK.PrintName = "Coup De Grace"
 PERK.Description = "Instantly kills enemies with less than 20% health."
 PERK.Icon = "materials/perks/coup.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 

@@ -208,7 +208,7 @@ function PANEL:SetData(item)
                 title:SetText(v.title)
             end
 
-            for choice, params in pairs(v.choices) do -- TODO grey out locked choices
+            for choice, _ in pairs(v.choices) do -- TODO grey out locked choices
                 local perkbutton = cur_panel:Add("HordePerkButton")
                 perkbutton:SetSize((cur_panel:GetWide() - 8) / #v.choices, ScrH() * 0.075)
                 perkbutton:SetData(class.name, perk_level, choice)

@@ -1,27 +1,11 @@
 PERK.PrintName = "Loaded Box"
-PERK.Description = "ArcCW weapons with >= {threshold} magazine capacity get {percent} more."
-
-PERK.Parameters = {
-    ["threshold"] = {type = "i", default = 60, min = 0},
-    ["percent"] = {type = "f", default = 0.5, min = 0, percent = true},
-}
+PERK.Description = "ArcCW weapons with >= 60 magazine capacity get 50 percent more."
 
 PERK.Hooks = {}
-
---[[]
-PERK.Hooks.M_Hook_Mult_ClipSize = function(wpn, data)
-    local ply = wpn:GetOwner()
-    if IsValid(ply) and ply:IsPlayer() and ply:Horde_GetPerk("arccw_mg_magazine")
-            and (wpn.RegularClipSize or wpn.Primary.ClipSize) >= ply:Horde_GetPerkParam("arccw_mg_magazine", "threshold") then
-        data.mult = (data.mult or 1) + ply:Horde_GetPerkParam("arccw_mg_magazine", "percent")
-    end
-end
-]]
-
 PERK.Hooks.Hook_GetCapacity = function(wpn, data)
     local ply = wpn:GetOwner()
     if IsValid(ply) and ply:IsPlayer() and ply:Horde_GetPerk("arccw_mg_magazine")
-            and data >= ply:Horde_GetPerkParam("arccw_mg_magazine", "threshold") then
-        return math.ceil(data * (1 + ply:Horde_GetPerkParam("arccw_mg_magazine", "percent")))
+            and data >= 60 then
+        return math.ceil(data * 1.5)
     end
 end

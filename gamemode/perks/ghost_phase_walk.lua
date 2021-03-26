@@ -2,17 +2,17 @@ PERK.PrintName = "Phase Walk"
 PERK.Description = "Running/Jumping does not cancel Camoflague.\n25% increased movement speed when you have Camoflague."
 PERK.Icon = "materials/perks/phase_walk.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "ghost_phase_walk" then
         ply:Horde_SetRemoveCamoflagueOnRun(0)
     end
 end
 
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "ghost_phase_walk" then
         ply:Horde_SetRemoveCamoflagueOnRun(1)
     end
