@@ -1,5 +1,5 @@
 PERK.PrintName = "Ghost Base"
-PERK.Description = "25% more headshot damage.\nCrouch to activate Camoflague, granting 15% evasion.\n\nRunning or jumping removes Camoflague."
+PERK.Description = "25% more headshot damage.\nCrouch to activate Camoflague, granting 15% evasion.\nRunning or jumping REMOVES Camoflague."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

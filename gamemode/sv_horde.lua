@@ -422,8 +422,6 @@ function HORDE:SpawnEnemy(enemy, pos)
         timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(enemy.mutation) end)
     end
     
-    --p:SetParent(spawned_enemy)
-
     --spawned_enemy:AddRelationship("player D_HT 99")
     hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy

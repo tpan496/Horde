@@ -102,6 +102,7 @@ function PANEL:Init()
         if firstBtn then firstBtn = false; btn:SetActive(true) end
 
         btn.DoClick = function(pnl)
+            description_panel.item = nil
             for k, v in pairs(btns) do v:SetActive(false) v:OnDeactivate() end
             pnl:SetActive(true) pnl:OnActivate()
             surface.PlaySound("UI/buttonclick.wav")

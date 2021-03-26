@@ -1,5 +1,5 @@
 PERK.PrintName = "Demolition Base"
-PERK.Description = "75% increased Blast damage resistance.\nRegenerate 1 frag grenade every 30 seconds, if you do not have one.\n\n"
+PERK.Description = "75% increased Blast damage resistance.\nRegenerate 1 frag grenade every 30 seconds, if you do not have one."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
