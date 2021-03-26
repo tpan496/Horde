@@ -3,6 +3,12 @@ PERK.Description = "Gain 1 Manhack minion every 30 seconds.\nManhack dies on imp
 PERK.Icon = "materials/perks/manhack.png"
 
 PERK.Hooks = {}
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
+    if SERVER and perk == "engineer_manhack" then
+    end
+end
 
-hook.Add("", "", function (ply, npc, bonus, hitgroup)
-end)
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
+    if SERVER and perk == "engineer_manhack" then
+    end
+end

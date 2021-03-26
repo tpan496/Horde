@@ -292,10 +292,10 @@ function PANEL:Paint()
             end
             
         elseif self.item.extra_description then
-            draw.DrawText(self.item.name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            draw.DrawText(self.item.display_name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             draw.DrawText(HORDE.perks[self.item.base_perk].Description .. "\n\n" .. self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-            local mat = Material("materials/" .. self.item.name .. ".png", "mips smooth")
+            local mat = Material(self.item.icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
             surface.DrawTexturedRect(self:GetWide() / 2 + string.len(self.item.name) * 2 + 20, 28, 40, 40)
         else
@@ -324,7 +324,7 @@ function PANEL:Paint()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
                 if not self.item then return end
-                local mat = Material("materials/" .. self.item.name .. ".png", "mips smooth")
+                local mat = Material(self.item.icon, "mips smooth")
                 surface.SetDrawColor(color_white)
                 surface.SetMaterial(mat) -- Use our cached material
                 surface.DrawTexturedRect(self:GetWide() / 2 + 80, 5, 40, 40)

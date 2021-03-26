@@ -76,7 +76,7 @@ function PANEL:SetData(classname, perk_level, choice)
     if icon then
         self.icon:SetMaterial(Material(icon, "mips smooth"))
     else
-        self.icon:SetMaterial(Material("materials/" .. classname .. ".png", "mips smooth"))
+        self.icon:SetMaterial(Material(HORDE.classes[classname].icon, "mips smooth"))
     end
 
     LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}

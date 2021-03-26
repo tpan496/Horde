@@ -1,19 +1,19 @@
 PERK.PrintName = "Savagery"
-PERK.Description = "25% increased blunt damage.\n20% increased maximum health."
+PERK.Description = "25% increased Blunt damage.\n20% increased maximum health."
 PERK.Icon = "materials/perks/savagery.png"
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "berserker_savagery" then
-        ply:SetMaxHealth(120)
-        ply:SetHealth(120)
+        ply:SetMaxHealth(ply:GetMaxHealth() * 1.2)
+        ply:SetHealth(ply:GetMaxHealth())
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "berserker_savagery" then
-        ply:SetMaxHealth(100)
-        ply:SetHealth(100)
+        ply:SetMaxHealth(ply:GetMaxHealth() / 1.2)
+        ply:SetHealth(ply:GetMaxHealth())
     end
 end
 

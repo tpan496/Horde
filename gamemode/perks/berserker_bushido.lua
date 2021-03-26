@@ -1,5 +1,5 @@
 PERK.PrintName = "Bushido"
-PERK.Description = "25% increased slashing damage.\n20% increased movement speed."
+PERK.Description = "25% increased Slashing damage.\n20% increased movement speed."
 PERK.Icon = "materials/perks/bushido.png"
 
 PERK.Hooks = {}

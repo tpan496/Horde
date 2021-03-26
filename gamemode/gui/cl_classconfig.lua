@@ -81,14 +81,18 @@ function PANEL:Init()
             end
             return editor
         elseif name == "Tier 1" or name == "Tier 2" or name == "Tier 3" then
+            local editor_title = vgui.Create("DTextEntry", panel)
+            editor_title:SetSize(200, 30)
+            editor_title:SetPos(110, 15)
+
             local label_left = vgui.Create("DLabel", panel)
             label_left:SetText("L")
             label_left:SetTextColor(Color(0,0,0))
-            label_left:SetPos(90, 15)
+            label_left:SetPos(90, 50)
 
             local editor_left = vgui.Create("DComboBox", panel)
             editor_left:SetSize(200, 30)
-            editor_left:SetPos(110, 10)
+            editor_left:SetPos(110, 45)
             for class,perk in pairs(HORDE.perks) do
                 editor_left:AddChoice(class)
             end
@@ -96,16 +100,16 @@ function PANEL:Init()
             local label_right = vgui.Create("DLabel", panel)
             label_right:SetText("R")
             label_right:SetTextColor(Color(0,0,0))
-            label_right:SetPos(90, 50)
+            label_right:SetPos(90, 80)
 
             local editor_right = vgui.Create("DComboBox", panel)
             editor_right:SetSize(200, 30)
-            editor_right:SetPos(110, 45)
+            editor_right:SetPos(110, 75)
             for class,perk in pairs(HORDE.perks) do
                 editor_right:AddChoice(class)
             end
 
-            local editors = {editor_left=editor_left, editor_right=editor_right}
+            local editors = {editor_title=editor_title, editor_left=editor_left, editor_right=editor_right}
             return editors
         else
             local editor = vgui.Create("DTextEntry", panel)
@@ -120,10 +124,11 @@ function PANEL:Init()
     local display_name_editor = create_property_editor("display name", 50, basic_panel)
     local description_editor = create_property_editor("extra description", 300, basic_panel)
     local model_editor = create_property_editor("player model", 50, basic_panel)
+    local icon_editor = create_property_editor("icon", 50, basic_panel)
     local perks0_editor = create_property_editor("Tier 0", 50, perks_panel)
-    local perks1_editors = create_property_editor("Tier 1", 75, perks_panel)
-    local perks2_editors = create_property_editor("Tier 2", 75, perks_panel)
-    local perks3_editors = create_property_editor("Tier 3", 75, perks_panel)
+    local perks1_editors = create_property_editor("Tier 1", 120, perks_panel)
+    local perks2_editors = create_property_editor("Tier 2", 120, perks_panel)
+    local perks3_editors = create_property_editor("Tier 3", 120, perks_panel)
 
     name_editor:SetText("")
     display_name_editor:SetText("")
@@ -155,10 +160,63 @@ function PANEL:Init()
         local name = name_editor:GetValue()
         local model = nil
         if model_editor:GetValue() ~= "" then model = model_editor:GetValue() end
+
+        local icon = nil
+        if icon_editor:GetValue() ~= "" then icon = icon_editor:GetValue() end
+        
+        local base_perk = nil
+        if perks0_editor:GetValue() ~= "" then base_perk = perks0_editor:GetValue() end
+
+        local perk1title = nil
+        if perks1_editors.editor_title:GetValue() ~= "" then perk1title = perks1_editors.editor_title:GetValue() end
+
+        local perk1l = nil
+        if perks1_editors.editor_left:GetValue() ~= "" then perk1l = perks1_editors.editor_left:GetValue() end
+
+        local perk1r = nil
+        if perks1_editors.editor_right:GetValue() ~= "" then perk1r = perks1_editors.editor_right:GetValue() end
+
+        local perk2title = nil
+        if perks2_editors.editor_title:GetValue() ~= "" then perk2title = perks2_editors.editor_title:GetValue() end
+
+        local perk2l = nil
+        if perks2_editors.editor_left:GetValue() ~= "" then perk2l = perks2_editors.editor_left:GetValue() end
+
+        local perk2r = nil
+        if perks2_editors.editor_right:GetValue() ~= "" then perk2r = perks2_editors.editor_right:GetValue() end
+
+        local perk3title = nil
+        if perks3_editors.editor_title:GetValue() ~= "" then perk3title = perks3_editors.editor_title:GetValue() end
+    
+        local perk3l = nil
+        if perks3_editors.editor_left:GetValue() ~= "" then perk3l = perks3_editors.editor_left:GetValue() end
+
+        local perk3r = nil
+        if perks3_editors.editor_right:GetValue() ~= "" then perk3r = perks3_editors.editor_right:GetValue() end
+        
         if name and HORDE.classes[name] then
             HORDE.classes[name].display_name = display_name_editor:GetValue()
             HORDE.classes[name].extra_description = description_editor:GetValue()
             HORDE.classes[name].model = model
+            HORDE.classes[name].icon = icon
+            if base_perk then HORDE.classes[name].base_perk = base_perk end
+            if not HORDE.classes[name].perks then
+                HORDE.classes[name].perks =  {
+                    [1] = {title = "", choices = {"", ""}},
+                    [2] = {title = "", choices = {"", ""}},
+                    [3] = {title = "", choices = {"", ""}},
+                }
+            end
+
+            if perk1title then HORDE.classes[name].perks[1].title = perk1title end
+            if perk2title then HORDE.classes[name].perks[2].title = perk2title end
+            if perk3title then HORDE.classes[name].perks[3].title = perk3title end
+            if perk1l then HORDE.classes[name].perks[1].choices[1] = perk1l end
+            if perk1r then HORDE.classes[name].perks[1].choices[2] = perk1r end
+            if perk2l then HORDE.classes[name].perks[2].choices[1] = perk2l end
+            if perk2r then HORDE.classes[name].perks[2].choices[2] = perk2r end
+            if perk3l then HORDE.classes[name].perks[3].choices[1] = perk3l end
+            if perk3r then HORDE.classes[name].perks[3].choices[2] = perk3r end
 
             net.Start("Horde_SetClassData")
             net.WriteTable(HORDE.classes)
@@ -174,7 +232,7 @@ function PANEL:Init()
     reset_btn:DockMargin(10, 5, 10, 5)
     reset_btn.DoClick = function ()
         if GetConVarNumber("horde_default_class_config") == 1 then return end
-        HORDE:CreateClasses()
+        HORDE:GetDefaultClassesData()
 
         net.Start("Horde_SetClassData")
         net.WriteTable(HORDE.classes)
@@ -198,6 +256,10 @@ function PANEL:Init()
     class_list:SetDataHeight(40)
 
     function LoadPerks(class, editors, i)
+        if not class.perks or not class.perks[i] then
+            return
+        end
+        editors.editor_title:SetValue(class.perks[i].title)
         editors.editor_left:SetValue(class.perks[i].choices[1])
         editors.editor_right:SetValue(class.perks[i].choices[2])
     end
@@ -212,7 +274,8 @@ function PANEL:Init()
             display_name_editor:SetValue(class.display_name)
             description_editor:SetValue(class.extra_description)
             model_editor:SetValue(class.model or "")
-            perks0_editor:SetValue(class.base_perk)
+            icon_editor:SetValue(class.icon or "")
+            perks0_editor:SetValue(class.base_perk or "")
             LoadPerks(class, perks1_editors, 1)
             LoadPerks(class, perks2_editors, 2)
             LoadPerks(class, perks3_editors, 3)
