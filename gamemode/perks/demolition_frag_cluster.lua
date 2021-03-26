@@ -2,8 +2,6 @@ PERK.PrintName = "Cluster Bombs"
 PERK.Description = "Grenades and SLAMs spawn 3 mini-nades on detonation.\nMini-nades do 20% less damage."
 PERK.Icon = "materials/perks/frag_cluster.png"
 
- = {}
-
 local exp = {npc_grenade_frag = true, npc_satchel = true, npc_tripmine = true}
 PERK.Hooks = {}
 PERK.Hooks.EntityRemoved = function(ent)

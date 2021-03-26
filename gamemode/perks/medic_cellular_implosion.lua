@@ -2,10 +2,7 @@ PERK.PrintName = "Cellular Implosion"
 PERK.Description = "Enemies you killed have 20% chance to generate a healing cloud."
 PERK.Icon = "materials/perks/cellular_implosion.png"
 
- = {}
-
 PERK.Hooks = {}
-
 PERK.Hooks.OnNPCKilled = function(victim, killer, inflictor)
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
     if not killer:Horde_GetPerk("medic_cellular_implosion") then return end

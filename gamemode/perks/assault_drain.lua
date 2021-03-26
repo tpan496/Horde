@@ -2,10 +2,7 @@ PERK.PrintName = "Drain"
 PERK.Description = "15% increased headshot damage when on full health.\nRecover 2% health for each enemy you killed."
 PERK.Icon = "materials/perks/drain.png"
 
- = {}
-
 PERK.Hooks = {}
-
 PERK.Hooks.OnNPCKilled = function(victim, killer, wpn)
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
     if not killer:Horde_GetPerk("assault_drain")  then return end

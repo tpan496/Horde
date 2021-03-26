@@ -2,10 +2,7 @@ PERK.PrintName = "Heightened Reflex"
 PERK.Description = "15% increased headshot damage.\n20% increased global damage resistance on full health."
 PERK.Icon = "materials/perks/heightened_reflex.png"
 
- = {}
-
 PERK.Hooks = {}
-
 PERK.Hooks.Horde_ApplyAdditionalDamage = function (ply, npc, bonus, hitgroup)
     if not hitgroup == HITGROUP_HEAD then return end
     if not ply:Horde_GetPerk("assault_heightened_reflex")  then return end

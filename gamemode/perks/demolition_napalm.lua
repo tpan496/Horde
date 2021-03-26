@@ -2,10 +2,7 @@ PERK.PrintName = "Napalm"
 PERK.Description = "25% increased fire damage.\n75% reduced fire damage taken."
 PERK.Icon = "materials/perks/napalm.png"
 
- = {}
-
 PERK.Hooks = {}
-
 PERK.Hooks.Horde_ApplyAdditionalDamage = function (ply, npc, bonus, hitgroup, dmgtype)
     if not ply:Horde_GetPerk("demolition_napalm")  then return end
     if dmgtype == DMG_FIRE or dmgtype == DMG_BURN then

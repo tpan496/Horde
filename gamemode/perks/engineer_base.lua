@@ -1,10 +1,7 @@
 PERK.PrintName = "Engineer Base"
 PERK.Description = "50% increased minion health and damage.\nTurrets you build have 500 base health and deals 18 base damage."
 
- = {}
-
 PERK.Hooks = {}
-
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "engineer_base" then
     end

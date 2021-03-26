@@ -2,10 +2,7 @@ PERK.PrintName = "Rip and Tear"
 PERK.Description = "40% more melee damage.\n10% increased damage taken."
 PERK.Icon = "materials/perks/rip_and_tear.png"
 
- = {}
-
 PERK.Hooks = {}
-
 PERK.Hooks.Horde_ApplyAdditionalDamage = function (ply, npc, bonus, hitgroup, dmgtype)
     if not ply:Horde_GetPerk("rip_and_tear") then return end
     if dmgtype == DMG_SLASH or dmgtype == DMG_CLUB then
