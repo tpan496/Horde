@@ -28,10 +28,13 @@ if CLIENT then
         local tbl = LocalPlayer().Horde_PerkChoices
         if not tbl or tbl == {} then
             local f = file.Read("horde/perk_choices.txt", "DATA")
-            if f then LocalPlayer().Horde_PerkChoices = util.JSONToTable(f) end
+            if f then
+                LocalPlayer().Horde_PerkChoices = util.JSONToTable(f)
+                tbl = LocalPlayer().Horde_PerkChoices
+            end
         end
         local class = (LocalPlayer():Horde_GetClass() or {}).name
-        if not class or not tbl[class] then return end
+        if not class or not tbl or not tbl[class] then return end
         net.Start("Horde_PerkChoice")
             net.WriteString(class)
             net.WriteUInt(0, 4)

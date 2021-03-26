@@ -5,7 +5,7 @@ HORDE.enemies_normalized = {}
 HORDE.bosses_normalized = {}
 
 -- Creates a Horde enemy.
-function HORDE:CreateEnemy(name, class, weight, wave, is_elite, health_scale, damage_scale, reward_scale, model_scale, color, weapon, spawn_limit, boss_properties)
+function HORDE:CreateEnemy(name, class, weight, wave, is_elite, health_scale, damage_scale, reward_scale, model_scale, color, weapon, spawn_limit, boss_properties, mutation, skin)
     if name == nil or class == nil or wave == nil or wave <= 0 or name == "" or class == "" then return end
     local enemy = {}
     enemy.name = name
@@ -27,6 +27,11 @@ function HORDE:CreateEnemy(name, class, weight, wave, is_elite, health_scale, da
             enemy.boss_properties.end_wave = true
         end
     end
+    enemy.mutation = mutation or nil
+    if skin and skin ~= "" then
+        enemy.skin = skin
+    end
+
     HORDE.enemies[name .. tostring(enemy.wave)] = enemy
 end
 
@@ -81,14 +86,21 @@ function HORDE:NormalizeEnemiesWeight()
 
 end
 
-function HORDE:SyncEnemies()
-    if player then
-        for _, ply in pairs(player.GetAll()) do
-            net.Start("Horde_SyncEnemies")
-            net.WriteTable(HORDE.enemies)
-            net.Send(ply)
+function HORDE:SyncEnemiesTo(ply)
+    net.Start("Horde_SyncEnemies")
+        net.WriteTable(HORDE.enemies)
+    net.Send(ply)
+end
+
+function HORDE:SyncMutationsTo(ply)
+    net.Start("Horde_SyncMutations")
+        -- Send the client simplified mutations
+        local muts = {}
+        for mut_name, mut in pairs(HORDE.mutations) do
+            muts[mut_name] = mut.Description
         end
-    end
+        net.WriteTable(muts)
+    net.Send(ply)
 end
 
 function HORDE:SetEnemiesData()
@@ -101,8 +113,6 @@ function HORDE:SetEnemiesData()
         end
 
         file.Write("horde/enemies.txt", util.TableToJSON(HORDE.enemies))
-
-        HORDE:SyncEnemies()
     end
 end
 
@@ -134,9 +144,6 @@ local function GetEnemiesData()
 
             print("[HORDE] - Loaded custom enemy config.")
         end
-
-
-        HORDE:SyncEnemies()
     end
 end
 
@@ -351,7 +358,6 @@ if SERVER then
 
     if GetConVarNumber("horde_default_enemy_config") == 1 then
         HORDE:GetDefaultEnemiesData()
-        HORDE:SyncEnemies()
     else
         GetEnemiesData()
     end

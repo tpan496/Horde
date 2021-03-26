@@ -19,11 +19,10 @@ function entmeta:Horde_GetWeaken()
 end
 
 hook.Add("EntityTakeDamage", "Horde_WeakenDamageTaken", function(target, dmg)
+    if target:Horde_GetWeaken() == 0 then return end
     local attacker = dmg:GetAttacker()
     if attacker:IsPlayer() and target:IsNPC() and not target:GetNWEntity("HordeOwner"):IsPlayer() then
-        if target:Horde_GetWeaken() == 1 then
-            dmg:ScaleDamage(1 + 0.10 * attacker:Horde_GetApplyDebuffMore())
-        end
+        dmg:ScaleDamage(1 + 0.10 * attacker:Horde_GetApplyDebuffMore())
     elseif attacker:IsNPC() and not attacker:GetNWEntity("HordeOwner"):IsPlayer() and attacker:Horde_GetWeaken() == 1 then
         dmg:ScaleDamage(1 - 0.10 * attacker:Horde_GetApplyDebuffMore())
     end

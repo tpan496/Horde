@@ -51,6 +51,7 @@ include("sv_damage.lua")
 include("sv_heal.lua")
 
 include("sh_status.lua")
+include("sv_mutation.lua")
 include("sv_perk.lua")
 include("sv_economy.lua")
 include("sv_commands.lua")

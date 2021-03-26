@@ -81,4 +81,5 @@ end)
 hook.Add("Horde_ResetStatus", "Horde_CamoflagueReset", function(ply)
     ply.Horde_Camoflague = 0
     ply.Horde_CamoflagueActivationTime = 0.5
+    ply.Horde_RemoveCamoflagueOnRun = 1
 end)

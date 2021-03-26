@@ -8,7 +8,7 @@ function entmeta:Horde_AddSlow(duration, more)
 
     self.Horde_Slow = 1
     -- VJ
-    if (not self.Horde_StoredAnimationPlaybackRate) then
+    if (not self.Horde_StoredAnimationPlaybackRate) or (self.Horde_Slow_More < more) then
         if self.AnimationPlaybackRate then
             self.Horde_StoredAnimationPlaybackRate = self.AnimationPlaybackRate
             self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRate * (1 - 0.15 * (1 + more))
@@ -16,12 +16,14 @@ function entmeta:Horde_AddSlow(duration, more)
             self.Horde_StoredAnimationPlaybackRate = self:GetPlaybackRate()
             self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRate * (1 - 0.15 * (1 + more)))
         end
+        self.Horde_Slow_More = more
     end
 end
 
 function entmeta:Horde_RemoveSlow()
     if not self:IsValid() then return end
     self.Horde_Slow = 0
+    self.Horde_Slow_More = 0
     -- VJ
     if self.Horde_StoredAnimationPlaybackRate then
         self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRate
@@ -33,4 +35,5 @@ end
 
 hook.Add("Horde_ResetStatus", "Horde_SlowReset", function(ply)
     ply.Horde_Slow = 0
+    ply.Horde_Slow_More = 0
 end)

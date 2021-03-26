@@ -63,5 +63,6 @@ end)
 
 hook.Add("Horde_ResetStatus", "Horde_HealthRegenReset", function(ply)
     ply.Horde_HealthRegen = 0
+    ply.Horde_HealthRegenPercentage = 0.02
     ply.Horde_HealthRegenCurTime = CurTime()
 end)

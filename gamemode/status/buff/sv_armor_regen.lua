@@ -71,5 +71,7 @@ end)
 
 hook.Add("Horde_ResetStatus", "Horde_ArmorRegenReset", function(ply)
     ply.Horde_ArmorRegen = 0
+    ply.Horde_ArmorRegenAmount = 1
+    ply.Horde_ArmorRegenMax = 25
     ply.Horde_ArmorRegenCurTime = CurTime()
 end)

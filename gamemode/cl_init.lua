@@ -240,6 +240,10 @@ net.Receive("Horde_SyncMaps", function ()
     HORDE.map_blacklist = net.ReadTable()
 end)
 
+net.Receive("Horde_SyncMutations", function ()
+    HORDE.mutations = net.ReadTable()
+end)
+
 hook.Add("HUDShouldDraw", "Horde_RemoveRetardRedScreen", function(name)
     if (name == "CHudDamageIndicator") then
        return false
