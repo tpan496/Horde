@@ -2,11 +2,11 @@ PERK.PrintName = "Nanomachine"
 PERK.Description = "100% increased armor regeneration rate.\nYou can now regenerate up to 35 armor."
 PERK.Icon = "materials/perks/nanomachine.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "heavy_nanomachine" then
         ply:Horde_SetArmorRegenEnabled(true)
         ply:Horde_SetArmorRegenAmount(2)
@@ -14,7 +14,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
     end
 end
 
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "heavy_nanomachine" then
         ply:Horde_SetArmorRegenEnabled(nil)
         ply:Horde_SetArmorRegenAmount(1)

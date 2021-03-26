@@ -1,7 +1,7 @@
 PERK.PrintName = "Nimble Box"
 PERK.Description = "ArcCW weapons with >= {threshold} magazine capacity reload {percent} faster."
 
-PERK.Parameters = {
+ = {
     ["threshold"] = {type = "i", default = 60, min = 0},
     ["percent"] = {type = "f", default = 0.25, min = 0, percent = true},
 }

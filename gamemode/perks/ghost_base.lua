@@ -1,17 +1,17 @@
 PERK.PrintName = "Ghost Base"
 PERK.Description = "25% more headshot damage.\nCrouch to activate Camoflague, granting 15% evasion.\n\nRunning or jumping removes Camoflague."
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "ghost_base" then
         ply:Horde_SetCamoflagueEnabled(true)
     end
 end
 
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "ghost_base" then
         ply:Horde_SetCamoflagueEnabled(nil)
     end

@@ -5,7 +5,7 @@ PERK.Ignore = true -- Set to true to not load perk.
 
 -- A list of parameters that can be configured in the editor.
 -- These will be saved alongside the class.
-PERK.Parameters = {
+ = {
     --["parameter_integer"] = {type = "i", default = 1, min = 0, max = 2},
     --["parameter_float"] = {type = "f", default = 0.5, min = 0, max = 1, percent = true},
     --["parameter_boolean"] = {type = "b", default = false},

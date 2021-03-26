@@ -1,7 +1,7 @@
 PERK.PrintName = "Dressed Up"
 PERK.Description = "Gain {amount} armor at the start of the first wave."
 
-PERK.Parameters = {
+ = {
     ["amount"] = {type = "i", default = 40, min = 0, max = 255},
 }
 

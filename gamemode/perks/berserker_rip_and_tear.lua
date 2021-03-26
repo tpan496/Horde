@@ -2,7 +2,7 @@ PERK.PrintName = "Rip and Tear"
 PERK.Description = "40% more melee damage.\n10% increased damage taken."
 PERK.Icon = "materials/perks/rip_and_tear.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 

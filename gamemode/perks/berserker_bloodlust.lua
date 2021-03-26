@@ -2,7 +2,7 @@ PERK.PrintName = "Bloodlust"
 PERK.Description = "Leech 10% of melee damage done.\nLeech is capped at 10 hp per hit."
 PERK.Icon = "materials/perks/bloodlust.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 

@@ -65,13 +65,13 @@ function PANEL:OnCursorExited()
 end
 
 function PANEL:SetData(classname, perk_level, choice)
-    local tbl = HORDE.classes[classname].perks[perk_level].choices[choice]
-    if not tbl then error("Could not find choice! class: " .. classname .. ", level: " .. perk_level .. ", choice: " .. choice) return end
+    local perk_choice = HORDE.classes[classname].perks[perk_level].choices[choice]
+    if not perk_choice then error("Could not find choice! class: " .. classname .. ", level: " .. perk_level .. ", choice: " .. choice) return end
     self.info = {class = classname, perk_level = perk_level, choice = choice}
     local icon = HORDE.perks[classname].Icon
 
     if icon then
-        self.icon:SetMaterial(Material(tbl.icon, "mips smooth"))
+        self.icon:SetMaterial(Material(icon, "mips smooth"))
     else
         self.icon:SetMaterial(Material("materials/" .. classname .. ".png", "mips smooth"))
     end
@@ -82,32 +82,13 @@ function PANEL:SetData(classname, perk_level, choice)
 
     self.info.active = (tbl_choices[perk_level] or 1) == choice
 
-    self.title:SetText(tbl.name or "Unnamed Perk")
-
+    local perk = HORDE.perks[perk_choice]
+    if not perk then error("Could not find perk '" .. perk .. "'!") return end
+    
+    self.title:SetText(perk.ClassName or "Unnamed Perk")
     self.desctext = ""
-
-    for perk, params in pairs(tbl.perks) do
-        local perk_tbl = HORDE.perks[perk]
-        if not perk_tbl then error("Could not find perk '" .. perk .. "'!") goto cont end
-        local text = perk_tbl.Description
-        for i, v in pairs(perk_tbl.Parameters) do
-            local replaced = "{" .. i .. "}"
-            if not string.find(text, replaced) then goto cont end
-            local formatted = params[i] or v.default
-            if v.percent then
-                formatted = math.Round(formatted * 100) .. "%"
-            elseif v.weapon then
-                formatted = getweaponname(formatted)
-            elseif v.ammo then
-                formatted = language.GetPhrase("ammo_" .. formatted) or formatted
-            elseif v.entity then
-                formatted = scripted_ents.Get(formatted) and scripted_ents.Get(formatted).PrintName or formatted
-            end
-            text = string.Replace(text, replaced, formatted)
-        end
-        self.desctext = self.desctext .. text .. "\n"
-        ::cont::
-    end
+    local text = perk.Description
+    self.desctext = self.desctext .. text .. "\n"
 
     self.desc:SetText(self.desctext)
     self.desc:SetFont("Horde_PerkButton_Text")

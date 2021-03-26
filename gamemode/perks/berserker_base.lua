@@ -1,16 +1,16 @@
 PERK.PrintName = "Berserker Base"
 PERK.Description = "20% increased global damage resistance.\n25% increased Poison damage resistance."
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "berserker_base" then
     end
 end
 
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk, params)
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "berserker_base" then
     end
 end

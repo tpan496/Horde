@@ -1,7 +1,7 @@
 PERK.PrintName = "Backpocket Grenade"
 PERK.Description = "At the start of every wave, gain one {weapon}."
 
-PERK.Parameters = {
+ = {
     ["weapon"] = {type = "s", default = "weapon_frag", weapon = true},
     ["ammotype"] = {type = "s", default = "grenade", ammo = true},
 }

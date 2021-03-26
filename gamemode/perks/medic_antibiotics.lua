@@ -2,7 +2,7 @@ PERK.PrintName = "Antibiotics"
 PERK.Description = "Your healing is amplified by 15%."
 PERK.Icon = "materials/perks/antibiotics.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 

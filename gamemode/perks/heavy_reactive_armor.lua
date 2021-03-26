@@ -2,7 +2,7 @@ PERK.PrintName = "Reactive Armor"
 PERK.Description = "While you have at least 5 armor:\n  Immune to Poison, Fire and Blast damage."
 PERK.Icon = "materials/perks/reactive_armor.png"
 
-PERK.Parameters = {}
+ = {}
 
 PERK.Hooks = {}
 

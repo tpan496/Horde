@@ -1,7 +1,7 @@
 PERK.PrintName = "Pressure Blast"
 PERK.Description = "Grenades and SLAMs do an extra blast with {damage}dmg in {radius}HU."
 
-PERK.Parameters = {
+ = {
     ["damage"] = {type = "i", default = 200, min = 0},
     ["radius"] = {type = "i", default = 400, min = 0},
 }
