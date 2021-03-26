@@ -65,6 +65,7 @@ end
 
 function plymeta:Horde_AddMoney(money)
     if not self:IsValid() and not money then return end
+    if not self.money then self.money = 0 end
     self.money = self.money + money
 end
 

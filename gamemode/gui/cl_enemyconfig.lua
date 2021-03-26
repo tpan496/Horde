@@ -56,6 +56,11 @@ function PANEL:Init()
     elite_modifier_cat:SetContents(elite_modifier_panel)
     elite_modifier_cat:SetExpanded(false)
     elite_modifier_panel:SetBackgroundColor(HORDE.color_none)
+    local mut_modifier_cat = modify_tab:Add("Mutation Modifiers")
+    local mut_modifier_panel = vgui.Create("DPanel", modify_tab)
+    mut_modifier_cat:SetContents(mut_modifier_panel)
+    mut_modifier_cat:SetExpanded(false)
+    mut_modifier_panel:SetBackgroundColor(HORDE.color_none)
 
     local function create_property_editor(name, height, cat_panel)
         local panel = vgui.Create("DPanel", cat_panel)
@@ -241,6 +246,32 @@ function PANEL:Init()
             table.insert(editors, boss_note_label)
 
             return {is_boss_editor=editor, end_wave_editor=end_wave_editor, unlimited_enemies_spawn_editor=unlimited_enemies_spawn_editor, enemies_spawn_threshold_editor=enemies_spawn_threshold_editor, music_editor=music_editor, music_duration_editor=music_duration_editor}
+        elseif name == "mutation" then
+            local editor = vgui.Create("DComboBox", panel)
+            editor:SetSortItems(false)
+            editor:SetSize(150, 25)
+            editor:SetPos(110, 10)
+
+            editor:AddChoice("")
+            for class,_ in pairs(HORDE.mutations) do
+                editor:AddChoice(class)
+            end
+
+            local mut_label = vgui.Create("DLabel", panel)
+            mut_label:SetText("No Mutation Selected")
+            mut_label:SetTextColor(color_black)
+            mut_label:SetSize(300, height/2)
+            mut_label:SetPos(110, 40)
+
+            function editor:OnSelect(index, value, data)
+                if value == "" then
+                    mut_label:SetText("No Mutation Selected")
+                else
+                    mut_label:SetText(HORDE.mutations[value])
+                end
+            end
+
+            return editor
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(150, height)
@@ -260,11 +291,14 @@ function PANEL:Init()
     local reward_editor = create_property_editor("reward scaling", 35, basic_modifier_panel)
     local model_scale_editor = create_property_editor("model scaling", 35, basic_modifier_panel)
     local weapon_editor = create_property_editor("weapon", 35, basic_modifier_panel)
+    local skin_editor = create_property_editor("skin", 35, basic_modifier_panel)
     local spawn_limit_editor = create_property_editor("spawn limit", 35, basic_modifier_panel)
     local color_editor = create_property_editor("color", 130, basic_modifier_panel)
     
     local elite_editor = create_property_editor("is elite", 35, elite_modifier_panel)
     local boss_editors = create_property_editor("is boss", 140, elite_modifier_panel)
+
+    local mut_editor = create_property_editor("mutation", 70, mut_modifier_panel)
 
     if GetConVarNumber("horde_default_enemy_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -281,9 +315,12 @@ function PANEL:Init()
     health_editor:SetValue("1")
     damage_editor:SetValue("1")
     reward_editor:SetValue("1")
+    skin_editor:SetNumeric(true)
+    skin_editor:SetValue("")
     model_scale_editor:SetValue("1")
     spawn_limit_editor:SetValue("0")
     weapon_editor:SetValue("_gmod_default")
+    mut_editor:SetValue("")
 
     local btn_panel = vgui.Create("DPanel", self)
     btn_panel:SetPos(self:GetWide() - 150, 50)
@@ -316,6 +353,10 @@ function PANEL:Init()
         boss_properties.music = boss_editors.music_editor:GetText()
         boss_properties.music_duration = tonumber(boss_editors.music_duration_editor:GetText())
 
+        local skin = nil
+        if skin_editor:GetText() ~= "" then
+            skin = tonumber(skin_editor:GetText())
+        end
         HORDE:CreateEnemy(
             name_editor:GetText(),
             class_editor:GetText(),
@@ -329,7 +370,9 @@ function PANEL:Init()
             color,
             weapon,
             spawn_limit_editor:GetInt(),
-            boss_properties
+            boss_properties,
+            mut_editor:GetText(),
+            skin
         )
 
         -- Reload from disk
@@ -392,10 +435,15 @@ function PANEL:Init()
         boss_properties.music = boss_editors.music_editor:GetText()
         boss_properties.music_duration = tonumber(boss_editors.music_duration_editor:GetText())
 
+        local skin = nil
+        if skin_editor:GetText() ~= "" then
+            skin = tonumber(skin_editor:GetText())
+        end
+
         local start_wave = tonumber(wave_start_box:GetText())
         local end_wave = tonumber(wave_end_box:GetText())
         if start_wave > end_wave then return end
-
+        
         for i = start_wave, end_wave do
             HORDE:CreateEnemy(
             name_editor:GetText(),
@@ -410,7 +458,9 @@ function PANEL:Init()
             color,
             weapon,
             spawn_limit_editor:GetInt(),
-            boss_properties
+            boss_properties,
+            mut_editor:GetText(),
+            skin
         )
         end
 
@@ -518,6 +568,8 @@ function PANEL:Init()
                 boss_editors.is_boss_editor:OnChange(false)
                 boss_editors.is_boss_editor:SetChecked(false)
             end
+            mut_editor:ChooseOption(enemy.mutation or "")
+            skin_editor:SetValue(enemy.skin or "")
         end)
 
         menu:AddOption("Delete", function()

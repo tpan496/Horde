@@ -164,6 +164,8 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         end
 
         victim:Horde_SetMostRecentAttacker(nil)
+
+        hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
     end
 end
 
@@ -409,16 +411,16 @@ function HORDE:SpawnEnemy(enemy, pos)
         end
     end
 
+    if enemy.skin then
+        spawned_enemy:SetSkin(enemy.skin)
+    end
 
-    -- This is experimental
     spawned_enemy:SetLagCompensated(true)
 
     -- Mutation
-    local id = spawned_enemy:GetCreationID()
-    timer.Create("Mutation_" .. id, 1, 0, function()
-        if not spawned_enemy:IsValid() then timer.Remove("Mutation_" .. id) return end
-        ParticleEffectAttach("blood_zombie_split", PATTACH_ABSORIGIN_FOLLOW, spawned_enemy, 0)
-    end)
+    if enemy.mutation and enemy.mutation ~= "" then
+        timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(enemy.mutation) end)
+    end
     
     --p:SetParent(spawned_enemy)
 

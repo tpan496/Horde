@@ -36,7 +36,6 @@ function plymeta:Horde_ApplyPerksForClass()
         end
         ::cont::
     end
-    print("perks set")
 end
 
 net.Receive("Horde_PerkChoice", function(len, ply)

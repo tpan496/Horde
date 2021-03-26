@@ -39,7 +39,7 @@ function PANEL:DoClick()
     LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}
     LocalPlayer().Horde_PerkChoices[self.info.class] = LocalPlayer().Horde_PerkChoices[self.info.class] or {}
     LocalPlayer().Horde_PerkChoices[self.info.class][self.info.perk_level] = self.info.choice
-    file.Write("horde_perkchoices.txt", util.TableToJSON(LocalPlayer().Horde_PerkChoices))
+    file.Write("horde/perk_choices.txt", util.TableToJSON(LocalPlayer().Horde_PerkChoices))
     net.Start("Horde_PerkChoice")
         net.WriteString(self.info.class)
         net.WriteUInt(self.info.perk_level, 4)

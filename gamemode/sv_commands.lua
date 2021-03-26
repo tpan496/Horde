@@ -141,6 +141,8 @@ function EnemyConfig(ply)
         return
     end
     if ply:IsSuperAdmin() then
+        HORDE:SyncEnemiesTo(ply)
+        HORDE:SyncMutationsTo(ply)
         net.Start("Horde_ToggleEnemyConfig")
         net.Send(ply)
     else

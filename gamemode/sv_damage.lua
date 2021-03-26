@@ -27,24 +27,6 @@ function plymeta:Horde_GetEvasion()
     return self.Horde_Evasion or 0
 end
 
--- All damage resistance
-function plymeta:Horde_SetGlobalDamageResistance(resistance)
-    self.Horde_GlobalDamageResistance = resistance
-end
-
-function plymeta:Horde_GetGlobalDamageResistance()
-    return self.GlobalDamageResistance or 0
-end
-
--- Certain damage type
-function plymeta:Horde_SetDamageResistance(dmgtype, resistance)
-    self.Horde_DamageResistance[dmgtype] = resistance
-end
-
-function plymeta:Horde_GetDamageResistance(dmgtype)
-    return self.Horde_DamageResistance[dmgtype] or 0
-end
-
 -- Player damage taken
 hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if not target:IsValid() or not target:IsPlayer() then return end
@@ -60,8 +42,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     end
 
     -- Apply resistance
-    local total_resistance = ply:Horde_GetGlobalDamageResistance() + ply:Horde_GetDamageResistance(dmg:GetDamageType())
-    local resistance = {resistance=total_resistance}
+    local resistance = {resistance=0}
     hook.Run("Horde_ApplyAdditionalDamageTaken", ply, dmg, resistance)
 
     dmg:ScaleDamage(1 - resistance.resistance)
@@ -69,11 +50,17 @@ end)
 
 hook.Add("Horde_ResetStatus", "Horde_ResetDamageTaken", function(ply)
     ply:Horde_SetEvasion(0)
-    ply:Horde_SetGlobalDamageResistance(0)
     ply.Horde_DamageResistance = {}
 end)
 
 -- Enemy damage.
+hook.Add("EntityTakeDamage", "Horde_MutationDamage", function (target, dmg)
+    if target:IsValid() and target:IsNPC() and dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsNPC() then
+        if target:GetNWEntity("HordeOwner"):IsPlayer() or dmg:GetInflictor():GetNWEntity("HordeOwner"):IsPlayer() then return end
+        return true
+    end
+end)
+
 -- Hulk hitbox fix
 hook.Add("ScaleNPCDamage", "Horde_HulkDamage", function (npc, hitgroup, dmg)
     if npc:IsValid() and npc:GetClass() == "npc_vj_zss_zhulk" then

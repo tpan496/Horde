@@ -70,10 +70,6 @@ end)
 
 hook.Add("Horde_ResetStatus", "Horde_AdrenalineReset", function(ply)
     ply.Horde_AdrenalineStack = 0
-    if ply:GetClass().name == "Assault" then
-        ply.Horde_MaxAdrenalineStack = 1
-    else
-        ply.Horde_MaxAdrenalineStack = 0
-    end
+    ply.Horde_MaxAdrenalineStack = 0
     ply.Horde_AdrenalineStackDuration = 5
 end)
