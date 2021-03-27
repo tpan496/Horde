@@ -29,7 +29,7 @@ function plymeta:Horde_GetBerserk()
     return self.Horde_Berserk or 0
 end
 
-hook.Add("Horde_ApplyAdditionalDamage", "Horde_BerserkDamage", function (ply, npc, bonus, hitgroup)
+hook.Add("Horde_OnPlayerDamage", "Horde_BerserkDamage", function (ply, npc, bonus, hitgroup)
     if ply:Horde_GetBerserk() == 1 then
         bonus.increase = bonus.increase + 0.10 * ply:Horde_GetApplyBuffMore()
     end

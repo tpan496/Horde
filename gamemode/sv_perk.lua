@@ -5,16 +5,8 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_ApplyPerksForClass()
     local class = self:Horde_GetClass().name
-    -- Apply class base perks
-    self:Horde_SetPerk(self:Horde_GetClass().base_perk)
-
-    if not self.Horde_ChoiceReceived then
-        return
-    end
-    self.Horde_ChoiceReceived = false
 
     self:Horde_ClearPerks()
-    -- Apply class base perks
     self:Horde_SetPerk(self:Horde_GetClass().base_perk)
 
     self.Horde_PerkChoices = self.Horde_PerkChoices or {}
@@ -31,11 +23,11 @@ function plymeta:Horde_ApplyPerksForClass()
 end
 
 net.Receive("Horde_PerkChoice", function(len, ply)
-    ply.Horde_ChoiceReceived = true
     local class = net.ReadString()
     ply.Horde_PerkChoices = ply.Horde_PerkChoices or {}
     local level = net.ReadUInt(4)
     if level == 0 then
+        -- All perks.
         ply.Horde_PerkChoices[class] = {}
         for perk_level, choices in SortedPairs(HORDE.classes[class].perks) do
             ply.Horde_PerkChoices[class][perk_level] = net.ReadUInt(4)
@@ -45,8 +37,10 @@ net.Receive("Horde_PerkChoice", function(len, ply)
         ply.Horde_PerkChoices[class] = ply.Horde_PerkChoices[class] or {}
         ply.Horde_PerkChoices[class][level] = net.ReadUInt(4)
     end
-    if HORDE.current_break_time > 0 then
+
+    if HORDE.current_break_time > 0 and level > 0 and (class == ply:Horde_GetClass().name) then
         -- Set the current perk choice and unset all others
+        -- Only apply perk changes if the current class is correct
         for c, perk in pairs(HORDE.classes[class].perks[level].choices) do
             if c == ply.Horde_PerkChoices[class][level] then
                 ply:Horde_SetPerk(perk)

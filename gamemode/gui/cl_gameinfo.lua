@@ -23,6 +23,7 @@ timer.Simple(5, function ()
             local display_name = class.display_name
             if LocalPlayer():Horde_GetClass() then
                 display_name = LocalPlayer():Horde_GetClass().display_name
+                name = LocalPlayer():Horde_GetClass().name
             end
             draw.SimpleText(display_name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
@@ -84,6 +85,10 @@ net.Receive("Horde_RenderCenterText", function ()
         draw.RoundedBox(10, 0, 0, 280 + 5 + 50, 50, Color(40,40,40,200))
         draw.SimpleText(str, "Trebuchet24", (280 + 5 + 50) / 2, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
+end)
+
+net.Receive("Horde_SyncGameInfo", function()
+    HORDE.current_wave = net.ReadUInt(16)
 end)
 
 net.Receive("Horde_SyncBossSpawned", function ()

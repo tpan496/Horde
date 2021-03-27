@@ -29,9 +29,9 @@ function plymeta:Horde_GetFortify()
     return self.Horde_Fortify or 0
 end
 
-hook.Add("EntityTakeDamage", "Horde_FortifyDamageTaken", function(target, dmg)
-    if target:IsPlayer() and target:Horde_GetFortify() == 1 then
-        dmg:ScaleDamage(1 - 0.15 * (1 + target:Horde_GetApplyBuffMore()))
+hook.Add("Horde_OnPlayerDamageTaken", "Horde_FortifyDamageTaken", function(ply, dmg, bonus)
+    if ply:Horde_GetFortify() == 1 then
+        bonus.reduce = bonus.reduce * (1 - 0.15 * (1 + ply:Horde_GetApplyBuffMore()))
     end
 end)
 

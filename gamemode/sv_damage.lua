@@ -8,49 +8,46 @@ hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo
     local increase = 0
     local more = 1
 
-    -- Now find buffs that will affect damage.
+    -- Apply bonus
     local bonus = {increase=increase, more=more}
-    hook.Run("Horde_ApplyAdditionalDamage", ply, npc, bonus, hitgroup, dmginfo:GetDamageType())
+    hook.Run("Horde_OnPlayerDamage", ply, npc, bonus, hitgroup, dmginfo:GetDamageType())
+    
     dmginfo:ScaleDamage(bonus.more * (1 + bonus.increase))
-    --print(more * (1 + increase), dmginfo:GetDamage())
 end)
 
-hook.Add("Horde_ResetStatus", "Horde_ResetDamage", function(ply)
+-- Redirect Minion damage
+hook.Add("EntityTakeDamage", "Horde_MinionDamage", function (target, dmginfo)
+    if target:IsNPC() and dmginfo:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
+        dmginfo:SetInflictor(dmginfo:GetAttacker())
+        dmginfo:SetAttacker(dmginfo:GetAttacker():GetNWEntity("HordeOwner"))
+    end
 end)
-
--- Evasion
-function plymeta:Horde_SetEvasion(evasion)
-    self.Horde_Evasion = evasion
-end
-
-function plymeta:Horde_GetEvasion()
-    return self.Horde_Evasion or 0
-end
 
 -- Player damage taken
 hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if not target:IsValid() or not target:IsPlayer() then return end
     local ply = target
 
-    -- Prevent damage from skill explosions (e.g. Chain Reaction, Volatile Dead)
+    -- Prevent damage from skill explosions (e.g. Chain Reaction, Kamikaze)
     if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end
+    
+    -- Prevent minion from damaging players
+    if dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then return true end
 
-    -- Apply evasion
-    if ply:Horde_GetEvasion() > 0 then
+    -- Apply bonus
+    local bonus = {resistance=0, reduce=1, evasion=0}
+    hook.Run("Horde_OnPlayerDamageTaken", ply, dmg, bonus)
+
+    if bonus.evasion > 0 then
         local evade = math.random()
-        if evade <= ply:Horde_GetEvasion() then return true end
+        if evade <= bonus.evasion then
+            sound.Play("horde/player/evade.mp3", ply:GetPos())
+            hook.Run("Horde_OnPlayerEvade", ply, dmg)
+            return true
+        end
     end
 
-    -- Apply resistance
-    local resistance = {resistance=0}
-    hook.Run("Horde_ApplyAdditionalDamageTaken", ply, dmg, resistance)
-
-    dmg:ScaleDamage(1 - resistance.resistance)
-end)
-
-hook.Add("Horde_ResetStatus", "Horde_ResetDamageTaken", function(ply)
-    ply:Horde_SetEvasion(0)
-    ply.Horde_DamageResistance = {}
+    dmg:ScaleDamage(bonus.reduce * (1 - bonus.resistance))
 end)
 
 -- Enemy damage.

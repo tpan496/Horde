@@ -189,6 +189,9 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
     end
 end)
 
+function HORDE:SpawnMinion()
+end
+
 net.Receive("Horde_BuyItem", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
@@ -330,7 +333,10 @@ function HORDE:DropTurret(ent)
         if dist_sqr >= 40000 then return end
         ent:SetPos(Vector(turret_pos.x, turret_pos.y, tr.HitPos.z + 15))
         ent:DropToFloor()
-        timer.Simple(0.5, function() ent:GetPhysicsObject():EnableMotion(false) end)
+        timer.Simple(0.5, function()
+            if not ent:IsValid() then return end
+            ent:GetPhysicsObject():EnableMotion(false)
+        end)
     end
 end
 
