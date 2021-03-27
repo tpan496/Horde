@@ -114,6 +114,7 @@ function PANEL:DoClick()
         Derma_Query("Changing class will remove all your items!", "Change Class",
             "Yes",
             function()
+                HORDE:SendSavedPerkChoices(self.item.name)
                 net.Start("Horde_SelectClass")
                 net.WriteString(self.item.name)
                 net.SendToServer()
@@ -202,14 +203,21 @@ function PANEL:SetData(item)
             cur_panel:DockMargin(0, 10, 0, 0)
 
             local unlocked_level = Horde_GetWaveForPerk(perk_level)
-            if unlocked_level > 0 then
+            if unlocked_level > 0 and unlocked_level > HORDE.current_wave then
                 title:SetText("[WAVE " .. unlocked_level .. "] "  .. (v.title or ""))
+                title:SetColor(color_gray)
             else
                 title:SetText(v.title)
+                title:SetColor(color_white)
             end
 
             for choice, _ in pairs(v.choices) do -- TODO grey out locked choices
                 local perkbutton = cur_panel:Add("HordePerkButton")
+                if unlocked_level > 0 and unlocked_level > HORDE.current_wave then
+                    perkbutton:SetLocked(true)
+                else
+                    perkbutton:SetLocked(nil)
+                end
                 perkbutton:SetSize((cur_panel:GetWide() - 8) / #v.choices, ScrH() * 0.075)
                 perkbutton:SetData(class.name, perk_level, choice)
             end

@@ -46,7 +46,7 @@ function plymeta:Horde_SetHeadHunterEnabled(enabled)
     self.Horde_HeadhunterEnabled = enabled
 end
 
-hook.Add("Horde_ApplyAdditionalDamage", "Horde_HeadhunterDamage", function (ply, npc, bonus, hitgroup)
+hook.Add("Horde_OnPlayerDamage", "Horde_HeadhunterDamage", function (ply, npc, bonus, hitgroup)
     if not ply:Horde_GetHeadHunterEnabled() then return end
     if not hitgroup == HITGROUP_HEAD then return end
     if ply:Horde_GetHeadhunterStack() > 0 then

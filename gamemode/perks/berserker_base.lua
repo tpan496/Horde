@@ -12,10 +12,10 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.Horde_ApplyAdditionalDamageTaken = function(ply, dmg, resistance)
+PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
     if not ply:Horde_GetPerk("berserker_base")  then return end
-    resistance.resistance = resistance.resistance + 0.20
+    bonus.resistance = bonus.resistance + 0.20
     if dmg:GetDamageType() == DMG_POISON or dmg:GetDamageType() == DMG_ACID or dmg:GetDamageType() == DMG_NERVEGAS then
-        resistance.resistance = resistance.resistance + 0.25
+        bonus.resistance = bonus.resistance + 0.25
     end
 end

@@ -3,7 +3,7 @@ PERK.Description = "While you have at least 5 armor:\n  Immune to Poison, Fire a
 PERK.Icon = "materials/perks/reactive_armor.png"
 
 PERK.Hooks = {}
-PERK.Hooks.Horde_ApplyAdditionalDamageTaken = function (ply, dmg, resistance)
+PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmg, resistance)
     if not ply:Horde_GetPerk("heavy_reactive_armor") then return end
     if ply:Armor() >= 5 and (dmg:GetDamageType() == DMG_NERVEGAS or dmg:GetDamageType() == DMG_ACID or dmg:GetDamageType() == DMG_POISON or dmg:GetDamageType() == DMG_FIRE or dmg:GetDamageType() == DMG_BURN or dmg:GetDamageType() == DMG_BLAST) then
         resistance = resistance + 1.0

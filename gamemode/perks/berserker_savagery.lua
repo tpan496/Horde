@@ -17,7 +17,7 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.Horde_ApplyAdditionalDamage = function (ply, npc, bonus, hitgroup, dmgtype)
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmgtype)
     if not ply:Horde_GetPerk("berserker_savagery")  then return end
     if dmgtype == DMG_CLUB then
         bonus.increase = bonus.increase + 0.25

@@ -73,10 +73,18 @@ function PANEL:SetData(classname, perk_level, choice)
     if not perk then error("Could not find perk '" .. perk .. "'!") return end
 
     local icon = perk.Icon
-    if icon then
-        self.icon:SetMaterial(Material(icon, "mips smooth"))
+    if self.locked then
+        self.icon:SetMaterial(Material("locked.png", "mips smooth"))
+        self.title:SetColor(color_gray)
+        self.desc:SetColor(color_gray)
     else
-        self.icon:SetMaterial(Material(HORDE.classes[classname].icon, "mips smooth"))
+        if icon then
+            self.icon:SetMaterial(Material(icon, "mips smooth"))
+        else
+            self.icon:SetMaterial(Material(HORDE.classes[classname].icon, "mips smooth"))
+        end
+        self.title:SetColor(color_white)
+        self.desc:SetColor(color_white)
     end
 
     LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}
@@ -92,18 +100,32 @@ function PANEL:SetData(classname, perk_level, choice)
 
     self.desc:SetText(self.desctext)
     self.desc:SetFont("Horde_PerkButton_Text")
+end
 
-    if self.info and self.info.active then
-        self.bg_color = Color(220, 20, 60, 150)
-    else
-        self.bg_color = Color(50, 50, 50)
-    end
+function PANEL:GetLocked()
+    return self.locked
+end
+
+function PANEL:SetLocked(locked)
+    self.locked = locked
 end
 
 function PANEL:Think()
     if not self.info then return end
     self.info.active = (LocalPlayer().Horde_PerkChoices[self.info.class][self.info.perk_level] or 1) == self.info.choice
-    self.bg_color = self.info.active and Color(220, 20, 60, 150) or Color(50, 50, 50)
+    if self.locked then
+        if self.info and self.info.active then
+            self.bg_color = Color(100, 00, 00, 150)
+        else
+            self.bg_color = Color(30, 30, 30)
+        end
+    else
+        if self.info and self.info.active then
+            self.bg_color = Color(220, 20, 60, 150)
+        else
+            self.bg_color = Color(50, 50, 50)
+        end
+    end
 end
 
 function PANEL:Paint(w,h)

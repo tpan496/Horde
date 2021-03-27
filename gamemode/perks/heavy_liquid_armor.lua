@@ -3,9 +3,9 @@ PERK.Description = "While you have at least 5 armor:\n  75% increasaed Physical 
 PERK.Icon = "materials/perks/liquid_armor.png"
 
 PERK.Hooks = {}
-PERK.Hooks.Horde_ApplyAdditionalDamageTaken = function (ply, dmg, resistance)
+PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmg, bonus)
     if not ply:Horde_GetPerk("heavy_liquid_armor") then return end
     if ply:Armor() >= 5 and (dmg:GetDamageType() == DMG_BULLET or dmg:GetDamageType() == DMG_SLASH or dmg:GetDamageType() == DMG_CLUB or dmg:GetDamageType() == DMG_GENERIC) then
-        resistance.resistance = resistance.resistance + 0.75
+        bonus.resistance = bonus.resistance + 0.75
     end
 end

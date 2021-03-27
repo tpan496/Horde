@@ -3,7 +3,7 @@ PERK.Description = "When you have Camoflague:\n  25% increased Ballistic damage 
 PERK.Icon = "materials/perks/decapacitate.png"
 
 PERK.Hooks = {}
-PERK.Hooks.Horde_ApplyAdditionalDamage = function (ply, npc, bonus, hitgroup, dmginfo)
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not npc:GetVar("is_elite") then return end
     if not ply:Horde_GetPerk("ghost_decapacitate") then return end
     if dmginfo:GetDamageType() == DMG_BULLET or dmginfo:GetDamageType() == DMG_SNIPER or dmginfo:GetDamageType() == DMG_BUCKSHOT then

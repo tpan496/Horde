@@ -23,7 +23,7 @@ if CLIENT then
     end)
 
     -- Get our saved choice and send it to the server
-    local function SendSavedChoice()
+    function HORDE:SendSavedPerkChoices(class)
         local tbl = LocalPlayer().Horde_PerkChoices
         if not tbl or tbl == {} then
             local f = file.Read("horde/perk_choices.txt", "DATA")
@@ -32,8 +32,7 @@ if CLIENT then
                 tbl = LocalPlayer().Horde_PerkChoices
             end
         end
-        local class = (LocalPlayer():Horde_GetClass() or {}).name
-        if not class then return end
+
         net.Start("Horde_PerkChoice")
             net.WriteString(class)
             net.WriteUInt(0, 4)
@@ -46,8 +45,7 @@ if CLIENT then
             end
         net.SendToServer()
     end
-    net.Receive("Horde_PerkChoice", SendSavedChoice)
-    hook.Add("InitPostEntity", "Horde_SendPerkChoice", SendSavedChoice)
+    net.Receive("Horde_PerkChoice", function() HORDE:SendSavedPerkChoices(LocalPlayer():Horde_GetClass().name) end)
 end
 
 function Horde_GetWaveForPerk(perk_level)
@@ -63,6 +61,7 @@ end
 function plymeta:Horde_SetPerk(perk, shared)
     if not HORDE.perks[perk] then error("Tried to use nonexistent perk '" .. perk .. "' in Horde_SetPerk!") return end
     self.Horde_Perks = self.Horde_Perks or {}
+    self.Horde_Perks[perk] = true
 
     hook.Run("Horde_OnSetPerk", self, perk)
 

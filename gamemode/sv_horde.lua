@@ -1,5 +1,6 @@
 util.AddNetworkString("Horde_HighlightEntities")
 util.AddNetworkString("Horde_GameEnd")
+util.AddNetworkString("Horde_SyncGameInfo")
 
 game.AddParticles("particles/gmod_effects.pcf")
 game.AddParticles( "particles/vortigaunt_fx.pcf" )
@@ -191,21 +192,16 @@ else
 end
 
 -- Record statistics
-hook.Add("EntityTakeDamage", "Horde_MinionDamageBelongsToOwner", function (target, dmg)
-    if target:IsNPC() then
-        local owner = dmg:GetAttacker():GetNWEntity("HordeOwner")
-        if owner and owner:IsPlayer() then
-            dmg:SetInflictor(dmg:GetAttacker())
-            dmg:SetAttacker(owner)
-        end
-    end
-end)
-
 hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
      if took then
        if ent:IsNPC() then
-            if dmg:GetAttacker():IsPlayer() then
-                local id = dmg:GetAttacker():SteamID()
+        if dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
+                local id
+                if dmg:GetAttacker():IsPlayer() then
+                    id = dmg:GetAttacker():SteamID()
+                else
+                    id = dmg:GetAttacker():GetNWEntity("HordeOwner"):SteamID()
+                end
                 if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
                 ent:Horde_SetMostRecentAttacker(dmg:GetAttacker())
@@ -299,6 +295,9 @@ function HORDE:HardResetDirector()
         boss_music_loop:Stop()
         boss_music_loop = nil
     end
+    net.Start("Horde_SyncGameInfo")
+        net.WriteUInt(HORDE.current_wave, 16)
+    net.Broadcast()
 end
 
 -- This resets the enemies.
@@ -705,6 +704,9 @@ function HORDE:StartBreak()
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
             BroadcastWaveMessage("Wave " .. HORDE.current_wave .. " has started!", 0)
+            net.Start("Horde_SyncGameInfo")
+                net.WriteUInt(HORDE.current_wave, 16)
+            net.Broadcast()
             horde_in_break = false
             timer.Remove("Horder_Counter")
         end

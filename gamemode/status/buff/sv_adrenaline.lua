@@ -48,7 +48,7 @@ function plymeta:Horde_SetAdrenalineEnabled(enabled)
     self.Horde_AdrenalineEnabled = enabled
 end
 
-hook.Add("Horde_ApplyAdditionalDamage", "Horde_AdrenalineStackDamage", function (ply, npc, bonus, hitgroup)
+hook.Add("Horde_OnPlayerDamage", "Horde_AdrenalineStackDamage", function (ply, npc, bonus, hitgroup)
     if ply:Horde_GetAdrenalineStack() > 0 then
         bonus.increase = bonus.increase + ply:Horde_GetAdrenalineStack() * 0.05
     end

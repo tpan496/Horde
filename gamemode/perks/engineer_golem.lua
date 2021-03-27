@@ -25,7 +25,7 @@ PERK.Hooks.ScaleNPCDamage = function (npc, hitgroup, dmg)
             local startpos = dmg:GetDamagePosition()
             local endpos = npc:GetPos()
             local dir = endpos - startpos
-            dmg:SetDamageForce(dir:GetNormalized() * 1000)
+            npc:GetPhysicsObject():ApplyForceCenter( dir:GetNormalized() * 10000 )
         end
     end
 end
