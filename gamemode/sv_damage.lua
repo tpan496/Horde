@@ -1,26 +1,33 @@
 local plymeta = FindMetaTable("Player")
 
 -- Player damage.
+hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, dmginfo)
+    print("et")
+    local attacker = dmginfo:GetAttacker()
+    if attacker:GetNWEntity("HordeOwner"):IsPlayer() then
+        dmginfo:SetInflictor(attacker)
+        dmginfo:SetAttacker(attacker:GetNWEntity("HordeOwner"))
+    end
+end)
+
 hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo)
+    print("sc")
+    if not npc:IsValid() then return end
+
     local ply = dmginfo:GetAttacker()
-    if not npc:IsValid() or not ply:IsPlayer() then return end
+    if not ply:IsPlayer() then return end
 
     local increase = 0
     local more = 1
 
     -- Apply bonus
     local bonus = {increase=increase, more=more}
-    hook.Run("Horde_OnPlayerDamage", ply, npc, bonus, hitgroup, dmginfo:GetDamageType())
-    
-    dmginfo:ScaleDamage(bonus.more * (1 + bonus.increase))
-end)
-
--- Redirect Minion damage
-hook.Add("EntityTakeDamage", "Horde_MinionDamage", function (target, dmginfo)
-    if target:IsNPC() and dmginfo:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
-        dmginfo:SetInflictor(dmginfo:GetAttacker())
-        dmginfo:SetAttacker(dmginfo:GetAttacker():GetNWEntity("HordeOwner"))
+    hook.Run("Horde_OnPlayerDamage", ply, npc, bonus, hitgroup, dmginfo)
+    if dmginfo:GetInflictor():GetNWEntity("HordeOwner"):IsPlayer() then
+        hook.Run("Horde_OnPlayerMinionDamage", ply, npc, bonus, dmginfo)
     end
+
+    dmginfo:ScaleDamage(bonus.more * (1 + bonus.increase))
 end)
 
 -- Player damage taken
@@ -32,7 +39,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end
     
     -- Prevent minion from damaging players
-    if dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then return true end
+    if dmg:GetInflictor():GetNWEntity("HordeOwner"):IsPlayer() then return true end
 
     -- Apply bonus
     local bonus = {resistance=0, reduce=1, evasion=0}

@@ -3,10 +3,11 @@ PERK.Description = "40% more melee damage.\n10% increased damage taken."
 PERK.Icon = "materials/perks/rip_and_tear.png"
 
 PERK.Hooks = {}
-PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmgtype)
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("rip_and_tear") then return end
+    local dmgtype = dmginfo:GetDamageType()
     if dmgtype == DMG_SLASH or dmgtype == DMG_CLUB then
-        bonus.more = bonus.more + 0.4
+        bonus.more = bonus.more * 1.4
     end
 end
 

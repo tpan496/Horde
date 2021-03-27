@@ -412,13 +412,6 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
     end
 
     if not ply:IsValid() then return end
-
-    -- Remove all his class abilities
-    timer.Remove("Horde_Medic" .. ply:SteamID())
-    timer.Remove("Horde_Heavy" .. ply:SteamID())
-    timer.Remove("Horde_Demolition" .. ply:SteamID())
-    hook.Remove("EntityTakeDamage", "Horde_Demolition" .. ply:SteamID())
-    hook.Remove("ScaleNPCDamage", "Horde_Ghost" .. ply:SteamID())
     
     -- Remove all the entities he owns
     if HORDE.player_drop_entities[ply:SteamID()] then
