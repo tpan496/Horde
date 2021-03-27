@@ -6,8 +6,7 @@ PERK.Hooks = {}
 PERK.Hooks.EntityRemoved = function (ent)
     local ply = ent:GetNWEntity("HordeOwner")
     if ent:IsNPC() and ply:IsPlayer() and ply:Horde_GetPerk("engineer_kamikaze") then
-        local dmg
-		dmg = ent:GetMaxHealth() * 2
+        local dmg = ent:GetMaxHealth() * 2
         util.BlastDamage(ent, ply, ent:GetPos(), 250, dmg)
         local pos = ent:GetPos()
         local eff = EffectData()

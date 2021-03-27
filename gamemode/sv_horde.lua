@@ -195,35 +195,32 @@ end
 hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
      if took then
        if ent:IsNPC() then
-        if dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
-                local id
-                if dmg:GetAttacker():IsPlayer() then
-                    id = dmg:GetAttacker():SteamID()
-                else
-                    id = dmg:GetAttacker():GetNWEntity("HordeOwner"):SteamID()
-                end
+            print(dmg:GetDamage())
+            if dmg:GetAttacker():IsPlayer() then
+                local id = dmg:GetAttacker():SteamID()
                 if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
                 ent:Horde_SetMostRecentAttacker(dmg:GetAttacker())
-            end
-            local boss_properties = ent:Horde_GetBossProperties()
-            if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
-                net.Start("Horde_SyncBossHealth")
-                net.WriteInt(ent:Health(), 32)
-                net.Broadcast()
 
-                -- Some special music for horde default boss.
-                if GetConVar("horde_default_enemy_config"):GetInt() == 1 and boss_music_loop and not horde_boss_critical and ent:Health() < ent:GetMaxHealth() / 2 and ent:GetClass() == "npc_vj_alpha_gonome" then
-                    timer.Remove("Horde_BossMusic")
-                    boss_music_loop:Stop()
-                    boss_music_loop = CreateSound(game.GetWorld(), "music/hl1_song10.mp3")
-                    boss_music_loop:SetSoundLevel(0)
-                    timer.Create("Horde_BossMusic", 103, 0, function()
+                local boss_properties = ent:Horde_GetBossProperties()
+                if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
+                    net.Start("Horde_SyncBossHealth")
+                    net.WriteInt(ent:Health(), 32)
+                    net.Broadcast()
+
+                    -- Some special music for horde default boss.
+                    if GetConVar("horde_default_enemy_config"):GetInt() == 1 and boss_music_loop and not horde_boss_critical and ent:Health() < ent:GetMaxHealth() / 2 and ent:GetClass() == "npc_vj_alpha_gonome" then
+                        timer.Remove("Horde_BossMusic")
                         boss_music_loop:Stop()
+                        boss_music_loop = CreateSound(game.GetWorld(), "music/hl1_song10.mp3")
+                        boss_music_loop:SetSoundLevel(0)
+                        timer.Create("Horde_BossMusic", 103, 0, function()
+                            boss_music_loop:Stop()
+                            boss_music_loop:Play()
+                        end)
                         boss_music_loop:Play()
-                    end)
-                    boss_music_loop:Play()
-                    horde_boss_critical = true
+                        horde_boss_critical = true
+                    end
                 end
             end
        elseif ent:IsPlayer() and dmg:GetAttacker():IsNPC() then

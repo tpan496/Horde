@@ -1,5 +1,5 @@
 PERK.PrintName = "Manhack"
-PERK.Description = "Your Sentries are replaced with Manhacks.\nManhack dies on impact, dealing its health as damage.\nManhack regenerates every 2 second."
+PERK.Description = "Your Sentries are replaced with Manhacks.\nManhack dies on impact.\nManhack deals its health as damage."
 PERK.Icon = "materials/perks/manhack.png"
 
 PERK.Hooks = {}
@@ -28,11 +28,7 @@ local function SpawnManhack(ply)
     ent:SetOwner(ply)
     -- Special case for turrets
     local id = ent:GetCreationID()
-    ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
-    timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
-        if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
-        ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
-    end)
+    timer.Simple(0, function() ent:SetCollisionGroup(COLLISION_GROUP_WORLD) end)
 
     -- Count Minions
     ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() + 1)
@@ -42,6 +38,15 @@ local function SpawnManhack(ply)
             ent:GetNWEntity("HordeOwner"):Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
             ent:GetNWEntity("HordeOwner"):Horde_SyncEconomy()
             ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
+        end
+    end)
+
+    -- Reset manhack position if it has been alive for too long
+    timer.Create("Horde_ManhackRepos" .. id, 30, 0, function ()
+        if ent:IsValid() then
+            ent:SetPos(ply:GetPos() + VectorRand())
+        else
+            timer.Remove("Horde_ManhackRepos" .. id)
         end
     end)
 end
@@ -90,13 +95,11 @@ PERK.Hooks.OnEntityCreated = function (ent)
     end)
 end
 
-PERK.Hooks.EntityTakeDamage = function (target, dmg)
-    local attacker = dmg:GetAttacker()
-    local inflictor = dmg:GetInflictor()
-    if inflictor:GetNWEntity("HordeOwner"):IsPlayer() then
-        if inflictor:GetClass() == "npc_manhack" then
-            dmg:SetDamage(attacker:GetMaxHealth())
-            inflictor:Remove()
-        end
+PERK.Hooks.EntityTakeDamage = function (target, dmginfo)
+    local inflictor = dmginfo:GetInflictor()
+    local ply = inflictor:GetNWEntity("HordeOwner")
+    if ply:IsPlayer() and ply:Horde_GetPerk("engineer_manhack") and inflictor:GetClass() == "npc_manhack" then
+        dmginfo:SetDamage(math.max(dmginfo:GetDamage(), inflictor:GetMaxHealth()))
+        timer.Simple(0, function() if inflictor:IsValid() then inflictor:Remove() end end)
     end
 end

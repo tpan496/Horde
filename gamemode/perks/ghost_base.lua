@@ -18,6 +18,6 @@ end
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup)
     if not ply:Horde_GetPerk("ghost_base") then return end
     if hitgroup == HITGROUP_HEAD then
-        bonus.more = bonus.more + 0.25
+        bonus.more = bonus.more * 1.25
     end
 end
