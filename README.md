@@ -37,9 +37,9 @@ You need to change these BEFORE your game/server starts to take effect.
 
 ## Perk Settings
 - horde_perk_start_wave(0-10) - First wave where Tier 1 perks will be unlocked. e.g. At 1, then Tier 1 perks are unlocked after Wave 1.
-- horde_perk_scaling(0-) - The multiplier to the level for which wave it is unlocked. This does not affect Tier 1 perks.
-e.g. 
-At 2, Tier 2 perks are unlocked after (start_wave + 2 * 1). Tier 3 perks are unlocked after (start_wave + 2 * 2).
+- horde_perk_scaling(0-) - The multiplier to the level for which wave it is unlocked. This does not affect Tier 1 perks.<br />
+e.g. <br />
+At 2, Tier 2 perks are unlocked after (start_wave + 2 * 1). Tier 3 perks are unlocked after (start_wave + 2 * 2).<br />
 At 3, Tier 2 perks are unlocked after (start_wave + 3 * 1). Tier 3 perks are unlocked after (start_wave + 3 * 2).
 
 #### UI Settings
