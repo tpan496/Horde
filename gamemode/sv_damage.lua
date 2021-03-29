@@ -69,6 +69,15 @@ hook.Add("EntityTakeDamage", "Horde_MutationDamage", function (target, dmg)
 end)
 
 -- Gonome headshot multiplier reduction
+hook.Add("ScaleNPCDamage", "Horde_MutatedHulkDamage", function (npc, hitgroup, dmg)
+    if npc:IsValid() and npc:GetClass() == "npc_vj_mutated_hulk" then
+        if hitgroup == HITGROUP_HEAD then
+            dmg:ScaleDamage(0.5)
+        end
+    end
+end)
+
+-- Gonome headshot multiplier reduction
 hook.Add("ScaleNPCDamage", "Horde_GonomeDamage", function (npc, hitgroup, dmg)
     if npc:IsValid() and npc:GetClass() == "npc_vj_alpha_gonome" then
         if hitgroup == HITGROUP_HEAD then
