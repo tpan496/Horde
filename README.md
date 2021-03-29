@@ -38,6 +38,7 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_testing_unlimited_class_change - Allows for unlimited class changes during break. Please use this only for testing purposes. I will not fix any problems that might be caused by this.
 
 ## Perk Settings
+- horde_enable_perks(0/1) - Enables perks or not. Default is 1.
 - horde_perk_start_wave(0-10) - First wave where Tier 1 perks will be unlocked. e.g. At 1, then Tier 1 perks are unlocked after Wave 1.
 - horde_perk_scaling(0-) - The multiplier to the level for which wave it is unlocked. This does not affect Tier 1 perks.<br />
 e.g. <br />
