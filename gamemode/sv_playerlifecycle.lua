@@ -24,6 +24,7 @@ function plymeta:Horde_GetGivenStarterWeapons()
 end
 
 function HORDE:GiveStarterWeapons(ply)
+    if GetConVar("horde_enable_starter"):GetInt() == 0 then return end
     if ply:Alive() and (not ply:Horde_GetGivenStarterWeapons()) then
         ply:Give("weapon_pistol")
         ply:Give("weapon_crowbar")
@@ -250,11 +251,11 @@ net.Receive("Horde_Votemap", function (len, ply)
     map_votes[ply] = net.ReadString()
 
     local map_collect = {}
-    for _, map in ipairs(map_list) do
+    for _, map in pairs(map_list) do
         map_collect[map] = 0
     end
 
-    for ply, map_voted in pairs(map_votes) do
+    for _, map_voted in pairs(map_votes) do
         for map, count in pairs(map_collect) do
             if map == map_voted then
                 map_collect[map] = count + 1
@@ -263,7 +264,7 @@ net.Receive("Horde_Votemap", function (len, ply)
     end
 
     local total_players = table.Count(player.GetAll())
-    for map, count in pairs(map_collect) do
+    for _, count in pairs(map_collect) do
         if count >= total_players then
             HORDE.vote_remaining_time = math.min(HORDE.vote_remaining_time, 10)
         elseif count >= HORDE:Round2(total_players * 2 / 3) then

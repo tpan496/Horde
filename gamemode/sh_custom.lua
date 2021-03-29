@@ -1,8 +1,8 @@
 function GM:RegisterCustomConfig(name)
     local classfiles, classdirectories = file.Find(self.FolderName .. "/gamemode/custom/*", "LUA")
+    print(self.FolderName .. "/gamemode/custom/")
     table.sort(classfiles)
     table.sort(classdirectories)
-
 
     for i, filename in ipairs(classfiles) do
         if string.sub(filename, -4) == ".lua" then

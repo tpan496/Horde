@@ -9,12 +9,19 @@ function entmeta:Horde_AddSlow(duration, more)
     self.Horde_Slow = 1
     -- VJ
     if (not self.Horde_StoredAnimationPlaybackRate) or (self.Horde_Slow_More < more) then
+        if self.Horde_StoredAnimationPlaybackRate and (self.Horde_Slow_More < more) then
+            if self.AnimationPlaybackRate then
+                self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRate
+            else
+                self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRate)
+            end
+        end
         if self.AnimationPlaybackRate then
             self.Horde_StoredAnimationPlaybackRate = self.AnimationPlaybackRate
-            self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRate * (1 - 0.15 * (1 + more))
+            self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRate * (1 - 0.20 * (1 + more))
         else
             self.Horde_StoredAnimationPlaybackRate = self:GetPlaybackRate()
-            self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRate * (1 - 0.15 * (1 + more)))
+            self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRate * (1 - 0.20 * (1 + more)))
         end
         self.Horde_Slow_More = more
     end

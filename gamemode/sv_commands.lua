@@ -277,3 +277,10 @@ end)
 concommand.Add("horde_map_config", function (ply, cmd, args)
     MapConfig(ply)
 end)
+
+concommand.Add("horde_free_perks", function (ply, cmd, args)
+    if ply:IsAdmin() then
+        RunConsoleCommand("horde_perk_start_wave", 0)
+        RunConsoleCommand("horde_perk_scaling", 0)
+    end
+end)
