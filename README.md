@@ -33,7 +33,9 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_total_enemies_scaling - Forces the gamemode to multiply maximum enemy count by this. You can only INCREASE the number of enemies. 0 by default (disabled).
 - horde_disable_difficulty_voting(0/1) - Disable difficulty voting. 0 by default.
 - horde_enable_ammobox(0/1) - Enable ammobox respawns or not. 1 by default.
+- horde_enable_starter(0/1) - Give player starter weapons or not.
 - horde_arccw_attinv_free(0/1) - Enables free ArcCW attachments or not. 1 by default.
+- horde_testing_unlimited_class_change - Allows for unlimited class changes during break. Please use this only for testing purposes. I will not fix any problems that might be caused by this.
 
 ## Perk Settings
 - horde_perk_start_wave(0-10) - First wave where Tier 1 perks will be unlocked. e.g. At 1, then Tier 1 perks are unlocked after Wave 1.
@@ -41,6 +43,7 @@ You need to change these BEFORE your game/server starts to take effect.
 e.g. <br />
 At 2, Tier 2 perks are unlocked after (start_wave + 2 * 1). Tier 3 perks are unlocked after (start_wave + 2 * 2).<br />
 At 3, Tier 2 perks are unlocked after (start_wave + 3 * 1). Tier 3 perks are unlocked after (start_wave + 3 * 2).
+- horde_free_perks - This command sets start_wave and scaling to be both 0.
 
 #### UI Settings
 - horde_enable_scoreboard(0/1) - Enables built-in scoreboard. 1 by default.
