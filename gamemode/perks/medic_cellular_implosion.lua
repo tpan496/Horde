@@ -18,6 +18,6 @@ PERK.Hooks.OnNPCKilled = function(victim, killer, inflictor)
         ent:Activate()
         timer.Simple(0, function() ent:Detonate() ent:SetArmed(true) end)
         ent:GetPhysicsObject():EnableMotion(false)
-        timer.Simple(2.5, function() if ent:IsValid() then ent:Remove() end end)
+        timer.Simple(3, function() if ent:IsValid() then ent:Remove() end end)
     end
 end

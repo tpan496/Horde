@@ -1,5 +1,5 @@
 PERK.PrintName = "Bushido"
-PERK.Description = "25% increased Slashing damage.\n20% increased movement speed."
+PERK.Description = "25% increased Slashing damage.\n25% increased movement speed."
 PERK.Icon = "materials/perks/bushido.png"
 
 PERK.Hooks = {}
@@ -12,6 +12,6 @@ end
 
 PERK.Hooks.Horde_PlayerMoveBonus = function(ply, mv)
     if not ply:Horde_GetPerk("berserker_bushido") then return end
-    ply:SetWalkSpeed(ply:GetWalkSpeed() * 1.20)
-    ply:SetRunSpeed(ply:GetRunSpeed() * 1.20)
+    ply:SetWalkSpeed(ply:GetWalkSpeed() * 1.25)
+    ply:SetRunSpeed(ply:GetRunSpeed() * 1.25)
 end

@@ -38,8 +38,9 @@ end
 -- Call this if you want Horde to recognize your healing
 function HORDE:OnPlayerHeal(ply, healinfo)
     hook.Run("Horde_ApplyHeal", ply, healinfo)
+    if (ply:GetMaxHealth() <= ply:Health()) and (healinfo:GetOverHealPercentage() <= 0) then return end
     ply:SetHealth(math.min(ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), ply:Health() + healinfo:GetHealAmount()))
-    
+
     local healer = healinfo:GetHealer()
     if not healer:IsValid() then return end
     if not HORDE.player_heal[healer:SteamID()] then HORDE.player_heal[healer:SteamID()] = 0 end

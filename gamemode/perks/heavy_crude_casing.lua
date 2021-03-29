@@ -7,8 +7,9 @@ PERK.Hooks.EntityTakeDamage = function(target, dmg)
     local attacker = dmg:GetAttacker()
     if not attacker:IsValid() or not attacker:IsPlayer() then return end
     if not attacker:Horde_GetPerk("heavy_crude_casing") then return end
-    if not target:IsNPC() or not dmg:GetDamageType() == DMG_BULLET then return end
-    if not target:GetNWEntity("HordeOwner") then
-        target:Horde_AddWeaken(attacker:Horde_GetApplyDebuffDuration(), attacker:Horde_GetApplyDebuffMore())
+    if not target:IsNPC() or target:GetNWEntity("HordeOwner") then return end
+    local dmgtype = dmg:GetDamageType()
+    if dmgtype == DMG_BULLET or dmgtype == DMG_BUCKSHOT then
+        target:Horde_AddWeaken(attacker:Horde_GetApplyDebuffDuration())
     end
 end

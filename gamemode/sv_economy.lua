@@ -423,7 +423,9 @@ net.Receive("Horde_SelectClass", function (len, ply)
     net.WriteString("You changed class to " .. class.name)
     net.WriteInt(0,2)
     net.Send(ply)
-    HORDE.player_class_changed[ply:SteamID()] = true
+    if GetConVar("horde_testing_unlimited_class_change"):GetInt() == 0 then
+        HORDE.player_class_changed[ply:SteamID()] = true
+    end
     ply:Horde_SyncEconomy()
 end)
 
