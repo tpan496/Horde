@@ -3,6 +3,7 @@ AddCSLuaFile()
 SWEP.PrintName = "Horde Medkit"
 SWEP.Author = "robotboy655 & MaxOfS2D"
 SWEP.Purpose = "Heal people with your primary attack, or yourself with the secondary."
+SWEP.Category = "ArcCW - Horde" -- edit this if you like
 
 SWEP.Slot = 5
 SWEP.SlotPos = 3

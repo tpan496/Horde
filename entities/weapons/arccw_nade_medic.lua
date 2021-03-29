@@ -2,7 +2,7 @@ if not ArcCWInstalled then return end
 -- Referenced From GSO
 SWEP.Base = "arccw_base_nade"
 SWEP.Spawnable = false -- this obviously has to be set to true
-SWEP.Category = "ArcCW - GSO (Gear)" -- edit this if you like
+SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Medic Grenade"

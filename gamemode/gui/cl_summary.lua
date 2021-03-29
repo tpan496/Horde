@@ -312,7 +312,7 @@ function PANEL:Votediff(vote_btn, diff)
     net.SendToServer()
 end
 
-function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
+function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, most_heal_player, most_heal, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
     local percentage = 0
     if total_damage > 0 then
         percentage = HORDE:Round2(mvp_damage / total_damage, 2) * 100
@@ -320,9 +320,9 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     self.create_player_panel({x=512 - 240,y=170}, mvp_player,              "MVP", tostring(mvp_kills) .. " Kills, " .. tostring(mvp_damage) .. " Damage (" .. tostring(percentage) .. "%)")
     self.create_player_panel({x=512 - 480 - 5,y=280}, damage_player,       "Most Damage Dealt", tostring(most_damage) .. " Damage")
     self.create_player_panel({x=512 + 5, y=280}, kills_player,             "Most Kills", tostring(most_kills) .. " Kills")
-    self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, " Most Damage Taken", tostring(most_damage_taken) .. " Damage Taken")
+    self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, "Most Damage Taken", tostring(most_damage_taken) .. " Damage Taken")
     self.create_player_panel({x=512 + 5,y=390}, elite_kill_player,         "Elite Killer", tostring(most_elite_kills) .. " Elite Kills")
-    self.create_player_panel({x=512 + 5,y=500}, money_player,              "Money Bag", tostring(most_money) .. "$ Earned")
+    self.create_player_panel({x=512 + 5,y=500}, most_heal_player,          "Most Heal", tostring(most_heal) .. " Healed")
     self.create_player_panel({x=512 - 480 - 5,y=500}, headshot_player,     "SharpShooter", tostring(most_headshots) .. " Headshots")
 
     for _, map in pairs(maps) do

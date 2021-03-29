@@ -7,7 +7,7 @@ end
 
 SWEP.Base = "arccw_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Melee" -- edit this if you like
+SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Bat"
@@ -32,14 +32,14 @@ SWEP.ViewModelFOV = 60
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
-SWEP.MeleeDamage = 135
+SWEP.MeleeDamage = 150
 SWEP.Melee2Damage = 80
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
 SWEP.MeleeDamageType = DMG_CLUB
 SWEP.MeleeRange = 60
-SWEP.MeleeAttackTime = 0.1
+SWEP.MeleeAttackTime = 0.15
 SWEP.MeleeTime = 0.65
 SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 

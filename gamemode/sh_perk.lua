@@ -48,7 +48,7 @@ if CLIENT then
     net.Receive("Horde_PerkChoice", function() HORDE:SendSavedPerkChoices(LocalPlayer():Horde_GetClass().name) end)
 end
 
-function Horde_GetWaveForPerk(perk_level)
+function HORDE:Horde_GetWaveForPerk(perk_level)
     return GetConVar("horde_perk_start_wave"):GetInt() + math.Round((perk_level - 1) * GetConVar("horde_perk_scaling"):GetFloat())
 end
 

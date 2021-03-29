@@ -1,7 +1,7 @@
 local PANEL = {}
 
 surface.CreateFont("Horde_PerkButton_Name", { font = "arial bold", size = 20, bold = true })
-surface.CreateFont("Horde_PerkButton_Text", { font = "arial bold", size = 16, bold = true})
+surface.CreateFont("Horde_PerkButton_Text", { font = "arial bold", size = 15, bold = true})
 
 local function getweaponname(class)
     if language.GetPhrase(class) ~= class then return language.GetPhrase(class) end
@@ -10,7 +10,7 @@ local function getweaponname(class)
 end
 
 function PANEL:Init()
-    local w, h = ScrW() * 0.1, ScrH() * 0.075
+    local w, h = 200, 82
     self:SetSize(w, h)
     self:SetText("")
 
@@ -25,6 +25,10 @@ function PANEL:Init()
     self.title:SetFont("Horde_PerkButton_Name")
     self.title:SetText("Perk Name")
     self.title:SetColor(color_white)
+
+    self.locked_icon = vgui.Create("DImage", self)
+    self.locked_icon:SetSize(15,15)
+    self.locked_icon:SetMaterial(Material("locked.png", "mips smooth"))
 
     self.desc = vgui.Create("DLabel", self)
     self.desc:Dock(FILL)
@@ -65,6 +69,7 @@ function PANEL:OnCursorExited()
 end
 
 function PANEL:SetData(classname, perk_level, choice)
+    self.locked_icon:SetPos(self:GetWide() - 20, 5)
     local perk_choice = HORDE.classes[classname].perks[perk_level].choices[choice]
     if not perk_choice then error("Could not find choice! class: " .. classname .. ", level: " .. perk_level .. ", choice: " .. choice) return end
     self.info = {class = classname, perk_level = perk_level, choice = choice}
@@ -73,18 +78,21 @@ function PANEL:SetData(classname, perk_level, choice)
     if not perk then error("Could not find perk '" .. perk .. "'!") return end
 
     local icon = perk.Icon
+    if icon then
+        self.icon:SetMaterial(Material(icon, "mips smooth"))
+    else
+        self.icon:SetMaterial(Material(HORDE.classes[classname].icon, "mips smooth"))
+    end
     if self.locked then
-        self.icon:SetMaterial(Material("locked.png", "mips smooth"))
+        self.icon:SetImageColor(Color(150,150,150,255))
         self.title:SetColor(color_gray)
         self.desc:SetColor(color_gray)
+        self.locked_icon:SetVisible(true)
     else
-        if icon then
-            self.icon:SetMaterial(Material(icon, "mips smooth"))
-        else
-            self.icon:SetMaterial(Material(HORDE.classes[classname].icon, "mips smooth"))
-        end
+        self.icon:SetImageColor(color_white)
         self.title:SetColor(color_white)
         self.desc:SetColor(color_white)
+        self.locked_icon:SetVisible(false)
     end
 
     LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}

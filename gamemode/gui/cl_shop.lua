@@ -112,8 +112,13 @@ function PANEL:Init()
             end
 
             if text == "Select Class" then
-                description_panel:SetSize(self:GetWide() * 3 / 4, self:GetTall() - 100)
-                container:SetSize(self:GetWide() / 4, self:GetTall() - 100)
+                if ScrW() <= 1280 then
+                    description_panel:SetSize(self:GetWide() * 5 / 6, self:GetTall() - 100)
+                    container:SetSize(self:GetWide() / 6, self:GetTall() - 100)
+                else
+                    description_panel:SetSize(self:GetWide() * 3 / 4, self:GetTall() - 100)
+                    container:SetSize(self:GetWide() / 4, self:GetTall() - 100)
+                end
             else
                 description_panel:SetSize(self:GetWide() / 2, self:GetTall() - 100)
                 container:SetSize(self:GetWide() / 2, self:GetTall() - 100)

@@ -124,9 +124,6 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             if not defer_reward then
                 killer:Horde_AddMoney(reward)
             end
-            
-            if not HORDE.player_money_earned[killer:SteamID()] then HORDE.player_money_earned[killer:SteamID()] = 0 end
-            HORDE.player_money_earned[killer:SteamID()] = HORDE.player_money_earned[killer:SteamID()] + reward
 
             if victim:GetVar("is_elite") then
                 if not HORDE.player_elite_kills[killer:SteamID()] then HORDE.player_elite_kills[killer:SteamID()] = 0 end
@@ -189,7 +186,6 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
      if took then
         if ent:IsNPC() then
             if dmg:GetAttacker():IsPlayer() then
-                print(dmg:GetDamage())
                 local id = dmg:GetAttacker():SteamID()
                 if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
@@ -742,8 +738,6 @@ function HORDE:WaveStart()
         return
     end
 
-    HORDE.current_wave = 7
-    
     if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
         net.Start("Horde_LegacyNotification")
         net.WriteString("No enemy config set for this wave. Falling back to previous wave settings.")
@@ -895,14 +889,14 @@ function HORDE:WaveEnd()
     net.Broadcast()
 
     -- Global Wave End Effects
-    if horde_perk_progress < 3 and Horde_GetWaveForPerk(horde_perk_progress) then
-        timer.Simple(5, function()
+    if horde_perk_progress <= 3 and HORDE.current_wave >= HORDE:Horde_GetWaveForPerk(horde_perk_progress) then
+        timer.Simple(1, function()
             net.Start("Horde_LegacyNotification")
-                net.WriteString("Tier " .. horde_perk_progress " perks have been unlocked!")
+                net.WriteString("Tier " .. horde_perk_progress .. " perks have been unlocked!")
                 net.WriteInt(0,2)
             net.Broadcast()
+            horde_perk_progress = math.min(3, horde_perk_progress + 1)
         end)
-        horde_perk_progress = math.min(3, horde_perk_progress + 1)
     end
     for _, ply in pairs(player.GetAll()) do
         -- Minion life recovery
