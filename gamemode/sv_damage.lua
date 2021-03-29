@@ -12,6 +12,12 @@ end)
 hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo)
     if not npc:IsValid() then return end
 
+    local attacker = dmginfo:GetAttacker()
+    if attacker:GetNWEntity("HordeOwner"):IsPlayer() then
+        dmginfo:SetInflictor(attacker)
+        dmginfo:SetAttacker(attacker:GetNWEntity("HordeOwner"))
+    end
+
     local ply = dmginfo:GetAttacker()
     if not ply:IsPlayer() then return end
 

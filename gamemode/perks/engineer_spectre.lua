@@ -19,6 +19,6 @@ PERK.Hooks.PostEntityTakeDamage = function (ent, dmg, took)
     if not attacker:IsValid() or not inflictor:IsValid() then return end
     if took and ent:IsNPC() and attacker:IsPlayer() and inflictor:GetNWEntity("HordeOwner"):IsPlayer() and attacker:Horde_GetPerk("engineer_spectre") then
         local leech = dmg:GetDamage() * 0.1
-        inflictor:SetHealth(math.max(inflictor:GetMaxHealth(), leech + inflictor:Health()))
+        inflictor:SetHealth(math.min(inflictor:GetMaxHealth(), leech + inflictor:Health()))
     end
 end

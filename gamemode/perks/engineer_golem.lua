@@ -11,7 +11,7 @@ PERK.Hooks.OnEntityCreated = function (ent)
             local id = ent:GetCreationID()
             timer.Create("Horde_Golem" .. id, function()
                 if not ent:IsValid() then timer.Remove("Horde_Golem" .. id) return end
-                ent:SetHealth(math.max(ent:Health() + ent:GetMaxHealth() * 0.02, ent:GetMaxHealth()))
+                ent:SetHealth(math.min(ent:Health() + ent:GetMaxHealth() * 0.02, ent:GetMaxHealth()))
             end)
         end)
     end

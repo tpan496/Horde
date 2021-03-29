@@ -1,5 +1,5 @@
 PERK.PrintName = "Demolition Base"
-PERK.Description = "85% increased Blast damage resistance.\nRegenerate 1 frag grenade every 30 seconds, if you do not have one."
+PERK.Description = "The Demolition class is a crowd-control class that can also provide high single target damage.\nComplexity: MEDIUM\n\n85% increased Blast damage resistance.\nRegenerate 1 frag grenade every 30 seconds, if you do not have one."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
