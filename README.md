@@ -35,6 +35,10 @@ You need to change these BEFORE your game/server starts to take effect.
 - horde_enable_ammobox(0/1) - Enable ammobox respawns or not. 1 by default.
 - horde_arccw_attinv_free(0/1) - Enables free ArcCW attachments or not. 1 by default.
 
+## Perk Settings
+- horde_perk_start_wave(0-10) - First wave where Tier 1 perks will be unlocked. e.g. at 1, then Tier 1 perks are unlocked after Wave 1.
+- horde_perk_scaling(0-) - The multiplier to the level for which wave it is unlocked. e.g. at 2, perk level 2 is unlocked after (start_wave + 2 * 1). at 3, perk level 2 is unlocked after (start_wave + 3 * 1).
+
 #### UI Settings
 - horde_enable_scoreboard(0/1) - Enables built-in scoreboard. 1 by default.
 - horde_enable_shop(0/1) - Enables shop menu or not. 1 by default.
