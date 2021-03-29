@@ -1,6 +1,5 @@
 function GM:RegisterCustomConfig(name)
     local classfiles, classdirectories = file.Find(self.FolderName .. "/gamemode/custom/*", "LUA")
-    print(self.FolderName .. "/gamemode/custom/")
     table.sort(classfiles)
     table.sort(classdirectories)
 

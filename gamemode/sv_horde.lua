@@ -747,7 +747,7 @@ function HORDE:WaveStart()
 
     horde_players_count = table.Count(player.GetAll())
     local difficulty_coefficient = HORDE.difficulty * 0.05
-    
+
     if HORDE.endless == 0 then
         -- No endless
         HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(horde_players_count * (0.75 + difficulty_coefficient))

@@ -24,7 +24,7 @@ local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25, 1.25}
 local difficulty_poison_headcrab_damage = {70, 80, 90, 90}
 
 -- Flat modifiers
-HORDE.difficulty_elite_health_scale_add = {0, 0.05, 0.10, 0.15}
+HORDE.difficulty_elite_health_scale_add = {0, 0.05, 0.075, 0.010}
 HORDE.difficulty_additional_pack = {0, 1, 2, 2}
 HORDE.difficulty_additional_ammoboxes = {2, 1, 0, 0}
 
