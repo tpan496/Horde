@@ -232,6 +232,7 @@ function PANEL:Init()
     reset_btn:DockMargin(10, 5, 10, 5)
     reset_btn.DoClick = function ()
         if GetConVarNumber("horde_default_class_config") == 1 then return end
+        HORDE.classes = {}
         HORDE:GetDefaultClassesData()
 
         net.Start("Horde_SetClassData")

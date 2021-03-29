@@ -68,7 +68,11 @@ function PANEL:Paint()
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
         if mat[1] ~= self.class then mat = {self.class, Material(self.class.icon, "mips smooth")} end
         if mat then surface.SetMaterial(mat[2]) end
-        surface.DrawTexturedRect(self:GetWide() / 2 - 50, 0, 40, 40)
+        if ScrW() <= 1280 then
+            surface.DrawTexturedRect(self:GetWide() / 2 - 135, 0, 40, 40)
+        else
+            surface.DrawTexturedRect(self:GetWide() / 2 - 50, 0, 40, 40)
+        end
     end
 end
 

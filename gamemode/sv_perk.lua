@@ -14,7 +14,7 @@ function plymeta:Horde_ApplyPerksForClass()
     self.Horde_PerkChoices[class] = self.Horde_PerkChoices[class] or {}
 
     for perk_level, v in pairs(HORDE.classes[class].perks) do
-        if HORDE.current_wave < Horde_GetWaveForPerk(perk_level) then goto cont end
+        if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then goto cont end
         local choice = v.choices[self.Horde_PerkChoices[class][perk_level] or 1]
         if not choice then error("Invalid choice in perk level " .. perk_level .. " for " .. class .. "!") return end
         if self:Horde_GetPerk(choice) then goto cont end
@@ -40,13 +40,18 @@ net.Receive("Horde_PerkChoice", function(len, ply)
         ply.Horde_PerkChoices[class][level] = net.ReadUInt(4)
     end
 
+    if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(level) then return end
+
     if HORDE.current_break_time > 0 and level > 0 and (class == ply:Horde_GetClass().name) then
         -- Set the current perk choice and unset all others
         -- Only apply perk changes if the current class is correct
         for c, perk in pairs(HORDE.classes[class].perks[level].choices) do
-            if c == ply.Horde_PerkChoices[class][level] then
+            local has_perk = ply:Horde_GetPerk(perk)
+            if c == ply.Horde_PerkChoices[class][level] and (not has_perk)then
+                -- We only set the perk if we do not have this perk
                 ply:Horde_SetPerk(perk)
-            else
+            elseif c ~= ply.Horde_PerkChoices[class][level] and has_perk then
+                -- We only reset the perk if we have this perk and it is not selected
                 ply:Horde_UnsetPerk(perk)
             end
         end

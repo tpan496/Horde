@@ -21,7 +21,7 @@ HORDE.difficulty_health_multiplier = {1, 1.25, 1.5, 1.5}
 local difficulty_start_money_multiplier = {1, 0.9, 0.8, 0.75}
 local difficulty_spawn_radiuis_multiplier = {1, 0.75, 0.5, 0.5}
 local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25, 1.25}
-local difficulty_poison_headcrab_damage = {70, 85, 99, 99}
+local difficulty_poison_headcrab_damage = {70, 85, 95, 95}
 
 -- Flat modifiers
 HORDE.difficulty_elite_health_scale_add = {0, 0.05, 0.10, 0.15}

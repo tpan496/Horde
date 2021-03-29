@@ -46,7 +46,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if bonus.evasion > 0 then
         local evade = math.random()
         if evade <= bonus.evasion then
-            sound.Play("horde/player/evade.mp3", ply:GetPos())
+            sound.Play("horde/player/evade.ogg", ply:GetPos())
             hook.Run("Horde_OnPlayerEvade", ply, dmg)
             return true
         end

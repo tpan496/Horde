@@ -270,8 +270,8 @@ net.Receive("Horde_GameEnd", function ()
     local kills_player = net.ReadEntity()
     local most_kills = net.ReadInt(32)
 
-    local money_player = net.ReadEntity()
-    local most_money = net.ReadInt(32)
+    local most_heal_player = net.ReadEntity()
+    local most_heal = net.ReadInt(32)
 
     local headshot_player = net.ReadEntity()
     local most_headshots = net.ReadInt(32)
@@ -287,7 +287,7 @@ net.Receive("Horde_GameEnd", function ()
     local maps = net.ReadTable()
 
     local end_gui = vgui.Create("HordeSummaryPanel")
-    end_gui:SetData(status, mvp, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, money_player, most_money, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
+    end_gui:SetData(status, mvp, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, most_heal_player, most_heal, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
 
     HORDE.game_ended = true
 end)

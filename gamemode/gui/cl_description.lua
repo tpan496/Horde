@@ -102,9 +102,6 @@ function PANEL:Init()
     self.perk_panel:Dock(FILL)
     self.perk_panel:SetVisible(false)
     self.perk_panel:SetBackgroundColor(Color(40,40,40))
-    self.perk_layout = vgui.Create("DIconLayout", self.perk_panel)
-    self.perk_layout:Dock(FILL)
-    self.perk_layout:DockMargin(4, 10, 4, 0)
 end
 
 function PANEL:DoClick()
@@ -179,14 +176,22 @@ end
 
 function PANEL:SetData(item)
     self.perk_panel:SetSize(self:GetWide(), self:GetTall())
-    self.perk_layout:SetSize(self:GetWide() - 5, self:GetTall())
-    self.perk_layout:SetSpaceY(8)
-    for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end
+    if self.perk_layout then for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end end
     self.perk_panel:SetVisible(false)
     self.item = item
     if not self.item then return end
     if not self.item.class then
         if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
+        if not self.perk_scroll_panel then
+            self.perk_scroll_panel = vgui.Create("DScrollPanel", self.perk_panel)
+            self.perk_scroll_panel:SetSize(self:GetWide(), self:GetTall() - 80)
+            self.perk_layout = vgui.Create("DIconLayout", self.perk_scroll_panel)
+            self.perk_layout:Dock(FILL)
+            self.perk_layout:DockMargin(4, 10, 0, 4)
+            self.perk_layout:DockPadding(0, 0, 0, 50)
+            self.perk_layout:SetSpaceY(8)
+            for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end
+        end
         local class = self.item
         for perk_level, v in SortedPairs(class.perks) do
             if not v.choices then goto cont end
@@ -201,13 +206,13 @@ function PANEL:SetData(item)
             title:SetContentAlignment(5)
             local cur_panel = self.perk_layout:Add("DIconLayout")
             cur_panel:SetSpaceX(4)
-            cur_panel:SetSize(self.perk_layout:GetWide(), ScrH() * 0.075)
+            cur_panel:SetSize(self:GetWide() - 8, 82)
             cur_panel:Dock(TOP)
             cur_panel:DockMargin(0, 10, 0, 0)
 
-            local unlocked_level = Horde_GetWaveForPerk(perk_level)
+            local unlocked_level = HORDE:Horde_GetWaveForPerk(perk_level)
             if unlocked_level > 0 and unlocked_level > HORDE.current_wave then
-                title:SetText("[WAVE " .. unlocked_level .. "] "  .. (v.title or ""))
+                title:SetText("[Unlock After Wave " .. unlocked_level .. "] "  .. (v.title or ""))
                 title:SetColor(color_gray)
             else
                 title:SetText(v.title)
@@ -221,7 +226,7 @@ function PANEL:SetData(item)
                 else
                     perkbutton:SetLocked(nil)
                 end
-                perkbutton:SetSize((cur_panel:GetWide() - 8) / #v.choices, ScrH() * 0.075)
+                perkbutton:SetSize(cur_panel:GetWide() / 2, 82)
                 perkbutton:SetData(class.name, perk_level, choice)
             end
             ::cont::
@@ -345,8 +350,7 @@ function PANEL:Paint()
                 surface.DrawTexturedRect(self:GetWide() / 2 + 80, 5, 40, 40)
             end
 
-            self.ammo_one_btn:SetVisible(false)
-            self.ammo_ten_btn:SetVisible(false)
+            self.ammo_panel:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel:SetVisible(false)
             
@@ -370,8 +374,7 @@ function PANEL:Paint()
             end
 
             if self.item.category ~= "Melee" and self.item.category ~= "Equipment" then
-                self.ammo_one_btn:SetVisible(true)
-                self.ammo_ten_btn:SetVisible(true)
+                self.ammo_panel:SetVisible(true)
 
                 if self.item.ammo_price and self.item.ammo_price >= 0 then
                     self.ammo_one_btn:SetTextColor(Color(255,255,255))
@@ -419,8 +422,7 @@ function PANEL:Paint()
                     end
                 end
             else
-                self.ammo_one_btn:SetVisible(false)
-                self.ammo_ten_btn:SetVisible(false)
+                self.ammo_panel:SetVisible(false)
                 self.ammo_secondary_btn:SetVisible(false)
                 self.current_ammo_panel.Paint = function () end
             end
@@ -432,8 +434,7 @@ function PANEL:Paint()
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
 
-            self.ammo_one_btn:SetVisible(false)
-            self.ammo_ten_btn:SetVisible(false)
+            self.ammo_panel:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
             self.sell_btn:SetVisible(false)
@@ -462,17 +463,15 @@ function PANEL:Paint()
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
 
-            self.ammo_one_btn:SetVisible(false)
-            self.ammo_ten_btn:SetVisible(false)
+            self.ammo_panel:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
         end
     else
         self.buy_btn:SetVisible(false)
         self.sell_btn:SetVisible(false)
-        self.ammo_one_btn:SetVisible(false)
-        self.ammo_ten_btn:SetVisible(false)
         self.ammo_secondary_btn:SetVisible(false)
+        self.ammo_panel:SetVisible(false)
     end
 
 end

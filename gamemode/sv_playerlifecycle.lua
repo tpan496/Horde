@@ -45,8 +45,8 @@ function HORDE:GameEnd(status)
     local second_kills_player = 0
     local second_most_kills = 0
 
-    local money_player = randomplayer
-    local most_money = 0
+    local most_heal_player = randomplayer
+    local most_heal = 0
 
     local headshot_player = randomplayer
     local most_headshots = 0
@@ -84,9 +84,9 @@ function HORDE:GameEnd(status)
             kills_player = ply
         end
 
-        if HORDE.player_money_earned and HORDE.player_money_earned[id] and HORDE.player_money_earned[id] > most_money then
-            most_money = HORDE.player_money_earned[id]
-            money_player = ply
+        if HORDE.player_heal and HORDE.player_heal[id] and HORDE.player_heal[id] > most_heal then
+            most_heal = HORDE.player_heal[id]
+            most_heal_player = ply
         end
 
         if HORDE.player_damage_taken and HORDE.player_damage_taken[id] and HORDE.player_damage_taken[id] > most_damage_taken then
@@ -148,8 +148,8 @@ function HORDE:GameEnd(status)
     net.WriteEntity(kills_player)
     net.WriteInt(most_kills, 32)
 
-    net.WriteEntity(money_player)
-    net.WriteInt(most_money, 32)
+    net.WriteEntity(most_heal_player)
+    net.WriteInt(most_heal, 32)
 
     net.WriteEntity(headshot_player)
     net.WriteInt(most_headshots, 32)
@@ -321,7 +321,6 @@ function HORDE:PlayerInit(ply)
     ply:Horde_SetDropEntities({})
     ply:Horde_SetWeight(HORDE.max_weight)
     ply:Horde_SetClass(HORDE.classes[HORDE.Class_Survivor])
-    print(ply.weight)
     ply:Horde_ApplyPerksForClass()
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:Horde_SyncEconomy()
