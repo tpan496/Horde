@@ -50,13 +50,13 @@ end
 
 hook.Add("Horde_OnPlayerDamage", "Horde_AdrenalineStackDamage", function (ply, npc, bonus, hitgroup)
     if ply:Horde_GetAdrenalineStack() > 0 then
-        bonus.increase = bonus.increase + ply:Horde_GetAdrenalineStack() * 0.05
+        bonus.increase = bonus.increase + ply:Horde_GetAdrenalineStack() * 0.06
     end
 end)
 
 hook.Add("Horde_PlayerMoveBonus", "Horde_AdrenalineStackMovespeed", function(ply, mv)
     if ply:Horde_GetAdrenalineStack() > 0 then
-        local bonus = (1 + ply:Horde_GetAdrenalineStack() * 0.05)
+        local bonus = (1 + ply:Horde_GetAdrenalineStack() * 0.06)
         ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus)
         ply:SetRunSpeed(ply:Horde_GetClass().sprintspd * bonus)
     end

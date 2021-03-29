@@ -292,6 +292,7 @@ function PANEL:Init()
     local model_scale_editor = create_property_editor("model scaling", 35, basic_modifier_panel)
     local weapon_editor = create_property_editor("weapon", 35, basic_modifier_panel)
     local skin_editor = create_property_editor("skin", 35, basic_modifier_panel)
+    local model_editor = create_property_editor("model override", 35, basic_modifier_panel)
     local spawn_limit_editor = create_property_editor("spawn limit", 35, basic_modifier_panel)
     local color_editor = create_property_editor("color", 130, basic_modifier_panel)
     
@@ -357,6 +358,7 @@ function PANEL:Init()
         if skin_editor:GetText() ~= "" then
             skin = tonumber(skin_editor:GetText())
         end
+
         HORDE:CreateEnemy(
             name_editor:GetText(),
             class_editor:GetText(),
@@ -372,7 +374,8 @@ function PANEL:Init()
             spawn_limit_editor:GetInt(),
             boss_properties,
             mut_editor:GetText(),
-            skin
+            skin,
+            model_editor:GetText()
         )
 
         -- Reload from disk
@@ -460,7 +463,8 @@ function PANEL:Init()
             spawn_limit_editor:GetInt(),
             boss_properties,
             mut_editor:GetText(),
-            skin
+            skin,
+            model_editor:GetText()
         )
         end
 
@@ -570,6 +574,7 @@ function PANEL:Init()
             end
             mut_editor:ChooseOption(enemy.mutation or "")
             skin_editor:SetValue(enemy.skin or "")
+            model_editor:SetValue(enemy.model or "")
         end)
 
         menu:AddOption("Delete", function()

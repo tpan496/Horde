@@ -11,7 +11,7 @@ ENT.AdminSpawnable = false
 ENT.Model = "models/weapons/arccw_go/w_eq_smokegrenade_thrown.mdl"
 ENT.FuseTime = 2
 ENT.ArmTime = 0
-ENT.Duration = 15
+ENT.Duration = 7.5
 ENT.ImpactFuse = false
 
 ENT.Armed = false
@@ -35,7 +35,7 @@ function entmeta:Horde_AddEffect_MedicGrenade(ent)
         if self:IsPlayer() then
             local healinfo = HealInfo:New({amount=5, healer=ent.Owner})
             HORDE:OnPlayerHeal(self, healinfo)
-        elseif self:IsNPC() and (not self:GetNWEntity("HordeOwner"):IsValid()) then
+        elseif ent:IsValid() and ent.Owner:IsValid() and ent.Inflictor():IsValid() and self:IsNPC() and (not self:GetNWEntity("HordeOwner"):IsValid()) then
             local d = DamageInfo()
             d:SetDamage(25)
             d:SetAttacker(ent.Owner)

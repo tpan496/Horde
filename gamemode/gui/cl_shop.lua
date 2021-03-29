@@ -102,7 +102,7 @@ function PANEL:Init()
         if firstBtn then firstBtn = false; btn:SetActive(true) end
 
         btn.DoClick = function(pnl)
-            description_panel.item = nil
+            description_panel:SetData(nil)
             for k, v in pairs(btns) do v:SetActive(false) v:OnDeactivate() end
             pnl:SetActive(true) pnl:OnActivate()
             surface.PlaySound("UI/buttonclick.wav")
@@ -110,11 +110,13 @@ function PANEL:Init()
                 -- Reload attachments everytime a player click this
                 self:ReloadAttachments(attachments, container, description_panel)
             end
-            description_panel:SetSize(self:GetWide() / 2, self:GetTall() - 100)
-            container:SetSize(self:GetWide() / 2, self:GetTall() - 100)
+
             if text == "Select Class" then
                 description_panel:SetSize(self:GetWide() * 3 / 4, self:GetTall() - 100)
                 container:SetSize(self:GetWide() / 4, self:GetTall() - 100)
+            else
+                description_panel:SetSize(self:GetWide() / 2, self:GetTall() - 100)
+                container:SetSize(self:GetWide() / 2, self:GetTall() - 100)
             end
         end
 

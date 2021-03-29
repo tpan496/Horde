@@ -66,6 +66,7 @@ net.Receive("Horde_RenderCenterText", function ()
         if num >= 0 and num <= 10 then
             if HORDE.PlayerReadyPanel then
                 HORDE.PlayerReadyPanel:Remove()
+                HORDE.HelpPanel:Remove()
             end
             if num == 10 then
                 surface.PlaySound("HL1/fvox/ten.wav")

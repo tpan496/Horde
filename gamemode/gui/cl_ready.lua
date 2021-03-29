@@ -53,8 +53,14 @@ end
 
 vgui.Register("HordePlayerReadyPanel", PANEL, "DPanel")
 
-
 HORDE.PlayerReadyPanel = vgui.Create("HordePlayerReadyPanel")
+HORDE.HelpPanel = vgui.Create("DPanel")
+HORDE.HelpPanel:SetSize(250, 50)
+HORDE.HelpPanel:SetPos(ScrW() / 2 - 100, ScrH() - 75)
+HORDE.HelpPanel.Paint = function (w,h)
+    draw.RoundedBox(10, 0, 0, 250, 50, HORDE.color_hollow)
+    draw.SimpleText("F3 - Shop, F4 - Ready", "Trebuchet24", 26, 12, HORDE.color_white)
+end
 
 net.Receive("Horde_PlayerReadySync", function ()
     HORDE.player_ready = net.ReadTable()
@@ -88,5 +94,6 @@ end)
 net.Receive("Horde_RemoveReadyPanel", function()
     if HORDE.PlayerReadyPanel then
         HORDE.PlayerReadyPanel:Remove()
+        HORDE.HelpPanel:Remove()
     end
 end)

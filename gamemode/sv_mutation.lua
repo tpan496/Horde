@@ -23,6 +23,7 @@ hook.Add("EntityRemoved", "Horde_UnsetMutationOnEntityRemoved", function(ent)
 end)
 
 HORDE.mutations = {}
+HORDE.mutations_sequential = {}
 
 local prefix = "horde/gamemode/mutations/"
 local function Horde_LoadMutations()
@@ -38,6 +39,7 @@ local function Horde_LoadMutations()
         hook.Run("Horde_OnLoadMutation", MUTATION)
 
         HORDE.mutations[MUTATION.ClassName] = MUTATION
+        table.insert(HORDE.mutations_sequential, MUTATION.ClassName)
 
         for k, v in pairs(MUTATION.Hooks or {}) do
             hook.Add(k, "horde_mutation_" .. MUTATION.ClassName, v)

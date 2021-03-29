@@ -24,7 +24,7 @@ MUTATION.Hooks.Horde_OnEnemyKilled = function(victim, killer, weapon)
 	    util.Effect("nemesis_explosion", e)
 
         local dmginfo = DamageInfo()
-        dmginfo:SetInflictor(victim)
+        dmginfo:SetInflictor(killer)
 		dmginfo:SetAttacker(victim)
 		dmginfo:SetDamageType(DMG_ACID)
 		dmginfo:SetDamage(math.min(victim:GetMaxHealth() * 0.25, 50))

@@ -49,7 +49,7 @@ if CLIENT then
 end
 
 function Horde_GetWaveForPerk(perk_level)
-    return math.Round((perk_level - 1) * GetConVar("horde_perk_scaling"):GetFloat())
+    return GetConVar("horde_perk_start_wave"):GetInt() + math.Round((perk_level - 1) * GetConVar("horde_perk_scaling"):GetFloat())
 end
 
 local plymeta = FindMetaTable("Player")
@@ -133,4 +133,7 @@ local function Horde_LoadPerks()
     end
     PERK = nil
 end
-Horde_LoadPerks()
+
+if GetConVar("horde_enable_perk"):GetInt() == 1 then
+    Horde_LoadPerks()
+end

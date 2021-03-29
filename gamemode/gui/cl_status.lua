@@ -50,3 +50,7 @@ net.Receive("Horde_SyncStatus", function()
 
     LocalPlayer():SetStatus(status, stack)
 end)
+
+net.Receive("Horde_ClearStatus", function()
+    LocalPlayer().Horde_StatusTable = {}
+end)

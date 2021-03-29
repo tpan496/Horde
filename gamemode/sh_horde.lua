@@ -4,6 +4,7 @@ CreateConVar("horde_default_class_config", 1, FCVAR_SERVER_CAN_EXECUTE, "Use def
 CreateConVar("horde_max_wave", 10, FCVAR_SERVER_CAN_EXECUTE, "Max waves.")
 CreateConVar("horde_break_time", 60, FCVAR_SERVER_CAN_EXECUTE, "Break time between waves.")
 CreateConVar("horde_enable_shop", 1, FCVAR_SERVER_CAN_EXECUTE, "Enables shop menu or not.")
+CreateConVar("horde_enable_perk", 1, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "Enables perks or not.")
 CreateConVar("horde_enable_client_gui", 1, FCVAR_SERVER_CAN_EXECUTE, "Enables client information ui or not.")
 CreateConVar("horde_max_spawn_distance", 2000, FCVAR_SERVER_CAN_EXECUTE, "Maximum enenmy respawn distance.")
 CreateConVar("horde_min_spawn_distance", 400, FCVAR_SERVER_CAN_EXECUTE, "Minimum enenmy respawn distance.")
@@ -29,9 +30,10 @@ CreateConVar("horde_disable_difficulty_voting", 0, FCVAR_SERVER_CAN_EXECUTE, "Di
 CreateConVar("horde_endless", 0, FCVAR_SERVER_CAN_EXECUTE, "Endless.")
 CreateConVar("horde_total_enemies_scaling", 0, FCVAR_SERVER_CAN_EXECUTE, "Forces the gamemode to multiply maximum enemy count by this.")
 
-CreateConVar("horde_perk_scaling", 0, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "The multiplier to the level for which wave it is unlocked. e.g. at 1.5, perk level 4 is unlocked at wave 6.", 0)
+CreateConVar("horde_perk_start_wave", 0, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "The wave when Tier 1 perks are active.")
+CreateConVar("horde_perk_scaling", 0, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "The multiplier to the level for which wave it is unlocked. e.g. at 1.5, perk level 4 is unlocked at start_wave + 6.", 0)
 
-CreateConVar("horde_arccw_attinv_free", 1, FCVAR_SERVER_CAN_EXECUTE, "Free ArcCW attachments.")
+CreateConVar("horde_arccw_attinv_free", 1, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "Free ArcCW attachments.")
 
 CreateConVar("horde_ready_countdown_ratio", 0.5, FCVAR_SERVER_CAN_EXECUTE, "Ratio of players required to start the 60 second countdown (0-1).")
 
@@ -121,7 +123,7 @@ HORDE.render_highlight_disable = 0
 HORDE.render_highlight_enemies = 1
 HORDE.render_highlight_ammoboxes = 2
 HORDE.enable_shop = GetConVarNumber("horde_enable_shop")
-HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM"}
+HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM", "NIGHTMARE"}
 
 -- ArcCW Attachments
 if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then

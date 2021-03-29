@@ -7,9 +7,13 @@ end
 function EFFECT:Think()
     if self.ticks % 5 == 0 then
         if not self.entity or not self.entity:IsValid() then return end
-        local emitter = ParticleEmitter(self.entity:GetPos())
-        if emitter then
-            local smoke = emitter:Add("particles/smokey", self.entity:GetPos())
+        local pos = self.entity:GetPos()
+        if not self.emitter then
+            self.emitter = ParticleEmitter(pos)
+        end
+        
+        if self.emitter then
+            local smoke = self.emitter:Add("particles/smokey", pos)
             smoke:SetGravity( Vector(0, 0, 1500) )
             smoke:SetDieTime( math.Rand(0.5, 1) )
             smoke:SetStartAlpha(20)

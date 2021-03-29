@@ -112,6 +112,10 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
     HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_go_melee_knife", 500,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
+    HORDE:CreateItem("Melee",      "Katana",         "arccw_horde_katana", 2000,  4, "Ninja sword.\nLong attack range and fast attack speed.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false, Berserker=true}, 10, -1)
+    HORDE:CreateItem("Melee",      "Bat",            "arccw_horde_bat",    2000,  4, "Sturdy baseball bat.\nHits like a truck.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false, Berserker=true}, 10, -1)
 
     HORDE:CreateItem("Pistol",     "9mm",            "weapon_pistol",     150,  0, "Combine standard sidearm.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 2, -1)
@@ -189,14 +193,16 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Rifle",      "Tavor",          "arccw_mw2_tavor",   2250, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
 
-    HORDE:CreateItem("Rifle",      "AWP",            "arccw_go_awp",      1500, 7, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 5, -1)
-    HORDE:CreateItem("Rifle",      "ACR",            "arccw_mw2_acr",     2150, 7, "Remington Adaptive Combat Rifle.\nA modular semi-Auto rifle.",
+    HORDE:CreateItem("Rifle",      "ACR",            "arccw_mw2_acr",       2150, 7, "Remington Adaptive Combat Rifle.\nA modular semi-Auto rifle.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "SCAR",           "arccw_mw2_scar",     2250, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
+    HORDE:CreateItem("Rifle",      "SCAR",           "arccw_mw2_scar",      2250, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "G3",             "arccw_go_g3",       2250, 8, "G3 Battle Rifle.\nA 7.62×51mm NATO, select-fire battle rifle developed by H&K.",
+    HORDE:CreateItem("Rifle",      "G3",             "arccw_go_g3",         2250, 8, "G3 Battle Rifle.\nA 7.62×51mm NATO, select-fire battle rifle developed by H&K.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
+    HORDE:CreateItem("Rifle",      "AWP",            "arccw_horde_awp",     1750, 7, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1)
+    HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3000, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 25, -1)
 
     HORDE:CreateItem("MG",         "M249",           "arccw_go_m249para",  2250, 10, "M249 light machine gun.\nA gas operated and air-cooled weapon of destruction.",
     {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 25, -1)
@@ -209,6 +215,8 @@ function HORDE:GetDefaultItemsData()
     {Medic=false, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 100, -1)
     HORDE:CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         2000,  7, "Laser-guided rocket propulsion device.",
     {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
+    HORDE:CreateItem("Explosive",  "RPG-7",          "arccw_horde_rpg7",   3000,  9, "Anti-tank rocket launcher developed by Soviet Union.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=false, Ghost=false, Engineer=false}, 10, -1)
     HORDE:CreateItem("Explosive",  "SLAM",           "weapon_slam",        400,   2, "Selectable Lightweight Attack Munition.\nRMB to detonate. Attach to wall to active laser mode.",
     {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 0, 100)
     HORDE:CreateItem("Explosive",  "Incendiary Grenade",   "arccw_go_nade_incendiary",        1500,   1, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
@@ -222,15 +230,17 @@ function HORDE:GetDefaultItemsData()
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3})
     HORDE:CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,   0, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
     {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 100, -1)
+    HORDE:CreateItem("Special",    "Throwing Knives",   "arccw_go_nade_knife", 800,  2, "Ranged throwing knives.\nThrown blades are retrievable.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false, Berserker=true}, 10, -1)
 
-    HORDE:CreateItem("Equipment",  "Medkit",         "weapon_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1)
+    HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
     HORDE:CreateItem("Equipment",  "Health Vial",    "item_healthvial",    20,   1, "A capsule filled with sticky green liquid.\nHeals instantly when picked up.",
     {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=5})
     HORDE:CreateItem("Equipment", "Kevlar Armor Battery", "item_battery", 160, 0, "Armor battery.\nEach one provides 15 armor. Personal use only.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE})
     HORDE:CreateItem("Equipment", "Full Kevlar Armor", "armor100", 1000, 0, "Full kevlar armor set.\nFills up 100% of your armor bar.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=100})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=100})
     --[[
     HORDE:CreateItem("Equipment", "Kaom's Heart", "armor_glorious_plate", 10000, 0, "The warrior who fears will fall.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=931})

@@ -234,7 +234,7 @@ net.Receive("Horde_SyncClasses", function ()
 end)
 
 net.Receive("Horde_SyncDifficulty", function ()
-    HORDE.difficulty = net.ReadInt(3)
+    HORDE.difficulty = net.ReadUInt(3)
 end)
 
 net.Receive("Horde_SyncMaps", function ()
@@ -291,3 +291,6 @@ net.Receive("Horde_GameEnd", function ()
 
     HORDE.game_ended = true
 end)
+
+killicon.AddAlias("arccw_horde_awp", "arccw_go_awp")
+killicon.AddAlias("arccw_horde_barret", "arccw_mw2_barrett")
