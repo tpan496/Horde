@@ -1,5 +1,5 @@
 PERK.PrintName = "Medic Base"
-PERK.Description = "Regenerate 2% health per second."
+PERK.Description = "The Medic class is a durable support class that focuses on healing and buffing teammates.\nComplexity: MEDIUM\n\nRegenerate 2% health per second."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

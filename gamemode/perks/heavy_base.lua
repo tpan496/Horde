@@ -1,5 +1,5 @@
 PERK.PrintName = "Heavy Base"
-PERK.Description = "Regenerate 1 armor per second.\nRegenerate up to 25 armor."
+PERK.Description = "The Heavy class is a tank class that provides strong suppression firepower.\nComplexity: EASY\n\nRegenerate 1 armor per second.\nRegenerate up to 25 armor."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

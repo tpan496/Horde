@@ -1,5 +1,5 @@
 PERK.PrintName = "Engineer Base"
-PERK.Description = "25% increased minion health and damage.\nTurrets have 500 base health and deals 18 base damage."
+PERK.Description = "The Engineer class is a minion-centered class that deals damage through minions.\nComplexity: MEDIUM\n\n25% increased minion health and damage.\nTurrets have 500 base health and deals 18 base damage."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

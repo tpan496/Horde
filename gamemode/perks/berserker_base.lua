@@ -1,5 +1,5 @@
 PERK.PrintName = "Berserker Base"
-PERK.Description = "20% increased global damage resistance.\n25% increased Poison damage resistance."
+PERK.Description = "The Berserker class is a melee-centered class that can be played both offensively and defensively.\nComplexity: HIGH\n\n20% increased global damage resistance.\n25% increased Poison damage resistance."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

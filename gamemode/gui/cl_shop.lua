@@ -57,7 +57,7 @@ function PANEL:Init()
         btn:SetFont("Category")
 
         btn.Paint = function(pnl, w, h)
-            if text == "Select Class" then
+            if text == "Class/Perks" then
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, w, h)
                 return
@@ -73,7 +73,7 @@ function PANEL:Init()
 
         btn.UpdateColours = function(pnl)
             if pnl:GetActive() then
-                if text == "Select Class" then
+                if text == "Class/Perks" then
                     pnl:SetTextColor(Color(220,220,220))
                 else
                     pnl:SetTextColor(HORDE.color_crimson)
@@ -81,7 +81,7 @@ function PANEL:Init()
                 return
             end
             if pnl.Hovered then
-                if text == "Select Class" then
+                if text == "Class/Perks" then
                     pnl:SetTextColor(Color(220,220,220))
                 else
                     pnl:SetTextColor(HORDE.color_crimson)
@@ -111,7 +111,7 @@ function PANEL:Init()
                 self:ReloadAttachments(attachments, container, description_panel)
             end
 
-            if text == "Select Class" then
+            if text == "Class/Perks" then
                 if ScrW() <= 1280 then
                     description_panel:SetSize(self:GetWide() * 5 / 6, self:GetTall() - 100)
                     container:SetSize(self:GetWide() / 6, self:GetTall() - 100)
@@ -233,7 +233,7 @@ function PANEL:Init()
         ClassTabLayout:Add(model)
     end
 
-    createBtn("Select Class", ClassTab, RIGHT)
+    createBtn("Class/Perks", ClassTab, RIGHT)
     
     -- ArcCW Attachment Tab
     if ArcCWInstalled and not table.IsEmpty(attachments) and GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then

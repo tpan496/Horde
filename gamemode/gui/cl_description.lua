@@ -212,7 +212,7 @@ function PANEL:SetData(item)
 
             local unlocked_level = HORDE:Horde_GetWaveForPerk(perk_level)
             if unlocked_level > 0 and unlocked_level > HORDE.current_wave then
-                title:SetText("[Unlock After Wave " .. unlocked_level .. "] "  .. (v.title or ""))
+                title:SetText("[Unlocks After Wave " .. unlocked_level .. "] "  .. (v.title or ""))
                 title:SetColor(color_gray)
             else
                 title:SetText(v.title)
