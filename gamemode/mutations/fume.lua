@@ -15,7 +15,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
             if not ent:IsValid() then timer.Remove("Horde_Mutation_Fume" .. id) return end
             local dmginfo = DamageInfo()
             dmginfo:SetAttacker(ent)
-            dmginfo:SetInflictor(ent)
+            dmginfo:SetInflictor(ents.GetByIndex(0))
             dmginfo:SetDamageType(DMG_ACID)
             dmginfo:SetDamage(10)
             dmginfo:SetDamageForce(Vector(0,0,0))

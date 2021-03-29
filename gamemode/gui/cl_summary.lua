@@ -341,6 +341,7 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     self.create_diff_panel("NORMAL")
     self.create_diff_panel("HARD")
     self.create_diff_panel("REALISM")
+    self.create_diff_panel("NIGHTMARE")
 end
 
 function PANEL:Paint(w, h)

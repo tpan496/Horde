@@ -181,9 +181,12 @@ function PANEL:SetData(item)
     self.perk_panel:SetSize(self:GetWide(), self:GetTall())
     self.perk_layout:SetSize(self:GetWide() - 5, self:GetTall())
     self.perk_layout:SetSpaceY(8)
-    self.item = item
     for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end
+    self.perk_panel:SetVisible(false)
+    self.item = item
+    if not self.item then return end
     if not self.item.class then
+        if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
         local class = self.item
         for perk_level, v in SortedPairs(class.perks) do
             if not v.choices then goto cont end
@@ -301,7 +304,11 @@ function PANEL:Paint()
             
         elseif self.item.extra_description then
             draw.DrawText(self.item.display_name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
-            draw.DrawText(HORDE.perks[self.item.base_perk].Description .. "\n\n" .. self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            if GetConVar("horde_enable_perk"):GetInt() == 1 then
+                draw.DrawText(HORDE.perks[self.item.base_perk].Description .. "\n\n" .. self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            else
+                draw.DrawText(self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            end
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
             local mat = Material(self.item.icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
@@ -399,6 +406,7 @@ function PANEL:Paint()
                 end
 
                 self.current_ammo_panel.Paint = function ()
+                    if not self.item then return end
                     local wpn = LocalPlayer():GetWeapon(self.item.class)
                     local clip_ammo = wpn:Clip1()
                     local total_ammo = LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())

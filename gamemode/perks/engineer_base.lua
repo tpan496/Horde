@@ -1,5 +1,5 @@
 PERK.PrintName = "Engineer Base"
-PERK.Description = "25% increased minion health and damage.\nTurrets have 500 base health and deals 12 base damage."
+PERK.Description = "25% increased minion health and damage.\nTurrets have 500 base health and deals 18 base damage."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
@@ -17,7 +17,7 @@ end
 
 PERK.Hooks.Horde_OnPlayerMinionDamage = function (ply, npc, bonus, dmginfo)
     if ply:Horde_GetPerk("engineer_base") and dmginfo:GetInflictor():GetClass() == "npc_turret_floor" then
-        bonus.more = bonus.more * 4
+        bonus.more = bonus.more * 6
     end
     bonus.increase = bonus.increase + 0.25
 end

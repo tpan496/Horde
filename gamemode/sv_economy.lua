@@ -138,12 +138,10 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     ply:SetCustomCollisionCheck(true)
     if not ply:IsValid() then return end
     if not ply:Horde_GetClass() then return end
-    if ply:Horde_GetClass().Name == HORDE.Class_Heavy then
-        ply:Horde_SetWeight(20)
-    else
-        ply:Horde_SetWeight(15)
-    end
     ply:Horde_SyncEconomy()
+    HORDE:GiveStarterWeapons(ply)
+    net.Start("Horde_ClearStatus")
+    net.Send(ply)
 end)
 
 hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
@@ -402,7 +400,6 @@ net.Receive("Horde_SelectClass", function (len, ply)
 
     -- Drop all weapons
     ply:Horde_SetClass(class)
-    ply:Horde_ApplyPerksForClass()
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
@@ -416,6 +413,8 @@ net.Receive("Horde_SelectClass", function (len, ply)
     HORDE.player_drop_entities[ply:SteamID()] = {}
 
     ply:Horde_SetWeight(HORDE.max_weight)
+    ply:Horde_ApplyPerksForClass()
+    ply:Horde_SyncEconomy()
     ply:SetMaxHealth(class.max_hp)
     net.Start("Horde_ToggleShop")
     net.Send(ply)
@@ -479,19 +478,3 @@ function HORDE:CanSell(ply, class)
 
     return true
 end
-
---https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/game/server/hl2/npc_turret_floor.cpp
-local VECTOR_CONE_10DEGREES	= Vector(87.16, 87.16, 0)
-hook.Add("EntityFireBullets", "Horde_ModifyTurretBullet", function(ent, data)
-    if ent:GetClass() == "npc_turret_floor" then
-        data.TracerName = "Tracer"  -- less annoying tracer
-        local enemy, owner = ent:GetEnemy(), ent:GetNWEntity("HordeOwner")
-        if IsValid(enemy) and owner:IsPlayer() then
-            data.Dir = enemy:BodyTarget(data.Src) - data.Src
-            data.Spread = VECTOR_CONE_10DEGREES * GetConVar("horde_turret_spread"):GetFloat()
-            data.IgnoreEntity = owner   -- Well, why not?
-            --data.Damage = owner:GetMinionDamageOverride() -- Btw you can override bullet damage here too instead of modifying CTakeDamageInfo
-        end
-        return true
-    end
-end)

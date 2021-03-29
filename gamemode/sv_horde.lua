@@ -2,18 +2,11 @@ util.AddNetworkString("Horde_HighlightEntities")
 util.AddNetworkString("Horde_GameEnd")
 util.AddNetworkString("Horde_SyncGameInfo")
 
-game.AddParticles("particles/gmod_effects.pcf")
-game.AddParticles( "particles/vortigaunt_fx.pcf" )
-game.AddParticles( "particles/fire_01.pcf" )
-game.AddParticles( "particles/blood_impact.pcf" )
-PrecacheParticleSystem("generic_smoke")
-PrecacheParticleSystem("vortigaunt_hand_glow")
-PrecacheParticleSystem("blood_zombie_split")
-
 local horde_players_count = 0
 local horde_spawned_ammoboxes = {}
 local horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local horde_in_break = false
+local horde_perk_progress = 1
 
 HORDE.horde_boss = nil
 HORDE.horde_boss_name = nil
@@ -194,9 +187,9 @@ end
 -- Record statistics
 hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
      if took then
-       if ent:IsNPC() then
-            print(dmg:GetDamage())
+        if ent:IsNPC() then
             if dmg:GetAttacker():IsPlayer() then
+                print(dmg:GetDamage())
                 local id = dmg:GetAttacker():SteamID()
                 if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
@@ -412,11 +405,36 @@ function HORDE:SpawnEnemy(enemy, pos)
         spawned_enemy:SetSkin(enemy.skin)
     end
 
+    if enemy.model then
+        spawned_enemy:SetModel(enemy.model)
+    end
+
     spawned_enemy:SetLagCompensated(true)
 
     -- Mutation
     if enemy.mutation and enemy.mutation ~= "" then
         timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(enemy.mutation) end)
+    else
+        local mut_prob
+        if enemy.is_elite and enemy.is_elite == true then
+            if enemy.boss_properties and enemy.boss_properties.is_boss == true then
+                if HORDE.difficulty >= 2 then
+                    mut_prob = 1.0
+                end
+            else
+                mut_prob = HORDE.difficulty_elite_mutation_probability[HORDE.difficulty]
+            end
+        else
+            mut_prob = HORDE.difficulty_mutation_probability[HORDE.difficulty]
+        end
+
+        if mut_prob > 0 then
+            local p = math.random()
+            if p <= mut_prob then
+                local mut = HORDE.mutations_sequential[math.random(1, #HORDE.mutations_sequential)]
+                timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(mut) end)
+            end
+        end
     end
     
     --spawned_enemy:AddRelationship("player D_HT 99")
@@ -723,6 +741,8 @@ function HORDE:WaveStart()
         HORDE.start_game = false
         return
     end
+
+    HORDE.current_wave = 7
     
     if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
         net.Start("Horde_LegacyNotification")
@@ -811,9 +831,10 @@ function HORDE:WaveStart()
     net.Broadcast()
     
     -- Apply perks.
-    for _, p in pairs(player.GetAll()) do
-        p:Horde_ApplyPerksForClass()
-    end
+    -- We shouldn't need this, perks are already applied when class changes.
+    --for _, p in pairs(player.GetAll()) do
+    --    p:Horde_ApplyPerksForClass()
+    --end
 end
 
 -- Ends a wave.
@@ -874,6 +895,15 @@ function HORDE:WaveEnd()
     net.Broadcast()
 
     -- Global Wave End Effects
+    if horde_perk_progress < 3 and Horde_GetWaveForPerk(horde_perk_progress) then
+        timer.Simple(5, function()
+            net.Start("Horde_LegacyNotification")
+                net.WriteString("Tier " .. horde_perk_progress " perks have been unlocked!")
+                net.WriteInt(0,2)
+            net.Broadcast()
+        end)
+        horde_perk_progress = math.min(3, horde_perk_progress + 1)
+    end
     for _, ply in pairs(player.GetAll()) do
         -- Minion life recovery
         if HORDE.player_drop_entities[ply:SteamID()] then
@@ -886,6 +916,8 @@ function HORDE:WaveEnd()
         -- Round bonus
         ply:Horde_AddMoney(HORDE.round_bonus_base)
         ply:Horde_SyncEconomy()
+        ply:Horde_SetGivenStarterWeapons(nil)
+        ply:Horde_ApplyPerksForClass()
     end
 end
 

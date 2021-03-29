@@ -5,7 +5,8 @@ PERK.Icon = "materials/perks/liquid_armor.png"
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmg, bonus)
     if not ply:Horde_GetPerk("heavy_liquid_armor") then return end
-    if ply:Armor() >= 5 and (dmg:GetDamageType() == DMG_BULLET or dmg:GetDamageType() == DMG_SLASH or dmg:GetDamageType() == DMG_CLUB or dmg:GetDamageType() == DMG_GENERIC) then
+    local dmgtype = dmg:GetDamageType()
+    if ply:Armor() >= 5 and (dmgtype == DMG_BULLET or dmgtype == DMG_SLASH or dmgtype == DMG_CLUB or dmgtype == DMG_GENERIC or dmgtype == DMG_CRUSH or dmgtype == DMG_BUCKSHOT) then
         bonus.resistance = bonus.resistance + 0.75
     end
 end

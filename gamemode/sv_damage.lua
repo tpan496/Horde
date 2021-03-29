@@ -2,7 +2,6 @@ local plymeta = FindMetaTable("Player")
 
 -- Player damage.
 hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, dmginfo)
-    print("et")
     local attacker = dmginfo:GetAttacker()
     if attacker:GetNWEntity("HordeOwner"):IsPlayer() then
         dmginfo:SetInflictor(attacker)
@@ -11,7 +10,6 @@ hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, 
 end)
 
 hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo)
-    print("sc")
     if not npc:IsValid() then return end
 
     local ply = dmginfo:GetAttacker()
@@ -59,27 +57,8 @@ end)
 
 -- Enemy damage.
 hook.Add("EntityTakeDamage", "Horde_MutationDamage", function (target, dmg)
-    if target:IsValid() and target:IsNPC() and dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsNPC() then
-        if target:GetNWEntity("HordeOwner"):IsPlayer() or dmg:GetInflictor():GetNWEntity("HordeOwner"):IsPlayer() then return end
+    if target:IsValid() and target:IsNPC() and dmg:GetInflictor():IsWorld() and dmg:GetAttacker():IsNPC() then
         return true
-    end
-end)
-
--- Hulk hitbox fix
-hook.Add("ScaleNPCDamage", "Horde_HulkDamage", function (npc, hitgroup, dmg)
-    if npc:IsValid() and npc:GetClass() == "npc_vj_zss_zhulk" then
-        if hitgroup == HITGROUP_GENERIC then
-            dmg:ScaleDamage(1.5)
-        end
-    end
-end)
-
--- Hulk hitbox fix
-hook.Add("ScaleNPCDamage", "Horde_MutatedHulkDamage", function (npc, hitgroup, dmg)
-    if npc:IsValid() and npc:GetClass() == "npc_vj_mutated_hulk" then
-        if hitgroup == HITGROUP_GENERIC then
-            dmg:ScaleDamage(1.5)
-        end
     end
 end)
 

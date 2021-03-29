@@ -1,5 +1,5 @@
 PERK.PrintName = "Pressurized Warhead"
-PERK.Description = "25% increased blast damage against elites."
+PERK.Description = "25% increased Blast damage against elites."
 PERK.Icon = "materials/perks/pressurized_warhead.png"
 
 PERK.Hooks = {}

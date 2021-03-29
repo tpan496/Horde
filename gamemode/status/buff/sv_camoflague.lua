@@ -3,7 +3,6 @@ local plymeta = FindMetaTable("Player")
 function plymeta:Horde_AddCamoflague()
     if self.Horde_Camoflague == 1 then return end
     self.Horde_Camoflague = 1
-    self:Horde_SetEvasion(self:Horde_GetEvasion() + 0.2)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Camoflague, 8)
         net.WriteUInt(1, 3)
@@ -14,7 +13,6 @@ function plymeta:Horde_RemoveCamoflague()
     if not self:IsValid() then return end
     if self.Horde_Camoflague == 0 then return end
     self.Horde_Camoflague = 0
-    self:Horde_SetEvasion(self:Horde_GetEvasion() - 0.2)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Camoflague, 8)
         net.WriteUInt(0, 3)

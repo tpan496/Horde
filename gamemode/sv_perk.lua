@@ -4,6 +4,7 @@ util.AddNetworkString("Horde_PerkChoice")
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_ApplyPerksForClass()
+    if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
     local class = self:Horde_GetClass().name
 
     self:Horde_ClearPerks()
@@ -23,6 +24,7 @@ function plymeta:Horde_ApplyPerksForClass()
 end
 
 net.Receive("Horde_PerkChoice", function(len, ply)
+    if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
     local class = net.ReadString()
     ply.Horde_PerkChoices = ply.Horde_PerkChoices or {}
     local level = net.ReadUInt(4)

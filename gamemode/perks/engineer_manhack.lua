@@ -1,5 +1,5 @@
 PERK.PrintName = "Manhack"
-PERK.Description = "Your Sentries are replaced with Manhacks.\nManhack dies on impact.\nManhack deals its health as damage."
+PERK.Description = "Your have Manhacks instead of Turrets.\nManhack dies on impact and regenerates automatically.\nManhack deals its health as damage."
 PERK.Icon = "materials/perks/manhack.png"
 
 PERK.Hooks = {}
@@ -33,8 +33,8 @@ local function SpawnManhack(ply)
     -- Count Minions
     ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() + 1)
     ent:CallOnRemove("Horde_EntityRemoved", function()
+        timer.Remove("Horde_ManhackRepos" .. id)
         if ent:IsValid() and ply:IsValid() then
-            timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
             ent:GetNWEntity("HordeOwner"):Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
             ent:GetNWEntity("HordeOwner"):Horde_SyncEconomy()
             ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
@@ -43,10 +43,11 @@ local function SpawnManhack(ply)
 
     -- Reset manhack position if it has been alive for too long
     timer.Create("Horde_ManhackRepos" .. id, 30, 0, function ()
-        if ent:IsValid() then
+        if ent:IsValid() and ply:Alive() then
             ent:SetPos(ply:GetPos() + VectorRand())
         else
             timer.Remove("Horde_ManhackRepos" .. id)
+            if ent:IsValid() then ent:Remove() end
         end
     end)
 end
@@ -62,9 +63,11 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
             end
         end
         local id = ply:SteamID()
-        timer.Create("Horde_SpawnManhack" .. id, 5, 0, function()
+        timer.Create("Horde_SpawnManhack" .. id, 4, 0, function()
             if not ply:IsValid() or not ply:Horde_GetPerk("engineer_manhack") then timer.Remove("Horde_SpawnManhack" .. id) return end
-            SpawnManhack(ply)
+            if ply:Alive() then
+                SpawnManhack(ply)
+            end
         end)
     end
 end

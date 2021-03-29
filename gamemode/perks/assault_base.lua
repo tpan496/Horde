@@ -1,5 +1,5 @@
 PERK.PrintName = "Assault Base"
-PERK.Description = "Gain Adrenaline when you kill an enemy.\nAdrenaline increases damage and speed by 5%."
+PERK.Description = "Gain Adrenaline when you kill an enemy.\nAdrenaline increases damage and speed by 6%."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

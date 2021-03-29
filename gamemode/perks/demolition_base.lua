@@ -1,5 +1,5 @@
 PERK.PrintName = "Demolition Base"
-PERK.Description = "75% increased Blast damage resistance.\nRegenerate 1 frag grenade every 30 seconds, if you do not have one."
+PERK.Description = "85% increased Blast damage resistance.\nRegenerate 1 frag grenade every 30 seconds, if you do not have one."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
@@ -22,6 +22,6 @@ end
 PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
     if not ply:Horde_GetPerk("demolition_base")  then return end
     if dmg:GetDamageType() == DMG_BLAST then
-        bonus.resistance = bonus.resistance + 0.75
+        bonus.resistance = bonus.resistance + 0.85
     end
 end

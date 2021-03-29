@@ -1,5 +1,5 @@
 PERK.PrintName = "Symbiosis"
-PERK.Description = "Minions have 25% more health.\n5% less damage taken for each minion alive."
+PERK.Description = "Minions have 25% more health on spawn.\n6% less damage taken for each minion alive."
 PERK.Icon = "materials/perks/symbiosis.png"
 
 PERK.Hooks = {}
@@ -14,8 +14,7 @@ PERK.Hooks.OnEntityCreated = function (ent)
     end)
 end
 
-PERK.Hooks.EntityTakeDamage = function (target, dmg)
-    if target:IsPlayer() and target:Horde_GetPerk("engineer_symbiosis") then
-        local drop
-    end
+PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmg, bonus)
+    if not ply:Horde_GetPerk("engineer_symbiosis")  then return end
+    bonus.resistance = bonus.resistance + 0.06 * ply:Horde_GetMinionCount()
 end
