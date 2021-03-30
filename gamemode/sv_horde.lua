@@ -1,6 +1,5 @@
 util.AddNetworkString("Horde_HighlightEntities")
 util.AddNetworkString("Horde_GameEnd")
-util.AddNetworkString("Horde_SyncGameInfo")
 
 local horde_players_count = 0
 local horde_spawned_ammoboxes = {}

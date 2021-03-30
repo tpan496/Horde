@@ -104,8 +104,8 @@ function HORDE:GetDefaultClassesData()
         HORDE.Class_Assault,
         "Have full access to Rifles.",
         100,
-        GetConVar("horde_base_walkspeed"):GetInt() * 1.20,
-        GetConVar("horde_base_runspeed"):GetInt() * 1.20,
+        GetConVar("horde_base_walkspeed"):GetInt(),
+        GetConVar("horde_base_runspeed"):GetInt(),
         "assault_base",
         {
             [1] = {title = "Maneuver", choices = {"assault_ambush", "assault_charge"}},
