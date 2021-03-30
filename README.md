@@ -135,7 +135,7 @@ CONFIG.enemies = {
         reward_scale = 100,
         model_scale = 2,
         color = Color(0,255,0),
-        weapon = ""
+        weapon = "",
     },
     HugeCombine1 = {
         name = "HugeCombine1",
@@ -163,7 +163,10 @@ CONFIG.enemies = {
         color = Color(255,0,0),
         weapon = "",
         spawn_limit = nil, -- optional
-        boss_properties = {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song24.mp3", music_duration=105} -- optional, boss settings
+        boss_properties = {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song24.mp3", music_duration=105}, -- optional, boss settings
+        mutation = "fume", -- optional
+        skin = nil, -- optional
+        model = nil -- optional
     }
 }
 ```
