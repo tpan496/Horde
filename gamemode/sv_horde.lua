@@ -705,6 +705,9 @@ end
 function HORDE:StartBreak()
     if horde_in_break then return end
     horde_in_break = true
+    net.Start("Horde_SyncGameInfo")
+        net.WriteUInt(HORDE.current_wave, 16)
+    net.Broadcast()
     timer.Create("Horder_Counter", 1, 0, function ()
         if not HORDE.start_game then return end
         BroadcastWaveMessage("Next wave starts in " .. HORDE.current_break_time, HORDE.current_break_time)

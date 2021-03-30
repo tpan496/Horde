@@ -1,4 +1,4 @@
-PERK.PrintName = "Decapacitate"
+PERK.PrintName = "Decapitate"
 PERK.Description = "When you have Camoflague:\n  25% increased Ballistic damage.\n  50% increased headshot damage against elites."
 PERK.Icon = "materials/perks/decapacitate.png"
 
