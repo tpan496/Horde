@@ -411,11 +411,13 @@ function HORDE:SpawnEnemy(enemy, pos)
     if enemy.mutation and enemy.mutation ~= "" then
         timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(enemy.mutation) end)
     else
-        local mut_prob
+        local mut_prob = 0
         if enemy.is_elite and enemy.is_elite == true then
             if enemy.boss_properties and enemy.boss_properties.is_boss == true then
                 if HORDE.difficulty >= 2 then
                     mut_prob = 1.0
+                else
+                    mut_prob = 0
                 end
             else
                 mut_prob = HORDE.difficulty_elite_mutation_probability[HORDE.difficulty]

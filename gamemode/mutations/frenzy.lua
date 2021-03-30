@@ -8,7 +8,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
         local e = EffectData()
             e:SetOrigin(ent:GetPos())
             e:SetEntity(ent)
-        util.Effect("frenzy", e)
+        util.Effect("frenzy", e, true, true)
 
         if ent.AnimationPlaybackRate then
             ent.AnimationPlaybackRate = ent.AnimationPlaybackRate * 1.5
