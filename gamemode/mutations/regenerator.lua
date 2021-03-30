@@ -13,9 +13,11 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
             e:SetRadius(radius)
         util.Effect("regenerator", e)
         local id = ent:GetCreationID()
+        local players_count = table.Count(player.GetAll())
+        local regen_amount = math.min(math.min(100, 25 * players_count), ent:GetMaxHealth() * 0.02)
         timer.Create("Horde_Mutation_Regenerator" .. id, 1, 0, function()
             if not ent:IsValid() then timer.Remove("Horde_Mutation_Regenerator" .. id) return end
-            ent:SetHealth(math.min(ent:GetMaxHealth(), ent:GetMaxHealth() * 0.02 + ent:Health()))
+            ent:SetHealth(math.min(ent:GetMaxHealth(), regen_amount + ent:Health()))
             local boss_properties = ent:Horde_GetBossProperties()
             if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
                 net.Start("Horde_SyncBossHealth")
