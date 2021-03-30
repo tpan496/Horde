@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/zombie/classic_gal_boss.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = GetConVarNumber("vj_zss_zboss_h")
+ENT.StartHealth = 500
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"} -- NPCs with the same class with be allied to each other
@@ -59,11 +59,11 @@ function ENT:MultipleMeleeAttacks()
 	if randattack == 1 then
 		self.AnimTbl_MeleeAttack = {"vjseq_attacka","vjseq_attackb","vjseq_attackc","vjseq_attackd"}
 		self.TimeUntilMeleeAttackDamage = 1
-		self.MeleeAttackDamage = GetConVarNumber("vj_zss_hlzombie_d")
+		self.MeleeAttackDamage = 35
 	elseif randattack == 2 then
 		self.AnimTbl_MeleeAttack = {"vjseq_attacke","vjseq_attackf"}
 		self.TimeUntilMeleeAttackDamage = 1
-		self.MeleeAttackDamage = GetConVarNumber("vj_zss_hlzombie_d_hard")
+		self.MeleeAttackDamage = 45
 	end
 end
 /*-----------------------------------------------

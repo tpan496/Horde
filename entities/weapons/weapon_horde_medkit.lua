@@ -53,7 +53,7 @@ function SWEP:PrimaryAttack()
 
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 64,
+		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 100,
 		filter = self.Owner
 	} )
 
