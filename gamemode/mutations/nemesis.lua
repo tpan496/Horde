@@ -13,7 +13,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
             e:SetEntity(ent)
             e:SetRadius(radius)
             e:SetMagnitude(height)
-        util.Effect("nemesis", e)
+        util.Effect("nemesis", e, true, true)
     end
 end
 

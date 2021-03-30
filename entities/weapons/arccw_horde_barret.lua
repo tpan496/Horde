@@ -8,7 +8,7 @@ SWEP.PrintName = "Barrett .50cal (Horde)"
 SWEP.Trivia_Class = "Sniper Rifle"
 SWEP.Trivia_Desc = "Semi-automatic (single fire)"
 
-if CLIENT and GetConVar("arccw_mw2cl_trivia"):GetBool() then
+if CLIENT then
 SWEP.Trivia_Manufacturer = "Barrett Firearms Manufacturing"
 SWEP.Trivia_Calibre = ".50 BMG"
 SWEP.Trivia_Mechanism = "Recoil-Operated"

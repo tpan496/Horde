@@ -8,7 +8,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
         local e = EffectData()
         e:SetOrigin(ent:GetPos())
             e:SetEntity(ent)
-        util.Effect("fume", e)
+        util.Effect("fume", e, true, true)
 
         local id = ent:GetCreationID()
         timer.Create("Horde_Mutation_Fume" .. id, 0.5, 0, function()

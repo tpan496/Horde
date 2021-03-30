@@ -1,5 +1,5 @@
 MUTATION.PrintName = "Shielding"
-MUTATION.Description = "Regenerable shield.\nShield durability = 10% max health."
+MUTATION.Description = "Regenerable shield.\nShield durability = 5% max health."
 
 MUTATION.Hooks = {}
 
@@ -38,7 +38,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
             e:SetEntity(ent)
             e:SetRadius(radius)
             e:SetMagnitude(height)
-        util.Effect("shielding", e)
+        util.Effect("shielding", e, true, true)
         
         local id = ent:GetCreationID()
         timer.Create("Horde_RegenShield" .. id, 10, 0, function ()
@@ -51,7 +51,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
             end
         end)
 
-        ent:Horde_SetMaxShieldHealth(ent:Health() * 0.10)
+        ent:Horde_SetMaxShieldHealth(math.min(300, ent:Health() * 0.05))
         ent:Horde_SetShieldHealth(ent:Horde_GetMaxShieldHealth())
         ent:SetNWBool("HasShield", true)
         ent:Horde_SetCanRegenShield(true)
