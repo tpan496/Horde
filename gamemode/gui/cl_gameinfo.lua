@@ -19,6 +19,7 @@ timer.Simple(5, function ()
         draw.RoundedBox(10, 0, 0, 280, 50, Color(40,40,40,200))
         if LocalPlayer():Alive() then
             local class = HORDE.classes[HORDE.Class_Survivor]
+            if not class then return end
             local name = class.name
             local display_name = class.display_name
             if LocalPlayer():Horde_GetClass() then

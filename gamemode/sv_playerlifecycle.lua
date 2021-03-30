@@ -6,6 +6,7 @@ util.AddNetworkString("Horde_VotemapSync")
 util.AddNetworkString("Horde_VotediffSync")
 util.AddNetworkString("Horde_RemainingTime")
 util.AddNetworkString("Horde_ClearStatus")
+util.AddNetworkString("Horde_SyncGameInfo")
 
 HORDE.vote_remaining_time = 60
 
@@ -283,25 +284,29 @@ function HORDE:PlayerInit(ply)
     net.Start("Horde_SyncItems")
     local str = HORDE.GetCachedHordeItems()
     net.WriteUInt(string.len(str), 32)
-    net.WriteData(str, string.len(str))
+        net.WriteData(str, string.len(str))
     net.Send(ply)
 
     net.Start("Horde_SyncEnemies")
-    net.WriteTable(HORDE.enemies)
+        net.WriteTable(HORDE.enemies)
     net.Send(ply)
 
     net.Start("Horde_SyncClasses")
-    net.WriteTable(HORDE.classes)
+        net.WriteTable(HORDE.classes)
     net.Send(ply)
 
     net.Start("Horde_SyncDifficulty")
-    net.WriteUInt(HORDE.difficulty,3)
+        net.WriteUInt(HORDE.difficulty,3)
+    net.Send(ply)
+
+    net.Start("Horde_SyncGameInfo")
+        net.WriteUInt(HORDE.current_wave, 16)
     net.Send(ply)
 
     if not HORDE.start_game then
         HORDE.player_ready[ply] = 0
         net.Start("Horde_PlayerReadySync")
-        net.WriteTable(HORDE.player_ready)
+            net.WriteTable(HORDE.player_ready)
         net.Broadcast()
     end
 
