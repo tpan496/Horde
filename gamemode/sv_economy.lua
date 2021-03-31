@@ -227,6 +227,10 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         return
                     end
                 end
+
+                -- Prevent players from purchasing turrets if they have the manhack skill.
+                if item.class == "npc_turret_floor" and ply:Horde_GetPerk("engineer_manhack") then return end
+                
                 ply:Horde_AddMoney(-price)
                 local ent = ents.Create(class)
                 local pos = ply:GetPos()

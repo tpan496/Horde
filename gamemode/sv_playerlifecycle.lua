@@ -498,8 +498,11 @@ end);
 hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     net.Start("Horde_ClearStatus")
     net.Send(victim)
+    for _, wpn in pairs(victim:GetWeapons()) do
+        victim:DropWeapon(wpn)
+    end
     if (not HORDE.start_game) or (HORDE.current_break_time > 0) then
-        timer.Simple(1, function() if victim:IsValid() then 
+        timer.Simple(1, function() if victim:IsValid() then
             victim:Spawn()
         end end)
         return
@@ -507,8 +510,5 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     net.Start("Horde_LegacyNotification")
     net.WriteString("You are dead. You will respawn next wave.")
     net.Send(victim)
-    for _, wpn in pairs(victim:GetWeapons()) do
-        victim:DropWeapon(wpn)
-    end
     HORDE:CheckAlivePlayers()
 end)
