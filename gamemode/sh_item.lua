@@ -610,11 +610,14 @@ end
 if SERVER then
     util.AddNetworkString("Horde_SetItemsData")
 
-    if GetConVarNumber("horde_default_item_config") == 0 then
-        GetItemsData()
+    if GetConVar("horde_external_lua_config"):GetString() and GetConVar("horde_external_lua_config"):GetString() ~= "" then
     else
-        HORDE:GetDefaultItemsData()
-        HORDE:SyncItems()
+        if GetConVarNumber("horde_default_item_config") == 0 then
+            GetItemsData()
+        else
+            HORDE:GetDefaultItemsData()
+            HORDE:SyncItems()
+        end
     end
 
 

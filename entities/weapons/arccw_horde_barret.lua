@@ -1,3 +1,4 @@
+if not ArcCWInstalled then return end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = false
 SWEP.Category = "ArcCW - Horde"

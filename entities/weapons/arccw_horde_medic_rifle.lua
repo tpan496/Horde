@@ -1,42 +1,43 @@
 if not ArcCWInstalled then return end
 SWEP.Base = "arccw_base"
-SWEP.Spawnable = false -- this obviously has to be set to true
+SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "AWSM (Horde)"
+SWEP.PrintName = "SSG08 Medic Rifle"
 SWEP.Trivia_Class = "Sniper Rifle"
-SWEP.Trivia_Desc = "The Arctic Warfare Super Magnum is a cold-weather sniper rifle for police and military using a high-caliber round."
-SWEP.Trivia_Manufacturer = "Accuracy International"
-SWEP.Trivia_Calibre = ".338 Lapua Magnum"
+SWEP.Trivia_Desc = "Precision sniper rifle that fires healing rounds. Heals players and damages enemies."
+SWEP.Trivia_Manufacturer = "Steyr Mannlicher"
+SWEP.Trivia_Calibre = ".308 Winchester"
 SWEP.Trivia_Mechanism = "Bolt-Action"
-SWEP.Trivia_Country = "United Kingdom"
-SWEP.Trivia_Year = 1996
+SWEP.Trivia_Country = "Austria"
+SWEP.Trivia_Year = 2008
 
 SWEP.Slot = 2
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/arccw_go/v_snip_awp.mdl"
-SWEP.WorldModel = "models/weapons/arccw_go/v_snip_awp.mdl"
+SWEP.ViewModel = "models/weapons/arccw_go/v_snip_ssg08.mdl"
+SWEP.WorldModel = "models/weapons/arccw_go/v_snip_ssg08.mdl"
 SWEP.ViewModelFOV = 60
 
-SWEP.DefaultBodygroups = "000000000000"
+SWEP.DefaultBodygroups = "011000000000"
+SWEP.DefaultWMBodygroup = "011000000000"
 
-SWEP.Damage = 200
-SWEP.DamageMin = 200 -- damage done at maximum range
-SWEP.Range = 50 -- in METRES
-SWEP.Penetration = 30
+SWEP.Damage = 65
+SWEP.DamageMin = 100 -- damage done at maximum range
+SWEP.Range = 100 -- in METRES
+SWEP.Penetration = 29
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = nil -- entity to fire, if any
-SWEP.MuzzleVelocity = 1050 -- projectile or phys bullet muzzle velocity
+SWEP.ShootEntity = "horde_medic_dart" -- entity to fire, if any
+SWEP.MuzzleVelocity = 3000 -- projectile or phys bullet muzzle velocity
 -- IN M/S
 SWEP.ChamberSize = 1 -- how many rounds can be chambered.
 SWEP.Primary.ClipSize = 10 -- DefaultClip is automatically set.
 
 SWEP.PhysBulletMuzzleVelocity = 1400
 
-SWEP.Recoil = 3.300
+SWEP.Recoil = 1.500
 SWEP.RecoilSide = 0.550
 SWEP.RecoilRise = 0.1
 SWEP.RecoilPunch = 2.5
@@ -57,19 +58,19 @@ SWEP.Firemodes = {
 }
 
 SWEP.NPCWeaponType = "weapon_crossbow"
-SWEP.NPCWeight = 100
+SWEP.NPCWeight = 150
 
-SWEP.AccuracyMOA = 0.06 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 500 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 0.25 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 1000 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 25
 
 SWEP.Primary.Ammo = "SniperPenetratedRound" -- what ammo type the gun uses
-SWEP.MagID = "awp" -- the magazine pool this gun draws from
+SWEP.MagID = "ssg08" -- the magazine pool this gun draws from
 
-SWEP.ShootVol = 140 -- volume of shoot sound
+SWEP.ShootVol = 120 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound = "arccw_go/awp/awp_01.wav"
+SWEP.ShootSound = "arccw_go/ssg08/ssg08_01.wav"
 SWEP.ShootSoundSilenced = "arccw_go/mosin_suppressed_fp.wav"
 SWEP.DistantShootSound = "arccw_go/awp/awp1-distant.wav"
 
@@ -78,22 +79,22 @@ SWEP.MeleeMissSound = "weapons/iceaxe/iceaxe_swing1.wav"
 SWEP.MeleeHitSound = "arccw_go/knife/knife_hitwall1.wav"
 SWEP.MeleeHitNPCSound = "physics/body/body_medium_break2.wav"
 
-SWEP.MuzzleEffect = "muzzleflash_m82"
-SWEP.ShellModel = "models/shells/shell_338mag.mdl"
-SWEP.ShellPitch = 80
+SWEP.MuzzleEffect = "muzzleflash_1"
+SWEP.ShellModel = "models/shells/shell_556.mdl"
+SWEP.ShellPitch = 85
 SWEP.ShellScale = 1.5
 SWEP.ShellRotateAngle = Angle(0, 180, 0)
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.90
+SWEP.SpeedMult = 0.94
 SWEP.SightedSpeedMult = 0.50
-SWEP.SightTime = 0.40
+SWEP.SightTime = 0.33
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-4.9109, -8.573, 1.80253),
-    Ang = Angle(0.060123, 0.26674, -0.55),
+    Pos = Vector(-5.65, -8.573, 1.65),
+    Ang = Angle(0, 0.2, -0.55),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false
@@ -120,7 +121,7 @@ SWEP.BarrelOffsetHip = Vector(2, 0, -2)
 SWEP.CustomizePos = Vector(8, 0, 1)
 SWEP.CustomizeAng = Angle(5, 30, 30)
 
-SWEP.BarrelLength = 24
+SWEP.BarrelLength = 0
 
 SWEP.AttachmentElements = {
     ["rs_none"] = {
@@ -135,24 +136,20 @@ SWEP.AttachmentElements = {
         VMBodygroups = {{ind = 6, bg = 1}},
         WMBodygroups = {{ind = 6, bg = 1}},
     },
-    ["tacms"] = {
-        VMBodygroups = {{ind = 7, bg = 1}},
-        WMBodygroups = {{ind = 7, bg = 1}},
-    },
-    ["go_awp_barrel_short"] = {
+    ["go_ssg08_barrel_short"] = {
         VMBodygroups = {
-            {ind = 1, bg = 1},
-            {ind = 2, bg = 1}
+            {ind = 1, bg = 0},
+            {ind = 2, bg = 0}
         },
         WMBodygroups = {
-            {ind = 1, bg = 1},
-            {ind = 2, bg = 1}
+            {ind = 1, bg = 0},
+            {ind = 2, bg = 0}
         },
         AttPosMods = {
-            [5] = {vpos = Vector(0, -3.4, 20)}
+            [5] = {vpos = Vector(0.2, -2.2, 23)}
         }
     },
-    ["go_awp_barrel_long"] = {
+    ["go_ssg08_barrel_long"] = {
         VMBodygroups = {
             {ind = 1, bg = 2},
             {ind = 2, bg = 2}
@@ -162,70 +159,63 @@ SWEP.AttachmentElements = {
             {ind = 2, bg = 2}
         },
         AttPosMods = {
-            [5] = {vpos = Vector(0, -3.4, 38)}
+            [5] = {vpos = Vector(0.2, -2.3, 32)}
         }
     },
-    ["go_awp_barrel_bull"] = {
-        VMBodygroups = {
-            {ind = 1, bg = 3},
-            {ind = 2, bg = 3}
-        },
-        WMBodygroups = {
-            {ind = 1, bg = 3},
-            {ind = 2, bg = 3}
-        },
-    },
-    ["go_awp_stock_obrez"] = {
+    ["go_stock_none"] = {
         VMBodygroups = {
             {ind = 5, bg = 1}
         },
-    },
-    ["go_awp_stock_basilisk"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 2}
-        },
         WMBodygroups = {
-            {ind = 5, bg = 2}
-        }
-    },
-    ["go_awp_stock_contractor"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 3}
-        },
-        WMBodygroups = {
-            {ind = 5, bg = 3}
-        }
-    },
-    ["go_awp_mag_5"] = {
-        VMBodygroups = {
-            {ind = 4, bg = 1}
-        },
-        WMBodygroups = {
-            {ind = 4, bg = 1}
-        }
-    },
-    ["go_awp_mag_15"] = {
-        VMBodygroups = {
-            {ind = 4, bg = 2}
-        },
-        WMBodygroups = {
-            {ind = 4, bg = 2}
+            {ind = 5, bg = 1}
         }
     },
     ["go_stock"] = {
         VMBodygroups = {
-            {ind = 5, bg = 1}
+            {ind = 5, bg = 1},
         },
         VMElements = {
             {
-                Model = "models/weapons/arccw_go/atts/stock_buftube.mdl",
-                Bone = "v_weapon.awp_parent",
+                Model = "models/weapons/arccw_go/atts/stock_buftube_lp.mdl",
+                Bone = "v_weapon.ssg08_Parent",
                 Offset = {
-                    pos = Vector(0, -2.25, -1.2),
+                    pos = Vector(0.5, 0, -2.75),
                     ang = Angle(90, 0, -90),
                 },
             }
         },
+    },
+    ["go_ssg08_stock_basilisk"] = {
+        VMBodygroups = {
+            {ind = 5, bg = 2}
+        },
+        WMBodygroups = {
+            {ind = 5, bg = 2}
+        }
+    },
+    ["go_ssg08_stock_contractor"] = {
+        VMBodygroups = {
+            {ind = 5, bg = 3}
+        },
+        WMBodygroups = {
+            {ind = 5, bg = 3}
+        }
+    },
+    ["go_ssg08_mag_10"] = {
+        VMBodygroups = {
+            {ind = 4, bg = 1}
+        },
+        WMBodygroups = {
+            {ind = 4, bg = 1}
+        }
+    },
+    ["go_ssg08_mag_5_338"] = {
+        VMBodygroups = {
+            {ind = 4, bg = 2}
+        },
+        WMBodygroups = {
+            {ind = 4, bg = 2}
+        }
     },
 }
 
@@ -233,7 +223,7 @@ SWEP.ExtraSightDist = 10
 SWEP.GuaranteeLaser = true
 
 SWEP.WorldModelOffset = {
-    pos = Vector(-12, 6, -5),
+    pos = Vector(-11, 6, -6),
     ang = Angle(-10, 0, 180)
 }
 
@@ -243,15 +233,15 @@ SWEP.Attachments = {
     {
         PrintName = "Optic",
         Slot = {"optic", "optic_lp"},
-        Bone = "v_weapon.awp_parent",
+        Bone = "v_weapon.ssg08_parent",
         DefaultAttName = "Iron Sights",
         Offset = {
-            vpos = Vector(-0.05, -4.2, 6),
+            vpos = Vector(0.2, -3.2, 9),
             vang = Angle(90, 0, -90),
             wpos = Vector(22, 1, -7),
             wang = Angle(-9.79, 0, 180)
         },
-        Installed = "go_optic_awp",
+        Installed = "go_optic_schmidt",
         VMScale = Vector(1, 1, 1),
         InstalledEles = {"rs_none"},
         CorrectiveAng = Angle(0.25, 0, 0),
@@ -260,9 +250,9 @@ SWEP.Attachments = {
     {
         PrintName = "Underbarrel",
         Slot = "foregrip",
-        Bone = "v_weapon.awp_parent",
+        Bone = "v_weapon.ssg08_parent",
         Offset = {
-            vpos = Vector(0, -1.0, 14),
+            vpos = Vector(0.2, 0, 17),
             vang = Angle(90, 0, -90),
             wpos = Vector(22, 1, -7),
             wang = Angle(-9.79, 0, 180)
@@ -272,9 +262,9 @@ SWEP.Attachments = {
     {
         PrintName = "Tactical",
         Slot = "tac",
-        Bone = "v_weapon.awp_parent",
+        Bone = "v_weapon.ssg08_parent",
         Offset = {
-            vpos = Vector(1.0, -2.85, 17),
+            vpos = Vector(1.3, -1.45, 15),
             vang = Angle(90, 0, 0),
             wpos = Vector(22, 1, -7),
             wang = Angle(-9.79, 0, 180)
@@ -283,34 +273,32 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Barrel",
-        Slot = "go_awp_barrel",
+        Slot = "go_ssg08_barrel",
         DefaultAttName = "500mm Sniper Barrel"
     },
     {
         PrintName = "Muzzle",
         DefaultAttName = "Standard Muzzle",
         Slot = "muzzle",
-        Bone = "v_weapon.awp_parent",
+        Bone = "v_weapon.ssg08_parent",
         Offset = {
-            vpos = Vector(0, -3.4, 28),
+            vpos = Vector(0.2, -2.3, 27),
             vang = Angle(90, 0, -90),
-            wpos = Vector(22, 1, -7),
-            wang = Angle(-9.79, 0, 180)
         },
         InstalledEles = {"fh_none"},
     },
     {
         PrintName = "Magazine",
-        Slot = "go_awp_mag",
-        DefaultAttName = "10-Round .338 AWM"
+        Slot = "go_ssg08_mag",
+        DefaultAttName = "10-Round .308 SSG"
     },
     {
         PrintName = "Stock",
-        Slot = {"go_stock", "go_awp_stock"},
+        Slot = {"go_ssg08_stock", "go_stock_none", "go_stock"},
         DefaultAttName = "Standard Stock",
-        Bone = "v_weapon.awp_parent",
+        Bone = "v_weapon.ssg08_parent",
         Offset = {
-            vpos = Vector(0, -2.25, -1.2),
+            vpos = Vector(0.5, 0, -2.75),
             vang = Angle(90, 0, -90),
         },
     },
@@ -327,9 +315,9 @@ SWEP.Attachments = {
         PrintName = "Charm",
         Slot = "charm",
         FreeSlot = true,
-        Bone = "v_weapon.awp_parent", -- relevant bone any attachments will be mostly referring to
+        Bone = "v_weapon.ssg08_parent", -- relevant bone any attachments will be mostly referring to
         Offset = {
-            vpos = Vector(0.75, -2.5, 4), -- offset that the attachment will be relative to the bone
+            vpos = Vector(0.8, 1.25, 4), -- offset that the attachment will be relative to the bone
             vang = Angle(90, 0, -90),
             wpos = Vector(6.099, 1.1, -3.301),
             wang = Angle(171.817, 180-1.17, 0),
@@ -390,7 +378,6 @@ SWEP.Animations = {
         LHIK = true,
         LHIKIn = 0.7,
         LHIKOut = 0.8,
-        ShellEjectAt = 2.75
     },
     ["enter_inspect"] = false,
     ["idle_inspect"] = false,
@@ -398,43 +385,43 @@ SWEP.Animations = {
 }
 
 sound.Add({
-    name = "ARCCW_GO_AWP.Draw",
+    name = "ARCCW_GO_SSG08.Draw",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/awp/awp_draw.wav"
+    sound = "arccw_go/ssg08/ssg08_draw.wav"
 })
 
 sound.Add({
-    name = "ARCCW_GO_AWP.Clipout",
+    name = "ARCCW_GO_SSG08.Clipout",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/awp/awp_clipout.wav"
+    sound = "arccw_go/ssg08/ssg08_clipout.wav"
 })
 
 sound.Add({
-    name = "ARCCW_GO_AWP.Clipin",
+    name = "ARCCW_GO_SSG08.Clipin",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/awp/awp_clipin.wav"
+    sound = "arccw_go/ssg08/ssg08_clipin.wav"
 })
 
 sound.Add({
-    name = "ARCCW_GO_AWP.Cliphit",
+    name = "ARCCW_GO_SSG08.Cliphit",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/awp/awp_cliphit.wav"
+    sound = "arccw_go/ssg08/ssg08_cliphit.wav"
 })
 
 sound.Add({
-    name = "ARCCW_GO_AWP.Boltforward",
+    name = "ARCCW_GO_SSG08.Boltforward",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/awp/awp_boltforward.wav"
+    sound = "arccw_go/ssg08/ssg08_boltforward.wav"
 })
 
 sound.Add({
-    name = "ARCCW_GO_AWP.Boltback",
+    name = "ARCCW_GO_SSG08.Boltback",
     channel = 16,
     volume = 1.0,
-    sound = "arccw_go/awp/awp_boltback.wav"
+    sound = "arccw_go/ssg08/ssg08_boltback.wav"
 })

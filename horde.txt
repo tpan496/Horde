@@ -4,6 +4,7 @@
 	"title"		"Horde"
 	"maps"		""
 	"menusystem"	"1"
+	"category"	"pve"
 	
 	"settings"
 	{	

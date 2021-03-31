@@ -1,3 +1,4 @@
+if not ArcCWInstalled then return end
 if CLIENT then
     SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/weapon_l4d2_baseball_bat")
     SWEP.DrawWeaponInfoBox	= false

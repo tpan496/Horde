@@ -59,7 +59,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.4.0"
+HORDE.version = "1.0.4.1"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -129,16 +129,18 @@ HORDE.enable_shop = GetConVarNumber("horde_enable_shop")
 HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM", "NIGHTMARE"}
 
 -- ArcCW Attachments
-if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
-    RunConsoleCommand("arccw_attinv_free", "0")
-else
-    RunConsoleCommand("arccw_attinv_free", "1")
-end
+if ArcCWInstalled then
+    if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
+        RunConsoleCommand("arccw_attinv_free", "0")
+    else
+        RunConsoleCommand("arccw_attinv_free", "1")
+    end
 
--- Disable Surgical Shot because it is way too overpowered.
-if GetConVar("horde_default_item_config"):GetInt() == 1 and ArcCWInstalled then
-    ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
-    ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
+    -- Disable Surgical Shot because it is way too overpowered.
+    if GetConVar("horde_default_item_config"):GetInt() == 1 then
+        ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
+        ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
+    end
 end
 
 -- Util functions
