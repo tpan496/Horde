@@ -2,13 +2,13 @@
 ## Workshop Link
 https://steamcommunity.com/sharedfiles/filedetails/?id=2401598805
 ## Full Console Command List
+Important: Put everything in autoexec.cfg!<br/>
 https://github.com/tpan496/Horde/wiki/Full-Console-Command-List
 
 ## Creating Config Addons
 https://github.com/tpan496/Horde/wiki/Creating-External-Lua-Config-Addons
 
 ## Dedicated Server Instructions
-Important: Put everything in `autoexec.cfg`!<br/>
 https://github.com/tpan496/Horde/wiki/Dedicated-Server-Instructions
 
 ## Licence and Legal Quetions
