@@ -8,6 +8,7 @@ https://github.com/tpan496/Horde/wiki/Full-Console-Command-List
 https://github.com/tpan496/Horde/wiki/Creating-External-Lua-Config-Addons
 
 ## Dedicated Server Instructions
+Important: Put everything in `autoexec.cfg`!
 https://github.com/tpan496/Horde/wiki/Dedicated-Server-Instructions
 
 ## Licence and Legal Quetions
