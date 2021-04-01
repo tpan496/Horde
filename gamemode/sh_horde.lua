@@ -143,6 +143,9 @@ if ArcCWInstalled then
     end
 end
 
+-- Disable Godmoe
+RunConsoleCommand("sbox_godmode", "0")
+
 -- Util functions
 function HORDE:GiveAmmo(ply, wpn, count)
     local clip_size = wpn:GetMaxClip1()

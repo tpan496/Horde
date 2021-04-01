@@ -32,7 +32,7 @@ SWEP.Range = 4000 -- in METRES
 SWEP.Penetration = 22
 
 SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 1 -- DefaultClip is automatically set.
+SWEP.Primary.ClipSize = 5 -- DefaultClip is automatically set.
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 2
@@ -42,7 +42,7 @@ SWEP.AccuracyMOA = 0.01 -- accuracy in Minutes of Angle. There are 60 MOA in a d
 SWEP.HipDispersion = 200 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 25
 
-SWEP.Delay = 0.05 -- 60 / RPM.
+SWEP.Delay = 1.0 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
