@@ -184,7 +184,7 @@ As you might already know there are two ways of setting up custom configs:
 horde_default_item_config = 0
 horde_default_enemy_config = 0
 ```
-In `autoexec.cfg` and `server.cfg`. Then you can edit stuff in your shop. A quick way to setup the config is just to put your `item.txt` or `enemy.txt` into your server's `data` folder.
+In `autoexec.cfg`. Then you can edit stuff in your shop. A quick way to setup the config is just to put your `item.txt` or `enemy.txt` into your server's `data` folder.
 
 2. Lua Scripting, as shown above. Your `autoexec.cfg` and `server.cfg` should then look like
 ```
