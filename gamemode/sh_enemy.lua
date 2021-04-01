@@ -364,10 +364,13 @@ end
 if SERVER then
     util.AddNetworkString("Horde_SetEnemiesData")
 
-    if GetConVarNumber("horde_default_enemy_config") == 1 then
-        HORDE:GetDefaultEnemiesData()
+    if GetConVar("horde_external_lua_config"):GetString() and GetConVar("horde_external_lua_config"):GetString() ~= "" then
     else
-        GetEnemiesData()
+        if GetConVarNumber("horde_default_enemy_config") == 1 then
+            HORDE:GetDefaultEnemiesData()
+        else
+            GetEnemiesData()
+        end
     end
 
     net.Receive("Horde_SetEnemiesData", function (len, ply)

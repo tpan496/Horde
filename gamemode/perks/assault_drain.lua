@@ -12,7 +12,7 @@ end
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup)
     if not hitgroup == HITGROUP_HEAD then return end
     if not ply:Horde_GetPerk("assault_drain")  then return end
-    if ply:Health() == ply:GetMaxHealth() then
+    if ply:Health() >= ply:GetMaxHealth() then
         bonus.increase = bonus.increase + 0.15
     end
 end
