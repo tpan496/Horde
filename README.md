@@ -2,7 +2,7 @@
 ## Workshop Link
 https://steamcommunity.com/sharedfiles/filedetails/?id=2401598805
 ## Full Console Command List
-Important: Put everything in autoexec.cfg!<br/>
+Important: Put everything in `autoexec.cfg`!<br/>
 https://github.com/tpan496/Horde/wiki/Full-Console-Command-List
 
 ## Creating Config Addons
