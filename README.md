@@ -173,27 +173,7 @@ CONFIG.enemies = {
 To use your config, simply set `horde_external_lua_config` to the name you used for the config (`CONFIG.name`). You can also do that directly in the gmod start menu.
 
 ## Dedicated Server Instructions
-
-### Default Config
-You don't need to add anything extra! Just make sure you set `gamemode` to `horde`.
-
-### Custom Config
-As you might already know there are two ways of setting up custom configs:
-1. Client UI. To use this on a dedicated server, you need to put
-```
-horde_default_item_config = 0
-horde_default_enemy_config = 0
-```
-In `autoexec.cfg`. Then you can edit stuff in your shop. A quick way to setup the config is just to put your `item.txt` or `enemy.txt` into your server's `data` folder.
-
-2. Lua Scripting, as shown above. Your `autoexec.cfg` should then look like
-```
--- These two don't matter
--- horde_default_item_config = 0
--- horde_default_enemy_config = 0
-
-horde_external_lua_config "custom-config"
-```
+https://github.com/tpan496/Horde/wiki/Dedicated-Server-Instructions
 
 ## Licence and Legal Quetions
 Protected under BY-NC-SA 3.0
