@@ -7,8 +7,8 @@ function GM:RegisterCustomConfig(name)
         if string.sub(filename, -4) == ".lua" then
             -- Just supporting one config so far
             CONFIG = {}
-            AddCSLuaFile("custom/" .. filename)
-            include("custom/" .. filename)
+            AddCSLuaFile("gamemode/custom/" .. filename)
+            include("gamemode/custom/" .. filename)
 
             if CONFIG.name then
                 print("[HORDE] Config " .. CONFIG.name .. " found!")
