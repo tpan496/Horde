@@ -1,5 +1,5 @@
 PERK.PrintName = "Rip and Tear"
-PERK.Description = "40% more melee damage.\n10% reduced Global damage resistance."
+PERK.Description = "40% more melee damage.\n10% less Global damage resistance."
 PERK.Icon = "materials/perks/rip_and_tear.png"
 
 PERK.Hooks = {}

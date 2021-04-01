@@ -59,8 +59,6 @@ hook.Add("ScaleNPCDamage", "Horde_HeadhunterApply", function(npc, hitgroup, dmgi
     if IsValid(attacker) and attacker:IsPlayer() and attacker:Horde_GetHeadHunterEnabled() and dmginfo:GetDamageType() == DMG_BULLET and dmginfo:GetDamage() > 0 then
         if hitgroup == HITGROUP_HEAD then
             attacker:Horde_AddHeadhunterStack()
-        else
-            attacker:Horde_RemoveHeadhunterStack()
         end
     end
 end)

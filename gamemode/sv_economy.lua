@@ -138,6 +138,8 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     ply:SetCustomCollisionCheck(true)
     if not ply:IsValid() then return end
     if not ply:Horde_GetClass() then return end
+    ply:Horde_SetWeight(HORDE.max_weight)
+    ply:Horde_ApplyPerksForClass()
     ply:Horde_SyncEconomy()
     HORDE:GiveStarterWeapons(ply)
     net.Start("Horde_ClearStatus")

@@ -67,7 +67,7 @@ net.Receive("Horde_RenderCenterText", function ()
         if num >= 0 and num <= 10 then
             if HORDE.PlayerReadyPanel then
                 HORDE.PlayerReadyPanel:Remove()
-                HORDE.HelpPanel:Remove()
+                HORDE.HelpPanel:SetVisible(false)
             end
             if num == 10 then
                 surface.PlaySound("HL1/fvox/ten.wav")
@@ -80,6 +80,10 @@ net.Receive("Horde_RenderCenterText", function ()
             end
         elseif num == -2 then
             surface.PlaySound("HL1/fvox/blip.wav")
+        elseif num > 0 then
+            if not HORDE.HelpPanel:IsVisible() then
+                HORDE.HelpPanel:SetVisible(true)
+            end
         end
     end
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end

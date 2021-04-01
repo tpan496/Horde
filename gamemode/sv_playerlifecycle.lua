@@ -327,11 +327,11 @@ function HORDE:PlayerInit(ply)
     ply:Horde_SetDropEntities({})
     ply:Horde_SetWeight(HORDE.max_weight)
     ply:Horde_SetClass(HORDE.classes[HORDE.Class_Survivor])
+    hook.Run("Horde_ResetStatus", ply)
     ply:Horde_ApplyPerksForClass()
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:Horde_SyncEconomy()
 
-    hook.Run("Horde_ResetStatus", ply)
     ply.Horde_Status = {}
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
 

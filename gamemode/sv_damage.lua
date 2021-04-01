@@ -46,7 +46,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if dmg:GetInflictor():GetNWEntity("HordeOwner"):IsPlayer() then return true end
 
     -- Apply bonus
-    local bonus = {resistance=0, reduce=1, evasion=0}
+    local bonus = {resistance=0, less=1, evasion=0}
     hook.Run("Horde_OnPlayerDamageTaken", ply, dmg, bonus)
 
     if bonus.evasion > 0 then
@@ -58,7 +58,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
         end
     end
 
-    dmg:ScaleDamage(bonus.reduce * (1 - bonus.resistance))
+    dmg:ScaleDamage(bonus.less * (1 - bonus.resistance))
 end)
 
 -- Enemy damage.

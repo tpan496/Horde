@@ -94,6 +94,6 @@ end)
 net.Receive("Horde_RemoveReadyPanel", function()
     if HORDE.PlayerReadyPanel then
         HORDE.PlayerReadyPanel:Remove()
-        HORDE.HelpPanel:Remove()
+        HORDE.HelpPanel:SetVisible(false)
     end
 end)

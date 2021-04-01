@@ -42,7 +42,7 @@ SWEP.AccuracyMOA = 0.01 -- accuracy in Minutes of Angle. There are 60 MOA in a d
 SWEP.HipDispersion = 200 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 25
 
-SWEP.Delay = 1.0 -- 60 / RPM.
+SWEP.Delay = 1.25 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
