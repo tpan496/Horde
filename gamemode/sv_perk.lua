@@ -5,7 +5,10 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_ApplyPerksForClass()
     if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
-    local class = self:Horde_GetClass().name
+    local class = HORDE.Class_Survivor
+    if self:Horde_GetClass() then
+        class = self:Horde_GetClass().name
+    end
 
     self:Horde_ClearPerks()
     self:Horde_SetPerk(self:Horde_GetClass().base_perk)

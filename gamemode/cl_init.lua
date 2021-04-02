@@ -203,6 +203,8 @@ net.Receive("Horde_ForceCloseShop", function ()
         end
     end
 
+    HORDE.TipPanel:SetVisible(false)
+
     gui.EnableScreenClicker(false)
 end)
 

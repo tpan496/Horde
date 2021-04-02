@@ -38,7 +38,6 @@ end
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
         local ent = data.HitEntity
-        print(ent)
         if ent:IsValid() then
             if ent == self.Owner then return end
             if ent:IsPlayer() then

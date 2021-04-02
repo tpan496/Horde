@@ -321,6 +321,13 @@ function HORDE:PlayerInit(ply)
                 net.WriteInt(HORDE.horde_boss:Health(),32)
             net.Send(ply)
         end
+
+        local tip = HORDE:GetTip()
+        if tip and (not HORDE.boss) then
+            net.Start("Horde_SyncTip")
+                net.WriteString(HORDE:GetTip())
+            net.Broadcast()
+        end
     else
         ply:Horde_SetMoney(HORDE.start_money)
     end
@@ -511,4 +518,11 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     net.WriteString("You are dead. You will respawn next wave.")
     net.Send(victim)
     HORDE:CheckAlivePlayers()
+
+    local tip = HORDE:GetTip()
+    if tip and (not HORDE.boss) then
+        net.Start("Horde_SyncTip")
+            net.WriteString(HORDE:GetTip())
+        net.Broadcast()
+    end
 end)
