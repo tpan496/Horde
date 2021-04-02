@@ -226,7 +226,11 @@ function PANEL:SetData(item)
                 else
                     perkbutton:SetLocked(nil)
                 end
-                perkbutton:SetSize(cur_panel:GetWide() / 2, 82)
+                if ScrW() <= 1280 then
+                    perkbutton:SetSize(cur_panel:GetWide() - 5, 82)
+                else
+                    perkbutton:SetSize(cur_panel:GetWide() / 2, 82)
+                end
                 perkbutton:SetData(class.name, perk_level, choice)
             end
             ::cont::

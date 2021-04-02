@@ -867,6 +867,14 @@ function HORDE:WaveEnd()
         net.WriteString("Wave Completed!")
         net.WriteInt(0,2)
         net.Broadcast()
+
+        -- Send Tips
+        local tip = HORDE:GetTip()
+        if tip then
+            net.Start("Horde_SyncTip")
+                net.WriteString(HORDE:GetTip())
+            net.Broadcast()
+        end
     end
 
     net.Start("Horde_HighlightEntities")
@@ -899,7 +907,7 @@ function HORDE:WaveEnd()
                 net.WriteString("Tier " .. horde_perk_progress .. " perks have been unlocked!")
                 net.WriteInt(0,2)
             net.Broadcast()
-            horde_perk_progress = math.min(3, horde_perk_progress + 1)
+            horde_perk_progress = horde_perk_progress + 1
         end)
     end
     for _, ply in pairs(player.GetAll()) do
