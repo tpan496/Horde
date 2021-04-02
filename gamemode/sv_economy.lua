@@ -394,7 +394,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
         net.Send(ply)
         return
     end
-    if HORDE.player_class_changed[ply:SteamID()] then
+    if GetConVar("horde_testing_unlimited_class_change"):GetInt() == 0 and HORDE.player_class_changed[ply:SteamID()] then
         net.Start("Horde_LegacyNotification")
         net.WriteString("You cannot change class more than once per wave.")
         net.WriteInt(1,2)
