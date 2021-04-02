@@ -68,10 +68,25 @@ function PANEL:Paint()
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
         if mat[1] ~= self.class then mat = {self.class, Material(self.class.icon, "mips smooth")} end
         if mat then surface.SetMaterial(mat[2]) end
+        local star = Material("star.png", "mips smooth")
         if ScrW() <= 1280 then
             surface.DrawTexturedRect(self:GetWide() / 2 - 135, 0, 40, 40)
+            --[[
+            surface.SetMaterial(star)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 25, 10, 10)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 20, 10, 10)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 15, 10, 10)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 10, 10, 10)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 5, 10, 10)--]]
         else
             surface.DrawTexturedRect(self:GetWide() / 2 - 50, 0, 40, 40)
+            --[[
+            surface.SetMaterial(star)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 28, 10, 10)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 21, 10, 10)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 14, 10, 10)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 7, 10, 10)
+            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 0, 10, 10)--]]
         end
     end
 end

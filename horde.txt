@@ -114,13 +114,21 @@
 		}
 		14
 		{
+			"name"		"horde_enable_starter"
+			"text"		"Enables starter weapons"
+			"type"		"CheckBox"
+			"default"	"1"
+			"singleplayer" ""
+		}
+		15
+		{
 			"name"		"horde_enable_sandbox"
 			"text"		"Enables sandbox/cheat features"
 			"type"		"CheckBox"
 			"default"	"0"
 			"singleplayer" ""
 		}
-		15
+		16
 		{
 			"name"		"horde_max_spawn_distance"
 			"text"		"Maximum enenmy respawn distance."
@@ -128,7 +136,7 @@
 			"default"	"2000"
 			"singleplayer" ""
 		}
-		16
+		17
 		{
 			"name"		"horde_min_spawn_distance"
 			"text"		"Minimum enenmy respawn distance."
@@ -136,7 +144,7 @@
 			"default"	"400"
 			"singleplayer" ""
 		}
-		17
+		18
 		{
 			"name"		"horde_max_spawn_z_distance"
 			"text"		"Maximum enemy spawn height difference."
@@ -144,7 +152,7 @@
 			"default"	"500"
 			"singleplayer" ""
 		}
-		18
+		19
 		{
 			"name"		"horde_corpse_cleanup"
 			"text"		"Remove corpses."
@@ -152,7 +160,7 @@
 			"default"	"0"
 			"singleplayer" ""
 		}
-		19
+		20
 		{
 			"name"		"horde_base_walkspeed"
 			"text"		"Base Walkspeed"
@@ -160,7 +168,7 @@
 			"default"	"180"
 			"singleplayer" ""
 		}
-		20
+		21
 		{
 			"name"		"horde_base_runspeed"
 			"text"		"Base Runspeed"
@@ -168,7 +176,7 @@
 			"default"	"220"
 			"singleplayer" ""
 		}
-		21
+		22
 		{
 			"name"		"horde_total_enemies_scaling"
 			"text"		"Forced enemy scaling multiplier"
@@ -176,7 +184,7 @@
 			"default"	"0"
 			"singleplayer" ""
 		}
-		22
+		23
 		{
 			"name"		"horde_enable_3d2d_icon"
 			"text"		"Enable 3D Class Icon Renders"
@@ -184,7 +192,7 @@
 			"default"	"1"
 			"singleplayer" ""
 		}
-		23
+		24
 		{
 			"name"		"horde_arccw_attinv_free"
 			"text"		"(ArcCW Only) Free Attachments"

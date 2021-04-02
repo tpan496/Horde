@@ -547,17 +547,17 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                 local p_cum = 0
                 local spawned_enemy
                 local enemy_wave = HORDE.current_wave
-                
+
                 -- This in fact should not happen
                 if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
                     enemy_wave = enemy_wave - 1
                 end
-                
+
                 -- Endless
                 if HORDE.endless == 1 and enemy_wave > HORDE.max_max_waves then
                     enemy_wave = HORDE.max_max_waves
                 end
-                
+
                 for name, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
                     p_cum = p_cum + weight
                     if p <= p_cum then
