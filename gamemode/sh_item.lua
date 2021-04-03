@@ -91,8 +91,9 @@ local function GetItemsData()
 
             for _, item in pairs(t) do
                 if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
-                    notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
-                    notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                    net.Start("Horde_LegacyNotification")
+                        net.WriteString("Item config file validation failed! Please update your file or delete it.")
+                    net.WriteInt(1,2)
                     return
                 end
             end
