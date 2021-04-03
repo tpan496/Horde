@@ -379,8 +379,11 @@ function PANEL:Init()
         )
 
         -- Reload from disk
+        local tab = util.TableToJSON(HORDE.enemies)
+        local str = util.Compress(tab)
         net.Start("Horde_SetEnemiesData")
-        net.WriteTable(HORDE.enemies)
+            net.WriteUInt(string.len(str), 32)
+            net.WriteData(str, string.len(str))
         net.SendToServer()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
@@ -468,8 +471,11 @@ function PANEL:Init()
         )
         end
 
+        local tab = util.TableToJSON(HORDE.enemies)
+        local str = util.Compress(tab)
         net.Start("Horde_SetEnemiesData")
-        net.WriteTable(HORDE.enemies)
+            net.WriteUInt(string.len(str), 32)
+            net.WriteData(str, string.len(str))
         net.SendToServer()
         notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
     end
@@ -486,8 +492,11 @@ function PANEL:Init()
                 HORDE.enemies = {}
                 HORDE:GetDefaultEnemiesData()
 
+                local tab = util.TableToJSON(HORDE.enemies)
+                local str = util.Compress(tab)
                 net.Start("Horde_SetEnemiesData")
-                net.WriteTable(HORDE.enemies)
+                    net.WriteUInt(string.len(str), 32)
+                    net.WriteData(str, string.len(str))
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
@@ -506,8 +515,11 @@ function PANEL:Init()
             function()
                 HORDE.enemies = {}
 
+                local tab = util.TableToJSON(HORDE.enemies)
+                local str = util.Compress(tab)
                 net.Start("Horde_SetEnemiesData")
-                net.WriteTable(HORDE.enemies)
+                    net.WriteUInt(string.len(str), 32)
+                    net.WriteData(str, string.len(str))
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
@@ -580,8 +592,11 @@ function PANEL:Init()
         menu:AddOption("Delete", function()
             HORDE.enemies[enemy.name .. tostring(enemy.wave)] = nil
 
+            local tab = util.TableToJSON(HORDE.enemies)
+            local str = util.Compress(tab)
 			net.Start("Horde_SetEnemiesData")
-            net.WriteTable(HORDE.enemies)
+                net.WriteUInt(string.len(str), 32)
+                net.WriteData(str, string.len(str))
         	net.SendToServer()
 			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
         end)

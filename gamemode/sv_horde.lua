@@ -83,7 +83,6 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
             HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
         end
-        --print("OnKill", "[HORDE] Killing ", HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
         
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
             net.Start("Horde_HighlightEntities")
@@ -235,7 +234,6 @@ hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
             HORDE.spawned_enemies[ent:EntIndex()] = nil
             HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
             HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
-            --print("OnRemove", "[HORDE] Remove ", ent:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
             local count = HORDE.spawned_enemies_count[ent:Horde_GetName()]
             if count and count > 0 then
                 HORDE.spawned_enemies_count[ent:Horde_GetName()] = count - 1
@@ -588,7 +586,6 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                 
                 HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
                 HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
-                --print("OnSpawn", "[HORDE] Spawning ", spawned_enemy:EntIndex(), HORDE.alive_enemies_this_wave, HORDE.total_enemies_this_wave)
             end
         else
             break
@@ -971,7 +968,11 @@ function HORDE:Direct()
     end
 
     if not HORDE.ai_nodes or table.IsEmpty(HORDE.ai_nodes) then
-        print("No info_node(s) in map! NPCs will not spawn.")
+        print("[HORDE] No info_node(s) in map! NPCs will not spawn.")
+        net.Start("Horde_LegacyNotification")
+            net.WriteString("Map has no info nodes! NPCs will not spawn.")
+            net.WriteInt(1,2)
+        net.Broadcast()
         return
     end
 

@@ -48,19 +48,19 @@ HORDE.GetCachedHordeItems = function()
     if HORDE.InvalidateHordeItemCache == 1 then
         local tab = util.TableToJSON(HORDE.items)
         local str = util.Compress(tab)
-        HORDE.CachedItems = str
-        HORDE.InvalidateItemCache = 0
+        HORDE.CachedHordeItems = str
+        HORDE.InvalidateHordeItemCache = 0
     end
-    return HORDE.CachedItems
+    return HORDE.CachedHordeItems
 end
 
 function HORDE:SyncItems()
+    local str = HORDE.GetCachedHordeItems()
     if player then
         for _, ply in pairs(player.GetAll()) do
             net.Start("Horde_SyncItems")
-            local str = HORDE.GetCachedHordeItems()
-            net.WriteUInt(string.len(str), 32)
-            net.WriteData(str, string.len(str))
+                net.WriteUInt(string.len(str), 32)
+                net.WriteData(str, string.len(str))
             net.Send(ply)
         end
     end
@@ -623,12 +623,12 @@ if SERVER then
 
     net.Receive("Horde_SetItemsData", function (len, ply)
         if not ply:IsSuperAdmin() then return end
-        local len = net.ReadUInt(32)
-        local data = net.ReadData(len)
+        local items_len = net.ReadUInt(32)
+        local data = net.ReadData(items_len)
         local str = util.Decompress(data)
         HORDE.items = util.JSONToTable(str)
-        HORDE:SetItemsData()
         HORDE.InvalidateHordeItemCache = 1
+        HORDE:SetItemsData()
     end)
 
 end
