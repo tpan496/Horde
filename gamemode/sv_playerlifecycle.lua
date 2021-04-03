@@ -287,10 +287,6 @@ function HORDE:PlayerInit(ply)
         net.WriteData(str, string.len(str))
     net.Send(ply)
 
-    net.Start("Horde_SyncEnemies")
-        net.WriteTable(HORDE.enemies)
-    net.Send(ply)
-
     net.Start("Horde_SyncClasses")
         net.WriteTable(HORDE.classes)
     net.Send(ply)
@@ -323,7 +319,7 @@ function HORDE:PlayerInit(ply)
         end
 
         local tip = HORDE:GetTip()
-        if tip and (not HORDE.boss) then
+        if tip and (not HORDE.horde_boss) then
             net.Start("Horde_SyncTip")
                 net.WriteString(HORDE:GetTip())
             net.Broadcast()
@@ -520,7 +516,7 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     HORDE:CheckAlivePlayers()
 
     local tip = HORDE:GetTip()
-    if tip and (not HORDE.boss) then
+    if tip and (not HORDE.horde_boss) then
         net.Start("Horde_SyncTip")
             net.WriteString(HORDE:GetTip())
         net.Broadcast()

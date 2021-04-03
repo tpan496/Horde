@@ -87,9 +87,23 @@ function HORDE:NormalizeEnemiesWeight()
 
 end
 
+HORDE.InvalidateHordeEnemyCache = 1
+HORDE.CachedHordeEnemies = nil
+HORDE.GetCachedHordeEnemies = function()
+    if HORDE.InvalidateHordeEnemyCache == 1 then
+        local tab = util.TableToJSON(HORDE.enemies)
+        local str = util.Compress(tab)
+        HORDE.CachedHordeEnemies = str
+        HORDE.InvalidateHordeEnemyCache = 0
+    end
+    return HORDE.CachedHordeEnemies
+end
+
 function HORDE:SyncEnemiesTo(ply)
+    local str = HORDE.GetCachedHordeEnemies()
     net.Start("Horde_SyncEnemies")
-        net.WriteTable(HORDE.enemies)
+        net.WriteUInt(string.len(str), 32)
+        net.WriteData(str, string.len(str))
     net.Send(ply)
 end
 
@@ -375,7 +389,11 @@ if SERVER then
 
     net.Receive("Horde_SetEnemiesData", function (len, ply)
         if not ply:IsSuperAdmin() then return end
-        HORDE.enemies = net.ReadTable()
+        local enemies_len = net.ReadUInt(32)
+        local data = net.ReadData(enemies_len)
+        local str = util.Decompress(data)
+        HORDE.enemies = util.JSONToTable(str)
+        HORDE.InvalidateHordeEnemyCache = 1
         HORDE:SetEnemiesData()
     end)
 end

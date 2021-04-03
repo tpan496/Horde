@@ -226,7 +226,10 @@ net.Receive("Horde_SyncItems", function ()
 end)
 
 net.Receive("Horde_SyncEnemies", function ()
-    HORDE.enemies = net.ReadTable()
+    local len = net.ReadUInt(32)
+    local data = net.ReadData(len)
+    local str = util.Decompress(data)
+    HORDE.enemies = util.JSONToTable(str)
 end)
 
 net.Receive("Horde_SyncClasses", function ()

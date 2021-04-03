@@ -24,18 +24,18 @@ SWEP.ViewModelFOV = 60
 SWEP.DefaultBodygroups = "011000000000"
 SWEP.DefaultWMBodygroup = "011000000000"
 
-SWEP.Damage = 65
+SWEP.Damage = 125
 SWEP.DamageMin = 100 -- damage done at maximum range
-SWEP.Range = 100 -- in METRES
+SWEP.Range = 2000 -- in METRES
 SWEP.Penetration = 29
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "horde_medic_dart" -- entity to fire, if any
-SWEP.MuzzleVelocity = 3000 -- projectile or phys bullet muzzle velocity
+SWEP.ShootEntity = "horde_healthvial" -- entity to fire, if any
+SWEP.MuzzleVelocity = 1000 -- projectile or phys bullet muzzle velocity
 -- IN M/S
 SWEP.ChamberSize = 1 -- how many rounds can be chambered.
 SWEP.Primary.ClipSize = 10 -- DefaultClip is automatically set.
 
-SWEP.PhysBulletMuzzleVelocity = 1400
+--SWEP.PhysBulletMuzzleVelocity = 1400
 
 SWEP.Recoil = 1.500
 SWEP.RecoilSide = 0.550
@@ -56,6 +56,26 @@ SWEP.Firemodes = {
         Mode = 0
     }
 }
+--[[
+        if CLIENT then
+        local emitter = ParticleEmitter(self:GetPos())
+        local smoke = emitter:Add("particles/smokey", self:GetPos())
+        smoke:SetGravity( Vector(0, 0, 1500) )
+        smoke:SetDieTime( math.Rand(0.5, 1) )
+        smoke:SetStartAlpha(75)
+        smoke:SetEndAlpha(0)
+        smoke:SetStartSize(10)
+        smoke:SetEndSize(50)
+        smoke:SetRoll( math.Rand(-180, 180) )
+        smoke:SetRollDelta( math.Rand(-0.2,0.2) )
+        smoke:SetColor(50, 200, 50)
+        smoke:SetAirResistance(1000)
+        smoke:SetPos( self:GetPos() )
+        smoke:SetLighting( false )
+        smoke:SetCollide(true)
+        smoke:SetBounce(0)
+    end
+]]
 
 SWEP.NPCWeaponType = "weapon_crossbow"
 SWEP.NPCWeight = 150
@@ -121,7 +141,7 @@ SWEP.BarrelOffsetHip = Vector(2, 0, -2)
 SWEP.CustomizePos = Vector(8, 0, 1)
 SWEP.CustomizeAng = Angle(5, 30, 30)
 
-SWEP.BarrelLength = 0
+SWEP.BarrelLength = 20
 
 SWEP.AttachmentElements = {
     ["rs_none"] = {
