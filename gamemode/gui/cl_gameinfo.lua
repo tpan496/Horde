@@ -30,16 +30,19 @@ timer.Simple(5, function ()
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
             local mat = Material(HORDE.classes[name].icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
-            local pos = 140 - 40 - string.len(display_name) * 7 - 25
+            local pos = math.max(15, 140 - 40 - string.len(display_name) * 7 - 25)
+            local level = LocalPlayer():Horde_GetLevel()
+            if level <= 0 then return end
+            local rank, rank_level, color = HORDE:LevelToRank(level)
+            surface.SetDrawColor(color)
             surface.DrawTexturedRect(pos, 5, 40, 40)
-            --[[
             local star = Material("star.png", "mips smooth")
             surface.SetMaterial(star)
-            surface.DrawTexturedRect(pos - 10, 33, 10, 10)
-            surface.DrawTexturedRect(pos - 10, 26, 10, 10)
-            surface.DrawTexturedRect(pos - 10, 19, 10, 10)
-            surface.DrawTexturedRect(pos - 10, 12, 10, 10)
-            surface.DrawTexturedRect(pos - 10, 5, 10, 10)--]]
+            local y_pos = 33
+            for i = 0, rank_level do
+                surface.DrawTexturedRect(pos - 10, y_pos, 10, 10)
+                y_pos = y_pos - 7
+            end
         else
             draw.SimpleText("Spectating", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
