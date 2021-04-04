@@ -14,7 +14,7 @@ PERK.Hooks.OnEntityCreated = function (ent)
     end)
 end
 
-PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmg, bonus)
+PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("engineer_symbiosis")  then return end
     bonus.resistance = bonus.resistance + 0.06 * ply:Horde_GetMinionCount()
 end

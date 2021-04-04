@@ -11,7 +11,7 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     end
 end
 
-PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmg, bonus)
+PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("berserker_rip_and_tear") then return end
     bonus.resistance = bonus.resistance - 0.1
 end
