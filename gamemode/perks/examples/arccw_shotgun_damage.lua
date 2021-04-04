@@ -1,9 +1,5 @@
 PERK.PrintName = "Shotgun Salvo"
-PERK.Description = "ArcCW shotguns do {percent} extra damage."
-
- = {
-    ["percent"] = {type = "f", default = 0.5, min = 0, percent = true},
-}
+PERK.Description = "ArcCW shotguns do 50% extra damage."
 
 PERK.Hooks = {}
 
@@ -25,6 +21,6 @@ PERK.Hooks.Horde_OnUnsetPerk = recalc
 PERK.Hooks.M_Hook_Mult_Damage = function(wpn, data)
     local ply = wpn:GetOwner()
     if IsValid(ply) and ply:IsPlayer() and wpn:GetIsShotgun() and ply:Horde_GetPerk("arccw_shotgun_damage") then
-        data.mult = (data.mult or 1) + ply:Horde_GetPerkParam("arccw_shotgun_damage", "percent")
+        data.mult = (data.mult or 1) + 0.5
     end
 end
