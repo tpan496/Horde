@@ -12,7 +12,6 @@ util.AddNetworkString("Horde_BuyItemAmmoSecondary")
 util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
 util.AddNetworkString("Horde_Horde_SyncEconomy")
-util.AddNetworkString("Horde_LegacyNotification")
 util.AddNetworkString("Horde_SyncDifficulty")
 util.AddNetworkString("Horde_RemoveReadyPanel")
 

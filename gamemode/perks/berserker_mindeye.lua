@@ -4,7 +4,7 @@ PERK.Icon = "materials/perks/mindeye.png"
 
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
+PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("berserker_mindeye")  then return end
     if ply:GetActiveWeapon():IsValid() and HORDE.items[ply:GetActiveWeapon():GetClass()] and HORDE.items[ply:GetActiveWeapon():GetClass()].category == "Melee" then
         bonus.evasion = bonus.evasion + 0.25

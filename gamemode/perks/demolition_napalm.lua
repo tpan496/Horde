@@ -10,9 +10,9 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     end
 end
 
-PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmg, bonus)
+PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("demolition_napalm")  then return end
-    if dmg:GetDamageType() == DMG_FIRE or dmg:GetDamageType() == DMG_BURN then
+    if dmginfo:GetDamageType() == DMG_FIRE or dmginfo:GetDamageType() == DMG_BURN then
         bonus.resistance = bonus.resistance + 0.75
     end
 end

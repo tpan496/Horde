@@ -1,10 +1,5 @@
 PERK.PrintName = "Nimble Box"
-PERK.Description = "ArcCW weapons with >= {threshold} magazine capacity reload {percent} faster."
-
- = {
-    ["threshold"] = {type = "i", default = 60, min = 0},
-    ["percent"] = {type = "f", default = 0.25, min = 0, percent = true},
-}
+PERK.Description = "ArcCW weapons with >= 60 magazine capacity reload 25% faster."
 
 PERK.Hooks = {}
 
@@ -26,7 +21,7 @@ PERK.Hooks.Horde_OnUnsetPerk = recalc
 PERK.Hooks.M_Hook_Mult_ReloadTime = function(wpn, data)
     local ply = wpn:GetOwner()
     if IsValid(ply) and ply:IsPlayer() and ply:Horde_GetPerk("arccw_mg_reload")
-            and (wpn.RegularClipSize or wpn.Primary.ClipSize) >= ply:Horde_GetPerkParam("arccw_mg_reload", "threshold") then
-        data.mult = (data.mult or 1) - ply:Horde_GetPerkParam("arccw_mg_reload", "percent")
+            and (wpn.RegularClipSize or wpn.Primary.ClipSize) >= 60 then
+        data.mult = (data.mult or 1) - 0.25
     end
 end

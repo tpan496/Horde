@@ -1,5 +1,5 @@
 PERK.PrintName = "Headhunter"
-PERK.Description = "ArcCW weapons do {percent} extra damage on headshots."
+PERK.Description = "ArcCW weapons do 50% extra damage on headshots."
 
 -- You can call ArcCW weapon hooks just like a regular hook (it's called by the base).
 -- arccw/shared/attachments/default.lua has a list of hooks you can call as well as what the data variable contains.

@@ -1,9 +1,6 @@
 PERK.PrintName = "Sticky Grenade"
 PERK.Description = "Grenades stick to enemies and surfaces."
 
- = {
-}
-
 PERK.Hooks = {}
 
 PERK.Hooks.EntityTakeDamage = function(victim, dmginfo)
