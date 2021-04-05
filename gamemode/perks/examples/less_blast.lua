@@ -1,11 +1,11 @@
-PERK.PrintName = "Blast Resistance"
-PERK.Description = "25% increased Blast damage resistance."
+PERK.PrintName = "Blastproof (less)"
+PERK.Description = "25% less Blast damage taken."
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
-    if not ply:Horde_GetPerk("resistance_blast") then return end
+    if not ply:Horde_GetPerk("less_blast") then return end
     if dmginfo:GetDamageType() == DMG_BLAST then
-        bonus.resistance = bonus.resistance + 0.25
+        bonus.less = bonus.less * 0.75
     end
 end
 

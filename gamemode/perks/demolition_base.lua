@@ -19,9 +19,9 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
+PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("demolition_base")  then return end
-    if dmg:GetDamageType() == DMG_BLAST then
+    if dmginfo:GetDamageType() == DMG_BLAST then
         bonus.resistance = bonus.resistance + 0.85
     end
 end

@@ -47,7 +47,7 @@ function plymeta:Horde_SetCamoflagueEnabled(enabled)
     self.Horde_CamoflagueEnabled = enabled
 end
 
-hook.Add("Horde_OnPlayerDamageTaken", "Horde_CamoflagueDamageTaken", function (ply, dmg, bonus)
+hook.Add("Horde_OnPlayerDamageTaken", "Horde_CamoflagueDamageTaken", function (ply, dmginfo, bonus)
     if not ply:Horde_GetCamoflagueEnabled() then return end
     if ply:Horde_GetCamoflague() == 1 then
         bonus.evasion = bonus.evasion + 0.15
