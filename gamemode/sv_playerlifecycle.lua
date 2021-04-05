@@ -186,7 +186,7 @@ function HORDE:GameEnd(status)
             local chosen_map_count = 0
 
             local map_collect = {}
-            for _, map in ipairs(map_list) do
+            for _, map in pairs(map_list) do
                 map_collect[map] = 0
             end
 
@@ -237,8 +237,7 @@ function HORDE:GameEnd(status)
             else
                 GetConVar("horde_difficulty"):SetInt(3)
             end
-            
-            
+
             timer.Simple(0, function() RunConsoleCommand("changelevel", chosen_map) end)
         end
         net.Start("Horde_RemainingTime")

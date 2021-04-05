@@ -18,7 +18,7 @@ function HORDE:GetNextMaps()
     end
 
     -- If there is a blacklist, filter off these maps.
-    HORDE.GetMapBlacklist()
+    HORDE:GetMapBlacklist()
     local maps = file.Find( "maps/*.bsp", "GAME")
     for _, map in ipairs( maps ) do
         map = map:sub(1, -5) -- Take off .bsp
