@@ -36,14 +36,13 @@ function HORDE:CreateEnemy(name, class, weight, wave, is_elite, health_scale, da
     HORDE.enemies[name .. tostring(enemy.wave)] = enemy
 end
 
-function HORDE:NormalizeEnemiesWeightOnWave(wave)
-    local enemies = HORDE.enemies_normalized[wave]
+function HORDE:NormalizeEnemiesWeightOnWave(enemies)
     local total_weight = 0
     for name, weight in pairs(enemies) do
         total_weight = total_weight + weight
     end
     for name, weight in pairs(enemies) do
-        HORDE.enemies_normalized[wave][name] = weight / total_weight
+        enemies[name] = weight / total_weight
     end
 end
 
