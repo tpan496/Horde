@@ -18,33 +18,33 @@ util.AddNetworkString("Horde_RemoveReadyPanel")
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_SetWeight(weight)
-    self.weight = weight
+    self.Horde_weight = weight
 end
 
 function plymeta:Horde_SetMoney(money)
-    self.money = money
+    self.Horde_money = money
 end
 
 function plymeta:Horde_SetClass(class)
-    self.class = class
+    self.Horde_class = class
     if HORDE.classes[class.name].model and HORDE.classes[class.name].model ~= "" then
         self:SetModel(HORDE.classes[class.name].model)
     end
 end
 
 function plymeta:Horde_SetDropEntities(entities)
-    self.drop_entities = entities
+    self.Horde_drop_entities = entities
 end
 
 function plymeta:Horde_AddDropEntity(class, entity)
     if not self:IsValid() then return end
-    if not self.drop_entities then
-        self.drop_entities = {}
+    if not self.Horde_drop_entities then
+        self.Horde_drop_entities = {}
     end
-    if self.drop_entities[class] then
-        self.drop_entities[class] = self.drop_entities[class] + 1
+    if self.Horde_drop_entities[class] then
+        self.Horde_drop_entities[class] = self.Horde_drop_entities[class] + 1
     else
-        self.drop_entities[class] = 1
+        self.Horde_drop_entities[class] = 1
     end
     if not HORDE.player_drop_entities[self:SteamID()] then
         HORDE.player_drop_entities[self:SteamID()] = {}
@@ -54,10 +54,10 @@ end
 
 function plymeta:Horde_RemoveDropEntity(class, entity_creation_id)
     if not self:IsValid() then return end
-    if self.drop_entities and self.drop_entities[class] then
-        self.drop_entities[class] = self.drop_entities[class] - 1
-        if self.drop_entities[class] == 0 then
-            self.drop_entities[class] = nil
+    if self.Horde_drop_entities and self.Horde_drop_entities[class] then
+        self.Horde_drop_entities[class] = self.Horde_drop_entities[class] - 1
+        if self.Horde_drop_entities[class] == 0 then
+            self.Horde_drop_entities[class] = nil
         end
     end
     if HORDE.player_drop_entities[self:SteamID()] then
@@ -79,21 +79,21 @@ end
 
 function plymeta:Horde_AddMoney(money)
     if not self:IsValid() and not money then return end
-    if not self.money then self.money = 0 end
-    self.money = self.money + money
+    if not self.Horde_money then self.Horde_money = 0 end
+    self.Horde_money = self.Horde_money + money
 end
 
 function plymeta:Horde_AddWeight(weight)
     if not self:IsValid() then return end
-    self.weight = self.weight + weight
+    self.Horde_weight = self.Horde_weight + weight
 end
 
 function plymeta:Horde_GetMoney()
-    return self.money
+    return self.Horde_money
 end
 
 function plymeta:GetHordeDropEntities()
-    return self.drop_entities
+    return self.Horde_drop_entities
 end
 
 function plymeta:Horde_DropMoney()
@@ -113,27 +113,29 @@ function plymeta:Horde_DropMoney()
 end
 
 function plymeta:Horde_GetWeight()
-    return self.weight
+    return self.Horde_weight
 end
 
 function plymeta:Horde_GetClass()
-    return self.class
+    return self.Horde_class
 end
 
 function plymeta:Horde_SyncEconomy()
     if not self:IsValid() then return end
-    if not self.money or not self.weight or not self.class then return end
+    if not self.Horde_money or not self.Horde_weight or not self.Horde_class then return end
     net.Start("Horde_Horde_SyncEconomy")
-    net.WriteEntity(self)
-    net.WriteInt(self.money, 32)
-    net.WriteInt(self.weight, 32)
-    net.WriteString(self.class.name)
-    net.WriteTable(self.drop_entities)
+        net.WriteEntity(self)
+        net.WriteInt(self.Horde_money, 32)
+        net.WriteInt(self.Horde_weight, 32)
+        net.WriteString(self.Horde_class.name)
+        net.WriteTable(self.Horde_drop_entities)
     net.Broadcast()
 end
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     hook.Run("Horde_ResetStatus", ply)
+    net.Start("Horde_ClearStatus")
+    net.Send(ply)
     ply:SetCustomCollisionCheck(true)
     if not ply:IsValid() then return end
     if not ply:Horde_GetClass() then return end
@@ -141,8 +143,6 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SyncEconomy()
     HORDE:GiveStarterWeapons(ply)
-    net.Start("Horde_ClearStatus")
-    net.Send(ply)
 end)
 
 hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)

@@ -557,6 +557,7 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                     if enemy_wave == 0 then enemy_wave = 10 end
                 end
 
+                local renormalize = nil
                 for name, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
                     p_cum = p_cum + weight
                     if p <= p_cum then
@@ -565,6 +566,8 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                             -- Do not spawn if exceeds spawn limit
                             local count = HORDE.spawned_enemies_count[name]
                             if count and count >= enemy.spawn_limit then
+                                renormalize = true
+                                HORDE.enemies_normalized[enemy_wave][name] = nil
                                 goto cont
                             else
                                 spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
@@ -583,6 +586,10 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                         break
                     end
                     ::cont::
+                end
+
+                if renormalize then
+                    HORDE:NormalizeEnemiesWeightOnWave(((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1)
                 end
                 
                 HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
