@@ -1,8 +1,5 @@
 local PANEL = {}
 
-surface.CreateFont("Horde_PerkButton_Name", { font = "arial bold", size = 20, bold = true })
-surface.CreateFont("Horde_PerkButton_Text", { font = "arial bold", size = 15, bold = true})
-
 local function getweaponname(class)
     if language.GetPhrase(class) ~= class then return language.GetPhrase(class) end
     if weapons.Get(class) then return weapons.Get(class).PrintName end
@@ -100,13 +97,15 @@ function PANEL:SetData(classname, perk_level, choice)
     local tbl_choices = LocalPlayer().Horde_PerkChoices[classname]
 
     self.info.active = (tbl_choices[perk_level] or 1) == choice
-    
-    self.title:SetText(perk.PrintName or "Unnamed Perk")
-    self.desctext = ""
-    local text = perk.Description
-    self.desctext = self.desctext .. text .. "\n"
 
-    self.desc:SetText(self.desctext)
+    local title = perk.PrintName or "Unnamed Perk"
+    local loc_title = translate.Get("Perk_Title_" .. perk_choice) or title
+    self.title:SetText(loc_title)
+    
+    local text = perk.Description .. "\n"
+    local loc_desc = translate.Get("Perk_" .. perk_choice) or text
+
+    self.desc:SetText(loc_desc)
     self.desc:SetFont("Horde_PerkButton_Text")
 end
 

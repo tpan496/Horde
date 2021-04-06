@@ -39,6 +39,14 @@ function plymeta:Horde_GetRemoveCamoflagueOnRun()
     return self.Horde_RemoveCamoflagueOnRun or 1
 end
 
+function plymeta:Horde_SetRemoveCamoflagueOnAttack(remove)
+    self.Horde_RemoveCamoflagueOnAttack = remove
+end
+
+function plymeta:Horde_GetRemoveCamoflagueOnAttack()
+    return self.Horde_RemoveCamoflagueOnAttack or 1
+end
+
 function plymeta:Horde_GetCamoflagueEnabled()
     return self.Horde_CamoflagueEnabled
 end
@@ -56,7 +64,7 @@ end)
 
 hook.Add("KeyPress", "Horde_CamoflagueOff", function(ply, key)
     if not ply:Horde_GetCamoflagueEnabled() then return end
-    if key == IN_ATTACK or ((key == IN_SPEED or key == IN_JUMP) and ply:Horde_GetRemoveCamoflagueOnRun() == 1) then
+    if (key == IN_ATTACK and ply:Horde_GetRemoveCamoflagueOnAttack() == 1) or ((key == IN_SPEED or key == IN_JUMP) and ply:Horde_GetRemoveCamoflagueOnRun() == 1) then
         ply.Horde_ShouldCamoflague = nil
         timer.Remove("Horde_Camoflague" .. ply:UniqueID())
         timer.Simple(0.1, function()

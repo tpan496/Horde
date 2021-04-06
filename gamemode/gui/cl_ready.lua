@@ -1,5 +1,3 @@
-surface.CreateFont("Content", { font = "arial bold", size = 20 })
-
 local PANEL = {}
 
 function PANEL:Init()
@@ -39,9 +37,9 @@ function PANEL:CreateReadyPanel(ply, status)
     status_label:Dock(RIGHT)
     status_label.Paint = function ()
         if status == 0 then
-            draw.SimpleText("Not Ready", "Content", 0, 8, Color(255,255,255))
+            draw.SimpleText(translate.Get("Game_Not Ready"), "Content", 0, 8, Color(255,255,255))
         else
-            draw.SimpleText("    Ready", "Content", 0, 8, HORDE.color_crimson)
+            draw.SimpleText("    " .. translate.Get("Game_Ready"), "Content", 0, 8, HORDE.color_crimson)
         end
     end
 end

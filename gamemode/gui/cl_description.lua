@@ -1,8 +1,3 @@
-surface.CreateFont("Horde_PerkTitle", { font = "arial bold", size = 24, bold = true })
-surface.CreateFont("Title", { font = "arial bold", size = 30 })
-surface.CreateFont("Warning", { font = "arial bold", size = 30, strikeout = true })
-surface.CreateFont("Content", { font = "arial bold", size = 20 })
-
 local PANEL = {}
 
 function PANEL:Init()
@@ -212,7 +207,7 @@ function PANEL:SetData(item)
 
             local unlocked_level = HORDE:Horde_GetWaveForPerk(perk_level)
             if unlocked_level > 0 and unlocked_level > HORDE.current_wave then
-                title:SetText("[Unlocks After Wave " .. unlocked_level .. "] "  .. (v.title or ""))
+                title:SetText("[" .. translate.Get("Shop_Unlocks_After_Wave") .. " " .. unlocked_level .. "] "  .. (v.title or ""))
                 title:SetColor(color_gray)
             else
                 title:SetText(v.title)
@@ -296,7 +291,7 @@ function PANEL:Paint()
                 end
                 description = description .. "\n\nEquip by Pressing C."
             end
-            if atttbl.Icon then 
+            if atttbl.Icon then
                 icon = ArcCW.AttachmentTable[self.item.class].Icon
                 draw.DrawText(self.item.name, "Title", self:GetWide() / 2 - 64, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
                 draw.DrawText(description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
@@ -310,18 +305,21 @@ function PANEL:Paint()
                 draw.DrawText(self.item.name, "Title", self:GetWide() / 2 , 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
                 draw.DrawText(description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             end
-            
+
         elseif self.item.extra_description then
-            draw.DrawText(self.item.display_name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            local loc_name = translate.Get("Class_" .. self.item.display_name) or self.item.display_name
+            draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            local loc_desc = translate.Get("Class_Description_" .. self.item.display_name) or self.item.extra_description
             if GetConVar("horde_enable_perk"):GetInt() == 1 then
-                draw.DrawText(HORDE.perks[self.item.base_perk].Description .. "\n\n" .. self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                local loc_perk_desc = translate.Get("Perk_" .. self.item.base_perk) or HORDE.perks[self.item.base_perk].Description
+                draw.DrawText(loc_perk_desc .. "\n\n" .. loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             else
-                draw.DrawText(self.item.extra_description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                draw.DrawText(loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             end
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
             local mat = Material(self.item.icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
-            surface.DrawTexturedRect(self:GetWide() / 2 + string.len(self.item.name) * 2 + 20, 28, 40, 40)
+            surface.DrawTexturedRect(self:GetWide() / 2 + string.len(loc_name) * 2 + 20, 28, 40, 40)
         else
             draw.DrawText(self.item.description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             draw.DrawText(self.item.name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
@@ -330,7 +328,7 @@ function PANEL:Paint()
         -- Check if this is a class or an item
         if not self.item.class then
             self.buy_btn:SetTextColor(Color(255,255,255))
-            self.buy_btn:SetText("Select Class (Your Items Will Be Removed)")
+            self.buy_btn:SetText(translate.Get("Shop_Select_Class"))
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -339,9 +337,9 @@ function PANEL:Paint()
             -- Use the sell button to toggle perks
             self.sell_btn:SetVisible(true)
             if self.perk_panel:IsVisible() then
-                self.sell_btn:SetText("Hide Class Perks")
+                self.sell_btn:SetText(translate.Get("Shop_Hide_Perks"))
             else
-                self.sell_btn:SetText("Show Class Perks")
+                self.sell_btn:SetText(translate.Get("Shop_Show_Perks"))
             end
             self.sell_btn:SetTextColor(Color(255,255,255))
             self.sell_btn.Paint = function ()

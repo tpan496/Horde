@@ -1,4 +1,16 @@
 -- Basic user ui
+local font = translate.GetFont()
+surface.CreateFont("Horde_PerkTitle", { font = font, size = 24, extended = true })
+surface.CreateFont("Horde_PerkButton_Name", { font = font, size = 20, extended = true })
+surface.CreateFont("Horde_PerkButton_Text", { font = font, size = 15, extended = true })
+surface.CreateFont("Title", { font = font, size = 30, extended = true })
+surface.CreateFont("Content", { font = font, size = 20, extended = true })
+surface.CreateFont("Warning", { font = font, size = 30, strikeout = true, extended = true })
+surface.CreateFont("LargeTitle", { font = font, size = 35, extended = true })
+surface.CreateFont("Heading", { font = font, size = 22, extended = true })
+surface.CreateFont("Category", { font = font, size = 22, extended = true })
+surface.CreateFont("Item", { font = font, size = 20, extended = true })
+
 local center_panel = vgui.Create("DPanel")
 center_panel:SetSize(350, 50)
 center_panel:SetPos(25, 80)
@@ -22,11 +34,12 @@ timer.Simple(5, function ()
             if not class then return end
             local name = class.name
             local display_name = class.display_name
+            local loc_display_name = translate.Get("Class_" .. display_name) or display_name
             if LocalPlayer():Horde_GetClass() then
                 display_name = LocalPlayer():Horde_GetClass().display_name
                 name = LocalPlayer():Horde_GetClass().name
             end
-            draw.SimpleText(display_name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(loc_display_name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Trebuchet24", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
             local mat = Material(HORDE.classes[name].icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material

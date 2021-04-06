@@ -1,4 +1,5 @@
 include("shared.lua")
+include("sh_translate.lua")
 include("sh_horde.lua")
 include("sh_item.lua")
 include("sh_class.lua")
