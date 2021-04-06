@@ -553,7 +553,8 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
 
                 -- Endless
                 if HORDE.endless == 1 and enemy_wave > HORDE.max_max_waves then
-                    enemy_wave = HORDE.max_max_waves
+                    enemy_wave = enemy_wave % HORDE.max_max_waves
+                    if enemy_wave == 0 then enemy_wave = 10 end
                 end
 
                 for name, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
@@ -787,7 +788,7 @@ function HORDE:WaveStart()
         if current_boss_wave == 0 then current_boss_wave = 10 end
     end
 
-    local has_boss = HORDE.bosses_normalized[current_boss_wave] and not table.IsEmpty(HORDE.bosses_normalized[HORDE.current_wave])
+    local has_boss = HORDE.bosses_normalized[current_boss_wave] and not table.IsEmpty(HORDE.bosses_normalized[current_boss_wave])
     if has_boss then
         local p = math.random()
         local p_cum = 0
@@ -1017,7 +1018,9 @@ function HORDE:Direct()
         HORDE:CheckBossStuck()
 
         -- Spawn boss
-        local has_boss = HORDE.bosses_normalized[HORDE.current_wave]
+        local wave = HORDE.current_wave % HORDE.max_max_waves
+        if wave == 0 then wave = 10 end
+        local has_boss = HORDE.bosses_normalized[wave]
         if has_boss and (not horde_boss_spawned) and (not HORDE.horde_boss) then
             HORDE:SpawnBoss(enemies, valid_nodes)
             hook.Run("HordeBossSpawn", HORDE.horde_boss)
