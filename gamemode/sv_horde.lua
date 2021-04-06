@@ -6,6 +6,7 @@ local horde_spawned_ammoboxes = {}
 local horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local horde_in_break = false
 local horde_perk_progress = 1
+local horde_current_enemies_list = {}
 
 HORDE.horde_boss = nil
 HORDE.horde_boss_name = nil
@@ -544,19 +545,19 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                 local p = math.random()
                 local p_cum = 0
                 local spawned_enemy
-                local enemy_wave = HORDE.current_wave
+                local enemy_wave = ((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1
 
                 -- This in fact should not happen
-                if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[enemy_wave]) then
-                    enemy_wave = enemy_wave - 1
+                if table.IsEmpty(horde_current_enemies_list) then
+                    net.Start("Horde_LegacyNotification")
+                        net.WriteString("Current enemy list is empty!")
+                        net.WriteInt(1,2)
+                    net.Broadcast()
+                    return
                 end
 
-                -- Endless
-                if HORDE.endless == 1 and enemy_wave > HORDE.max_max_waves then
-                    enemy_wave = HORDE.max_max_waves
-                end
-
-                for name, weight in pairs(HORDE.enemies_normalized[enemy_wave]) do
+                local renormalize = nil
+                for name, weight in pairs(horde_current_enemies_list) do
                     p_cum = p_cum + weight
                     if p <= p_cum then
                         local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
@@ -564,6 +565,8 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                             -- Do not spawn if exceeds spawn limit
                             local count = HORDE.spawned_enemies_count[name]
                             if count and count >= enemy.spawn_limit then
+                                renormalize = true
+                                horde_current_enemies_list[name] = nil
                                 goto cont
                             else
                                 spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
@@ -583,6 +586,10 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                     end
                     ::cont::
                 end
+
+                if renormalize then
+                    HORDE:NormalizeEnemiesWeightOnWave(horde_current_enemies_list)
+                end
                 
                 HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
                 HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
@@ -601,22 +608,15 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         if not pos then return end
         table.RemoveByValue(valid_nodes, pos)
         local spawned_enemy
-        local enemy_wave = HORDE.current_wave
-        
-        -- Endless
-        -- Boss only spawns on multiples of 10.
-        if HORDE.endless == 1 and enemy_wave > HORDE.max_max_waves then
-            enemy_wave = enemy_wave % HORDE.max_max_waves
-            if enemy_wave == 0 then enemy_wave = 10 end
-        end
-        
+        local enemy_wave = ((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1
+
         local enemy = HORDE.bosses[HORDE.horde_boss_name .. tostring(enemy_wave)]
         enemy.is_elite = true
         spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
         HORDE.horde_boss = spawned_enemy
         horde_boss_reposition = false
         table.insert(enemies, spawned_enemy)
-        
+
         net.Start("Horde_SyncBossSpawned")
             net.WriteString(enemy.name)
             net.WriteInt(spawned_enemy:GetMaxHealth(),32)
@@ -746,7 +746,9 @@ function HORDE:WaveStart()
         net.Broadcast()
     end
 
+    local current_wave = ((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1
     horde_players_count = table.Count(player.GetAll())
+    horde_current_enemies_list = table.Copy(HORDE.enemies_normalized[current_wave])
     local difficulty_coefficient = HORDE.difficulty * 0.05
 
     if HORDE.endless == 0 then
@@ -781,17 +783,11 @@ function HORDE:WaveStart()
     HORDE.killed_enemies_this_wave = 0
 
     -- Decides the boss to spawn.
-    local current_boss_wave = HORDE.current_wave
-    if HORDE.endless == 1 then
-        current_boss_wave = current_boss_wave % HORDE.max_max_waves
-        if current_boss_wave == 0 then current_boss_wave = 10 end
-    end
-
-    local has_boss = HORDE.bosses_normalized[current_boss_wave] and not table.IsEmpty(HORDE.bosses_normalized[HORDE.current_wave])
+    local has_boss = HORDE.bosses_normalized[current_wave] and not table.IsEmpty(HORDE.bosses_normalized[current_wave])
     if has_boss then
         local p = math.random()
         local p_cum = 0
-        for name, weight in pairs(HORDE.bosses_normalized[current_boss_wave]) do
+        for name, weight in pairs(HORDE.bosses_normalized[current_wave]) do
             p_cum = p_cum + weight
             if p <= p_cum then
                 HORDE.horde_boss_name = name
@@ -799,7 +795,7 @@ function HORDE:WaveStart()
             end
         end
 
-        horde_boss_properties = HORDE.bosses[HORDE.horde_boss_name .. current_boss_wave].boss_properties
+        horde_boss_properties = HORDE.bosses[HORDE.horde_boss_name .. current_wave].boss_properties
         if horde_boss_properties.enemies_spawn_threshold <= 0 and horde_boss_properties.end_wave == true then
             -- No enemies will spawn, just the boss.
             HORDE.total_enemies_this_wave = 1
@@ -824,12 +820,6 @@ function HORDE:WaveStart()
     -- Close all the shop menus
     net.Start("Horde_ForceCloseShop")
     net.Broadcast()
-    
-    -- Apply perks.
-    -- We shouldn't need this, perks are already applied when class changes.
-    --for _, p in pairs(player.GetAll()) do
-    --    p:Horde_ApplyPerksForClass()
-    --end
 end
 
 -- Ends a wave.
@@ -1017,7 +1007,9 @@ function HORDE:Direct()
         HORDE:CheckBossStuck()
 
         -- Spawn boss
-        local has_boss = HORDE.bosses_normalized[HORDE.current_wave]
+        local wave = HORDE.current_wave % HORDE.max_max_waves
+        if wave == 0 then wave = 10 end
+        local has_boss = HORDE.bosses_normalized[wave]
         if has_boss and (not horde_boss_spawned) and (not HORDE.horde_boss) then
             HORDE:SpawnBoss(enemies, valid_nodes)
             hook.Run("HordeBossSpawn", HORDE.horde_boss)
