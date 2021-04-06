@@ -1,5 +1,5 @@
 PERK.PrintName = "Chain Reaction"
-PERK.Description = "Enemies you kill have 25% chance to explode,\ndealing 25% of their health as Blast damage."
+PERK.Description = "Enemies you kill have 25% chance to explode,\ndealing 50% of their health as Blast damage."
 PERK.Icon = "materials/perks/chain_reaction.png"
 
 PERK.Hooks = {}
@@ -9,7 +9,7 @@ PERK.Hooks.OnNPCKilled = function(victim, killer, inflictor)
     if inflictor:IsNPC() then return end -- Prevent infinite chains
     local p = math.random()
     if p <= 0.25 then
-        local dmg = victim:GetMaxHealth() * 0.25
+        local dmg = victim:GetMaxHealth() * 0.50
         local rad = 140
         local e = EffectData()
         e:SetOrigin(victim:GetPos())

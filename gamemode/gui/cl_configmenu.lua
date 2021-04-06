@@ -1,7 +1,5 @@
 local PANEL = {}
 
-surface.CreateFont("Heading", { font = "arial bold", size = 22 })
-
 function PANEL:Init()
     self:SetSize(256, 325)
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))

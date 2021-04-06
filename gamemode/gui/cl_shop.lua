@@ -1,7 +1,3 @@
-surface.CreateFont("Heading", { font = "arial bold", size = 22 })
-surface.CreateFont("Category", { font = "arial bold", size = 22 })
-surface.CreateFont("Item", { font = "arial bold", size = 20 })
-
 local PANEL = {}
 
 function PANEL:Init()
@@ -53,7 +49,8 @@ function PANEL:Init()
 
         local btn = vgui.Create("DButton", btn_container)
         btn:Dock(dock)
-        btn:SetText(text)
+        local loc_text = translate.Get("Shop_" .. text) or text
+        btn:SetText(loc_text)
         btn:SetFont("Category")
 
         btn.Paint = function(pnl, w, h)
@@ -300,11 +297,13 @@ function PANEL:Paint(w, h)
     draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
 
     -- Money
-    draw.SimpleText("Class: " .. LocalPlayer():Horde_GetClass().display_name, 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    local display_name = LocalPlayer():Horde_GetClass().display_name
+    local loc_display_name = translate.Get("Class_" .. display_name) or display_name
+    draw.SimpleText(translate.Get("Shop_Class") .. ": " .. loc_display_name, 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     if LocalPlayer():Horde_GetClass().name == HORDE.Class_Heavy then
-        draw.SimpleText("Cash: " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight + 5 - LocalPlayer():Horde_GetWeight()) .. "/" .. HORDE.max_weight + 5 .. "]", 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Shop_Cash") .. ": " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ ' .. translate.Get("Shop_Weight") .. ': [' .. tostring(HORDE.max_weight + 5 - LocalPlayer():Horde_GetWeight()) .. "/" .. HORDE.max_weight + 5 .. "]", 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
     else
-        draw.SimpleText("Cash: " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ Weight: [' .. tostring(HORDE.max_weight - LocalPlayer():Horde_GetWeight()) .. "/" .. HORDE.max_weight .. "]", "Heading", self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Shop_Cash") .. ": " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ ' .. translate.Get("Shop_Weight") .. ': [' .. tostring(HORDE.max_weight - LocalPlayer():Horde_GetWeight()) .. "/" .. HORDE.max_weight .. "]", "Heading", self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
     end
 end
 

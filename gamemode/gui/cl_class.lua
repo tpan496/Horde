@@ -1,5 +1,3 @@
-surface.CreateFont("Item", { font = "arial", size = 20 })
-
 local PANEL = {}
 local mat = {}
 
@@ -63,7 +61,7 @@ function PANEL:Paint()
 
         surface.SetTextColor(Color(255,255,255))
         surface.SetTextPos(10, self:GetTall() / 2 - 10)
-        surface.DrawText(self.name)
+        surface.DrawText(translate.Get("Class_" .. self.name) or self.name)
 
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
         if mat[1] ~= self.class then mat = {self.class, Material(self.class.icon, "mips smooth")} end
