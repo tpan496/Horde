@@ -42,6 +42,7 @@ local function Render(bdepth, bskybox)
         render_ang:RotateAroundAxis(render_ang:Right(),90)
         render_ang:RotateAroundAxis(-render_ang:Up(),90)
 
+        if (not HORDE.classes) or (not HORDE.classes[class]) then return end
         local mat = Material(HORDE.classes[class].icon, "mips smooth")
         local len = string.len(class) * 6
 
