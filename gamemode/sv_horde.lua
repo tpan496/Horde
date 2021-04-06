@@ -158,7 +158,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
     end
 end
 
-hook.Add("OnNPCKilled", "Horde_OnEnemyKilled", function(victim, killer, weapon)
+hook.Add("OnNPCKilled", "Horde_EnemyKilled", function(victim, killer, weapon)
     HORDE:OnEnemyKilled(victim, killer, weapon)
 end)
 
@@ -227,7 +227,7 @@ hook.Add("ScaleNPCDamage", "Horde_HeadshotCounter", function (npc, hitgroup, dmg
 end)
 
 hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
-    if ent:IsNPC() and ent:Horde_GetMostRecentAttacker() then
+    if (ent:IsNPC() or ent:IsNextBot()) and ent:Horde_GetMostRecentAttacker() then
         HORDE:OnEnemyKilled(ent, ent:Horde_GetMostRecentAttacker())
     else
         if HORDE.spawned_enemies[ent:EntIndex()] then
