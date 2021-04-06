@@ -1,25 +1,25 @@
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_GetMoney()
-    return self.money or 0
+    return self.Horde_money or 0
 end
 
 function plymeta:Horde_GetWeight()
-    return self.weight or 0
+    return self.Horde_weight or 0
 end
 
 function plymeta:Horde_GetClass()
-    return self.class
+    return self.Horde_class
 end
 
 function plymeta:GetHordeDropEntities()
-    return self.drop_entities
+    return self.Horde_drop_entities
 end
 
 net.Receive("Horde_Horde_SyncEconomy", function(length)
     local ply = net.ReadEntity()
-    ply.money = net.ReadInt(32)
-    ply.weight = net.ReadInt(32)
-    ply.class = HORDE.classes[net.ReadString()]
-    ply.drop_entities = net.ReadTable()
+    ply.Horde_money = net.ReadInt(32)
+    ply.Horde_weight = net.ReadInt(32)
+    ply.Horde_class = HORDE.classes[net.ReadString()]
+    ply.Horde_drop_entities = net.ReadTable()
 end)
