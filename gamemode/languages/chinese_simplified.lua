@@ -4,26 +4,38 @@ LANGUAGE["Default_Font"] = "微软雅黑"
 LANGUAGE["Default_Font_Scale"] = 1.20
 
 -- Game Info
-LANGUAGE["Game_Ready"] = "准备"
-LANGUAGE["Game_Not Ready"] = "未准备"
+LANGUAGE["Game_Ready"] = "     准备"
+LANGUAGE["Game_Not Ready"] = "     未准备"
 LANGUAGE["Game_Players_Ready"] = "等待玩家"
-LANGUAGE["Game_Next_Wave_Starts_In"] = "倒计时"
+LANGUAGE["Game_Next_Wave_Starts_In"] = "下一波在 %d 秒后开始"
 LANGUAGE["Game_Difficulty_NORMAL"] = "普通"
 LANGUAGE["Game_Difficulty_HARD"] = "困难"
 LANGUAGE["Game_Difficulty_REALISM"] = "写实"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "噩梦"
 LANGUAGE["Game_Enemies"] = "敌人数"
-LANGUAGE["Game_HintBottomReady"] = "F3 - 商店/技能, F4 - 准备"
-LANGUAGE["Game_HintBottom"] = "F3 - 商店/技能, V - 扔钱$"
+LANGUAGE["Game_HintBottomReady"] = "  F3 - 商店/技能, F4 - 准备"
+LANGUAGE["Game_HintBottom"] = "  F3 - 商店/技能, V - 扔钱"
 LANGUAGE["Game_Result_VICTORY"] = "胜利"
 LANGUAGE["Game_Result_DEFEAT"] = "失败"
 LANGUAGE["Game_Result_Change Map"] = "地图更换中"
-LANGUAGE["Game_Wave"] = "回合"
-LANGUAGE["Game_Has_Started"] = "即将开始"
-LANGUAGE["Game_Wave_Completed"] = "回合目标达成"
+LANGUAGE["Game_Wave"] = "波数"
+LANGUAGE["Game_Wave_Has_Started"] = "第 %d 波即将开始!"
+LANGUAGE["Game_Wave_Completed"] = "目标达成!"
 LANGUAGE["Game_Remaining_Time"] = "剩余时间"
 LANGUAGE["Game_Vote_Map"] = "地图投票"
 LANGUAGE["Game_Game_Summary"] = "游戏数据"
+LANGUAGE["Game_Most_Damage_Dealt"] = "最高伤害"
+LANGUAGE["Game_Damage"] = "伤害"
+LANGUAGE["Game_Most_Damage_Taken"] = "最高伤害承受"
+LANGUAGE["Game_Damage_Taken"] = "承受伤害"
+LANGUAGE["Game_Most_Kills"] = "最多杀敌"
+LANGUAGE["Game_Kills"] = "击杀"
+LANGUAGE["Game_Elite_Killer"] = "精英杀手"
+LANGUAGE["Game_Elite_Kills"] = "精英怪击杀"
+LANGUAGE["Game_SharpShooter"] = "神射手"
+LANGUAGE["Game_Headshots"] = "爆头数"
+LANGUAGE["Game_Most_Heal"] = "最高治疗量"
+LANGUAGE["Game_Healed"] = "治疗量"
 
 
 -- Shop
@@ -44,7 +56,7 @@ LANGUAGE["Shop_Class/Perks"] = "职业/技能"
 LANGUAGE["Shop_Select_Class"] = "选择职业（拥有物品会被去除）"
 LANGUAGE["Shop_Show_Perks"] = "显示技能树"
 LANGUAGE["Shop_Hide_Perks"] = "隐藏技能树"
-LANGUAGE["Shop_Unlocks_After_Wave"] = "解锁波数："
+LANGUAGE["Shop_Unlocks_After_Wave"] = "第 %d 波后解锁"
 LANGUAGE["Shop_Buy_Ammo_Clip"] = "购买弹匣"
 LANGUAGE["Shop_Sell_For"] = "卖出"
 LANGUAGE["Shop_Sell_All_For"] = "卖出全部"
@@ -117,7 +129,7 @@ LANGUAGE["Perk_medic_base"] = [[
 医疗兵拥有强大的生命恢复能力，同时能为队友提供治疗以及各种增益效果。
 复杂度: 中
 
-每秒恢复 2% 最大生命值。]]
+每秒恢复 2% 生命值。]]
 
 LANGUAGE["Perk_demolition_base"] = [[
 爆破兵拥有强大的范围性输出。根据技能的选择，爆破兵也能提供超群的单体输出能力。
@@ -356,7 +368,8 @@ LANGUAGE["Perk_engineer_kamikaze"] = [[
 LANGUAGE["Perk_Title_Berserker_Tier_1"] = [[基本功]]
 LANGUAGE["Perk_Title_berserker_breathing_technique"] = [[波纹呼吸]]
 LANGUAGE["Perk_berserker_breathing_technique"] = [[
-每秒恢复 2% 最大生命值。]]
+每秒恢复 2% 最大生命值。
+免疫毒素伤害。]]
 
 LANGUAGE["Perk_Title_berserker_bloodlust"] = [[嗜血狂怒]]
 LANGUAGE["Perk_berserker_bloodlust"] = [[
@@ -379,9 +392,9 @@ LANGUAGE["Perk_Title_berserker_mindeye"] = [[心眼]]
 LANGUAGE["Perk_berserker_mindeye"] = [[
 当前武器为近战武器的前提下：
   +25% 闪避
-  闪避成功后，反击敌人闪避伤害的 50%。]]
+  闪避成功后，反击闪避近战伤害的 50%。]]
 
-LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[毁灭]]
+LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[肉斩骨断]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
 50% 更多近战伤害
-受到 10% 更多伤害]]
+自身受到 10% 更多伤害]]
