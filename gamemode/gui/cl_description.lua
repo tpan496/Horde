@@ -208,7 +208,7 @@ function PANEL:SetData(item)
             local unlocked_level = HORDE:Horde_GetWaveForPerk(perk_level)
             local loc_title = translate.Get("Perk_Title_" .. class.name .. "_Tier_" .. perk_level) or (v.title or "")
             if unlocked_level > 0 and unlocked_level > HORDE.current_wave then
-                title:SetText("[" .. translate.Get("Shop_Unlocks_After_Wave") .. " " .. unlocked_level .. "] "  .. loc_title)
+                title:SetText("[" .. translate.Format("Shop_Unlocks_After_Wave", unlocked_level) .. "] "  .. loc_title)
                 title:SetColor(color_gray)
             else
                 title:SetText(loc_title)

@@ -4,7 +4,7 @@ translate.AddLanguage("en", "English")
 LANGUAGE["Game_Ready"] = "Ready"
 LANGUAGE["Game_Not Ready"] = "Not Ready"
 LANGUAGE["Game_Players_Ready"] = "Players Ready"
-LANGUAGE["Game_Next_Wave_Starts_In"] = "Next wave starts in"
+LANGUAGE["Game_Next_Wave_Starts_In"] = "Next wave starts in %d"
 LANGUAGE["Game_Difficulty_NORMAL"] = "NORMAL"
 LANGUAGE["Game_Difficulty_HARD"] = "HARD"
 LANGUAGE["Game_Difficulty_REALISM"] = "REALISM"
@@ -16,11 +16,23 @@ LANGUAGE["Game_Result_VICTORY"] = "VICTORY"
 LANGUAGE["Game_Result_DEFEAT"] = "DEFEAT"
 LANGUAGE["Game_Result_Change Map"] = "Change Map"
 LANGUAGE["Game_Wave"] = "Wave"
-LANGUAGE["Game_Has_Started"] = "has started"
-LANGUAGE["Game_Wave_Completed"] = "Wave Completed"
+LANGUAGE["Game_Wave_Has_Started"] = "Wave %d has started!"
+LANGUAGE["Game_Wave_Completed"] = "Wave Completed!"
 LANGUAGE["Game_Remaining_Time"] = "Remaining Time"
 LANGUAGE["Game_Vote_Map"] = "Vote Map"
 LANGUAGE["Game_Game_Summary"] = "Game Summary"
+LANGUAGE["Game_Most_Damage_Dealt"] = "Most Damage Dealt"
+LANGUAGE["Game_Damage"] = "Damage"
+LANGUAGE["Game_Most_Damage_Taken"] = "Most Damage Taken"
+LANGUAGE["Game_Damage_Taken"] = "Damage Taken"
+LANGUAGE["Game_Most_Kills"] = "Most Kills"
+LANGUAGE["Game_Kills"] = "Kills"
+LANGUAGE["Game_Elite_Killer"] = "Elite Killer"
+LANGUAGE["Game_Elite_Kills"] = "Elite Kills"
+LANGUAGE["Game_SharpShooter"] = "SharpShooter"
+LANGUAGE["Game_Headshots"] = "Headshots"
+LANGUAGE["Game_Most_Heal"] = "Most Heal"
+LANGUAGE["Game_Healed"] = "Healed"
 
 
 -- Shop
@@ -41,7 +53,7 @@ LANGUAGE["Shop_Class/Perks"] = "Class/Perks"
 LANGUAGE["Shop_Select_Class"] = "Select Class (Your Items Will Be Removed)"
 LANGUAGE["Shop_Show_Perks"] = "Show Class Perks"
 LANGUAGE["Shop_Hide_Perks"] = "Hide Class Perks"
-LANGUAGE["Shop_Unlocks_After_Wave"] = "Unlocks After Wave"
+LANGUAGE["Shop_Unlocks_After_Wave"] = "Unlocks After Wave %d"
 LANGUAGE["Shop_Buy_Ammo_Clip"] = "Buy Ammo Clip"
 LANGUAGE["Shop_Sell_For"] = "Sell For"
 LANGUAGE["Shop_Sell_All_For"] = "Sell All For"
@@ -71,7 +83,8 @@ LANGUAGE.Perk_assault_base = [[
 The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
 Complexity: EASY
 
-20% increased movement speed.\nGain Adrenaline when you kill an enemy.
+20% increased movement speed.
+Gain Adrenaline when you kill an enemy.
 Adrenaline increases damage and speed by 6%.]]
 LANGUAGE.Perk_heavy_base = [[
 The Heavy class is a tank class that provides strong suppression firepower.

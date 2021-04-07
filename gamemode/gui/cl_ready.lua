@@ -29,7 +29,7 @@ function PANEL:CreateReadyPanel(ply, status)
     name_label:SetSize(130-32,32)
     name_label.Paint = function ()
         if not ply:IsValid() then return end
-        draw.SimpleText(ply:GetName(), "Content", 10, 8, Color(255,255,255))
+        draw.SimpleText(ply:GetName(), "Content", 10, 6, Color(255,255,255))
     end
 
     local status_label = vgui.Create("DPanel", panel)
@@ -37,9 +37,9 @@ function PANEL:CreateReadyPanel(ply, status)
     status_label:Dock(RIGHT)
     status_label.Paint = function ()
         if status == 0 then
-            draw.SimpleText(translate.Get("Game_Not Ready"), "Content", 0, 8, Color(255,255,255))
+            draw.SimpleText(translate.Get("Game_Not Ready"), "Content", 0, 6, Color(255,255,255))
         else
-            draw.SimpleText("    " .. translate.Get("Game_Ready"), "Content", 0, 8, HORDE.color_crimson)
+            draw.SimpleText("    " .. translate.Get("Game_Ready"), "Content", 0, 6, HORDE.color_crimson)
         end
     end
 end

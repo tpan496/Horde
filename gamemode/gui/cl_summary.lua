@@ -188,7 +188,7 @@ function PANEL:Init()
         local name_label = vgui.Create("DLabel", panel)
         name_label:SetPos(90,-20)
         name_label:SetText(ply:GetName())
-        name_label:SetSize(100, 80)
+        name_label:SetSize(125, 80)
         name_label:SetColor(Color(255,255,255))
         name_label:SetFont("Title")
 
@@ -207,8 +207,8 @@ function PANEL:Init()
         reason_label:SetFont("Title")
 
         local class_icon = vgui.Create("DPanel", panel)
-        class_icon:SetPos(430, 20)
-        class_icon:SetSize(45, 45)
+        class_icon:SetPos(430, 22)
+        class_icon:SetSize(40, 40)
         class_icon.Paint = function ()
             local mat = Material(ply:Horde_GetClass().icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
@@ -313,13 +313,13 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     if total_damage > 0 then
         percentage = HORDE:Round2(mvp_damage / total_damage, 2) * 100
     end
-    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              "MVP", tostring(mvp_kills) .. " Kills, " .. tostring(mvp_damage) .. " Damage (" .. tostring(percentage) .. "%)")
-    self.create_player_panel({x=512 - 480 - 5,y=280}, damage_player,       "Most Damage Dealt", tostring(most_damage) .. " Damage")
-    self.create_player_panel({x=512 + 5, y=280}, kills_player,             "Most Kills", tostring(most_kills) .. " Kills")
-    self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, "Most Damage Taken", tostring(most_damage_taken) .. " Damage Taken")
-    self.create_player_panel({x=512 + 5,y=390}, elite_kill_player,         "Elite Killer", tostring(most_elite_kills) .. " Elite Kills")
-    self.create_player_panel({x=512 + 5,y=500}, most_heal_player,          "Most Heal", tostring(most_heal) .. " Healed")
-    self.create_player_panel({x=512 - 480 - 5,y=500}, headshot_player,     "SharpShooter", tostring(most_headshots) .. " Headshots")
+    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              "MVP", tostring(mvp_kills) .. " " .. translate.Get("Game_Kills") .. ", " .. tostring(mvp_damage) .. " " .. translate.Get("Game_Damage") .. " (" .. tostring(percentage) .. "%)")
+    self.create_player_panel({x=512 - 480 - 5,y=280}, damage_player,       translate.Get("Game_Most_Damage_Dealt"), tostring(most_damage) .. " " .. translate.Get("Game_Damage"))
+    self.create_player_panel({x=512 + 5, y=280}, kills_player,             translate.Get("Game_Most_Kills"), tostring(most_kills) .. " " .. translate.Get("Game_Kills"))
+    self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, translate.Get("Game_Most_Damage_Taken"), tostring(most_damage_taken) .. " " .. translate.Get("Game_Damage_Taken"))
+    self.create_player_panel({x=512 + 5,y=390}, elite_kill_player,         translate.Get("Game_Elite_Killer"), tostring(most_elite_kills) .. " " .. translate.Get("Game_Elite_Kills"))
+    self.create_player_panel({x=512 + 5,y=500}, most_heal_player,          translate.Get("Game_Most_Heal"), tostring(most_heal) .. " " .. translate.Get("Game_Healed"))
+    self.create_player_panel({x=512 - 480 - 5,y=500}, headshot_player,     translate.Get("Game_SharpShooter"), tostring(most_headshots) .. " " .. translate.Get("Game_Headshots"))
 
     for _, map in pairs(maps) do
         self.create_map_panel(map)
@@ -331,7 +331,7 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     summary_label:SetText("")
     summary_label:SetTextColor(Color(255,255,255))
     summary_label.Paint = function ()
-            draw.SimpleText(status .. " " .. game.GetMap() .. " - " .. HORDE.difficulty_text[HORDE.difficulty], "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Game_Result_" .. status) .. "! " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
     end
 
     self.create_diff_panel(translate.Get("Game_Difficulty_NORMAL"))

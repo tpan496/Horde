@@ -1,7 +1,7 @@
 -- Basic user ui
 local font = translate.GetFont()
 local font_scale = translate.Get("Default_Font_Scale") or 1
-surface.CreateFont("Horde_PerkTitle", { font = font, size = 24 * font_scale, extended = true })
+surface.CreateFont("Horde_PerkTitle", { font = font, size = 24 * font_scale, bold = true, extended = true })
 surface.CreateFont("Horde_PerkButton_Name", { font = font, size = 20 * font_scale, extended = true })
 surface.CreateFont("Horde_PerkButton_Text", { font = font, size = 15 * font_scale, extended = true })
 surface.CreateFont("Title", { font = font, size = 30 * font_scale, extended = true })
@@ -11,7 +11,7 @@ surface.CreateFont("LargeTitle", { font = font, size = 35 * font_scale, extended
 surface.CreateFont("Heading", { font = font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Category", { font = font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Item", { font = font, size = 20 * font_scale, extended = true })
-surface.CreateFont("Info", { font = font, size = 24 * font_scale, extended = true})
+surface.CreateFont("Info", { font = font, size = 23 * font_scale, extended = true})
 
 local center_panel = vgui.Create("DPanel")
 local center_panel_str = ""
@@ -155,9 +155,9 @@ net.Receive("Horde_RenderBreakCountDown", function()
         end
     end
     if num == 0 then
-        center_panel_str = translate.Get("Game_Wave") .. " " .. tostring(HORDE.current_wave) .. " " .. translate.Get("Game_Has_Started") .. "!"
+        center_panel_str = translate.Format("Game_Wave_Has_Started", tostring(HORDE.current_wave))
     else
-        center_panel_str = translate.Get("Game_Next_Wave_Starts_In") .. ": "  .. tostring(num)
+        center_panel_str = translate.Format("Game_Next_Wave_Starts_In", num)
     end
 end)
 
@@ -166,14 +166,14 @@ net.Receive("Horde_RenderEnemiesCount", function()
     local wave_str = net.ReadString()
     local count = net.ReadInt(32)
     if is_boss then
-        center_panel_str = "[" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "]:" .. wave_str .. " " .. "BOSS"
+        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|:" .. wave_str .. "  " .. "BOSS"
     else
-        center_panel_str = "[" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "]:" .. wave_str .. " " .. translate.Get("Game_Enemies") .. ":" .. tostring(count)
+        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|: " .. wave_str .. "  " .. translate.Get("Game_Enemies") .. ": " .. tostring(count)
     end
 end)
 
 net.Receive("Horde_RenderGameResult", function()
     local status = net.ReadString()
     local wave = net.ReadUInt(32)
-    center_panel_str = translate.Get("Game_Result_" .. status) .. " " .. translate.Get("Game_Wave") .. ": " .. tostring(wave)
+    center_panel_str = translate.Get("Game_Result_" .. status) .. "! " .. translate.Get("Game_Wave") .. ": " .. tostring(wave)
 end)

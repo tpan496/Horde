@@ -728,7 +728,7 @@ function HORDE:WaveStart()
         net.Broadcast()
     end
 
-    local current_wave = ((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1
+     local current_wave = ((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1
     horde_players_count = table.Count(player.GetAll())
     horde_current_enemies_list = table.Copy(HORDE.enemies_normalized[current_wave])
     local difficulty_coefficient = HORDE.difficulty * 0.05
@@ -828,7 +828,7 @@ function HORDE:WaveEnd()
     if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
         -- TODO: change this magic number
         if boss_music_loop then boss_music_loop:Stop() end
-        HORDE:GameEnd("VICTORY!")
+        HORDE:GameEnd("VICTORY")
     else
         HORDE:BroadcastBreakCountDownMessage(0, true)
         net.Start("Horde_LegacyNotification")
