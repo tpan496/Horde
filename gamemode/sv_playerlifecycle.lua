@@ -176,7 +176,7 @@ function HORDE:GameEnd(status)
 
     timer.Remove("Horde_Main")
     timer.Remove("Horder_Counter")
-    BroadcastMessage(status .. " Wave: " .. HORDE.current_wave)
+    HORDE:BroadcastGameResultMessage(status, HORDE.current_wave)
 
     timer.Create("Horde_MapVoteCountdown", 1, 0, function ()
         if HORDE.vote_remaining_time <= 0 then
@@ -354,7 +354,7 @@ function HORDE:PlayerInit(ply)
         HORDE.start_game = true
     end
 
-    BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
+    HORDE:BroadcastPlayersReadyMessage(tostring(ready_count) .. "/" .. tostring(total_player))
 end
 
 net.Receive("Horde_PlayerInit", function (len, ply)
@@ -475,7 +475,7 @@ function HORDE:CheckAlivePlayers()
         net.WriteString("All players are dead! Restarting...")
         net.WriteInt(1,2)
         net.Broadcast()
-        HORDE:GameEnd("DEFEAT!")
+        HORDE:GameEnd("DEFEAT")
     end
 end
 

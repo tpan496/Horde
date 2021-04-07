@@ -4,11 +4,19 @@ translate.AddLanguage("en", "English")
 LANGUAGE["Game_Ready"] = "Ready"
 LANGUAGE["Game_Not Ready"] = "Not Ready"
 LANGUAGE["Game_Players Ready"] = "Players Ready"
+LANGUAGE["Game_Next_Wave_Starts_In"] = "Next wave starts in"
 LANGUAGE["Game_Difficulty_NORMAL"] = "NORMAL"
 LANGUAGE["Game_Difficulty_HARD"] = "HARD"
 LANGUAGE["Game_Difficulty_REALISM"] = "REALISM"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "NIGHTMARE"
 LANGUAGE["Game_Enemies"] = "Enemies"
+LANGUAGE["Game_HintBottomReady"] = "F3 - Shop/Perk, F4 - Ready"
+LANGUAGE["Game_HintBottom"] = "F3 - Shop/Perk, V - Drop $"
+LANGUAGE["Game_Result_VICTORY"] = "VICTORY"
+LANGUAGE["Game_Result_DEFEAT"] = "DEFEAT"
+LANGUAGE["Game_Result_Change Map"] = "Change Map"
+LANGUAGE["Game_Wave"] = "Wave"
+LANGUAGE["Game_Wave_Completed"] = "Wave Completed"
 
 
 -- Shop
@@ -30,6 +38,14 @@ LANGUAGE["Shop_Select_Class"] = "Select Class (Your Items Will Be Removed)"
 LANGUAGE["Shop_Show_Perks"] = "Show Class Perks"
 LANGUAGE["Shop_Hide_Perks"] = "Hide Class Perks"
 LANGUAGE["Shop_Unlocks_After_Wave"] = "Unlocks After Wave"
+LANGUAGE["Shop_Buy_Ammo_Clip"] = "Buy Ammo Clip"
+LANGUAGE["Shop_Sell_For"] = "Sell For"
+LANGUAGE["Shop_Sell_All_For"] = "Sell All For"
+LANGUAGE["Shop_Buy_Item"] = "Buy Item"
+LANGUAGE["Shop_OWNED"] = "OWNED"
+LANGUAGE["Shop_Buy_Secondary_Ammo"] = "Buy Secondary Ammo"
+LANGUAGE["Shop_Primary_Ammo"] = "Primary Ammo"
+LANGUAGE["Shop_Secondary_Ammo"] = "Secondary Ammo"
 
 
 -- Classes
