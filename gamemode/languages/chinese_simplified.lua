@@ -175,7 +175,7 @@ LANGUAGE["Perk_Title_assault_charge"] = [[蓄能]]
 LANGUAGE["Perk_assault_charge"] = [[
 肾上腺素最大堆叠次数 +2。]]
 
-LANGUAGE["Perk_Title_Assault_Tier_2"] = [[适应]]
+LANGUAGE["Perk_Title_Assault_Tier_2"] = [[适应性]]
 LANGUAGE["Perk_Title_assault_drain"] = [[生命汲取]]
 LANGUAGE["Perk_assault_drain"] = [[
 满血前提下，提升 15% 爆头伤害。
@@ -276,7 +276,7 @@ LANGUAGE["Perk_demolition_frag_cluster"] = [[
 手雷爆炸后产生 3 个子雷。
 子雷伤害为母雷的 75%。]]
 
-LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[途径]]
+LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[爆破途径]]
 LANGUAGE["Perk_Title_demolition_fragmentation"] = [[冲击]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
 对满血敌人造成的爆炸伤害提升 25%。]]
@@ -308,7 +308,7 @@ LANGUAGE["Perk_Title_ghost_sniper"] = [[狙击]]
 LANGUAGE["Perk_ghost_sniper"] = [[
 蹲下状态增加 25% 子弹伤害。]]
 
-LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[转移]]
+LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[战略转移]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[幽灵漫步]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
 奔跑，跳跃不会取消迷彩状态。
@@ -330,7 +330,7 @@ LANGUAGE["Perk_ghost_decapitate"] = [[
   增加 25% 子弹伤害。
   增加 50% 对精英敌人造成的爆头伤害。]]
 
--- Default Perks: Berserker
+-- Default Perks: Engineer
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[制造]]
 LANGUAGE["Perk_Title_engineer_tinkerer"] = [[匠工]]
 LANGUAGE["Perk_engineer_tinkerer"] = [[

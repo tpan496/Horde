@@ -102,7 +102,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Assault,
-        "Have full access to Rifles.",
+        "Have full access to Assault Rifles.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -117,7 +117,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Heavy,
-        "Have full access to Machine Guns and heavier weapons.",
+        "Have full access to Machine Guns and high weight weapons.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
