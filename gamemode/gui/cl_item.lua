@@ -1,5 +1,3 @@
-surface.CreateFont("Item", { font = "arial bold", size = 20 })
-
 local PANEL = {}
 
 function PANEL:Init()

@@ -1,11 +1,11 @@
 PERK.PrintName = "Decapitate"
 PERK.Description = "When you have Camoflague:\n  25% increased Ballistic damage.\n  50% increased headshot damage against elites."
-PERK.Icon = "materials/perks/decapacitate.png"
+PERK.Icon = "materials/perks/decapitate.png"
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     
-    if not ply:Horde_GetPerk("ghost_decapacitate") then return end
+    if not ply:Horde_GetPerk("ghost_decapitate") then return end
     if not (ply:Horde_GetCamoflague() == 1) then return end
     if dmginfo:GetDamageType() == DMG_BULLET or dmginfo:GetDamageType() == DMG_SNIPER or dmginfo:GetDamageType() == DMG_BUCKSHOT then
         bonus.increase = bonus.increase + 0.25
