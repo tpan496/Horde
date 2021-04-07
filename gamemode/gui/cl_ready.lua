@@ -58,9 +58,9 @@ HORDE.HelpPanel:SetPos(ScrW() / 2 - 150, ScrH() - 75)
 HORDE.HelpPanel.Paint = function (w,h)
     draw.RoundedBox(10, 0, 0, 300, 50, HORDE.color_hollow)
     if HORDE.current_wave > 0 then
-        draw.SimpleText(translate.Get("Game_HintBottom"), "Info", 26, 12, HORDE.color_white)
+        draw.SimpleText(translate.Get("Game_HintBottom"), "Info", 26, 13, HORDE.color_white)
     else
-        draw.SimpleText(translate.Get("Game_HintBottomReady"), "Info", 26, 12, HORDE.color_white)
+        draw.SimpleText(translate.Get("Game_HintBottomReady"), "Info", 26, 13, HORDE.color_white)
     end
 end
 
@@ -71,7 +71,7 @@ HORDE.TipPanel:SetPos(ScrW() / 2 - ScrW() * 2 / 5 / 2, 25)
 HORDE.TipPanel.Paint = function (w,h)
     if tip == nil or tip == "" then return end
     draw.RoundedBox(10, 0, 0, ScrW() * 2 / 5, 50,  Color(40,40,40,200))
-    draw.DrawText("Tip: " .. tip, "Info", ScrW() * 2 / 5 / 2, 12, HORDE.color_white, TEXT_ALIGN_CENTER)
+    draw.DrawText("Tip: " .. tip, "Info", ScrW() * 2 / 5 / 2, 13, HORDE.color_white, TEXT_ALIGN_CENTER)
 end
 
 net.Receive("Horde_SyncTip", function()
