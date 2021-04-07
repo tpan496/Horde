@@ -125,6 +125,10 @@ end)
 net.Receive("Horde_RenderBreakCountDown", function()
     local num = net.ReadInt(8)
     local is_end_message = net.ReadBool()
+    if is_end_message then
+        center_panel_str = translate.Get("Game_Wave_Completed") .. "!"
+        return
+    end
     if num then
         if num >= 0 and num <= 10 then
             if HORDE.PlayerReadyPanel then
@@ -150,8 +154,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
             end
         end
     end
-    if is_end_message then
-        center_panel_str = translate.Get("Game_Wave_Completed") .. "!"
+    if num == 0 then
     else
         center_panel_str = translate.Get("Game_Next_Wave_Starts_In") .. ": "  .. tostring(num)
     end

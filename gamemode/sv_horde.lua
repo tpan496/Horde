@@ -697,7 +697,7 @@ function HORDE:StartBreak()
         if HORDE.current_break_time == 0 then
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
-            --HORDE:BroadcastWaveMessage("Wave " .. HORDE.current_wave .. " has started!", 0)
+            HORDE:BroadcastBreakCountDownMessage("Wave " .. HORDE.current_wave .. " has started!", 0)
             net.Start("Horde_SyncGameInfo")
                 net.WriteUInt(HORDE.current_wave, 16)
             net.Broadcast()
