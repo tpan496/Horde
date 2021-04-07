@@ -108,7 +108,7 @@ function HORDE:GetDefaultClassesData()
         GetConVar("horde_base_runspeed"):GetInt(),
         "assault_base",
         {
-            [1] = {title = "Maneuver", choices = {"assault_ambush", "assault_charge"}},
+            [1] = {title = "Maneuverability", choices = {"assault_ambush", "assault_charge"}},
             [2] = {title = "Adaptability", choices = {"assault_drain", "assault_overclock"}},
             [3] = {title = "Conditioning", choices = {"assault_heightened_reflex", "assault_cardiac_overload"}},
         },
@@ -183,9 +183,9 @@ function HORDE:GetDefaultClassesData()
         GetConVar("horde_base_runspeed"):GetInt(),
         "engineer_base",
         {
-            [1] = {title = "Clockwork", choices = {"engineer_tinkerer", "engineer_manhack"}},
-            [2] = {title = "Prototype", choices = {"engineer_golem", "engineer_spectre"}},
-            [3] = {title = "Extension", choices = {"engineer_symbiosis", "engineer_kamikaze"}},
+            [1] = {title = "Craftsmanship", choices = {"engineer_tinkerer", "engineer_manhack"}},
+            [2] = {title = "Archetype", choices = {"engineer_golem", "engineer_spectre"}},
+            [3] = {title = "Experimental", choices = {"engineer_symbiosis", "engineer_kamikaze"}},
         },
         6
     )

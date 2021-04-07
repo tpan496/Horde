@@ -1,16 +1,25 @@
 translate.AddLanguage("zh-CN", "Chinese Simplified")
 
-LANGUAGE["Default_Font"] = "黑体"
+LANGUAGE["Default_Font"] = "微软雅黑"
+LANGUAGE["Default_Font_Scale"] = 1.20
 
 -- Game Info
 LANGUAGE["Game_Ready"] = "准备"
 LANGUAGE["Game_Not Ready"] = "未准备"
-LANGUAGE["Game_Players Ready"] = "等待玩家"
+LANGUAGE["Game_Players_Ready"] = "等待玩家"
+LANGUAGE["Game_Next_Wave_Starts_In"] = "倒计时"
 LANGUAGE["Game_Difficulty_NORMAL"] = "普通"
 LANGUAGE["Game_Difficulty_HARD"] = "困难"
 LANGUAGE["Game_Difficulty_REALISM"] = "写实"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "噩梦"
 LANGUAGE["Game_Enemies"] = "敌人"
+LANGUAGE["Game_HintBottomReady"] = "F3 - 商店/技能, F4 - 准备"
+LANGUAGE["Game_HintBottom"] = "F3 - 商店/技能, V - 扔 $ "
+LANGUAGE["Game_Result_VICTORY"] = "胜利"
+LANGUAGE["Game_Result_DEFEAT"] = "失败"
+LANGUAGE["Game_Result_Change Map"] = "地图更换中"
+LANGUAGE["Game_Wave"] = "波数"
+LANGUAGE["Game_Wave_Completed"] = "目标完成"
 
 
 -- Shop
@@ -32,6 +41,14 @@ LANGUAGE["Shop_Select_Class"] = "选择职业（拥有物品会被去除）"
 LANGUAGE["Shop_Show_Perks"] = "显示技能树"
 LANGUAGE["Shop_Hide_Perks"] = "隐藏技能树"
 LANGUAGE["Shop_Unlocks_After_Wave"] = "解锁波数："
+LANGUAGE["Shop_Buy_Ammo_Clip"] = "购买弹匣"
+LANGUAGE["Shop_Sell_For"] = "卖出"
+LANGUAGE["Shop_Sell_All_For"] = "卖出全部"
+LANGUAGE["Shop_Buy_Item"] = "购买物品"
+LANGUAGE["Shop_OWNED"] = "已拥有"
+LANGUAGE["Shop_Buy_Secondary_Ammo"] = "购买副弹药"
+LANGUAGE["Shop_Primary_Ammo"] = "主弹药"
+LANGUAGE["Shop_Secondary_Ammo"] = "副弹药"
 
 
 -- Classes
@@ -127,16 +144,22 @@ LANGUAGE["Perk_berserker_base"] = [[
 提升 20% 所有伤害抗性。
 提升 25% 毒素伤害抗性。]]
 
+-- Default Perks: Survivor
+LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[生存]]
+LANGUAGE["Perk_Title_Survivor_Tier_2"] = [[随机应变]]
+LANGUAGE["Perk_Title_Survivor_Tier_3"] = [[技巧复制]]
 
 -- Default Perks: Assault
-LANGUAGE["Perk_Title_assault_ambush"] = [[奇袭]]
+LANGUAGE["Perk_Title_Assault_Tier_1"] = [[机动性]]
+LANGUAGE["Perk_Title_assault_ambush"] = [[强袭]]
 LANGUAGE["Perk_assault_ambush"] = [[
 提升 15% 爆头伤害。]]
 
-LANGUAGE["Perk_Title_assault_charge"] = [[能量存储]]
+LANGUAGE["Perk_Title_assault_charge"] = [[蓄能]]
 LANGUAGE["Perk_assault_charge"] = [[
 肾上腺素最大堆叠次数 +2。]]
 
+LANGUAGE["Perk_Title_Assault_Tier_2"] = [[适应]]
 LANGUAGE["Perk_Title_assault_drain"] = [[生命汲取]]
 LANGUAGE["Perk_assault_drain"] = [[
 满血前提下，提升 15% 爆头伤害。
@@ -147,6 +170,7 @@ LANGUAGE["Perk_assault_overclock"] = [[
 肾上腺素持续时间提升 50%。
 肾上腺素最大堆叠次数 +2。]]
 
+LANGUAGE["Perk_Title_Assault_Tier_3"] = [[条件反射]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[精神统一]]
 LANGUAGE["Perk_assault_heightened_reflex"] = [[
 提升 20% 爆头伤害。
@@ -158,6 +182,7 @@ LANGUAGE["Perk_assault_cardiac_overload"] = [[
 肾上腺素最大堆叠次数 +2。]]
 
 -- Default Perks: Heavy
+LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[压制]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[粘性化合物]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
 子弹伤害击中的敌人受到减速异常状态。
@@ -169,6 +194,7 @@ LANGUAGE["Perk_heavy_crude_casing"] = [[
 虚弱状态下，受到 10% 更多伤害。
 虚弱状态下，造成 10% 更少伤害。]]
 
+LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[护甲强化]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[流体装甲]]
 LANGUAGE["Perk_heavy_liquid_armor"] = [[
 护甲值至少有 5 的前提下：
@@ -179,6 +205,7 @@ LANGUAGE["Perk_heavy_reactive_armor"] = [[
 护甲值至少有 5 的前提下：
   免疫火焰，毒素，爆炸伤害。]]
 
+LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[先进科技]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[纳米机器]]
 LANGUAGE["Perk_heavy_nanomachine"] = [[
 提升 100% 护甲值恢复速度.
@@ -190,6 +217,7 @@ LANGUAGE["Perk_heavy_ballistic_shock"] = [[
 造成的异常状态效果提升 100%。]]
 
 -- Default Perks: Medic
+LANGUAGE["Perk_Title_Medic_Tier_1"] = [[药物]]
 LANGUAGE["Perk_Title_medic_antibiotics"] = [[抗生素]]
 LANGUAGE["Perk_medic_antibiotics"] = [[
 治疗量提升 15%。]]
@@ -198,6 +226,7 @@ LANGUAGE["Perk_Title_medic_painkillers"] = [[止痛剂]]
 LANGUAGE["Perk_medic_painkillers"] = [[
 治疗生命值最大上限提升 15%。]]
 
+LANGUAGE["Perk_Title_Medic_Tier_2"] = [[生物工程]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[狂化]]
 LANGUAGE["Perk_medic_berserk"] = [[
 治疗的对象获得狂化增益状态。
@@ -209,6 +238,7 @@ LANGUAGE["Perk_medic_fortify"] = [[
 治疗的对象获得坚固增益状态。
 增益状态下，受到 15% 更少伤害。]]
 
+LANGUAGE["Perk_Title_Medic_Tier_3"] = [[物竞天择]]
 LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[细胞坍缩]]
 LANGUAGE["Perk_medic_cellular_implosion"] = [[
 击杀的敌人有 20% 概率产生治疗烟雾。]]
@@ -219,6 +249,7 @@ LANGUAGE["Perk_medic_xcele"] = [[
 提升 100% 增益状态效果。]]
 
 -- Default Perks: Demolition
+LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[手雷改装]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[冲击起爆]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
 触碰到敌人后，手雷会直接引爆。
@@ -229,7 +260,8 @@ LANGUAGE["Perk_demolition_frag_cluster"] = [[
 手雷爆炸后产生 3 个子雷。
 子雷伤害为母雷的 75%。]]
 
-LANGUAGE["Perk_Title_demolition_fragmentation"] = [[破片冲击]]
+LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[途径]]
+LANGUAGE["Perk_Title_demolition_fragmentation"] = [[冲击]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
 对满血敌人造成的爆炸伤害提升 25%。]]
 
@@ -239,7 +271,8 @@ LANGUAGE["Perk_demolition_napalm"] = [[
 提升 25% 火焰伤害。
 ]]
 
-LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[超压弹头]]
+LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[毁灭]]
+LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[高压弹头]]
 LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
 提升 25% 对精英敌人造成的爆炸伤害。]]
 
@@ -249,6 +282,7 @@ LANGUAGE["Perk_demolition_chain_reaction"] = [[
 爆炸伤害为最大生命值的 50%。]]
 
 -- Default Perks: Ghost
+LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[策略]]
 LANGUAGE["Perk_Title_ghost_headhunter"] = [[猎头]]
 LANGUAGE["Perk_ghost_headhunter"] = [[
 爆头伤害能够进行堆叠，最多堆叠 5 次。
@@ -258,6 +292,7 @@ LANGUAGE["Perk_Title_ghost_sniper"] = [[狙击]]
 LANGUAGE["Perk_ghost_sniper"] = [[
 蹲下状态增加 25% 子弹伤害。]]
 
+LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[转移]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[幽灵漫步]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
 奔跑，跳跃不会取消迷彩状态。
@@ -268,6 +303,7 @@ LANGUAGE["Perk_ghost_ghost_veil"] = [[
 攻击不会取消迷彩状态。
 迷彩激活速度提升 100%。]]
 
+LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[歼灭]]
 LANGUAGE["Perk_Title_ghost_coup"] = [[恩赐解脱]]
 LANGUAGE["Perk_ghost_coup"] = [[
 直接击杀生命值小于 20% 最大生命值的敌人。]]
@@ -279,6 +315,7 @@ LANGUAGE["Perk_ghost_decapitate"] = [[
   增加 50% 对精英敌人造成的爆头伤害。]]
 
 -- Default Perks: Berserker
+LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[制造]]
 LANGUAGE["Perk_Title_engineer_tinkerer"] = [[匠工]]
 LANGUAGE["Perk_engineer_tinkerer"] = [[
 提升 25% 召唤物最大生命值。]]
@@ -289,6 +326,7 @@ LANGUAGE["Perk_engineer_manhack"] = [[
 无人机撞击敌人后死亡，死亡后会自动再生。
 无人机撞击伤害为自身生命值。]]
 
+LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[原型]]
 LANGUAGE["Perk_Title_engineer_golem"] = [[魔像]]
 LANGUAGE["Perk_engineer_golem"] = [[
 召唤物每秒恢复 2% 最大生命值。
@@ -299,6 +337,7 @@ LANGUAGE["Perk_engineer_spectre"] = [[
 召唤物吸收 10% 对敌人造成的伤害为生命值。
 召唤物提升 15% 伤害。]]
 
+LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[实验性模组]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[共生]]
 LANGUAGE["Perk_engineer_symbiosis"] = [[
 召唤物提升 25% 最大生命值。
@@ -310,6 +349,7 @@ LANGUAGE["Perk_engineer_kamikaze"] = [[
 爆炸伤害为召唤物最大生命值的 200%。]]
 
 -- Default Perks: Berserker
+LANGUAGE["Perk_Title_Berserker_Tier_1"] = [[基本功]]
 LANGUAGE["Perk_Title_berserker_breathing_technique"] = [[波纹呼吸]]
 LANGUAGE["Perk_berserker_breathing_technique"] = [[
 每秒恢复 2% 最大生命值。]]
@@ -319,6 +359,7 @@ LANGUAGE["Perk_berserker_bloodlust"] = [[
 吸收 10% 造成的近战伤害为生命值。
 每次攻击最多吸收 10 点生命值。]]
 
+LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[技巧]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[剑舞]]
 LANGUAGE["Perk_berserker_bushido"] = [[
 提供 25% 利器伤害。
@@ -329,6 +370,7 @@ LANGUAGE["Perk_berserker_savagery"] = [[
 提升 25% 钝器伤害。
 提升 25% 最大生命值。]]
 
+LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[秘技]]
 LANGUAGE["Perk_Title_berserker_mindeye"] = [[心眼]]
 LANGUAGE["Perk_berserker_mindeye"] = [[
 当前武器为近战武器的前提下：

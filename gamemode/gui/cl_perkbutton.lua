@@ -16,7 +16,7 @@ function PANEL:Init()
     self.icon:Dock(LEFT)
 
     self.title = vgui.Create("DLabel", self)
-    self.title:SetSize(w, 16)
+    self.title:SetSize(w, 20)
     self.title:Dock(TOP)
     self.title:DockMargin(5, 5, 0, 0)
     self.title:SetFont("Horde_PerkButton_Name")

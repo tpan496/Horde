@@ -6,27 +6,44 @@ util.AddNetworkString("Horde_ToggleEnemyConfig")
 util.AddNetworkString("Horde_ToggleClassConfig")
 util.AddNetworkString("Horde_ToggleMapConfig")
 util.AddNetworkString("Horde_RenderCenterText")
+util.AddNetworkString("Horde_RenderPlayersReady")
+util.AddNetworkString("Horde_RenderBreakCountDown")
+util.AddNetworkString("Horde_RenderEnemiesCount")
+util.AddNetworkString("Horde_RenderGameResult")
 util.AddNetworkString("Horde_Console_Commands")
 
+function HORDE:BroadcastPlayersReadyMessage(str)
+    net.Start("Horde_RenderPlayersReady")
+        net.WriteString(str)
+    net.Broadcast()
+end
 
-function BroadcastMessage(msg, delay)
-    for _, ply in pairs(player.GetAll()) do
-        net.Start("Horde_RenderCenterText")
-        net.WriteString(msg)
-        if delay then
-            net.WriteInt(delay,16)
-        else
-            net.WriteInt(0,16)
-        end
-        net.Send(ply)
-    end
+function HORDE:BroadcastBreakCountDownMessage(wave, is_end_message)
+    net.Start("Horde_RenderBreakCountDown")
+        net.WriteInt(wave,8)
+        net.WriteBool(is_end_message)
+    net.Broadcast()
+end
+
+function HORDE:BroadcastEnemiesCountMessage(is_boss, wave_str, count)
+    net.Start("Horde_RenderEnemiesCount")
+        net.WriteBool(is_boss)
+        net.WriteString(wave_str)
+        net.WriteInt(count, 32)
+    net.Broadcast()
+end
+
+function HORDE:BroadcastGameResultMessage(status, wave)
+    net.Start("Horde_RenderGameResult")
+        net.WriteString(status)
+        net.WriteUInt(wave, 32)
+    net.Broadcast()
 end
 
 function Start(ply)
     if ply:IsAdmin() then
         if not HORDE.start_game then
             HORDE.start_game = true
-            BroadcastMessage("Horde gamemode initiated!")
         else
             ply:PrintMessage(HUD_PRINTTALK, "Game has already started!")
         end
@@ -72,7 +89,7 @@ function Ready(ply)
     net.Broadcast()
 
     if HORDE.start_game and HORDE.current_wave > 0 then return end
-    BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
+    HORDE:BroadcastPlayersReadyMessage(tostring(ready_count) .. "/" .. tostring(total_player))
 end
 
 function End(ply)

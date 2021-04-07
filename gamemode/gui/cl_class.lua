@@ -67,12 +67,12 @@ function PANEL:Paint()
         if mat[1] ~= self.class then mat = {self.class, Material(self.class.icon, "mips smooth")} end
         if mat then surface.SetMaterial(mat[2]) end
         local level = LocalPlayer():Horde_GetLevel(LocalPlayer():Horde_GetClass().name)
-        if level <= 0 then return end
-        local rank, rank_level, color = HORDE:LevelToRank(level)
-        surface.SetDrawColor(color)
+        local rank, rank_level = HORDE:LevelToRank(level)
+        surface.SetDrawColor(HORDE.Rank_Colors[rank])
         local star = Material("star.png", "mips smooth")
         if ScrW() <= 1280 then
             surface.DrawTexturedRect(self:GetWide() / 2 - 135, 0, 40, 40)
+            if level <= 0 then return end
             surface.SetMaterial(star)
             local pos = 28
             for i = 0, rank_level do
@@ -81,6 +81,7 @@ function PANEL:Paint()
             end
         else
             surface.DrawTexturedRect(self:GetWide() / 2 - 50, 0, 40, 40)
+            if level <= 0 then return end
             surface.SetMaterial(star)
             local pos = 28
             for i = 0, rank_level do

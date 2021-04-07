@@ -93,15 +93,15 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         
         if HORDE.endless == 1 then
             if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
-                BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞ BOSS")
+                HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. "/∞", 0)
             else
-                BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+                HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/∞", HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
             end
         else
             if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
-                BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  BOSS")
+                HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), 0)
             else
-                BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+                HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
             end
         end
         
@@ -242,24 +242,6 @@ hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
         end
     end
 end)
-
-function BroadcastMessage(msg)
-    net.Start("Horde_RenderCenterText")
-    if msg then
-        net.WriteString(msg)
-    else
-        net.WriteString("")
-    end
-    net.WriteInt(-1,8)
-    net.Broadcast()
-end
-
-function BroadcastWaveMessage(msg, wave)
-    net.Start("Horde_RenderCenterText")
-    net.WriteString(msg)
-    net.WriteInt(wave,8)
-    net.Broadcast()
-end
 
 -- This resets the director.
 function HORDE:HardResetDirector()
@@ -706,7 +688,7 @@ function HORDE:StartBreak()
     net.Broadcast()
     timer.Create("Horder_Counter", 1, 0, function ()
         if not HORDE.start_game then return end
-        BroadcastWaveMessage("Next wave starts in " .. HORDE.current_break_time, HORDE.current_break_time)
+        HORDE:BroadcastBreakCountDownMessage(HORDE.current_break_time, false)
 
         if 0 < HORDE.current_break_time then
             HORDE.current_break_time = HORDE.current_break_time - 1
@@ -715,7 +697,7 @@ function HORDE:StartBreak()
         if HORDE.current_break_time == 0 then
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
-            BroadcastWaveMessage("Wave " .. HORDE.current_wave .. " has started!", 0)
+            --HORDE:BroadcastWaveMessage("Wave " .. HORDE.current_wave .. " has started!", 0)
             net.Start("Horde_SyncGameInfo")
                 net.WriteUInt(HORDE.current_wave, 16)
             net.Broadcast()
@@ -806,15 +788,15 @@ function HORDE:WaveStart()
     horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval
     if HORDE.endless == 1 then
         if horde_boss_properties then
-            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  BOSS")
+            HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. "/∞", 0)
         else
-            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/∞  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/∞", HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         end
     else
         if horde_boss_properties then
-            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  BOSS")
+            HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), 0)
         else
-            BroadcastMessage("[" .. HORDE.difficulty_text[HORDE.difficulty] .. "]: " .. tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves) .. "  Enemies: " .. HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         end
     end
     -- Close all the shop menus
@@ -845,14 +827,13 @@ function HORDE:WaveEnd()
 
     if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
         -- TODO: change this magic number
-        BroadcastWaveMessage("Final Wave Completed! You have survived!", -2)
         if boss_music_loop then boss_music_loop:Stop() end
         HORDE:GameEnd("VICTORY!")
     else
-        BroadcastWaveMessage("Wave Completed!", -2)
+        HORDE:BroadcastBreakCountDownMessage(0, true)
         net.Start("Horde_LegacyNotification")
-        net.WriteString("Wave Completed!")
-        net.WriteInt(0,2)
+            net.WriteString("Wave Completed!")
+            net.WriteInt(0,2)
         net.Broadcast()
 
         -- Send Tips
@@ -948,7 +929,7 @@ function HORDE:Direct()
         if total_player > 0 and total_player == ready_count then
             HORDE.start_game = true
         else
-            BroadcastMessage("Players Ready: " .. tostring(ready_count) .. "/" .. tostring(total_player))
+            HORDE:BroadcastPlayersReadyMessage(tostring(ready_count) .. "/" .. tostring(total_player))
         end
         return
     end
