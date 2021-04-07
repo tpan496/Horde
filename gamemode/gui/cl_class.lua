@@ -1,5 +1,3 @@
-surface.CreateFont("Item", { font = "arial", size = 20 })
-
 local PANEL = {}
 local mat = {}
 
@@ -63,30 +61,33 @@ function PANEL:Paint()
 
         surface.SetTextColor(Color(255,255,255))
         surface.SetTextPos(10, self:GetTall() / 2 - 10)
-        surface.DrawText(self.name)
+        surface.DrawText(translate.Get("Class_" .. self.name) or self.name)
 
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
         if mat[1] ~= self.class then mat = {self.class, Material(self.class.icon, "mips smooth")} end
         if mat then surface.SetMaterial(mat[2]) end
+        local level = LocalPlayer():Horde_GetLevel(LocalPlayer():Horde_GetClass().name)
+        local rank, rank_level = HORDE:LevelToRank(level)
+        surface.SetDrawColor(HORDE.Rank_Colors[rank])
         local star = Material("star.png", "mips smooth")
         if ScrW() <= 1280 then
             surface.DrawTexturedRect(self:GetWide() / 2 - 135, 0, 40, 40)
-            --[[
+            if level <= 0 then return end
             surface.SetMaterial(star)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 25, 10, 10)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 20, 10, 10)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 15, 10, 10)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 10, 10, 10)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 145, 5, 10, 10)--]]
+            local pos = 28
+            for i = 0, rank_level do
+                surface.DrawTexturedRect(self:GetWide() / 2 - 145, pos, 10, 10)
+                pos = pos - 7
+            end
         else
             surface.DrawTexturedRect(self:GetWide() / 2 - 50, 0, 40, 40)
-            --[[
+            if level <= 0 then return end
             surface.SetMaterial(star)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 28, 10, 10)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 21, 10, 10)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 14, 10, 10)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 7, 10, 10)
-            surface.DrawTexturedRect(self:GetWide() / 2 - 60, 0, 10, 10)--]]
+            local pos = 28
+            for i = 0, rank_level do
+                surface.DrawTexturedRect(self:GetWide() / 2 - 60, pos, 10, 10)
+                pos = pos - 7
+            end
         end
     end
 end

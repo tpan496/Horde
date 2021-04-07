@@ -1,5 +1,3 @@
-surface.CreateFont("Content", { font = "arial bold", size = 20 })
-
 local PANEL = {}
 
 function PANEL:Init()
@@ -31,7 +29,7 @@ function PANEL:CreateReadyPanel(ply, status)
     name_label:SetSize(130-32,32)
     name_label.Paint = function ()
         if not ply:IsValid() then return end
-        draw.SimpleText(ply:GetName(), "Content", 10, 8, Color(255,255,255))
+        draw.SimpleText(ply:GetName(), "Content", 10, 6, Color(255,255,255))
     end
 
     local status_label = vgui.Create("DPanel", panel)
@@ -39,9 +37,9 @@ function PANEL:CreateReadyPanel(ply, status)
     status_label:Dock(RIGHT)
     status_label.Paint = function ()
         if status == 0 then
-            draw.SimpleText("Not Ready", "Content", 0, 8, Color(255,255,255))
+            draw.SimpleText(translate.Get("Game_Not Ready"), "Content", 0, 6, Color(255,255,255))
         else
-            draw.SimpleText("    Ready", "Content", 0, 8, HORDE.color_crimson)
+            draw.SimpleText("    " .. translate.Get("Game_Ready"), "Content", 0, 6, HORDE.color_crimson)
         end
     end
 end
@@ -60,9 +58,9 @@ HORDE.HelpPanel:SetPos(ScrW() / 2 - 150, ScrH() - 75)
 HORDE.HelpPanel.Paint = function (w,h)
     draw.RoundedBox(10, 0, 0, 300, 50, HORDE.color_hollow)
     if HORDE.current_wave > 0 then
-        draw.SimpleText("F3 - Shop/Perk, V - Drop $", "Trebuchet24", 26, 12, HORDE.color_white)
+        draw.SimpleText(translate.Get("Game_HintBottom"), "Info", 26, 12, HORDE.color_white)
     else
-        draw.SimpleText("F3 - Shop/Perk, F4 - Ready", "Trebuchet24", 26, 12, HORDE.color_white)
+        draw.SimpleText(translate.Get("Game_HintBottomReady"), "Info", 26, 12, HORDE.color_white)
     end
 end
 
@@ -73,7 +71,7 @@ HORDE.TipPanel:SetPos(ScrW() / 2 - ScrW() * 2 / 5 / 2, 25)
 HORDE.TipPanel.Paint = function (w,h)
     if tip == nil or tip == "" then return end
     draw.RoundedBox(10, 0, 0, ScrW() * 2 / 5, 50,  Color(40,40,40,200))
-    draw.DrawText("Tip: " .. tip, "Trebuchet24", ScrW() * 2 / 5 / 2, 12, HORDE.color_white, TEXT_ALIGN_CENTER)
+    draw.DrawText("Tip: " .. tip, "Info", ScrW() * 2 / 5 / 2, 12, HORDE.color_white, TEXT_ALIGN_CENTER)
 end
 
 net.Receive("Horde_SyncTip", function()
