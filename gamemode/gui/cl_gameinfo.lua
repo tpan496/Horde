@@ -126,6 +126,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
     local num = net.ReadInt(8)
     local is_end_message = net.ReadBool()
     if is_end_message then
+        surface.PlaySound("HL1/fvox/blip.wav")
         center_panel_str = translate.Get("Game_Wave_Completed") .. "!"
         return
     end
@@ -145,8 +146,6 @@ net.Receive("Horde_RenderBreakCountDown", function()
             else
                 surface.PlaySound("horde/cd/" .. tostring(num) ..".mp3")
             end
-        elseif num == -2 then
-            surface.PlaySound("HL1/fvox/blip.wav")
         elseif num > 0 then
             if not HORDE.HelpPanel:IsVisible() then
                 HORDE.HelpPanel:SetVisible(true)
@@ -155,7 +154,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
         end
     end
     if num == 0 then
-        center_panel_str = translate.Format("Game_Wave_Has_Started", tostring(HORDE.current_wave))
+        center_panel_str = translate.Format("Game_Wave_Has_Started", tostring(HORDE.current_wave)) .. "!"
     else
         center_panel_str = translate.Format("Game_Next_Wave_Starts_In", num)
     end
