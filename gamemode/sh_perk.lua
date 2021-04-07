@@ -8,6 +8,7 @@ HORDE.perks = HORDE.perks or {}
 
 if CLIENT then
     net.Receive("Horde_Perk", function()
+        if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
         local mode = net.ReadUInt(HORDE.NET_PERK_BITS)
         local ply = net.ReadEntity()
         ply.Horde_Perks = ply.Horde_Perks or {}
