@@ -3,7 +3,7 @@ translate.AddLanguage("en", "English")
 -- Game Info
 LANGUAGE["Game_Ready"] = "Ready"
 LANGUAGE["Game_Not Ready"] = "Not Ready"
-LANGUAGE["Game_Players Ready"] = "Players Ready"
+LANGUAGE["Game_Players_Ready"] = "Players Ready"
 LANGUAGE["Game_Next_Wave_Starts_In"] = "Next wave starts in"
 LANGUAGE["Game_Difficulty_NORMAL"] = "NORMAL"
 LANGUAGE["Game_Difficulty_HARD"] = "HARD"
@@ -16,7 +16,11 @@ LANGUAGE["Game_Result_VICTORY"] = "VICTORY"
 LANGUAGE["Game_Result_DEFEAT"] = "DEFEAT"
 LANGUAGE["Game_Result_Change Map"] = "Change Map"
 LANGUAGE["Game_Wave"] = "Wave"
+LANGUAGE["Game_Has_Started"] = "has started"
 LANGUAGE["Game_Wave_Completed"] = "Wave Completed"
+LANGUAGE["Game_Remaining_Time"] = "Remaining Time"
+LANGUAGE["Game_Vote_Map"] = "Vote Map"
+LANGUAGE["Game_Game_Summary"] = "Game Summary"
 
 
 -- Shop

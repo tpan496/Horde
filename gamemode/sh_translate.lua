@@ -57,7 +57,7 @@ function translate.Format(id, ...)
 end
 
 function translate.GetFont()
-	return translate.Get("Default_Font") or "Arial Bold"
+	return translate.Get("Default_Font") or "arial bold"
 end
 
 if SERVER then

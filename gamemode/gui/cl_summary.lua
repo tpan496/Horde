@@ -28,7 +28,7 @@ function PANEL:Init()
     local summary_btn = vgui.Create("DButton", self)
     local summary_activated = true
     local summary_hovered = false
-    summary_btn:SetText("Game Summary")
+    summary_btn:SetText(translate.Get("Game_Game_Summary"))
     summary_btn:SetTextColor(Color(255,255,255))
     summary_btn:SetFont("Title")
     summary_btn:SetSize(250, 50)
@@ -121,7 +121,7 @@ function PANEL:Init()
 
     local votemap_btn = vgui.Create("DButton", self)
     local votemap_hovered = false
-    votemap_btn:SetText("Vote Map")
+    votemap_btn:SetText(translate.Get("Game_Vote_Map"))
     votemap_btn:SetTextColor(Color(255,255,255))
     votemap_btn:SetFont("Title")
     votemap_btn:SetSize(250, 50)
@@ -282,7 +282,7 @@ function PANEL:Init()
     counter_label:SetSize(1024, 50)
     counter_label:SetTextColor(Color(255,255,255))
     counter_label.Paint = function ()
-        draw.SimpleText("Remaining time: " .. tostring(remaining_time), "Title", self:GetWide() - 240, 12.5, Color(255,255,255))
+        draw.SimpleText(translate.Get("Game_Remaining_Time") .. ": " .. tostring(remaining_time), "Title", self:GetWide() - 240, 12.5, Color(255,255,255))
     end
 end
 
@@ -334,10 +334,10 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
             draw.SimpleText(status .. " " .. game.GetMap() .. " - " .. HORDE.difficulty_text[HORDE.difficulty], "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
     end
 
-    self.create_diff_panel("NORMAL")
-    self.create_diff_panel("HARD")
-    self.create_diff_panel("REALISM")
-    self.create_diff_panel("NIGHTMARE")
+    self.create_diff_panel(translate.Get("Game_Difficulty_NORMAL"))
+    self.create_diff_panel(translate.Get("Game_Difficulty_HARD"))
+    self.create_diff_panel(translate.Get("Game_Difficulty_REALISM"))
+    self.create_diff_panel(translate.Get("Game_Difficulty_NIGHTMARE"))
 end
 
 function PANEL:Paint(w, h)

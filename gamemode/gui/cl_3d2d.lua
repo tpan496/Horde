@@ -44,13 +44,14 @@ local function Render(bdepth, bskybox)
 
         if (not HORDE.classes) or (not HORDE.classes[class]) then return end
         local mat = Material(HORDE.classes[class].icon, "mips smooth")
-        local len = string.len(class) * 6
+        local loc_class = translate.Get("Class_" .. class)
+        local len = string.len(loc_class) * 6
 
         cam.Start3D2D(render_pos, render_ang, 0.1)
             surface.SetMaterial(mat)
             surface.SetDrawColor(fade_white)
             surface.DrawTexturedRect(- 64 - len - 8, -64 / 2, 64, 64)
-            draw.SimpleText(class, "Icon", len + 8, 0, fade_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(loc_class, "Icon", len + 8, 0, fade_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
         cam.End3D2D()
         ::cont::
