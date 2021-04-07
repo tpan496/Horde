@@ -1,6 +1,6 @@
 -- Basic user ui
 local font = translate.GetFont()
-local font_scale = translate.Get("Default_Font_Scale")
+local font_scale = translate.Get("Default_Font_Scale") or 1
 surface.CreateFont("Horde_PerkTitle", { font = font, size = 24 * font_scale, extended = true })
 surface.CreateFont("Horde_PerkButton_Name", { font = font, size = 20 * font_scale, extended = true })
 surface.CreateFont("Horde_PerkButton_Text", { font = font, size = 15 * font_scale, extended = true })
@@ -155,6 +155,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
         end
     end
     if num == 0 then
+        center_panel_str = translate.Get("Game_Wave") .. " " .. tostring(HORDE.current_wave) .. " " .. translate.Get("Game_Has_Started") .. "!"
     else
         center_panel_str = translate.Get("Game_Next_Wave_Starts_In") .. ": "  .. tostring(num)
     end
