@@ -81,7 +81,7 @@ Have access to all weapons except for exclusive and special weapons.
 Limited access to attachments.]]
 
 LANGUAGE["Class_Description_Assault"] = [[
-Have full access to Assault Rifles."]]
+Have full access to Assault Rifles.]]
 
 LANGUAGE["Class_Description_Heavy"] = [[
 Have full access to Machine Guns and high weight weapons.]]
@@ -100,7 +100,7 @@ LANGUAGE["Class_Description_Engineer"] = [[
 Have access to special weapons and equipment.]]
 
 LANGUAGE["Class_Description_Berserker"] = [[
-Only has access to melee weapons."]]
+Only has access to melee weapons.]]
 
 
 -- Default Base Perks

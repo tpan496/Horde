@@ -272,6 +272,18 @@ function PANEL:Init()
             end
 
             return editor
+        elseif name == "spawn limit" then
+            local editor = vgui.Create("DTextEntry", panel)
+            editor:SetSize(150, height)
+            editor:DockPadding(10, 10, 10, 10)
+            editor:Dock(LEFT)
+
+            local warning_label = vgui.Create("DLabel", panel)
+            warning_label:SetColor(color_black)
+            warning_label:SetText("0 -- No limit")
+            warning_label:SetPos(275, 8)
+            warning_label:SetWide(100)
+            return editor
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(150, height)
