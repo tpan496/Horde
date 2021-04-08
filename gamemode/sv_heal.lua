@@ -47,4 +47,8 @@ function HORDE:OnPlayerHeal(ply, healinfo)
     HORDE.player_heal[healer:SteamID()] = HORDE.player_heal[healer:SteamID()] + healinfo:GetHealAmount()
 
     ply:ScreenFade(SCREENFADE.IN, Color(50, 200, 50, 10), 0.3, 0)
+    if healer ~= player then
+        healer:Horde_AddMoney(2)
+        healer:Horde_SyncEconomy()
+    end
 end
