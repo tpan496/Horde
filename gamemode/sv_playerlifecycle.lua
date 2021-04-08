@@ -321,7 +321,7 @@ function HORDE:PlayerInit(ply)
         if tip and (not HORDE.horde_boss) then
             net.Start("Horde_SyncTip")
                 net.WriteString(HORDE:GetTip())
-            net.Broadcast()
+            net.Send(ply)
         end
     else
         ply:Horde_SetMoney(HORDE.start_money)
@@ -518,6 +518,6 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     if tip and (not HORDE.horde_boss) then
         net.Start("Horde_SyncTip")
             net.WriteString(HORDE:GetTip())
-        net.Broadcast()
+        net.Send(victim)
     end
 end)
