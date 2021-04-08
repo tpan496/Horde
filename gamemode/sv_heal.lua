@@ -42,7 +42,9 @@ function HORDE:OnPlayerHeal(ply, healinfo)
     ply:SetHealth(math.min(ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), ply:Health() + healinfo:GetHealAmount()))
 
     local healer = healinfo:GetHealer()
-    if not healer:IsValid() then return end
+    if not healer:IsPlayer() or not healer:IsValid() then return end
     if not HORDE.player_heal[healer:SteamID()] then HORDE.player_heal[healer:SteamID()] = 0 end
     HORDE.player_heal[healer:SteamID()] = HORDE.player_heal[healer:SteamID()] + healinfo:GetHealAmount()
+
+    ply:ScreenFade(SCREENFADE.IN, Color(50, 200, 50, 10), 0.3, 0)
 end

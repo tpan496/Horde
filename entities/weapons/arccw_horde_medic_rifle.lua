@@ -1,4 +1,8 @@
 if not ArcCWInstalled then return end
+if CLIENT then
+    SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_go_ssg08")
+    killicon.Add("arccw_horde_ssg08", "arccw/weaponicons/arccw_go_ssg08", Color(0, 0, 0, 255))
+end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
@@ -403,6 +407,8 @@ SWEP.Animations = {
     ["idle_inspect"] = false,
     ["exit_inspect"] = false,
 }
+
+SWEP.PrimaryAttack = function() end
 
 sound.Add({
     name = "ARCCW_GO_SSG08.Draw",

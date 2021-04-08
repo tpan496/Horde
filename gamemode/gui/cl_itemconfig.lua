@@ -430,7 +430,6 @@ function PANEL:Init()
             function()
                 HORDE.items = {}
                 HORDE:GetDefaultItemsData()
-                HORDE.GetSpecialItems()
 
                 local tab = util.TableToJSON(HORDE.items)
                 local str = util.Compress(tab)
@@ -454,7 +453,6 @@ function PANEL:Init()
             "Yes",
             function()
                 HORDE.items = {}
-                HORDE.GetSpecialItems()
 
                 local tab = util.TableToJSON(HORDE.items)
                 local str = util.Compress(tab)
