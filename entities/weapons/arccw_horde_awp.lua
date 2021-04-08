@@ -1,4 +1,8 @@
 if not ArcCWInstalled then return end
+if CLIENT then
+    SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_go_awp")
+    killicon.Add("arccw_horde_awp", "arccw/weaponicons/arccw_go_awp", Color(0, 0, 0, 255))
+end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = false -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
@@ -23,8 +27,8 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "000000000000"
 
-SWEP.Damage = 200
-SWEP.DamageMin = 200 -- damage done at maximum range
+SWEP.Damage = 400
+SWEP.DamageMin = 400 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 30
 SWEP.DamageType = DMG_BULLET
@@ -44,7 +48,7 @@ SWEP.RecoilPunch = 2.5
 SWEP.ManualAction = true
 SWEP.NoLastCycle = true -- do not cycle on last shot
 
-SWEP.Delay = 60 / 300 -- 60 / RPM.
+SWEP.Delay = 60 / 400 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {

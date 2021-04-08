@@ -113,9 +113,9 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
     HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_go_melee_knife", 500,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
-    HORDE:CreateItem("Melee",      "Katana",         "arccw_horde_katana", 2000,  4, "Ninja sword.\nLong attack range and fast attack speed.",
+    HORDE:CreateItem("Melee",      "Katana",         "arccw_horde_katana",  2000,  4, "Ninja sword.\nLong attack range and fast attack speed.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false, Berserker=true}, 10, -1)
-    HORDE:CreateItem("Melee",      "Bat",            "arccw_horde_bat",    2000,  4, "Sturdy baseball bat.\nHits like a truck.",
+    HORDE:CreateItem("Melee",      "Bat",            "arccw_horde_bat",     2000,  4, "Sturdy baseball bat.\nHits like a truck.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false, Berserker=true}, 10, -1)
 
     HORDE:CreateItem("Pistol",     "9mm",            "weapon_pistol",     150,  0, "Combine standard sidearm.",
@@ -142,12 +142,12 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
     HORDE:CreateItem("Pistol",     "M9",             "arccw_go_m9",       750,  3, "Beretta 92F semi-automatic pistol.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
-    HORDE:CreateItem("Pistol",     "Tec-9",          "arccw_go_tec9",     850,  3, "A Swedish-made semi-automatic pistol.\nLethal in close quarters.",
+    HORDE:CreateItem("Pistol",     "Tec-9",          "arccw_go_tec9",     900,  3, "A Swedish-made semi-automatic pistol.\nLethal in close quarters.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 6, -1)
-    HORDE:CreateItem("Pistol",     "TMP",            "arccw_mw2_tmp",     1000,  3, "Steyr TMP.\nA select-fire 9×19mm Parabellum caliber machine pistol.",
+    HORDE:CreateItem("Pistol",     "TMP",            "arccw_mw2_tmp",     900,  3, "Steyr TMP.\nA select-fire 9×19mm Parabellum caliber machine pistol.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 7, -1)
 
-    HORDE:CreateItem("SMG",        "MP7",            "weapon_smg1",       1000, 3, "A compact, fully automatic firearm.\nArmed with an M203 launcher.",
+    HORDE:CreateItem("SMG",        "SMG1",            "weapon_smg1",       750, 3, "A compact, fully automatic firearm.\nArmed with an M203 launcher.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 3, 50)
     HORDE:CreateItem("SMG",        "Mac10",          "arccw_go_mac10",    1500, 4, "MAC-10 SMG boasts a high rate of fire,\nwith poor spread accuracy and high recoil as trade-offs.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 8, -1)
@@ -163,63 +163,70 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 8, -1)
     HORDE:CreateItem("SMG",        "P90",            "arccw_go_p90",      2000, 6, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
     {Medic=true, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    HORDE:CreateItem("SMG",        "Vector",         "arccw_mw2_vector",  2000, 6, "KRISS Vector Gen I.\nUses an unconventional delayed blowback system.",
-    {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 8, -1)
+    HORDE:CreateItem("SMG",        "Vector",         "arccw_horde_vector",2500, 6, "KRISS Vector Gen I.\nUses an unconventional blowback system that results in its high firerate.",
+    {Medic=true, Assault=false,Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 8, -1)
 
-    HORDE:CreateItem("Shotgun",    "SPAS12",         "weapon_shotgun",    1250, 7, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
+    HORDE:CreateItem("Shotgun",    "Pump-Action",    "weapon_shotgun",    1000, 6, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
-    HORDE:CreateItem("Shotgun",    "Nova",           "arccw_go_nova",     1500, 7, "Benelli Nova.\nPump-action 12-gauge shotgun.",
+    HORDE:CreateItem("Shotgun",    "Nova",           "arccw_go_nova",     1500, 7, "Benelli Nova.\nItalian pump-action 12-gauge shotgun.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
     HORDE:CreateItem("Shotgun",    "M870",           "arccw_go_870",      1500, 7, "Remington 870 Shotgun.\nManufactured in the United States.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
     HORDE:CreateItem("Shotgun",    "MAG7",           "arccw_go_mag7",     1500, 7, "Techno Arms MAG-7.\nFires a specialized 60mm 12 gauge shell.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
-    HORDE:CreateItem("Shotgun",    "XM1014",         "arccw_go_m1014",    2000, 8, "Benelli M4 Super 90.\nFully automatic shotgun.",
-    {Medic=false, Assault=true, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
-    HORDE:CreateItem("Shotgun",    "AA12",           "arccw_mw2_aa12",     2000, 8, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
-    {Medic=false, Assault=true, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
+    HORDE:CreateItem("Shotgun",    "XM1014",         "arccw_go_m1014",    2000, 7, "Benelli M4 Super 90.\nFully automatic shotgun.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    HORDE:CreateItem("Shotgun",    "AA12",           "arccw_horde_aa12",  3000, 10, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
+    {Medic=false, Assault=false,Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 25, -1)
 
+    HORDE:CreateItem("Rifle",      "AR15",           "arccw_go_ar15",     2000, 7, "AR-15 Style Rifle.\nA lightweight semi-automatic rifle based on ArmaLite AR-15 design.",
+    {Medic=true, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
     HORDE:CreateItem("Rifle",      "FAMAS",          "arccw_go_famas",    2000, 7, "FAMAS bullpup assault rifle.\nRecognised for its high rate of fire.",
     {Medic=true, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE:CreateItem("Rifle",      "Galil",          "arccw_go_ace",      2000, 7, "Galil ACE 22.\nDeveloped and originally manufactured by  Israel Military Industries.",
     {Medic=true, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "AK47",           "arccw_go_ak47",     2250, 7, "Avtomat Kalashnikova.\nA gas-operated, 7.62×39mm assault rifle developed in the Soviet Union.",
+    HORDE:CreateItem("Rifle",      "AK47",           "arccw_go_ak47",     2500, 7, "Avtomat Kalashnikova.\nA gas-operated, 7.62×39mm assault rifle developed in the Soviet Union.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "M4A1",           "arccw_go_m4",       2250, 7, "Colt M4.\nA 5.56×45mm NATO, air-cooled, gas-operated, select fire carbine.",
+    HORDE:CreateItem("Rifle",      "M4A1",           "arccw_go_m4",       2500, 7, "Colt M4.\nA 5.56×45mm NATO, air-cooled, gas-operated, select fire carbine.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "SG556",          "arccw_go_sg556",    2250, 7, "SIG SG 550.\nAn assault rifle manufactured by Swiss Arms AG.",
+    HORDE:CreateItem("Rifle",      "SG556",          "arccw_go_sg556",    2500, 7, "SIG SG 550.\nAn assault rifle manufactured by Swiss Arms AG.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "AUG",            "arccw_go_aug",      2250, 7, "Steyr AUG.\nAn Austrian bullpup assault rifle.",
+    HORDE:CreateItem("Rifle",      "AUG",            "arccw_go_aug",      2500, 7, "Steyr AUG.\nAn Austrian bullpup assault rifle.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "F2000",          "arccw_mw2_f2000",   2250, 7, "FN F2000.\nAn ambidextrous bullpup rifle developed by FN.",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "Tavor",          "arccw_mw2_tavor",   2250, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
+    HORDE:CreateItem("Rifle",      "F2000",          "arccw_horde_f2000", 3000, 7, "FN F2000.\nAn ambidextrous bullpup rifle developed by FN.",
+    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1)
+    HORDE:CreateItem("Rifle",      "Tavor",          "arccw_go_tavor",    3000, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
+    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1)
 
-    HORDE:CreateItem("Rifle",      "ACR",            "arccw_mw2_acr",       2150, 7, "Remington Adaptive Combat Rifle.\nA modular semi-Auto rifle.",
+    HORDE:CreateItem("Rifle",      "ACR",            "arccw_mw2_acr",       2250, 7, "Remington Adaptive Combat Rifle.\nA modular semi-Auto rifle.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "SCAR",           "arccw_go_scar",      2250, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "G3",             "arccw_go_g3",         2250, 8, "G3 Battle Rifle.\nA 7.62×51mm NATO, select-fire battle rifle developed by H&K.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "AWP",            "arccw_horde_awp",     1750, 7, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
+    HORDE:CreateItem("Rifle",      "AWP",            "arccw_horde_awp",     2500, 8, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1)
-    HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3000, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
+    HORDE:CreateItem("Rifle",      "SCAR",           "arccw_go_scar",       2500, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
+    HORDE:CreateItem("Rifle",      "G3",             "arccw_horde_g3",      3000, 8, "G3 Battle Rifle.\nA 7.62×51mm NATO, select-fire battle rifle developed by H&K.",
+    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
+    HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3500, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 50, -1)
 
-    HORDE:CreateItem("MG",         "M249",           "arccw_go_m249para",  2250, 10, "M249 light machine gun.\nA gas operated and air-cooled weapon of destruction.",
+    HORDE:CreateItem("Rifle",    "Medic Rifle",      "arccw_horde_medic_rifle",  1500,   5, "A medic rifle that shoots healing darts.\nDamages enemies and heals players.",
+    {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1)
+
+    HORDE:CreateItem("MG",         "Negev",          "arccw_go_negev",     2250, 9, "IWI Negev.\nA 5.56×45mm NATO light machine gun developed by the IWI.",
     {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 25, -1)
-    HORDE:CreateItem("MG",         "Negev",          "arccw_go_negev",     2250, 10, "IWI Negev.\nA 5.56×45mm NATO light machine gun developed by the IWI.",
+    HORDE:CreateItem("MG",         "M249",           "arccw_go_m249para",  2500, 9, "M249 light machine gun.\nA gas operated and air-cooled weapon of destruction.",
     {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 25, -1)
-    HORDE:CreateItem("MG",         "M240B",          "arccw_mw2_m240",     2250, 10, "M240 Bravo.\nFires 7.62mm NATO ammunition. Equipped by U.S. Armed Forces.",
-    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 25, -1)
+    HORDE:CreateItem("MG",         "M240B",          "arccw_mw2_m240",     3000, 10, "M240 Bravo.\nFires 7.62mm NATO ammunition. Equipped by U.S. Armed Forces.",
+    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 35, -1)
+    HORDE:CreateItem("MG",         "MG4",            "arccw_mw2_mg4",      3000, 10, "Heckler & Koch MG4.\nA belt-fed 5.56 mm light machine gun that replaced MG3.",
+    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 35, -1)
 
     HORDE:CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,   0, "A standard frag grenade.\nGood for crowd control.",
     {Medic=false, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 100, -1)
     HORDE:CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         2000,  7, "Laser-guided rocket propulsion device.",
     {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE:CreateItem("Explosive",  "RPG-7",          "arccw_horde_rpg7",   3000,  9, "Anti-tank rocket launcher developed by Soviet Union.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=false, Ghost=false, Engineer=false}, 10, -1)
+    {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=false, Ghost=false, Engineer=false}, 15, -1)
     HORDE:CreateItem("Explosive",  "SLAM",           "weapon_slam",        400,   2, "Selectable Lightweight Attack Munition.\nRMB to detonate. Attach to wall to active laser mode.",
     {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 0, 100)
     HORDE:CreateItem("Explosive",  "Incendiary Grenade",   "arccw_go_nade_incendiary",        1500,   2, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
@@ -238,7 +245,7 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
-    HORDE:CreateItem("Equipment",  "Health Vial",    "item_healthvial",    20,   1, "A capsule filled with sticky green liquid.\nHeals instantly when picked up.",
+    HORDE:CreateItem("Equipment",  "Health Vial",    "item_healthvial",    15,   1, "A capsule filled with sticky green liquid.\nHeals instantly when picked up.",
     {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=5})
     HORDE:CreateItem("Equipment", "Kevlar Armor Battery", "item_battery", 160, 0, "Armor battery.\nEach one provides 15 armor. Personal use only.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE})
@@ -631,5 +638,4 @@ if SERVER then
         HORDE.InvalidateHordeItemCache = 1
         HORDE:SetItemsData()
     end)
-
 end
