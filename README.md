@@ -5,7 +5,8 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=2401598805
 Important: Put everything in `autoexec.cfg`!<br/>
 https://github.com/tpan496/Horde/wiki/Full-Console-Command-List
 
-## Creating Config Addons
+## Creating Lua Config Addons
+Lua Configs are more modular and can be uploaded to workshop.<br/>
 https://github.com/tpan496/Horde/wiki/Creating-External-Lua-Config-Addons
 
 ## Dedicated Server Instructions
