@@ -27,9 +27,9 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "000000000000"
 
-SWEP.Damage = 400
-SWEP.DamageMin = 400 -- damage done at maximum range
-SWEP.Range = 50 -- in METRES
+SWEP.Damage = 300
+SWEP.DamageMin = 300 -- damage done at maximum range
+SWEP.Range = 150 -- in METRES
 SWEP.Penetration = 30
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -93,7 +93,7 @@ SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
 SWEP.SpeedMult = 0.90
 SWEP.SightedSpeedMult = 0.50
-SWEP.SightTime = 0.40
+SWEP.SightTime = 0.25
 
 SWEP.IronSightStruct = {
     Pos = Vector(-4.9109, -8.573, 1.80253),

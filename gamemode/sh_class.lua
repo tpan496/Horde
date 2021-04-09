@@ -132,7 +132,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Medic,
-        "Have acesss to most light weapons and medic grenades.",
+        "Have acesss to most light weapons and medical tools.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),

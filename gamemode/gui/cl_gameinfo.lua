@@ -12,6 +12,7 @@ surface.CreateFont("Heading", { font = font, size = 22 * font_scale, extended = 
 surface.CreateFont("Category", { font = font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Item", { font = font, size = 20 * font_scale, extended = true })
 surface.CreateFont("Info", { font = font, size = 23 * font_scale, extended = true})
+surface.CreateFont("SmallInfo", { font = font, size = 20 * font_scale, extended = true})
 
 local center_panel = vgui.Create("DPanel")
 local center_panel_str = ""
@@ -175,4 +176,19 @@ net.Receive("Horde_RenderGameResult", function()
     local status = net.ReadString()
     local wave = net.ReadUInt(32)
     center_panel_str = translate.Get("Game_Result_" .. status) .. "! " .. translate.Get("Game_Wave") .. ": " .. tostring(wave)
+end)
+
+local heal_msg_cd = 0
+timer.Create("Horde_PreventHealSpam", 1, 0, function()
+    if heal_msg_cd > 0 then
+        heal_msg_cd = heal_msg_cd - 1
+    end
+end)
+
+net.Receive("Horde_RenderHealer", function()
+    local healer = net.ReadString()
+    if heal_msg_cd <= 0 then
+        notification.AddLegacy(string.sub(healer, 0, 10) .. " " .. translate.Get("Game_Healed_By") .. ".", NOTIFY_GENERIC, 5)
+        heal_msg_cd = 5
+    end
 end)

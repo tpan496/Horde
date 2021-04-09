@@ -36,6 +36,7 @@ LANGUAGE["Game_SharpShooter"] = "神射手"
 LANGUAGE["Game_Headshots"] = "爆头数"
 LANGUAGE["Game_Most_Heal"] = "最高治疗量"
 LANGUAGE["Game_Healed"] = "治疗量"
+LANGUAGE["Game_Healed_By"] = "治疗了你"
 
 
 -- Shop
@@ -89,7 +90,7 @@ LANGUAGE["Class_Description_Heavy"] = [[
 能使用全部的重机枪和高负重武器。]]
 
 LANGUAGE["Class_Description_Medic"] = [[
-能使用大部分轻武器以及医疗手雷。]]
+能使用大部分轻武器以及医疗类工具。]]
 
 LANGUAGE["Class_Description_Demolition"] = [[
 能使用全部的爆炸类武器。]]
