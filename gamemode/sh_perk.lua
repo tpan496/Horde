@@ -11,6 +11,7 @@ if CLIENT then
         if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
         local mode = net.ReadUInt(HORDE.NET_PERK_BITS)
         local ply = net.ReadEntity()
+        if not ply:IsValid() then return end
         ply.Horde_Perks = ply.Horde_Perks or {}
         if mode == HORDE.NET_PERK_SET then
             local perk = net.ReadString()

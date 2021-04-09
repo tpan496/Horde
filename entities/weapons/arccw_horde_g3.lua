@@ -8,7 +8,7 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "G3"
+SWEP.PrintName = "G3 (Horde)"
 SWEP.Trivia_Class = "Battle Rifle"
 SWEP.Trivia_Desc = "Slow-firing, heavy hitting battle rifle with origins tracing back to the end of World War 2. Developed to meet the needs of the newly-formed Bundeswehr."
 SWEP.Trivia_Manufacturer = "Heckler und Koch"

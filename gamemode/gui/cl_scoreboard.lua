@@ -55,9 +55,11 @@ function scoreboard:show()
             end
             draw.DrawText(ply:Name():sub(1,20), "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-            local mat = Material(HORDE.classes[class].icon, "mips smooth")
-            surface.SetMaterial(mat) -- Use our cached material
-            surface.DrawTexturedRect(200, 2, 38, 38)
+            if HORDE.classes and HORDE.classes[class] then
+                local mat = Material(HORDE.classes[class].icon, "mips smooth")
+                surface.SetMaterial(mat) -- Use our cached material
+                surface.DrawTexturedRect(200, 2, 38, 38)
+            end
             draw.DrawText(translate.Get("Class_" .. class), "Content", 250, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
             draw.DrawText(tostring(ply:Frags()), "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
             draw.DrawText(tostring(ply:Deaths()), "Content", 921, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )

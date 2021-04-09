@@ -33,6 +33,7 @@ LANGUAGE["Game_SharpShooter"] = "SharpShooter"
 LANGUAGE["Game_Headshots"] = "Headshots"
 LANGUAGE["Game_Most_Heal"] = "Most Heal"
 LANGUAGE["Game_Healed"] = "Healed"
+LANGUAGE["Game_Healed_By"] = "healed you"
 
 
 -- Shop
@@ -87,7 +88,7 @@ LANGUAGE["Class_Description_Heavy"] = [[
 Have full access to Machine Guns and high weight weapons.]]
 
 LANGUAGE["Class_Description_Medic"] = [[
-Have acesss to most light weapons and medic grenades.]]
+Have acesss to most light weapons and medical tools.]]
 
 LANGUAGE["Class_Description_Demolition"] = [[
 Have full access to explosive weapons.]]

@@ -9,7 +9,7 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "AA-12"
+SWEP.PrintName = "AA-12 (Horde)"
 SWEP.Trivia_Class = "Shotgun"
 SWEP.Trivia_Desc = "Fully automatic."
 

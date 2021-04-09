@@ -8,6 +8,7 @@ PERK.Hooks.OnEntityCreated = function (ent)
     local ply = ent:GetNWEntity("HordeOwner")
     if ply:IsValid() and ply:Horde_GetPerk("engineer_golem") and ent:IsNPC() then
         timer.Simple(0.1, function()
+            if not ent:IsValid() then return end
             local id = ent:GetCreationID()
             timer.Create("Horde_Golem" .. id, function()
                 if not ent:IsValid() then timer.Remove("Horde_Golem" .. id) return end

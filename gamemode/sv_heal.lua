@@ -1,5 +1,6 @@
 --Horde's healing framework
 -- Healing is affected by skill bonuses and is logged.
+util.AddNetworkString("Horde_RenderHealer")
 
 HealInfo = {}
 HealInfo.__index = HealInfo
@@ -50,5 +51,8 @@ function HORDE:OnPlayerHeal(ply, healinfo)
     if healer ~= player then
         healer:Horde_AddMoney(2)
         healer:Horde_SyncEconomy()
+        net.Start("Horde_RenderHealer")
+            net.WriteString(healer:GetName())
+        net.Send(ply)
     end
 end

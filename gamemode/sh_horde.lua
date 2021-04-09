@@ -141,7 +141,6 @@ if ArcCWInstalled then
     if GetConVar("horde_default_item_config"):GetInt() == 1 then
         ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
         ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
-        ArcCW.AttachmentBlacklistTable["go_perk_"] = true
     end
 end
 

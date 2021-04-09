@@ -60,26 +60,6 @@ SWEP.Firemodes = {
         Mode = 0
     }
 }
---[[
-        if CLIENT then
-        local emitter = ParticleEmitter(self:GetPos())
-        local smoke = emitter:Add("particles/smokey", self:GetPos())
-        smoke:SetGravity( Vector(0, 0, 1500) )
-        smoke:SetDieTime( math.Rand(0.5, 1) )
-        smoke:SetStartAlpha(75)
-        smoke:SetEndAlpha(0)
-        smoke:SetStartSize(10)
-        smoke:SetEndSize(50)
-        smoke:SetRoll( math.Rand(-180, 180) )
-        smoke:SetRollDelta( math.Rand(-0.2,0.2) )
-        smoke:SetColor(50, 200, 50)
-        smoke:SetAirResistance(1000)
-        smoke:SetPos( self:GetPos() )
-        smoke:SetLighting( false )
-        smoke:SetCollide(true)
-        smoke:SetBounce(0)
-    end
-]]
 
 SWEP.NPCWeaponType = "weapon_crossbow"
 SWEP.NPCWeight = 150
@@ -112,9 +92,9 @@ SWEP.ShellRotateAngle = Angle(0, 180, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.94
-SWEP.SightedSpeedMult = 0.50
-SWEP.SightTime = 0.33
+SWEP.SpeedMult = 1.00
+SWEP.SightedSpeedMult = 0.75
+SWEP.SightTime = 0.10
 
 SWEP.IronSightStruct = {
     Pos = Vector(-5.65, -8.573, 1.65),
