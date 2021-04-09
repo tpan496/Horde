@@ -11,7 +11,7 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "AA-12"
 SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "Fully automatic, low ammo."
+SWEP.Trivia_Desc = "Fully automatic."
 
 if CLIENT then
 SWEP.Trivia_Manufacturer = "Maxwell Atchisson"
