@@ -48,7 +48,8 @@ local function GetTipsData()
         AddTip("Mutated enemies have special particle effects.")
         AddTip("Headshot deals 2x base damage.")
 
-        if GetConVar("horde_default_item_config"):GetInt() == 1 then
+
+        if GetConVar("horde_default_item_config"):GetInt() == 1 and GetConVar("horde_external_lua_config"):GetString() == "" then
             AddTip("Buy a Medkit to heal yourself.")
             AddTip("Buy Armor for extra protection.")
             AddTip("Medic Grenade damages enemies and heals players.")
@@ -58,7 +59,7 @@ local function GetTipsData()
             AddTip("Turrets are quite durable.")
         end
 
-        if GetConVar("horde_default_enemy_config"):GetInt() == 1 then
+        if GetConVar("horde_default_enemy_config"):GetInt() == 1 and GetConVar("horde_external_lua_config"):GetString() == "" then
             AddTip("Colored enemies have higher health and damage.")
             AddTip("Bosses have increased headshot resistance.")
             AddTip("Some enemies have additional mutations.")
