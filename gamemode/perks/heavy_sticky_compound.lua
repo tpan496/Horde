@@ -1,6 +1,9 @@
 PERK.PrintName = "Sticky Compound"
-PERK.Description = "Enemies you hit with Ballistic damage are Slowed.\nSlowed enemies have 20% reduced action speed."
+PERK.Description = "Enemies you hit with Ballistic damage are Slowed.\nSlowed enemies have {1} reduced action speed."
 PERK.Icon = "materials/perks/sticky_compound.png"
+PERK.Params = {
+    [1] = {value = 0.20, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.EntityTakeDamage = function(target, dmg)

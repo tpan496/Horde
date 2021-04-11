@@ -123,8 +123,9 @@ LANGUAGE.Perk_heavy_base = [[
 The Heavy class is a tank class that provides strong suppression firepower.
 Complexity: EASY
 
-Regenerate 1 armor per second.
-Regenerate up to 25 armor.]]
+Adds {1} to maximum carrying capacity.
+Regenerate {2} armor per second.
+Regenerate up to {3} armor.]]
 
 LANGUAGE.Perk_medic_base = [[
 The Medic class is a durable support class that focuses on healing and buffing teammates.
@@ -205,35 +206,35 @@ LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Suppression]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Sticky Compound]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
 Enemies you hit with Ballistic damage are Slowed.
-Slowed enemies have 20% reduced action speed.]]
+Slowed enemies have {1} reduced action speed.]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Crude Casing]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 Enemies you hit with Ballistic damage are Weakened.
-Weakened enemies deal 10% reduced damage.
-Weakened enemies receive 10% increased damage.]]
+Weakened enemies deal {1} reduced damage.
+Weakened enemies receive {2} increased damage.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Armor Protection]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[Liquid Armor]]
 LANGUAGE["Perk_heavy_liquid_armor"] = [[
-While you have at least 5 armor:
-  75% increasaed Physical damage resistance.]]
+While you have at least {1} armor:
+  {2} increasaed Physical damage resistance.]]
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[Reactive Armor]]
 LANGUAGE["Perk_heavy_reactive_armor"] = [[
-While you have at least 5 armor:\
+While you have at least {1} armor:\
   Immune to Poison, Fire and Blast damage.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[Technology]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[Nanomachine]]
 LANGUAGE["Perk_heavy_nanomachine"] = [[
-100% increased armor regeneration rate.
-You can now regenerate up to 35 armor.]]
+{1} increased armor regeneration rate.
+You can now regenerate up to {2} armor.]]
 
 LANGUAGE["Perk_Title_heavy_ballistic_shock"] = [[Ballistic Shock]]
 LANGUAGE["Perk_heavy_ballistic_shock"] = [[
-Debuffs you apply have 100% increased effect.
-Debuffs you apply have 100% increased duration.]]
+Debuffs you apply have {1} increased effect.
+Debuffs you apply have {2} increased duration.]]
 
 -- Default Perks: Medic
 LANGUAGE["Perk_Title_Medic_Tier_1"] = [[Medicine]]

@@ -1,6 +1,10 @@
 PERK.PrintName = "Ballistic Shock"
-PERK.Description = "Debuffs you apply have 100% increased effect.\nDebuffs you apply have 100% increased duration."
+PERK.Description = "Debuffs you apply have {1} increased effect.\nDebuffs you apply have {2} increased duration."
 PERK.Icon = "materials/perks/ballistic_shock.png"
+PERK.Params = {
+    [1] = {value = 1, percent = true},
+    [2] = {value = 1, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

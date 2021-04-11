@@ -1,6 +1,10 @@
 PERK.PrintName = "Nanomachine"
-PERK.Description = "100% increased armor regeneration rate.\nYou can now regenerate up to 35 armor."
+PERK.Description = "{1} increased armor regeneration rate.\nYou can now regenerate up to {2} armor."
 PERK.Icon = "materials/perks/nanomachine.png"
+PERK.Params = {
+    [1] = {value = 1, percent = true},
+    [2] = {value = 35},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
