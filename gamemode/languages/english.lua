@@ -136,8 +136,8 @@ LANGUAGE.Perk_demolition_base = [[
 The Demolition class is a crowd-control class that can also provide high single target damage.
 Complexity: MEDIUM
 
-85% increased Blast damage resistance.
-Regenerate 1 frag grenade every 30 seconds, if you do not have one.]]
+{1} increased Blast damage resistance.
+Regenerate {2} frag grenade every {3} seconds, if you do not have one.]]
 
 LANGUAGE.Perk_ghost_base = [[
 The Ghost class is focused on taking down boss enemies using Camoflague.
@@ -271,33 +271,33 @@ LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Grenade]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[Impact Grenade]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
 Grenades explode on enemy impact.
-Grenade damage increased by 50%.]]
+Grenade damage increased by {1}.]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[Cluster Grenade]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[
-Grenades and SLAMs spawn 3 mini-nades on detonation.
-Mini-nades do 25% less damage.]]
+Grenades and SLAMs spawn {1} mini-nades on detonation.
+Mini-nades do {2} less damage.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[Approach]]
 LANGUAGE["Perk_Title_demolition_fragmentation"] = [[Fragmentation]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
-25% increased Blast damage against enemies on full health.]]
+{1} increased Blast damage against enemies on full health.]]
 
 LANGUAGE["Perk_Title_demolition_napalm"] = [[Napalm]]
 LANGUAGE["Perk_demolition_napalm"] = [[
-25% increased Fire damage.
-75% reduced Fire damage taken.
+{1} increased Fire damage.
+{2} reduced Fire damage taken.
 ]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Destruction]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Pressurized Warhead]]
 LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
-25% increased Blast damage against elites.]]
+{1} increased Blast damage against elites.]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Chain Reaction]]
 LANGUAGE["Perk_demolition_chain_reaction"] = [[
-Enemies you kill have 25% chance to explode,
-dealing 50% of their health as Blast damage.]]
+Enemies you kill have {1} chance to explode,
+dealing {2} of their health as Blast damage.]]
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[Tactics]]

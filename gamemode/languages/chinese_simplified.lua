@@ -136,8 +136,8 @@ LANGUAGE["Perk_demolition_base"] = [[
 爆破兵拥有强大的范围性输出。根据技能的选择，爆破兵也能提供超群的单体输出能力。
 复杂度: 中
 
-提升 85% 爆炸伤害抗性。
-在没有高爆手雷的前提下，每 30 秒获得 1 个高爆手雷。]]
+提升 {1} 爆炸伤害抗性。
+在没有高爆手雷的前提下，每 {3} 秒获得 {2} 个高爆手雷。]]
 
 LANGUAGE["Perk_ghost_base"] = [[
 幻影是一个围绕着精准度和“迷彩”机制的职业。使用恰当的话，幻影可以提供无以匹敌的单体输出。
@@ -270,33 +270,33 @@ LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[手雷改装]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[冲击起爆]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
 触碰到敌人后，手雷会直接引爆。
-手雷伤害提升 50%。]]
+手雷伤害提升 {1}。]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[子母弹]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[
-手雷爆炸后产生 3 个子雷。
-子雷伤害为母雷的 75%。]]
+手雷爆炸后产生 {1} 个子雷。
+子雷伤害比母雷少 {2}。]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[爆破途径]]
 LANGUAGE["Perk_Title_demolition_fragmentation"] = [[冲击]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
-对满血敌人造成的爆炸伤害提升 25%。]]
+对满血敌人造成的爆炸伤害提升 {1}。]]
 
 LANGUAGE["Perk_Title_demolition_napalm"] = [[烈火]]
 LANGUAGE["Perk_demolition_napalm"] = [[
-提升 75% 火焰抗性。
-提升 25% 火焰伤害。
+提升 {1} 火焰抗性。
+提升 {2} 火焰伤害。
 ]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[毁灭]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[高压弹头]]
 LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
-提升 25% 对精英敌人造成的爆炸伤害。]]
+提升 {1} 对精英敌人造成的爆炸伤害。]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[连锁反应]]
 LANGUAGE["Perk_demolition_chain_reaction"] = [[
-击杀的敌人有 25% 概率爆炸。
-爆炸伤害为最大生命值的 50%。]]
+击杀的敌人有 {1} 概率爆炸。
+爆炸伤害为最大生命值的 {2}。]]
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[策略]]

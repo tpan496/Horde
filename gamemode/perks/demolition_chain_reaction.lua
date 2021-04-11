@@ -1,6 +1,10 @@
 PERK.PrintName = "Chain Reaction"
-PERK.Description = "Enemies you kill have 25% chance to explode,\ndealing 50% of their health as Blast damage."
+PERK.Description = "Enemies you kill have {1} chance to explode,\ndealing {2} of their health as Blast damage."
 PERK.Icon = "materials/perks/chain_reaction.png"
+PERK.Params = {
+    [1] = {value = 0.25, percent = true},
+    [2] = {value = 0.50, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.OnNPCKilled = function(victim, killer, inflictor)

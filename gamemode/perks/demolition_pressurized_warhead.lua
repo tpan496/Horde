@@ -1,6 +1,9 @@
 PERK.PrintName = "Pressurized Warhead"
-PERK.Description = "25% increased Blast damage against elites."
+PERK.Description = "{1} increased Blast damage against elites."
 PERK.Icon = "materials/perks/pressurized_warhead.png"
+PERK.Params = {
+    [1] = {value = 0.25, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
