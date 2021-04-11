@@ -312,7 +312,19 @@ function PANEL:Paint()
             draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             local loc_desc = translate.Get("Class_Description_" .. self.item.display_name) or self.item.extra_description
             if GetConVar("horde_enable_perk"):GetInt() == 1 then
-                local loc_perk_desc = translate.Get("Perk_" .. self.item.base_perk) or HORDE.perks[self.item.base_perk].Description
+                local perk = HORDE.perks[self.item.base_perk]
+                local loc_perk_desc = translate.Get("Perk_" .. self.item.base_perk) or perk.Description
+                for i, v in pairs(perk.Params) do
+                    print(i,v)
+                    local replaced = "{" .. i .. "}"
+                    if not string.find(loc_perk_desc, replaced) then goto cont end
+                    local formatted = v.value
+                    if v.percent then
+                        formatted = math.Round(formatted * 100) .. "%"
+                    end
+                    loc_perk_desc = string.Replace(loc_perk_desc, replaced, formatted)
+                    ::cont::
+                end
                 draw.DrawText(loc_perk_desc .. "\n\n" .. loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             else
                 draw.DrawText(loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)

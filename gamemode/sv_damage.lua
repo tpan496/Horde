@@ -72,7 +72,7 @@ end)
 hook.Add("ScaleNPCDamage", "Horde_MutatedHulkDamage", function (npc, hitgroup, dmg)
     if npc:IsValid() and npc:GetClass() == "npc_vj_mutated_hulk" then
         if hitgroup == HITGROUP_HEAD then
-            dmg:ScaleDamage(0.5)
+            dmg:ScaleDamage(0.75)
         end
     end
 end)
@@ -81,7 +81,7 @@ end)
 hook.Add("ScaleNPCDamage", "Horde_GonomeDamage", function (npc, hitgroup, dmg)
     if npc:IsValid() and npc:GetClass() == "npc_vj_alpha_gonome" then
         if hitgroup == HITGROUP_HEAD then
-            dmg:ScaleDamage(0.5)
+            dmg:ScaleDamage(0.75)
         end
     end
 end)
@@ -90,7 +90,7 @@ end)
 hook.Add("ScaleNPCDamage", "Horde_HostDamage", function (npc, hitgroup, dmg)
     if npc:IsValid() and npc:Horde_GetName() == "Host" then
         if hitgroup == HITGROUP_HEAD then
-            dmg:ScaleDamage(0.5)
+            dmg:ScaleDamage(0.75)
         end
     end
 end)

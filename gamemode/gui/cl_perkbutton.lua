@@ -104,6 +104,17 @@ function PANEL:SetData(classname, perk_level, choice)
     
     local text = perk.Description .. "\n"
     local loc_desc = translate.Get("Perk_" .. perk_choice) or text
+    for i, v in pairs(perk.Params) do
+        print(i,v)
+        local replaced = "{" .. i .. "}"
+        if not string.find(loc_desc, replaced) then goto cont end
+        local formatted = v.value
+        if v.percent then
+            formatted = math.Round(formatted * 100) .. "%"
+        end
+        loc_desc = string.Replace(loc_desc, replaced, formatted)
+        ::cont::
+    end
 
     self.desc:SetText(loc_desc)
     self.desc:SetFont("Horde_PerkButton_Text")

@@ -115,9 +115,9 @@ LANGUAGE["Perk_assault_base"] = [[
 突击兵拥有出色的移动力和稳定的输出，从而能应对任何场景。
 复杂度: 简单
 
-提升 20% 移速。
+提升 {1} 移速。
 杀死敌人后获得“肾上腺素”状态。通过技能的选择，“肾上腺素”可以进行堆叠。
-“肾上腺素”提升 6% 移速和输出。]]
+“肾上腺素”提升 {2} 移速和输出。]]
 
 LANGUAGE["Perk_heavy_base"] = [[
 重装兵拥有高超的护甲防御机制，同时能使用重武器对敌人造成火力压制。
@@ -170,33 +170,33 @@ LANGUAGE["Perk_Title_Survivor_Tier_3"] = [[技巧复制]]
 LANGUAGE["Perk_Title_Assault_Tier_1"] = [[机动性]]
 LANGUAGE["Perk_Title_assault_ambush"] = [[强袭]]
 LANGUAGE["Perk_assault_ambush"] = [[
-提升 15% 爆头伤害。]]
+提升 {1} 爆头伤害。]]
 
 LANGUAGE["Perk_Title_assault_charge"] = [[蓄能]]
 LANGUAGE["Perk_assault_charge"] = [[
-肾上腺素最大堆叠次数 +2。]]
+肾上腺素最大堆叠次数 +{1}。]]
 
 LANGUAGE["Perk_Title_Assault_Tier_2"] = [[适应性]]
 LANGUAGE["Perk_Title_assault_drain"] = [[生命汲取]]
 LANGUAGE["Perk_assault_drain"] = [[
-满血前提下，提升 15% 爆头伤害。
-每击杀一个敌人恢复 2% 最大生命值。]]
+满血前提下，提升 {1} 爆头伤害。
+每击杀一个敌人恢复 {2} 最大生命值。]]
 
 LANGUAGE["Perk_Title_assault_overclock"] = [[代谢超频]]
 LANGUAGE["Perk_assault_overclock"] = [[
-肾上腺素持续时间提升 50%。
-肾上腺素最大堆叠次数 +2。]]
+肾上腺素持续时间提升 {1}。
+肾上腺素最大堆叠次数 +{2}。]]
 
 LANGUAGE["Perk_Title_Assault_Tier_3"] = [[条件反射]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[精神统一]]
 LANGUAGE["Perk_assault_heightened_reflex"] = [[
-提升 20% 爆头伤害。
-满血前提下，提升 20% 所有伤害抗性。]]
+提升 {1} 爆头伤害。
+满血前提下，提升 {2} 所有伤害抗性。]]
 
 LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[心脏过载]]
 LANGUAGE["Perk_assault_cardiac_overload"] = [[
-爆头有 25% 几率 +1 层肾上腺素。
-肾上腺素最大堆叠次数 +2。]]
+爆头有 {1} 几率 +1 层肾上腺素。
+肾上腺素最大堆叠次数 +{2}。]]
 
 -- Default Perks: Heavy
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[压制]]
