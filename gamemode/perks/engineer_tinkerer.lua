@@ -1,6 +1,9 @@
 PERK.PrintName = "Tinkerer"
-PERK.Description = "Minions have 25% more health on spawn."
+PERK.Description = "Minions have {1} more health on spawn."
 PERK.Icon = "materials/perks/tinkerer.png"
+PERK.Params = {
+    [1] = {value = 0.25, percent = true},
+}
 
 PERK.Hooks = {}
 

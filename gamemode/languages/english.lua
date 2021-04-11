@@ -151,8 +151,8 @@ LANGUAGE.Perk_engineer_base = [[
 The Engineer class is a minion-centered class that deals damage through minions.
 Complexity: MEDIUM
 
-25% increased minion health and damage.
-Turrets have 500 base health and deals 18 base damage.]]
+{1} increased minion health and damage.
+Turrets have {2} base health and deals {3} base damage.]]
 
 LANGUAGE.Perk_berserker_base = [[
 The Berserker class is a melee-centered class that can be played both offensively and defensively.
@@ -336,7 +336,7 @@ When you have Camoflague:
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[Craftsmanship]]
 LANGUAGE["Perk_Title_engineer_tinkerer"] = [[Tinkerer]]
 LANGUAGE["Perk_engineer_tinkerer"] = [[
-Minions have 25% more health on spawn.]]
+Minions have {1} more health on spawn.]]
 
 LANGUAGE["Perk_Title_engineer_manhack"] = [[Manhack]]
 LANGUAGE["Perk_engineer_manhack"] = [[
@@ -347,23 +347,23 @@ Manhack deals its health as damage.]]
 LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[Archetype]]
 LANGUAGE["Perk_Title_engineer_golem"] = [[Golem]]
 LANGUAGE["Perk_engineer_golem"] = [[
-Minions regenerate 2% health per second.
+Minions regenerate {1} health per second.
 Minion attacks have increased knockback.]]
 
 LANGUAGE["Perk_Title_engineer_spectre"] = [[Spectre]]
 LANGUAGE["Perk_engineer_spectre"] = [[
-Minions leech 10% of damage dealt.
-Minions deal 15% more damage.]]
+Minions leech {1} of damage dealt.
+Minions deal {2} more damage.]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Experimental]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[Symbiosis]]
 LANGUAGE["Perk_engineer_symbiosis"] = [[
-Minions have 25% more health on spawn.
-6% less damage taken for each minion alive.]]
+Minions have {1} more health on spawn.
+{2} less damage taken for each minion alive.]]
 
 LANGUAGE["Perk_Title_engineer_kamikaze"] = [[Kamikaze]]
 LANGUAGE["Perk_engineer_kamikaze"] = [[
-Minions deal 200% of their max health as Blast damage on death.]]
+Minions deal {1} of their max health as Blast damage on death.]]
 
 -- Default Perks: Berserker
 LANGUAGE["Perk_Title_Berserker_Tier_1"] = [[Fundamentals]]

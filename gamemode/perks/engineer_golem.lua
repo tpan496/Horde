@@ -1,6 +1,9 @@
 PERK.PrintName = "Golem"
-PERK.Description = "Minions regenerate 2% health per second.\nMinion attacks have increased knockback."
+PERK.Description = "Minions regenerate {1} health per second.\nMinion attacks have increased knockback."
 PERK.Icon = "materials/perks/golem.png"
+PERK.Params = {
+    [1] = {value = 0.02, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.OnEntityCreated = function (ent)

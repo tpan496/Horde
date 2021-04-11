@@ -1,6 +1,9 @@
 PERK.PrintName = "Kamikaze"
-PERK.Description = "Minions deal 200% of their max health as Blast damage on death."
+PERK.Description = "Minions deal {1} of their max health as Blast damage on death."
 PERK.Icon = "materials/perks/kamikaze.png"
+PERK.Params = {
+    [1] = {value = 2, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.EntityRemoved = function (ent)
