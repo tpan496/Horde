@@ -1,6 +1,9 @@
 PERK.PrintName = "Sniper"
-PERK.Description = "25% increased Ballistic damage while crouching."
+PERK.Description = "{1} increased Ballistic damage while crouching."
 PERK.Icon = "materials/perks/sniper.png"
+PERK.Params = {
+    [1] = {value = 0.25, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)

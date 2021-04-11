@@ -31,7 +31,7 @@ end
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_FortifyDamageTaken", function(ply, dmginfo, bonus)
     if ply:Horde_GetFortify() == 1 then
-        bonus.less = bonus.less * (1 - 0.15 * (1 + ply:Horde_GetApplyBuffMore()))
+        bonus.less = bonus.less * (1 - 0.20 * (1 + ply:Horde_GetApplyBuffMore()))
     end
 end)
 

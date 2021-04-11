@@ -3,7 +3,7 @@ PERK.Description = "{1} increased health regeneration per second.\nBuffs you app
 PERK.Icon = "materials/perks/xcele.png"
 PERK.Params = {
     [1] = {value = 0.50, percent = true},
-    [2] = {value = 1},
+    [2] = {value = 1, percent = true},
 }
 
 PERK.Hooks = {}

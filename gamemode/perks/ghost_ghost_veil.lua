@@ -1,6 +1,9 @@
 PERK.PrintName = "Ghost Veil"
-PERK.Description = "Attacking does not cancel Camoflague.\n100% increased Camoflague activation speed."
+PERK.Description = "Attacking does not cancel Camoflague.\n{1} increased Camoflague activation speed."
 PERK.Icon = "materials/perks/ghost_veil.png"
+PERK.Params = {
+    [1] = {value = 1, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

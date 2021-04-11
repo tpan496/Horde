@@ -144,8 +144,8 @@ LANGUAGE["Perk_ghost_base"] = [[
 幻影是一个围绕着精准度和“迷彩”机制的职业。使用恰当的话，幻影可以提供无以匹敌的单体输出。
 复杂度: 高
 
-25% 更多爆头伤害。
-蹲下以激活“迷彩”状态，提供 15% 闪避。
+{1} 更多爆头伤害。
+蹲下以激活“迷彩”状态，提供 {2} 闪避。
 攻击，奔跑或者跳跃会取消“迷彩"状态。]]
 
 LANGUAGE["Perk_engineer_base"] = [[
@@ -304,34 +304,34 @@ LANGUAGE["Perk_demolition_chain_reaction"] = [[
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[策略]]
 LANGUAGE["Perk_Title_ghost_headhunter"] = [[猎头]]
 LANGUAGE["Perk_ghost_headhunter"] = [[
-爆头伤害能够进行堆叠，最多堆叠 5 次。
-每层堆叠提升 8% 爆头伤害。]]
+爆头伤害能够进行堆叠，最多堆叠 {1} 次。
+每层堆叠提升 {2} 爆头伤害。]]
 
 LANGUAGE["Perk_Title_ghost_sniper"] = [[狙击]]
 LANGUAGE["Perk_ghost_sniper"] = [[
-蹲下状态提升 25% 子弹伤害。]]
+蹲下状态提升 {1} 子弹伤害。]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[战略转移]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[幽灵漫步]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
 奔跑，跳跃不会取消迷彩状态。
-迷彩状态下提升 25% 移速。]]
+迷彩状态下提升 {1} 移速。]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[幻影披风]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
 攻击不会取消迷彩状态。
-迷彩激活速度提升 100%。]]
+迷彩激活速度提升 {1}。]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[歼灭]]
 LANGUAGE["Perk_Title_ghost_coup"] = [[恩赐解脱]]
 LANGUAGE["Perk_ghost_coup"] = [[
-直接击杀生命值小于 20% 最大生命值的敌人。]]
+直接击杀生命值小于 {1} 最大生命值的敌人。]]
 
 LANGUAGE["Perk_Title_ghost_decapitate"] = [[斩首]]
 LANGUAGE["Perk_ghost_decapitate"] = [[
 迷彩状态下：
-  提升 25% 子弹伤害。
-  提升 50% 对精英敌人造成的爆头伤害。]]
+  提升 {1} 子弹伤害。
+  提升 {2} 对精英敌人造成的爆头伤害。]]
 
 -- Default Perks: Engineer
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[制造]]

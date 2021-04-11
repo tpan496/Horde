@@ -31,13 +31,13 @@ end
 
 hook.Add("Horde_OnPlayerDamage", "Horde_BerserkDamage", function (ply, npc, bonus, hitgroup)
     if ply:Horde_GetBerserk() == 1 then
-        bonus.increase = bonus.increase + 0.10 * (1 + ply:Horde_GetApplyBuffMore())
+        bonus.increase = bonus.increase + 0.15 * (1 + ply:Horde_GetApplyBuffMore())
     end
 end)
 
 hook.Add("Horde_PlayerMoveBonus", "Horde_BerserkMovespeed", function(ply, mv)
     if ply:Horde_GetBerserk() == 1 then
-        local bonus = (1 + 0.10 * (1 + ply:Horde_GetApplyBuffMore()))
+        local bonus = (1 + 0.15 * (1 + ply:Horde_GetApplyBuffMore()))
         ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus)
         ply:SetRunSpeed(ply:Horde_GetClass().sprintspd * bonus)
     end

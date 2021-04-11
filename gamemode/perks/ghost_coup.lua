@@ -1,6 +1,9 @@
 PERK.PrintName = "Coup De Grace"
-PERK.Description = "Instantly kills enemies with less than 20% health."
+PERK.Description = "Instantly kills enemies with less than {1} health."
 PERK.Icon = "materials/perks/coup.png"
+PERK.Params = {
+     [1] = {value = 0.20, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.EntityTakeDamage = function(target, dmg)
