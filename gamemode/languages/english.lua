@@ -115,9 +115,9 @@ LANGUAGE.Perk_assault_base = [[
 The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
 Complexity: EASY
 
-20% increased movement speed.
+{1} increased movement speed.
 Gain Adrenaline when you kill an enemy.
-Adrenaline increases damage and speed by 6%.]]
+Adrenaline increases damage and speed by {2}.]]
 
 LANGUAGE.Perk_heavy_base = [[
 The Heavy class is a tank class that provides strong suppression firepower.
@@ -171,34 +171,34 @@ LANGUAGE["Perk_Title_Survivor_Tier_3"] = [[Inspired Learning]]
 LANGUAGE["Perk_Title_Assault_Tier_1"] = [[Maneuverability]]
 LANGUAGE["Perk_Title_assault_ambush"] = [[Ambush]]
 LANGUAGE["Perk_assault_ambush"] = [[
-15% increased headshot damage.]]
+{1} increased headshot damage.]]
 
 LANGUAGE["Perk_Title_assault_charge"] = [[Charge]]
 LANGUAGE["Perk_assault_charge"] = [[
-Adds 2 maximum Adrenaline stacks.
-(Each Adrenaline stack increases damage and speed by 6%.)]]
+Adds {1} maximum Adrenaline stacks.
+(Each Adrenaline stack increases damage and speed by {2}.)]]
 
 LANGUAGE["Perk_Title_Assault_Tier_2"] = [[Adaptability]]
 LANGUAGE["Perk_Title_assault_drain"] = [[Drain]]
 LANGUAGE["Perk_assault_drain"] = [[
-15% increased headshot damage when on full health.
-Recover 2% health for each enemy you killed.]]
+{1} increased headshot damage when on full health.
+Recover {2} health for each enemy you killed.]]
 
 LANGUAGE["Perk_Title_assault_overclock"] = [[Overclock]]
 LANGUAGE["Perk_assault_overclock"] = [[
-Adrenaline duration increased by 50%.
-Adds 2 maximum Adrenaline stacks.]]
+Adrenaline duration increased by {1}.
+Adds {2} maximum Adrenaline stacks.]]
 
 LANGUAGE["Perk_Title_Assault_Tier_3"] = [[Conditioning]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[Heightened Reflex]]
 LANGUAGE["Perk_assault_heightened_reflex"] = [[
-20% increased headshot damage.
-20% increased global damage resistance on full health.]]
+{1} increased headshot damage.
+{2} increased global damage resistance on full health.]]
 
 LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[Cardiac Overload]]
 LANGUAGE["Perk_assault_cardiac_overload"] = [[
-25% chance to add 1 Adrenaline stack on headshot.
-Adds 2 maximum Adrenaline stacks.]]
+{1} chance to add 1 Adrenaline stack on headshot.
+Adds {2} maximum Adrenaline stacks.]]
 
 -- Default Perks: Heavy
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Suppression]]
