@@ -158,8 +158,8 @@ LANGUAGE["Perk_berserker_base"] = [[
 狂战士是近距离格斗专家。
 复杂度: 高
 
-提升 20% 所有伤害抗性。
-提升 25% 毒素伤害抗性。]]
+提升 {1} 所有伤害抗性。
+提升 {2} 毒素伤害抗性。]]
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[生存]]
@@ -369,33 +369,33 @@ LANGUAGE["Perk_engineer_kamikaze"] = [[
 LANGUAGE["Perk_Title_Berserker_Tier_1"] = [[基本功]]
 LANGUAGE["Perk_Title_berserker_breathing_technique"] = [[波纹呼吸]]
 LANGUAGE["Perk_berserker_breathing_technique"] = [[
-每秒恢复 2% 最大生命值。
+每秒恢复 {1} 最大生命值。
 免疫毒素伤害。]]
 
 LANGUAGE["Perk_Title_berserker_bloodlust"] = [[嗜血狂怒]]
 LANGUAGE["Perk_berserker_bloodlust"] = [[
-吸收 10% 造成的近战伤害为生命值。
-每次攻击最多吸收 10 点生命值。]]
+吸收 {1} 造成的近战伤害为生命值。
+每次攻击最多吸收 {2} 点生命值。]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[技巧]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[剑舞]]
 LANGUAGE["Perk_berserker_bushido"] = [[
-提供 25% 利器伤害。
-提升 25% 移速。]]
+提升 {1} 利器伤害。
+提升 {2} 移速。]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[残暴]]
 LANGUAGE["Perk_berserker_savagery"] = [[
-提升 25% 钝器伤害。
-提升 25% 最大生命值。]]
+提升 {1} 钝器伤害。
+提升 {2} 最大生命值。]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[秘技]]
 LANGUAGE["Perk_Title_berserker_mindeye"] = [[心眼]]
 LANGUAGE["Perk_berserker_mindeye"] = [[
 当前武器为近战武器的前提下：
-  +25% 闪避
-  闪避成功后，反击闪避近战伤害的 50%。]]
+  +{1} 闪避
+  闪避成功后，反击闪避近战伤害的 {2}。]]
 
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[肉斩骨断]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
-50% 更多近战伤害。
-自身受到 10% 更多伤害。]]
+{1} 更多近战伤害。
+自身受到 {2} 更多伤害。]]
