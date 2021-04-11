@@ -1,6 +1,10 @@
 PERK.PrintName = "Savagery"
-PERK.Description = "25% increased Blunt damage.\n25% increased maximum health."
+PERK.Description = "{1} increased Blunt damage.\n{2} increased maximum health."
 PERK.Icon = "materials/perks/savagery.png"
+PERK.Params = {
+    [1] = {value = 0.25, percent = true},
+    [2] = {value = 0.25, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

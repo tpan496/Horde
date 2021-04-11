@@ -1,6 +1,10 @@
 PERK.PrintName = "Rip and Tear"
-PERK.Description = "50% more melee damage.\n10% less Global damage resistance."
+PERK.Description = "{1} more melee damage.\n{2} less Global damage resistance."
 PERK.Icon = "materials/perks/rip_and_tear.png"
+PERK.Params = {
+    [1] = {value = 0.50, percent = true},
+    [2] = {value = 0.10, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)

@@ -158,8 +158,8 @@ LANGUAGE.Perk_berserker_base = [[
 The Berserker class is a melee-centered class that can be played both offensively and defensively.
 Complexity: HIGH
 
-20% increased Global damage resistance.
-25% increased Poison damage resistance.]]
+{1} increased Global damage resistance.
+{2} increased Poison damage resistance.]]
 
 
 -- Default Perks: Survivor
@@ -369,33 +369,33 @@ Minions deal 200% of their max health as Blast damage on death.]]
 LANGUAGE["Perk_Title_Berserker_Tier_1"] = [[Fundamentals]]
 LANGUAGE["Perk_Title_berserker_breathing_technique"] = [[Breathing Technique]]
 LANGUAGE["Perk_berserker_breathing_technique"] = [[
-Regenerate 2% health per second.
+Regenerate {1} health per second.
 Immune to Poison damage.]]
 
 LANGUAGE["Perk_Title_berserker_bloodlust"] = [[Bloodlust]]
 LANGUAGE["Perk_berserker_bloodlust"] = [[
-Leech 10% of melee damage done.
-Leech is capped at 10 hp per hit.]]
+Leech {1} of melee damage done.
+Leech is capped at {2} hp per hit.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[Technique]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[Bushido]]
 LANGUAGE["Perk_berserker_bushido"] = [[
-25% increased Slashing damage.
-25% increased movement speed.]]
+{1} increased Slashing damage.
+{2} increased movement speed.]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[Savagery]]
 LANGUAGE["Perk_berserker_savagery"] = [[
-25% increased Blunt damage.
-25% increased maximum health.]]
+{1} increased Blunt damage.
+{2} increased maximum health.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Combat Arts]]
 LANGUAGE["Perk_Title_berserker_mindeye"] = [[Mind's Eye]]
 LANGUAGE["Perk_berserker_mindeye"] = [[
 While holding a melee weapon:
-  25% chance to evade damage.
-  Counter with 50% of evaded melee damage.]]
+  {1} chance to evade damage.
+  Counter with {2} of evaded melee damage.]]
 
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[Rip and Tear]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
-50% more melee damage.
-10% less Global damage resistance.]]
+{1} more melee damage.
+{2} less Global damage resistance.]]

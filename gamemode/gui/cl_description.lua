@@ -314,16 +314,18 @@ function PANEL:Paint()
             if GetConVar("horde_enable_perk"):GetInt() == 1 then
                 local perk = HORDE.perks[self.item.base_perk]
                 local loc_perk_desc = translate.Get("Perk_" .. self.item.base_perk) or perk.Description
-                for i, v in pairs(perk.Params) do
-                    print(i,v)
-                    local replaced = "{" .. i .. "}"
-                    if not string.find(loc_perk_desc, replaced) then goto cont end
-                    local formatted = v.value
-                    if v.percent then
-                        formatted = math.Round(formatted * 100) .. "%"
+                if perk.Params then
+                    for i, v in pairs(perk.Params) do
+                        print(i,v)
+                        local replaced = "{" .. i .. "}"
+                        if not string.find(loc_perk_desc, replaced) then goto cont end
+                        local formatted = v.value
+                        if v.percent then
+                            formatted = math.Round(formatted * 100) .. "%"
+                        end
+                        loc_perk_desc = string.Replace(loc_perk_desc, replaced, formatted)
+                        ::cont::
                     end
-                    loc_perk_desc = string.Replace(loc_perk_desc, replaced, formatted)
-                    ::cont::
                 end
                 draw.DrawText(loc_perk_desc .. "\n\n" .. loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             else
