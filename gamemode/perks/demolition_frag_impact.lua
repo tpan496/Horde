@@ -1,6 +1,9 @@
 PERK.PrintName = "Impact Detonation"
-PERK.Description = "Grenades explode on enemy impact.\nGrenade damage increased by 50%."
+PERK.Description = "Grenades explode on enemy impact.\nGrenade damage increased by {1}."
 PERK.Icon = "materials/perks/frag_impact.png"
+PERK.Params = {
+    [1] = {value = 0.50, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.EntityTakeDamage = function(victim, dmginfo)
