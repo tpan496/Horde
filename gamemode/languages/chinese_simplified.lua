@@ -123,8 +123,9 @@ LANGUAGE["Perk_heavy_base"] = [[
 重装兵拥有高超的护甲防御机制，同时能使用重武器对敌人造成火力压制。
 复杂度: 简单
 
-每秒恢复 1 点护甲。
-护甲回复上线为 25。]]
++{1} 最大负重
+每秒恢复 {2} 点护甲。
+护甲回复上限为 {3}。]]
 
 LANGUAGE["Perk_medic_base"] = [[
 医疗兵拥有强大的生命恢复能力，同时能为队友提供治疗以及各种增益效果。
@@ -203,35 +204,35 @@ LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[压制]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[粘性化合物]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
 子弹伤害击中的敌人受到减速异常状态。
-减速状态下，行动速度减少 20%。]]
+减速状态下，行动速度减少 {1}。]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[粗糙弹壳]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 子弹伤害击中的敌人受到虚弱异常状态。
-虚弱状态下，受到 10% 更多伤害。
-虚弱状态下，造成 10% 更少伤害。]]
+虚弱状态下，受到 {1} 更多伤害。
+虚弱状态下，造成 {2} 更少伤害。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[护甲强化]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[流体装甲]]
 LANGUAGE["Perk_heavy_liquid_armor"] = [[
-护甲值至少有 5 的前提下：
-  提升 75% 物理抗性。]]
+护甲值至少有 {1} 的前提下：
+  提升 {2} 物理抗性。]]
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[反应装甲]]
 LANGUAGE["Perk_heavy_reactive_armor"] = [[
-护甲值至少有 5 的前提下：
+护甲值至少有 {1} 的前提下：
   免疫火焰，毒素，爆炸伤害。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[先进科技]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[纳米机器]]
 LANGUAGE["Perk_heavy_nanomachine"] = [[
-提升 100% 护甲值恢复速度.
-护甲值可以最多恢复至 35 点。]]
+提升 {1} 护甲值恢复速度.
+护甲值可以最多恢复至 {2} 点。]]
 
 LANGUAGE["Perk_Title_heavy_ballistic_shock"] = [[弹道冲击]]
 LANGUAGE["Perk_heavy_ballistic_shock"] = [[
-造成的异常状态时间提升 100%。
-造成的异常状态效果提升 100%。]]
+造成的异常状态时间提升 {1}。
+造成的异常状态效果提升 {2}。]]
 
 -- Default Perks: Medic
 LANGUAGE["Perk_Title_Medic_Tier_1"] = [[药物]]

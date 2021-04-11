@@ -1,6 +1,10 @@
 PERK.PrintName = "Liquid Armor"
-PERK.Description = "While you have at least 5 armor:\n  75% increasaed Physical damage resistance."
+PERK.Description = "While you have at least {1} armor:\n  {2} increasaed Physical damage resistance."
 PERK.Icon = "materials/perks/liquid_armor.png"
+PERK.Params = {
+    [1] = {value = 5},
+    [2] = {value = 0.75, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
