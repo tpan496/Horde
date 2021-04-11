@@ -144,7 +144,7 @@ if ArcCWInstalled then
     end
 end
 
--- Disable Godmoe
+-- Disable Godmode
 RunConsoleCommand("sbox_godmode", "0")
 
 -- Util functions
