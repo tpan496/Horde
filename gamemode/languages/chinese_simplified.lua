@@ -303,17 +303,17 @@ LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[策略]]
 LANGUAGE["Perk_Title_ghost_headhunter"] = [[猎头]]
 LANGUAGE["Perk_ghost_headhunter"] = [[
 爆头伤害能够进行堆叠，最多堆叠 5 次。
-每层堆叠增加 8% 爆头伤害。]]
+每层堆叠提升 8% 爆头伤害。]]
 
 LANGUAGE["Perk_Title_ghost_sniper"] = [[狙击]]
 LANGUAGE["Perk_ghost_sniper"] = [[
-蹲下状态增加 25% 子弹伤害。]]
+蹲下状态提升 25% 子弹伤害。]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[战略转移]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[幽灵漫步]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
 奔跑，跳跃不会取消迷彩状态。
-迷彩状态下增加 25% 移速。]]
+迷彩状态下提升 25% 移速。]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[幻影披风]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
@@ -328,12 +328,12 @@ LANGUAGE["Perk_ghost_coup"] = [[
 LANGUAGE["Perk_Title_ghost_decapitate"] = [[斩首]]
 LANGUAGE["Perk_ghost_decapitate"] = [[
 迷彩状态下：
-  增加 25% 子弹伤害。
-  增加 50% 对精英敌人造成的爆头伤害。]]
+  提升 25% 子弹伤害。
+  提升 50% 对精英敌人造成的爆头伤害。]]
 
 -- Default Perks: Engineer
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[制造]]
-LANGUAGE["Perk_Title_engineer_tinkerer"] = [[匠工]]
+LANGUAGE["Perk_Title_engineer_tinkerer"] = [[工匠]]
 LANGUAGE["Perk_engineer_tinkerer"] = [[
 提升 25% 召唤物最大生命值。]]
 
@@ -397,5 +397,5 @@ LANGUAGE["Perk_berserker_mindeye"] = [[
 
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[肉斩骨断]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
-50% 更多近战伤害
-自身受到 10% 更多伤害]]
+50% 更多近战伤害。
+自身受到 10% 更多伤害。]]
