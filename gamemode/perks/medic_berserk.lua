@@ -1,6 +1,10 @@
 PERK.PrintName = "Berserk"
 PERK.Description = "Players you heal have Berserk for 5 seconds.\n10% increased damage and speed while you have Berserk."
 PERK.Icon = "materials/perks/berserk.png"
+PERK.Params = {
+    [1] = {value = 5},
+    [2] = {value = 0.10, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)

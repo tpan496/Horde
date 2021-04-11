@@ -1,7 +1,9 @@
 PERK.PrintName = "Painkillers"
-PERK.Description = "You can overheal player's health by 15%."
+PERK.Description = "You can overheal player's health by {1}."
 PERK.Icon = "materials/perks/painkillers.png"
-
+PERK.Params = {
+    [1] = {value = 0.15, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)

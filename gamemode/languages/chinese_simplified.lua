@@ -123,7 +123,7 @@ LANGUAGE["Perk_heavy_base"] = [[
 重装兵拥有高超的护甲防御机制，同时能使用重武器对敌人造成火力压制。
 复杂度: 简单
 
-+{1} 最大负重
++{1} 最大负重。
 每秒恢复 {2} 点护甲。
 护甲回复上限为 {3}。]]
 
@@ -131,7 +131,7 @@ LANGUAGE["Perk_medic_base"] = [[
 医疗兵拥有强大的生命恢复能力，同时能为队友提供治疗以及各种增益效果。
 复杂度: 中
 
-每秒恢复 2% 生命值。]]
+每秒恢复 {1} 生命值。]]
 
 LANGUAGE["Perk_demolition_base"] = [[
 爆破兵拥有强大的范围性输出。根据技能的选择，爆破兵也能提供超群的单体输出能力。
@@ -238,33 +238,33 @@ LANGUAGE["Perk_heavy_ballistic_shock"] = [[
 LANGUAGE["Perk_Title_Medic_Tier_1"] = [[药物]]
 LANGUAGE["Perk_Title_medic_antibiotics"] = [[抗生素]]
 LANGUAGE["Perk_medic_antibiotics"] = [[
-治疗量提升 15%。]]
+治疗量提升 {1}。]]
 
 LANGUAGE["Perk_Title_medic_painkillers"] = [[止痛剂]]
 LANGUAGE["Perk_medic_painkillers"] = [[
-治疗生命值最大上限提升 15%。]]
+治疗生命值最大上限提升 {1}。]]
 
 LANGUAGE["Perk_Title_Medic_Tier_2"] = [[生物工程]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[狂化]]
 LANGUAGE["Perk_medic_berserk"] = [[
 治疗的对象获得狂化增益状态。
-狂化状态下，提升 10% 伤害。
-狂化状态下，提升 10% 移速。]]
+狂化状态下，提升 {1} 伤害。
+狂化状态下，提升 {2} 移速。]]
 
 LANGUAGE["Perk_Title_medic_fortify"] = [[坚固]]
 LANGUAGE["Perk_medic_fortify"] = [[
 治疗的对象获得坚固增益状态。
-增益状态下，受到 15% 更少伤害。]]
+增益状态下，受到 {1} 更少伤害。]]
 
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[物竞天择]]
 LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[细胞坍缩]]
 LANGUAGE["Perk_medic_cellular_implosion"] = [[
-击杀的敌人有 20% 概率产生治疗烟雾。]]
+击杀的敌人有 {1} 概率产生治疗烟雾。]]
 
 LANGUAGE["Perk_Title_medic_xcele"] = [[治愈因子]]
 LANGUAGE["Perk_medic_xcele"] = [[
-提升 50% 生命恢复速度。
-提升 100% 增益状态效果。]]
+提升 {1} 生命恢复速度。
+提升 {2} 增益状态效果。]]
 
 -- Default Perks: Demolition
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[手雷改装]]

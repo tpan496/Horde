@@ -1,6 +1,9 @@
 PERK.PrintName = "Antibiotics"
 PERK.Description = "Your healing is amplified by 15%."
 PERK.Icon = "materials/perks/antibiotics.png"
+PERK.Params = {
+    [1] = {value = 0.15, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)
