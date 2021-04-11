@@ -335,7 +335,7 @@ LANGUAGE["Perk_ghost_decapitate"] = [[
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[制造]]
 LANGUAGE["Perk_Title_engineer_tinkerer"] = [[工匠]]
 LANGUAGE["Perk_engineer_tinkerer"] = [[
-提升 25% 召唤物最大生命值。]]
+提升 {1} 召唤物最大生命值。]]
 
 LANGUAGE["Perk_Title_engineer_manhack"] = [[无人机]]
 LANGUAGE["Perk_engineer_manhack"] = [[
@@ -346,24 +346,24 @@ LANGUAGE["Perk_engineer_manhack"] = [[
 LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[原型]]
 LANGUAGE["Perk_Title_engineer_golem"] = [[魔像]]
 LANGUAGE["Perk_engineer_golem"] = [[
-召唤物每秒恢复 2% 最大生命值。
+召唤物每秒恢复 {1} 最大生命值。
 召唤物攻击带有增强的击退效果。]]
 
 LANGUAGE["Perk_Title_engineer_spectre"] = [[鬼影]]
 LANGUAGE["Perk_engineer_spectre"] = [[
-召唤物吸收 10% 对敌人造成的伤害为生命值。
-召唤物提升 15% 伤害。]]
+召唤物吸收 {1} 对敌人造成的伤害为生命值。
+召唤物提升 {2} 伤害。]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[实验性模组]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[共生]]
 LANGUAGE["Perk_engineer_symbiosis"] = [[
-召唤物提升 25% 最大生命值。
-每有一个存活的召唤物，提升 6% 所有伤害抗性。]]
+召唤物提升 {1} 最大生命值。
+每有一个存活的召唤物，提升 {2} 所有伤害抗性。]]
 
 LANGUAGE["Perk_Title_engineer_kamikaze"] = [[神风]]
 LANGUAGE["Perk_engineer_kamikaze"] = [[
 召唤物死亡时会产生爆炸。
-爆炸伤害为召唤物最大生命值的 200%。]]
+爆炸伤害为召唤物最大生命值的 {1}。]]
 
 -- Default Perks: Berserker
 LANGUAGE["Perk_Title_Berserker_Tier_1"] = [[基本功]]
