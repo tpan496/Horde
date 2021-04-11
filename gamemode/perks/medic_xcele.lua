@@ -1,6 +1,10 @@
 PERK.PrintName = "Accelerated Healing Factor"
-PERK.Description = "50% increased health regeneration per second.\nBuffs you apply are 100% more effective."
+PERK.Description = "{1} increased health regeneration per second.\nBuffs you apply are {2} more effective."
 PERK.Icon = "materials/perks/xcele.png"
+PERK.Params = {
+    [1] = {value = 0.50},
+    [2] = {value = 1},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

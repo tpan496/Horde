@@ -131,7 +131,7 @@ LANGUAGE.Perk_medic_base = [[
 The Medic class is a durable support class that focuses on healing and buffing teammates.
 Complexity: MEDIUM
 
-Regenerate 2% health per second.]]
+Regenerate {1} health per second.]]
 
 LANGUAGE.Perk_demolition_base = [[
 The Demolition class is a crowd-control class that can also provide high single target damage.
@@ -240,32 +240,32 @@ Debuffs you apply have {2} increased duration.]]
 LANGUAGE["Perk_Title_Medic_Tier_1"] = [[Medicine]]
 LANGUAGE["Perk_Title_medic_antibiotics"] = [[Antibiotics]]
 LANGUAGE["Perk_medic_antibiotics"] = [[
-Your healing is amplified by 15%.]]
+Your healing is amplified by {1}.]]
 
 LANGUAGE["Perk_Title_medic_painkillers"] = [[Painkillers]]
 LANGUAGE["Perk_medic_painkillers"] = [[
-You can overheal player's health by 15%.]]
+You can overheal player's health by {1}.]]
 
 LANGUAGE["Perk_Title_Medic_Tier_2"] = [[Bio-Engineering]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[Berserk]]
 LANGUAGE["Perk_medic_berserk"] = [[
-Players you heal have Berserk for 5 seconds.
-10% increased damage and speed while you have Berserk.]]
+Players you heal have Berserk for {1} seconds.
+{2} increased damage and speed while you have Berserk.]]
 
 LANGUAGE["Perk_Title_medic_fortify"] = [[Fortify]]
 LANGUAGE["Perk_medic_fortify"] = [[
-Players you heal have Fortify for 5 seconds.
-15% less damage taken while you have Fortify.]]
+Players you heal have Fortify for {1} seconds.
+{2} less damage taken while you have Fortify.]]
 
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[Natural Selection]]
 LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[Cellular Implosion]]
 LANGUAGE["Perk_medic_cellular_implosion"] = [[
-Enemies you killed have 20% chance to generate a healing cloud.]]
+Enemies you killed have {1} chance to generate a healing cloud.]]
 
 LANGUAGE["Perk_Title_medic_xcele"] = [[Accelerated Healing Factor]]
 LANGUAGE["Perk_medic_xcele"] = [[
-50% increased health regeneration per second.
-Buffs you apply are 100% more effective.]]
+{1} increased health regeneration per second.
+Buffs you apply are {2} more effective.]]
 
 -- Default Perks: Demolition
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Grenade]]
