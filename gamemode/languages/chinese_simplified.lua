@@ -248,13 +248,14 @@ LANGUAGE["Perk_Title_Medic_Tier_2"] = [[生物工程]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[狂化]]
 LANGUAGE["Perk_medic_berserk"] = [[
 治疗的对象获得狂化增益状态。
-狂化状态下，提升 {1} 伤害。
-狂化状态下，提升 {2} 移速。]]
+狂化状态持续 {1} 秒。
+狂化状态下，提升 {2} 伤害和移速。]]
 
 LANGUAGE["Perk_Title_medic_fortify"] = [[坚固]]
 LANGUAGE["Perk_medic_fortify"] = [[
 治疗的对象获得坚固增益状态。
-增益状态下，受到 {1} 更少伤害。]]
+坚固状态持续 {1} 秒。
+坚固状态下，受到 {2} 更少伤害。]]
 
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[物竞天择]]
 LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[细胞坍缩]]
