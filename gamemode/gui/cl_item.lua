@@ -23,6 +23,12 @@ end
 function PANEL:SetData(item, description_panel)
     self.item = item
     self.name = item.name
+    if GetConVar("horde_default_item_config"):GetInt() == 1 then
+        self.loc_name = translate.Get("Item_" .. self.name) or self.name
+    else
+        self.loc_name = self.name
+    end
+
     self.description = item.description
     self.weight = item.weight
     self.price = item.price
@@ -91,7 +97,7 @@ function PANEL:Paint()
 
         surface.SetTextColor(Color(255,255,255))
         surface.SetTextPos(10, self:GetTall() / 2 - 10)
-        surface.DrawText(self.name)
+        surface.DrawText(self.loc_name)
 
         if self.item.entity_properties and self.item.entity_properties.is_arccw_attachment and ArcCW.AttachmentTable[self.item.class] then
             local icon = ArcCW.AttachmentTable[self.item.class].Icon

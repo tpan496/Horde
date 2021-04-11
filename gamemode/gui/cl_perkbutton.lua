@@ -106,7 +106,6 @@ function PANEL:SetData(classname, perk_level, choice)
     local loc_desc = translate.Get("Perk_" .. perk_choice) or text
     if perk.Params then
         for i, v in pairs(perk.Params) do
-            print(i,v)
             local replaced = "{" .. i .. "}"
             if not string.find(loc_desc, replaced) then goto cont end
             local formatted = v.value

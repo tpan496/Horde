@@ -1,3 +1,13 @@
+--[[
+HORDE Translation Guideline
+1. Use English as base.
+2. Do not translate special characters. e.g. {1}, %d. Keep them directlyai.GetScheduleID(sched)
+3. Keep translations short and concise.
+4. Consistency, especially for perks.
+increase vs. more: these two descriptions are DIFFERENT! Make sure you differetiate them during translation.
+resistance vs. less damage taken: same as above.
+--]]
+
 translate.AddLanguage("zh-CN", "Chinese Simplified")
 
 LANGUAGE["Default_Font"] = "微软雅黑"
@@ -40,6 +50,7 @@ LANGUAGE["Game_Healed_By"] = "治疗了你"
 
 
 -- Shop
+-- Categories
 LANGUAGE["Shop_Class"] = "职业"
 LANGUAGE["Shop_Cash"] = "金钱"
 LANGUAGE["Shop_Weight"] = "负重"
@@ -53,6 +64,19 @@ LANGUAGE["Shop_Explosive"] = "爆炸物"
 LANGUAGE["Shop_Special"] = "特殊"
 LANGUAGE["Shop_Equipment"] = "装备"
 LANGUAGE["Shop_Attachment"] = "配件"
+
+-- Attachments
+LANGUAGE["Shop_Optic"] = "瞄具"
+LANGUAGE["Shop_Underbarrel"] = "下挂"
+LANGUAGE["Shop_Tactical"] = "战术工具"
+LANGUAGE["Shop_Barrel"] = "枪管"
+LANGUAGE["Shop_Muzzle"] = "枪口"
+LANGUAGE["Shop_Magazine"] = "弹匣"
+LANGUAGE["Shop_Stock"] = "枪托"
+LANGUAGE["Shop_Ammo Type"] = "子弹类型"
+LANGUAGE["Shop_Perk"] = "武器技能"
+
+-- Class Panel
 LANGUAGE["Shop_Class/Perks"] = "职业/技能"
 LANGUAGE["Shop_Select_Class"] = "选择职业（拥有物品会被去除）"
 LANGUAGE["Shop_Show_Perks"] = "显示技能树"
@@ -66,7 +90,6 @@ LANGUAGE["Shop_OWNED"] = "已拥有"
 LANGUAGE["Shop_Buy_Secondary_Ammo"] = "购买副弹药"
 LANGUAGE["Shop_Primary_Ammo"] = "主弹药"
 LANGUAGE["Shop_Secondary_Ammo"] = "副弹药"
-
 
 -- Classes
 LANGUAGE["Class_Survivor"] = "生存者"
@@ -401,3 +424,410 @@ LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[肉斩骨断]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
 {1} 更多近战伤害。
 自身受到 {2} 更多伤害。]]
+
+
+-- Default Config Shop Items
+-- Optional
+LANGUAGE["Item_Stunstick"] = [[电击棍]]
+LANGUAGE["Item_Desc_Stunstick"] = [[
+能放出电流的警棍。
+]]
+
+LANGUAGE["Item_Crowbar"] = [[撬棍]]
+LANGUAGE["Item_Desc_Crowbar"] = [[
+略微生锈的撬棍。
+]]
+
+LANGUAGE["Item_Combat Knife"] = [[战术匕首]]
+LANGUAGE["Item_Desc_Combat Knife"] = [[
+可靠的匕首。
+右键能使出威力更大的横砍。
+]]
+
+LANGUAGE["Item_Katana"] = [[武士刀]]
+LANGUAGE["Item_Desc_Katana"] = [[
+忍者武士刀。
+有优越的攻击距离和劈砍速度。
+]]
+
+LANGUAGE["Item_Bat"] = [[棒球棍]]
+LANGUAGE["Item_Desc_Bat"] = [[
+扎实的棒球棍。
+对敌人造成钝器伤害。
+]]
+
+
+LANGUAGE["Item_9mm"] = [[9mm]]
+LANGUAGE["Item_Desc_9mm"] = [[
+联合军标配手枪。
+]]
+
+LANGUAGE["Item_357"] = [[357]]
+LANGUAGE["Item_Desc_357"] = [[
+Colt python magnum pistol.
+Used by Black Mesa security guards.
+]]
+
+LANGUAGE["Item_Glock"] = [[Glock]]
+LANGUAGE["Item_Desc_Glock"] = [[
+Glock 18.
+奥地利制造半自动手枪。
+]]
+
+LANGUAGE["Item_USP"] = [[USP]]
+LANGUAGE["Item_Desc_USP"] = [[
+Universelle Selbstladepistole.
+德国公司H&K制造的半自动手枪。
+]]
+
+LANGUAGE["Item_P2000"] = [[P2000]]
+LANGUAGE["Item_Desc_P2000"] = [[
+Heckler & Koch P2000.
+A serviceable first-round pistol made by H&K.
+]]
+
+LANGUAGE["Item_P250"] = [[P250]]
+LANGUAGE["Item_Desc_P250"] = [[
+SIG Sauer P250.
+A low-recoil sidearm with a high rate of fire.
+]]
+
+LANGUAGE["Item_R8"] = [[R8]]
+LANGUAGE["Item_Desc_R8"] = [[
+R8 Revolver.
+Delivers a highly accurate and powerful round,
+at the expense of a lengthy trigger-pull.
+]]
+
+LANGUAGE["Item_Deagle"] = [[Deagle]]
+LANGUAGE["Item_Desc_Deagle"] = [[
+Night Hawk .50C.
+An iconic pistol that is diffcult to master.
+]]
+
+LANGUAGE["Item_M1911"] = [[M1911]]
+LANGUAGE["Item_Desc_M1911"] = [[
+Colt 1911.
+Standard-issue sidearm for the United States Armed Forces.
+]]
+
+LANGUAGE["Item_FiveSeven"] = [[FiveSeven]]
+LANGUAGE["Item_Desc_FiveSeven"] = [[
+ES Five-seven.
+A Belgian semi-automatic pistol made by FN Herstal.
+]]
+
+LANGUAGE["Item_CZ75"] = [[CZ75]]
+LANGUAGE["Item_Desc_CZ75"] = [[
+CZ 75.
+A semi-automatic pistol manufactured in Czech Republic.
+]]
+
+LANGUAGE["Item_M9"] = [[M9]]
+LANGUAGE["Item_Desc_M9"] = [[
+Beretta M9.
+Sidearm used by the United States Armed Forces.
+]]
+
+LANGUAGE["Item_Tec-9"] = [[Tec-9]]
+LANGUAGE["Item_Desc_Tec-9"] = [[
+A Swedish-made semi-automatic pistol.
+Lethal in close quarters.
+]]
+
+LANGUAGE["Item_TMP"] = [[TMP]]
+LANGUAGE["Item_Desc_TMP"] = [[
+Steyr TMP.
+A select-fire 9×19mm Parabellum caliber machine pistol.
+]]
+
+
+LANGUAGE["Item_SMG1"] = [[SMG1]]
+LANGUAGE["Item_Desc_SMG1"] = [[
+A compact, fully automatic firearm.
+Armed with an M203 launcher.
+]]
+
+LANGUAGE["Item_Mac10"] = [[Mac10]]
+LANGUAGE["Item_Desc_Mac10"] = [[
+Military Armament Corporation Model 10.
+Boasts a high rate of fire,
+with poor spread accuracy and high recoil as trade-offs.
+]]
+
+LANGUAGE["Item_MP9"] = [[MP9]]
+LANGUAGE["Item_Desc_MP9"] = [[
+Brügger & Thomet MP9.
+Manufactured in Switzerland,
+the MP9 is favored by private security firms world-wide.
+]]
+
+LANGUAGE["Item_MP5K"] = [[MP5K]]
+LANGUAGE["Item_Desc_MP5K"] = [[
+Heckler & Koch MP5K.
+A more convert and mobile version of the MP5.
+]]
+
+LANGUAGE["Item_MP5"] = [[MP5]]
+LANGUAGE["Item_Desc_MP5"] = [[
+Heckler & Koch MP5.
+Often imitated but never equaled,
+the MP5 is perhaps the most versatile SMG in the world.
+]]
+
+LANGUAGE["Item_UMP45"] = [[UMP45]]
+LANGUAGE["Item_Desc_UMP45"] = [[
+KM UMP45.
+A lighter and cheaper successor to the MP5.
+]]
+
+LANGUAGE["Item_PP Bizon"] = [[PP Bizon]]
+LANGUAGE["Item_Desc_PP Bizon"] = [[
+PP-19 Bizon.
+Offers a high-capacity magazine that reloads quickly.
+]]
+
+LANGUAGE["Item_P90"] = [[P90]]
+LANGUAGE["Item_Desc_P90"] = [[
+ES C90.
+A Belgian bullpup PDW with a magazine of 50 rounds.
+]]
+
+LANGUAGE["Item_Vector"] = [[Vector]]
+LANGUAGE["Item_Desc_Vector"] = [[
+KRISS Vector Gen I.
+Uses an unconventional blowback system that results in its high firerate.
+]]
+
+
+LANGUAGE["Item_Pump-Action"] = [[Pump-Action]]
+LANGUAGE["Item_Desc_Pump-Action"] = [[
+A standard 12-gauge shotgun.
+RMB to fire 2 shots at once.
+]]
+
+LANGUAGE["Item_Nova"] = [[Nova]]
+LANGUAGE["Item_Desc_Nova"] = [[
+Benelli Nova.
+Italian pump-action 12-gauge shotgun.
+]]
+
+LANGUAGE["Item_M870"] = [[M870]]
+LANGUAGE["Item_Desc_M870"] = [[
+Remington 870 Shotgun.
+Manufactured in the United States.
+]]
+
+LANGUAGE["Item_MAG7"] = [[MAG7]]
+LANGUAGE["Item_Desc_MAG7"] = [[
+Techno Arms MAG-7.
+Fires a specialized 60mm 12 gauge shell.
+]]
+
+LANGUAGE["Item_XM1014"] = [[XM1014]]
+LANGUAGE["Item_Desc_XM1014"] = [[
+Benelli M4 Super 90.
+Fully automatic shotgun.
+]]
+
+LANGUAGE["Item_AA12"] = [[AA12]]
+LANGUAGE["Item_Desc_AA12"] = [[
+Atchisson Assault Shotgun.
+Devastating firepower at close to medium range.
+]]
+
+
+LANGUAGE["Item_AR15"] = [[AR15]]
+LANGUAGE["Item_Desc_AR15"] = [[
+AR-15 Style Rifle.
+A lightweight semi-automatic rifle based on ArmaLite AR-15 design.
+]]
+
+LANGUAGE["Item_FAMAS"] = [[FAMAS]]
+LANGUAGE["Item_Desc_FAMAS"] = [[
+FAMAS bullpup assault rifle.
+Recognised for its high rate of fire."
+]]
+
+LANGUAGE["Item_Galil"] = [[Galil]]
+LANGUAGE["Item_Desc_Galil"] = [[
+Galil ACE 22.
+Developed and originally manufactured by Israel Military Industries.
+]]
+
+LANGUAGE["Item_AK47"] = [[AK47]]
+LANGUAGE["Item_Desc_AK47"] = [[
+Avtomat Kalashnikova.
+A gas-operated, 7.62×39mm assault rifle developed in the Soviet Union.
+]]
+
+LANGUAGE["Item_M4A1"] = [[M4A1]]
+LANGUAGE["Item_Desc_M4A1"] = [[
+Colt M4.
+A 5.56×45mm NATO, air-cooled, gas-operated, select fire carbine.
+]]
+
+LANGUAGE["Item_SG556"] = [[SG556]]
+LANGUAGE["Item_Desc_SG556"] = [[
+SIG SG 550.
+An assault rifle manufactured by Swiss Arms AG.
+]]
+
+LANGUAGE["Item_AUG"] = [[AUG]]
+LANGUAGE["Item_Desc_AUG"] = [[
+Steyr AUG.
+An Austrian bullpup assault rifle.
+]]
+
+LANGUAGE["Item_F2000"] = [[F2000]]
+LANGUAGE["Item_Desc_F2000"] = [[
+FN F2000.
+An ambidextrous bullpup rifle developed by FN.
+]]
+
+LANGUAGE["Item_Tavor"] = [[Tavor]]
+LANGUAGE["Item_Desc_Tavor"] = [[
+IWI Tavor-21.
+Designed to maximize reliability, durability, and simplicity.
+]]
+
+
+LANGUAGE["Item_ACR"] = [[ACR]]
+LANGUAGE["Item_Desc_ACR"] = [[
+Remington Adaptive Combat Rifle.
+A modular semi-Auto rifle.
+]]
+
+LANGUAGE["Item_AWP"] = [[AWP]]
+LANGUAGE["Item_Desc_AWP"] = [[
+Magnum Ghost Rifle.
+A series of sniper rifles manufactured by the United Kingdom.
+]]
+
+LANGUAGE["Item_SCAR"] = [[SCAR]]
+LANGUAGE["Item_Desc_SCAR"] = [[
+FN SCAR.
+An assault rifle developed by Belgian manufacturer FN Herstal.
+]]
+
+LANGUAGE["Item_G3"] = [[G3]]
+LANGUAGE["Item_Desc_G3"] = [[
+G3 Battle Rifle.
+A 7.62×51mm NATO, select-fire battle rifle developed by H&K.
+]]
+
+LANGUAGE["Item_Barret AMR"] = [[Barret AMR]]
+LANGUAGE["Item_Desc_Barret AMR"] = [[
+.50 Cal Anti-Material Sniper Rifle.
+能对目标造成巨额的子弹伤害。
+]]
+
+
+LANGUAGE["Item_SSG08 Medic SR"] = [[SSG08医疗狙击枪]]
+LANGUAGE["Item_Desc_SSG08 Medic SR"] = [[
+一把改造过的狙击枪，能够发射医疗针。
+医疗针能够治疗队友并且伤害敌人。
+]]
+
+LANGUAGE["Item_Negev"] = [[Negev]]
+LANGUAGE["Item_Desc_Negev"] = [[
+IWI Negev.
+A 5.56×45mm NATO light machine gun developed by the IWI.
+]]
+
+LANGUAGE["Item_M249"] = [[M249]]
+LANGUAGE["Item_Desc_M249"] = [[
+M249 light machine gun.
+A gas operated and air-cooled weapon of destruction.
+]]
+
+LANGUAGE["Item_M240B"] = [[M240B]]
+LANGUAGE["Item_Desc_M240B"] = [[
+M240 Bravo.
+Fires 7.62mm NATO ammunition.
+Equipped by U.S. Armed Forces.
+]]
+
+LANGUAGE["Item_MG4"] = [[MG4]]
+LANGUAGE["Item_Desc_MG4"] = [[
+Heckler & Koch MG4.
+A belt-fed 5.56 mm light machine gun that replaced MG3.
+]]
+
+
+LANGUAGE["Item_Frag Grenade"] = [[高爆手雷]]
+LANGUAGE["Item_Desc_Frag Grenade"] = [[
+常规军用手雷。
+能对大片敌人造成伤害。
+]]
+
+LANGUAGE["Item_Resistance RPG"] = [[反抗军RPG]]
+LANGUAGE["Item_Desc_Resistance RPG"] = [[
+反抗军粗制火箭筒。
+]]
+
+LANGUAGE["Item_RPG-7"] = [[RPG-7]]
+LANGUAGE["Item_Desc_RPG-7"] = [[
+源自苏联的反坦克火箭筒。
+对敌人能造成大量的爆炸伤害。
+]]
+
+LANGUAGE["Item_SLAM"] = [[SLAM]]
+LANGUAGE["Item_Desc_SLAM"] = [[
+Selectable Lightweight Attack Munition.
+右键引爆。对墙按左键激活镭射引爆模式。
+]]
+
+LANGUAGE["Item_Incendiary Grenade"] = [[燃烧手雷]]
+LANGUAGE["Item_Desc_Incendiary Grenade"] = [[
+引爆后产生大量火焰。
+火焰对敌人造成持续伤害。
+]]
+
+
+LANGUAGE["Item_Heat Crossbow"] = [[十字弩]]
+LANGUAGE["Item_Desc_Heat Crossbow"] = [[
+临时制作的远距离狙击武器。
+使用炙热的钢管作为弹药。
+]]
+
+LANGUAGE["Item_Turret"] = [[步哨枪]]
+LANGUAGE["Item_Desc_Turret"] = [[
+联合军专用步哨枪。
+能够用来看守固定区域。
+]]
+
+LANGUAGE["Item_Medic Grenade"] = [[医疗手雷]]
+LANGUAGE["Item_Desc_Medic Grenade"] = [[
+引爆后持续散发出医疗烟雾。
+医疗烟雾能治疗队友并且对敌人造成持续伤害。
+]]
+
+LANGUAGE["Item_Throwing Knives"] = [[飞刀]]
+LANGUAGE["Item_Desc_Throwing Knives"] = [[
+远距离飞刀。
+扔出去的刀可以被回收。
+]]
+
+
+LANGUAGE["Item_Medkit"] = [[医疗包]]
+LANGUAGE["Item_Desc_Medkit"] = [[
+自动充能的医疗包。
+右键治疗自己，左键治疗队友。
+]]
+
+LANGUAGE["Item_Health Vial"] = [[治疗药瓶]]
+LANGUAGE["Item_Desc_Health Vial"] = [[
+装有绿色液体的药瓶。
+拾取后能直接回复生命值。
+]]
+
+LANGUAGE["Item_Kevlar Armor Battery"] = [[护甲包]]
+LANGUAGE["Item_Desc_Kevlar Armor Battery"] = [[
+提供15护甲。
+]]
+
+LANGUAGE["Item_Full Kevlar Armor"] = [[全套护甲]]
+LANGUAGE["Item_Desc_Full Kevlar Armor"] = [[
+提供100%护甲。
+]]
