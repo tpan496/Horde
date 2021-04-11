@@ -174,6 +174,15 @@ function PANEL:SetData(item)
     if self.perk_layout then for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end end
     self.perk_panel:SetVisible(false)
     self.item = item
+    if self.item and self.item.class then
+        if GetConVar("horde_default_item_config"):GetInt() == 1 then
+            self.loc_name = translate.Get("Item_" .. self.item.name) or self.item.name
+            self.loc_desc = translate.Get("Item_Desc_" .. self.item.name) or self.item.description
+        else
+            self.loc_name = self.item.name
+            self.loc_desc = self.item.description
+        end
+    end
     if not self.item then return end
     if not self.item.class then
         if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
@@ -316,7 +325,6 @@ function PANEL:Paint()
                 local loc_perk_desc = translate.Get("Perk_" .. self.item.base_perk) or perk.Description
                 if perk.Params then
                     for i, v in pairs(perk.Params) do
-                        print(i,v)
                         local replaced = "{" .. i .. "}"
                         if not string.find(loc_perk_desc, replaced) then goto cont end
                         local formatted = v.value
@@ -336,8 +344,8 @@ function PANEL:Paint()
             surface.SetMaterial(mat) -- Use our cached material
             surface.DrawTexturedRect(self:GetWide() / 2 + string.len(loc_name) * 2 + 20, 28, 40, 40)
         else
-            draw.DrawText(self.item.description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
-            draw.DrawText(self.item.name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            draw.DrawText(self.loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
         end
 
         -- Check if this is a class or an item
