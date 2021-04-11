@@ -1,6 +1,9 @@
 PERK.PrintName = "Phase Walk"
-PERK.Description = "Running/Jumping does not cancel Camoflague.\n25% increased movement speed when you have Camoflague."
+PERK.Description = "Running/Jumping does not cancel Camoflague.\n{1} increased movement speed when you have Camoflague."
 PERK.Icon = "materials/perks/phase_walk.png"
+PERK.Params = {
+    [1] = {value = 0.25, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

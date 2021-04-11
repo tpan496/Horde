@@ -1,6 +1,10 @@
 PERK.PrintName = "Decapitate"
-PERK.Description = "When you have Camoflague:\n  25% increased Ballistic damage.\n  50% increased headshot damage against elites."
+PERK.Description = "When you have Camoflague:\n  {1} increased Ballistic damage.\n  {2} increased headshot damage against elites."
 PERK.Icon = "materials/perks/decapitate.png"
+PERK.Params = {
+    [1] = {value = 0.25, percent = true},
+    [2] = {value = 0.50, percent = true},
+}
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)

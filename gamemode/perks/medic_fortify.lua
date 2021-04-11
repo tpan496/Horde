@@ -3,7 +3,7 @@ PERK.Description = "Players you heal have Fortify for {1} seconds.\n{2} less dam
 PERK.Icon = "materials/perks/fortify.png"
 PERK.Params = {
     [1] = {value = 5},
-    [2] = {value = 0.15, percent = true},
+    [2] = {value = 0.20, percent = true},
 }
 
 PERK.Hooks = {}
