@@ -49,6 +49,16 @@ LANGUAGE["Game_Healed"] = "治疗量"
 LANGUAGE["Game_Healed_By"] = "治疗了你"
 
 
+-- Ranks
+LANGUAGE["Rank_Novice"] = "入门"
+LANGUAGE["Rank_Amateur"] = "学徒"
+LANGUAGE["Rank_Skilled"] = "高手"
+LANGUAGE["Rank_Professional"] = "专业"
+LANGUAGE["Rank_Expert"] = "大师"
+LANGUAGE["Rank_Champion"] = "冠绝"
+LANGUAGE["Rank_Master"] = "宗师"
+
+
 -- Shop
 -- Categories
 LANGUAGE["Shop_Class"] = "职业"

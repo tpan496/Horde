@@ -90,15 +90,24 @@ LANGUAGE["Shop_Secondary_Ammo"] = "Secondary Ammo"
 
 
 -- Classes
-LANGUAGE.Class_Survivor = "Survivor"
-LANGUAGE.Class_Assault = "Assault"
-LANGUAGE.Class_Heavy = "Heavy"
-LANGUAGE.Class_Medic = "Medic"
-LANGUAGE.Class_Demolition = "Demolition"
-LANGUAGE.Class_Ghost = "Ghost"
-LANGUAGE.Class_Engineer = "Engineer"
-LANGUAGE.Class_Berserker = "Berserker"
+LANGUAGE["Class_Survivor"] = "Survivor"
+LANGUAGE["Class_Assault"] = "Assault"
+LANGUAGE["Class_Heavy"] = "Heavy"
+LANGUAGE["Class_Medic"] = "Medic"
+LANGUAGE["Class_Demolition"] = "Demolition"
+LANGUAGE["Class_Ghost"] = "Ghost"
+LANGUAGE["Class_Engineer"] = "Engineer"
+LANGUAGE["Class_Berserker"] = "Berserker"
 
+
+-- Ranks
+LANGUAGE["Rank_Novice"] = "Novice"
+LANGUAGE["Rank_Amateur"] = "Amateur"
+LANGUAGE["Rank_Skilled"] = "Skilled"
+LANGUAGE["Rank_Professional"] = "Professional"
+LANGUAGE["Rank_Expert"] = "Expert"
+LANGUAGE["Rank_Champion"] = "Champion"
+LANGUAGE["Rank_Master"] = "Master"
 
 -- Default Class Extra Descriptions
 LANGUAGE["Class_Description_Survivor"] = [[
