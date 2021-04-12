@@ -1,10 +1,10 @@
 --[[
 HORDE Translation Guideline
 1. Use English as base.
-2. Do not translate special characters. e.g. {1}, %d. Keep them directlyai.GetScheduleID(sched)
+2. Do not translate special characters. e.g. {1}, %d. Keep them directly.
 3. Keep translations short and concise.
 4. Consistency, especially for perks.
-increase vs. more: these two descriptions are DIFFERENT! Make sure you differetiate them during translation.
+increase vs. more: these two descriptions are DIFFERENT!
 resistance vs. less damage taken: same as above.
 --]]
 

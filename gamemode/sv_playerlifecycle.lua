@@ -9,6 +9,7 @@ util.AddNetworkString("Horde_ClearStatus")
 util.AddNetworkString("Horde_SyncGameInfo")
 
 HORDE.vote_remaining_time = 60
+HORDE.game_end = nil
 
 local map_list = {}
 local map_votes = {}
@@ -35,6 +36,14 @@ function HORDE:GiveStarterWeapons(ply)
 end
 
 function HORDE:GameEnd(status)
+    if HORDE.game_end then return end
+    if status == "DEFEAT" then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("All players are dead!")
+        net.WriteInt(1,2)
+        net.Broadcast()
+    end
+    HORDE.game_end = true
     local randomplayer = table.Random(player.GetAll())
     if not randomplayer then return end
 
@@ -470,11 +479,6 @@ function HORDE:CheckAlivePlayers()
             -- ply:ScreenFade(SCREENFADE.OUT, Color(0,0,0), 6, 2)
             -- ply:Freeze(true)
         end
-
-        net.Start("Horde_LegacyNotification")
-        net.WriteString("All players are dead! Restarting...")
-        net.WriteInt(1,2)
-        net.Broadcast()
         HORDE:GameEnd("DEFEAT")
     end
 end

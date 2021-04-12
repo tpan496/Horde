@@ -48,7 +48,7 @@ function HORDE:OnPlayerHeal(ply, healinfo)
     HORDE.player_heal[healer:SteamID()] = HORDE.player_heal[healer:SteamID()] + healinfo:GetHealAmount()
 
     ply:ScreenFade(SCREENFADE.IN, Color(50, 200, 50, 10), 0.3, 0)
-    if healer ~= player then
+    if healer ~= ply then
         healer:Horde_AddMoney(2)
         healer:Horde_SyncEconomy()
         net.Start("Horde_RenderHealer")
