@@ -93,13 +93,7 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
         end
     end
 end)
---[[
-hook.Add("EntityTakeDamage", "Horde_VJRPGBuff", function (target, dmg)
-    if not target:IsValid() then return end
-    if target:IsNPC() and dmg:GetAttacker():IsPlayer() and dmg:GetAttacker():GetActiveWeapon():GetClass() == "weapon_vj_rpg" then
-        dmg:ScaleDamage(5)
-    end
-end)]]--
+
 -- Fall damage handling
 hook.Add("GetFallDamage", "RealisticDamage", function(ply, speed)
     if HORDE.difficulty == difficulty_normal then

@@ -72,6 +72,15 @@ function HORDE:ExpToLevel(exp)
     return 0
 end
 
+function HORDE:LevelToExp(level)
+    return 0
+end
+
+function HORDE:ExpDiff(level_a, level_b)
+    if level_b <= level_a then return 0 end
+    return HORDE:LevelToExp(level_b) - HORDE:LevelToExp(level_a)
+end
+
 function HORDE:LevelToRank(level)
     if level < 30 then
         local rank = HORDE.Rank_Novice
@@ -91,13 +100,4 @@ function HORDE:LevelToRank(level)
     else
         return HORDE.Rank_Master, level - 30
     end
-end
-
-if SERVER then
-function HORDE:SavePlayerRanks(ply)
-end
-
-function HORDE:LoadPlayerRanks(ply)
-    return nil
-end
 end

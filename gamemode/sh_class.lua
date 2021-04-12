@@ -1,5 +1,6 @@
 -- Class
 HORDE.classes = {}
+HORDE.order_to_class_name = {}
 HORDE.Class_Survivor = "Survivor"
 HORDE.Class_Assault = "Assault"
 HORDE.Class_Heavy = "Heavy"
@@ -24,6 +25,7 @@ function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, 
     class.display_name = display_name or name
     class.model = model or nil
     class.icon = icon or (class.name .. ".png")
+    HORDE.order_to_class_name[class.order] = class.name
     HORDE.classes[class.name] = class
 end
 -- Only allow 1 change per wave
