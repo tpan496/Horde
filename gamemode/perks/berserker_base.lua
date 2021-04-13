@@ -18,8 +18,8 @@ end
 
 PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("berserker_base")  then return end
-    bonus.resistance = bonus.resistance + PERK.Params[1].value
+    bonus.resistance = bonus.resistance + 0.20
     if dmginfo:GetDamageType() == DMG_POISON or dmginfo:GetDamageType() == DMG_ACID or dmginfo:GetDamageType() == DMG_NERVEGAS then
-        bonus.resistance = bonus.resistance + PERK.Params[2].value
+        bonus.resistance = bonus.resistance + 0.25
     end
 end

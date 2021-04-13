@@ -53,7 +53,7 @@ function HORDE:LoadRank(ply)
 		end
 	strm:Close()
 end
-
+--[[
 if GetConVar("horde_enable_rank"):GetInt() == 1 then
     timer.Create("Horde_Rank_Autosave", 30, 0, function( )
         for _, ply in pairs(player.GetHumans()) do
@@ -62,4 +62,4 @@ if GetConVar("horde_enable_rank"):GetInt() == 1 then
             ::cont::
         end
     end)
-end
+end--]]

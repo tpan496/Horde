@@ -43,7 +43,7 @@ LANGUAGE["Game_SharpShooter"] = "SharpShooter"
 LANGUAGE["Game_Headshots"] = "Headshots"
 LANGUAGE["Game_Most_Heal"] = "Most Heal"
 LANGUAGE["Game_Healed"] = "Healed"
-LANGUAGE["Game_Healed_By"] = "healed you"
+LANGUAGE["Game_Healed_You"] = "healed you"
 
 
 -- Shop
@@ -98,6 +98,7 @@ LANGUAGE["Class_Demolition"] = "Demolition"
 LANGUAGE["Class_Ghost"] = "Ghost"
 LANGUAGE["Class_Engineer"] = "Engineer"
 LANGUAGE["Class_Berserker"] = "Berserker"
+LANGUAGE["Class_Warden"] = "Warden"
 
 
 -- Ranks
@@ -326,12 +327,13 @@ LANGUAGE["Perk_demolition_napalm"] = [[
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Destruction]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Pressurized Warhead]]
 LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
-{1} increased Blast damage against elites.]]
+{1} increased Blast damage against elites.
+Explosions deal {2} of enemies' current health as extra Blast damage.]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Chain Reaction]]
 LANGUAGE["Perk_demolition_chain_reaction"] = [[
 Enemies you kill have {1} chance to explode,
-dealing {2} of their health as Blast damage.]]
+dealing {2} of their max health as Blast damage.]]
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[Tactics]]
@@ -425,14 +427,15 @@ LANGUAGE["Perk_berserker_savagery"] = [[
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Combat Arts]]
 LANGUAGE["Perk_Title_berserker_mindeye"] = [[Mind's Eye]]
 LANGUAGE["Perk_berserker_mindeye"] = [[
-While holding a melee weapon:
-  {1} chance to evade damage.
-  Counter with {2} of evaded melee damage.]]
+Each melee attack increases Mind's Eye stack by 1, up to {1}.
+Each stack increases {2} evasion and {3} melee damage.
+Loses all stacks when you are hit or exceeded max stack.]]
 
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[Rip and Tear]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
 {1} more melee damage.
-{2} less Global damage resistance.]]
+Your melee attack can splash.
+Splash damage is {2} of your melee damage.]]
 
 
 -- Default Config Shop Items
@@ -770,6 +773,7 @@ Laser-guided rocket propulsion device.
 
 LANGUAGE["Item_RPG-7"] = [[RPG-7]]
 LANGUAGE["Item_Desc_RPG-7"] = [[
+Ruchnoy Protivotankoviy Granatomyot.
 Anti-tank rocket launcher developed by Soviet Union.
 ]]
 

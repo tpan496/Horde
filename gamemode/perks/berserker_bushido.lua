@@ -10,7 +10,7 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("berserker_bushido") then return end
     if dmginfo:GetDamageType() == DMG_SLASH then
-        bonus.increase = bonus.increase + PERK.Params.value[1]
+        bonus.increase = bonus.increase + 0.25
     end
 end
 

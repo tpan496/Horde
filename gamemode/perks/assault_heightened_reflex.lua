@@ -10,12 +10,12 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup)
     if not hitgroup == HITGROUP_HEAD then return end
     if not ply:Horde_GetPerk("assault_heightened_reflex")  then return end
-    bonus.increase = bonus.increase + PERK.Params[1].value
+    bonus.increase = bonus.increase + 0.20
 end
 
 PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("assault_heightened_reflex")  then return end
     if ply:Health() == ply:GetMaxHealth() then
-        bonus.resistance = bonus.resistance + PERK.Params[2].value
+        bonus.resistance = bonus.resistance + 0.20
     end
 end

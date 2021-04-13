@@ -9,6 +9,7 @@ HORDE.Status_Berserk = 4
 HORDE.Status_ArmorRegen = 5
 HORDE.Status_HealthRegen = 6
 HORDE.Status_Minion = 7
+HORDE.Status_Mindeye = 8
 
 HORDE.Status_Icon = {}
 HORDE.Status_Icon[HORDE.Status_Camoflague] = "materials/status/camoflague.png"
@@ -19,8 +20,9 @@ HORDE.Status_Icon[HORDE.Status_Berserk] = "materials/perks/berserk.png"
 HORDE.Status_Icon[HORDE.Status_ArmorRegen] = "materials/status/armorregen.png"
 HORDE.Status_Icon[HORDE.Status_HealthRegen] = "materials/status/healthregen.png"
 HORDE.Status_Icon[HORDE.Status_Minion] = "materials/status/minion.png"
+HORDE.Status_Icon[HORDE.Status_Mindeye] = "materials/perks/mindeye.png"
 
 function HORDE:IsStatusStackable(status)
-    if status == HORDE.Status_Adrenaline or status == HORDE.Status_Headhunter or status == HORDE.Status_Minion then return true end
+    if status == HORDE.Status_Adrenaline or status == HORDE.Status_Headhunter or status == HORDE.Status_Minion or status == HORDE.Status_Mindeye then return true end
     return false
 end

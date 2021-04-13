@@ -31,7 +31,7 @@ function plymeta:Horde_GetMaxHeadhunterStack()
 end
 
 function plymeta:Horde_GetHeadhunterStackDuration()
-    return self.Horde_HeadhunterStack
+    return 5
 end
 
 function plymeta:Horde_ClearHeadhunterStack()
@@ -48,18 +48,10 @@ end
 
 hook.Add("Horde_OnPlayerDamage", "Horde_HeadhunterDamage", function (ply, npc, bonus, hitgroup)
     if not ply:Horde_GetHeadHunterEnabled() then return end
-    if not hitgroup == HITGROUP_HEAD then return end
+    if not (hitgroup == HITGROUP_HEAD) then return end
+    ply:Horde_AddHeadhunterStack()
     if ply:Horde_GetHeadhunterStack() > 0 then
         bonus.increase = bonus.increase + ply:Horde_GetHeadhunterStack() * 0.08
-    end
-end)
-
-hook.Add("ScaleNPCDamage", "Horde_HeadhunterApply", function(npc, hitgroup, dmginfo)
-    local attacker = dmginfo:GetAttacker()
-    if IsValid(attacker) and attacker:IsPlayer() and attacker:Horde_GetHeadHunterEnabled() and dmginfo:GetDamageType() == DMG_BULLET and dmginfo:GetDamage() > 0 then
-        if hitgroup == HITGROUP_HEAD then
-            attacker:Horde_AddHeadhunterStack()
-        end
     end
 end)
 

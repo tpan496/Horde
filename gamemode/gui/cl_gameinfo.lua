@@ -188,7 +188,7 @@ end)
 net.Receive("Horde_RenderHealer", function()
     local healer = net.ReadString()
     if heal_msg_cd <= 0 then
-        notification.AddLegacy(string.sub(healer, 0, 10) .. " " .. translate.Get("Game_Healed_By") .. ".", NOTIFY_GENERIC, 5)
+        notification.AddLegacy(string.sub(healer, 0, 10) .. " " .. translate.Get("Game_Healed_You") .. ".", NOTIFY_GENERIC, 5)
         heal_msg_cd = 5
     end
 end)
