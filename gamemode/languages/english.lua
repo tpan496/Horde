@@ -56,6 +56,7 @@ LANGUAGE["Rank_Expert"] = "Expert"
 LANGUAGE["Rank_Champion"] = "Champion"
 LANGUAGE["Rank_Master"] = "Master"
 
+
 -- Shop
 -- Categories
 LANGUAGE["Shop_Class"] = "Class"

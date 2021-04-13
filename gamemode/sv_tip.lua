@@ -56,7 +56,8 @@ local function GetTipsData()
             AddTip("Barret AMR has the highest single-shot damage.")
             AddTip("Heavy Machine Guns can overheat.")
             AddTip("RPG-7 has a large blast radius.")
-            AddTip("Turrets are quite durable.")
+            AddTip("Turrets can be used to distract enemies.")
+            AddTip("SSG08 Medic Rifle can heal temmates from afar.")
         end
 
         if GetConVar("horde_default_enemy_config"):GetInt() == 1 and GetConVar("horde_external_lua_config"):GetString() == "" then
@@ -64,7 +65,7 @@ local function GetTipsData()
             AddTip("Bosses have increased headshot resistance.")
             AddTip("Some enemies have additional mutations.")
             AddTip("Corruptor has a damaging aura.")
-            AddTip("Hulk can kill you in 2-3 hits.")
+            AddTip("Hulks can kill you in 2 hits.")
             AddTip("Zombines will self-destruct on low health.")
             AddTip("Vomitter's spit does radial damage.")
             AddTip("Scorcher's ranged attack has strong knockback.")
