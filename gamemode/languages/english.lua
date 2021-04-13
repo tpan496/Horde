@@ -322,7 +322,7 @@ LANGUAGE["Perk_demolition_fragmentation"] = [[
 LANGUAGE["Perk_Title_demolition_napalm"] = [[Napalm]]
 LANGUAGE["Perk_demolition_napalm"] = [[
 {1} increased Fire damage.
-{2} reduced Fire damage taken.
+{2} increased Fire damage resistance.
 ]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Destruction]]
