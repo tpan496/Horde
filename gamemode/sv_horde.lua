@@ -728,7 +728,6 @@ function HORDE:WaveStart()
         net.Broadcast()
     end
 
-    HORDE.current_wave = 5
     local current_wave = ((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1
     horde_players_count = table.Count(player.GetAll())
     horde_current_enemies_list = table.Copy(HORDE.enemies_normalized[current_wave])

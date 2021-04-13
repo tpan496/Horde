@@ -46,7 +46,7 @@ LANGUAGE["Game_SharpShooter"] = "神射手"
 LANGUAGE["Game_Headshots"] = "爆头数"
 LANGUAGE["Game_Most_Heal"] = "最高治疗量"
 LANGUAGE["Game_Healed"] = "治疗量"
-LANGUAGE["Game_Healed_By"] = "治疗了你"
+LANGUAGE["Game_Healed_You"] = "治疗了你"
 
 
 -- Ranks
@@ -110,6 +110,7 @@ LANGUAGE["Class_Demolition"] = "爆破兵"
 LANGUAGE["Class_Ghost"] = "幻影"
 LANGUAGE["Class_Engineer"] = "工程师"
 LANGUAGE["Class_Berserker"] = "狂战士"
+LANGUAGE["Class_Warden"] = "守望者"
 
 
 -- Default Class Extra Descriptions
@@ -326,7 +327,8 @@ LANGUAGE["Perk_demolition_napalm"] = [[
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[毁灭]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[高压弹头]]
 LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
-提升 {1} 对精英敌人造成的爆炸伤害。]]
+提升 {1} 对精英敌人造成的爆炸伤害。
+对敌人造成 {2} 当前生命值的额外爆炸伤害。]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[连锁反应]]
 LANGUAGE["Perk_demolition_chain_reaction"] = [[
@@ -426,14 +428,15 @@ LANGUAGE["Perk_berserker_savagery"] = [[
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[秘技]]
 LANGUAGE["Perk_Title_berserker_mindeye"] = [[心眼]]
 LANGUAGE["Perk_berserker_mindeye"] = [[
-当前武器为近战武器的前提下：
-  +{1} 闪避
-  闪避成功后，反击闪避近战伤害的 {2}。]]
+每次近战攻击可以获得一层心眼状态，最多 {1} 层。
+每层提升 {2} 闪避和 {3} 近战伤害。
+被敌人攻击命中或者层数超过最大时，层数清零。]]
 
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[肉斩骨断]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
 {1} 更多近战伤害。
-自身受到 {2} 更多伤害。]]
+近战攻击可以溅射。
+溅射伤害为基础伤害的 {2}。]]
 
 
 -- Default Config Shop Items
@@ -778,7 +781,7 @@ LANGUAGE["Item_Desc_Resistance RPG"] = [[
 
 LANGUAGE["Item_RPG-7"] = [[RPG-7]]
 LANGUAGE["Item_Desc_RPG-7"] = [[
-源自苏联的反坦克火箭筒。
+Ruchnoy Protivotankoviy Granatomyot.
 对敌人能造成大量的爆炸伤害。
 ]]
 

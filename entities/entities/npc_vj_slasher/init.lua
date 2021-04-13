@@ -49,6 +49,9 @@ ENT.SoundTbl_LeapAttackDamage = {"npc/fast_zombie/claw_strike1.wav","npc/fast_zo
 ENT.SoundTbl_Pain = {"npc/fast_zombie/idle1.wav","npc/fast_zombie/idle2.wav","npc/fast_zombie/idle3.wav"}
 ENT.SoundTbl_Death = {"npc/fast_zombie/wake1.wav"}
 
+ENT.Immune_AcidPoisonRadiation = true -- Makes the SNPC not get damage from Acid, posion, radiation
+ENT.Immune_Dissolve = true -- Lmao you thought combine balls would work
+
 ENT.GeneralSoundPitch1 = 100
 ENT.GeneralSoundPitch2 = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
