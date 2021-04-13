@@ -1,11 +1,12 @@
 --[[
 HORDE Translation Guideline
 1. Use English as base.
-2. Do not translate special characters. e.g. {1}, %d. Keep them directly.
+2. Do NOT translate special characters. e.g. {1}, %d. Keep those directly.
 3. Keep translations short and concise.
 4. Consistency, especially for perks.
 increase vs. more: these two descriptions are DIFFERENT!
 resistance vs. less damage taken: same as above.
+5. Translate AS IS.
 --]]
 
 translate.AddLanguage("en", "English")
@@ -45,6 +46,15 @@ LANGUAGE["Game_Most_Heal"] = "Most Heal"
 LANGUAGE["Game_Healed"] = "Healed"
 LANGUAGE["Game_Healed_You"] = "healed you"
 
+
+-- Ranks
+LANGUAGE["Rank_Novice"] = "Novice"
+LANGUAGE["Rank_Amateur"] = "Amateur"
+LANGUAGE["Rank_Skilled"] = "Skilled"
+LANGUAGE["Rank_Professional"] = "Professional"
+LANGUAGE["Rank_Expert"] = "Expert"
+LANGUAGE["Rank_Champion"] = "Champion"
+LANGUAGE["Rank_Master"] = "Master"
 
 -- Shop
 -- Categories
@@ -100,39 +110,29 @@ LANGUAGE["Class_Engineer"] = "Engineer"
 LANGUAGE["Class_Berserker"] = "Berserker"
 LANGUAGE["Class_Warden"] = "Warden"
 
-
--- Ranks
-LANGUAGE["Rank_Novice"] = "Novice"
-LANGUAGE["Rank_Amateur"] = "Amateur"
-LANGUAGE["Rank_Skilled"] = "Skilled"
-LANGUAGE["Rank_Professional"] = "Professional"
-LANGUAGE["Rank_Expert"] = "Expert"
-LANGUAGE["Rank_Champion"] = "Champion"
-LANGUAGE["Rank_Master"] = "Master"
-
 -- Default Class Extra Descriptions
 LANGUAGE["Class_Description_Survivor"] = [[
-Have access to all weapons except for exclusive and special weapons.
+Has access to all weapons except for exclusive and special weapons.
 Limited access to attachments.]]
 
 LANGUAGE["Class_Description_Assault"] = [[
-Have full access to Assault Rifles.]]
+Has full access to Assault Rifles.]]
 
 LANGUAGE["Class_Description_Heavy"] = [[
-Have full access to Machine Guns and high weight weapons.]]
+Has full access to Machine Guns and high weight weapons.]]
 
 LANGUAGE["Class_Description_Medic"] = [[
-Have acesss to most light weapons and medical tools.]]
+Has acesss to most light weapons and medical tools.]]
 
 LANGUAGE["Class_Description_Demolition"] = [[
-Have full access to explosive weapons.]]
+Has full access to explosive weapons.]]
 
 LANGUAGE["Class_Description_Ghost"] = [[
-Have access to sniper rifles and selected light weapons.
-Have access to suppressors and sniper scopes.]]
+Has access to sniper rifles and selected light weapons.
+Has access to suppressors and sniper scopes.]]
 
 LANGUAGE["Class_Description_Engineer"] = [[
-Have access to special weapons and equipment.]]
+Has access to special weapons and equipment.]]
 
 LANGUAGE["Class_Description_Berserker"] = [[
 Only has access to melee weapons.]]
