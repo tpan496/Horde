@@ -140,13 +140,13 @@ Only has access to melee weapons.]]
 
 
 -- Default Base Perks
-LANGUAGE.Perk_survivor_base = [[
+LANGUAGE["Perk_survivor_base"] = [[
 The Survivor class can be played into any class to fill in missing roles for the team.
 Complexity: EASY
 
 No bonus.]]
 
-LANGUAGE.Perk_assault_base = [[
+LANGUAGE["Perk_assault_base"] = [[
 The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
 Complexity: EASY
 
@@ -154,7 +154,7 @@ Complexity: EASY
 Gain Adrenaline when you kill an enemy.
 Adrenaline increases damage and speed by {2}.]]
 
-LANGUAGE.Perk_heavy_base = [[
+LANGUAGE["Perk_heavy_base"] = [[
 The Heavy class is a tank class that provides strong suppression firepower.
 Complexity: EASY
 
@@ -162,20 +162,20 @@ Adds {1} to maximum carrying capacity.
 Regenerate {2} armor per second.
 Regenerate up to {3} armor.]]
 
-LANGUAGE.Perk_medic_base = [[
+LANGUAGE["Perk_medic_base"] = [[
 The Medic class is a durable support class that focuses on healing and buffing teammates.
 Complexity: MEDIUM
 
 Regenerate {1} health per second.]]
 
-LANGUAGE.Perk_demolition_base = [[
+LANGUAGE["Perk_demolition_base"] = [[
 The Demolition class is a crowd-control class that can also provide high single target damage.
 Complexity: MEDIUM
 
 {1} increased Blast damage resistance.
 Regenerate {2} frag grenade every {3} seconds, if you do not have one.]]
 
-LANGUAGE.Perk_ghost_base = [[
+LANGUAGE["Perk_ghost_base"] = [[
 The Ghost class is focused on taking down boss enemies using Camoflague.
 Complexity: HIGH
 
@@ -183,14 +183,14 @@ Complexity: HIGH
 Crouch to activate Camoflague, granting 15% evasion.
 Attacking, Running or Jumping REMOVES Camoflague.]]
 
-LANGUAGE.Perk_engineer_base = [[
+LANGUAGE["Perk_engineer_base"] = [[
 The Engineer class is a minion-centered class that deals damage through minions.
 Complexity: MEDIUM
 
 {1} increased minion health and damage.
 Turrets have {2} base health and deals {3} base damage.]]
 
-LANGUAGE.Perk_berserker_base = [[
+LANGUAGE["Perk_berserker_base"] = [[
 The Berserker class is a melee-centered class that can be played both offensively and defensively.
 Complexity: HIGH
 
