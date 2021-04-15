@@ -57,13 +57,18 @@ timer.Simple(5, function ()
             local rank, rank_level = HORDE:LevelToRank(level)
             surface.SetDrawColor(HORDE.Rank_Colors[rank])
             surface.DrawTexturedRect(pos, 5, 40, 40)
-            if rank_level > 0 then
-                local star = Material("star.png", "mips smooth")
-                surface.SetMaterial(star)
-                local y_pos = 33
-                for i = 0, rank_level - 1 do
-                    surface.DrawTexturedRect(pos - 10, y_pos, 10, 10)
-                    y_pos = y_pos - 7
+
+            if rank == HORDE.Rank_Master then
+                draw.SimpleText(rank_level, "Trebuchet18", pos - 5, 15, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            else
+                if rank_level > 0 then
+                    local star = Material("star.png", "mips smooth")
+                    surface.SetMaterial(star)
+                    local y_pos = 33
+                    for i = 0, rank_level - 1 do
+                        surface.DrawTexturedRect(pos - 10, y_pos, 10, 10)
+                        y_pos = y_pos - 7
+                    end
                 end
             end
         else

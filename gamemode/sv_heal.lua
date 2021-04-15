@@ -36,6 +36,20 @@ function HealInfo:GetOverHealPercentage()
     return self.over_heal_percentage or 0
 end
 
+local plymeta = FindMetaTable("Player")
+
+function plymeta:Horde_AddHealAmount(amount)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 1 then return end
+    self.Horde_HealAmount = self.Horde_HealAmount + amount
+    if amount >= 100 then
+        amount = 0
+        if HORDE.current_wave <= 0 then return end
+		local class_name = self:Horde_GetClass().name
+		if self:Horde_GetLevel(class_name) >= HORDE.max_level then return end
+		self:Horde_SetExp(class_name, self:Horde_GetExp(class_name) + 1)
+    end
+end
+
 -- Call this if you want Horde to recognize your healing
 function HORDE:OnPlayerHeal(ply, healinfo)
     hook.Run("Horde_OnPlayerHeal", ply, healinfo)
@@ -54,5 +68,7 @@ function HORDE:OnPlayerHeal(ply, healinfo)
         net.Start("Horde_RenderHealer")
             net.WriteString(healer:GetName())
         net.Send(ply)
+
+        healer:Horde_AddHealAmount(healinfo:GetHealAmount())
     end
 end
