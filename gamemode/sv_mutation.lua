@@ -52,10 +52,11 @@ local function Horde_LoadMutations()
 end
 Horde_LoadMutations()
 
+--[[
 hook.Add("OnNPCKilled", "asdasda", function(victim, killer, wpn)
     if killer:IsPlayer() then
         local class_name = killer:Horde_GetClass().name
         killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + 1)
         print(killer:Horde_GetExp(class_name))
     end
-end)
+end)-]]
