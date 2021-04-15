@@ -72,6 +72,13 @@ function PANEL:Init()
     self.current_ammo_panel:SetTall(50)
     self.current_ammo_panel.Paint = function () end
 
+    self.class_progress = vgui.Create("DPanel", self)
+    self.class_progress:Dock(BOTTOM)
+    self.class_progress:DockMargin(5,2.5,5,2.5)
+    self.class_progress:SetTall(50)
+    self.class_progress.Paint = function() end
+    self.class_progress:SetVisible(false)
+
     function self.buy_btn:DoClick()
         if self:GetText() == translate.Get("Shop_OWNED") then return end
         self:GetParent():DoClick()
@@ -185,6 +192,8 @@ function PANEL:SetData(item)
     end
     if not self.item then return end
     if not self.item.class then
+        self.exp_diff = LocalPlayer():Horde_GetExp(self.item.name)
+        self.exp_total = HORDE:GetExpToNextLevel(LocalPlayer():Horde_GetLevel(self.item.name) + 1)
         if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
         if not self.perk_scroll_panel then
             self.perk_scroll_panel = vgui.Create("DScrollPanel", self.perk_panel)
@@ -279,6 +288,7 @@ end
 function PANEL:Paint()
     surface.SetDrawColor(HORDE.color_hollow)
     surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
+    self.class_progress:SetVisible(false)
     if self.item then
         self.buy_btn:SetVisible(true)
         self.sell_btn:SetVisible(true)
@@ -317,6 +327,7 @@ function PANEL:Paint()
             end
 
         elseif self.item.extra_description then
+            self.class_progress:SetVisible(true)
             local loc_name = translate.Get("Class_" .. self.item.display_name) or self.item.display_name
             draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             local loc_desc = translate.Get("Class_Description_" .. self.item.display_name) or self.item.extra_description
@@ -343,6 +354,14 @@ function PANEL:Paint()
             local mat = Material(self.item.icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
             surface.DrawTexturedRect(self:GetWide() / 2 + string.len(loc_name) * 2 + 20, 28, 40, 40)
+
+            self.class_progress.Paint = function()
+                draw.SimpleText(LocalPlayer():Horde_GetRank(self.item.name) .. " " .. LocalPlayer():Horde_GetRankLevel(self.item.name), "Content", 0, 0, color_white, TEXT_ALIGN_LEFT)
+                draw.SimpleText(self.exp_diff .. "/"  .. self.exp_total, "Content", self:GetWide() - 10, 0, color_white, TEXT_ALIGN_RIGHT)
+                surface.SetDrawColor(HORDE.color_crimson)
+                draw.RoundedBox(5, 5, 30, self:GetWide() - 20, 10, Color(80,80,80))
+                draw.RoundedBox(5, 5, 30, self:GetWide() * (self.exp_diff / self.exp_total), 10, Color(220,220,220))
+            end
         else
             draw.DrawText(self.loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
@@ -359,11 +378,14 @@ function PANEL:Paint()
 
             -- Use the sell button to toggle perks
             self.sell_btn:SetVisible(true)
+            local text_hide = translate.Get("Shop_Hide_Perks")
+            local text_show = translate.Get("Shop_Show_Perks")
             if self.perk_panel:IsVisible() then
-                self.sell_btn:SetText(translate.Get("Shop_Hide_Perks"))
+                self.sell_btn:SetText(text_hide)
             else
-                self.sell_btn:SetText(translate.Get("Shop_Show_Perks"))
+                self.sell_btn:SetText(text_show)
             end
+            local text_len = surface.GetTextSize(self.sell_btn:GetText())
             self.sell_btn:SetTextColor(Color(255,255,255))
             self.sell_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
@@ -372,7 +394,7 @@ function PANEL:Paint()
                 local mat = Material(self.item.icon, "mips smooth")
                 surface.SetDrawColor(color_white)
                 surface.SetMaterial(mat) -- Use our cached material
-                surface.DrawTexturedRect(self:GetWide() / 2 + 80, 5, 40, 40)
+                surface.DrawTexturedRect(self:GetWide() / 2 + text_len / 2 + 10, 5, 40, 40)
             end
 
             self.ammo_panel:SetVisible(false)

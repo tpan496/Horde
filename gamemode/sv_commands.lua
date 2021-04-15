@@ -126,6 +126,15 @@ function Shop(ply)
         net.Send(ply)
         return
     end
+
+    for name, class in pairs(HORDE.classes) do
+        net.Start("Horde_SyncExp")
+            net.WriteUInt(class.order, 4)
+            net.WriteUInt(ply:Horde_GetExp(name), 32)
+            net.WriteUInt(ply:Horde_GetLevel(name), 8)
+        net.Send(ply)
+    end
+
     net.Start("Horde_ToggleShop")
     net.Send(ply)
 end

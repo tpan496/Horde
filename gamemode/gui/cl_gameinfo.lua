@@ -48,20 +48,20 @@ timer.Simple(5, function ()
                 name = LocalPlayer():Horde_GetClass().name
             end
             local loc_display_name = translate.Get("Class_" .. display_name) or display_name
-            draw.SimpleText(loc_display_name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Info", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(loc_display_name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Info", 160, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
             local mat = Material(HORDE.classes[name].icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
-            local pos = math.max(15, 140 - 40 - string.len(display_name) * 7 - 25)
-            local level = LocalPlayer():Horde_GetLevel()
+            local pos = math.max(15, 140 - 40 - string.len(loc_display_name) * 7 - 25)
+            local level = LocalPlayer():Horde_GetLevel(name)
             local rank, rank_level = HORDE:LevelToRank(level)
             surface.SetDrawColor(HORDE.Rank_Colors[rank])
             surface.DrawTexturedRect(pos, 5, 40, 40)
-            if level > 0 then
+            if rank_level > 0 then
                 local star = Material("star.png", "mips smooth")
                 surface.SetMaterial(star)
                 local y_pos = 33
-                for i = 0, rank_level do
+                for i = 0, rank_level - 1 do
                     surface.DrawTexturedRect(pos - 10, y_pos, 10, 10)
                     y_pos = y_pos - 7
                 end

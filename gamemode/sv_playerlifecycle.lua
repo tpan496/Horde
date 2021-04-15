@@ -347,6 +347,7 @@ function HORDE:PlayerInit(ply)
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
 
     HORDE:GiveStarterWeapons(ply)
+    HORDE:LoadRank(ply)
 
     if HORDE.start_game then return end
 
