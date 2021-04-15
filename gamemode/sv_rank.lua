@@ -5,6 +5,7 @@ local function ScrubSteamID(ply)
 end
 
 function HORDE:SaveRank(ply)
+	--[[
 	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
 	local path, strm
 
@@ -21,10 +22,11 @@ function HORDE:SaveRank(ply)
             strm:WriteLong(ply:Horde_GetExp(name))
 			strm:WriteShort(ply:Horde_GetLevel(name))
         end
-	strm:Close()
+	strm:Close()--]]
 end
 
 function HORDE:LoadRank(ply)
+	--[[
 	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
 	local path, strm
 
@@ -57,15 +59,16 @@ function HORDE:LoadRank(ply)
                 ply:Horde_SetExp(class.name, 0)
             end
 		end
-	strm:Close()
+	strm:Close()--]]
 end
 
 if GetConVar("horde_enable_rank"):GetInt() == 1 then
+	--[[
     timer.Create("Horde_Rank_Autosave", 30, 0, function( )
         for _, ply in pairs(player.GetHumans()) do
             if not ply:IsValid() then goto cont end
             HORDE:SaveRank(ply)
             ::cont::
         end
-    end)
+    end)--]]
 end
