@@ -73,20 +73,28 @@ function PANEL:Paint()
         if ScrW() <= 1280 then
             surface.DrawTexturedRect(self:GetWide() / 2 - 135, 0, 40, 40)
             if level <= 0 then return end
-            surface.SetMaterial(star)
-            local pos = 28
-            for i = 0, rank_level - 1 do
-                surface.DrawTexturedRect(self:GetWide() / 2 - 145, pos, 10, 10)
-                pos = pos - 7
+            if rank == HORDE.Rank_Master then
+                draw.SimpleText(rank_level, "Trebuchet18", self:GetWide() / 2 - 145, 12, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            else
+                surface.SetMaterial(star)
+                local pos = 28
+                for i = 0, rank_level - 1 do
+                    surface.DrawTexturedRect(self:GetWide() / 2 - 145, pos, 10, 10)
+                    pos = pos - 7
+                end
             end
         else
             surface.DrawTexturedRect(self:GetWide() / 2 - 50, 0, 40, 40)
             if level <= 0 then return end
-            surface.SetMaterial(star)
-            local pos = 28
-            for i = 0, rank_level - 1 do
-                surface.DrawTexturedRect(self:GetWide() / 2 - 60, pos, 10, 10)
-                pos = pos - 7
+            if rank == HORDE.Rank_Master then
+                draw.SimpleText(rank_level, "Trebuchet18", self:GetWide() / 2 - 60, 12, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            else
+                surface.SetMaterial(star)
+                local pos = 28
+                for i = 0, rank_level - 1 do
+                    surface.DrawTexturedRect(self:GetWide() / 2 - 60, pos, 10, 10)
+                    pos = pos - 7
+                end
             end
         end
     end

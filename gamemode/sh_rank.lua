@@ -12,6 +12,7 @@ HORDE.Rank_Champion = "Champion" -- 25 - 29
 HORDE.Rank_Master = "Master" -- 30 - 100
 HORDE.player_ranks = {}
 HORDE.player_exps = {}
+HORDE.max_level = 100
 
 HORDE.Rank_Colors = {
     [HORDE.Rank_Novice] = color_white,
@@ -74,13 +75,12 @@ function plymeta:Horde_SetRank(class_name, rank)
 end
 
 function HORDE:GetExpToNextLevel(level)
-    return level * 10
+    return math.floor(50 + 5 * math.pow(1.1, level) + level * 30)
 end
 
---[[
-function HORDE:GetExpToNextLevel(level)
-    return 25 + level * 25
-end--]]
+for i = 0, 100 do
+    print(i, HORDE:GetExpToNextLevel(i))
+end
 
 function HORDE:LevelToRank(level)
     if level < 30 then
