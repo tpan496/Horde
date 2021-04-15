@@ -1,5 +1,6 @@
 if SERVER then
 util.AddNetworkString("Horde_SyncRanks")
+util.AddNetworkString("Horde_SyncExp")
 end
 
 HORDE.Rank_Novice = "Novice" -- 0 - 4
@@ -32,7 +33,11 @@ end
 function plymeta:Horde_SetExp(class_name, exp)
     if not self.Horde_Exps then self.Horde_Exps = {} end
     self.Horde_Exps[class_name] = exp
-    self:Horde_SetLevel(HORDE:ExpToLevel(exp))
+    local level = self:Horde_GetLevel(class_name)
+    if exp >= HORDE:GetExpToNextLevel(level + 1) then
+        self:Horde_SetLevel(class_name, level + 1)
+        self.Horde_Exps[class_name] = 0
+    end
 end
 
 function plymeta:Horde_GetLevel(class_name)
@@ -68,18 +73,14 @@ function plymeta:Horde_SetRank(class_name, rank)
     self.Horde_Ranks[class_name] = rank
 end
 
-function HORDE:ExpToLevel(exp)
-    return 0
+function HORDE:GetExpToNextLevel(level)
+    return level * 10
 end
 
-function HORDE:LevelToExp(level)
-    return 0
-end
-
-function HORDE:ExpDiff(level_a, level_b)
-    if level_b <= level_a then return 0 end
-    return HORDE:LevelToExp(level_b) - HORDE:LevelToExp(level_a)
-end
+--[[
+function HORDE:GetExpToNextLevel(level)
+    return 25 + level * 25
+end--]]
 
 function HORDE:LevelToRank(level)
     if level < 30 then
@@ -100,4 +101,14 @@ function HORDE:LevelToRank(level)
     else
         return HORDE.Rank_Master, level - 30
     end
+end
+
+if CLIENT then
+net.Receive("Horde_SyncExp", function(len, ply)
+    local class_order = net.ReadUInt(4)
+    local exp = net.ReadUInt(32)
+    local level = net.ReadUInt(8)
+    LocalPlayer():Horde_SetLevel(HORDE.order_to_class_name[class_order], level)
+    LocalPlayer():Horde_SetExp(HORDE.order_to_class_name[class_order], exp)
+end)
 end

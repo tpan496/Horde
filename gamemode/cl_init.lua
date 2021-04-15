@@ -238,6 +238,9 @@ net.Receive("Horde_SyncClasses", function ()
     HORDE.classes = net.ReadTable()
     local class = LocalPlayer():Horde_GetClass() or HORDE.classes[HORDE.Class_Survivor]
     HORDE:SendSavedPerkChoices(class.name)
+    for name, c in pairs(HORDE.classes) do
+        HORDE.order_to_class_name[c.order] = name
+    end
 end)
 
 net.Receive("Horde_SyncDifficulty", function ()

@@ -179,8 +179,8 @@ LANGUAGE["Perk_ghost_base"] = [[
 The Ghost class is focused on taking down boss enemies using Camoflague.
 Complexity: HIGH
 
-25% more headshot damage.
-Crouch to activate Camoflague, granting 15% evasion.
+{1} more headshot damage.
+Crouch to activate Camoflague, granting {2} evasion.
 Attacking, Running or Jumping REMOVES Camoflague.]]
 
 LANGUAGE["Perk_engineer_base"] = [[

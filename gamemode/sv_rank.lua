@@ -8,7 +8,7 @@ function HORDE:SaveRank(ply)
 	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
 	local path, strm
 
-	if not file.IsDir("horde", "DATA") then
+	if not file.IsDir("horde/ranks", "DATA") then
 		file.CreateDir("horde/ranks", "DATA")
 	end
 
@@ -19,6 +19,7 @@ function HORDE:SaveRank(ply)
         for name, class in pairs(HORDE.classes) do
             strm:WriteShort(class.order)
             strm:WriteLong(ply:Horde_GetExp(name))
+			strm:WriteShort(ply:Horde_GetLevel(name))
         end
 	strm:Close()
 end
@@ -44,16 +45,21 @@ function HORDE:LoadRank(ply)
 		if header == EXPECTED_HEADER then
 			for _, _ in pairs(HORDE.classes) do
                 local order = strm:ReadShort()
-                ply:Horde_SetExp(strm:ReadLong(HORDE.order_to_class_name[order]))
+				local exp = strm:ReadLong()
+				local level = strm:ReadShort()
+				local class_name = HORDE.order_to_class_name[order]
+				ply:Horde_SetLevel(class_name, level)
+                ply:Horde_SetExp(class_name, exp)
             end
 		else
-			for _, _ in pairs(HORDE.classes) do
-                ply:Horde_SetExp(0)
+			for _, class in pairs(HORDE.classes) do
+				ply:Horde_SetLevel(class.name, 0)
+                ply:Horde_SetExp(class.name, 0)
             end
 		end
 	strm:Close()
 end
---[[
+
 if GetConVar("horde_enable_rank"):GetInt() == 1 then
     timer.Create("Horde_Rank_Autosave", 30, 0, function( )
         for _, ply in pairs(player.GetHumans()) do
@@ -62,4 +68,4 @@ if GetConVar("horde_enable_rank"):GetInt() == 1 then
             ::cont::
         end
     end)
-end--]]
+end
