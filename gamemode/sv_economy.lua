@@ -27,8 +27,28 @@ end
 
 function plymeta:Horde_SetClass(class)
     self.Horde_class = class
+    self:Horde_SetClassModel(class)
+end
+
+function plymeta:Horde_SetClassModel(class)
     if HORDE.classes[class.name].model and HORDE.classes[class.name].model ~= "" then
-        self:SetModel(HORDE.classes[class.name].model)
+        local mdl = HORDE.classes[class.name].model
+        local mdl_path = player_manager.TranslatePlayerModel(mdl)
+        timer.Simple(0.1, function() self:SetModel(mdl_path) self:SetupHands() end)
+        timer.Simple(0.2, function()
+            local mdlhands = player_manager.TranslatePlayerHands(mdl)
+            local hands_ent = self:GetHands()
+            PrintTable(mdlhands)
+            if hands_ent and mdlhands and istable(mdlhands) then
+                if hands_ent:GetModel() ~= mdlhands.model then
+                    if (IsValid(hands_ent)) then
+                        hands_ent:SetModel( mdlhands.model )
+                        hands_ent:SetSkin( mdlhands.skin )
+                        hands_ent:SetBodyGroups( mdlhands.body )
+                    end
+                end
+            end
+        end)
     end
 end
 

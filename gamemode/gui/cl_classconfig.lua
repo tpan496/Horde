@@ -39,7 +39,7 @@ function PANEL:Init()
 
     local modify_tab = vgui.Create("DCategoryList", self)
     modify_tab:SetBackgroundColor(HORDE.color_config_content_bg)
-    modify_tab:SetSize(self:GetWide() / 2 - 200, self:GetTall() - 50 - 12)
+    modify_tab:SetSize(self:GetWide() / 2 - 150, self:GetTall() - 50 - 12)
     modify_tab:SetPos(self:GetWide() / 2, 50)
 
     local basic_cat = modify_tab:Add("Basic")
@@ -67,14 +67,14 @@ function PANEL:Init()
         label:Dock(LEFT)
         if name == "class name" then
             local editor = vgui.Create("DLabel", panel)
-            editor:SetSize(200, height)
+            editor:SetSize(175, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
             editor:SetTextColor(Color(0,0,0))
             return editor
         elseif name == "Tier 0" then
             local editor = vgui.Create("DComboBox", panel)
-            editor:SetSize(200, 30)
+            editor:SetSize(175, 30)
             editor:SetPos(110, 10)
             for class,perk in pairs(HORDE.perks) do
                 editor:AddChoice(class)
@@ -82,7 +82,7 @@ function PANEL:Init()
             return editor
         elseif name == "Tier 1" or name == "Tier 2" or name == "Tier 3" then
             local editor_title = vgui.Create("DTextEntry", panel)
-            editor_title:SetSize(200, 30)
+            editor_title:SetSize(175, 30)
             editor_title:SetPos(110, 15)
 
             local label_left = vgui.Create("DLabel", panel)
@@ -91,7 +91,7 @@ function PANEL:Init()
             label_left:SetPos(90, 50)
 
             local editor_left = vgui.Create("DComboBox", panel)
-            editor_left:SetSize(200, 30)
+            editor_left:SetSize(175, 30)
             editor_left:SetPos(110, 45)
             for class,perk in pairs(HORDE.perks) do
                 editor_left:AddChoice(class)
@@ -103,7 +103,7 @@ function PANEL:Init()
             label_right:SetPos(90, 80)
 
             local editor_right = vgui.Create("DComboBox", panel)
-            editor_right:SetSize(200, 30)
+            editor_right:SetSize(175, 30)
             editor_right:SetPos(110, 75)
             for class,perk in pairs(HORDE.perks) do
                 editor_right:AddChoice(class)
@@ -111,9 +111,21 @@ function PANEL:Init()
 
             local editors = {editor_title=editor_title, editor_left=editor_left, editor_right=editor_right}
             return editors
+        elseif name == "player model" then
+            local editor = vgui.Create("DTextEntry", panel)
+            editor:SetSize(175, height)
+            editor:DockPadding(10, 10, 10, 10)
+            editor:Dock(LEFT)
+
+            local eg = vgui.Create("DLabel", panel)
+            eg:SetSize(175, height)
+            eg:SetPos(290, 0)
+            eg:SetText("e.g. alyx, css_arctic")
+            eg:SetTextColor(color_black)
+            return editor
         else
             local editor = vgui.Create("DTextEntry", panel)
-            editor:SetSize(200, height)
+            editor:SetSize(175, height)
             editor:DockPadding(10, 10, 10, 10)
             editor:Dock(LEFT)
             return editor
@@ -122,7 +134,7 @@ function PANEL:Init()
 
     local name_editor = create_property_editor("class name", 50, basic_panel)
     local display_name_editor = create_property_editor("display name", 50, basic_panel)
-    local description_editor = create_property_editor("extra description", 300, basic_panel)
+    local description_editor = create_property_editor("extra description", 200, basic_panel)
     local model_editor = create_property_editor("player model", 50, basic_panel)
     local icon_editor = create_property_editor("icon", 50, basic_panel)
     local perks0_editor = create_property_editor("Tier 0", 50, perks_panel)
@@ -146,8 +158,8 @@ function PANEL:Init()
     end
 
     local btn_panel = vgui.Create("DPanel", self)
-    btn_panel:SetPos(self:GetWide() - 200, 50)
-    btn_panel:SetSize(200, self:GetTall() - 58)
+    btn_panel:SetPos(self:GetWide() - 150, 50)
+    btn_panel:SetSize(150, self:GetTall() - 58)
     btn_panel:SetBackgroundColor(HORDE.color_none)
 
     local save_btn = vgui.Create("DButton", btn_panel)

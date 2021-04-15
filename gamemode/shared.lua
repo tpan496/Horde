@@ -69,7 +69,13 @@ local groups = {"group01", "group03"}
 local sex = {"female", "male"}
 local nums = {"_01", "_02", "_03", "_04", "_05", "_06"}
 
-function GM:PlayerSetModel(ply) return ply:SetModel("models/player/" .. table.Random(groups) .. "/" .. table.Random(sex) .. table.Random(nums) .. ".mdl") end
+function GM:PlayerSetModel(ply)
+    local class = ply:Horde_GetClass()
+    if class and class.model and class.model ~= nil then
+        return ply:Horde_SetClassModel(class)
+    end
+    return ply:SetModel("models/player/" .. table.Random(groups) .. "/" .. table.Random(sex) .. table.Random(nums) .. ".mdl")
+end
 
 function GM:ShouldCollide(ent1, ent2)
     -- Ulti: Yes, this does prevents bullets from colliding with teammates somehow
