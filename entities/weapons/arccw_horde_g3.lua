@@ -428,7 +428,8 @@ SWEP.Animations = {
         LHIK = true,
         LHIKIn = 0.7,
         LHIKOut = 0.9,
-        LHIKEaseOut = 0.7
+        LHIKEaseOut = 0.7,
+        Time = 2.5
     },
     ["reload_empty"] = {
         Source = "reload_empty",
@@ -438,7 +439,8 @@ SWEP.Animations = {
         LHIK = true,
         LHIKIn = 0.7,
         LHIKOut = 0.9,
-        LHIKEaseOut = 0.7
+        LHIKEaseOut = 0.7,
+        Time = 2.5
     },
     ["enter_inspect"] = false,
     ["idle_inspect"] = false,
