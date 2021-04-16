@@ -207,6 +207,21 @@ function HORDE:GetDefaultClassesData()
         },
         7
     )
+
+    HORDE:CreateClass(
+        HORDE.Class_Warden,
+        "Has full access to shotguns and Warden structures.\nWarden structures spawn 1 ammo box every 30 seconds.",
+        100,
+        GetConVar("horde_base_walkspeed"):GetInt(),
+        GetConVar("horde_base_runspeed"):GetInt(),
+        "warden_base",
+        {
+            [1] = {title = "Fundamentals", choices = {"berserker_breathing_technique", "berserker_bloodlust"}},
+            [2] = {title = "Technique", choices = {"berserker_bushido", "berserker_savagery"}},
+            [3] = {title = "Combat Arts", choices = {"berserker_mindeye", "berserker_rip_and_tear"}},
+        },
+        8
+    )
 end
 
 -- TODO: Should we support adding custom classes?

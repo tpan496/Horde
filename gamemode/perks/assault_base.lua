@@ -1,5 +1,5 @@
 PERK.PrintName = "Assault Base"
-PERK.Description = "The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.\nComplexity: EASY\n\n{1} increased movement speed.\nGain Adrenaline when you kill an enemy.\nAdrenaline increases damage and speed by {2}."
+PERK.Description = "The Assault is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.\nComplexity: EASY\n\n{1} increased movement speed.\nGain Adrenaline when you kill an enemy.\nAdrenaline increases damage and speed by {2}."
 PERK.Params = {
     [1] = {value = 0.20, percent = true},
     [2] = {value = 0.06, percent = true},

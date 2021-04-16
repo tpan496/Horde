@@ -1,5 +1,5 @@
 PERK.PrintName = "Medic Base"
-PERK.Description = "The Medic class is a durable support class that focuses on healing and buffing teammates.\nComplexity: MEDIUM\n\nRegenerate {1} health per second."
+PERK.Description = "The Medic is a durable support class that focuses on healing and buffing teammates.\nComplexity: MEDIUM\n\nRegenerate {1} health per second."
 PERK.Params = {
     [1] = {value = 0.02, percent = true},
 }

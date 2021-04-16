@@ -588,6 +588,8 @@ function PANEL:Init()
                     else
                         editor:SetChecked(false)
                     end
+                else
+                    editor:SetChecked(true)
                 end
             end
             ammo_price_editor:SetValue(item.ammo_price and item.ammo_price or HORDE.default_ammo_price)

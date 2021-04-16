@@ -60,22 +60,12 @@ function HORDE:LoadRank(ply)
 	strm:Close()
 end
 
-if GetConVar("horde_enable_rank"):GetInt() == 1 then
-    timer.Create("Horde_Rank_Autosave", 30, 0, function( )
-        for _, ply in pairs(player.GetHumans()) do
-            if not ply:IsValid() then goto cont end
-            HORDE:SaveRank(ply)
-            ::cont::
-        end
-    end)
-end
-
-if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
-	hook.Add("OnNPCKilled", "asdasda", function(victim, killer, wpn)
+if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_rank"):GetInt() == 1 then
+	hook.Add("Horde_OnEnemyKilled", "asdasda", function(victim, killer, wpn)
 		if HORDE.current_wave <= 0 then return end
 		if killer:IsPlayer() then
 			local class_name = killer:Horde_GetClass().name
-			if killer.Horde_GetLevel(class_name) >= HORDE.max_level then return end
+			if killer:Horde_GetLevel(class_name) >= HORDE.max_level then return end
 			if victim:GetVar("is_elite") then
 				killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + 2)
 			else

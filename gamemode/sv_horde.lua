@@ -892,6 +892,9 @@ function HORDE:WaveEnd()
         ply:Horde_SyncEconomy()
         ply:Horde_SetGivenStarterWeapons(nil)
         ply:Horde_ApplyPerksForClass()
+        if GetConVar("horde_enable_rank"):GetInt() == 1 then
+            HORDE:SaveRank(ply)
+        end
     end
 end
 

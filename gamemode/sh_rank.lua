@@ -75,11 +75,7 @@ function plymeta:Horde_SetRank(class_name, rank)
 end
 
 function HORDE:GetExpToNextLevel(level)
-    return math.floor(50 + 5 * math.pow(1.1, level) + level * 30)
-end
-
-for i = 0, 100 do
-    print(i, HORDE:GetExpToNextLevel(i))
+    return math.floor(50 + 5 * math.pow(1.1, level) + level * 30 + 100 * math.floor(level / 5))
 end
 
 function HORDE:LevelToRank(level)

@@ -197,6 +197,14 @@ Complexity: HIGH
 {1} increased Global damage resistance.
 {2} increased Poison damage resistance.]]
 
+LANGUAGE["Perk_warden_base"] = [[
+The Warden is a support class that uses aura effects and structures to buff teammates.
+Complexity: MEDIUM
+
+Players/Minions near you are affected by Warden Aura.
+Warden Aura blocks {1} damage per damage taken.
+Warden Aura has {2} increased effect on you.]]
+
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[Survival]]
