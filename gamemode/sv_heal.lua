@@ -40,9 +40,10 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_AddHealAmount(amount)
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then return end
+    if not self.Horde_HealAmount then self.Horde_HealAmount = 0 end
     self.Horde_HealAmount = self.Horde_HealAmount + amount
-    if amount >= 100 then
-        amount = 0
+    if self.Horde_HealAmount >= 100 then
+        self.Horde_HealAmount = 0
         if HORDE.current_wave <= 0 then return end
 		local class_name = self:Horde_GetClass().name
 		if self:Horde_GetLevel(class_name) >= HORDE.max_level then return end

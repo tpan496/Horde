@@ -1,5 +1,5 @@
 PERK.PrintName = "Demolition Base"
-PERK.Description = "The Demolition class is a crowd-control class that can also provide high single target damage.\nComplexity: MEDIUM\n\n{1} increased Blast damage resistance.\nRegenerate {2} frag grenade every {3} seconds, if you do not have one."
+PERK.Description = "The Demolition is a crowd-control class that can also provide high single target damage.\nComplexity: MEDIUM\n\n{1} increased Blast damage resistance.\nRegenerate {2} frag grenade every {3} seconds, if you do not have one."
 PERK.Params = {
     [1] = {value = 0.85, percent = true},
     [2] = {value = 1},

@@ -16,7 +16,7 @@ HORDE.default_ammo_price = 10
 -- Creates a Horde item. The item will appear in the shop.
 function HORDE:CreateItem(category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price, entity_properties)
     if category == nil or name == nil or class == nil or price == nil or weight == nil or description == nil then return end
-    if name == "" or class == "" or whitelist == nil then return end
+    if name == "" or class == "" then return end
     if not table.HasValue(HORDE.categories, category) then return end
     if string.len(name) <= 0 or string.len(class) <= 0 then return end
     if price < 0 or weight < 0 then return end
@@ -90,7 +90,7 @@ local function GetItemsData()
             local t = util.JSONToTable(file.Read("horde/items.txt", "DATA"))
 
             for _, item in pairs(t) do
-                if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
+                if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
                     net.Start("Horde_LegacyNotification")
                         net.WriteString("Item config file validation failed! Please update your file or delete it.")
                     net.WriteInt(1,2)
@@ -108,39 +108,41 @@ end
 
 function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Melee",      "Stunstick",      "weapon_stunstick",     100,  0, "Electric baton.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
+    nil, 10, -1)
     HORDE:CreateItem("Melee",      "Crowbar",        "weapon_crowbar",       100,  0, "A rusty crowbar.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
+    nil, 10, -1)
     HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_go_melee_knife", 500,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
+    nil, 10, -1)
     HORDE:CreateItem("Melee",      "Katana",         "arccw_horde_katana",  2000,  4, "Ninja sword.\nLong attack range and fast attack speed.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false, Berserker=true}, 10, -1)
     HORDE:CreateItem("Melee",      "Bat",            "arccw_horde_bat",     2000,  4, "Sturdy baseball bat.\nHits like a truck.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false, Berserker=true}, 10, -1)
 
     HORDE:CreateItem("Pistol",     "9mm",            "weapon_pistol",     150,  0, "Combine standard sidearm.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 2, -1)
-    HORDE:CreateItem("Pistol",     "357",            "weapon_357",        300,  2, "Colt python magnum pistol.\nUsed by Black Mesa security guards.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 3, -1)
-    HORDE:CreateItem("Pistol",     "Glock",          "arccw_go_glock",    750,  3, "Glock 18.\nSemi-automatic pistols manufactured in Austrian.",
+    nil, 2, -1)
+    HORDE:CreateItem("Pistol",     "357",            "weapon_357",        300,  1, "Colt python magnum pistol.\nUsed by Black Mesa security guards.",
+    nil, 3, -1)
+    HORDE:CreateItem("Pistol",     "Glock",          "arccw_go_glock",    750,  2, "Glock 18.\nSemi-automatic pistols manufactured in Austrian.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
-    HORDE:CreateItem("Pistol",     "USP",            "arccw_go_usp",      750,  3, "Universelle Selbstladepistole.\nA semi-automatic pistol developed in Germany by H&K.",
+    HORDE:CreateItem("Pistol",     "USP",            "arccw_go_usp",      750,  2, "Universelle Selbstladepistole.\nA semi-automatic pistol developed in Germany by H&K.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
-    HORDE:CreateItem("Pistol",     "P2000",          "arccw_go_p2000",    750,  3, "Heckler & Koch P2000.\nA serviceable first-round pistol made by H&K.",
+    HORDE:CreateItem("Pistol",     "P2000",          "arccw_go_p2000",    750,  2, "Heckler & Koch P2000.\nA serviceable first-round pistol made by H&K.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
-    HORDE:CreateItem("Pistol",     "P250",           "arccw_go_p250",     750,  3, "SIG Sauer P250.\nA low-recoil sidearm with a high rate of fire.",
+    HORDE:CreateItem("Pistol",     "P250",           "arccw_go_p250",     750,  2, "SIG Sauer P250.\nA low-recoil sidearm with a high rate of fire.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
-    HORDE:CreateItem("Pistol",     "R8",             "arccw_go_r8",       750,  3, "R8 Revolver.\nDelivers a highly accurate and powerful round,\nbut at the expense of a lengthy trigger-pull.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 5, -1)
-    HORDE:CreateItem("Pistol",     "Deagle",         "arccw_go_deagle",   750,  3, "Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 5, -1)
-    HORDE:CreateItem("Pistol",     "M1911",          "arccw_mw2_m1911",   750,  3, "Colt 1911.\nStandard-issue sidearm for the United States Armed Forces.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 5, -1)
-    HORDE:CreateItem("Pistol",     "FiveSeven",      "arccw_go_fiveseven",750,  3, "ES Five-seven.\nA Belgian semi-automatic pistol made by FN Herstal.",
+    HORDE:CreateItem("Pistol",     "R8",             "arccw_go_r8",       750,  2, "R8 Revolver.\nDelivers a highly accurate and powerful round,\nbut at the expense of a lengthy trigger-pull.",
+    {Survivor=true, Ghost=true}, 5, -1)
+    HORDE:CreateItem("Pistol",     "Deagle",         "arccw_go_deagle",   750,  2, "Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
+    {Survivor=true, Ghost=true}, 5, -1)
+    HORDE:CreateItem("Pistol",     "M1911",          "arccw_mw2_m1911",   750,  2, "Colt 1911.\nStandard-issue sidearm for the United States Armed Forces.",
+    {Ghost=true}, 5, -1)
+    HORDE:CreateItem("Pistol",     "Anaconda",       "arccw_horde_anaconda",1000,  3, "Colt Anaconda.\nChambered for the powerful .44 Magnum.",
+    {Ghost=true}, 10, -1)
+    HORDE:CreateItem("Pistol",     "FiveSeven",      "arccw_go_fiveseven",750,  2, "ES Five-seven.\nA Belgian semi-automatic pistol made by FN Herstal.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
-    HORDE:CreateItem("Pistol",     "CZ75",           "arccw_go_cz75",     750,  3, "CZ 75.\nA semi-automatic pistol manufactured in Czech Republic.",
+    HORDE:CreateItem("Pistol",     "CZ75",           "arccw_go_cz75",     750,  2, "CZ 75.\nA semi-automatic pistol manufactured in Czech Republic.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
-    HORDE:CreateItem("Pistol",     "M9",             "arccw_go_m9",       750,  3, "Beretta M9.\nSidearm used by the United States Armed Forces.",
+    HORDE:CreateItem("Pistol",     "M9",             "arccw_go_m9",       750,  2, "Beretta M9.\nSidearm used by the United States Armed Forces.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 5, -1)
     HORDE:CreateItem("Pistol",     "Tec-9",          "arccw_go_tec9",     900,  3, "A Swedish-made semi-automatic pistol.\nLethal in close quarters.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 8, -1)
@@ -164,20 +166,22 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("SMG",        "P90",            "arccw_go_p90",      2000, 6, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
     {Medic=true, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE:CreateItem("SMG",        "Vector",         "arccw_horde_vector",2500, 6, "KRISS Vector Gen I.\nUses an unconventional blowback system that results in its high firerate.",
-    {Medic=true, Assault=false,Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 8, -1)
+    {Survivor=true, Medic=true}, 8, -1)
 
     HORDE:CreateItem("Shotgun",    "Pump-Action",    "weapon_shotgun",    1000, 6, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true, Warden=true}, 10, -1)
     HORDE:CreateItem("Shotgun",    "Nova",           "arccw_go_nova",     1500, 7, "Benelli Nova.\nItalian pump-action 12-gauge shotgun.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true, Warden=true}, 10, -1)
     HORDE:CreateItem("Shotgun",    "M870",           "arccw_go_870",      1500, 7, "Remington 870 Shotgun.\nManufactured in the United States.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true, Warden=true}, 10, -1)
     HORDE:CreateItem("Shotgun",    "MAG7",           "arccw_go_mag7",     1500, 7, "Techno Arms MAG-7.\nFires a specialized 60mm 12 gauge shell.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true, Warden=true}, 10, -1)
     HORDE:CreateItem("Shotgun",    "XM1014",         "arccw_go_m1014",    2000, 7, "Benelli M4 Super 90.\nFully automatic shotgun.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=true}, 10, -1)
+    {Medic=true, Assault=true, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=true, Warden=true}, 10, -1)
+    HORDE:CreateItem("Shotgun",    "SPAS-12",        "arccw_horde_spas12",2250, 7, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
+    {Survivor=true, Warden=true}, 10, -1)
     HORDE:CreateItem("Shotgun",    "AA12",           "arccw_horde_aa12",  3000, 10, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
-    {Medic=false, Assault=false,Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 25, -1)
+    {Heavy=true, Survivor=true, Warden=true}, 25, -1)
 
     HORDE:CreateItem("Rifle",      "AR15",           "arccw_go_ar15",     2000, 7, "AR-15 Style Rifle.\nA lightweight semi-automatic rifle based on ArmaLite AR-15 design.",
     {Medic=true, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=true, Engineer=false}, 10, -1)
@@ -194,9 +198,9 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Rifle",      "AUG",            "arccw_go_aug",      2500, 7, "Steyr AUG.\nAn Austrian bullpup assault rifle.",
     {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE:CreateItem("Rifle",      "F2000",          "arccw_horde_f2000", 3000, 7, "FN F2000.\nAn ambidextrous bullpup rifle developed by FN.",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1)
+    {Assault=true}, 10, -1)
     HORDE:CreateItem("Rifle",      "Tavor",          "arccw_horde_tavor",    3000, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1)
+    {Assault=true}, 10, -1)
 
     HORDE:CreateItem("Rifle",      "ACR",            "arccw_mw2_acr",       2250, 7, "Remington Adaptive Combat Rifle.\nA modular semi-Auto rifle.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true,  Ghost=true, Engineer=false}, 10, -1)
@@ -205,24 +209,24 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Rifle",      "SCAR",           "arccw_go_scar",       2500, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=true,  Ghost=true, Engineer=false}, 10, -1)
     HORDE:CreateItem("Rifle",      "G3",             "arccw_horde_g3",      3000, 8, "G3 Battle Rifle.\nA 7.62×51mm NATO, select-fire battle rifle developed by H&K.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1)
+    {Ghost=true}, 10, -1)
     HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3500, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 50, -1)
+    {Ghost=true}, 50, -1)
 
     HORDE:CreateItem("Rifle",    "SSG08 Medic SR",   "arccw_horde_medic_rifle",  1500,   6, "A medic sniper rifle that shoots healing darts.\nDamages enemies and heals players.",
-    {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1)
+    {Medic=true}, 10, -1)
 
     HORDE:CreateItem("MG",         "Negev",          "arccw_go_negev",     2250, 9, "IWI Negev.\nA 5.56×45mm NATO light machine gun developed by the IWI.",
     {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 25, -1)
     HORDE:CreateItem("MG",         "M249",           "arccw_go_m249para",  2500, 9, "M249 light machine gun.\nA gas operated and air-cooled weapon of destruction.",
     {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 25, -1)
     HORDE:CreateItem("MG",         "M240B",          "arccw_mw2_m240",     3000, 10, "M240 Bravo.\nFires 7.62mm NATO ammunition.\nEquipped by U.S. Armed Forces.",
-    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 35, -1)
+    {Heavy=true}, 35, -1)
     HORDE:CreateItem("MG",         "MG4",            "arccw_mw2_mg4",      3000, 10, "Heckler & Koch MG4.\nA belt-fed 5.56 mm light machine gun that replaced MG3.",
-    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 35, -1)
+    {Heavy=true}, 35, -1)
 
     HORDE:CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,   0, "A standard frag grenade.\nGood for crowd control.",
-    {Medic=false, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 100, -1)
+    {Medic=false, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Warden=true}, 100, -1)
     HORDE:CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         2000,  7, "Laser-guided rocket propulsion device.",
     {Medic=false, Assault=false, Heavy=false, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1)
     HORDE:CreateItem("Explosive",  "RPG-7",          "arccw_horde_rpg7",   3000,  9, "Ruchnoy Protivotankoviy Granatomyot.\nAnti-tank rocket launcher developed by Soviet Union.",
@@ -239,18 +243,18 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Special",    "Turret",         "npc_turret_floor",   900,  0, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3})
     HORDE:CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,   1, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
-    {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 100, -1)
+    {Medic=true}, 100, -1)
     HORDE:CreateItem("Special",    "Throwing Knives",   "arccw_go_nade_knife", 800,  2, "Ranged throwing knives.\nThrown blades are retrievable.",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false, Berserker=true}, 10, -1)
+    {Berserker=true}, 10, -1)
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1)
+    nil, 10, -1)
     HORDE:CreateItem("Equipment",  "Health Vial",    "item_healthvial",    15,   0, "A capsule filled with sticky green liquid.\nHeals instantly when picked up.",
     {Medic=true, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=5})
     HORDE:CreateItem("Equipment", "Kevlar Armor Battery", "item_battery", 160, 0, "Armor battery.\nEach one provides 15 armor. Personal use only.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE})
     HORDE:CreateItem("Equipment", "Full Kevlar Armor", "armor100", 1000, 0, "Full kevlar armor set.\nFills up 100% of your armor bar.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Berserker=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=100})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=100})
     --[[
     HORDE:CreateItem("Equipment", "Kaom's Heart", "armor_glorious_plate", 10000, 0, "The warrior who fears will fall.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=931})
@@ -267,74 +271,74 @@ end
 HORDE.GetArcCWAttachments = function ()
     -- Optics
     HORDE:CreateItem("Attachment", "C-MORE (RDS)",   "go_optic_cmore",  100,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "EOTech 553 (RDS)",    "go_optic_eotech",  100,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "Kobra (RDS)",   "go_optic_kobra",  100,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "CompM4 (RDS)",   "go_optic_compm4",  100,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "MICRO T1 (RDS)",   "go_optic_t1",  100,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "MARS (RDS)",   "optic_mw2_mars",  100,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "BARSKA (RDS)",   "go_optic_barska",  100,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
 
     HORDE:CreateItem("Attachment", "PVS-4 (2x)",   "go_optic_pvs4",  110,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "Leupold HAMR (Hybrid)",   "go_optic_hamr",  110,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "Hunter Compact (2.5x)",   "go_optic_hunter",  110,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
 
 
     HORDE:CreateItem("Attachment", "ELCAN C79 (3.5x)",   "go_optic_elcan",  115,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "ACOG (x4)",   "go_optic_acog",  120,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "CheyTac (2-4.3x)",   "optic_cheytacscope",  125,  0, "RDS",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
 
     HORDE:CreateItem("Attachment", "PM-II (7x)",   "go_optic_schmidt",  130,  0, "RDS",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     
     HORDE:CreateItem("Attachment", "LPVO (8x)",   "go_optic_ssr",  140,  0, "RDS",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     
     HORDE:CreateItem("Attachment", "Arctic Warfare (10x)",   "go_optic_awp",  140,  0, "RDS",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     
     -- Underbarrel
     HORDE:CreateItem("Attachment", "Pistol Foregrip",   "go_nova_stock_pistol",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
     HORDE:CreateItem("Attachment", "Ergo Foregrip",   "go_foregrip_ergo",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
     HORDE:CreateItem("Attachment", "Battle Foregrip",   "go_foregrip",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
     HORDE:CreateItem("Attachment", "Stubby Foregrip",   "go_foregrip_stubby",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
     HORDE:CreateItem("Attachment", "Tactical Grip",   "go_ak_grip_tactical",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
     HORDE:CreateItem("Attachment", "Snatch Foregrip",   "go_foregrip_snatch",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
     HORDE:CreateItem("Attachment", "Angled Foregrip",   "go_foregrip_angled",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
     HORDE:CreateItem("Attachment", "Bipod",             "go_fore_bipod",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
 
 
     -- Tactical
     HORDE:CreateItem("Attachment", "Flashlight",   "go_flashlight",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
     HORDE:CreateItem("Attachment", "Combo Flashlight",   "go_flashlight_combo",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
     HORDE:CreateItem("Attachment", "5mW Laser",   "go_laser_peq",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
     HORDE:CreateItem("Attachment", "3mW Laser",   "go_laser_surefire",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
     HORDE:CreateItem("Attachment", "1mW Laser",   "go_laser",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Tactical"})
 
     -- Barrel
     HORDE:CreateItem("Attachment", "[MP9] 210mm Plus Barrel",    "go_mp9_barrel_med",  75,  0, "",
@@ -440,178 +444,178 @@ HORDE.GetArcCWAttachments = function ()
 
     -- Mag
     HORDE:CreateItem("Attachment", "[USP] 20-Round .45",   "go_usp_mag_20",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_usp"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_usp"})
     HORDE:CreateItem("Attachment", "[USP] 30-Round .45",   "go_usp_mag_30",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_usp"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_usp"})
     HORDE:CreateItem("Attachment", "[Glock] 31-Round 9mm",   "go_glock_mag_28",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_glock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_glock"})
     HORDE:CreateItem("Attachment", "[P250] 21-Round .357",   "go_p250_mag_21",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_p250"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_p250"})
     HORDE:CreateItem("Attachment", "[M9] 24-Round 9mm",   "go_m9_mag_24",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m9"})
     HORDE:CreateItem("Attachment", "[P2000] 24-Round 9mm",   "go_p2000_mag_24",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m9"})
     HORDE:CreateItem("Attachment", "[CZ75] 30-Round 9mm",   "go_cz75_mag_30",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_cz75"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_cz75"})
     HORDE:CreateItem("Attachment", "[Fiveseven] 30-Round 5.7mm",   "go_fiveseven_mag_30",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_fiveseven"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_fiveseven"})
     HORDE:CreateItem("Attachment", "[Tec-9] 10-Round 9mm",   "go_tec9_mag_10",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_tec9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_tec9"})
     HORDE:CreateItem("Attachment", "[Tec-9] 32-Round 9mm",   "go_tec9_mag_32",  80,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_tec9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_tec9"})
     
     HORDE:CreateItem("Attachment", "[MP9] 15-Round 9mm",   "go_mp9_mag_15",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mp9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mp9"})
     HORDE:CreateItem("Attachment", "[MAC10] 16-Round .45 Ingram",   "go_mac10_mag_16",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mac10"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mac10"})
     HORDE:CreateItem("Attachment", "[MAC10] 48-Round .45 Grave",   "go_mac10_mag_48",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mac10"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mac10"})
     HORDE:CreateItem("Attachment", "[MP5] 15-Round 9mm",   "go_mp5_mag_15",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mp5"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mp5"})
     HORDE:CreateItem("Attachment", "[MP5] 40-Round 9mm",   "go_mp5_mag_40",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mp5"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mp5"})
     HORDE:CreateItem("Attachment", "[PP-Bizon] 47-Round 9mm",   "go_bizon_mag_47",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_bizon"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_bizon"})
     HORDE:CreateItem("Attachment", "[PP-Bizon] 82-Round 9mm",   "go_bizon_mag_82",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_bizon"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_bizon"})
     HORDE:CreateItem("Attachment", "[UMP] 12-Round .45",   "go_ump_mag_12",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ump"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ump"})
     HORDE:CreateItem("Attachment", "[UMP] 30-Round 9mm",   "go_ump_mag_30_9mm",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ump"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ump"})
 
     HORDE:CreateItem("Attachment", "[Nova] 8-Round 12-Gauge",   "go_nova_mag_8",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_nova"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_nova"})
     HORDE:CreateItem("Attachment", "[Mag7] 3-Round 12-Gauge",   "go_mag7_mag_3",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mag7"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mag7"})
     HORDE:CreateItem("Attachment", "[Mag7] 7-Round 12-Gauge",   "go_mag7_mag_7",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mag7"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mag7"})
     HORDE:CreateItem("Attachment", "[M870] 4-Round",   "go_870_mag_4",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_870"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_870"})
     HORDE:CreateItem("Attachment", "[M870] 8-Round",   "go_870_mag_8",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_870"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_870"})
     HORDE:CreateItem("Attachment", "[M1014] 4-Round",   "go_m1014_mag_4",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m1014"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m1014"})
     HORDE:CreateItem("Attachment", "[M1014] 7-Round",   "go_m1014_mag_7",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m1014"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m1014"})
 
     HORDE:CreateItem("Attachment", "[Famas] 25-Round 5.56mm",   "go_famas_mag_25",  100,  0, "",
-    {Medic=true, Assault=true,  Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_famas"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_famas"})
     HORDE:CreateItem("Attachment", "[AK47] 10-Round 7.62mm Poly",   "go_ak_mag_10",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
     HORDE:CreateItem("Attachment", "[AK47] 10-Round 7.62mm Steel",   "go_ak_mag_10_steel",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
     HORDE:CreateItem("Attachment", "[AK47] 15-Round 5.45mm Poly",   "go_ak_mag_15_545",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
     HORDE:CreateItem("Attachment", "[AK47] 30-Round 5.45mm Poly",   "go_ak_mag_30_545",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
     HORDE:CreateItem("Attachment", "[AK47] 30-Round 7.62mm Poly",   "go_ak_mag_30",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
     HORDE:CreateItem("Attachment", "[AK47] 40-Round 7.62mm Poly",   "go_ak_mag_40",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
     HORDE:CreateItem("Attachment", "[AK47] 40-Round 7.62mm Steel",   "go_ak_mag_40_steel",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
     HORDE:CreateItem("Attachment", "[AK47] 45-Round 5.45mm Poly",   "go_ak_mag_45_545",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
     HORDE:CreateItem("Attachment", "[AK47] 60-Round 5.45mm Poly",   "go_ak_mag_60_545",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ak47"})
     HORDE:CreateItem("Attachment", "[M4A1] 10-Round .50 Beowulf",   "go_m4_mag_10_50",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m4"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m4"})
     HORDE:CreateItem("Attachment", "[M4A1] 20-Round 5.56mm",   "go_m4_mag_20",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m4"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m4"})
     HORDE:CreateItem("Attachment", "[M4A1] 21-Round 9mm",   "go_m4_mag_21_9mm",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m4"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m4"})
     HORDE:CreateItem("Attachment", "[M4A1] 30-Round 9mm",   "go_m4_mag_30_9mm",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m4"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m4"})
     HORDE:CreateItem("Attachment", "[SG556] 20-Round 5.56mm",   "go_sg_mag_20",  100,  0, "",
-    {Medic=false, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_sg556"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_sg556"})
 
     HORDE:CreateItem("Attachment", "[SCAR] 10-Round 7.62mm",   "go_scar_mag_10",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_scar"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_scar"})
     HORDE:CreateItem("Attachment", "[SCAR] 30-Round 7.62mm",   "go_scar_mag_30",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_scar"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_scar"})
     HORDE:CreateItem("Attachment", "[G3] 10-Round 7.62mm Steel",   "go_g3_mag_10",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_g3"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_g3"})
     HORDE:CreateItem("Attachment", "[G3] 30-Round 5.56mm STANAG",   "go_g3_mag_30_556",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_g3"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_g3"})
     HORDE:CreateItem("Attachment", "[G3] 30-Round 7.62mm Steel",   "go_g3_mag_30",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_g3"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_g3"})
 
     HORDE:CreateItem("Attachment", "[Negev] 100-Round 5.56mm",   "go_negev_belt_100",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_negev"})
+    {Heavy=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_negev"})
     HORDE:CreateItem("Attachment", "[M249] 45-Round 12 Gauge",   "go_m249_mag_12g_45",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m249para"})
+    {Heavy=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m249para"})
     HORDE:CreateItem("Attachment", "[M249] 200-Round 9mm",   "go_m249_mag_9_200",  50,  100, "",
-    {Medic=false, Assault=false, Heavy=true, Demolition=false, Survivor=false, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m249para"})
+    {Heavy=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m249para"})
 
     -- Stock
     HORDE:CreateItem("Attachment", "BT-2 Pistol Stock",  "go_stock_pistol_bt",  50,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "Basilisk Stock",     "go_stock_basilisk",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "MOE Stock",           "go_stock_moe",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "Contractor Stock",   "go_stock_contractor",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "Ergonomic Stock",    "go_stock_ergo",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "Collapsible Stock",    "go_g3_stock_collapsible",  110,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "Sniper Stock",    "go_scar_stock_sniper",  110,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
 
     -- Muzzle
     HORDE:CreateItem("Attachment", "Bayonet",  "go_muzz_bayonet",  200,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "Flash Hider",  "go_muzz_flashhider",  90,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "Muzzle Booster",  "go_muzz_booster",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "Muzzle Brake",  "go_muzz_brake",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "SSQ Suppressor",  "go_supp_ssq",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "Rotor43 Suppressor",  "go_supp_rotor43",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "PBS-4 Suppressor",  "go_supp_pbs4",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "QDSS Suppressor",  "go_supp_qdss",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "TGP-A Suppressor",  "go_supp_tgpa",  100,  0, "",
-    {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
 
     -- Ammo Type
     HORDE:CreateItem("Attachment", "Tracer Rounds",  "go_ammo_tr",  50,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "Match Rounds",  "go_ammo_match",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "JHP Rounds",  "go_ammo_jhp",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "AP/I Rounds",  "go_ammo_api",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "TMJ Rounds",  "go_ammo_tmj",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "Subsonic Rounds",  "go_ammo_sub",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "[Shotgun] Magnum Shells",  "go_ammo_sg_magnum",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "[Shotgun] Sabot Shells",  "go_ammo_sg_sabot",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "[Shotgun] Scattershot Shells",  "go_ammo_sg_scatter",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "[Shotgun] Slug Shells",  "go_ammo_sg_slug",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
     HORDE:CreateItem("Attachment", "[Shotgun] Triple-Hit Shells",  "go_ammo_sg_triple",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Ammo Type"})
 
     -- Perks
     HORDE:CreateItem("Attachment", "Full Auto",  "go_homemade_auto",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
     HORDE:CreateItem("Attachment", "Enhanced Burst",  "go_perk_burst",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
     HORDE:CreateItem("Attachment", "Rapid Reload",  "go_perk_fastreload",  200,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
     HORDE:CreateItem("Attachment", "Frantic Firing Frenzy",  "go_perk_rapidfire",  200,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
 end
 
 -- Startup

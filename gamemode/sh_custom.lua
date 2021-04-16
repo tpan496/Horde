@@ -46,7 +46,7 @@ HORDE.LoadTempData = function ()
         local t1 = util.JSONToTable(file.Read("horde/temp_items.dat", "DATA"))
 
         for _, item in pairs(t1) do
-            if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.whitelist == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
+            if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
                 if CLIENT then
                     notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
                     notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)

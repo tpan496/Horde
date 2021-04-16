@@ -145,7 +145,7 @@ function PANEL:Init()
         local items = {}
 
         for _, item in pairs(HORDE.items) do
-            if item.category == category and item.whitelist and item.whitelist[class.name] then
+            if item.category == category and ((item.whitelist == nil) or (item.whitelist and item.whitelist[class.name])) then
                 if LocalPlayer():HasWeapon(item.class) then
                     item.cmp = -1
                 else
