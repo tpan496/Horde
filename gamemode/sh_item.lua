@@ -180,7 +180,7 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Demolition=false, Survivor=true, Ghost=false, Engineer=true, Warden=true}, 10, -1)
     HORDE:CreateItem("Shotgun",    "SPAS-12",        "arccw_mw2_spas12",  2500, 8, "Franchi SPAS-12.\nA combat shotgun manufactured by Italian firearms company Franchi.",
     {Survivor=true, Warden=true}, 15, -1)
-    HORDE:CreateItem("Shotgun",    "Striker",        "arccw_horde_striker", 2500, 8, "Franchi SPAS-12.\nA combat shotgun manufactured by Italian firearms company Franchi.",
+    HORDE:CreateItem("Shotgun",    "Striker",        "arccw_horde_striker", 2500, 8, "Armsel Striker.\nA 12-gauge shotgun with a revolving cylinder from South Africa.",
     {Survivor=true, Warden=true}, 15, -1)
     HORDE:CreateItem("Shotgun",    "AA12",           "arccw_horde_aa12",  3000, 10, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
     {Heavy=true, Survivor=true, Warden=true}, 25, -1)
