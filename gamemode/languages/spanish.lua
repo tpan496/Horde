@@ -747,7 +747,7 @@ Heckler & Koch MG4.
 Una ametralladora ligera 5.56mm alimentada por correa que reemplazo la MG3.
 ]]
 
-LANGUAGE["Item_Frag Grenade"] = [[Granada de Fragemntacion]]
+LANGUAGE["Item_Frag Grenade"] = [[Granada de Fragmentacion]]
 LANGUAGE["Item_Desc_Frag Grenade"] = [[
 Una granada de fragmentacion estandar.
 Buena para control de multitudes.

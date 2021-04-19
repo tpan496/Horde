@@ -82,9 +82,12 @@ function HORDE:GameEnd(status)
             total_damage = total_damage + HORDE.player_damage[id]
             if HORDE.player_damage[id] > most_damage then
                 second_damage_player = damage_player
-                second_most_damage = most_damage
+                second_most_damage = HORDE.player_damage[damage_player:SteamID()]
                 most_damage = HORDE.player_damage[id]
                 damage_player = ply
+            elseif HORDE.player_damage[id] > second_most_damage then
+                second_damage_player = ply
+                second_most_damage = HORDE.player_damage[id]
             end
         end
 

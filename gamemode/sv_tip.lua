@@ -70,7 +70,7 @@ local function GetTipsData()
             AddTip("Vomitter's spit does radial damage.")
             AddTip("Scorcher's ranged attack has strong knockback.")
             AddTip("Black Crabless Fasties are extremely dangerous.")
-            AddTip("Poison Headcrabs are extremely danagerous.")
+            AddTip("Poison Headcrabs are extremely dangerous.")
         end
 
         if GetConVar("horde_default_class_config"):GetInt() == 1 then
