@@ -12,7 +12,7 @@ function plymeta:Horde_GetClass()
     return self.Horde_class
 end
 
-function plymeta:GetHordeDropEntities()
+function plymeta:Horde_GetDropEntities()
     return self.Horde_drop_entities
 end
 

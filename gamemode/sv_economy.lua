@@ -86,7 +86,7 @@ function plymeta:Horde_RemoveDropEntity(class, entity_creation_id)
 end
 
 function plymeta:Horde_SetMinionCount(count)
-    self.Horde_MinionCount = count
+    self.Horde_MinionCount = math.max(0,count)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Minion, 8)
         net.WriteUInt(self.Horde_MinionCount, 3)
@@ -112,7 +112,7 @@ function plymeta:Horde_GetMoney()
     return self.Horde_money
 end
 
-function plymeta:GetHordeDropEntities()
+function plymeta:Horde_GetDropEntities()
     return self.Horde_drop_entities
 end
 
@@ -242,7 +242,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 end
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
                 -- Drop entity
-                local drop_entities = ply:GetHordeDropEntities()
+                local drop_entities = ply:Horde_GetDropEntities()
                 if drop_entities[item.class] then
                     if drop_entities[item.class] > item.entity_properties.limit then
                         return
@@ -264,6 +264,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 ply:Horde_AddDropEntity(ent:GetClass(), ent)
                 ent:SetNWEntity("HordeOwner", ply)
                 ent:Spawn()
+
                 if ent:IsNPC() then
                     -- Minions have no player collsion
                     ent:AddRelationship("player D_LI 99")
@@ -364,7 +365,7 @@ function HORDE:DropTurret(ent)
 end
 
 hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
-    if ent:GetNWEntity("HordeOwner") and ent:GetClass() == "npc_turret_floor" then
+    if ent:GetNWEntity("HordeOwner") and (ent:GetClass() == "npc_turret_floor" or ent:GetClass() == "horde_watchtower") then
         -- Turrets should always stay straight.
         local a = ent:GetAngles()
         ent:SetAngles(Angle(0, a.y, 0))
@@ -390,7 +391,7 @@ net.Receive("Horde_SellItem", function (len, ply)
         ply:Horde_SyncEconomy()
     else
         local item = HORDE.items[class]
-        local drop_entities = ply:GetHordeDropEntities()
+        local drop_entities = ply:Horde_GetDropEntities()
         if drop_entities and drop_entities[class] then
             ply:Horde_AddMoney(math.floor(0.25 * item.price * drop_entities[class]))
             -- Remove all the drop entiies of this player
@@ -428,6 +429,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
+    ply:Horde_SetMinionCount(0)
 
     -- Remove all entities
     if HORDE.player_drop_entities[ply:SteamID()] then
@@ -451,6 +453,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     if GetConVar("horde_testing_unlimited_class_change"):GetInt() == 0 then
         HORDE.player_class_changed[ply:SteamID()] = true
     end
+
     ply:Horde_SyncEconomy()
 end)
 

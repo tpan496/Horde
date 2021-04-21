@@ -117,10 +117,10 @@ Has access to all weapons except for exclusive and special weapons.
 Limited access to attachments.]]
 
 LANGUAGE["Class_Description_Assault"] = [[
-Has full access to Assault Rifles.]]
+Has full access to assault rifles.]]
 
 LANGUAGE["Class_Description_Heavy"] = [[
-Has full access to Machine Guns and high weight weapons.]]
+Has full access to machine guns and high weight weapons.]]
 
 LANGUAGE["Class_Description_Medic"] = [[
 Has acesss to most light weapons and medical tools.]]
@@ -137,6 +137,9 @@ Has access to special weapons and equipment.]]
 
 LANGUAGE["Class_Description_Berserker"] = [[
 Only has access to melee weapons.]]
+
+LANGUAGE["Class_Description_Warden"] = [[
+Has full access to shotguns and watchtowers.]]
 
 
 -- Default Base Perks
@@ -445,6 +448,37 @@ LANGUAGE["Perk_berserker_rip_and_tear"] = [[
 Your melee attack can splash.
 Splash damage is {2} of your melee damage.]]
 
+-- Default Perks: Warden
+LANGUAGE["Perk_Title_Warden_Tier_1"] = [[Sustain]]
+LANGUAGE["Perk_Title_warden_bulwark"] = [[Bulwark]]
+LANGUAGE["Perk_warden_bulwark"] = [[
+Watchtowers generate 1 armor battery every {1} seconds.]]
+
+LANGUAGE["Perk_Title_warden_vitality"] = [[Vitality]]
+LANGUAGE["Perk_warden_vitality"] = [[
+Aura provides {1} health regeneration per second.]]
+
+LANGUAGE["Perk_Title_Warden_Tier_2"] = [[Resource Utilization]]
+LANGUAGE["Perk_Title_warden_restock"] = [[Quick Restock]]
+LANGUAGE["Perk_warden_restock"] = [[
+Watchtowers restock cooldown decreased by {1}.]]
+
+LANGUAGE["Perk_Title_warden_energize"] = [[Energize]]
+LANGUAGE["Perk_warden_energize"] = [[
+Aura adds {1} base damage to attacks.]]
+
+LANGUAGE["Perk_Title_Warden_Tier_3"] = [[Coverage]]
+LANGUAGE["Perk_Title_warden_ex_machina"] = [[Deus Ex Machina]]
+LANGUAGE["Perk_warden_ex_machina"] = [[
+Watchtowers have Warden Aura.
+Watchtowers generate a shockwave every {1} seconds.
+Shockwave deals {2} Shock damage.]]
+
+LANGUAGE["Perk_Title_warden_resonance_cascade"] = [[Resonance Cascade]]
+LANGUAGE["Perk_warden_resonance_cascade"] = [[
+Aura effect increased by {1}.
+Aura radius increased by {2}.]]
+
 
 -- Default Config Shop Items
 -- Optional
@@ -650,6 +684,18 @@ Benelli M4 Super 90.
 Fully automatic shotgun.
 ]]
 
+LANGUAGE["Item_SPAS-12"] = [[SPAS-12]]
+LANGUAGE["Item_Desc_SPAS-12"] = [[
+Franchi SPAS-12.
+A combat shotgun manufactured by Italian firearms company Franchi.
+]]
+
+LANGUAGE["Item_Striker"] = [[Striker]]
+LANGUAGE["Item_Desc_Striker"] = [[
+Armsel Striker.
+A 12-gauge shotgun with a revolving cylinder from South Africa.
+]]
+
 LANGUAGE["Item_AA12"] = [[AA12]]
 LANGUAGE["Item_Desc_AA12"] = [[
 Atchisson Assault Shotgun.
@@ -820,6 +866,13 @@ LANGUAGE["Item_Throwing Knives"] = [[Throwing Knives]]
 LANGUAGE["Item_Desc_Throwing Knives"] = [[
 Ranged throwing knives.
 Thrown blades are retrievable.
+]]
+
+LANGUAGE["Item_Watchtower"] = [[Watchtower]]
+LANGUAGE["Item_Desc_Watchtower"] = [[
+A watchtower that provides resupply.
+Generates 1 ammobox every 30 seconds.
+(Entity Class: horde_watchtower)
 ]]
 
 

@@ -8,7 +8,7 @@ local function SpawnManhack(ply)
     if CLIENT then return end
     if not ply:IsValid() or not ply:Horde_GetPerk("engineer_manhack") then return end
     local class = "npc_manhack"
-    local drop_entities = ply:GetHordeDropEntities()
+    local drop_entities = ply:Horde_GetDropEntities()
     if drop_entities[class] then
         if drop_entities[class] > 2 then
             return

@@ -290,8 +290,8 @@ Enemigos que tu mates tienen un {1} posibilidad de generar una nube de curacion.
 
 LANGUAGE["Perk_Title_medic_xcele"] = [[Factor de Curacion Acelerada]]
 LANGUAGE["Perk_medic_xcele"] = [[
-{1} mas de regeneracion de vida por segundo.
-Buffs que tu apliques seran un {2} mas efectivo.]]
+Buffs que tu apliques seran un {1} mas efectivo.
+Buffs que tu apliques tendran {2} mas de duracion.]]
 
 -- Default Perks: Demolition
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Granada]]

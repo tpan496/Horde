@@ -30,9 +30,9 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
         hook.Run("Horde_OnPlayerMinionDamage", ply, npc, bonus, dmginfo)
     end
 
-    dmginfo:AddDamage(base_add)
+    dmginfo:AddDamage(bonus.base_add)
     dmginfo:ScaleDamage(bonus.more * (1 + bonus.increase))
-    dmginfo:AddDamage(post_add)
+    dmginfo:AddDamage(bonus.post_add)
     dmginfo:SetDamageCustom(HORDE.DMG_CALCULATED)
 end
 
@@ -65,7 +65,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if dmg:GetInflictor():GetNWEntity("HordeOwner"):IsPlayer() then return true end
 
     -- Apply bonus
-    local bonus = {resistance=0, less=1, evasion=0}
+    local bonus = {resistance=0, less=1, evasion=0, block=0}
     hook.Run("Horde_OnPlayerDamageTaken", ply, dmg, bonus)
 
     if bonus.evasion > 0 then
@@ -78,6 +78,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     end
     if bonus.resistance >= 1.0 then return true end
     dmg:ScaleDamage(bonus.less * (1 - bonus.resistance))
+    dmg:SubtractDamage(bonus.block)
 end)
 
 -- Enemy damage.
