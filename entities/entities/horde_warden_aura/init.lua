@@ -20,13 +20,12 @@ function ENT:Initialize()
     self:SetColor(Color(0, 0, 0, 0))
 end
 
-function ENT:StartTouch(ent)
+function ENT:Touch(ent)
     if SERVER then
+        if not ent:IsPlayer() then return end
         if self.TouchedEntities[ent:GetCreationID()] then return end
-        if ent:IsPlayer() then
-            self.TouchedEntities[ent:GetCreationID()] = ent
-            ent:Horde_AddWardenAuraEffects(self:GetParent())
-        end
+        self.TouchedEntities[ent:GetCreationID()] = ent
+        ent:Horde_AddWardenAuraEffects(self:GetParent())
     end
 end
 

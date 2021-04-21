@@ -21,7 +21,7 @@ MUTATION.Hooks.Horde_OnEnemyKilled = function(victim, killer, weapon)
     if victim:Horde_GetMutation() == "nemesis" then
         local e = EffectData()
 		    e:SetOrigin(victim:GetPos())
-	    util.Effect("nemesis_explosion", e)
+	    util.Effect("nemesis_explosion", e, true, true)
 
         local dmginfo = DamageInfo()
         dmginfo:SetInflictor(killer)

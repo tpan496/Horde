@@ -3,7 +3,7 @@ PERK.Description = "Adds {1} maximum Adrenaline stacks.\n(Each Adrenaline stack 
 PERK.Icon = "materials/perks/charge.png"
 PERK.Params = {
     [1] = {value = 2},
-    [2] = {value = 0.07, percent=true},
+    [2] = {value = 0.06, percent=true},
 }
 
 PERK.Hooks = {}
