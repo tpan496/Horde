@@ -190,6 +190,12 @@ function HORDE:GameEnd(status)
     timer.Remove("Horder_Counter")
     HORDE:BroadcastGameResultMessage(status, HORDE.current_wave)
 
+    for _, ply in pairs(player.GetAll()) do
+        if GetConVar("horde_enable_rank"):GetInt() == 1 then
+            HORDE:SaveRank(ply)
+        end
+    end
+
     timer.Create("Horde_MapVoteCountdown", 1, 0, function ()
         if HORDE.vote_remaining_time <= 0 then
             timer.Remove("Horde_MapVoteCountdown")

@@ -105,7 +105,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Assault,
-        "Have full access to Assault Rifles.",
+        "Have full access to assault rifles.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -120,7 +120,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Heavy,
-        "Have full access to Machine Guns and high weight weapons.",
+        "Have full access to machine guns and high weight weapons.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -210,15 +210,15 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Warden,
-        "Has full access to shotguns and Warden structures.\nWarden structures spawn 1 ammo box every 30 seconds.",
+        "Has full access to shotguns and watchtowers.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
         "warden_base",
         {
-            [1] = {title = "Fundamentals", choices = {"berserker_breathing_technique", "berserker_bloodlust"}},
-            [2] = {title = "Technique", choices = {"berserker_bushido", "berserker_savagery"}},
-            [3] = {title = "Combat Arts", choices = {"berserker_mindeye", "berserker_rip_and_tear"}},
+            [1] = {title = "Sustain", choices = {"warden_bulwark", "warden_vitality"}},
+            [2] = {title = "Resource Utilization", choices = {"warden_restock", "warden_energize"}},
+            [3] = {title = "Coverage", choices = {"warden_ex_machina", "warden_resonance_cascade"}},
         },
         8
     )

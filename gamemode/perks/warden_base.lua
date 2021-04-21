@@ -8,12 +8,12 @@ PERK.Params = {
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "warden_base" then
-        ply:Horde_SetHealthRegenEnabled(true)
+        ply:Horde_AddWardenAura()
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "warden_base" then
-        ply:Horde_SetHealthRegenEnabled(nil)
+        ply:Horde_RemoveWardenAura()
     end
 end

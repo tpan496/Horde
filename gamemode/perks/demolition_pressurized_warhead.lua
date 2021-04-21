@@ -3,7 +3,7 @@ PERK.Description = "{1} increased Blast damage against elites.\nExplosions deal 
 PERK.Icon = "materials/perks/pressurized_warhead.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},
-    [2] = {value = 0.05, percent = true}
+    [2] = {value = 0.06, percent = true}
 }
 
 PERK.Hooks = {}
@@ -13,6 +13,6 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
         if npc:GetVar("is_elite") then
             bonus.increase = bonus.increase + 0.25
         end
-        bonus.post_add = npc:Health() * 0.05
+        bonus.post_add = npc:Health() * 0.06
     end
 end

@@ -124,7 +124,7 @@ function PANEL:DoClick()
         return
     end
     if LocalPlayer():Horde_GetMoney() < self.item.price or LocalPlayer():Horde_GetWeight() < self.item.weight then return end
-    local drop_entities = LocalPlayer():GetHordeDropEntities()
+    local drop_entities = LocalPlayer():Horde_GetDropEntities()
     if self.item.entity_properties and self.item.entity_properties.limit and self.item.entity_properties.limit > 0 and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP and drop_entities[self.item.class] and drop_entities[self.item.class] >= self.item.entity_properties.limit then return end
     -- Buy the item
     net.Start("Horde_BuyItem")
@@ -488,7 +488,7 @@ function PANEL:Paint()
         else
             self.buy_btn:SetText(translate.Get("Shop_Buy_Item"))
             if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
-                local drop_entities = LocalPlayer():GetHordeDropEntities()
+                local drop_entities = LocalPlayer():Horde_GetDropEntities()
                 if drop_entities[self.item.class] then
                     self.buy_btn:SetText(translate.Get("Shop_Buy_Item") .. " " .. drop_entities[self.item.class] .. "/" .. self.item.entity_properties.limit)
                     self.sell_btn:SetVisible(true)

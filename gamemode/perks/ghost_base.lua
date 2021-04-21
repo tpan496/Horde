@@ -2,7 +2,7 @@ PERK.PrintName = "Ghost Base"
 PERK.Description = "The Ghost is focused on taking down boss enemies using Camoflague.\nComplexity: HIGH\n\n{1} more headshot damage.\nCrouch to activate Camoflague, granting {2} evasion.\nAttacking, Running or Jumping REMOVES Camoflague."
 PERK.Params = {
     [1] = {value = 0.25, percent = true},
-    [2] = {value = 0.20, percent = true},
+    [2] = {value = 0.25, percent = true},
 }
 
 PERK.Hooks = {}

@@ -52,7 +52,7 @@ function plymeta:Horde_AddHealAmount(amount)
 end
 
 -- Call this if you want Horde to recognize your healing
-function HORDE:OnPlayerHeal(ply, healinfo)
+function HORDE:OnPlayerHeal(ply, healinfo, silent)
     hook.Run("Horde_OnPlayerHeal", ply, healinfo)
     if (ply:GetMaxHealth() <= ply:Health()) and (healinfo:GetOverHealPercentage() <= 0) then return end
     ply:SetHealth(math.min(ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), ply:Health() + healinfo:GetHealAmount()))
@@ -62,6 +62,10 @@ function HORDE:OnPlayerHeal(ply, healinfo)
     if not HORDE.player_heal[healer:SteamID()] then HORDE.player_heal[healer:SteamID()] = 0 end
     HORDE.player_heal[healer:SteamID()] = HORDE.player_heal[healer:SteamID()] + healinfo:GetHealAmount()
 
+    if silent then
+        healer:Horde_AddHealAmount(healinfo:GetHealAmount())
+        return
+    end
     ply:ScreenFade(SCREENFADE.IN, Color(50, 200, 50, 10), 0.3, 0)
     if healer ~= ply then
         healer:Horde_AddMoney(3)

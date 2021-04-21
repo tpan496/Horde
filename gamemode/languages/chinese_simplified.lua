@@ -139,6 +139,9 @@ LANGUAGE["Class_Description_Engineer"] = [[
 LANGUAGE["Class_Description_Berserker"] = [[
 只能使用近战类武器。]]
 
+LANGUAGE["Class_Description_Warden"] = [[
+能使用全部的霰弹枪武器以及制造守望塔。]]
+
 -- Default Base Perks
 LANGUAGE["Perk_survivor_base"] = [[
 生存者拥有最大的武器池，从而可以弥补团队中需缺的任何角色。
@@ -181,7 +184,7 @@ LANGUAGE["Perk_ghost_base"] = [[
 
 {1} 更多爆头伤害。
 蹲下以激活“迷彩”状态，提供 {2} 闪避。
-攻击，奔跑或者跳跃会取消“迷彩"状态。]]
+攻击，奔跑或者跳跃会取消“迷彩”状态。]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 工程师是一个围绕着召唤物的职业。召唤物能有效地进行区域性防守并且为队友提供掩护。
@@ -197,6 +200,13 @@ LANGUAGE["Perk_berserker_base"] = [[
 提升 {1} 所有伤害抗性。
 提升 {2} 毒素伤害抗性。]]
 
+LANGUAGE["Perk_warden_base"] = [[
+守望者是是一个使用自身光环和建筑来为队友提供各种有利效果的辅助职业。
+复杂度：中
+
+自身以及附近的玩家会受到“守望光环”效果。
+“守望光环”阻挡 {1} 伤害。]]
+
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[生存]]
 LANGUAGE["Perk_Title_Survivor_Tier_2"] = [[随机应变]]
@@ -210,7 +220,7 @@ LANGUAGE["Perk_assault_ambush"] = [[
 
 LANGUAGE["Perk_Title_assault_charge"] = [[蓄能]]
 LANGUAGE["Perk_assault_charge"] = [[
-肾上腺素最大堆叠次数 +{1}。]]
+“肾上腺素”最大堆叠次数 +{1}。]]
 
 LANGUAGE["Perk_Title_Assault_Tier_2"] = [[适应性]]
 LANGUAGE["Perk_Title_assault_drain"] = [[生命汲取]]
@@ -220,8 +230,8 @@ LANGUAGE["Perk_assault_drain"] = [[
 
 LANGUAGE["Perk_Title_assault_overclock"] = [[代谢超频]]
 LANGUAGE["Perk_assault_overclock"] = [[
-肾上腺素持续时间提升 {1}。
-肾上腺素最大堆叠次数 +{2}。]]
+“肾上腺素”持续时间提升 {1}。
+“肾上腺素”最大堆叠次数 +{2}。]]
 
 LANGUAGE["Perk_Title_Assault_Tier_3"] = [[条件反射]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[精神统一]]
@@ -231,21 +241,21 @@ LANGUAGE["Perk_assault_heightened_reflex"] = [[
 
 LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[心脏过载]]
 LANGUAGE["Perk_assault_cardiac_overload"] = [[
-爆头有 {1} 几率 +1 层肾上腺素。
-肾上腺素最大堆叠次数 +{2}。]]
+爆头有 {1} 几率 +1 层“肾上腺素”。
+“肾上腺素”最大堆叠次数 +{2}。]]
 
 -- Default Perks: Heavy
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[压制]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[粘性化合物]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
-子弹伤害击中的敌人受到减速异常状态。
-减速状态下，行动速度减少 {1}。]]
+子弹伤害击中的敌人受到“减速”异常状态。
+“减速”状态下，行动速度减少 {1}。]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[粗糙弹壳]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
-子弹伤害击中的敌人受到虚弱异常状态。
-虚弱状态下，受到 {1} 更多伤害。
-虚弱状态下，造成 {2} 更少伤害。]]
+子弹伤害击中的敌人受到“虚弱”异常状态。
+“虚弱”状态下，受到 {1} 更多伤害。
+“虚弱”状态下，造成 {2} 更少伤害。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[护甲强化]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[流体装甲]]
@@ -282,15 +292,15 @@ LANGUAGE["Perk_medic_painkillers"] = [[
 LANGUAGE["Perk_Title_Medic_Tier_2"] = [[生物工程]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[狂化]]
 LANGUAGE["Perk_medic_berserk"] = [[
-治疗的对象获得狂化增益状态。
-狂化状态持续 {1} 秒。
-狂化状态下，提升 {2} 伤害和移速。]]
+治疗的对象获得“狂化”增益状态。
+“狂化”状态持续 {1} 秒。
+“狂化”状态下，提升 {2} 伤害和移速。]]
 
 LANGUAGE["Perk_Title_medic_fortify"] = [[坚固]]
 LANGUAGE["Perk_medic_fortify"] = [[
-治疗的对象获得坚固增益状态。
-坚固状态持续 {1} 秒。
-坚固状态下，受到 {2} 更少伤害。]]
+治疗的对象获得“坚固”增益状态。
+“坚固”状态持续 {1} 秒。
+“坚固”状态下，受到 {2} 更少伤害。]]
 
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[物竞天择]]
 LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[细胞坍缩]]
@@ -299,8 +309,8 @@ LANGUAGE["Perk_medic_cellular_implosion"] = [[
 
 LANGUAGE["Perk_Title_medic_xcele"] = [[治愈因子]]
 LANGUAGE["Perk_medic_xcele"] = [[
-提升 {1} 生命恢复速度。
-提升 {2} 增益状态效果。]]
+提升 {1} 增益状态效果。
+提升 {2} 增益状态持续时间。]]
 
 -- Default Perks: Demolition
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[手雷改装]]
@@ -350,12 +360,12 @@ LANGUAGE["Perk_ghost_sniper"] = [[
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[战略转移]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[幽灵漫步]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
-奔跑，跳跃不会取消迷彩状态。
+奔跑，跳跃不会取消“迷彩”状态。
 迷彩状态下提升 {1} 移速。]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[幻影披风]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
-攻击不会取消迷彩状态。
+攻击不会取消“迷彩”状态。
 迷彩激活速度提升 {1}。]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[歼灭]]
@@ -365,7 +375,7 @@ LANGUAGE["Perk_ghost_coup"] = [[
 
 LANGUAGE["Perk_Title_ghost_decapitate"] = [[斩首]]
 LANGUAGE["Perk_ghost_decapitate"] = [[
-迷彩状态下：
+“迷彩”状态下：
   提升 {1} 子弹伤害。
   提升 {2} 对精英敌人造成的爆头伤害。]]
 
@@ -438,6 +448,37 @@ LANGUAGE["Perk_berserker_rip_and_tear"] = [[
 {1} 更多近战伤害。
 近战攻击可以溅射。
 溅射伤害为基础伤害的 {2}。]]
+
+-- Default Perks: Warden
+LANGUAGE["Perk_Title_Warden_Tier_1"] = [[维持]]
+LANGUAGE["Perk_Title_warden_bulwark"] = [[制御]]
+LANGUAGE["Perk_warden_bulwark"] = [[
+守望塔每 {1} 秒生成 1 个护甲包。]]
+
+LANGUAGE["Perk_Title_warden_vitality"] = [[活性化]]
+LANGUAGE["Perk_warden_vitality"] = [[
+光环提供每秒 {1} 点生命恢复。]]
+
+LANGUAGE["Perk_Title_Warden_Tier_2"] = [[资源利用]]
+LANGUAGE["Perk_Title_warden_restock"] = [[快速补充]]
+LANGUAGE["Perk_warden_restock"] = [[
+守望塔资源生成冷却时间减少 {1}。]]
+
+LANGUAGE["Perk_Title_warden_energize"] = [[残暴]]
+LANGUAGE["Perk_warden_energize"] = [[
+光环提供 +{1} 额外基础伤害。]]
+
+LANGUAGE["Perk_Title_Warden_Tier_3"] = [[广域化]]
+LANGUAGE["Perk_Title_warden_ex_machina"] = [[机械降神]]
+LANGUAGE["Perk_warden_ex_machina"] = [[
+守望塔提供“守望光环”。
+守望塔每 {1} 秒产生冲击波。
+冲击波造成 {2} 电击伤害。]]
+
+LANGUAGE["Perk_Title_warden_resonance_cascade"] = [[级联共振]]
+LANGUAGE["Perk_warden_resonance_cascade"] = [[
+光环效果增加 {1}。
+光环半径增加 {2}。]]
 
 
 -- Default Config Shop Items
@@ -644,6 +685,18 @@ Benelli M4 Super 90.
 Fully automatic shotgun.
 ]]
 
+LANGUAGE["Item_SPAS-12"] = [[SPAS-12]]
+LANGUAGE["Item_Desc_SPAS-12"] = [[
+Franchi SPAS-12.
+A combat shotgun manufactured by Italian firearms company Franchi.
+]]
+
+LANGUAGE["Item_Striker"] = [[Striker]]
+LANGUAGE["Item_Desc_Striker"] = [[
+Armsel Striker.
+A 12-gauge shotgun with a revolving cylinder from South Africa.
+]]
+
 LANGUAGE["Item_AA12"] = [[AA12]]
 LANGUAGE["Item_Desc_AA12"] = [[
 Atchisson Assault Shotgun.
@@ -821,6 +874,13 @@ LANGUAGE["Item_Throwing Knives"] = [[飞刀]]
 LANGUAGE["Item_Desc_Throwing Knives"] = [[
 远距离飞刀。
 扔出去的刀可以被回收。
+]]
+
+LANGUAGE["Item_Watchtower"] = [[守望塔]]
+LANGUAGE["Item_Desc_Watchtower"] = [[
+一个能提供补给的守望塔。
+每 30 秒生成 1 个弹药包。
+（实体名称：horde_watchtower）
 ]]
 
 
