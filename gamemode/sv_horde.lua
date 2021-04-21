@@ -78,6 +78,11 @@ hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
 end)
 
 function HORDE:OnEnemyKilled(victim, killer, weapon)
+    if victim:IsNPC() and not victim:GetVar("horde_killed") then
+        print(victim, killer)
+        victim:SetVar("horde_killed", true)
+        hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
+    end
     if HORDE.spawned_enemies[victim:EntIndex()] then
         HORDE.spawned_enemies[victim:EntIndex()] = nil
         if (not HORDE.horde_boss) or (HORDE.horde_boss and (not horde_boss_properties.unlimited_enemies_spawn)) then
@@ -154,8 +159,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         end
 
         victim:Horde_SetMostRecentAttacker(nil)
-
-        hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
+        --hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
     end
 end
 
