@@ -595,6 +595,12 @@ Steyr TMP.
 A select-fire 9×19mm Parabellum caliber machine pistol.
 ]]
 
+LANGUAGE["Item_Anaconda"] = [[Anaconda]]
+LANGUAGE["Item_Desc_Anaconda"] = [[
+Colt Anaconda.
+Chambered for the powerful .44 Magnum.
+]]
+
 
 LANGUAGE["Item_SMG1"] = [[SMG1]]
 LANGUAGE["Item_Desc_SMG1"] = [[

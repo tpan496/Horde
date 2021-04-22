@@ -54,7 +54,7 @@ local function Render(bdepth, bskybox)
         cam.Start3D2D(render_pos, render_ang, 0.1)
             surface.SetMaterial(mat)
             surface.SetDrawColor(HORDE.Rank_Colors[rank])
-            local pos = - 64 - len - 8
+            local pos = - 64 - len - 20
             surface.DrawTexturedRect(pos, -64 / 2, 64, 64)
             
             if rank == HORDE.Rank_Master then
@@ -72,7 +72,7 @@ local function Render(bdepth, bskybox)
                 end
                 draw.SimpleText(loc_class, "Icon", len + 8, 0, fade_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
-            draw.SimpleText(loc_rank, "Rank", len + 8, -54, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(loc_rank, "Rank", 0, -54, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
         cam.End3D2D()
         ::cont::
