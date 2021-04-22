@@ -372,6 +372,13 @@ function HORDE:PlayerInit(ply)
         ::cont::
     end
 
+    if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
+        net.Start("Horde_SyncStatus")
+            net.WriteUInt(HORDE.Status_ExpDisabled, 8)
+            net.WriteUInt(1, 3)
+        net.Send(ply)
+    end
+
     if HORDE.start_game then return end
 
     local ready_count = 0

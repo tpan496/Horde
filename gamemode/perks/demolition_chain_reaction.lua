@@ -7,14 +7,14 @@ PERK.Params = {
 }
 
 PERK.Hooks = {}
-PERK.Hooks.OnNPCKilled = function(victim, killer, inflictor)
+PERK.Hooks.OnEnemyKilled = function(victim, killer, inflictor)
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
     if not killer:Horde_GetPerk("demolition_chain_reaction") then return end
     if inflictor:IsNPC() then return end -- Prevent infinite chains
     local p = math.random()
     if p <= 0.25 then
         local dmg = victim:GetMaxHealth() * 0.50
-        local rad = 140
+        local rad = 150
         local e = EffectData()
         e:SetOrigin(victim:GetPos())
         util.Effect("Explosion", e)
