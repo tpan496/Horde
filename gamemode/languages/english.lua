@@ -139,7 +139,7 @@ LANGUAGE["Class_Description_Berserker"] = [[
 Only has access to melee weapons.]]
 
 LANGUAGE["Class_Description_Warden"] = [[
-Has full access to shotguns and watchtowers.]]
+Has full access to shotguns and watchtowers (horde_watchtower).]]
 
 
 -- Default Base Perks

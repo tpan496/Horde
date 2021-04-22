@@ -140,7 +140,7 @@ LANGUAGE["Class_Description_Berserker"] = [[
 只能使用近战类武器。]]
 
 LANGUAGE["Class_Description_Warden"] = [[
-能使用全部的霰弹枪武器以及制造守望塔。]]
+能使用全部的霰弹枪武器以及制造守望塔 (horde_watchtower)。]]
 
 -- Default Base Perks
 LANGUAGE["Perk_survivor_base"] = [[

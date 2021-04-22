@@ -210,7 +210,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Warden,
-        "Has full access to shotguns and watchtowers.",
+        "Has full access to shotguns and watchtowers (horde_watchtower).",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),

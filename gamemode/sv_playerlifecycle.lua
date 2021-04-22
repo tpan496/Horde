@@ -360,7 +360,7 @@ function HORDE:PlayerInit(ply)
     HORDE:LoadRank(ply)
     ply:Horde_SyncExp()
     for _, other_ply in pairs(player.GetAll()) do
-        if other_ply == ply or (not other_ply:IsHuman()) then goto cont end
+        if other_ply == ply then goto cont end
         for name, class in pairs(HORDE.classes) do
             net.Start("Horde_SyncExp")
                 net.WriteEntity(other_ply)
