@@ -16,7 +16,7 @@ function plymeta:Horde_GetDropEntities()
     return self.Horde_drop_entities
 end
 
-net.Receive("Horde_Horde_SyncEconomy", function(length)
+net.Receive("Horde_SyncEconomy", function(length)
     local ply = net.ReadEntity()
     ply.Horde_money = net.ReadInt(32)
     ply.Horde_weight = net.ReadInt(32)

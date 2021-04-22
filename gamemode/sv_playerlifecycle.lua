@@ -356,7 +356,21 @@ function HORDE:PlayerInit(ply)
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
 
     HORDE:GiveStarterWeapons(ply)
+
     HORDE:LoadRank(ply)
+    ply:Horde_SyncExp()
+    for _, other_ply in pairs(player.GetAll()) do
+        if other_ply == ply or (not other_ply:IsHuman()) then goto cont end
+        for name, class in pairs(HORDE.classes) do
+            net.Start("Horde_SyncExp")
+                net.WriteEntity(other_ply)
+                net.WriteUInt(class.order, 4)
+                net.WriteUInt(other_ply:Horde_GetExp(name), 32)
+                net.WriteUInt(other_ply:Horde_GetLevel(name), 8)
+            net.Send(ply)
+        end
+        ::cont::
+    end
 
     if HORDE.start_game then return end
 

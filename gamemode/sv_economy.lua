@@ -11,7 +11,7 @@ util.AddNetworkString("Horde_BuyItemAmmoPrimary")
 util.AddNetworkString("Horde_BuyItemAmmoSecondary")
 util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
-util.AddNetworkString("Horde_Horde_SyncEconomy")
+util.AddNetworkString("Horde_SyncEconomy")
 util.AddNetworkString("Horde_SyncDifficulty")
 util.AddNetworkString("Horde_RemoveReadyPanel")
 
@@ -143,7 +143,7 @@ end
 function plymeta:Horde_SyncEconomy()
     if not self:IsValid() then return end
     if not self.Horde_money or not self.Horde_weight or not self.Horde_class then return end
-    net.Start("Horde_Horde_SyncEconomy")
+    net.Start("Horde_SyncEconomy")
         net.WriteEntity(self)
         net.WriteInt(self.Horde_money, 32)
         net.WriteInt(self.Horde_weight, 32)

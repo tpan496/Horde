@@ -79,7 +79,6 @@ end)
 
 function HORDE:OnEnemyKilled(victim, killer, weapon)
     if victim:IsNPC() and not victim:GetVar("horde_killed") then
-        print(victim, killer)
         victim:SetVar("horde_killed", true)
         hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
     end
@@ -899,6 +898,8 @@ function HORDE:WaveEnd()
         if GetConVar("horde_enable_rank"):GetInt() == 1 then
             HORDE:SaveRank(ply)
         end
+        
+        ply:Horde_SyncExp()
     end
 end
 
