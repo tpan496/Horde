@@ -163,6 +163,12 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SyncEconomy()
     HORDE:GiveStarterWeapons(ply)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
+        net.Start("Horde_SyncStatus")
+            net.WriteUInt(HORDE.Status_ExpDisabled, 8)
+            net.WriteUInt(1, 3)
+        net.Send(ply)
+    end
 end)
 
 hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
