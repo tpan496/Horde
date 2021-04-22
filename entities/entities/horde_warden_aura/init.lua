@@ -23,7 +23,7 @@ end
 function ENT:Touch(ent)
     if SERVER then
         if not ent:IsPlayer() then return end
-        if self.TouchedEntities[ent:GetCreationID()] then return end
+        if self.TouchedEntities[ent:GetCreationID()] and ent.Horde_WardenAuraProvider then return end
         self.TouchedEntities[ent:GetCreationID()] = ent
         ent:Horde_AddWardenAuraEffects(self:GetParent())
     end
@@ -31,12 +31,11 @@ end
 
 function ENT:EndTouch(ent)
     if SERVER then
-        if not ent:IsPlayer() then return end
+        if not ent:IsPlayer() or not ent:IsValid() then return end
         self.TouchedEntities[ent:GetCreationID()] = nil
+        ent:Horde_RemoveWardenAuraEffects()
         if ent.Horde_WardenAura then
             ent:Horde_AddWardenAura()
-        else
-            ent:Horde_RemoveWardenAuraEffects()
         end
     end
 end

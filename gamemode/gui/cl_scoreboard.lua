@@ -54,12 +54,28 @@ function scoreboard:show()
                 draw.RoundedBox(5, 0, 0, w, 40, Color(100,0,0,200), true, true, false, false)
             end
             draw.DrawText(ply:Name():sub(1,20), "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-            surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
             if HORDE.classes and HORDE.classes[class] then
                 local mat = Material(HORDE.classes[class].icon, "mips smooth")
+                local rank = ply:Horde_GetRank(class)
+                local rank_level = ply:Horde_GetRankLevel(class)
                 surface.SetMaterial(mat) -- Use our cached material
+                surface.SetDrawColor(HORDE.Rank_Colors[rank])
                 surface.DrawTexturedRect(200, 2, 38, 38)
+                if rank == HORDE.Rank_Master then
+                    draw.SimpleText(rank_level, "Trebuchet18", 200 - 5, 15, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                else
+                    if rank_level > 0 then
+                        local star = Material("star.png", "mips smooth")
+                        surface.SetMaterial(star)
+                        local y_pos = 27
+                        for i = 0, rank_level - 1 do
+                            surface.DrawTexturedRect(200 - 10, y_pos, 10, 10)
+                            y_pos = y_pos - 7
+                        end
+                    end
+                end
             end
+            surface.SetDrawColor(255, 255, 255, 255)
             draw.DrawText(translate.Get("Class_" .. class), "Content", 250, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
             draw.DrawText(tostring(ply:Frags()), "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
             draw.DrawText(tostring(ply:Deaths()), "Content", 921, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
