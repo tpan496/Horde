@@ -130,3 +130,7 @@ hook.Add("Horde_ResetStatus", "Horde_WardenAuraEffectsReset", function(ply)
     ply.Horde_WardenAuraDamageBonus = nil
     ply.Horde_WardenAuraHealthRegenCurTime = CurTime()
 end)
+
+hook.Add("DoPlayerDeath", "Horde_WardenAuraDoPlayerDeath", function(victim)
+    victim:Horde_RemoveWardenAura()
+end)

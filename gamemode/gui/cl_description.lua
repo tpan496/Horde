@@ -327,7 +327,7 @@ function PANEL:Paint()
             end
 
         elseif self.item.extra_description then
-            self.class_progress:SetVisible(true)
+            self.class_progress:SetVisible(not self.perk_panel:IsVisible())
             local loc_name = translate.Get("Class_" .. self.item.display_name) or self.item.display_name
             draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             local loc_desc = translate.Get("Class_Description_" .. self.item.display_name) or self.item.extra_description
@@ -356,9 +356,8 @@ function PANEL:Paint()
             surface.DrawTexturedRect(self:GetWide() / 2 + string.len(loc_name) * 2 + 20, 28, 40, 40)
 
             self.class_progress.Paint = function()
-                draw.SimpleText(translate.Get("Rank_" .. LocalPlayer():Horde_GetRank(self.item.name)) .. " " .. LocalPlayer():Horde_GetRankLevel(self.item.name), "Content", 0, 0, color_white, TEXT_ALIGN_LEFT)
-                draw.SimpleText(self.exp_diff .. " / "  .. self.exp_total, "Content", self:GetWide() - 10, 0, color_white, TEXT_ALIGN_RIGHT)
-                surface.SetDrawColor(HORDE.color_crimson)
+                draw.SimpleText(translate.Get("Rank_" .. LocalPlayer():Horde_GetRank(self.item.name)) .. " " .. LocalPlayer():Horde_GetRankLevel(self.item.name), "Content", 0, 5, color_white, TEXT_ALIGN_LEFT)
+                draw.SimpleText(self.exp_diff .. " / "  .. self.exp_total, "Content", self:GetWide() - 10, 5, color_white, TEXT_ALIGN_RIGHT)
                 draw.RoundedBox(5, 5, 30, self:GetWide() - 20, 10, Color(80,80,80))
                 draw.RoundedBox(5, 5, 30, self:GetWide() * (self.exp_diff / self.exp_total), 10, Color(220,220,220))
             end

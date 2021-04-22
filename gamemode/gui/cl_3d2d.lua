@@ -1,4 +1,5 @@
 surface.CreateFont("Icon", { font = "arial", size = 64 })
+surface.CreateFont("Rank", { font = "arial", size = 32 })
 
 local function Render(bdepth, bskybox)
     if bskybox then return end
@@ -46,17 +47,19 @@ local function Render(bdepth, bskybox)
         local mat = Material(HORDE.classes[class].icon, "mips smooth")
         local loc_class = translate.Get("Class_" .. class)
         local len = string.len(loc_class) * 6
-        local rank = ply:Horde_GetRank(class)
+        local rank = ply:Horde_GetRank(class) or HORDE.Rank_Novice
         local rank_level = ply:Horde_GetRankLevel(class)
+        local loc_rank = "[" .. translate.Get("Rank_" .. rank) .. "]"
 
         cam.Start3D2D(render_pos, render_ang, 0.1)
             surface.SetMaterial(mat)
             surface.SetDrawColor(HORDE.Rank_Colors[rank])
             local pos = - 64 - len - 8
             surface.DrawTexturedRect(pos, -64 / 2, 64, 64)
-            draw.SimpleText(loc_class, "Icon", len + 8, 0, fade_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            
             if rank == HORDE.Rank_Master then
-                draw.SimpleText(rank_level, "Trebuchet18", pos - 5, 15, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText(rank_level, "Trebuchet24", pos - 5, -32 + 15, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText(loc_class, "Icon", len + 8, 0, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
                 if rank_level > 0 then
                     local star = Material("star.png", "mips smooth")
@@ -67,7 +70,9 @@ local function Render(bdepth, bskybox)
                         y_pos = y_pos - 7
                     end
                 end
+                draw.SimpleText(loc_class, "Icon", len + 8, 0, fade_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
+            draw.SimpleText(loc_rank, "Rank", len + 8, -54, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
         cam.End3D2D()
         ::cont::
