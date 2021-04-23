@@ -15,6 +15,11 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
         dmginfo:SetAttacker(attacker:GetNWEntity("HordeOwner"))
     end
 
+    if attacker:GetOwner():IsPlayer() then
+        dmginfo:SetInflictor(attacker)
+        dmginfo:SetAttacker(attacker:GetOwner())
+    end
+
     local ply = dmginfo:GetAttacker()
     if not ply:IsPlayer() then return end
 
@@ -41,6 +46,11 @@ hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, 
     if attacker:GetNWEntity("HordeOwner"):IsPlayer() then
         dmginfo:SetInflictor(attacker)
         dmginfo:SetAttacker(attacker:GetNWEntity("HordeOwner"))
+    end
+
+    if attacker:GetOwner():IsPlayer() then
+        dmginfo:SetInflictor(attacker)
+        dmginfo:SetAttacker(attacker:GetOwner())
     end
 
     if attacker:IsPlayer() and target:IsNPC() and (not target:GetNWEntity("HordeOwner"):IsPlayer())then

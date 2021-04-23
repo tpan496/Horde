@@ -14,4 +14,4 @@ end
 -- Horde:
 -- Ballistic: DMG_BULLET, DMG_SNIPER, DMG_BUCKSHOT
 -- Melee: DMG_SLASH, DMG_CLUB
--- Fire: DMG_FIRE, DMG_BURN
+-- Fire: DMG_BURN
