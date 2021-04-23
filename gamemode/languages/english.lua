@@ -205,8 +205,7 @@ The Warden is a support class that uses aura effects and structures to buff team
 Complexity: MEDIUM
 
 Players near you are affected by Warden Aura.
-Warden Aura blocks {1} damage per damage taken.
-Warden Aura has {2} increased effect on you.]]
+Warden Aura blocks {1} damage.]]
 
 
 -- Default Perks: Survivor
