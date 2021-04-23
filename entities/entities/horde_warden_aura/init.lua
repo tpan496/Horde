@@ -2,6 +2,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 ENT.CleanupPriority = 2
 ENT.TouchedEntities = {}
+ENT.Removing = nil
 
 function ENT:Horde_SetAuraRadius(radius)
     self.Horde_AuraRadius = radius or 160
@@ -22,6 +23,7 @@ end
 
 function ENT:Touch(ent)
     if SERVER then
+        if self.Removing then return end
         if not ent:IsPlayer() then return end
         if self.TouchedEntities[ent:GetCreationID()] and ent.Horde_WardenAuraProvider then return end
         self.TouchedEntities[ent:GetCreationID()] = ent
@@ -31,6 +33,7 @@ end
 
 function ENT:EndTouch(ent)
     if SERVER then
+        if self.Removing then return end
         if not ent:IsPlayer() or not ent:IsValid() then return end
         self.TouchedEntities[ent:GetCreationID()] = nil
         ent:Horde_RemoveWardenAuraEffects()
@@ -38,4 +41,8 @@ function ENT:EndTouch(ent)
             ent:Horde_AddWardenAura()
         end
     end
+end
+
+function ENT:OnRemove()
+    self.Removing = true
 end

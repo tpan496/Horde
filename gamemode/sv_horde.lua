@@ -185,11 +185,9 @@ end
 
 -- Record statistics
 hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
-    print(ent, dmg, took)
     if took then
         if ent:IsNPC() then
             if dmg:GetAttacker():IsPlayer() then
-                print(dmg)
                 local id = dmg:GetAttacker():SteamID()
                 if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
