@@ -10,7 +10,7 @@ function entmeta:Horde_AddWardenAura()
         ent:Horde_SetAuraRadius(self:GetNWEntity("HordeOwner"):Horde_GetWardenAuraRadius())
     else
         ent:Horde_SetAuraRadius(self:Horde_GetWardenAuraRadius())
-        self:Horde_AddWardenAuraEffects(self)
+        timer.Simple(0, function() self:Horde_AddWardenAuraEffects(self) end)
     end
     ent:Spawn()
     self.Horde_WardenAura = ent
@@ -19,10 +19,11 @@ end
 function entmeta:Horde_RemoveWardenAura()
     if not self:IsValid() then return end
     if self.Horde_WardenAura then
+        self.Horde_WardenAura:OnRemove()
         self.Horde_WardenAura:Remove()
         self.Horde_WardenAura = nil
         if self:IsPlayer() then
-            self:Horde_RemoveWardenAuraEffects()
+            timer.Simple(0, function() self:Horde_RemoveWardenAuraEffects() end)
         end
     end
 end
@@ -124,10 +125,7 @@ hook.Add("Horde_OnPlayerDamage", "Horde_WardenAuraDamage", function (ply, npc, b
 end)
 
 hook.Add("Horde_ResetStatus", "Horde_WardenAuraEffectsReset", function(ply)
-    ply.Horde_WardenAuraProvider = nil
-    ply.Horde_WardenAuraDamageBlock = nil
-    ply.Horde_WardenAuraHealthRegen = nil
-    ply.Horde_WardenAuraDamageBonus = nil
+    ply:Horde_RemoveWardenAuraEffects()
     ply.Horde_WardenAuraHealthRegenCurTime = CurTime()
 end)
 

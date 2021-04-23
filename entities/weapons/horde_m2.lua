@@ -9,6 +9,7 @@ SWEP.ViewModel					= "models/weapons/sanic/c_m2.mdl"
 SWEP.WorldModel					= "models/weapons/sanic/w_m2f2.mdl"
 SWEP.UseHands			        = true
 SWEP.ViewModelFOV      			= 50
+SWEP.Slot = 3
 
 SWEP.HoldType					= "smg"
 SWEP.Primary.Automatic			= true
@@ -19,7 +20,7 @@ SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo		= "none"
-SWEP.ReloadDelay 				= 0.5
+SWEP.ReloadDelay 				= 2
 SWEP.Delay = 0.08
 
 SWEP.ReloadSound = "vehicles/tank_readyfire1.wav"
@@ -58,12 +59,13 @@ function SWEP:PrimaryAttack()
                 flame:SetPos(trace.HitPos)
                 flame:SetOwner(self.Owner)
                 flame:SetKeyValue("DamageRadius",128)
-                flame:SetKeyValue("Damage",10)
+                flame:SetKeyValue("Damage",4)
                 flame:SetKeyValue("DamageDelay",0.32)
                 flame:SetKeyValue("DamageType", DMG_BURN)
                 flame:Spawn()
                 flame:Fire("TurnOn","",0)
                 flame:Fire("kill","",0.72)
+
                 if trace.HitWorld then
                     local nearbystuff = ents.FindInSphere(trace.HitPos, 100)
                     

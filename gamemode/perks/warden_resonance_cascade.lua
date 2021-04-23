@@ -19,6 +19,10 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "warden_resonance_cascade" then
         ply:Horde_SetEnableWardenAuraBuffBonus(nil)
         ply:Horde_SetWardenAuraRadius(ply:Horde_GetWardenAuraRadius() / 1.5)
-        ply:Horde_AddWardenAura()
+        if ply:Horde_GetPerk("warden_base") then
+            ply:Horde_AddWardenAura()
+        else
+            ply:Horde_RemoveWardenAura()
+        end
     end
 end

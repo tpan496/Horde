@@ -39,6 +39,11 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     dmginfo:ScaleDamage(bonus.more * (1 + bonus.increase))
     dmginfo:AddDamage(bonus.post_add)
     dmginfo:SetDamageCustom(HORDE.DMG_CALCULATED)
+
+    -- DMG_BURN for some reason does not apply, convert this to something else
+    if dmginfo:GetDamageType() == DMG_BURN then
+        dmginfo:SetDamageType(DMG_SLOWBURN)
+    end
 end
 
 hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, dmginfo)

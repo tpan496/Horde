@@ -16,6 +16,10 @@ end
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "warden_energize" then
         ply:Horde_SetEnableWardenAuraDamageBonus(nil)
-        ply:Horde_AddWardenAura()
+        if ply:Horde_GetPerk("warden_base") then
+            ply:Horde_AddWardenAura()
+        else
+            ply:Horde_RemoveWardenAura()
+        end
     end
 end
