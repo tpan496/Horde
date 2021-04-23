@@ -45,4 +45,8 @@ end
 
 function ENT:OnRemove()
     self.Removing = true
+    if not self.TouchedEntities then return end
+    for _, ent in pairs(self.TouchedEntities) do
+        ent:Horde_RemoveWardenAuraEffects()
+    end
 end
