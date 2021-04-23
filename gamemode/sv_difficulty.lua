@@ -14,7 +14,7 @@ local difficulty_realism = 2
 local difficulty_nightmare = 3
 
 -- Multipliers
-local difficulty_damage_multiplier = {1, 1.25, 1.5, 1.65}
+local difficulty_damage_multiplier = {1, 1.25, 1.5, 1.7}
 local difficulty_enemy_count_multiplier = {1, 1.3, 1.5, 1.5}
 local difficulty_reward_base_multiplier = {1, 0.8, 0.6, 0.5}
 HORDE.difficulty_health_multiplier = {1, 1.25, 1.5, 1.5}
@@ -33,8 +33,8 @@ HORDE.endless_health_multiplier = 1
 HORDE.endless_damage_multiplier = 1
 
 -- Mutation
-HORDE.difficulty_mutation_probability = {0, 0.05, 0.10, 0.15}
-HORDE.difficulty_elite_mutation_probability = {0, 0, 0.05, 0.25}
+HORDE.difficulty_mutation_probability = {0, 0.05, 0.10, 0.20}
+HORDE.difficulty_elite_mutation_probability = {0, 0.05, 0.10, 0.30}
 
 -- Hook settings
 -- Damage scaling/handling
