@@ -227,7 +227,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
             if not HORDE.player_damage_taken[id] then HORDE.player_damage_taken[id] = 0 end
             HORDE.player_damage_taken[id] = HORDE.player_damage_taken[id] + dmg:GetDamage()
         end
-   end
+    end
 end)
 
 hook.Add("ScaleNPCDamage", "Horde_HeadshotCounter", function (npc, hitgroup, dmg)
