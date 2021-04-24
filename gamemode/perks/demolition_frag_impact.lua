@@ -10,7 +10,7 @@ PERK.Hooks.EntityTakeDamage = function(victim, dmginfo)
     local attacker = dmginfo:GetAttacker()
     local ent = dmginfo:GetInflictor()
     if (victim:IsNPC() or victim:IsNextBot()) and IsValid(ent)
-            and ent:GetClass() == "npc_grenade_frag" and IsValid(attacker)
+            and (ent:GetClass() == "npc_grenade_frag" or ent:GetClass() == "arccw_thr_go_frag") and IsValid(attacker)
             and not dmginfo:IsExplosionDamage() and attacker:Horde_GetPerk("demolition_frag_impact") then
         local dmg = 125 * 1.5
         local rad = 250

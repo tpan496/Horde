@@ -229,6 +229,8 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,   0, "A standard frag grenade.\nGood for crowd control.",
     {Medic=false, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Warden=true}, 100, -1)
+    HORDE:CreateItem("Explosive",  "M67 Grenade",     "arccw_go_nade_frag",1500,  2, "M67 High Explosive Fragmentation Grenade.\nMilitary grade, does large amounts of Blast damage.",
+    {Demolition=true}, 150, -1)
     HORDE:CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         2000,  7, "Laser-guided rocket propulsion device.",
     {Demolition=true, Survivor=true}, 10, -1)
     HORDE:CreateItem("Explosive",  "RPG-7",          "arccw_horde_rpg7",   3000,  9, "Ruchnoy Protivotankoviy Granatomyot.\nAnti-tank rocket launcher developed by Soviet Union.",
@@ -245,6 +247,9 @@ function HORDE:GetDefaultItemsData()
     })
     game.AddAmmoType({
         name = "arccw_go_nade_molotov"
+    })
+    game.AddAmmoType({
+        name = "arccw_go_nade_frag"
     })
 
     --HORDE:CreateItem("Special",    "Combine AR2",    "weapon_ar2",         2250, 7, "Overwatch standard issue rifle.\nDark energy-powered assault rifle.",
