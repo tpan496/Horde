@@ -1,50 +1,44 @@
-SWEP.Author						= "Sanikku & Syntax_Errorsanic"
-SWEP.Category					= "ArcCW - Horde"
-SWEP.Purpose					= "Bring forth flames upon your enemies!"
-SWEP.Instructions				= "Left-Click: Fire\nReload: Regenerate Fuel"
-SWEP.Spawnable					= true
-SWEP.AdminSpawnable				= true
+SWEP.PrintName              = "M2 Flamethrower (Horde)"
+SWEP.Author					= "Sanikku, Syntax_Errorsanic, Gorlami"
+SWEP.Category				= "ArcCW - Horde"
+SWEP.Purpose				= "Bring forth flames upon your enemies!"
+SWEP.Instructions			= "Primary: Fire"
+SWEP.Spawnable				= true
+SWEP.AdminSpawnable			= true
 
-SWEP.ViewModel					= "models/weapons/sanic/c_m2.mdl"
-SWEP.WorldModel					= "models/weapons/sanic/w_m2f2.mdl"
-SWEP.UseHands			        = true
-SWEP.ViewModelFOV      			= 50
-SWEP.Slot = 3
+SWEP.ViewModel				= "models/weapons/sanic/c_m2.mdl"
+SWEP.WorldModel				= "models/weapons/sanic/w_m2f2.mdl"
+SWEP.UseHands			    = true
+SWEP.ViewModelFOV      		= 50
+SWEP.Slot                   = 3
 
-SWEP.HoldType					= "smg"
-SWEP.Primary.Automatic			= true
-SWEP.Primary.ClipSize			= 100
-SWEP.Primary.DefaultClip		= 100
-SWEP.Primary.Ammo				= "ar2"
+SWEP.HoldType				= "smg"
+SWEP.Primary.Automatic		= true
+SWEP.Primary.ClipSize		= 100
+SWEP.Primary.DefaultClip	= 100
+SWEP.Primary.Ammo			= "ar2"
 SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
+SWEP.Secondary.DefaultClip  = -1
 SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo		= "none"
-SWEP.ReloadDelay 				= 2
-SWEP.Delay = 0.08
-
-SWEP.ReloadSound = "vehicles/tank_readyfire1.wav"
+SWEP.Secondary.Ammo		    = "none"
+SWEP.ReloadDelay 			= 2
+SWEP.Delay                  = 0.08
+SWEP.ReloadSound            = "ambient/machines/keyboard2_clicks.wav"
 
 function SWEP:Initialize()
-	
 	self:SetWeaponHoldType( self.HoldType )
-	
 end
 
 function SWEP:Precache()
-
 	util.PrecacheSound("ambient/machines/keyboard2_clicks.wav")
-
 	util.PrecacheSound("ambient/machines/thumper_dust.wav")
 	util.PrecacheSound("ambient/fire/mtov_flame2.wav")
 	util.PrecacheSound("ambient/fire/ignite.wav")
-
 	util.PrecacheSound("vehicles/tank_readyfire1.wav")
-
 end
 
 function SWEP:PrimaryAttack()
-    if ( !self:CanPrimaryAttack() ) then return end
+    if (not self:CanPrimaryAttack()) then return end
 
     self:TakePrimaryAmmo(1)
     self.Owner:MuzzleFlash()
@@ -52,14 +46,14 @@ function SWEP:PrimaryAttack()
     if (SERVER) then
         local trace = self.Owner:GetEyeTrace()
         local Distance = self.Owner:GetPos():Distance(trace.HitPos)
-        if Distance < 520 then
+        --if Distance < 520 then
             local Ignite = function()
                 if !self:IsValid() then return end
                 local flame = ents.Create("point_hurt")
                 flame:SetPos(trace.HitPos)
                 flame:SetOwner(self.Owner)
                 flame:SetKeyValue("DamageRadius",128)
-                flame:SetKeyValue("Damage",4)
+                flame:SetKeyValue("Damage", 10)
                 flame:SetKeyValue("DamageDelay",0.32)
                 flame:SetKeyValue("DamageType", DMG_BURN)
                 flame:Spawn()
@@ -68,59 +62,34 @@ function SWEP:PrimaryAttack()
 
                 if trace.HitWorld then
                     local nearbystuff = ents.FindInSphere(trace.HitPos, 100)
-                    
+
                     for _, stuff in pairs(nearbystuff) do
                         if stuff != self.Owner then
-                            if stuff:GetPhysicsObject():IsValid() && !stuff:IsNPC() && !stuff:IsPlayer() then
-                                if !stuff:IsOnFire() then stuff:Ignite(math.random(16,32), 100) end
-                            end
-                            if stuff:IsPlayer() then
+                            if stuff:IsNPC() and (not stuff:GetNWEntity("HordeOwner"):IsPlayer()) then
                                 if stuff:GetPhysicsObject():IsValid() then
-                                    stuff:Ignite(1, 100)
-                                end
-                            end
-                            
-                            if stuff:IsNPC() then
-                                if stuff:GetPhysicsObject():IsValid() then
-                                    local npc = stuff:GetClass()
-                                    if npc == "npc_antlionguard" || npc == "npc_hunter" || npc == "npc_kleiner" || npc == "npc_gman" || npc == "npc_eli" || npc == "npc_alyx" || npc == "npc_mossman" || npc == "npc_breen" || npc == "npc_monk" || npc == "npc_vortigaunt" || npc == "npc_citizen" || npc == "npc_rebel" || npc == "npc_barney" || npc == "npc_magnusson" then
-                                        stuff:Fire("Ignite","",1)
-                                    end
                                     stuff:Ignite(math.random(12,16), 100)
                                 end
                             end
                         end
                     end
                 end
-                
+
                 if trace.Entity:IsValid() then
-                    if trace.Entity:GetPhysicsObject():IsValid() && !trace.Entity:IsNPC() && !trace.Entity:IsPlayer() then
-                        if !trace.Entity:IsOnFire() then trace.Entity:Ignite(math.random(16,32), 100) end
-                    end
-                    
-                    if trace.Entity:IsPlayer() then
-                        if trace.Entity:GetPhysicsObject():IsValid() then trace.Entity:Ignite(math.random(1,2), 100) end
-                    end
-                    
-                    if trace.Entity:IsNPC() then
+                    if trace.Entity:IsNPC() and (not trace.Entity:GetNWEntity("HordeOwner"):IsPlayer()) then
                         if trace.Entity:GetPhysicsObject():IsValid() then
-                            local npc = trace.Entity:GetClass()
-                            if npc == "npc_antlionguard" || npc == "npc_hunter" || npc == "npc_kleiner" || npc == "npc_gman" || npc == "npc_eli" || npc == "npc_alyx" || npc == "npc_mossman" || npc == "npc_breen" || npc == "npc_monk" || npc == "npc_vortigaunt" || npc == "npc_citizen" || npc == "npc_rebel" || npc == "npc_barney" || npc == "npc_magnusson" then
-                                trace.Entity:Fire("Ignite","",1)
-                            end
                             trace.Entity:Ignite(math.random(12,16), 100)
                         end
                     end
                 end
-                
+
                 if (SERVER) then
                     local firefx = EffectData()
                     firefx:SetOrigin(trace.HitPos)
-                    util.Effect("weapon_sanic_m2_explosion",firefx,true,true)
+                    util.Effect("m2_flame_explosion",firefx,true,true)
                 end
             end
-            timer.Simple(Distance/1520, Ignite)
-        end
+            timer.Simple(math.min(500, Distance)/1520, Ignite)
+        --end
     end
 end
 
@@ -137,12 +106,14 @@ end
 
 function SWEP:Think()
 	if self.Owner:KeyReleased(IN_ATTACK) then
+        if (not self:CanPrimaryAttack()) then return end
 		if (SERVER) then
 			self.Owner:EmitSound("ambient/fire/mtov_flame2.wav", 24, 100 )
 		end
 	end
-	
+
     if self.Owner:KeyDown(IN_ATTACK) then
+        if (not self:CanPrimaryAttack()) then return end
         if (SERVER) then
             self.Owner:EmitSound("ambient/fire/mtov_flame2.wav", math.random(27,35), math.random(32,152) )
             self.Owner:EmitSound("ambient/machines/thumper_dust.wav", math.random(27,35), math.random(32,152) )
@@ -154,12 +125,12 @@ function SWEP:Think()
             flamefx:SetStart(self.Owner:GetShootPos())
             flamefx:SetAttachment(1)
             flamefx:SetEntity(self.Weapon)
-            util.Effect("effect_sanic_m2_raflam",flamefx,true,true)
+            util.Effect("m2_flame",flamefx,true,true)
         end
     end
 end
 
 function SWEP:Reload()
-    self:EmitSound(Sound(self.ReloadSound)) 
-    self.Weapon:DefaultReload( ACT_VM_RELOAD );
+    self:EmitSound(Sound(self.ReloadSound))
+    self.Weapon:DefaultReload(ACT_VM_RELOAD);
 end

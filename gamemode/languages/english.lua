@@ -110,6 +110,7 @@ LANGUAGE["Class_Ghost"] = "Ghost"
 LANGUAGE["Class_Engineer"] = "Engineer"
 LANGUAGE["Class_Berserker"] = "Berserker"
 LANGUAGE["Class_Warden"] = "Warden"
+LANGUAGE["Class_Cremator"] = "Cremator"
 
 -- Default Class Extra Descriptions
 LANGUAGE["Class_Description_Survivor"] = [[
@@ -139,6 +140,9 @@ LANGUAGE["Class_Description_Berserker"] = [[
 Only has access to melee weapons.]]
 
 LANGUAGE["Class_Description_Warden"] = [[
+Has full access to shotguns and watchtowers (horde_watchtower).]]
+
+LANGUAGE["Class_Description_Cremator"] = [[
 Has full access to shotguns and watchtowers (horde_watchtower).]]
 
 

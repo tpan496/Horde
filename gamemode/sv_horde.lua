@@ -23,8 +23,16 @@ function entmeta:Horde_SetMostRecentAttacker(attacker)
 	self.most_recent_attacker = attacker
 end
 
+function entmeta:Horde_SetMostRecentFireAttacker(attacker)
+	self.most_recent_fire_attacker = attacker
+end
+
 function entmeta:Horde_GetMostRecentAttacker()
 	return self.most_recent_attacker
+end
+
+function entmeta:Horde_GetMostRecentFireAttacker()
+	return self.most_recent_fire_attacker
 end
 
 function entmeta:Horde_SetName(name)

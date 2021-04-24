@@ -37,7 +37,6 @@ SWEP.Penetration = 3
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
-
 SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 45 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 45
