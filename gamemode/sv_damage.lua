@@ -16,7 +16,6 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     end
 
     if attacker:GetOwner():IsPlayer() then
-        dmginfo:SetInflictor(attacker)
         dmginfo:SetAttacker(attacker:GetOwner())
     end
 
@@ -43,23 +42,32 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     -- DMG_BURN for some reason does not apply, convert this to something else
     if dmginfo:GetDamageType() == DMG_BURN then
         dmginfo:SetDamageType(DMG_SLOWBURN)
+        npc:Horde_SetMostRecentFireAttacker(ply)
     end
 end
 
 hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, dmginfo)
     local attacker = dmginfo:GetAttacker()
+    if not target:IsNPC() then return end
+    
     if attacker:GetNWEntity("HordeOwner"):IsPlayer() then
         dmginfo:SetInflictor(attacker)
         dmginfo:SetAttacker(attacker:GetNWEntity("HordeOwner"))
     end
 
     if attacker:GetOwner():IsPlayer() then
-        dmginfo:SetInflictor(attacker)
         dmginfo:SetAttacker(attacker:GetOwner())
     end
 
-    if attacker:IsPlayer() and target:IsNPC() and (not target:GetNWEntity("HordeOwner"):IsPlayer())then
-        HORDE:ApplyDamage(target, HITGROUP_GENERIC, dmginfo)
+    if target:IsNPC() and (not target:GetNWEntity("HordeOwner"):IsPlayer()) then
+        if attacker:GetClass() == "entityflame" then
+            if target:Horde_GetMostRecentFireAttacker() then
+                dmginfo:SetAttacker(target:Horde_GetMostRecentFireAttacker())
+            end
+        end
+        if attacker:IsPlayer() then
+            HORDE:ApplyDamage(target, HITGROUP_GENERIC, dmginfo)
+        end
     end
 end)
 
@@ -94,6 +102,8 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if bonus.resistance >= 1.0 then return true end
     dmg:ScaleDamage(bonus.less * (1 - bonus.resistance))
     dmg:SubtractDamage(bonus.block)
+
+    if dmg:GetDamage() < 0.5 then return true end
 end)
 
 -- Enemy damage.

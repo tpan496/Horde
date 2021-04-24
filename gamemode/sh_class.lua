@@ -10,6 +10,7 @@ HORDE.Class_Ghost = "Ghost"
 HORDE.Class_Engineer = "Engineer"
 HORDE.Class_Berserker = "Berserker"
 HORDE.Class_Warden = "Warden"
+HORDE.Class_Cremator = "Cremator"
 
 -- Creates a Horde class
 function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, base_perk, perks, order, display_name, model, icon)
@@ -90,7 +91,7 @@ end
 function HORDE:GetDefaultClassesData()
     HORDE:CreateClass(
         HORDE.Class_Survivor,
-        "Have access to all weapons except for exclusive and special weapons.\n\nLimited access to attachments.",
+        "Has access to all weapons except for exclusive and special weapons.\n\nLimited access to attachments.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -105,7 +106,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Assault,
-        "Have full access to assault rifles.",
+        "Has full access to assault rifles.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -120,7 +121,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Heavy,
-        "Have full access to machine guns and high weight weapons.",
+        "Has full access to machine guns and high weight weapons.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -135,7 +136,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Medic,
-        "Have acesss to most light weapons and medical tools.",
+        "Has acesss to most light weapons and medical tools.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -150,7 +151,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Demolition,
-        "Have full access to explosive weapons.",
+        "Has full access to explosive weapons.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -165,7 +166,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Ghost,
-        "Have access to sniper rifles and selected light weapons.\n\nHave access to suppressors and sniper scopes.",
+        "Has access to sniper rifles and selected light weapons.\n\nHave access to suppressors and sniper scopes.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -180,7 +181,7 @@ function HORDE:GetDefaultClassesData()
 
     HORDE:CreateClass(
         HORDE.Class_Engineer,
-        "Have access to special weapons and equipment.",
+        "Has access to special weapons and equipment.",
         100,
         GetConVar("horde_base_walkspeed"):GetInt(),
         GetConVar("horde_base_runspeed"):GetInt(),
@@ -221,6 +222,21 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Coverage", choices = {"warden_ex_machina", "warden_resonance_cascade"}},
         },
         8
+    )
+
+    HORDE:CreateClass(
+        HORDE.Class_Cremator,
+        "Has access to fire-based weaponry.",
+        100,
+        GetConVar("horde_base_walkspeed"):GetInt(),
+        GetConVar("horde_base_runspeed"):GetInt(),
+        "cremator_base",
+        {
+            [1] = {title = "Survival", choices = {"medic_antibiotics", "assault_charge"}},
+            [2] = {title = "Improvise", choices = {"berserker_breathing_technique", "demolition_frag_cluster"}},
+            [3] = {title = "Inspired Learning", choices = {"heavy_liquid_armor", "ghost_headhunter"}},
+        },
+        9
     )
 end
 

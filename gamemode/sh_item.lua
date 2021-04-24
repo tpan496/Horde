@@ -236,20 +236,31 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Explosive",  "SLAM",           "weapon_slam",        400,   2, "Selectable Lightweight Attack Munition.\nRMB to detonate. Attach to wall to active laser mode.",
     {Demolition=true, Survivor=true}, 0, 100)
     HORDE:CreateItem("Explosive",  "Incendiary Grenade",   "arccw_go_nade_incendiary",        1500,   2, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
-    {Demolition=true}, 100, -1)
+    {Cremator=true}, 100, -1)
+    HORDE:CreateItem("Explosive",  "Molotov",   "arccw_go_nade_molotov",        1500,   2, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
+    {Cremator=true}, 100, -1)
+
+    game.AddAmmoType({
+        name = "arccw_go_nade_incendiary"
+    })
+    game.AddAmmoType({
+        name = "arccw_go_nade_molotov"
+    })
 
     --HORDE:CreateItem("Special",    "Combine AR2",    "weapon_ar2",         2250, 7, "Overwatch standard issue rifle.\nDark energy-powered assault rifle.",
     --{Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 5, 100)
-    HORDE:CreateItem("Special",    "Heat Crossbow",  "weapon_crossbow",    800,   4, "Improvised sniper weapon.\nShoots scorching rebars.",
-    {Ghost=true, Engineer=true}, 2, -1)
-    HORDE:CreateItem("Special",    "Turret",         "npc_turret_floor",   900,  0, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
+    HORDE:CreateItem("Special",    "Heat Crossbow",  "weapon_crossbow",     800,  4, "Improvised sniper weapon.\nShoots scorching rebars.",
+    {Ghost=true, Engineer=true, Cremator=true}, 2, -1)
+    HORDE:CreateItem("Special",    "Turret",         "npc_turret_floor",    900,  0, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3})
-    HORDE:CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,   1, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
+    HORDE:CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,  1, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
     {Medic=true}, 100, -1)
-    HORDE:CreateItem("Special",    "Throwing Knives", "arccw_go_nade_knife", 800,  2, "Ranged throwing knives.\nThrown blades are retrievable.",
+    HORDE:CreateItem("Special",    "Throwing Knives", "arccw_go_nade_knife",800,  2, "Ranged throwing knives.\nThrown blades are retrievable.",
     {Berserker=true}, 10, -1)
     HORDE:CreateItem("Special",    "Watchtower",      "horde_watchtower",   800,  0, "A watchtower that provides resupply.\nGenerates 1 ammobox every 30 seconds.\n(Entity Class: horde_watchtower)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2})
+    HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",          2500,  7, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
+    {Cremator=true}, 50, -1)
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
     nil, 10, -1)

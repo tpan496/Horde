@@ -48,7 +48,9 @@ net.Receive("Horde_SyncStatus", function()
     local status = net.ReadUInt(8)
     local stack = net.ReadUInt(3)
 
-    LocalPlayer():SetStatus(status, stack)
+    if LocalPlayer().SetStatus then
+        LocalPlayer():SetStatus(status, stack)
+    end
 end)
 
 net.Receive("Horde_ClearStatus", function()
