@@ -137,6 +137,9 @@ Tiene acceso a equipamiento y armas especiales.]]
 LANGUAGE["Class_Description_Berserker"] = [[
 Solo tiene acceso a armas Cuerpo a Cuerpo.]]
 
+LANGUAGE["Class_Description_Warden"] = [[
+Has full access to shotguns and watchtowers (horde_watchtower).]]
+
 
 -- Default Base Perks
 LANGUAGE.Perk_survivor_base = [[
@@ -187,6 +190,13 @@ La Clase Berserker se concentra en combate Cuerpo a C. que puede ser usado tanto
 Dificultad: ALTA
 {1} resistencia al daño en General.
 {2} resistencia al daño por Veneno.]]
+
+LANGUAGE["Perk_warden_base"] = [[
+The Warden is a support class that uses aura effects and structures to buff teammates.
+Complexity: MEDIUM
+
+Players near you are affected by Warden Aura.
+Warden Aura blocks {1} damage.]]
 
 
 -- Default Perks: Survivor
@@ -429,6 +439,37 @@ Aumenta un {1} el daño cuerpo a cuerpo.
 Tus golpes cuerpo a cuerpo pueden salpicar.
 Daño de salpicadura tiene un {2} de tu daño cuerpo a cuerpo normal.]]
 
+-- Default Perks: Warden
+LANGUAGE["Perk_Title_Warden_Tier_1"] = [[Sustain]]
+LANGUAGE["Perk_Title_warden_bulwark"] = [[Bulwark]]
+LANGUAGE["Perk_warden_bulwark"] = [[
+Watchtowers generate 1 armor battery every {1} seconds.]]
+
+LANGUAGE["Perk_Title_warden_vitality"] = [[Vitality]]
+LANGUAGE["Perk_warden_vitality"] = [[
+Aura provides {1} health regeneration per second.]]
+
+LANGUAGE["Perk_Title_Warden_Tier_2"] = [[Resource Utilization]]
+LANGUAGE["Perk_Title_warden_restock"] = [[Quick Restock]]
+LANGUAGE["Perk_warden_restock"] = [[
+Watchtowers restock cooldown decreased by {1}.]]
+
+LANGUAGE["Perk_Title_warden_energize"] = [[Energize]]
+LANGUAGE["Perk_warden_energize"] = [[
+Aura adds {1} base damage to attacks.]]
+
+LANGUAGE["Perk_Title_Warden_Tier_3"] = [[Coverage]]
+LANGUAGE["Perk_Title_warden_ex_machina"] = [[Deus Ex Machina]]
+LANGUAGE["Perk_warden_ex_machina"] = [[
+Watchtowers have Warden Aura.
+Watchtowers generate a shockwave every {1} seconds.
+Shockwave deals {2} Shock damage.]]
+
+LANGUAGE["Perk_Title_warden_resonance_cascade"] = [[Resonance Cascade]]
+LANGUAGE["Perk_warden_resonance_cascade"] = [[
+Aura effect increased by {1}.
+Aura radius increased by {2}.]]
+
 
 -- Default Config Shop Items
 -- Optional
@@ -544,6 +585,12 @@ Steyr TMP.
 Una ametralladora de calibre Parabellum de 9 × 19 mm de fuego selecto.
 ]]
 
+LANGUAGE["Item_Anaconda"] = [[Anaconda]]
+LANGUAGE["Item_Desc_Anaconda"] = [[
+Colt Anaconda.
+Chambered for the powerful .44 Magnum.
+]]
+
 
 LANGUAGE["Item_SMG1"] = [[SMG1]]
 LANGUAGE["Item_Desc_SMG1"] = [[
@@ -630,6 +677,18 @@ LANGUAGE["Item_XM1014"] = [[XM1014]]
 LANGUAGE["Item_Desc_XM1014"] = [[
 Benelli M4 Super 90.
 Escopeta completamente automatica.
+]]
+
+LANGUAGE["Item_SPAS-12"] = [[SPAS-12]]
+LANGUAGE["Item_Desc_SPAS-12"] = [[
+Franchi SPAS-12.
+A combat shotgun manufactured by Italian firearms company Franchi.
+]]
+
+LANGUAGE["Item_Striker"] = [[Striker]]
+LANGUAGE["Item_Desc_Striker"] = [[
+Armsel Striker.
+A 12-gauge shotgun with a revolving cylinder from South Africa.
 ]]
 
 LANGUAGE["Item_AA12"] = [[AA12]]
