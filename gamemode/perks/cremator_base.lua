@@ -1,5 +1,5 @@
 PERK.PrintName = "Cremator Base"
-PERK.Description = "The Cremator offers a wide variety of effects revolving around Fire damage.\nComplexity: EASY\n\n85% increased Fire damage resistance.\nAttacks have 10% chance to Ignite enemies."
+PERK.Description = "The Cremator builds its offense and defense around Fire damage.\n\n85% increased Fire damage resistance.\nAttacks have 15% chance to Ignite enemies."
 PERK.Params = {
     [2] = {value = 0.85, percent = true},
 }

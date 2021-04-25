@@ -43,6 +43,11 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     if dmginfo:GetDamageType() == DMG_BURN then
         dmginfo:SetDamageType(DMG_SLOWBURN)
         npc:Horde_SetMostRecentFireAttacker(ply)
+        npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
+    end
+
+    if dmginfo:GetInflictor():GetClass() == "entityflame" then
+        dmginfo:SetDamagePosition(npc:GetPos())
     end
 end
 
@@ -65,7 +70,7 @@ hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, 
                 dmginfo:SetAttacker(target:Horde_GetMostRecentFireAttacker())
             end
         end
-        if attacker:IsPlayer() then
+        if dmginfo:GetAttacker():IsPlayer() then
             HORDE:ApplyDamage(target, HITGROUP_GENERIC, dmginfo)
         end
     end
