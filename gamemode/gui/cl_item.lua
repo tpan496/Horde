@@ -70,6 +70,24 @@ function PANEL:SetData(item, description_panel)
     price_panel:SetSize(80, price_panel:GetTall())
     price_panel:SetFont("Item")
     self.price_panel = price_panel
+
+    --[[
+    local icon
+    local wpn = weapons.Get(self.item.class)
+    if not wpn then return end
+    icon = wpn.WepSelectIcon
+    if not icon or icon == surface.GetTextureID("weapons/swep") then
+        if wpn.ArcCW then
+            local path = "arccw/weaponicons/" .. self.item.class
+            local mat = Material(path)
+            local tex = mat:GetTexture("$basetexture")
+            if tex then
+                if tex:GetName() == "error" then return end
+                local texpath = tex:GetName()
+                icon = surface.GetTextureID(texpath)
+            end
+        end
+    end--]]
 end
 
 function PANEL:Paint()
@@ -109,6 +127,10 @@ function PANEL:Paint()
             self.weight_panel:SetVisible(false)
         else
             self.weight_panel:SetVisible(true)
+            if not self.icon or self.icon < 0 or self.icon == surface.GetTextureID( "weapons/swep" ) then return end
+            surface.SetTexture(self.icon)
+            surface.SetDrawColor(255, 255, 255, 255)
+            surface.DrawTexturedRect(self:GetWide() - 256, -5, 96, 48)
         end
     end
 end

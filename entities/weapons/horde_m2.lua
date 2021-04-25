@@ -25,6 +25,14 @@ SWEP.ReloadDelay 			= 2
 SWEP.Delay                  = 0.08
 SWEP.ReloadSound            = "ambient/machines/keyboard2_clicks.wav"
 
+if (CLIENT) then
+	SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/horde_m2")
+    SWEP.DrawWeaponInfoBox	= false
+    SWEP.BounceWeaponIcon = false
+	killicon.Add("horde_m2", "vgui/hud/horde_m2", color_white)
+    killicon.Add("entityflame", "vgui/hud/fire", color_white)
+end
+
 function SWEP:Initialize()
 	self:SetWeaponHoldType( self.HoldType )
 end
@@ -44,52 +52,31 @@ function SWEP:PrimaryAttack()
     self.Owner:MuzzleFlash()
     self.Weapon:SetNextPrimaryFire( CurTime() + self.Delay )
     if (SERVER) then
-        local trace = self.Owner:GetEyeTrace()
+        local eyetrace = self.Owner:GetEyeTrace()
+        local tracedata = {}
+        tracedata.start = self.Owner:GetShootPos()
+        tracedata.endpos = self.Owner:GetShootPos() + (self.Owner:GetAimVector() * 500)
+        tracedata.filter = self.Owner
+        tracedata.mins = Vector(-25,-25,-25)
+        tracedata.maxs = Vector(25,25,25)
+        local trace = util.TraceHull(tracedata)
         local Distance = self.Owner:GetPos():Distance(trace.HitPos)
-        --if Distance < 520 then
-            local Ignite = function()
-                if !self:IsValid() then return end
-                local flame = ents.Create("point_hurt")
-                flame:SetPos(trace.HitPos)
-                flame:SetOwner(self.Owner)
-                flame:SetKeyValue("DamageRadius",128)
-                flame:SetKeyValue("Damage", 10)
-                flame:SetKeyValue("DamageDelay",0.32)
-                flame:SetKeyValue("DamageType", DMG_BURN)
-                flame:Spawn()
-                flame:Fire("TurnOn","",0)
-                flame:Fire("kill","",0.72)
-
-                if trace.HitWorld then
-                    local nearbystuff = ents.FindInSphere(trace.HitPos, 100)
-
-                    for _, stuff in pairs(nearbystuff) do
-                        if stuff != self.Owner then
-                            if stuff:IsNPC() and (not stuff:GetNWEntity("HordeOwner"):IsPlayer()) then
-                                if stuff:GetPhysicsObject():IsValid() then
-                                    stuff:Ignite(math.random(12,16), 100)
-                                end
-                            end
-                        end
-                    end
-                end
-
-                if trace.Entity:IsValid() then
-                    if trace.Entity:IsNPC() and (not trace.Entity:GetNWEntity("HordeOwner"):IsPlayer()) then
-                        if trace.Entity:GetPhysicsObject():IsValid() then
-                            trace.Entity:Ignite(math.random(12,16), 100)
-                        end
-                    end
-                end
-
-                if (SERVER) then
-                    local firefx = EffectData()
-                    firefx:SetOrigin(trace.HitPos)
-                    util.Effect("m2_flame_explosion",firefx,true,true)
-                end
+        local Ignite = function()
+            if not self:IsValid() then return end
+            local dmg = DamageInfo()
+            dmg:SetAttacker(self.Owner)
+            dmg:SetInflictor(self)
+            dmg:SetDamageType(DMG_BURN)
+            dmg:SetDamage(8)
+            util.BlastDamageInfo(dmg, trace.HitPos, 128)
+            
+            if (SERVER) and trace.Hit then
+                local firefx = EffectData()
+                firefx:SetOrigin(trace.HitPos)
+                util.Effect("m2_flame_explosion",firefx,true,true)
             end
-            timer.Simple(math.min(500, Distance)/1520, Ignite)
-        --end
+        end
+        timer.Simple(math.min(500, Distance)/1520, Ignite)
     end
 end
 
@@ -131,6 +118,7 @@ function SWEP:Think()
 end
 
 function SWEP:Reload()
+    if self:Clip1() >= self:GetMaxClip1() then return end
     self:EmitSound(Sound(self.ReloadSound))
     self.Weapon:DefaultReload(ACT_VM_RELOAD);
 end
