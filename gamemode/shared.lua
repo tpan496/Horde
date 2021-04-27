@@ -8,6 +8,18 @@ CreateConVar("horde_enable_player_collision", 0, {FCVAR_SERVER_CAN_EXECUTE, FCVA
 
 DeriveGamemode("sandbox")
 
+function GM:Initialize()
+    game.AddAmmoType({
+        name = "arccw_go_nade_incendiary"
+    })
+    game.AddAmmoType({
+        name = "arccw_nade_medic"
+    })
+    game.AddAmmoType({
+        name = "arccw_nade_knife"
+    })
+end
+
 function GM:PlayerLoadout(ply) ply:StripWeapons() end
 
 local function CheckAllowHook(hook_name)
