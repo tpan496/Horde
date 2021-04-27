@@ -76,7 +76,3 @@ sound.Add({
     volume = 1.0,
     sound = "arccw_go/hegrenade/pinpull.wav"
 })
-
-game.AddAmmoType({
-    name = "arccw_nade_medic"
-})
