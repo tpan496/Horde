@@ -238,13 +238,6 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Explosive",  "Incendiary Grenade",   "arccw_go_nade_incendiary",        1500,   2, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
     {Demolition=true}, 100, -1)
 
-    game.AddAmmoType({
-        name = "arccw_go_nade_incendiary"
-    })
-    game.AddAmmoType({
-        name = "arccw_go_nade_molotov"
-    })
-
     --HORDE:CreateItem("Special",    "Combine AR2",    "weapon_ar2",         2250, 7, "Overwatch standard issue rifle.\nDark energy-powered assault rifle.",
     --{Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 5, 100)
     HORDE:CreateItem("Special",    "Heat Crossbow",  "weapon_crossbow",    800,   4, "Improvised sniper weapon.\nShoots scorching rebars.",
