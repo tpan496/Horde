@@ -184,7 +184,7 @@ function HORDE:GetDefaultItemsData()
     {Survivor=true, Warden=true}, 15, -1)
     HORDE:CreateItem("Shotgun",    "Striker",        "arccw_horde_striker", 2500, 8, "Armsel Striker.\nA 12-gauge shotgun with a revolving cylinder from South Africa.",
     {Warden=true}, 15, -1)
-    HORDE:CreateItem("Shotgun",    "Trench Gun",      "arccw_horde_trenchgun", 2500, 8, "Winchester Model 1200.\nShoots incendiary pellets.",
+    HORDE:CreateItem("Shotgun",    "Trench Gun",      "arccw_horde_trenchgun", 2500, 7, "Winchester Model 1200.\nShoots incendiary pellets.",
     {Warden=true, Cremator=true}, 15, -1)
     HORDE:CreateItem("Shotgun",    "AA12",           "arccw_horde_aa12",  3000, 10, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
     {Heavy=true, Survivor=true, Warden=true}, 25, -1)
@@ -262,7 +262,7 @@ function HORDE:GetDefaultItemsData()
     {Berserker=true}, 10, -1)
     HORDE:CreateItem("Special",    "Watchtower",      "horde_watchtower",     800,  0, "A watchtower that provides resupply.\nGenerates 1 ammobox every 30 seconds.\n(Entity Class: horde_watchtower)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2})
-    HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",            2500,  7, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
+    HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",            2500,  8, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
     {Cremator=true}, 50, -1)
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
