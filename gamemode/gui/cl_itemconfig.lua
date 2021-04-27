@@ -319,7 +319,7 @@ function PANEL:Init()
             for _, class in pairs(HORDE.classes) do
                 local editor = vgui.Create("DCheckBoxLabel", panel)
                 editor:SetSize(75, height / 2)
-                if i < 4 then
+                if i <= 4 then
                     editor:SetPos(start_pos, 25)
                     start_pos = start_pos + 75
                 else

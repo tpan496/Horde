@@ -34,7 +34,7 @@ function EFFECT:Init(data)
                 FlameParticle:SetEndAlpha(0)
 
                 FlameParticle:SetStartSize(0)
-                FlameParticle:SetEndSize(64)
+                FlameParticle:SetEndSize(64 * data:GetScale())
 
                 FlameParticle:SetRoll(math.Rand(-210, 210))
                 FlameParticle:SetRollDelta(math.Rand(-3.2, 3.2))

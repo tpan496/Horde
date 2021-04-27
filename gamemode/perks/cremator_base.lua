@@ -1,17 +1,22 @@
 PERK.PrintName = "Cremator Base"
-PERK.Description = "The Cremator builds its offense and defense around Fire damage.\n\n85% increased Fire damage resistance.\nAttacks have 15% chance to Ignite enemies."
+PERK.Description = "The Cremator builds its offense and defense around Fire damage.\n\n{1} increased Fire damage resistance.\nAttacks have {2} chance to Ignite enemies.\n\nIgnite base duration is {3}.\nIgnite deals {4} of most recent damage received over time."
 PERK.Params = {
-    [2] = {value = 0.85, percent = true},
+    [1] = {value = 0.85, percent = true},
+    [2] = {value = 0.15, percent = true},
+    [3] = {value = 4},
+    [4] = {value = 0.025, percent = true},
 }
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "cremator_base" then
+        ply:Horde_SetApplyIgniteChance(ply:Horde_GetApplyIgniteChance() + 0.15)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "cremator_base" then
+        ply:Horde_SetApplyIgniteChance(ply:Horde_GetApplyIgniteChance() - 0.15)
     end
 end
 

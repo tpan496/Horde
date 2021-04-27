@@ -148,6 +148,8 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true, Warden=true}, 8, -1)
     HORDE:CreateItem("Pistol",     "TMP",            "arccw_mw2_tmp",     900,  3, "Steyr TMP.\nA select-fire 9×19mm Parabellum caliber machine pistol.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true, Warden=true}, 8, -1)
+    HORDE:CreateItem("Pistol",     "Flare Gun",      "arccw_horde_flaregun",  1250,  4, "Orion Safety Flare Gun.\nIgnites enemies and deals Fire damage.",
+    {Cremator=true}, 8, -1)
 
     HORDE:CreateItem("SMG",        "SMG1",           "weapon_smg1",       750, 3, "A compact, fully automatic firearm.\nArmed with an M203 launcher.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false, Warden=true}, 3, 50)
@@ -182,6 +184,8 @@ function HORDE:GetDefaultItemsData()
     {Survivor=true, Warden=true}, 15, -1)
     HORDE:CreateItem("Shotgun",    "Striker",        "arccw_horde_striker", 2500, 8, "Armsel Striker.\nA 12-gauge shotgun with a revolving cylinder from South Africa.",
     {Warden=true}, 15, -1)
+    HORDE:CreateItem("Shotgun",    "Trench Gun",      "arccw_horde_trenchgun", 2500, 8, "Winchester Model 1200.\nShoots incendiary pellets.",
+    {Warden=true, Cremator=true}, 15, -1)
     HORDE:CreateItem("Shotgun",    "AA12",           "arccw_horde_aa12",  3000, 10, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
     {Heavy=true, Survivor=true, Warden=true}, 25, -1)
 
@@ -228,11 +232,13 @@ function HORDE:GetDefaultItemsData()
     {Heavy=true}, 35, -1)
 
     HORDE:CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,   0, "A standard frag grenade.\nGood for crowd control.",
-    {Medic=false, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Warden=true}, 100, -1)
+    {Medic=false, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Warden=true, Cremator=true}, 100, -1)
     HORDE:CreateItem("Explosive",  "M67 Grenade",     "arccw_go_nade_frag",1500,  2, "M67 High Explosive Fragmentation Grenade.\nMilitary grade, does large amounts of Blast damage.",
     {Demolition=true}, 150, -1)
     HORDE:CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         2000,  7, "Laser-guided rocket propulsion device.",
     {Demolition=true, Survivor=true}, 10, -1)
+    HORDE:CreateItem("Explosive",  "Grenade Launcher",  "arccw_horde_grenade_launcher", 2500,  7, "Grenade Launcher.\nShoots grenades the explodes on impact.",
+    {Demolition=true}, 10, -1)
     HORDE:CreateItem("Explosive",  "RPG-7",          "arccw_horde_rpg7",   3000,  9, "Ruchnoy Protivotankoviy Granatomyot.\nAnti-tank rocket launcher developed by Soviet Union.",
     {Demolition=true}, 15, -1)
     HORDE:CreateItem("Explosive",  "SLAM",           "weapon_slam",        400,   2, "Selectable Lightweight Attack Munition.\nRMB to detonate. Attach to wall to active laser mode.",
@@ -241,16 +247,8 @@ function HORDE:GetDefaultItemsData()
     {Cremator=true}, 100, -1)
     HORDE:CreateItem("Explosive",  "Molotov",   "arccw_go_nade_molotov",        1500,   2, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
     {Cremator=true}, 100, -1)
-
-    game.AddAmmoType({
-        name = "arccw_go_nade_incendiary"
-    })
-    game.AddAmmoType({
-        name = "arccw_go_nade_molotov"
-    })
-    game.AddAmmoType({
-        name = "arccw_go_nade_frag"
-    })
+    HORDE:CreateItem("Explosive",  "Incendiary Launcher",  "arccw_horde_incendiary_launcher", 3000,  8, "Incendiary Grenade Launcher.\nShoots incendiary grenades the erupt into flames on impact.",
+    {Cremator=true}, 50, -1)
 
     --HORDE:CreateItem("Special",    "Combine AR2",    "weapon_ar2",         2250, 7, "Overwatch standard issue rifle.\nDark energy-powered assault rifle.",
     --{Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 5, 100)
@@ -262,9 +260,9 @@ function HORDE:GetDefaultItemsData()
     {Medic=true}, 100, -1)
     HORDE:CreateItem("Special",    "Throwing Knives", "arccw_go_nade_knife",800,  2, "Ranged throwing knives.\nThrown blades are retrievable.",
     {Berserker=true}, 10, -1)
-    HORDE:CreateItem("Special",    "Watchtower",      "horde_watchtower",   800,  0, "A watchtower that provides resupply.\nGenerates 1 ammobox every 30 seconds.\n(Entity Class: horde_watchtower)",
+    HORDE:CreateItem("Special",    "Watchtower",      "horde_watchtower",     800,  0, "A watchtower that provides resupply.\nGenerates 1 ammobox every 30 seconds.\n(Entity Class: horde_watchtower)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2})
-    HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",          2500,  7, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
+    HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",            2500,  7, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
     {Cremator=true}, 50, -1)
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
