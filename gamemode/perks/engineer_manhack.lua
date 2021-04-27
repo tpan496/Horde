@@ -17,7 +17,9 @@ local function SpawnManhack(ply)
 
     local ent = ents.Create(class)
     local pos = ply:GetPos()
-    local drop_pos = pos + VectorRand()
+    local dis = VectorRand()
+    dis.z = math.max(8, dis.z)
+    local drop_pos = pos + dis
     ent:SetPos(drop_pos)
     ply:Horde_AddDropEntity(ent:GetClass(), ent)
     ent:SetNWEntity("HordeOwner", ply)
