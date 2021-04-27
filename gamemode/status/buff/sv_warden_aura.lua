@@ -114,8 +114,8 @@ hook.Add("PlayerTick", "Horde_WardenAuraHealthRegen", function(ply, mv)
     end
 end)
 
-hook.Add("Horde_OnPlayerDamage", "Horde_WardenAuraDamage", function (ply, npc, bonus, hitgroup)
-    if ply.Horde_WardenAuraDamageBonus then
+hook.Add("Horde_OnPlayerDamage", "Horde_WardenAuraDamage", function (ply, npc, bonus, hitgroup, dmginfo)
+    if ply.Horde_WardenAuraDamageBonus and dmginfo:GetInflictor():GetClass() ~= "entityflame" then
         local amount = 8
         if ply.Horde_WardenAuraProvider.Horde_EnableWardenAuraBuffBonus then
             amount = 12

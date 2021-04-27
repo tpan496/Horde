@@ -10,15 +10,15 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "RPG7"
-SWEP.TrueName = "Rocket Lawwncher"
-SWEP.Trivia_Class = "Rocket Launcher"
-SWEP.Trivia_Desc = "A custom made Rocket launcher"
+SWEP.PrintName = "Incendiary Launcher"
+SWEP.TrueName = "Incendiary Launcher"
+SWEP.Trivia_Class = "Incendiary Launcher"
+SWEP.Trivia_Desc = "Launches an incendiary grenade that explodes on impact."
 SWEP.Trivia_Manufacturer = "???"
-SWEP.Trivia_Calibre = "Rockets"
-SWEP.Trivia_Mechanism = "Electric pulse"
-SWEP.Trivia_Country = "UK"
-SWEP.Trivia_Year = 1960
+SWEP.Trivia_Calibre = "Grenade"
+SWEP.Trivia_Mechanism = "Projectile Launcher"
+SWEP.Trivia_Country = "???"
+SWEP.Trivia_Year = 2015
 
 SWEP.Slot = 3
 
@@ -26,28 +26,28 @@ SWEP.Spawnable = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/vj_weapons/c_rpg7.mdl"
-SWEP.WorldModel = "models/vj_weapons/w_ins_rpg7.mdl"
+SWEP.ViewModel = "models/vj_weapons/c_e5.mdl"
+SWEP.WorldModel = "models/vj_weapons/w_e5.mdl"
 SWEP.ViewModelFOV = 60
 
 SWEP.Damage = 500
 SWEP.DamageMin = 500 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 0
-SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "obj_vj_rocket" -- entity to fire, if any
-SWEP.MuzzleVelocity = 2000 -- projectile or phys bullet muzzle velocity
+SWEP.DamageType = DMG_BURN
+SWEP.ShootEntity = "obj_vj_incendiary" -- entity to fire, if any
+SWEP.MuzzleVelocity = 1500 -- projectile or phys bullet muzzle velocity
 
-SWEP.CanFireUnderwater = false
+SWEP.CanFireUnderwater = true
 
 SWEP.TracerNum = 1 -- tracer every X
 SWEP.TracerCol = Color(255, 25, 25)
 SWEP.TracerWidth = 3
 
 SWEP.ChamberSize = 0 -- how many rounds can be chambered.
-SWEP.Primary.ClipSize = 1 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 1
-SWEP.ReducedClipSize = 1
+SWEP.Primary.ClipSize = 10 -- DefaultClip is automatically set.
+SWEP.ExtendedClipSize = 10
+SWEP.ReducedClipSize = 10
 
 SWEP.Recoil = 5
 SWEP.RecoilSide = 1
@@ -69,14 +69,15 @@ SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a deg
 SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 250
 
-SWEP.Primary.Ammo = "RPG_Round" -- what ammo type the gun uses
+SWEP.Primary.Ammo = "SMG1" -- what ammo type the gun uses
 
 SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound = "vj_weapons/rpg/rpg_fire.wav"
-SWEP.ShootSoundSilenced = "vj_weapons/rpg/rpg_fire_far.wav"
-SWEP.DistantShootSound = "vj_weapons/rpg/rpg_fire_far.wav"
+SWEP.ShootSound = "weapons/grenade_launcher1.wav"
+SWEP.ShootSoundSilenced = nil
+SWEP.DistantShootSound = nil
+SWEP.ReloadSound = "vj_weapons/blaster/blaster_reload.wav"
 
 --SWEP.MuzzleEffect = "muzzleflash_pistol"
 SWEP.ShellModel = "models/shells/shell_9mm.mdl"
@@ -95,14 +96,14 @@ SWEP.ProceduralIronFire = false
 SWEP.CaseBones = {}
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-3, 0, 2),
-    Ang = Angle(-0, 0, 0),
+    Pos = Vector(-7, 0, 0),
+    Ang = Angle(0, 0, 0),
     Magnification = 1.3,
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "rpg"
-SWEP.HoldtypeSights = "rpg"
+SWEP.HoldtypeActive = "ar2"
+SWEP.HoldtypeSights = "ar2"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
 

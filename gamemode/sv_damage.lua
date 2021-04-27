@@ -34,24 +34,32 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
         hook.Run("Horde_OnPlayerMinionDamage", ply, npc, bonus, dmginfo)
     end
 
+    -- DMG_BURN for some reason does not apply, convert this to something else
+    if dmginfo:GetInflictor():GetClass() == "entityflame" then
+        dmginfo:SetDamagePosition(npc:GetPos())
+        dmginfo:SetDamage(npc:Horde_GetIgniteDamageTaken())
+    else
+        if dmginfo:GetDamageType() == DMG_BURN then
+            dmginfo:SetDamageType(DMG_SLOWBURN)
+            npc:Horde_SetMostRecentFireAttacker(ply, dmginfo)
+            npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
+        elseif ply:Horde_GetApplyIgniteChance() > 0 then
+            local ignite = math.random()
+            if ignite <= ply:Horde_GetApplyIgniteChance() then
+                npc:Horde_SetMostRecentFireAttacker(ply, dmginfo)
+                npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
+            end
+        end
+    end
+
     dmginfo:AddDamage(bonus.base_add)
     dmginfo:ScaleDamage(bonus.more * (1 + bonus.increase))
     dmginfo:AddDamage(bonus.post_add)
     dmginfo:SetDamageCustom(HORDE.DMG_CALCULATED)
-
-    -- DMG_BURN for some reason does not apply, convert this to something else
-    if dmginfo:GetDamageType() == DMG_BURN then
-        dmginfo:SetDamageType(DMG_SLOWBURN)
-        npc:Horde_SetMostRecentFireAttacker(ply)
-        npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
-    end
-
-    if dmginfo:GetInflictor():GetClass() == "entityflame" then
-        dmginfo:SetDamagePosition(npc:GetPos())
-    end
 end
 
 hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, dmginfo)
+    print("take", dmginfo:GetDamageType())
     local attacker = dmginfo:GetAttacker()
     if not target:IsNPC() then return end
     
@@ -78,6 +86,7 @@ end)
 
 -- Seems like ScaleNPCDamage is called before EntityTakeDamage.
 hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo)
+    print("scale", dmginfo:GetDamageType())
     HORDE:ApplyDamage(npc, hitgroup, dmginfo)
 end)
 

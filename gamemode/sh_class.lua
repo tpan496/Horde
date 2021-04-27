@@ -232,9 +232,9 @@ function HORDE:GetDefaultClassesData()
         GetConVar("horde_base_runspeed"):GetInt(),
         "cremator_base",
         {
-            [1] = {title = "Energy Discharge", choices = {"medic_antibiotics", "assault_charge"}},
-            [2] = {title = "Energy Absorption", choices = {"cremator_photon_array", "cremator_entropy_reflector"}},
-            [3] = {title = "Energy Manipulation", choices = {"heavy_liquid_armor", "ghost_headhunter"}},
+            [1] = {title = "Energy Discharge", choices = {"cremator_scorch", "cremator_napalm"}},
+            [2] = {title = "Energy Absorption", choices = {"cremator_positron_array", "cremator_entropy_shield"}},
+            [3] = {title = "Energy Manipulation", choices = {"cremator_incineration", "cremator_incineration"}},
         },
         9
     )

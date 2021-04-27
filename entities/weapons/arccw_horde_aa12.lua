@@ -201,17 +201,18 @@ SWEP.Attachments = {
         },
     },
     {
-        PrintName = "Ammo Type",
-        Slot = "ammo_shotgun"
-    },
-    {
         PrintName = "Fire Group",
         Slot = "fcg",
         DefaultAttName = "Standard FCG",
     },
     {
+        PrintName = "Ammo Type",
+        Slot = "go_ammo",
+        DefaultAttName = "Buckshot Shells"
+    },
+    {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",

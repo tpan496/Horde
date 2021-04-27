@@ -138,10 +138,13 @@ if ArcCWInstalled then
         RunConsoleCommand("arccw_attinv_free", "1")
     end
 
-    -- Disable Surgical Shot because it is way too overpowered.
+    -- Disable perks that messes up with Horde's own system.
     if GetConVar("horde_default_item_config"):GetInt() == 1 then
         ArcCW.AttachmentBlacklistTable["go_perk_headshot"] = true
         ArcCW.AttachmentBlacklistTable["go_perk_ace"] = true
+        ArcCW.AttachmentBlacklistTable["go_perk_last"] = true
+        ArcCW.AttachmentBlacklistTable["go_perk_refund"] = true
+        ArcCW.AttachmentBlacklistTable["go_perk_slow"] = true
     end
 end
 

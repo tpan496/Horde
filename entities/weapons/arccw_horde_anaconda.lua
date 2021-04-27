@@ -23,8 +23,8 @@ SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_357.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 92
-SWEP.DamageMin = 70
+SWEP.Damage = 95
+SWEP.DamageMin = 75
 SWEP.RangeMin = 500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Range = 1250 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 12
@@ -222,11 +222,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo",
+        DefaultAttName = "Standard Ammo"
     },
     {
         PrintName = "Perk",
-        Slot = {"perk", "perk_revolver"}
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",

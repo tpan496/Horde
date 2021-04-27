@@ -1,5 +1,5 @@
 PERK.PrintName = "Napalm"
-PERK.Description = "{1} increased Fire damage.\n{2} reduced Fire damage taken."
+PERK.Description = "."
 PERK.Icon = "materials/perks/napalm.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},
