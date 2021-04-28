@@ -1,15 +1,15 @@
 if not ArcCWInstalled then return end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - MW2"
+SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Trench Gun"
 SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "Pump action."
+SWEP.Trivia_Desc = "Fires incendiary pellets."
 
-if CLIENT and GetConVar("arccw_mw2cl_trivia"):GetBool() then
+if CLIENT then
 SWEP.Trivia_Manufacturer = "Winchester"
 SWEP.Trivia_Calibre = "12 Gauge"
 SWEP.Trivia_Mechanism = "Pump-Action"
@@ -26,7 +26,7 @@ SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_shot_m3super90.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 40
+SWEP.Damage = 33
 SWEP.DamageMin = 10
 SWEP.Range = 800 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 1
@@ -187,7 +187,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
 	{
         PrintName = "Charm",
