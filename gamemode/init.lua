@@ -56,6 +56,7 @@ include("status/debuff/sv_debuff.lua")
 include("status/debuff/sv_slow.lua")
 include("status/debuff/sv_weaken.lua")
 include("status/debuff/sv_ignite.lua")
+include("status/debuff/sv_stun.lua")
 
 include("sh_status.lua")
 include("sv_mutation.lua")
