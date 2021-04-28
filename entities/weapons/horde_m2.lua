@@ -6,8 +6,8 @@ SWEP.Instructions			= "Primary: Fire"
 SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 
-SWEP.ViewModel				= "models/weapons/sanic/c_m2.mdl"
-SWEP.WorldModel				= "models/weapons/sanic/w_m2f2.mdl"
+SWEP.ViewModel				= "models/horde/weapons/c_m2.mdl"
+SWEP.WorldModel				= "models/horde/weapons/w_m2f2.mdl"
 SWEP.UseHands			    = true
 SWEP.ViewModelFOV      		= 50
 SWEP.Slot                   = 3
@@ -63,6 +63,7 @@ function SWEP:PrimaryAttack()
         local Distance = self.Owner:GetPos():Distance(trace.HitPos)
         local Ignite = function()
             if not self:IsValid() then return end
+            if not self.Owner:IsValid() then return end
             local dmg = DamageInfo()
             dmg:SetAttacker(self.Owner)
             dmg:SetInflictor(self)

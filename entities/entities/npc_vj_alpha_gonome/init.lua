@@ -159,11 +159,10 @@ ENT.SoundTbl_FootStep = {"horde/gonome/gonome_step1.wav","horde/gonome/gonome_st
 ENT.SoundTbl_Idle = {"horde/gonome/gonome_idle1.wav","horde/gonome/gonome_idle2.wav","horde/gonome/gonome_idle3.wav"}
 ENT.SoundTbl_MeleeAttack = {"horde/gonome/gonome_melee1.wav","horde/gonome/gonome_melee2.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"horde/gonome/gonome_melee1.wav","horde/gonome/gonome_melee2.wav"}
---ENT.SoundTbl_RangeAttack = {"horde/vj_bms_bullsquid/goo_attack1.wav","horde/vj_bms_bullsquid/goo_attack2.wav","horde/vj_bms_bullsquid/goo_attack3.wav"}
 ENT.SoundTbl_BeforeLeapAttack = {"horde/gonome/gonome_beforeleap.wav"}
 ENT.SoundTbl_LeapAttackJump = {"horde/gonome/gonome_jumpattack.wav"}
 ENT.SoundTbl_Pain = {"horde/gonome/gonome_pain1.wav","horde/gonome/gonome_pain2.wav","horde/gonome/gonome_pain3.wav","horde/gonome/gonome_pain4.wav"}
-ENT.SoundTbl_Death = {"horde/gonome/gonome_death1.wav","horde/gonome/gonome_death2.wav","horde/gonome/gonome_death3.wav","horde/gonome/gonome_death4.wav"}
+ENT.SoundTbl_Death = {"horde/gonome/gonome_death2.wav","horde/gonome/gonome_death3.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
     self:SetCollisionBounds(Vector(20, 20, 85), Vector(-20, -20, 0))

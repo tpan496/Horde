@@ -59,7 +59,6 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
 end
 
 hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, dmginfo)
-    print("take", dmginfo:GetDamageType())
     local attacker = dmginfo:GetAttacker()
     if not target:IsNPC() then return end
     
@@ -86,7 +85,6 @@ end)
 
 -- Seems like ScaleNPCDamage is called before EntityTakeDamage.
 hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo)
-    print("scale", dmginfo:GetDamageType())
     HORDE:ApplyDamage(npc, hitgroup, dmginfo)
 end)
 

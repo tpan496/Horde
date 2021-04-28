@@ -45,9 +45,9 @@ SWEP.TracerCol = Color(255, 25, 25)
 SWEP.TracerWidth = 3
 
 SWEP.ChamberSize = 0 -- how many rounds can be chambered.
-SWEP.Primary.ClipSize = 10 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 10
-SWEP.ReducedClipSize = 10
+SWEP.Primary.ClipSize = 8 -- DefaultClip is automatically set.
+SWEP.ExtendedClipSize = 8
+SWEP.ReducedClipSize = 8
 
 SWEP.Recoil = 5
 SWEP.RecoilSide = 1
