@@ -158,7 +158,7 @@ function HORDE:GetDefaultClassesData()
         "demolition_base",
         {
             [1] = {title = "Grenade", choices = {"demolition_frag_impact", "demolition_frag_cluster"}},
-            [2] = {title = "Approach", choices = {"demolition_fragmentation", "demolition_napalm"}},
+            [2] = {title = "Approach", choices = {"demolition_fragmentation", "demolition_knockout"}},
             [3] = {title = "Destruction", choices = {"demolition_pressurized_warhead", "demolition_chain_reaction"}},
         },
         4

@@ -231,10 +231,12 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("MG",         "MG4",            "arccw_mw2_mg4",      3000, 10, "Heckler & Koch MG4.\nA belt-fed 5.56 mm light machine gun that replaced MG3.",
     {Heavy=true}, 35, -1)
 
-    HORDE:CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,   0, "A standard frag grenade.\nGood for crowd control.",
+    HORDE:CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",        100,  0, "A standard frag grenade.\nGood for crowd control.",
     {Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=true, Engineer=true, Warden=true, Cremator=true}, 100, -1)
-    HORDE:CreateItem("Explosive",  "M67 Grenade",     "arccw_go_nade_frag",1500,  2, "M67 High Explosive Fragmentation Grenade.\nMilitary grade, does large amounts of Blast damage.",
+    HORDE:CreateItem("Explosive",  "M67 Grenade",    "arccw_go_nade_frag",1500,  2, "M67 High Explosive Fragmentation Grenade.\nMilitary grade, does large amounts of Blast damage.",
     {Demolition=true}, 100, -1)
+    HORDE:CreateItem("Explosive",  "Stun Grenade",   "arccw_go_nade_stun", 800,  2, "Deals damage and Stuns enemy for 2 seconds.",
+    {Assault=true, Heavy=true, Ghost=true}, 100, -1)
     HORDE:CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         1500,  6, "Laser-guided rocket propulsion device.",
     {Demolition=true, Survivor=true}, 10, -1)
     HORDE:CreateItem("Explosive",  "M79 GL",         "arccw_horde_m79",    2000,  6, "M79 Grenade Launcher.\nShoots 40x46mm grenades the explodes on impact.",

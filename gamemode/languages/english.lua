@@ -333,10 +333,9 @@ LANGUAGE["Perk_Title_demolition_fragmentation"] = [[Fragmentation]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
 {1} increased Blast damage against enemies on full health.]]
 
-LANGUAGE["Perk_Title_demolition_napalm"] = [[Napalm]]
-LANGUAGE["Perk_demolition_napalm"] = [[
-{1} increased Fire damage.
-{2} increased Fire damage resistance.]]
+LANGUAGE["Perk_Title_demolition_knockout"] = [[Knockout]]
+LANGUAGE["Perk_demolition_knockout"] = [[
+Blast damage causes enemies to flinch for {1} second.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Destruction]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Pressurized Warhead]]
