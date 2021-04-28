@@ -7,7 +7,7 @@ PERK.Params = {
 }
 
 PERK.Hooks = {}
-PERK.Hooks.OnEnemyKilled = function(victim, killer, inflictor)
+PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, inflictor)
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
     if not killer:Horde_GetPerk("demolition_chain_reaction") then return end
     if inflictor:IsNPC() then return end -- Prevent infinite chains
