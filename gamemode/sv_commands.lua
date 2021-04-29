@@ -302,3 +302,11 @@ concommand.Add("horde_testing_free_perks", function (ply, cmd, args)
         RunConsoleCommand("horde_perk_scaling", 0)
     end
 end)
+
+concommand.Add("horde_testing_wave_goto", function (ply, cmd, args)
+    if ply:IsAdmin() then
+        HORDE.start_game = true
+        HORDE.current_wave = tonumber(args[1])
+        HORDE:WaveStart()
+    end
+end)
