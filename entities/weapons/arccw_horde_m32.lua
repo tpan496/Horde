@@ -80,8 +80,8 @@ SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "KF_m32.Fire"
-SWEP.ShootSoundSilenced = "KF_mac10.Fire"
-SWEP.DistantShootSound = "KF_m32.Fire"
+SWEP.ShootSoundSilenced = nil
+SWEP.DistantShootSound = nil
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"
 SWEP.ShellModel = "models/shells/shell_9mm.mdl"
@@ -217,23 +217,23 @@ sound.Add({
 	name = 			"KF_m32_open",
 	channel = 		CHAN_STATIC,
 	volume = 		1.0,
-	sound = 		"horde/weapons/gl/M32_Reload_000.wav"
+	sound = 		"horde/weapons/gl/M32_Reload_000.mp3"
 })
 sound.Add({
 	name = 			"KF_m32_close",
 	channel = 		CHAN_STATIC,
 	volume = 		1.0,
-	sound = 		"horde/weapons/gl/M32_Reload_280.wav"
+	sound = 		"horde/weapons/gl/M32_Reload_280.mp3"
 })
 sound.Add({
 	name = 			"KF_m32_insert",
 	channel = 		CHAN_STATIC,
 	volume = 		1.0,
-	sound = 		"horde/weapons/gl/M32_Reload_049.wav"
+	sound = 		"horde/weapons/gl/M32_Reload_049.mp3"
 })
 sound.Add({
 	name = 			"KF_m32.Fire",
 	channel = 		CHAN_WEAPON,
 	volume = 		1.0,
-	sound = 		"horde/weapons/gl/fire.wav"
+	sound = 		"horde/weapons/gl/fire.mp3"
 })

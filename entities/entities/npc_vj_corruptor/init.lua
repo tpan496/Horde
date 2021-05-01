@@ -40,6 +40,7 @@ ENT.SoundTbl_Death = {"zsszombie/zombie_die1.wav","zsszombie/zombie_die2.wav","z
 
 ENT.GeneralSoundPitch1 = 100
 ENT.GeneralSoundPitch2 = 100
+ENT.NextTick = 0
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
@@ -51,6 +52,23 @@ function ENT:CustomOnThink()
 		self.AnimTbl_Walk = {ACT_WALK}
 		self.AnimTbl_Run = {ACT_RUN}
 		self.AnimTbl_IdleStand = {ACT_IDLE}
+	end
+
+	if SERVER then
+		if CurTime() >= self.NextTick then
+			local dmginfo = DamageInfo()
+            dmginfo:SetAttacker(self)
+            dmginfo:SetInflictor(ents.GetByIndex(0))
+            dmginfo:SetDamageType(DMG_ACID)
+            dmginfo:SetDamage(15)
+            dmginfo:SetDamageForce(Vector(0,0,0))
+            util.BlastDamageInfo(dmginfo, self:GetPos(), 200)
+			self.NextTick = CurTime() + 0.5
+			local e = EffectData()
+				e:SetOrigin(self:GetPos())
+				e:SetEntity(self)
+        	util.Effect("corruption", e, true, true)
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

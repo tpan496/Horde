@@ -2,8 +2,8 @@ PERK.PrintName = "Knockout"
 PERK.Description = "Blast damage builds up stun power.\nStuns enemy for {1} seconds when power reaches {2}.\nStun cooldown is {3} seconds."
 PERK.Icon = "materials/perks/knockout.png"
 PERK.Params = {
-    [1] = {value = 300},
-    [2] = {value = 2},
+    [1] = {value = 2},
+    [2] = {value = 300},
     [3] = {value = 10},
 }
 

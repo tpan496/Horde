@@ -22,9 +22,9 @@ hook.Add("EntityTakeDamage", "Horde_WeakenDamageTaken", function(target, dmg)
     if target:Horde_GetWeaken() == 0 then return end
     local attacker = dmg:GetAttacker()
     if attacker:IsPlayer() and target:IsNPC() then
-        dmg:ScaleDamage(1 + 0.10 * (1 + attacker:Horde_GetApplyDebuffMore()))
+        dmg:ScaleDamage(1 + 0.15 * (1 + attacker:Horde_GetApplyDebuffMore()))
     elseif attacker:IsNPC() and attacker:Horde_GetWeaken() == 1 then
-        dmg:ScaleDamage(1 - 0.10 * (1 + attacker:Horde_GetApplyDebuffMore()))
+        dmg:ScaleDamage(1 - 0.15 * (1 + attacker:Horde_GetApplyDebuffMore()))
     end
 end)
 

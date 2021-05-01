@@ -271,7 +271,7 @@ While you have at least {1} armor:
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[Reactive Armor]]
 LANGUAGE["Perk_heavy_reactive_armor"] = [[
-While you have at least {1} armor:\
+While you have at least {1} armor:
   Immune to Poison, Fire and Blast damage.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[Technology]]
@@ -335,7 +335,9 @@ LANGUAGE["Perk_demolition_fragmentation"] = [[
 
 LANGUAGE["Perk_Title_demolition_knockout"] = [[Knockout]]
 LANGUAGE["Perk_demolition_knockout"] = [[
-Blast damage causes enemies to flinch for {1} second.]]
+Blast damage builds up stun power.
+Stuns enemy for {1} seconds when power reaches {2}.
+Stun cooldown is {3} seconds.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Destruction]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Pressurized Warhead]]

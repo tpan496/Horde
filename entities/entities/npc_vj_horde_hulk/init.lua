@@ -57,6 +57,19 @@ function ENT:CustomOnThink()
 		self.AnimTbl_Walk = {ACT_WALK}
 		self.AnimTbl_Run = {ACT_RUN}
 	end
+	if self.Critical then
+		self:SetLocalVelocity(self:GetMoveVelocity() * 1.5)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+ENT.Critical = false
+function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
+    if not self.Critical and self:Health() < self:GetMaxHealth() / 2 then
+        self.Critical = true
+        self.AnimationPlaybackRate = 1.5
+        self:SetColor(Color(255,0,0))
+        self:SetRenderMode(RENDERMODE_TRANSCOLOR)
+    end
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2018 by DrVrej, All rights reserved. ***

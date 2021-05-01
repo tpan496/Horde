@@ -7,6 +7,17 @@ PERK.Params = {
 }
 
 PERK.Hooks = {}
-PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
-    if not ply:Horde_GetPerk("cremator_entropy_shield")  then return end
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
+    if SERVER and perk == "cremator_entropy_shield" then
+        ply:Horde_SetEntropyShieldEnabled(true)
+        ply:Horde_AddEntropyShield()
+    end
+end
+
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
+    if SERVER and perk == "cremator_entropy_shield" then
+        ply:Horde_SetEntropyShieldEnabled(nil)
+        ply:Horde_RemoveEntropyShield()
+        timer.Remove("Horde_RestockEntropyShield" .. ply:SteamID())
+    end
 end

@@ -51,21 +51,21 @@ SWEP.Melee2Time = 0.5
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.MeleeSwingSound = {
-    "horde/weapons/bat/bat_swing_miss1.wav",
-    "horde/weapons/bat/bat_swing_miss2.wav"
+    "horde/weapons/bat/bat_swing_miss1.mp3",
+    "horde/weapons/bat/bat_swing_miss2.mp3"
 }
 SWEP.MeleeMissSound = {
-    "horde/weapons/bat/bat_swing_miss1.wav",
-    "horde/weapons/bat/bat_swing_miss2.wav"
+    "horde/weapons/bat/bat_swing_miss1.mp3",
+    "horde/weapons/bat/bat_swing_miss2.mp3"
 }
 SWEP.MeleeHitSound = {
-    "horde/weapons/bat/bat_impact_world1.wav",
-    "horde/weapons/bat/bat_impact_world2.wav"
+    "horde/weapons/bat/bat_impact_world1.mp3",
+    "horde/weapons/bat/bat_impact_world2.mp3"
 }
 SWEP.MeleeHitNPCSound = {
-    "horde/weapons/bat/melee_bat_01.wav",
-    "horde/weapons/bat/melee_bat_02.wav",
-    "horde/weapons/bat/melee_bat_03.wav"
+    "horde/weapons/bat/melee_bat_01.mp3",
+    "horde/weapons/bat/melee_bat_02.mp3",
+    "horde/weapons/bat/melee_bat_03.mp3"
 }
 
 SWEP.NotForNPCs = true

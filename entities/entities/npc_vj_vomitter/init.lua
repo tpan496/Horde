@@ -33,7 +33,7 @@ ENT.RangeToMeleeDistance = 100 -- How close does it have to be until it uses mel
 ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
 ENT.RangeUseAttachmentForPosID = "Head" -- The attachment used on the range attack if RangeUseAttachmentForPos is set to true
 ENT.TimeUntilRangeAttackProjectileRelease = 1.0 -- How much time until the projectile code is ran?
-ENT.NextRangeAttackTime = 10 -- How much time until it can use a range attack?
+ENT.NextRangeAttackTime = 89 -- How much time until it can use a range attack?
 ENT.Immune_AcidPoisonRadiation = true
 
 	-- ====== Sound File Paths ====== --
