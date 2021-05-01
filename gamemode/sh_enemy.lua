@@ -278,9 +278,9 @@ function HORDE:GetDefaultEnemiesData ()
     HORDE:CreateEnemy("Mutated Hulk",  "npc_vj_mutated_hulk",       1, 5, true,  1, 1, 10, 1, nil, nil, nil,
     {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=1.0, music="music/hl2_song20_submix0.mp3", music_duration=104}, "fume")
     HORDE:CreateEnemy("Host",  "npc_poisonzombie",                  1, 5, true, 30, 2, 10, 2, Color(255,0,255), nil, nil,
-    {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=1.0, music="music/hl2_song20_submix0.mp3", music_duration=104}, "frenzy")
+    {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=1.0, music="music/hl2_song20_submix0.mp3", music_duration=104}, "fume")
     HORDE:CreateEnemy("Slasher",  "npc_vj_slasher",                 1, 5, true, 1, 0.5, 10, 1.5, nil, nil, nil,
-    {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=1.0, music="music/hl2_song20_submix0.mp3", music_duration=104}, "regenerator")
+    {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=1.0, music="music/hl2_song20_submix0.mp3", music_duration=104}, "frenzy")
 
     HORDE:CreateEnemy("zombie", "npc_zombie", 0.1, 6, false, 1, 1, 1, 1, nil)
     HORDE:CreateEnemy("black zombie", "npc_zombie", 0.1, 6, true, 1.5, 1.25, 1.25, 1.25, Color(0,0,0))
