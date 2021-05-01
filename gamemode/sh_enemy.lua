@@ -390,6 +390,8 @@ function HORDE:GetDefaultEnemiesData ()
     HORDE:CreateEnemy("zombie poison",    "npc_poisonzombie",        0.5,  10, false, 1, 1, 1, 1, nil)
     HORDE:CreateEnemy("Alpha Gonome",     "npc_vj_alpha_gonome",     1,    10, true,  1, 1, 10, 1, nil, nil, nil,
     {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song24.mp3", music_duration=105}, "fume")
+    HORDE:CreateEnemy("Infested Beast",   "npc_vj_infested_beast",   100,    10, true,  1, 1, 10, 1, nil, nil, nil,
+    {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=0,  music="music/hl1_song24.mp3", music_duration=105}, nil)
     
     HORDE:NormalizeEnemiesWeight()
 
