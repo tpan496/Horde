@@ -156,13 +156,13 @@ ENT.DeathSoundPitch2 = "UseGeneralPitch"
     -- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {"horde/gonome/gonome_step1.wav","horde/gonome/gonome_step2.wav","horde/gonome/gonome_step3.wav","horde/gonome/gonome_step4.wav","horde/gonome/gonome_run.wav"}
-ENT.SoundTbl_Idle = {"horde/gonome/gonome_idle1.wav","horde/gonome/gonome_idle2.wav","horde/gonome/gonome_idle3.wav"}
+ENT.SoundTbl_Idle = {"horde/gonome/gonome_idle1.wav","horde/gonome/gonome_idle2.wav"}
 ENT.SoundTbl_MeleeAttack = {"horde/gonome/gonome_melee1.wav","horde/gonome/gonome_melee2.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"horde/gonome/gonome_melee1.wav","horde/gonome/gonome_melee2.wav"}
-ENT.SoundTbl_BeforeLeapAttack = {"horde/gonome/gonome_beforeleap.wav"}
+ENT.SoundTbl_BeforeLeapAttack = nil
 ENT.SoundTbl_LeapAttackJump = {"horde/gonome/gonome_jumpattack.wav"}
 ENT.SoundTbl_Pain = {"horde/gonome/gonome_pain1.wav","horde/gonome/gonome_pain2.wav","horde/gonome/gonome_pain3.wav","horde/gonome/gonome_pain4.wav"}
-ENT.SoundTbl_Death = {"horde/gonome/gonome_death2.wav","horde/gonome/gonome_death3.wav"}
+ENT.SoundTbl_Death = {"horde/gonome/gonome_death.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
     self:SetCollisionBounds(Vector(20, 20, 85), Vector(-20, -20, 0))
@@ -171,6 +171,11 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(TheProjectile)
     return (self:GetEnemy():GetPos() - self:LocalToWorld(Vector(math.random(-30,30),math.random(-30,30),math.random(20,30))))*2 + self:GetUp()*300
+end
+function ENT:CustomOnThink()
+	if self.Critical then
+		self:SetLocalVelocity(self:GetMoveVelocity() * 1.5)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Critical = false

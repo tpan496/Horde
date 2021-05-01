@@ -29,36 +29,47 @@ function entmeta:Horde_GetCanRegenShield()
 end
 
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
-    if SERVER and mutation == "shielding" then
-        local col_min, col_max = ent:GetCollisionBounds()
-        local radius = col_max:Distance(col_min) / 2
-        local height = math.abs(col_min.z - col_max.z)
-        local e = EffectData()
-            e:SetOrigin(ent:GetPos())
-            e:SetEntity(ent)
-            e:SetRadius(radius)
-            e:SetMagnitude(height)
-        util.Effect("shielding", e, true, true)
-        
-        local id = ent:GetCreationID()
-        timer.Create("Horde_RegenShield" .. id, 10, 0, function ()
-            if not ent:IsValid() then timer.Remove("Horde_RegenShield" .. id) return end
-            if ent:Horde_GetCanRegenShield() then
-                ent:Horde_SetShieldHealth(ent:Horde_GetMaxShieldHealth())
-                ent:SetNWBool("HasShield", true)
-            else
-                ent:Horde_SetCanRegenShield(true)
-            end
-        end)
+    if mutation == "shielding" then
+        if CLIENT then
+            local col_min, col_max = ent:GetCollisionBounds()
+            local radius = col_max:Distance(col_min) / 2
+            local height = math.abs(col_min.z - col_max.z)
+            local id = ent:EntIndex()
+            hook.Add("PostDrawTranslucentRenderables", "Horde_ShieldingEffect" .. id, function()
+                if not ent:IsValid() then
+                    hook.Remove("PostDrawTranslucentRenderables", "Horde_ShieldingEffect" .. id)
+                    return
+                end
+                if ent:GetNWBool("HasShield") == false then return end
+                render.SetColorMaterial()
+                local pos = ent:GetPos()
+                pos.z = pos.z + height / 2
+                render.DrawSphere(pos, radius + 5, 50, 50, Color(175, 175, 175, 50))
+            end)
+        end
 
-        ent:Horde_SetMaxShieldHealth(math.min(300, ent:Health() * 0.05))
-        ent:Horde_SetShieldHealth(ent:Horde_GetMaxShieldHealth())
-        ent:SetNWBool("HasShield", true)
-        ent:Horde_SetCanRegenShield(true)
+        if SERVER then
+            local id = ent:GetCreationID()
+            timer.Create("Horde_RegenShield" .. id, 10, 0, function ()
+                if not ent:IsValid() then timer.Remove("Horde_RegenShield" .. id) return end
+                if ent:Horde_GetCanRegenShield() then
+                    ent:Horde_SetShieldHealth(ent:Horde_GetMaxShieldHealth())
+                    ent:SetNWBool("HasShield", true)
+                else
+                    ent:Horde_SetCanRegenShield(true)
+                end
+            end)
+
+            ent:Horde_SetMaxShieldHealth(math.min(300, ent:Health() * 0.05))
+            ent:Horde_SetShieldHealth(ent:Horde_GetMaxShieldHealth())
+            ent:SetNWBool("HasShield", true)
+            ent:Horde_SetCanRegenShield(true)
+        end
     end
 end
 
 MUTATION.Hooks.EntityTakeDamage = function(target, dmg)
+    if CLIENT then return end
     if target:IsNPC() and target:Horde_GetMutation() == "shielding" then
         local health = target:Horde_GetShieldHealth()
         if health > 0 then

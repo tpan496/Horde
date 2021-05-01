@@ -51,21 +51,21 @@ SWEP.Melee2Time = 0.5
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.MeleeSwingSound = {
-    "horde/weapons/katana/katana_swing_miss1.wav",
-    "horde/weapons/katana/katana_swing_miss2.wav"
+    "horde/weapons/katana/katana_swing_miss1.mp3",
+    "horde/weapons/katana/katana_swing_miss2.mp3"
 }
 SWEP.MeleeMissSound = {
-    "horde/weapons/katana/katana_swing_miss1.wav",
-    "horde/weapons/katana/katana_swing_miss2.wav"
+    "horde/weapons/katana/katana_swing_miss1.mp3",
+    "horde/weapons/katana/katana_swing_miss2.mp3"
 }
 SWEP.MeleeHitSound = {
-    "horde/weapons/katana/katana_impact_world1.wav",
-    "horde/weapons/katana/katana_impact_world2.wav"
+    "horde/weapons/katana/katana_impact_world1.mp3",
+    "horde/weapons/katana/katana_impact_world2.mp3"
 }
 SWEP.MeleeHitNPCSound = {
-    "horde/weapons/katana/melee_katana_01.wav",
-    "horde/weapons/katana/melee_katana_02.wav",
-    "horde/weapons/katana/melee_katana_03.wav"
+    "horde/weapons/katana/melee_katana_01.mp3",
+    "horde/weapons/katana/melee_katana_02.mp3",
+    "horde/weapons/katana/melee_katana_03.mp3"
 }
 
 SWEP.NotForNPCs = true
