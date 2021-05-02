@@ -18,7 +18,6 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup)
     if not ply:Horde_GetPerk("ghost_base") then return end
     if hitgroup == HITGROUP_HEAD then

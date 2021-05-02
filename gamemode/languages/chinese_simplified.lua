@@ -283,11 +283,11 @@ LANGUAGE["Perk_heavy_ballistic_shock"] = [[
 LANGUAGE["Perk_Title_Medic_Tier_1"] = [[药物]]
 LANGUAGE["Perk_Title_medic_antibiotics"] = [[抗生素]]
 LANGUAGE["Perk_medic_antibiotics"] = [[
-治疗量提升 {1}。]]
+提升 {1} 治疗量。]]
 
 LANGUAGE["Perk_Title_medic_painkillers"] = [[止痛剂]]
 LANGUAGE["Perk_medic_painkillers"] = [[
-治疗生命值最大上限提升 {1}。]]
+提升 {1} 治疗生命值最大上限。]]
 
 LANGUAGE["Perk_Title_Medic_Tier_2"] = [[生物工程]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[狂化]]
@@ -316,8 +316,8 @@ LANGUAGE["Perk_medic_xcele"] = [[
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[手雷改装]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[冲击起爆]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
-触碰到敌人后，手雷会直接引爆。
-手雷伤害提升 {1}。]]
+提升 {1} 爆炸伤害。
+提升 {2} 手雷伤害。]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[子母弹]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[
@@ -329,10 +329,11 @@ LANGUAGE["Perk_Title_demolition_fragmentation"] = [[冲击]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
 对满血敌人造成的爆炸伤害提升 {1}。]]
 
-LANGUAGE["Perk_Title_demolition_napalm"] = [[烈火]]
-LANGUAGE["Perk_demolition_napalm"] = [[
-提升 {1} 火焰抗性。
-提升 {2} 火焰伤害。
+LANGUAGE["Perk_Title_demolition_knockout"] = [[击晕]]
+LANGUAGE["Perk_demolition_knockout"] = [[
+爆炸伤害对敌人累计眩晕值。
+眩晕值到达 {2} 后，对敌人造成 {1} 秒眩晕。
+眩晕冷却时间为 {3} 秒。
 ]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[毁灭]]
@@ -495,7 +496,7 @@ LANGUAGE["Perk_Title_Cremator_Tier_2"] = [[能量汲取]]
 LANGUAGE["Perk_Title_cremator_positron_array"] = [[阳电子阵列]]
 LANGUAGE["Perk_cremator_positron_array"] = [[
 免疫火焰伤害。
-吸收 {1} 火焰伤害为生命值。]]
+吸收 {1} 受到的火焰伤害为生命值。]]
 
 LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[熵护盾]]
 LANGUAGE["Perk_cremator_entropy_shield"] = [[
@@ -504,11 +505,11 @@ LANGUAGE["Perk_cremator_entropy_shield"] = [[
 护盾爆炸造成 {2} 火焰伤害。]]
 
 LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[能量释放]]
-LANGUAGE["Perk_Title_cremator_firestorm"] = [[火焰风暴]]
+LANGUAGE["Perk_Title_cremator_firestorm"] = [[烈焰风暴]]
 LANGUAGE["Perk_cremator_firestorm"] = [[
-提升 {1} 火焰伤害。
-击杀的敌人有 {2} 概率爆炸，
-造成 {3} 火焰伤害。]]
+火焰伤害对敌人累计爆裂值。
+爆裂值到达 {1} 后产生爆炸。
+爆炸造成 {2} 爆炸伤害。]]
 
 LANGUAGE["Perk_Title_cremator_incineration"] = [[燃烧殆尽]]
 LANGUAGE["Perk_cremator_incineration"] = [[

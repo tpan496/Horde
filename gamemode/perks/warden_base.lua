@@ -1,7 +1,7 @@
 PERK.PrintName = "Warden Base"
 PERK.Description = "The Warden is a support class that uses aura effects and structures to buff teammates.\nComplexity: MEDIUM\n\nPlayers/Minions near you are affected by Warden Aura.\nWarden Aura blocks {1} damage."
 PERK.Params = {
-    [1] = {value = 4}
+    [1] = {value = 3}
 }
 
 PERK.Hooks = {}

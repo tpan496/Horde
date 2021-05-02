@@ -47,7 +47,10 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
             local ignite = math.random()
             if ignite <= ply:Horde_GetApplyIgniteChance() then
                 npc:Horde_SetMostRecentFireAttacker(ply, dmginfo)
-                npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
+                timer.Simple(0.1, function()
+                    if not ply:IsValid() or not npc:IsValid() then return end
+                    npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
+                end)
             end
         end
     end
@@ -115,7 +118,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     dmg:ScaleDamage(bonus.less * (1 - bonus.resistance))
     dmg:SubtractDamage(bonus.block)
 
-    if dmg:GetDamage() < 0.5 then return true end
+    if dmg:GetDamage() <= 0.5 then return true end
 end)
 
 -- Enemy damage.

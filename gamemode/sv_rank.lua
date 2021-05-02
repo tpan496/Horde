@@ -47,7 +47,6 @@ function HORDE:LoadRank(ply)
                 local order = strm:ReadShort()
 				local exp = strm:ReadLong()
 				local level = strm:ReadShort()
-				print(order)
 				if order == nil then
 				else
 					local class_name = HORDE.order_to_class_name[order]
