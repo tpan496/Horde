@@ -234,7 +234,7 @@ function HORDE:GetDefaultClassesData()
         {
             [1] = {title = "Chemicals", choices = {"cremator_methane", "cremator_napalm"}},
             [2] = {title = "Energy Absorption", choices = {"cremator_positron_array", "cremator_entropy_shield"}},
-            [3] = {title = "Energy Discharge", choices = {"cremator_scorch", "cremator_incineration"}},
+            [3] = {title = "Energy Discharge", choices = {"cremator_firestorm", "cremator_incineration"}},
         },
         9
     )

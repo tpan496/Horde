@@ -483,6 +483,41 @@ LANGUAGE["Perk_warden_resonance_cascade"] = [[
 Aura effect increased by {1}.
 Aura radius increased by {2}.]]
 
+-- Default Perks: Cremator
+LANGUAGE["Perk_Title_Cremator_Tier_1"] = [[Chemicals]]
+LANGUAGE["Perk_Title_cremator_methane"] = [[Methane]]
+LANGUAGE["Perk_cremator_methane"] = [[
+{1} increased Fire damage against Ignited enemies.]]
+
+LANGUAGE["Perk_Title_cremator_napalm"] = [[Napalm]]
+LANGUAGE["Perk_cremator_napalm"] = [[
+{1} increased Ignite radius.
+{2} increased Ignite duration.]]
+
+LANGUAGE["Perk_Title_Cremator_Tier_2"] = [[Energy Absorption]]
+LANGUAGE["Perk_Title_cremator_positron_array"] = [[Positron Array]]
+LANGUAGE["Perk_cremator_positron_array"] = [[
+Immune to Fire damage.
+Absorb {1} of Fire damage taken as health.]]
+
+LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[Entropy Shield]]
+LANGUAGE["Perk_cremator_entropy_shield"] = [[
+Gain a shield that negates damage taken.
+Shield explodes on hit and recharges after {1} seconds.
+Explosion deals {2} Fire damage.]]
+
+LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[Energy Discharge]]
+LANGUAGE["Perk_Title_cremator_firestorm"] = [[Firestorm]]
+LANGUAGE["Perk_cremator_firestorm"] = [[
+{1} increased Fire damage.
+Enemies you killed have {2} chance to explode,
+dealing {3} Fire damage.]]
+
+LANGUAGE["Perk_Title_cremator_incineration"] = [[Incineration]]
+LANGUAGE["Perk_cremator_incineration"] = [[
+{1} increased Ignite damage.
+{2} increased Ignite chance.]]
+
 
 -- Default Config Shop Items
 -- Optional
@@ -599,6 +634,12 @@ Steyr TMP.
 A select-fire 9×19mm Parabellum caliber machine pistol.
 ]]
 
+LANGUAGE["Item_Flare Gun"] = [[Flare Gun]]
+LANGUAGE["Item_Desc_Flare Gun"] = [[
+Orion Safety Flare Gun.
+Ignites enemies and deals Fire damage.
+]]
+
 LANGUAGE["Item_Anaconda"] = [[Anaconda]]
 LANGUAGE["Item_Desc_Anaconda"] = [[
 Colt Anaconda.
@@ -692,6 +733,12 @@ LANGUAGE["Item_XM1014"] = [[XM1014]]
 LANGUAGE["Item_Desc_XM1014"] = [[
 Benelli M4 Super 90.
 Fully automatic shotgun.
+]]
+
+LANGUAGE["Item_Trench Gun"] = [[Trench Gun]]
+LANGUAGE["Item_Desc_Trench Gun"] = [[
+Winchester Model 1200.
+Shoots incendiary pellets.
 ]]
 
 LANGUAGE["Item_SPAS-12"] = [[SPAS-12]]
@@ -835,6 +882,18 @@ LANGUAGE["Item_Desc_Resistance RPG"] = [[
 Laser-guided rocket propulsion device.
 ]]
 
+LANGUAGE["Item_M79 GL"] = [[M79 GL]]
+LANGUAGE["Item_Desc_M79 GL"] = [[
+M79 Grenade Launcher.
+Shoots 40x46mm grenades the explodes on impact.
+]]
+
+LANGUAGE["Item_M32 GL"] = [[M32 GL]]
+LANGUAGE["Item_Desc_M32 GL"] = [[
+Milkor Multiple Grenade Launcher.
+A lightweight 40mm six-shot revolver grenade launcher.
+]]
+
 LANGUAGE["Item_RPG-7"] = [[RPG-7]]
 LANGUAGE["Item_Desc_RPG-7"] = [[
 Ruchnoy Protivotankoviy Granatomyot.
@@ -851,6 +910,18 @@ LANGUAGE["Item_Incendiary Grenade"] = [[Incendiary Grenade]]
 LANGUAGE["Item_Desc_Incendiary Grenade"] = [[
 Generates a pool of fire after some delay.
 Sets everything on fire within its effect.
+]]
+
+LANGUAGE["Item_Molotov"] = [[Molotov]]
+LANGUAGE["Item_Desc_Molotov"] = [[
+Generates a pool of fire on impact.
+Sets everything on fire within its effect.
+]]
+
+LANGUAGE["Item_Incendiary Launcher"] = [[Incendiary Launcher]]
+LANGUAGE["Item_Desc_Incendiary Launcher"] = [[
+Incendiary Grenade Launcher.
+Shoots incendiary grenades the erupt into flames on impact.
 ]]
 
 
@@ -883,6 +954,12 @@ LANGUAGE["Item_Desc_Watchtower"] = [[
 A watchtower that provides resupply.
 Generates 1 ammobox every 30 seconds.
 (Entity Class: horde_watchtower)
+]]
+
+LANGUAGE["Item_M2 Flamethrower"] = [[M2 Flamethrower]]
+LANGUAGE["Item_Desc_M2 Flamethrower"] = [[
+M2-2 Flamethrower.
+An American man-portable backpack flamethrower.
 ]]
 
 

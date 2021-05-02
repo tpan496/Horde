@@ -207,7 +207,7 @@ function HORDE:GetDefaultEnemiesData ()
     HORDE:CreateEnemy("zombie vj slow10", "npc_vj_zss_zombie10", 0.1, 2, false, 0.4, 1, 1, 1, nil)
     HORDE:CreateEnemy("zombie vj slow11", "npc_vj_zss_zombie11", 0.1, 2, false, 0.4, 1, 1, 1, nil)
     HORDE:CreateEnemy("zombie vj slow12", "npc_vj_zss_zombie12", 0.1, 2, false, 0.4, 1, 1, 1, nil)
-    HORDE:CreateEnemy("zombie torso", "npc_zombie_torso",        0.5, 2, false, 1, 1, 1, 1, nil)
+    HORDE:CreateEnemy("zombie torso",     "npc_zombie_torso",    0.5, 2, false, 1, 1, 1, 1, nil)
     HORDE:CreateEnemy("zombie torso vj", "npc_vj_zss_czombietors", 0.5, 2, false, 1, 1, 1, 1, nil)
     HORDE:CreateEnemy("zombie fast",      "npc_fastzombie",      0.5, 2, false, 1, 1, 1, 1, nil)
     HORDE:CreateEnemy("zombie poison vj", "npc_vj_zss_cpzombie", 0.5, 2, false, 1, 1, 1, 1, nil)
@@ -390,8 +390,8 @@ function HORDE:GetDefaultEnemiesData ()
     HORDE:CreateEnemy("zombie poison",    "npc_poisonzombie",        0.5,  10, false, 1, 1, 1, 1, nil)
     HORDE:CreateEnemy("Alpha Gonome",     "npc_vj_alpha_gonome",     1,    10, true,  1, 1, 10, 1, nil, nil, nil,
     {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song24.mp3", music_duration=105}, "fume")
-    HORDE:CreateEnemy("Infested Beast",   "npc_vj_infested_beast",   100,    10, true,  1, 1, 10, 1, nil, nil, nil,
-    {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=0,  music="music/hl1_song24.mp3", music_duration=105}, nil)
+    HORDE:CreateEnemy("Behemoth",         "npc_vj_behemoth",         1,    10, true,  1, 1, 10, 1, nil, nil, nil,
+    {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=0,  music="music/hl1_song24.mp3", music_duration=105}, "nemesis")
     
     HORDE:NormalizeEnemiesWeight()
 

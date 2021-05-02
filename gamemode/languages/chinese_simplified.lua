@@ -480,6 +480,40 @@ LANGUAGE["Perk_warden_resonance_cascade"] = [[
 光环效果增加 {1}。
 光环半径增加 {2}。]]
 
+-- Default Perks: Cremator
+LANGUAGE["Perk_Title_Cremator_Tier_1"] = [[化合物]]
+LANGUAGE["Perk_Title_cremator_methane"] = [[甲烷]]
+LANGUAGE["Perk_cremator_methane"] = [[
+对被引燃的敌人提升 {1} 火焰伤害。]]
+
+LANGUAGE["Perk_Title_cremator_napalm"] = [[凝固汽油弹]]
+LANGUAGE["Perk_cremator_napalm"] = [[
+提升 {1} 引燃半径。
+提升 {2} 引燃持续时间。]]
+
+LANGUAGE["Perk_Title_Cremator_Tier_2"] = [[能量汲取]]
+LANGUAGE["Perk_Title_cremator_positron_array"] = [[阳电子阵列]]
+LANGUAGE["Perk_cremator_positron_array"] = [[
+免疫火焰伤害。
+吸收 {1} 火焰伤害为生命值。]]
+
+LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[熵护盾]]
+LANGUAGE["Perk_cremator_entropy_shield"] = [[
+获得一个能抵消一次伤害的护盾。
+护盾被击中后爆炸，在 {1} 秒后重生。
+护盾爆炸造成 {2} 火焰伤害。]]
+
+LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[能量释放]]
+LANGUAGE["Perk_Title_cremator_firestorm"] = [[火焰风暴]]
+LANGUAGE["Perk_cremator_firestorm"] = [[
+提升 {1} 火焰伤害。
+击杀的敌人有 {2} 概率爆炸，
+造成 {3} 火焰伤害。]]
+
+LANGUAGE["Perk_Title_cremator_incineration"] = [[燃烧殆尽]]
+LANGUAGE["Perk_cremator_incineration"] = [[
+提升 {1} 引燃伤害。
+提升 {2} 引燃概率。]]
 
 -- Default Config Shop Items
 -- Optional

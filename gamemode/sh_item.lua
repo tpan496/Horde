@@ -249,7 +249,7 @@ function HORDE:GetDefaultItemsData()
     {Demolition=true, Survivor=true}, 0, 100)
     HORDE:CreateItem("Explosive",  "Incendiary Grenade",   "arccw_go_nade_incendiary",        1500,   2, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
     {Cremator=true}, 100, -1)
-    HORDE:CreateItem("Explosive",  "Molotov",   "arccw_go_nade_molotov",        1500,   2, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
+    HORDE:CreateItem("Explosive",  "Molotov",   "arccw_go_nade_molotov",        1500,   2, "Generates a pool of fire on impact.\nSets everything on fire within its effect.",
     {Cremator=true}, 100, -1)
     HORDE:CreateItem("Explosive",  "Incendiary Launcher",  "arccw_horde_incendiary_launcher", 3000,  8, "Incendiary Grenade Launcher.\nShoots incendiary grenades the erupt into flames on impact.",
     {Cremator=true}, 50, -1)
