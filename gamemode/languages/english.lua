@@ -320,8 +320,8 @@ Buffs you apply are {2} more effective.]]
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Grenade]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[Impact Grenade]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
-Grenades explode on enemy impact.
-Grenade damage increased by {1}.]]
+{1} increased Blast damage.
+{2} increased Grenade damage.]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[Cluster Grenade]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[
@@ -509,9 +509,9 @@ Explosion deals {2} Fire damage.]]
 LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[Energy Discharge]]
 LANGUAGE["Perk_Title_cremator_firestorm"] = [[Firestorm]]
 LANGUAGE["Perk_cremator_firestorm"] = [[
-{1} increased Fire damage.
-Enemies you killed have {2} chance to explode,
-dealing {3} Fire damage.]]
+Fire damage builds up Burst power in enemies.
+Creates an explosion when Burst power reaches {1}.
+Explosion deals {2} Blast damage.]]
 
 LANGUAGE["Perk_Title_cremator_incineration"] = [[Incineration]]
 LANGUAGE["Perk_cremator_incineration"] = [[

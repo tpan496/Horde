@@ -307,8 +307,8 @@ Buffs que tu apliques tendran {2} mas de duracion.]]
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Granada]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[Granada de Impacto]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
-Granadas explotan al impacto contra un enemigo.
-Daño de la Granada aumentado un {1}.]]
+{1} Aumento de daño por explosion.
+Daño de la Granada aumentado un {2}.]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[Granada en Racimo]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[

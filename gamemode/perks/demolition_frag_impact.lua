@@ -1,23 +1,19 @@
 PERK.PrintName = "Impact Detonation"
-PERK.Description = "Grenades explode on enemy impact.\nGrenade damage increased by {1}."
+PERK.Description = "{1} increased Blast damage.\n{2} increased Grenade damage."
 PERK.Icon = "materials/perks/frag_impact.png"
 PERK.Params = {
-    [1] = {value = 0.50, percent = true},
+    [1] = {value = 0.15, percent = true},
+    [2] = {value = 0.25, percent = true},
 }
 
 PERK.Hooks = {}
-PERK.Hooks.EntityTakeDamage = function(victim, dmginfo)
-    local attacker = dmginfo:GetAttacker()
-    local ent = dmginfo:GetInflictor()
-    if (victim:IsNPC() or victim:IsNextBot()) and IsValid(ent)
-            and (ent:GetClass() == "npc_grenade_frag" or ent:GetClass() == "arccw_thr_go_frag") and IsValid(attacker)
-            and not dmginfo:IsExplosionDamage() and attacker:Horde_GetPerk("demolition_frag_impact") then
-        local dmg = 125 * 1.5
-        local rad = 250
-        local e = EffectData()
-        e:SetOrigin(ent:GetPos())
-        util.Effect("Explosion", e)
-        util.BlastDamage(ent, attacker, ent:GetPos(), rad, dmg)
-        ent:Remove()
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
+    if not ply:Horde_GetPerk("demolition_frag_impact")  then return end
+    if dmginfo:GetDamageType() == DMG_BLAST or dmginfo:IsExplosionDamage() then
+        bonus.increase = bonus.increase + 0.15
+    end
+    local inflictor = dmginfo:GetInflictor()
+    if inflictor:GetClass() == "weapon_frag" or inflictor:GetClass() == "arccw_go_nade_frag" then
+        bonus.increase = bonus.increase + 0.25
     end
 end
