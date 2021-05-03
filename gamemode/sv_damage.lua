@@ -2,6 +2,7 @@ local plymeta = FindMetaTable("Player")
 
 HORDE.DMG_CALCULATED = 1
 HORDE.DMG_SPLASH = 2
+HORDE.DMG_FRIENDLY = 3
 
 -- Player damage.
 function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
@@ -47,10 +48,7 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
             local ignite = math.random()
             if ignite <= ply:Horde_GetApplyIgniteChance() then
                 npc:Horde_SetMostRecentFireAttacker(ply, dmginfo)
-                timer.Simple(0.1, function()
-                    if not ply:IsValid() or not npc:IsValid() then return end
-                    npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
-                end)
+                npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
             end
         end
     end
@@ -61,7 +59,7 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     dmginfo:SetDamageCustom(HORDE.DMG_CALCULATED)
 end
 
-hook.Add("EntityTakeDamage", "Horde_MinionDamageRedirection", function (target, dmginfo)
+hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginfo)
     local attacker = dmginfo:GetAttacker()
     if not target:IsNPC() then return end
     
@@ -95,6 +93,8 @@ end)
 hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if not target:IsValid() or not target:IsPlayer() then return end
     local ply = target
+
+    if dmg:GetInflictor() == dmg:GetAttacker() then return true end
 
     -- Prevent damage from skill explosions (e.g. Rip and Tear, Chain Reaction, Kamikaze)
     if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end

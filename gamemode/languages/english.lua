@@ -143,7 +143,7 @@ LANGUAGE["Class_Description_Warden"] = [[
 Has full access to shotguns and watchtowers (horde_watchtower).]]
 
 LANGUAGE["Class_Description_Cremator"] = [[
-Has full access to shotguns and watchtowers (horde_watchtower).]]
+Has access to heat-based weaponry.]]
 
 
 -- Default Base Perks
@@ -211,6 +211,13 @@ Complexity: MEDIUM
 Players near you are affected by Warden Aura.
 Warden Aura blocks {1} damage.]]
 
+LANGUAGE["Perk_cremator_base"] = [[
+The Cremator builds its offense and defense around Fire damage.
+{1} increased Fire damage resistance.
+Attacks have {2} chance to Ignite enemies.
+
+Ignite base duration is {3} and deals damage over time based on hit damage.
+Fire damage has {5} Ignite chance.]]
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[Survival]]

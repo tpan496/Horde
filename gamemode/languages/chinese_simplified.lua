@@ -112,6 +112,7 @@ LANGUAGE["Class_Ghost"] = "幻影"
 LANGUAGE["Class_Engineer"] = "工程师"
 LANGUAGE["Class_Berserker"] = "狂战士"
 LANGUAGE["Class_Warden"] = "守望者"
+LANGUAGE["Class_Cremator"] = "火焰兵"
 
 
 -- Default Class Extra Descriptions
@@ -141,6 +142,9 @@ LANGUAGE["Class_Description_Berserker"] = [[
 
 LANGUAGE["Class_Description_Warden"] = [[
 能使用全部的霰弹枪武器以及制造守望塔 (horde_watchtower)。]]
+
+LANGUAGE["Class_Description_Cremator"] = [[
+能使用基于热学原理的武器。]]
 
 -- Default Base Perks
 LANGUAGE["Perk_survivor_base"] = [[
@@ -206,6 +210,14 @@ LANGUAGE["Perk_warden_base"] = [[
 
 自身以及附近的玩家会受到“守望光环”效果。
 “守望光环”阻挡 {1} 伤害。]]
+
+LANGUAGE["Perk_cremator_base"] = [[
+喷火兵是使用火焰伤害进行进攻和防御。
+提升 {1} 火焰伤害抗性。
+攻击有 {2} 概率引燃敌人。
+
+引燃持续时间为 {3} 秒，造成基于攻击伤害的持续伤害。
+火焰伤害有 {1} 概率引燃敌人。]]
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[生存]]
