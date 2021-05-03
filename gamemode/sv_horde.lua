@@ -223,7 +223,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
 end)
 
 hook.Add("ScaleNPCDamage", "Horde_HeadshotCounter", function (npc, hitgroup, dmg)
-    if npc:IsValid() and dmg:GetAttacker():IsPlayer() then
+    if npc:IsValid() and dmg:GetAttacker():IsPlayer() and hitgroup == HITGROUP_HEAD then
         local id = dmg:GetAttacker():SteamID()
         if not HORDE.player_headshots[id] then HORDE.player_headshots[id] = 0 end
         HORDE.player_headshots[id] = HORDE.player_headshots[id] + 1

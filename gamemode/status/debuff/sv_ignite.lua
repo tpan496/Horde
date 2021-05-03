@@ -26,7 +26,7 @@ function plymeta:Horde_GetApplyIgniteChance()
 end
 
 function entmeta:Horde_SetMostRecentFireAttacker(attacker, dmginfo)
-	self.most_recent_fire_attacker = attacker
+	self.Horde_MostRecentFireAttacker = attacker
     if self.Horde_IgniteDamageTaken then
         self.Horde_IgniteDamageTaken = math.max(self.Horde_IgniteDamageTaken, dmginfo:GetDamage() * 0.025)
     else
@@ -35,9 +35,9 @@ function entmeta:Horde_SetMostRecentFireAttacker(attacker, dmginfo)
 end
 
 function entmeta:Horde_GetMostRecentFireAttacker()
-	return self.most_recent_fire_attacker
+	return self.Horde_MostRecentFireAttacker
 end
 
-function entmeta:Horde_GetIgniteDamageTaken(damage)
+function entmeta:Horde_GetIgniteDamageTaken()
     return self.Horde_IgniteDamageTaken or 1
 end

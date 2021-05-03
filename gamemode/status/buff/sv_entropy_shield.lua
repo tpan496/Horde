@@ -37,7 +37,7 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_EntropyShieldDamage", function (ply
         bonus.resistance = 1
         local dmg = DamageInfo()
         dmg:SetAttacker(ply)
-        dmg:SetInflictor(dmginfo:GetAttacker())
+        dmg:SetInflictor(ply)
         dmg:SetDamageType(DMG_BURN)
         dmg:SetDamage(100)
         util.BlastDamageInfo(dmg, ply:GetPos(), 150)
