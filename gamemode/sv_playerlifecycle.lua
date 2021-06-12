@@ -191,9 +191,11 @@ function HORDE:GameEnd(status)
     HORDE:BroadcastGameResultMessage(status, HORDE.current_wave)
 
     for _, ply in pairs(player.GetAll()) do
+        if not ply:IsValid() then goto cont end
         if GetConVar("horde_enable_rank"):GetInt() == 1 then
             HORDE:SaveRank(ply)
         end
+        ::cont::
     end
 
     timer.Create("Horde_MapVoteCountdown", 1, 0, function ()
@@ -451,7 +453,7 @@ HORDE.VoteChangeMap = function (ply)
         net.WriteString("All players want to change map! Initiating map vote...")
         net.WriteInt(0,2)
         net.Broadcast()
-        timer.Simple(5, function ()
+        timer.Simple(1, function ()
             HORDE:GameEnd("Change Map")
         end)
     else

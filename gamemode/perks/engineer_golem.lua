@@ -31,5 +31,10 @@ PERK.Hooks.ScaleNPCDamage = function (npc, hitgroup, dmg)
             local dir = endpos - startpos
             npc:SetVelocity(dir:GetNormalized() * 500)
         end
+    elseif npc.Horde_Has_Parasite and npc.Horde_Has_Parasite:IsPlayer() and npc.Horde_Has_Parasite:Horde_GetPerk("engineer_golem") then
+        local startpos = dmg:GetDamagePosition()
+        local endpos = npc:GetPos()
+        local dir = endpos - startpos
+        npc:SetVelocity(dir:GetNormalized() * 500)
     end
 end

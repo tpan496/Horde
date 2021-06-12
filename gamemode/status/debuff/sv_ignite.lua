@@ -30,8 +30,12 @@ function entmeta:Horde_SetMostRecentFireAttacker(attacker, dmginfo)
     if self.Horde_IgniteDamageTaken then
         self.Horde_IgniteDamageTaken = math.max(self.Horde_IgniteDamageTaken, dmginfo:GetDamage() * 0.025)
     else
-        self.Horde_IgniteDamageTaken = math.max(1, dmginfo:GetDamage() * 0.025)
+        self.Horde_IgniteDamageTaken = math.max(1, dmginfo:GetDamage() * 0.03)
     end
+end
+
+function entmeta:Horde_SetIgniteDamage(dmg)
+    self.Horde_IgniteDamageTaken = dmg
 end
 
 function entmeta:Horde_GetMostRecentFireAttacker()

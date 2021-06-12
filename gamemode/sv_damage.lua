@@ -3,6 +3,7 @@ local plymeta = FindMetaTable("Player")
 HORDE.DMG_CALCULATED = 1
 HORDE.DMG_SPLASH = 2
 HORDE.DMG_FRIENDLY = 3
+HORDE.DMG_PARASITE = 4
 
 -- Player damage.
 function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
@@ -11,12 +12,14 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     if not npc:IsValid() then return end
 
     local attacker = dmginfo:GetAttacker()
+    if not IsValid(attacker) then return end
+
     if attacker:GetNWEntity("HordeOwner"):IsPlayer() then
         dmginfo:SetInflictor(attacker)
         dmginfo:SetAttacker(attacker:GetNWEntity("HordeOwner"))
     end
 
-    if attacker:GetOwner():IsPlayer() then
+    if IsValid(attacker:GetOwner()) and attacker:GetOwner():IsPlayer() then
         dmginfo:SetAttacker(attacker:GetOwner())
     end
 
@@ -57,18 +60,24 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     dmginfo:ScaleDamage(bonus.more * (1 + bonus.increase))
     dmginfo:AddDamage(bonus.post_add)
     dmginfo:SetDamageCustom(HORDE.DMG_CALCULATED)
+
+    -- Play sound
+    if hitgroup == HITGROUP_HEAD then
+        sound.Play("horde/player/headshot.ogg", npc:GetPos())
+    end
 end
 
 hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginfo)
     local attacker = dmginfo:GetAttacker()
     if not target:IsNPC() then return end
-    
+    if not IsValid(attacker) then return end
+
     if attacker:GetNWEntity("HordeOwner"):IsPlayer() then
         dmginfo:SetInflictor(attacker)
         dmginfo:SetAttacker(attacker:GetNWEntity("HordeOwner"))
     end
 
-    if attacker:GetOwner():IsPlayer() then
+    if IsValid(attacker:GetOwner()) and attacker:GetOwner():IsPlayer() then
         dmginfo:SetAttacker(attacker:GetOwner())
     end
 
@@ -94,7 +103,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if not target:IsValid() or not target:IsPlayer() then return end
     local ply = target
 
-    if dmg:GetInflictor() == dmg:GetAttacker() then return true end
+    if dmg:GetAttacker():IsPlayer() and (dmg:GetInflictor() == dmg:GetAttacker()) then return true end
 
     -- Prevent damage from skill explosions (e.g. Rip and Tear, Chain Reaction, Kamikaze)
     if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end

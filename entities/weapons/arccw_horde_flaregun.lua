@@ -30,8 +30,8 @@ SWEP.ViewModel = "models/vj_weapons/v_flaregun.mdl"
 SWEP.WorldModel = "models/vj_weapons/w_flaregun.mdl"
 SWEP.ViewModelFOV = 60
 
-SWEP.Damage = 500
-SWEP.DamageMin = 500 -- damage done at maximum range
+SWEP.Damage = 0
+SWEP.DamageMin = 0 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 0
 SWEP.DamageType = DMG_BULLET
@@ -157,7 +157,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload",
-        Time = 2.5,
+        Time = 1.5,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
         FrameRate = 30,
         LHIK = true,

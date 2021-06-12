@@ -93,7 +93,7 @@ PERK.Hooks.OnEntityCreated = function (ent)
     timer.Simple(0, function()
         local owner = ent:GetNWEntity("HordeOwner")
         if owner:IsPlayer() and owner:Horde_GetPerk("engineer_manhack") then
-            if ent:GetClass() == "npc_turret_floor" then
+            if ent:GetClass() == "npc_turret_floor" and (not ent.Horde_Is_Mini_Sentry) then
                 ent:Remove()
             end
         end

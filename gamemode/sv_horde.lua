@@ -192,6 +192,12 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                 if not HORDE.player_damage[id] then HORDE.player_damage[id] = 0 end
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
                 ent:Horde_SetMostRecentAttacker(dmg:GetAttacker())
+                if GetConVar("horde_testing_display_damage"):GetInt() == 1 then
+                    net.Start("Horde_LegacyNotification")
+                        net.WriteString("You dealt " .. dmg:GetDamage() .. " damage to " .. ent:GetClass())
+                        net.WriteInt(0,2)
+                    net.Send(dmg:GetAttacker())
+                end
 
                 local boss_properties = ent:Horde_GetBossProperties()
                 if boss_properties and boss_properties.is_boss and boss_properties.is_boss == true then
@@ -218,6 +224,12 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
             local id = ent:SteamID()
             if not HORDE.player_damage_taken[id] then HORDE.player_damage_taken[id] = 0 end
             HORDE.player_damage_taken[id] = HORDE.player_damage_taken[id] + dmg:GetDamage()
+            if GetConVar("horde_testing_display_damage"):GetInt() == 1 then
+                net.Start("Horde_LegacyNotification")
+                    net.WriteString("You received " .. dmg:GetDamage() .. " damage from " .. dmg:GetAttacker():GetClass())
+                    net.WriteInt(0,2)
+                net.Send(ent)
+            end
         end
     end
 end)
@@ -828,7 +840,7 @@ function HORDE:WaveEnd()
     end
     HORDE.spawned_enemies_count = {}
 
-    if (HORDE.current_wave == HORDE.max_waves) and (HORDE.endless == 0) then
+    if (HORDE.current_wave >= HORDE.max_waves) and (HORDE.endless == 0) then
         -- TODO: change this magic number
         if boss_music_loop then boss_music_loop:Stop() end
         HORDE:GameEnd("VICTORY")

@@ -106,7 +106,7 @@ function End(ply)
 end
 
 function Shop(ply)
-    if not HORDE.enable_shop then
+    if GetConVar("horde_enable_shop"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
         net.WriteString("Shop has been disabled.")
         net.WriteInt(1,2)
@@ -126,7 +126,7 @@ function Shop(ply)
         net.Send(ply)
         return
     end
-
+    ply:Horde_RecalcWeight()
     net.Start("Horde_ToggleShop")
     net.Send(ply)
 end
@@ -309,4 +309,8 @@ concommand.Add("horde_testing_wave_goto", function (ply, cmd, args)
         HORDE.current_wave = tonumber(args[1])
         HORDE:WaveStart()
     end
+end)
+
+concommand.Add("horde_use_gadget", function (ply, cmd, args)
+    HORDE:UseGadget(ply)
 end)

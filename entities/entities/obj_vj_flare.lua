@@ -44,12 +44,19 @@ function ENT:Initialize()
 	//print(self:GetModel())
 	if self:GetModel() == "models/error.mdl" then
 	self:SetModel("models/items/ar2_grenade.mdl") end
-	self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
+	//self:PhysicsInit(SOLID_VPHYSICS)
+	//self:SetMoveType(MOVETYPE_VPHYSICS)
 	//self:SetMoveCollide(COLLISION_GROUP_INTERACTIVE)
 	//self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
-	self:SetSolid(SOLID_VPHYSICS)
-	self:SetOwner(self:GetOwner())
+	//self:SetSolid(SOLID_VPHYSICS)
+	local pb_vert = 1
+    local pb_hor = 1
+    self:PhysicsInitBox( Vector(-pb_vert,-pb_hor,-pb_hor), Vector(pb_vert,pb_hor,pb_hor) )
+
+    local phys = self:GetPhysicsObject()
+    if phys:IsValid() then
+        phys:Wake()
+    end
 	self:SetColor(Color(255,0,0))
 
 	-- Physics Functions
@@ -59,25 +66,6 @@ function ENT:Initialize()
 		phys:EnableGravity(true)
 		phys:SetBuoyancyRatio(0)
 	end
-
-	-- Misc Functions
-	util.SpriteTrail(self, 0, Color(90,90,90,255), false, 10, 1, 3, 1/(15+1)*0.5, "trails/smoke.vmt")
-	ParticleEffectAttach("vj_rpg1_smoke", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	ParticleEffectAttach("vj_rpg2_smoke2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	util.SpriteTrail(self, 0, Color(155, 0, 0, 150), false, 1, 100, 5, 5 / ((2 + 10) * 0.5), "trails/smoke.vmt")
-
-
-	self.StartLight1 = ents.Create("light_dynamic")
-	self.StartLight1:SetKeyValue("brightness", "0.01")
-	self.StartLight1:SetKeyValue("distance", "1500")
-	self.StartLight1:SetLocalPos(self:GetPos())
-	self.StartLight1:SetLocalAngles( self:GetAngles() )
-	self.StartLight1:Fire("Color", "255 0 0")
-	self.StartLight1:SetParent(self)
-	self.StartLight1:Spawn()
-	self.StartLight1:Activate()
-	self.StartLight1:Fire("TurnOn", "", 0)
-	self:DeleteOnRemove(self.StartLight1)
 
 	if self:GetOwner():IsValid() && (self:GetOwner().FlareAttackFussTime) then
 		timer.Simple(self:GetOwner().FlareAttackFussTime,function() if IsValid(self) then self:DoDeath() end end) else
@@ -128,17 +116,17 @@ function ENT:OnTakeDamage(dmginfo)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:PhysicsCollide(data,physobj)
+	if self.Removing then return end
 	if IsValid(data.HitEntity) && (data.HitEntity:IsNPC() or data.HitEntity:IsPlayer()) && !self.Removing then
-		local damagecode = DamageInfo()
-		damagecode:SetDamage(150)
-		damagecode:SetDamageType(DMG_BURN)
-		damagecode:SetAttacker(self)
-		damagecode:SetInflictor(self.Inflictor)
-		damagecode:SetDamagePosition(data.HitPos)
-		data.HitEntity:TakeDamageInfo(damagecode, self)
+		local dmg = DamageInfo()
+		dmg:SetAttacker(self.Owner)
+		dmg:SetInflictor(self.Inflictor)
+		dmg:SetDamageType(DMG_BURN)
+		dmg:SetDamage(150)
+		util.BlastDamageInfo(dmg, self:GetPos(), 75)
 	end
 	if not self.Removing then
-		timer.Simple(1, function() self:DoDeath() end)
+		self:Remove()
 		self.Removing = true
 	end
 end

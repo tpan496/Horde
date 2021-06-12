@@ -35,7 +35,11 @@ PERK.Hooks.OnEntityCreated = function (ent)
         if ply:IsPlayer() and ply:Horde_GetPerk("engineer_base") and ent:IsNPC() then
             if ent:GetClass() == "npc_turret_floor" then
                 if ent:GetMaxHealth() < 500 then
-                    ent:SetMaxHealth(500)
+                    if ent.Horde_Is_Mini_Sentry then
+                        ent:SetMaxHealth(250)
+                    else
+                        ent:SetMaxHealth(500)
+                    end
                 end
             end
             ent:SetMaxHealth(ent:GetMaxHealth() * 1.25)

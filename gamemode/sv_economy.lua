@@ -152,6 +152,20 @@ function plymeta:Horde_SyncEconomy()
     net.Broadcast()
 end
 
+function plymeta:Horde_RecalcWeight()
+    local weight = 0
+    for _, wpn in pairs(self:GetWeapons()) do
+        if not HORDE.items[wpn:GetClass()] then goto cont end
+        local wpn_weight = HORDE.items[wpn:GetClass()].weight
+        if weight + wpn_weight > self:Horde_GetWeight() then
+            self:DropWeapon(wpn)
+        else
+            weight = weight + wpn_weight
+        end
+        ::cont::
+    end
+end
+
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     hook.Run("Horde_ResetStatus", ply)
     net.Start("Horde_ClearStatus")
@@ -214,9 +228,6 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
     end
 end)
 
-function HORDE:SpawnMinion()
-end
-
 net.Receive("Horde_BuyItem", function (len, ply)
     if not ply:IsValid() then return end
     local class = net.ReadString()
@@ -274,6 +285,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 if ent:IsNPC() then
                     -- Minions have no player collsion
                     ent:AddRelationship("player D_LI 99")
+                    ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
                     local npc_info = list.Get("NPC")[ent:GetClass()]
                     if not npc_info then
                         print("[HORDE] NPC does not exist in ", list.Get("NPC"))
@@ -316,6 +328,11 @@ net.Receive("Horde_BuyItem", function (len, ply)
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_ARMOR then
                 if ply:Armor() >= ply:GetMaxArmor() then return end
                 ply:SetArmor(item.entity_properties.armor)
+                ply:Horde_AddMoney(-price)
+                ply:Horde_SyncEconomy()
+            elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
+                ply:Horde_UnsetGadget()
+                ply:Horde_SetGadget(item.class)
                 ply:Horde_AddMoney(-price)
                 ply:Horde_SyncEconomy()
             end
@@ -397,15 +414,22 @@ net.Receive("Horde_SellItem", function (len, ply)
         ply:Horde_SyncEconomy()
     else
         local item = HORDE.items[class]
-        local drop_entities = ply:Horde_GetDropEntities()
-        if drop_entities and drop_entities[class] then
-            ply:Horde_AddMoney(math.floor(0.25 * item.price * drop_entities[class]))
-            -- Remove all the drop entiies of this player
-            for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-                if ent:GetClass() == class then
-                    ent:Remove()
+        if item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
+            local drop_entities = ply:Horde_GetDropEntities()
+            if drop_entities and drop_entities[class] then
+                ply:Horde_AddMoney(math.floor(0.25 * item.price * drop_entities[class]))
+                -- Remove all the drop entiies of this player
+                for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+                    if ent:GetClass() == class then
+                        ent:Remove()
+                    end
                 end
+                ply:Horde_SyncEconomy()
             end
+        elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
+            if ply:Horde_GetGadget() == nil then return end
+            ply:Horde_UnsetGadget()
+            ply:Horde_AddMoney(math.floor(0.25 * item.price))
             ply:Horde_SyncEconomy()
         end
     end

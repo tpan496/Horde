@@ -4,6 +4,7 @@ CreateConVar("horde_default_class_config", 1, FCVAR_SERVER_CAN_EXECUTE, "Use def
 CreateConVar("horde_max_wave", 10, FCVAR_SERVER_CAN_EXECUTE, "Max waves.")
 CreateConVar("horde_break_time", 60, FCVAR_SERVER_CAN_EXECUTE, "Break time between waves.")
 CreateConVar("horde_enable_shop", 1, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "Enables shop menu or not.")
+CreateConVar("horde_enable_shop_icons", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Enables shop menu icons or not.")
 CreateConVar("horde_enable_perk", 1, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "Enables perks or not.")
 CreateConVar("horde_enable_rank", 1, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "Enables ranks or not.")
 CreateConVar("horde_enable_client_gui", 1, FCVAR_SERVER_CAN_EXECUTE, "Enables client information ui or not.")
@@ -47,6 +48,7 @@ CreateConVar("horde_enable_3d2d_icon", 1, FCVAR_SERVER_CAN_EXECUTE, "Enables pla
 CreateConVar("horde_turret_spread", 0.5, FCVAR_SERVER_CAN_EXECUTE, "Turret spread.")
 
 CreateConVar("horde_testing_unlimited_class_change", 0, FCVAR_SERVER_CAN_EXECUTE, "You can change a class for an unlimited times. Please use this only for testing purposes.")
+CreateConVar("horde_testing_display_damage", 0, FCVAR_ARCHIVE, "Display damage.")
 
 if SERVER then
 util.AddNetworkString("Horde_LegacyNotification")
@@ -63,7 +65,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.7.0"
+HORDE.version = "1.0.8.0"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -106,7 +108,6 @@ HORDE.start_money = math.max(0, GetConVarNumber("horde_start_money"))
 HORDE.total_enemies_this_wave_fixed = 0
 HORDE.kill_reward_base = 90
 HORDE.round_bonus_base = GetConVar("horde_round_bonus"):GetInt()
-HORDE.game_ended = false
 
 -- Ammobox
 HORDE.ammobox_max_count_limit = 9
@@ -129,7 +130,6 @@ HORDE.player_vote_map_change = {}
 HORDE.render_highlight_disable = 0
 HORDE.render_highlight_enemies = 1
 HORDE.render_highlight_ammoboxes = 2
-HORDE.enable_shop = GetConVarNumber("horde_enable_shop")
 HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM", "NIGHTMARE"}
 
 -- ArcCW Attachments
@@ -149,6 +149,7 @@ if ArcCWInstalled then
         ArcCW.AttachmentBlacklistTable["go_perk_slow"] = true
     end
 end
+
 
 -- Disable Godmode
 RunConsoleCommand("sbox_godmode", "0")
