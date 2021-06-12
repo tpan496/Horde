@@ -35,6 +35,7 @@ SWEP.Throwing = true
 
 SWEP.Primary.ClipSize = 1
 
+
 SWEP.MuzzleVelocity = 1000
 SWEP.ShootEntity = "arccw_thr_medicgrenade"
 

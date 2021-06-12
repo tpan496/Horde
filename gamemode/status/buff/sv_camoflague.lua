@@ -10,6 +10,7 @@ function plymeta:Horde_AddCamoflague()
 end
 
 function plymeta:Horde_RemoveCamoflague()
+    if self.Horde_In_Optical_Camouflage then return end
     if not self:IsValid() then return end
     if self.Horde_Camoflague == 0 then return end
     self.Horde_Camoflague = 0

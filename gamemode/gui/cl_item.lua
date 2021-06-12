@@ -71,10 +71,31 @@ function PANEL:SetData(item, description_panel)
     price_panel:SetFont("Item")
     self.price_panel = price_panel
 
-    --[[
+    if self.item.shop_icon and self.item.shop_icon ~= "" then
+        self.icon = self.item.shop_icon
+        return
+    end
     local icon
     local wpn = weapons.Get(self.item.class)
-    if not wpn then return end
+    if not wpn then
+        if self.item.class == "weapon_crowbar" or
+        self.item.class == "weapon_stunstick" or
+        self.item.class == "weapon_pistol" or
+        self.item.class == "weapon_357" or
+        self.item.class == "weapon_rpg" or
+        self.item.class == "weapon_frag" or
+        self.item.class == "weapon_slam" or
+        self.item.class == "weapon_smg1" or
+        self.item.class == "weapon_shotgun" or
+        self.item.class == "weapon_ar2" or
+        self.item.class == "weapon_physcannon" or
+        self.item.class == "weapon_crossbow" or
+        self.item.class == "weapon_bugbait" then
+            self.is_hl2 = true
+        end
+        self.icon = surface.GetTextureID("vgui/hud/item")
+        return
+    end
     icon = wpn.WepSelectIcon
     if not icon or icon == surface.GetTextureID("weapons/swep") then
         if wpn.ArcCW then
@@ -82,12 +103,20 @@ function PANEL:SetData(item, description_panel)
             local mat = Material(path)
             local tex = mat:GetTexture("$basetexture")
             if tex then
-                if tex:GetName() == "error" then return end
+                if tex:GetName() == "error" then
+                    self.icon = surface.GetTextureID("vgui/hud/item")
+                    return
+                end
                 local texpath = tex:GetName()
                 icon = surface.GetTextureID(texpath)
+            else
+                icon = surface.GetTextureID("vgui/hud/item")
             end
+        else
+            icon = surface.GetTextureID("vgui/hud/item")
         end
-    end--]]
+    end
+    self.icon = icon
 end
 
 function PANEL:Paint()
@@ -97,7 +126,7 @@ function PANEL:Paint()
         surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
         surface.SetFont("Item")
 
-        if LocalPlayer():HasWeapon(self.item.class) then
+        if LocalPlayer():HasWeapon(self.item.class) or LocalPlayer():Horde_GetGadget() == self.item.class then
             self.price_panel:SetTextColor(HORDE.color_crimson)
             self.price_panel:SetText("Owned")
         else
@@ -127,10 +156,35 @@ function PANEL:Paint()
             self.weight_panel:SetVisible(false)
         else
             self.weight_panel:SetVisible(true)
+            if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
+                if HORDE.gadgets[self.item.class].Active then
+                    surface.SetMaterial(Material(HORDE.gadgets[self.item.class].Icon, "mips smooth"))
+                    surface.SetDrawColor(HORDE.color_crimson)
+                    surface.DrawTexturedRect(self:GetWide() - 256, -5, 96, 48)
+                else
+                    surface.SetMaterial(Material(HORDE.gadgets[self.item.class].Icon, "mips smooth"))
+                    surface.SetDrawColor(255, 255, 255, 255)
+                    surface.DrawTexturedRect(self:GetWide() - 256, -5, 96, 48)
+                end
+                return
+            end
+            if GetConVar("horde_enable_shop_icons"):GetInt() == 0 then return end
+            if self.item.shop_icon then
+                surface.SetMaterial(Material(self.item.shop_icon, "mips smooth"))
+                surface.SetDrawColor(255, 255, 255, 255)
+                surface.DrawTexturedRect(self:GetWide() - 256, -5, 96, 48)
+                return
+            end
             if not self.icon or self.icon < 0 or self.icon == surface.GetTextureID( "weapons/swep" ) then return end
-            surface.SetTexture(self.icon)
-            surface.SetDrawColor(255, 255, 255, 255)
-            surface.DrawTexturedRect(self:GetWide() - 256, -5, 96, 48)
+            if self.is_hl2 then
+                surface.SetMaterial(Material("items/hl2/" .. self.item.class .. ".png", "mips smooth"))
+                surface.SetDrawColor(255, 255, 255, 255)
+                surface.DrawTexturedRect(self:GetWide() - 256, -5, 96, 48)
+            else
+                surface.SetTexture(self.icon)
+                surface.SetDrawColor(255, 255, 255, 255)
+                surface.DrawTexturedRect(self:GetWide() - 256, -5, 96, 48)
+            end
         end
     end
 end

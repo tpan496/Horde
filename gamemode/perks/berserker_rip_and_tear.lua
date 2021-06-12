@@ -20,7 +20,7 @@ PERK.Hooks.PostEntityTakeDamage = function (ent, dmginfo, took)
     if inflictor:IsNPC() then return end
     local attacker = dmginfo:GetAttacker()
     local dmgtype = dmginfo:GetDamageType()
-    if took and ent:IsNPC() and attacker:IsPlayer() and attacker:Horde_GetPerk("berserker_rip_and_tear") and (dmgtype == DMG_SLASH or dmgtype == DMG_CLUB) then
+    if took and ent:IsNPC() and attacker:IsPlayer() and attacker:Horde_GetPerk("berserker_rip_and_tear") and (dmgtype == DMG_SLASH or dmgtype == DMG_CLUB) and not attacker.Horde_In_Flash then
         --local e = EffectData()
         --e:SetOrigin(ent:GetPos())
         --util.Effect("Explosion", e)

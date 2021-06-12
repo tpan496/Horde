@@ -18,7 +18,6 @@ function entmeta:Horde_SetMutation(mutation)
     hook.Run("Horde_OnSetMutation", self, mutation)
     if SERVER then
         net.Start("Horde_OnSetMutationEffect")
-            print("server", self)
             net.WriteEntity(self)
             net.WriteString(mutation)
         net.Broadcast()

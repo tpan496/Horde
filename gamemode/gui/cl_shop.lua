@@ -13,7 +13,7 @@ function PANEL:Init()
     close_btn:SetPos(self:GetWide() - 40, 8)
     close_btn.DoClick = function() HORDE:ToggleShop() end
 
-    local btn_container = vgui.Create("DPanel", self)
+    local btn_container = vgui.Create("DHorizontalScroller", self)
     btn_container:SetTall(32)
     btn_container:Dock(TOP)
     btn_container:DockMargin(0, 48, 0, 0)
@@ -47,50 +47,61 @@ function PANEL:Init()
             panel:SetVisible(false)
         end
 
-        local btn = vgui.Create("DButton", btn_container)
-        btn:Dock(dock)
+        local btn
+        if text == "Class/Perks" then
+            btn = vgui.Create("DButton", self)
+            btn:SetPos(11, 11)
+            btn:SetTall(40)
+            btn.PerformLayout = function(pnl)
+                pnl:SizeToContents() pnl:SetWide(pnl:GetWide() + 12) DLabel.PerformLayout(pnl)
+                pnl:SetContentAlignment(4)
+                pnl:SetTextInset( 12, 0 )
+            end
+        else
+            btn = vgui.Create("DButton", btn_container)
+            btn_container:AddPanel(btn)
+            btn:Dock(dock)
+            btn.PerformLayout = function(pnl)
+                pnl:SizeToContents() pnl:SetWide(pnl:GetWide() + 12) pnl:SetTall( pnl:GetParent():GetTall() ) DLabel.PerformLayout(pnl)
+                pnl:SetContentAlignment(4)
+                pnl:SetTextInset( 12, 0 )
+            end
+        end
+
         local loc_text = translate.Get("Shop_" .. text) or text
         btn:SetText(loc_text)
         btn:SetFont("Category")
 
         btn.Paint = function(pnl, w, h)
             if text == "Class/Perks" then
-                surface.SetDrawColor(HORDE.color_crimson)
+                if pnl:GetActive() then
+                    draw.RoundedBox(5, 0, 0, w, h, Color(40,40,40,230))
+                else
+                    draw.RoundedBox(5, 0, 0, w, h, HORDE.color_crimson)
+                end
+            else
+                surface.SetDrawColor(0,0,0,0)
                 surface.DrawRect(0, 0, w, h)
-                return
-            end
-            surface.SetDrawColor(0,0,0,0)
-            surface.DrawRect(0, 0, w, h)
-
-            if pnl:GetActive() then
-                surface.SetDrawColor(Color(40,40,40,230))
-                surface.DrawRect(0, 0, w, h)
+                if pnl:GetActive() then
+                    surface.SetDrawColor(Color(40,40,40,230))
+                    surface.DrawRect(0, 0, w, h)
+                end
             end
         end
 
         btn.UpdateColours = function(pnl)
             if pnl:GetActive() then
-                if text == "Class/Perks" then
-                    pnl:SetTextColor(Color(220,220,220))
-                else
-                    pnl:SetTextColor(HORDE.color_crimson)
-                end
+                pnl:SetTextColor(HORDE.color_crimson)
                 return
             end
             if pnl.Hovered then
                 if text == "Class/Perks" then
-                    pnl:SetTextColor(Color(220,220,220))
+                    --pnl:SetTextColor(Color(220,220,220))
                 else
                     pnl:SetTextColor(HORDE.color_crimson)
                 end
             return end
             pnl:SetTextColor(Color(255, 255, 255))
-        end
-
-        btn.PerformLayout = function(pnl)
-            pnl:SizeToContents() pnl:SetWide(pnl:GetWide() + 12) pnl:SetTall( pnl:GetParent():GetTall() ) DLabel.PerformLayout(pnl)
-            pnl:SetContentAlignment(4)
-            pnl:SetTextInset( 12, 0 )
         end
 
         btn.GetActive = function(pnl) return pnl.Active or false end
@@ -299,7 +310,7 @@ function PANEL:Paint(w, h)
     -- Money
     local display_name = LocalPlayer():Horde_GetClass().display_name
     local loc_display_name = translate.Get("Class_" .. display_name) or display_name
-    draw.SimpleText(translate.Get("Shop_Class") .. ": " .. loc_display_name, 'Heading', 10, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText(translate.Get("Shop_Class") .. ": " .. loc_display_name, 'Heading', 170, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     if LocalPlayer():Horde_GetClass().name == HORDE.Class_Heavy then
         draw.SimpleText(translate.Get("Shop_Cash") .. ": " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ ' .. translate.Get("Shop_Weight") .. ': [' .. tostring(HORDE.max_weight + 5 - LocalPlayer():Horde_GetWeight()) .. "/" .. HORDE.max_weight + 5 .. "]", 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
     else

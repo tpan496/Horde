@@ -35,10 +35,14 @@ PrecacheParticleSystem("combineball")
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetColor(Color(250, 0, 0))
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-    self:SetSolid(SOLID_VPHYSICS)
-    self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetOwner(self:GetOwner())
+	local pb_vert = 1
+    local pb_hor = 1
+    self:PhysicsInitBox( Vector(-pb_vert,-pb_hor,-pb_hor), Vector(pb_vert,pb_hor,pb_hor) )
+
+    local phys = self:GetPhysicsObject()
+    if phys:IsValid() then
+        phys:Wake()
+    end
 end
 
 function ENT:DeathEffects(data,phys)

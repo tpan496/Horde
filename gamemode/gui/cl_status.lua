@@ -29,6 +29,26 @@ local function DrawStatus(status, stack, displacement)
     end
 end
 
+local function DrawGadget(gadget, cd)
+    draw.RoundedBox(10, 0, 0, 50, 50, Color(40,40,40,200))
+
+    local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
+    surface.SetMaterial(mat) -- Use our cached material
+    if HORDE.gadgets[gadget].Active then
+        surface.SetDrawColor(HORDE.color_crimson)
+    else
+        surface.SetDrawColor(color_white)
+    end
+    surface.DrawTexturedRect(-35, -5, 120, 60)
+    --draw.SimpleText("E", "Trebuchet24", 40, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
+    if cd > 0 then
+        draw.RoundedBox(10, 0, 0, 50, 50, Color(40,40,40,200))
+        surface.SetDrawColor(color_white)
+        draw.SimpleText(cd, "Trebuchet24", 25, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    end
+end
+
 local status_panel = vgui.Create("DPanel")
 status_panel:SetSize(350, 50)
 status_panel:SetPos(25, 135)
@@ -37,9 +57,13 @@ status_panel.Paint = function ()
 
     if LocalPlayer():IsValid() and LocalPlayer():Alive() and LocalPlayer():GetStatusTable() then
         local pos = 0
+        if LocalPlayer():Horde_GetGadget() ~= nil then
+            DrawGadget(LocalPlayer():Horde_GetGadget(), LocalPlayer():Horde_GetGadgetInternalCooldown())
+            pos = 55
+        end
         for status, stack in pairs(LocalPlayer():GetStatusTable()) do
             DrawStatus(status, stack, pos)
-            pos = pos + 50 + 5
+            pos = pos + 55
         end
     end
 end
@@ -56,3 +80,14 @@ end)
 net.Receive("Horde_ClearStatus", function()
     LocalPlayer().Horde_StatusTable = {}
 end)
+
+if CLIENT then
+    net.Receive("Horde_GadgetStartCooldown", function()
+        LocalPlayer():Horde_SetGadgetInternalCooldown(net.ReadUInt(8))
+        if LocalPlayer():Horde_GetGadgetInternalCooldown() <= 0 then return end
+        timer.Create("Horde_LocalGadgetCooldown", 1, 0, function()
+            if LocalPlayer():Horde_GetGadgetInternalCooldown() <= 0 then timer.Remove("Horde_LocalGadgetCooldown") return end
+            LocalPlayer():Horde_SetGadgetInternalCooldown(LocalPlayer():Horde_GetGadgetInternalCooldown() - 1)
+        end)
+    end)
+end

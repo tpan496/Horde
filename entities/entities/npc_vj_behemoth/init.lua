@@ -137,7 +137,7 @@ function ENT:CustomOnThink()
 				self.drone:SetAngles(self:GetAngles())
 				self.drone:Spawn()
 				self.drone:SetNoDraw(true)
-				timer.Simple(0.3,function() if IsValid(self.drone) then self.drone:SetNoDraw(false) end end)
+				timer.Simple(0.3,function() if IsValid(self) and IsValid(self.drone) then self.drone:SetNoDraw(false) end end)
 				self.drone:SetOwner(self)
 			end
 			
@@ -147,7 +147,7 @@ function ENT:CustomOnThink()
 				self.anotherone:SetAngles(self:GetAngles())
 				self.anotherone:Spawn()
 				self.anotherone:SetNoDraw(true)
-				timer.Simple(0.3,function() if IsValid(self.anotherone) then self.anotherone:SetNoDraw(false) end end)
+				timer.Simple(0.3,function() if IsValid(self) and IsValid(self.anotherone) then self.anotherone:SetNoDraw(false) end end)
 				self.anotherone:SetOwner(self)
 			end
 
@@ -157,7 +157,7 @@ function ENT:CustomOnThink()
 				self.drone1:SetAngles(self:GetAngles())
 				self.drone1:Spawn()
 				self.drone1:SetNoDraw(true)
-				timer.Simple(0.3,function() if IsValid(self.drone1) then self.drone1:SetNoDraw(false) end end)
+				timer.Simple(0.3,function() if IsValid(self) and IsValid(self.drone1) then self.drone1:SetNoDraw(false) end end)
 				self.drone1:SetOwner(self)
 			end
 
@@ -167,7 +167,7 @@ function ENT:CustomOnThink()
 				self.drone2:SetAngles(self:GetAngles())
 				self.drone2:Spawn()
 				self.drone2:SetNoDraw(true)
-				timer.Simple(0.3,function() if IsValid(self.drone2) then self.drone2:SetNoDraw(false) end end)
+				timer.Simple(0.3,function() if IsValid(self) and IsValid(self.drone2) then self.drone2:SetNoDraw(false) end end)
 				self.drone2:SetOwner(self)
 			end
 			
@@ -178,6 +178,7 @@ function ENT:CustomOnThink()
 		sound.Play("weapons/physcannon/physcannon_charge.wav", self:GetPos())
 		self:VJ_ACT_PLAYACTIVITY("big_flinch", true, 1.5, false)
 		timer.Simple(1.5, function()
+			if not self:IsValid() then return end
 			local blast = ents.Create("prop_combine_ball")
 			blast:SetPos(self:GetPos())
 			blast:SetParent(self)

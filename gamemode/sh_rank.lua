@@ -31,6 +31,7 @@ function plymeta:Horde_GetExp(class_name)
 end
 
 function plymeta:Horde_SetExp(class_name, exp)
+    if not self:IsValid() then return end
     if not self.Horde_Exps then self.Horde_Exps = {} end
     self.Horde_Exps[class_name] = exp
     local level = self:Horde_GetLevel(class_name)
@@ -46,6 +47,7 @@ function plymeta:Horde_GetLevel(class_name)
 end
 
 function plymeta:Horde_SetLevel(class_name, level)
+    if not self:IsValid() then return end
     if not self.Horde_Levels then self.Horde_Levels = {} end
     self.Horde_Levels[class_name] = level
     local rank, rank_level = HORDE:LevelToRank(level)
@@ -59,6 +61,7 @@ function plymeta:Horde_GetRankLevel(class_name)
 end
 
 function plymeta:Horde_SetRankLevel(class_name, level)
+    if not self:IsValid() then return end
     if not self.Horde_RankLevels then self.Horde_RankLevels = {} end
     self.Horde_RankLevels[class_name] = level
 end
@@ -69,6 +72,7 @@ function plymeta:Horde_GetRank(class_name)
 end
 
 function plymeta:Horde_SetRank(class_name, rank)
+    if not self:IsValid() then return end
     if not self.Horde_Ranks then self.Horde_Ranks = {} end
     self.Horde_Ranks[class_name] = rank
 end

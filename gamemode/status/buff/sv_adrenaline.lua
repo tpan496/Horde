@@ -2,7 +2,11 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_AddAdrenalineStack()
     self.Horde_AdrenalineStack = math.min(self:Horde_GetMaxAdrenalineStack(), self.Horde_AdrenalineStack + 1)
-    timer.Simple(self:Horde_GetAdrenalineStackDuration(), function ()
+    self.Horde_AdrenalineStackAdded = true
+    timer.Remove("Horde_AdrenalineTracker" .. self:SteamID())
+    timer.Create("Horde_AdrenalineTracker" .. self:SteamID(), self:Horde_GetAdrenalineStackDuration(), 1, function()
+        if not self:IsValid() then return end
+        self.Horde_AdrenalineStackAdded = nil
         self:Horde_RemoveAdrenalineStack()
     end)
     net.Start("Horde_SyncStatus")
@@ -13,11 +17,16 @@ end
 
 function plymeta:Horde_RemoveAdrenalineStack()
     if not self:IsValid() then return end
+    if self.Horde_AdrenalineStack <= 0 then return end
+    if self.Horde_AdrenalineStackAdded then return end
     self.Horde_AdrenalineStack = math.max(0, self.Horde_AdrenalineStack - 1)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Adrenaline, 8)
         net.WriteUInt(self.Horde_AdrenalineStack, 3)
     net.Send(self)
+    timer.Create("Horde_AdrenalineTracker" .. self:SteamID(), self:Horde_GetAdrenalineStackDuration(), 1, function()
+        self:Horde_RemoveAdrenalineStack()
+    end)
 end
 
 function plymeta:Horde_GetAdrenalineStack()
@@ -72,4 +81,5 @@ hook.Add("Horde_ResetStatus", "Horde_AdrenalineReset", function(ply)
     ply.Horde_AdrenalineStack = 0
     ply.Horde_MaxAdrenalineStack = 0
     ply.Horde_AdrenalineStackDuration = 5
+    ply.Horde_AdrenalineStackAdded = nil
 end)

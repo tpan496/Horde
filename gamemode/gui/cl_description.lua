@@ -162,7 +162,7 @@ function PANEL:SellDoClick()
         self.perk_panel:SetVisible(not self.perk_panel:IsVisible())
         return
     end
-    if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP) then
+    if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties and (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP or self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET)) then
         Derma_Query("Sell Item?!", "Sell",
                 "Yes",
                 function()
@@ -183,11 +183,43 @@ function PANEL:SetData(item)
     self.item = item
     if self.item and self.item.class then
         if GetConVar("horde_default_item_config"):GetInt() == 1 then
-            self.loc_name = translate.Get("Item_" .. self.item.name) or self.item.name
-            self.loc_desc = translate.Get("Item_Desc_" .. self.item.name) or self.item.description
+            if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
+                self.loc_name = translate.Get("Item_" .. self.item.name) or HORDE.gadgets[self.item.class].PrintName
+                self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
+                if HORDE.gadgets[self.item.class].Active then
+                    self.loc_desc = "Press T to activate.\n\n" .. self.loc_desc
+                    self.loc_desc = self.loc_desc .. "\n\n"
+                    if HORDE.gadgets[self.item.class].Duration and HORDE.gadgets[self.item.class].Duration > 0 then
+                        self.loc_desc = self.loc_desc .. "\nDuration: " .. tostring(HORDE.gadgets[self.item.class].Duration) .. " seconds."
+                    end
+                    if HORDE.gadgets[self.item.class].Cooldown and HORDE.gadgets[self.item.class].Cooldown > 0 then
+                        self.loc_desc = self.loc_desc .. "\nCooldown: " .. tostring(HORDE.gadgets[self.item.class].Cooldown) .. " seconds."
+                    end
+                end
+                self.loc_desc = self.loc_desc .. "\n\nOnly 1 Gadget can be OWNED!"
+            else
+                self.loc_name = translate.Get("Item_" .. self.item.name) or self.item.name
+                self.loc_desc = translate.Get("Item_Desc_" .. self.item.name) or self.item.description
+            end
         else
-            self.loc_name = self.item.name
-            self.loc_desc = self.item.description
+            if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
+                self.loc_name = HORDE.gadgets[self.item.class].PrintName
+                self.loc_desc = HORDE.gadgets[self.item.class].Description
+                if HORDE.gadgets[self.item.class].Active then
+                    self.loc_desc = "Press T to activate.\n\n" .. self.loc_desc
+                    self.loc_desc = self.loc_desc .. "\n\n"
+                    if HORDE.gadgets[self.item.class].Duration and HORDE.gadgets[self.item.class].Duration > 0 then
+                        self.loc_desc = self.loc_desc .. "\nDuration: " .. tostring(HORDE.gadgets[self.item.class].Duration) .. " seconds."
+                    end
+                    if HORDE.gadgets[self.item.class].Cooldown and HORDE.gadgets[self.item.class].Cooldown > 0 then
+                        self.loc_desc = self.loc_desc .. "\nCooldown: " .. tostring(HORDE.gadgets[self.item.class].Cooldown) .. " seconds."
+                    end
+                end
+                self.loc_desc = self.loc_desc .. "\n\nOnly 1 Gadget can be OWNED!"
+            else
+                self.loc_desc = self.item.description
+                self.loc_name = self.item.name
+            end
         end
     end
     if not self.item then return end
@@ -361,6 +393,17 @@ function PANEL:Paint()
                 draw.RoundedBox(5, 5, 30, self:GetWide() - 20, 10, Color(80,80,80))
                 draw.RoundedBox(5, 5, 30, self:GetWide() * (self.exp_diff / self.exp_total), 10, Color(220,220,220))
             end
+        elseif self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
+            local icon = Material(HORDE.gadgets[self.item.class].Icon, "mips smooth")
+            draw.DrawText(self.loc_name, "Title", self:GetWide() / 2 - surface.GetTextSize(self.loc_name) / 2 + 16, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            draw.DrawText(self.loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            surface.SetMaterial(icon) -- Use our cached material
+            if HORDE.gadgets[self.item.class].Active then
+                surface.SetDrawColor(HORDE.color_crimson)
+            else
+                surface.SetDrawColor(255, 255, 255, 255)
+            end
+            surface.DrawTexturedRect(self:GetWide() / 2 + surface.GetTextSize(self.loc_name) / 2 - 32, 16, 128, 64)
         else
             draw.DrawText(self.loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
@@ -403,7 +446,7 @@ function PANEL:Paint()
             return
         end
 
-        if LocalPlayer():HasWeapon(self.item.class) then
+        if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET and LocalPlayer():Horde_GetGadget() == self.item.class) then
             self.buy_btn:SetTextColor(Color(255,255,255))
             self.buy_btn:SetText("OWNED")
             self.buy_btn.Paint = function ()
@@ -419,7 +462,7 @@ function PANEL:Paint()
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
 
-            if self.item.category ~= "Melee" and self.item.category ~= "Equipment" then
+            if self.item.category ~= "Melee" and self.item.category ~= "Equipment" and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_WPN then
                 self.ammo_panel:SetVisible(true)
 
                 if self.item.ammo_price and self.item.ammo_price >= 0 then

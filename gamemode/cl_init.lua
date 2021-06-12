@@ -10,6 +10,7 @@ include("sh_perk.lua")
 include("sh_maps.lua")
 include("sh_custom.lua")
 include("sh_rank.lua")
+include("sh_gadget.lua")
 include("cl_economy.lua")
 include("gui/cl_gameinfo.lua")
 include("gui/cl_status.lua")
@@ -299,9 +300,9 @@ net.Receive("Horde_GameEnd", function ()
 
     local end_gui = vgui.Create("HordeSummaryPanel")
     end_gui:SetData(status, mvp, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, most_heal_player, most_heal, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
-
-    HORDE.game_ended = true
 end)
 
 killicon.AddAlias("arccw_horde_awp", "arccw_go_awp")
 killicon.AddAlias("arccw_horde_barret", "arccw_mw2_barrett")
+killicon.Add("arccw_nade_medic", "arccw/weaponicons/arccw_nade_medic", Color(0, 0, 0, 255))
+killicon.Add("npc_turret_floor", "vgui/hud/npc_turret_floor", Color(0, 0, 0, 255))

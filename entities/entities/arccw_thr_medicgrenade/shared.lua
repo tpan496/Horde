@@ -41,6 +41,7 @@ function entmeta:Horde_AddEffect_MedicGrenade(ent)
             d:SetAttacker(ent.Owner)
             d:SetInflictor(ent.Inflictor)
             d:SetDamageType(DMG_NERVEGAS)
+            d:SetDamagePosition(self:GetPos())
             self:TakeDamageInfo(d)
         end
     end)
@@ -103,7 +104,7 @@ end
 
 function ENT:Touch(ent)
     if SERVER then
-        if self.TouchedEntities[ent:GetCreationID()] then return end
+        if self.TouchedEntities[ent:GetCreationID()] and ent.horde_effect_medicgrenade then return end
         if self:GetArmed() and (ent:IsPlayer() or ent:IsNPC()) then
             self.TouchedEntities[ent:GetCreationID()] = ent
             ent:Horde_AddEffect_MedicGrenade(self)

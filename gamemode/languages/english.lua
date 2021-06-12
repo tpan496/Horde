@@ -213,6 +213,8 @@ Warden Aura blocks {1} damage.]]
 
 LANGUAGE["Perk_cremator_base"] = [[
 The Cremator builds its offense and defense around Fire damage.
+Complexity: EASY
+
 {1} increased Fire damage resistance.
 Attacks have {2} chance to Ignite enemies.
 
@@ -320,8 +322,8 @@ Enemies you killed have {1} chance to generate a healing cloud.]]
 
 LANGUAGE["Perk_Title_medic_xcele"] = [[Accelerated Healing Factor]]
 LANGUAGE["Perk_medic_xcele"] = [[
-{1} increased health regeneration per second.
-Buffs you apply are {2} more effective.]]
+Buffs you apply are {1} more effective.
+Buffs you apply have {2} increased duration.]]
 
 -- Default Perks: Demolition
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Grenade]]

@@ -54,6 +54,8 @@ function PANEL:Init()
     local ammo_price_editor
     local secondary_ammo_price_editor
     local category_editor
+    local description_editor
+    local shop_icon_editor
     local weapon_categories = HORDE.categories
     local entity_categories = HORDE.entity_categories
     local weight_editor
@@ -88,7 +90,7 @@ function PANEL:Init()
             entity_checkboxes_panel:DockPadding(0, 5, 0, 5)
             entity_checkboxes_panel:SetSize(300, height/3)
             entity_checkboxes_panel.Paint = function() end
-            local entity_types = {"weapon_entity", "give_entity", "drop_entity"}
+            local entity_types = {"weapon_entity", "give_entity", "drop_entity", "gadget_entity"}
             local entity_checkboxes = {}
 
             local editor_panel = vgui.Create("DPanel", panel)
@@ -247,15 +249,38 @@ function PANEL:Init()
             limit_editor:SetNumeric(true)
             limit_editor:SetValue(5)
 
+            local gadget_editor = vgui.Create("DComboBox", editor_panel)
+            gadget_editor:SetSize(200, height/3)
+            gadget_editor:DockPadding(10, 10, 10, 10)
+            gadget_editor:Dock(LEFT)
+            gadget_editor:SetVisible(false)
+            for gadget, _ in pairs(HORDE.gadgets) do
+                gadget_editor:AddChoice(gadget)
+            end
+
+            local entity_label = vgui.Create("DLabel", panel)
+            entity_label:SetText("entity")
+            entity_label:SetSize(200, height / 3)
+            entity_label:SetPos(10,7)
+            entity_label:SetTextColor(Color(0,0,0))
+
             local start_pos = 0
             for _, type in pairs(entity_types) do
                 local checkbox = vgui.Create("DCheckBoxLabel", entity_checkboxes_panel)
                 checkbox:SetSize(100, height/3)
                 checkbox:SetPos(start_pos, 15)
-                checkbox:SetText(type)
+                if type == "weapon_entity" then
+                    checkbox:SetText("weapon")
+                elseif type == "give_entity" then
+                    checkbox:SetText("give")
+                elseif type == "drop_entity" then
+                    checkbox:SetText("drop")
+                elseif type == "gadget_entity" then
+                    checkbox:SetText("gadget")
+                end
                 checkbox:SetTextColor(Color(0,0,0))
                 checkbox:SetChecked(true)
-                start_pos = start_pos + 100
+                start_pos = start_pos + 70
                 entity_checkboxes[type] = checkbox
                 if type == "weapon_entity" then
                     checkbox:SetChecked(true)
@@ -274,20 +299,24 @@ function PANEL:Init()
                             weapon_manual_toggle:SetChecked(false)
                             entity_editor:SetVisible(false)
                             drop_editors:SetVisible(false)
+                            gadget_editor:SetVisible(false)
                             ammo_price_editor:SetVisible(true)
                             secondary_ammo_price_editor:SetVisible(true)
                             weight_editor:SetVisible(true)
                             category_editor:Clear()
                             for _, category in pairs(weapon_categories) do
+                                if category == "Gadget" then goto cont end
                                 category_editor:AddChoice(category)
+                                ::cont::
                             end
                             drop_editors:SetVisible(false)
                             give_editors:SetVisible(false)
+                            description_editor:SetVisible(true)
+                            shop_icon_editor:SetVisible(true)
                         else
                             weapon_editor:SetVisible(false)
                             weapon_manual_toggle:SetVisible(false)
                             weapon_editor_manual:SetVisible(false)
-                            entity_editor:SetVisible(true)
                             if type == "drop_entity" then
                                 drop_editors:SetVisible(true)
                                 give_editors:SetVisible(false)
@@ -295,10 +324,31 @@ function PANEL:Init()
                                 for _, category in pairs(entity_categories) do
                                     category_editor:AddChoice(category)
                                 end
-                            else
+                                gadget_editor:SetVisible(false)
+                                entity_editor:SetVisible(true)
+                                description_editor:SetVisible(true)
+                                shop_icon_editor:SetVisible(true)
+                            elseif type == "give_entity" then
                                 drop_editors:SetVisible(false)
                                 give_editors:SetVisible(true)
                                 arccw_attachment_editor:OnChange()
+                                gadget_editor:SetVisible(false)
+                                entity_editor:SetVisible(true)
+                                category_editor:Clear()
+                                for _, category in pairs(entity_categories) do
+                                    category_editor:AddChoice(category)
+                                end
+                                description_editor:SetVisible(true)
+                                shop_icon_editor:SetVisible(true)
+                            else
+                                drop_editors:SetVisible(false)
+                                give_editors:SetVisible(false)
+                                category_editor:Clear()
+                                category_editor:AddChoice("Gadget")
+                                gadget_editor:SetVisible(true)
+                                entity_editor:SetVisible(false)
+                                description_editor:SetVisible(false)
+                                shop_icon_editor:SetVisible(false)
                             end
                             ammo_price_editor:SetVisible(false)
                             secondary_ammo_price_editor:SetVisible(false)
@@ -310,7 +360,7 @@ function PANEL:Init()
                 end
             end
 
-            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, weapon_manual_toggle=weapon_manual_toggle, weapon_editor_manual=weapon_editor_manual, entity_editor=entity_editor, give_editors=give_editors, give_arccw_attachment_editor=arccw_attachment_editor, give_arccw_attachment_type_editor=arccw_attachment_type_editor, drop_editors=drop_editors, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor, drop_editor_limit = limit_editor}}
+            return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, weapon_manual_toggle=weapon_manual_toggle, weapon_editor_manual=weapon_editor_manual, entity_editor=entity_editor, give_editors=give_editors, give_arccw_attachment_editor=arccw_attachment_editor, give_arccw_attachment_type_editor=arccw_attachment_type_editor, drop_editors=drop_editors, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor, drop_editor_limit = limit_editor, gadget_editor = gadget_editor}}
         elseif name == "whitelist" then
             local editors = {}
             local start_pos = 70
@@ -348,10 +398,11 @@ function PANEL:Init()
     local name_editor = create_property_editor("name", 35, entity_type_panel)
     local price_editor = create_property_editor("price", 35, entity_properties_panel)
     weight_editor = create_property_editor("weight", 35, entity_properties_panel)
-    local description_editor = create_property_editor("description", 100, entity_properties_panel)
+    description_editor = create_property_editor("description", 100, entity_properties_panel)
     local whitelist_editors = create_property_editor("whitelist", 40 * 2, entity_properties_panel)
     ammo_price_editor = create_property_editor("ammo price", 35, entity_properties_panel)
     secondary_ammo_price_editor = create_property_editor("alt ammo price", 35, entity_properties_panel)
+    shop_icon_editor = create_property_editor("shop icon", 35, entity_properties_panel)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -408,6 +459,8 @@ function PANEL:Init()
                     entity_properties.z = class_editor.drop_editor_z:GetFloat()
                     entity_properties.yaw = class_editor.drop_editor_yaw:GetFloat()
                     entity_properties.limit = class_editor.drop_editor_limit:GetInt()
+                elseif type == "gadget_entity" then
+                    class_type = HORDE.ENTITY_PROPERTY_GADGET
                 end
                 
                 entity_properties.type = class_type
@@ -417,6 +470,8 @@ function PANEL:Init()
 
         if class_type == HORDE.ENTITY_PROPERTY_WPN then
             class = class_editor.weapon_editor:GetValue()
+        elseif class_type == HORDE.ENTITY_PROPERTY_GADGET then
+            class = class_editor.gadget_editor:GetValue()
         else
             class = class_editor.entity_editor:GetValue()
         end
@@ -427,6 +482,9 @@ function PANEL:Init()
                 whitelist[editor:GetText()] = true
             end
         end
+
+        local shop_icon = shop_icon_editor:GetValue()
+
         if not category_editor:GetValue() or not name_editor:GetValue() or class == "" then return end
 
         HORDE:CreateItem(
@@ -439,7 +497,8 @@ function PANEL:Init()
             whitelist,
             ammo_price_editor:GetInt() or 0,
             secondary_ammo_price_editor:GetInt() or 0,
-            entity_properties
+            entity_properties,
+            shop_icon
         )
         -- Reload from disk
         local tab = util.TableToJSON(HORDE.items)
@@ -462,6 +521,29 @@ function PANEL:Init()
             function()
                 HORDE.items = {}
                 HORDE:GetDefaultItemsData()
+
+                local tab = util.TableToJSON(HORDE.items)
+                local str = util.Compress(tab)
+                net.Start("Horde_SetItemsData")
+                    net.WriteUInt(string.len(str), 32)
+                    net.WriteData(str, string.len(str))
+                net.SendToServer()
+                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+            end,
+            "No", function() end
+        )
+    end
+
+    local gadget_btn = vgui.Create("DButton", btn_panel)
+    gadget_btn:Dock(BOTTOM)
+    gadget_btn:DockMargin(10,5,10,5)
+    gadget_btn:SetTall(30)
+    gadget_btn:SetText("Add Default Gadgets")
+    gadget_btn.DoClick = function ()
+        Derma_Query("Add Default Gadgets?", "Default Gadgets",
+            "Yes",
+            function()
+                HORDE:GetDefaultGadgets()
 
                 local tab = util.TableToJSON(HORDE.items)
                 local str = util.Compress(tab)
@@ -534,18 +616,28 @@ function PANEL:Init()
                     class_editor.weapon_manual_toggle:SetVisible(true)
                     class_editor.weapon_editor_manual:SetVisible(false)
                     class_editor.weapon_manual_toggle:SetChecked(false)
+                    class_editor.gadget_editor:SetVisible(false)
                 elseif class_type == HORDE.ENTITY_PROPERTY_GIVE and type == "give_entity" then
                     checkbox:SetChecked(true)
                     class_editor.drop_editors:SetVisible(false)
                     class_editor.give_editors:SetVisible(true)
                     class_editor.weapon_manual_toggle:SetVisible(false)
                     class_editor.weapon_editor_manual:SetVisible(false)
+                    class_editor.gadget_editor:SetVisible(false)
                 elseif class_type == HORDE.ENTITY_PROPERTY_DROP and type == "drop_entity" then
                     checkbox:SetChecked(true)
                     class_editor.drop_editors:SetVisible(true)
                     class_editor.give_editors:SetVisible(false)
                     class_editor.weapon_manual_toggle:SetVisible(false)
                     class_editor.weapon_editor_manual:SetVisible(false)
+                    class_editor.gadget_editor:SetVisible(false)
+                elseif class_type == HORDE.ENTITY_PROPERTY_GADGET and type == "gadget_entity" then
+                    checkbox:SetChecked(true)
+                    class_editor.drop_editors:SetVisible(false)
+                    class_editor.give_editors:SetVisible(false)
+                    class_editor.weapon_manual_toggle:SetVisible(false)
+                    class_editor.weapon_editor_manual:SetVisible(false)
+                    class_editor.gadget_editor:SetVisible(true)
                 else
                     checkbox:SetChecked(false)
                 end
@@ -556,12 +648,32 @@ function PANEL:Init()
                 class_editor.weapon_editor:SetValue(item.class)
                 class_editor.weapon_editor_manual:SetValue(item.class)
                 class_editor.entity_editor:SetVisible(false)
+                class_editor.gadget_editor:SetVisible(false)
+                category_editor:Clear()
+                for _, category in pairs(weapon_categories) do
+                    if category == "Gadget" then goto cont end
+                    category_editor:AddChoice(category)
+                    ::cont::
+                end
+                ammo_price_editor:SetVisible(true)
+                secondary_ammo_price_editor:SetVisible(true)
+                description_editor:SetVisible(true)
+                shop_icon_editor:SetVisible(true)
             else
+                ammo_price_editor:SetVisible(false)
+                secondary_ammo_price_editor:SetVisible(false)
+                description_editor:SetVisible(true)
+                shop_icon_editor:SetVisible(true)
                 if class_type == HORDE.ENTITY_PROPERTY_DROP then
                     class_editor.drop_editor_x:SetValue(item.entity_properties.x)
                     class_editor.drop_editor_z:SetValue(item.entity_properties.z)
                     class_editor.drop_editor_yaw:SetValue(item.entity_properties.yaw)
                     class_editor.drop_editor_limit:SetValue(item.entity_properties.limit)
+                    class_editor.entity_editor:SetVisible(true)
+                    category_editor:Clear()
+                    for _, category in pairs(entity_categories) do
+                        category_editor:AddChoice(category)
+                    end
                 elseif class_type == HORDE.ENTITY_PROPERTY_GIVE then
                     if item.entity_properties.is_arccw_attachment and item.entity_properties.is_arccw_attachment == true then
                         class_editor.give_arccw_attachment_editor:SetChecked(true)
@@ -570,10 +682,22 @@ function PANEL:Init()
                     else
                         class_editor.give_arccw_attachment_editor:SetChecked(false)
                     end
+                    class_editor.entity_editor:SetVisible(true)
+                    category_editor:Clear()
+                    for _, category in pairs(entity_categories) do
+                        category_editor:AddChoice(category)
+                    end
+                elseif class_type == HORDE.ENTITY_PROPERTY_GADGET then
+                    class_editor.gadget_editor:SetVisible(true)
+                    class_editor.entity_editor:SetVisible(false)
+                    class_editor.gadget_editor:SetValue(item.class)
+                    category_editor:Clear()
+                    category_editor:AddChoice("Gadget")
+                    description_editor:SetVisible(false)
+                    shop_icon_editor:SetVisible(false)
                 end
                 class_editor.weapon_editor:SetVisible(false)
                 class_editor.entity_editor:SetValue(item.class)
-                class_editor.entity_editor:SetVisible(true)
             end
 
             category_editor:SetValue(item.category)
@@ -594,6 +718,7 @@ function PANEL:Init()
             end
             ammo_price_editor:SetValue(item.ammo_price and item.ammo_price or HORDE.default_ammo_price)
             secondary_ammo_price_editor:SetValue(item.secondary_ammo_price and item.secondary_ammo_price or -1)
+            shop_icon_editor:SetValue(item.shop_icon or "")
         end)
 
         menu:AddOption("Delete", function()
@@ -636,7 +761,7 @@ function PANEL:Think()
             local item = line.item
 
             line:SetValue(1, item.class)
-            line:SetValue(2, translate.Get("Shop_" .. item.category))
+            line:SetValue(2, translate.Get("Shop_" .. item.category) or item.category)
             line:SetValue(3, item.name)
             line:SetValue(4, item.price)
             line:SetValue(5, item.weight)
