@@ -2,8 +2,9 @@ GADGET.PrintName = "Diamond Plating"
 GADGET.Description = "10% increased Physical damage resistance."
 GADGET.Icon = "items/gadgets/diamond_plating.png"
 GADGET.Duration = 0
-GADGET.Cooldown = 10
+GADGET.Cooldown = 0
 GADGET.Params = {
+    [1] = {value = 0.10, percent = true},
 }
 GADGET.Hooks = {}
 

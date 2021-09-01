@@ -75,6 +75,7 @@ LANGUAGE["Shop_Explosive"] = "爆炸物"
 LANGUAGE["Shop_Special"] = "特殊"
 LANGUAGE["Shop_Equipment"] = "装备"
 LANGUAGE["Shop_Attachment"] = "配件"
+LANGUAGE["Shop_Gadget"] = "道具"
 
 -- Attachments
 LANGUAGE["Shop_Optic"] = "瞄具"
@@ -960,3 +961,132 @@ LANGUAGE["Item_Full Kevlar Armor"] = [[全套护甲]]
 LANGUAGE["Item_Desc_Full Kevlar Armor"] = [[
 提供100%护甲。
 ]]
+
+LANGUAGE["Gadget_gadget_blast_plating"] = [[防爆涂层]]
+LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
+提升 {1} 爆炸和声波伤害抗性。
+]]
+
+LANGUAGE["Gadget_gadget_shock_plating"] = [[绝缘涂层]]
+LANGUAGE["Gadget_Desc_gadget_shock_plating"] = [[
+提升 {1} 雷电伤害抗性。
+]]
+
+LANGUAGE["Gadget_gadget_heat_plating"] = [[抗热涂层]]
+LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+提升 {1} 火焰伤害抗性。
+]]
+
+LANGUAGE["Gadget_gadget_diamond_plating"] = [[钻石涂层]]
+LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+提升 {1} 物理伤害抗性。
+]]
+
+LANGUAGE["Gadget_gadget_detoxifier"] = [[抗毒剂]]
+LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+提升 {1} 毒素伤害抗性。
+]]
+
+LANGUAGE["Gadget_gadget_vitality_booster"] = [[体力提升]]
+LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
+增加 {1} 最大生命值。
+]]
+
+LANGUAGE["Gadget_gadget_damage_booster"] = [[伤害提升]]
+LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
+提升 {1} 全局伤害。
+]]
+
+LANGUAGE["Gadget_gadget_berserk_armor"] = [[狂战盔甲]]
+LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
+提升 {1} 全局伤害。
+提升 {2} 全局伤害抗性。
+提升 {3} 移动速度。
+]]
+
+LANGUAGE["Gadget_gadget_flash"] = [[一闪]]
+LANGUAGE["Gadget_Desc_flash"] = [[
+向前快速移动，对路径上的所有敌人造成 {1} 利器伤害。
+提供短暂的无敌时间。
+]]
+
+LANGUAGE["Gadget_gadget_butane_can"] = [[易燃物]]
+LANGUAGE["Gadget_Desc_gadget_butane_can"] = [[
+生成一个丙烷气罐。
+丙烷气罐被攻击后爆炸，造成 {1} 范围性火焰伤害。
+每个玩家最多保留一个生成的丙烷气罐。
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_fire"] = [[发射器（火焰弹）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_fire"] = [[
+发射灼热的火焰弹。
+火焰弹引燃效果范围内所有敌人。
+火焰弹基础引燃伤害为 {1}。
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[发射器（雷电弹）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
+发射能够穿透敌人的雷电弹。
+雷电弹每穿透一个敌人，造成 {1} 范围性雷电伤害。
+]]
+
+
+LANGUAGE["Gadget_gadget_projectile_launcher_ballistic"] = [[发射器（冲击弹）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
+发射能产生大量冲击的弓箭。
+弓箭造成 {1} 子弹伤害。
+弓箭对击中敌人造成眩晕效果。
+]]
+
+
+LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[发射器（破片弹）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
+发射不稳定爆破弹。
+爆破弹造成 {1} 范围性爆炸伤害。
+爆破弹爆炸后，产生 {2} 个额外破片爆炸。
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[发射器（治愈弹）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
+发射带有治愈效果的化学药弹。
+治愈弹造成 {1} 范围性毒素伤害。
+治愈弹对范围内友军提供 {2} 生命恢复。
+]]
+
+LANGUAGE["Gadget_gadget_e_parasite"] = [[E-寄生虫]]
+LANGUAGE["Gadget_Desc_gadget_e_parasite"] = [[
+发射E-寄生虫，感染击中的目标。
+E-寄生虫享有全部的召唤物技能效果。
+E-寄生虫对感染目标造成持续伤害。
+E-寄生虫为使用者提供持续生命恢复。
+被感染的目标死亡后，造成等于目标最大生命值的爆炸伤害。
+]]
+
+LANGUAGE["Gadget_gadget_energy_shield"] = [[能量盾]]
+LANGUAGE["Gadget_Desc_energy_shield"] = [[
+暂时获得额外 25 点护甲。
+]]
+
+LANGUAGE["Gadget_gadget_hardening_injection"] = [[硬化注射剂]]
+LANGUAGE["Gadget_Desc_hardening_injection"] = [[
+移动速度减缓 {1}。
+提升 {2} 全局伤害抗性。
+提升 {3} 物理伤害抗性。
+]]
+
+LANGUAGE["Gadget_gadget_iv_injection"] = [[生命注射剂]]
+LANGUAGE["Gadget_Desc_hardening_injection"] = [[
+恢复 25 点生命值。
+]]
+
+LANGUAGE["Gadget_gadget_proximity_defense"] = [[近身制御]]
+
+LANGUAGE["Gadget_gadget_optical_camouflage"] = [[光学迷彩]]
+
+LANGUAGE["Gadget_gadget_life_diffuser"] = [[活体扩散器]]
+
+LANGUAGE["Gadget_gadget_solar_array"] = [[太阳能阵列]]
+
+LANGUAGE["Gadget_gadget_turret_pack"] = [[便携步哨]]
+
+LANGUAGE["Gadget_gadget_cortex"] = [[皮层刺激器]]

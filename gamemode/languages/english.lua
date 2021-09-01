@@ -72,6 +72,7 @@ LANGUAGE["Shop_Explosive"] = "Explosive"
 LANGUAGE["Shop_Special"] = "Special"
 LANGUAGE["Shop_Equipment"] = "Equipment"
 LANGUAGE["Shop_Attachment"] = "Attachment"
+LANGUAGE["Shop_Gadget"] = "Gadget"
 
 -- Attachments
 LANGUAGE["Shop_Optic"] = "Optic"

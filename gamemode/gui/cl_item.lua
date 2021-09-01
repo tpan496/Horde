@@ -24,9 +24,17 @@ function PANEL:SetData(item, description_panel)
     self.item = item
     self.name = item.name
     if GetConVar("horde_default_item_config"):GetInt() == 1 then
-        self.loc_name = translate.Get("Item_" .. self.name) or self.name
+        if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
+            self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
+        else
+            self.loc_name = translate.Get("Item_" .. self.name) or self.name
+        end
     else
-        self.loc_name = self.name
+        if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
+            self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
+        else
+            self.loc_name = self.name
+        end
     end
 
     self.description = item.description

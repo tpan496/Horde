@@ -52,9 +52,8 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     sound.Play("weapons/bugbait/bugbait_squeeze1.wav", ply:GetPos())
 end
 
-GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, inflictor)
+GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
-    if inflictor:IsNPC() then return end
     if victim.Horde_Has_Parasite then
         local rad = 250
         local e = EffectData()
