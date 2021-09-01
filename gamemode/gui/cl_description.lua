@@ -184,8 +184,9 @@ function PANEL:SetData(item)
     if self.item and self.item.class then
         if GetConVar("horde_default_item_config"):GetInt() == 1 then
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
-                self.loc_name = translate.Get("Item_" .. self.item.name) or HORDE.gadgets[self.item.class].PrintName
-                self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
+                self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
+                self.loc_desc = HORDE.gadgets[self.item.class].Description
+                --self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
                 if HORDE.gadgets[self.item.class].Active then
                     self.loc_desc = "Press T to activate.\n\n" .. self.loc_desc
                     self.loc_desc = self.loc_desc .. "\n\n"
@@ -203,8 +204,9 @@ function PANEL:SetData(item)
             end
         else
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
-                self.loc_name = HORDE.gadgets[self.item.class].PrintName
+                self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
                 self.loc_desc = HORDE.gadgets[self.item.class].Description
+                --self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
                 if HORDE.gadgets[self.item.class].Active then
                     self.loc_desc = "Press T to activate.\n\n" .. self.loc_desc
                     self.loc_desc = self.loc_desc .. "\n\n"
@@ -331,7 +333,7 @@ function PANEL:Paint()
             if atttbl.Description then
                 description = multlinetext(ArcCW.AttachmentTable[self.item.class].Description, self:GetWide() - 64, "Item")
                 -- TODO: This should take two parameters. Second one seems useless?
-                local pros, cons = ArcCW:GetProsCons(atttbl)
+                local pros, cons = ArcCW:GetProsCons(nil, atttbl, nil)
                 description = description .. "\n\n"
                 description = description .. "Pros: \n\n"
                 for _, pro in pairs(pros) do

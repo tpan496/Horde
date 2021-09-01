@@ -4,6 +4,7 @@ GADGET.Icon = "items/gadgets/heat_plating.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
 GADGET.Params = {
+    [1] = {value = 0.20, percent = true},
 }
 GADGET.Hooks = {}
 

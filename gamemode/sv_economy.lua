@@ -154,10 +154,14 @@ end
 
 function plymeta:Horde_RecalcWeight()
     local weight = 0
+    local max_weight = 15
+    if self:Horde_GetPerk("heavy_base") then
+        max_weight = 20
+    end
     for _, wpn in pairs(self:GetWeapons()) do
         if not HORDE.items[wpn:GetClass()] then goto cont end
         local wpn_weight = HORDE.items[wpn:GetClass()].weight
-        if weight + wpn_weight > self:Horde_GetWeight() then
+        if weight + wpn_weight > max_weight then
             self:DropWeapon(wpn)
         else
             weight = weight + wpn_weight
@@ -472,6 +476,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     ply:Horde_SetWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SyncEconomy()
+    ply:Horde_UnsetGadget()
     ply:SetMaxHealth(class.max_hp)
     net.Start("Horde_ToggleShop")
     net.Send(ply)

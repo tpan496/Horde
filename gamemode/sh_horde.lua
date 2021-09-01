@@ -50,6 +50,8 @@ CreateConVar("horde_turret_spread", 0.5, FCVAR_SERVER_CAN_EXECUTE, "Turret sprea
 CreateConVar("horde_testing_unlimited_class_change", 0, FCVAR_SERVER_CAN_EXECUTE, "You can change a class for an unlimited times. Please use this only for testing purposes.")
 CreateConVar("horde_testing_display_damage", 0, FCVAR_ARCHIVE, "Display damage.")
 
+CreateClientConVar("horde_disable_default_gadget_use_key", 0, FCVAR_ARCHIVE, "Disable default key bind for active gadgets.")
+
 if SERVER then
 util.AddNetworkString("Horde_LegacyNotification")
 util.AddNetworkString("Horde_PlayerInit")

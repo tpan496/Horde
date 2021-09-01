@@ -114,6 +114,13 @@ end
 
 Horde_LoadGadgets()
 
+hook.Add("PlayerButtonDown", "Horde_UseKey", function(ply, key)
+    if GetConVar("horde_disable_default_gadget_use_key"):GetInt() == 1 then return end
+    if (key == KEY_T) then
+        RunConsoleCommand("horde_use_gadget")
+    end
+end)
+
 if SERVER then
     function HORDE:UseGadget(ply)
         if ply:Horde_GetGadgetInternalCooldown() <= 0 and ply:Alive() then
@@ -124,12 +131,6 @@ if SERVER then
             net.Send(ply)
         end
     end
-
-    hook.Add("PlayerButtonDown", "Horde_UseKey", function(ply, key)
-        if (key == KEY_T) then
-            HORDE:UseGadget(ply)
-        end
-    end)
 
     hook.Add("PlayerPostThink", "Horde_GadgetCooldown", function(ply)
         if CurTime() >= ply:Horde_GetGadgetNextThink() then

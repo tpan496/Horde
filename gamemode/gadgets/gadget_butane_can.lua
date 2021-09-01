@@ -5,6 +5,7 @@ GADGET.Duration = 0
 GADGET.Cooldown = 30
 GADGET.Active = true
 GADGET.Params = {
+    [1] = {value = 375},
 }
 GADGET.Hooks = {}
 
