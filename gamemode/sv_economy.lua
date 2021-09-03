@@ -17,8 +17,12 @@ util.AddNetworkString("Horde_RemoveReadyPanel")
 
 local plymeta = FindMetaTable("Player")
 
+function plymeta:Horde_SetMaxWeight(weight)
+    self.Horde_max_weight = weight
+end
+
 function plymeta:Horde_SetWeight(weight)
-    self.Horde_weight = weight
+    self.Horde_weight = math.max(weight, self.Horde_max_weight)
 end
 
 function plymeta:Horde_SetMoney(money)
@@ -28,6 +32,22 @@ end
 function plymeta:Horde_SetClass(class)
     self.Horde_class = class
     self:Horde_SetClassModel(class)
+end
+
+function plymeta:Horde_SetInBuyZone(can_buy)
+    self.Horde_CanBuy = can_buy
+    net.Start("Horde_SyncStatus")
+        net.WriteUInt(HORDE.Status_CanBuy, 8)
+        if can_buy then
+            net.WriteUInt(1, 3)
+        else
+            net.WriteUInt(0, 3)
+        end
+    net.Send(self)
+end
+
+function plymeta:Horde_GetInBuyZone()
+    return self.Horde_CanBuy
 end
 
 function plymeta:Horde_SetClassModel(class)
@@ -132,6 +152,10 @@ function plymeta:Horde_DropMoney()
     end
 end
 
+function plymeta:Horde_GetMaxWeight()
+    return self.Horde_max_weight
+end
+
 function plymeta:Horde_GetWeight()
     return self.Horde_weight
 end
@@ -154,14 +178,10 @@ end
 
 function plymeta:Horde_RecalcWeight()
     local weight = 0
-    local max_weight = 15
-    if self:Horde_GetPerk("heavy_base") then
-        max_weight = 20
-    end
     for _, wpn in pairs(self:GetWeapons()) do
         if not HORDE.items[wpn:GetClass()] then goto cont end
         local wpn_weight = HORDE.items[wpn:GetClass()].weight
-        if weight + wpn_weight > max_weight then
+        if weight + wpn_weight > self:Horde_GetMaxWeight() then
             self:DropWeapon(wpn)
         else
             weight = weight + wpn_weight
@@ -177,14 +197,26 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     ply:SetCustomCollisionCheck(true)
     if not ply:IsValid() then return end
     if not ply:Horde_GetClass() then return end
-    ply:Horde_SetWeight(HORDE.max_weight)
+    ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
+    ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
     ply:Horde_SyncEconomy()
     HORDE:GiveStarterWeapons(ply)
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
         net.Start("Horde_SyncStatus")
             net.WriteUInt(HORDE.Status_ExpDisabled, 8)
             net.WriteUInt(1, 3)
+        net.Send(ply)
+    end
+    
+    if not HORDE.has_buy_zone then
+        net.Start("Horde_SyncStatus")
+        net.WriteUInt(HORDE.Status_CanBuy, 8)
+        if HORDE.current_break_time > 0 then
+            net.WriteUInt(1, 3)
+        else
+            net.WriteUInt(0, 3)
+        end
         net.Send(ply)
     end
 end)
@@ -473,8 +505,9 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
     HORDE.player_drop_entities[ply:SteamID()] = {}
 
-    ply:Horde_SetWeight(HORDE.max_weight)
+    ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
+    ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
     ply:Horde_SyncEconomy()
     ply:Horde_UnsetGadget()
     ply:SetMaxHealth(class.max_hp)

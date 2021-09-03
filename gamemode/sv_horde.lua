@@ -43,18 +43,41 @@ function entmeta:Horde_GetBossProperties()
     return self.horde_boss_properties
 end
 
-hook.Add("Initialize", "Horde_Init", function()
+hook.Add("InitPostEntity", "Horde_Init", function()
     HORDE.ai_nodes = {}
+    local horde_nodes = ents.FindByClass("info_horde_enemy_spawn")
     HORDE.spawned_enemies = {}
     HORDE.found_ai_nodes = false
-    ParseFile()
+    HORDE.found_horde_nodes = false
+    if not table.IsEmpty(horde_nodes) then
+        for _, node in pairs(horde_nodes) do
+            local new_node = {}
+            new_node["pos"] = node:GetPos()
+            table.insert(HORDE.ai_nodes, new_node)
+        end
+        HORDE.found_horde_nodes = true
+        HORDE.found_ai_nodes = true
+    else
+        ParseFile()
+    end
+
+    HORDE.ammobox_nodes = {}
+    local ammobox_nodes = ents.FindByClass("info_horde_ammobox_spawn")
+    if not table.IsEmpty(ammobox_nodes) then
+        for _, node in pairs(ammobox_nodes) do
+            table.insert(HORDE.ammobox_nodes, node:GetPos())
+        end
+    end
+
+    HORDE.has_buy_zone = not table.IsEmpty(ents.FindByClass("trigger_horde_buyzone"))
 end)
 
 hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
+    if HORDE.found_horde_nodes then return end 
     if ent:GetClass() == "info_player_teamspawn" then
         local valid = true
         for k,v in pairs(HORDE.ai_nodes) do
-            if v["pos"] == ent:GetPos() then
+            if v["pos"] and v["pos"] == ent:GetPos() then
                 valid = false
             end
         end
@@ -450,6 +473,7 @@ end
 
 -- Removes enemies that are too far away from players.
 function HORDE:RemoveDistantEnemies(enemies)
+    if HORDE.found_horde_nodes then return end
     for _, enemy in pairs(enemies) do
         local boss_properties = enemy:Horde_GetBossProperties()
         local closest = 99999
@@ -494,6 +518,7 @@ end
 
 function HORDE:GetValidNodes(enemies)
     local valid_nodes = {}
+    local invalid_nodes = {}
     for _, node in pairs(HORDE.ai_nodes) do
         local valid = false
         local z_dist
@@ -512,7 +537,12 @@ function HORDE:GetValidNodes(enemies)
             end
         end
 
-        if not valid then goto cont end
+        if not valid then
+            if HORDE.found_horde_nodes then
+                table.insert(invalid_nodes, node["pos"])
+            end
+            goto cont
+        end
 
         for _, enemy in pairs(enemies) do
             local dist = node["pos"]:Distance(enemy:GetPos())
@@ -524,9 +554,16 @@ function HORDE:GetValidNodes(enemies)
 
         if valid then
             table.insert(valid_nodes, node["pos"])
+        elseif HORDE.found_horde_nodes then
+            table.insert(invalid_nodes, node["pos"])
         end
 
         ::cont::
+    end
+    
+    -- Add some noise to spawn
+    if HORDE.found_horde_nodes and #invalid_nodes > 0 then
+        table.insert(valid_nodes, invalid_nodes[math.random(#invalid_nodes)])
     end
     return valid_nodes
 end
@@ -817,6 +854,13 @@ function HORDE:WaveStart()
     -- Close all the shop menus
     net.Start("Horde_ForceCloseShop")
     net.Broadcast()
+
+    if not HORDE.has_buy_zone then
+        net.Start("Horde_SyncStatus")
+        net.WriteUInt(HORDE.Status_CanBuy, 8)
+        net.WriteUInt(0, 3)
+        net.Broadcast()
+    end
 end
 
 -- Ends a wave.
@@ -913,6 +957,13 @@ function HORDE:WaveEnd()
         
         ply:Horde_SyncExp()
     end
+
+    if not HORDE.has_buy_zone then
+        net.Start("Horde_SyncStatus")
+        net.WriteUInt(HORDE.Status_CanBuy, 8)
+        net.WriteUInt(1, 3)
+        net.Broadcast()
+    end
 end
 
 -- Referenced some spawning mechanics from Zombie Invasion+
@@ -946,7 +997,7 @@ function HORDE:Direct()
             total_player = total_player + 1
         end
 
-        if total_player > 0 and total_player == ready_count then
+        if total_player > 0 and total_player == ready_count then 
             HORDE.start_game = true
         else
             HORDE:BroadcastPlayersReadyMessage(tostring(ready_count) .. "/" .. tostring(total_player))
@@ -967,7 +1018,7 @@ function HORDE:Direct()
         return
     end
 
-    if #HORDE.ai_nodes <= 35 then
+    if (not HORDE.found_horde_nodes) and (#HORDE.ai_nodes <= 35) then
         print("Enemies may not spawn well on this map, please try another.")
     end
 
@@ -1031,7 +1082,11 @@ function HORDE:Direct()
         
         -- Spawn ammoboxes
         if horde_ammobox_refresh_timer <= 0 then
-            HORDE:SpawnAmmoboxes(valid_nodes)
+            if HORDE.ammobox_nodes and not (table.IsEmpty(HORDE.ammobox_nodes)) then
+                HORDE:SpawnAmmoboxes(HORDE.ammobox_nodes)
+            else
+                HORDE:SpawnAmmoboxes(valid_nodes)
+            end
         end
     end
 

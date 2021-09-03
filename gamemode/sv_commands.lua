@@ -126,6 +126,12 @@ function Shop(ply)
         net.Send(ply)
         return
     end
+
+    if HORDE.has_buy_zone then
+        if not ply:Horde_GetInBuyZone() then
+            return
+        end
+    end
     ply:Horde_RecalcWeight()
     net.Start("Horde_ToggleShop")
     net.Send(ply)

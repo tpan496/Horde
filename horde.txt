@@ -2,7 +2,7 @@
 {
 	"base"		"sandbox"
 	"title"		"Horde"
-	"maps"		""
+	"maps"		"hr"
 	"menusystem"	"1"
 	"category"	"pve"
 	
