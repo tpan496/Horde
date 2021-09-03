@@ -168,6 +168,10 @@ net.Receive("Horde_ToggleShop", function ()
     HORDE:ToggleShop()
 end)
 
+net.Receive("Horde_CloseShop", function ()
+    HORDE:ToggleShop()
+end)
+
 net.Receive("Horde_ToggleItemConfig", function ()
     HORDE:ToggleItemConfig()
 end)

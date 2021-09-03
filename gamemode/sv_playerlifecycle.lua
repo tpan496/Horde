@@ -347,10 +347,11 @@ function HORDE:PlayerInit(ply)
         ply:Horde_SetMoney(HORDE.start_money)
     end
     ply:Horde_SetDropEntities({})
-    ply:Horde_SetWeight(HORDE.max_weight)
+    ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_SetClass(HORDE.classes[HORDE.Class_Survivor])
     hook.Run("Horde_ResetStatus", ply)
     ply:Horde_ApplyPerksForClass()
+    ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:Horde_SyncEconomy()
 
@@ -378,6 +379,17 @@ function HORDE:PlayerInit(ply)
         net.Start("Horde_SyncStatus")
             net.WriteUInt(HORDE.Status_ExpDisabled, 8)
             net.WriteUInt(1, 3)
+        net.Send(ply)
+    end
+
+    if not HORDE.has_buy_zone then
+        net.Start("Horde_SyncStatus")
+        net.WriteUInt(HORDE.Status_CanBuy, 8)
+        if HORDE.current_break_time > 0 then
+            net.WriteUInt(1, 3)
+        else
+            net.WriteUInt(0, 3)
+        end
         net.Send(ply)
     end
 
