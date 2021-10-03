@@ -1075,7 +1075,7 @@ LANGUAGE["Gadget_Desc_hardening_injection"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_iv_injection"] = [[生命注射剂]]
-LANGUAGE["Gadget_Desc_hardening_injection"] = [[
+LANGUAGE["Gadget_Desc_iv_injection"] = [[
 恢复 25 点生命值。
 ]]
 

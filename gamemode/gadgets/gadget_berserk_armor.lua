@@ -1,4 +1,4 @@
-GADGET.PrintName = "Berserk Armor"
+GADGET.PrintName = "Berserker Armor"
 GADGET.Description = "25% increased damage.\n25% increased Global damage resistance.\n25% increased move speed."
 GADGET.Icon = "items/gadgets/berserk_armor.png"
 GADGET.Duration = 8

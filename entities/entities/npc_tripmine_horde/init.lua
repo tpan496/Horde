@@ -4,8 +4,8 @@ include("shared.lua")
 local reuse = CreateConVar("horde_tripmine_reusable", 1, FCVAR_SERVER_CAN_EXECUTE, "Can tripwire mines(SLAM's) be picked up after being armed?")
 
 ENT.SWEP = "weapon_slam"
-ENT.Damage = 375
-ENT.Radius = 750
+ENT.Damage = 400
+ENT.Radius = 200
 
 -- btw, incendiary deals 75 spherical burn damage 4 times per seconds for 15 seconds
 function ENT:Detonate()

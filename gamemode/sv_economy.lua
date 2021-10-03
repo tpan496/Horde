@@ -29,6 +29,10 @@ function plymeta:Horde_SetMoney(money)
     self.Horde_money = money
 end
 
+function plymeta:Horde_SetSkullTokens(tokens)
+    self.Horde_skull_tokens = tokens
+end
+
 function plymeta:Horde_SetClass(class)
     self.Horde_class = class
     self:Horde_SetClassModel(class)
@@ -128,8 +132,19 @@ function plymeta:Horde_AddWeight(weight)
     self.Horde_weight = self.Horde_weight + weight
 end
 
+function plymeta:Horde_AddSkullTokens(tokens)
+    if not self:IsValid() and not tokens and tokens <= 0 then return end
+    if not self.Horde_skull_tokens then self.Horde_skull_tokens = 0 end
+    self.Horde_skull_tokens = self.Horde_skull_tokens + tokens
+    HORDE:SaveSkullTokens(self)
+end
+
 function plymeta:Horde_GetMoney()
     return self.Horde_money
+end
+
+function plymeta:Horde_GetSkullTokens()
+    return self.Horde_skull_tokens or 0
 end
 
 function plymeta:Horde_GetDropEntities()
@@ -170,6 +185,7 @@ function plymeta:Horde_SyncEconomy()
     net.Start("Horde_SyncEconomy")
         net.WriteEntity(self)
         net.WriteInt(self.Horde_money, 32)
+        net.WriteInt(self.Horde_skull_tokens, 32)
         net.WriteInt(self.Horde_weight, 32)
         net.WriteString(self.Horde_class.name)
         net.WriteTable(self.Horde_drop_entities)
@@ -200,6 +216,18 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
+    if ply.Horde_Special_Armor then
+        net.Start("Horde_SyncSpecialArmor")
+            net.WriteString(ply.Horde_Special_Armor)
+            net.WriteUInt(1, 3)
+        net.Send(ply)
+    end
+    if ply:Horde_GetGadget() then
+        local item = HORDE.items[ply:Horde_GetGadget()]
+        if item then
+            ply:Horde_AddWeight(-item.weight)
+        end
+    end
     ply:Horde_SyncEconomy()
     HORDE:GiveStarterWeapons(ply)
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
@@ -269,7 +297,18 @@ net.Receive("Horde_BuyItem", function (len, ply)
     local class = net.ReadString()
     local price = HORDE.items[class].price
     local weight = HORDE.items[class].weight
-    if ply:Horde_GetMoney() >= price and ply:Horde_GetWeight() >= weight then
+    local levels = HORDE.items[class].levels
+    local skull_tokens = HORDE.items[class].skull_tokens
+    local level_satisfy = true
+    if levels and (HORDE.disable_levels_restrictions == 0) then
+        for c, level in pairs(levels) do
+            if ply:Horde_GetLevel(c) < level then
+                level_satisfy = false
+                break
+            end
+        end
+    end
+    if ply:Horde_GetMoney() >= price and ply:Horde_GetWeight() >= weight and ply:Horde_GetSkullTokens() >= skull_tokens and level_satisfy then
         local item = HORDE.items[class]
         if item.entity_properties then
             if item.entity_properties.type == HORDE.ENTITY_PROPERTY_WPN then
@@ -277,6 +316,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 local wpns = list.Get("Weapon")
                 if not wpns[class] then return end
                 ply:Horde_AddMoney(-price)
+                ply:Horde_AddSkullTokens(-skull_tokens)
                 ply:Give(class)
                 ply:SelectWeapon(class)
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GIVE then
@@ -286,6 +326,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     if ply:Armor() >= ply:GetMaxArmor() then return end
                 end
                 ply:Horde_AddMoney(-price)
+                ply:Horde_AddSkullTokens(-skull_tokens)
                 if item.entity_properties.is_arccw_attachment and item.entity_properties.is_arccw_attachment == true then
                     -- ArcCW support
                     ArcCW:PlayerGiveAtt(ply, class, 1)
@@ -306,6 +347,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 if item.class == "npc_turret_floor" and ply:Horde_GetPerk("engineer_manhack") then return end
                 
                 ply:Horde_AddMoney(-price)
+                ply:Horde_AddSkullTokens(-skull_tokens)
                 local ent = ents.Create(class)
                 local pos = ply:GetPos()
                 local dir = (ply:GetEyeTrace().HitPos - pos)
@@ -352,24 +394,36 @@ net.Receive("Horde_BuyItem", function (len, ply)
 
                     -- Count Minions
                     ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() + 1)
+
+                    ent:CallOnRemove("Horde_EntityRemoved", function()
+                        if ent:IsValid() and ply:IsValid() then
+                            timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
+                            ent:GetNWEntity("HordeOwner"):Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
+                            ent:GetNWEntity("HordeOwner"):Horde_SyncEconomy()
+                            ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
+                        end
+                    end)
                 end
-                ent:CallOnRemove("Horde_EntityRemoved", function()
-                    if ent:IsValid() and ply:IsValid() then
-                        timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
-                        ent:GetNWEntity("HordeOwner"):Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
-                        ent:GetNWEntity("HordeOwner"):Horde_SyncEconomy()
-                        ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
-                    end
-                end)
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_ARMOR then
                 if ply:Armor() >= ply:GetMaxArmor() then return end
                 ply:SetArmor(item.entity_properties.armor)
                 ply:Horde_AddMoney(-price)
+                ply:Horde_AddSkullTokens(-skull_tokens)
                 ply:Horde_SyncEconomy()
+                if item.class == "armor100" then
+                    ply.Horde_Special_Armor = nil
+                else
+                    ply.Horde_Special_Armor = item.class
+                    net.Start("Horde_SyncSpecialArmor")
+                        net.WriteString(ply.Horde_Special_Armor)
+                        net.WriteUInt(1, 3)
+                    net.Send(ply)
+                end
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 ply:Horde_UnsetGadget()
                 ply:Horde_SetGadget(item.class)
                 ply:Horde_AddMoney(-price)
+                ply:Horde_AddSkullTokens(-skull_tokens)
                 ply:Horde_SyncEconomy()
             end
         else
@@ -508,8 +562,15 @@ net.Receive("Horde_SelectClass", function (len, ply)
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
-    ply:Horde_SyncEconomy()
+    if ply.Horde_Special_Armor then
+        net.Start("Horde_SyncSpecialArmor")
+            net.WriteString(ply.Horde_Special_Armor)
+            net.WriteUInt(0, 3)
+        net.Send(ply)
+        ply.Horde_Special_Armor = nil
+    end
     ply:Horde_UnsetGadget()
+    ply:Horde_SyncEconomy()
     ply:SetMaxHealth(class.max_hp)
     net.Start("Horde_ToggleShop")
     net.Send(ply)

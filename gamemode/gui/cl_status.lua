@@ -17,25 +17,34 @@ end
 -- Stack = 0 means enabled for non-stacking status
 local function DrawStatus(status, stack, displacement)
     if stack <= 0 then return end
+    
     draw.RoundedBox(10, 0 + displacement, 0, 50, 50, Color(40,40,40,200))
-
-    local mat = Material(HORDE.Status_Icon[status], "mips smooth")
-    surface.SetMaterial(mat) -- Use our cached material
-    surface.SetDrawColor(color_white)
-    surface.DrawTexturedRect(5 + displacement, 5, 40, 40)
+    local mat
+    if HORDE.Status_Icon[status] then
+        mat = Material(HORDE.Status_Icon[status], "mips smooth")
+        surface.SetMaterial(mat) -- Use our cached material
+        surface.SetDrawColor(color_white)
+        surface.DrawTexturedRect(5 + displacement, 5, 40, 40)
+    else
+        draw.RoundedBox(10, 0 + displacement, 0, 50, 50, Color(40,40,40,200))
+        mat = Material("items/" .. status .. ".png")
+        surface.SetMaterial(mat) -- Use our cached material
+        surface.SetDrawColor(color_white)
+        surface.DrawTexturedRect(-15 + displacement, 5, 80, 40)
+    end
 
     if stack > 0 and HORDE:IsStatusStackable(status) then
         draw.SimpleText(stack, "Trebuchet24", 40 + displacement, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 end
 
-local function DrawGadget(gadget, cd)
+local function DrawGadget(gadget, cd, charge)
     draw.RoundedBox(10, 0, 0, 50, 50, Color(40,40,40,200))
 
     local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
     surface.SetMaterial(mat) -- Use our cached material
     if HORDE.gadgets[gadget].Active then
-        surface.SetDrawColor(HORDE.color_crimson)
+        surface.SetDrawColor(HORDE.color_gadget_active)
     else
         surface.SetDrawColor(color_white)
     end
@@ -46,6 +55,10 @@ local function DrawGadget(gadget, cd)
         draw.RoundedBox(10, 0, 0, 50, 50, Color(40,40,40,200))
         surface.SetDrawColor(color_white)
         draw.SimpleText(cd, "Trebuchet24", 25, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    end
+
+    if charge >= 0 then
+        draw.SimpleText(charge, "Trebuchet24", 40, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 end
 
@@ -58,7 +71,7 @@ status_panel.Paint = function ()
     if LocalPlayer():IsValid() and LocalPlayer():Alive() and LocalPlayer():GetStatusTable() then
         local pos = 0
         if LocalPlayer():Horde_GetGadget() ~= nil then
-            DrawGadget(LocalPlayer():Horde_GetGadget(), LocalPlayer():Horde_GetGadgetInternalCooldown())
+            DrawGadget(LocalPlayer():Horde_GetGadget(), LocalPlayer():Horde_GetGadgetInternalCooldown(), LocalPlayer():Horde_GetGadgetCharges())
             pos = 55
         end
         for status, stack in pairs(LocalPlayer():GetStatusTable()) do
@@ -77,6 +90,15 @@ net.Receive("Horde_SyncStatus", function()
     end
 end)
 
+net.Receive("Horde_SyncSpecialArmor", function()
+    local armor = net.ReadString()
+    local on = net.ReadUInt(3)
+
+    if LocalPlayer().SetStatus then
+        LocalPlayer():SetStatus(armor, on)
+    end
+end)
+
 net.Receive("Horde_ClearStatus", function()
     LocalPlayer().Horde_StatusTable = {}
 end)
@@ -89,5 +111,9 @@ if CLIENT then
             if LocalPlayer():Horde_GetGadgetInternalCooldown() <= 0 then timer.Remove("Horde_LocalGadgetCooldown") return end
             LocalPlayer():Horde_SetGadgetInternalCooldown(LocalPlayer():Horde_GetGadgetInternalCooldown() - 1)
         end)
+    end)
+
+    net.Receive("Horde_GadgetChargesUpdate", function ()
+        LocalPlayer():Horde_SetGadgetCharges(net.ReadInt(8))
     end)
 end

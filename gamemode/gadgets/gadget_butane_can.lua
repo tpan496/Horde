@@ -29,7 +29,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
 end
 
 GADGET.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
-    if not ply:Horde_GetGadget() == "gadget_butane_can" then return end
+    if ply:Horde_GetGadget() ~= "gadget_butane_can" then return end
     if dmginfo:GetInflictor():GetModel() == "models/props_explosive/explosive_butane_can.mdl" then
         bonus.increase = bonus.increase + 5.0
         dmginfo:SetDamageType(DMG_BURN)

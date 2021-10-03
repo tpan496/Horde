@@ -1,4 +1,4 @@
-GADGET.PrintName = "Life Diffuser"
+GADGET.PrintName = "Bio Diffuser"
 GADGET.Description = "Triggers a pulse that heals nearby players.\nHeals 20 health."
 GADGET.Icon = "items/gadgets/life_diffuser.png"
 GADGET.Duration = 0

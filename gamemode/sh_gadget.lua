@@ -1,6 +1,7 @@
 if SERVER then
 util.AddNetworkString("Horde_Gadget")
 util.AddNetworkString("Horde_GadgetStartCooldown")
+util.AddNetworkString("Horde_GadgetChargesUpdate")
 end
 
 HORDE.gadgets = HORDE.gadgets or {}
@@ -45,12 +46,25 @@ function plymeta:Horde_SetGadgetInternalCooldown(cd)
     self.Horde_GadgetInternalCooldown = cd
 end
 
+function plymeta:Horde_SetGadgetCharges(charges)
+    self.Horde_GadgetCharges = charges
+    if SERVER then
+        net.Start("Horde_GadgetChargesUpdate")
+            net.WriteInt(charges, 8)
+        net.Send(self)
+    end
+end
+
 function plymeta:Horde_GetGadgetInternalCooldown()
     return self.Horde_GadgetInternalCooldown or 1
 end
 
 function plymeta:Horde_GetGadgetCooldown()
     return self.Horde_GadgetCooldown or 1
+end
+
+function plymeta:Horde_GetGadgetCharges(charges)
+    return self.Horde_GadgetCharges or -1
 end
 
 function plymeta:Horde_GetGadget()
@@ -62,7 +76,14 @@ function plymeta:Horde_SetGadget(gadget)
     self.Horde_Gadget = gadget
     self:Horde_SetGadgetDuration(HORDE.gadgets[gadget].Duration)
     self:Horde_SetGadgetCooldown(HORDE.gadgets[gadget].Cooldown)
+    self:Horde_SetGadgetCharges(HORDE.gadgets[gadget].Charges or -1)
     self:Horde_SetGadgetInternalCooldown(0)
+    if SERVER then
+        local item = HORDE.items[gadget]
+        if item then
+            self:Horde_AddWeight(-item.weight)
+        end
+    end
 
     hook.Run("Horde_OnSetGadget", self, gadget)
 
@@ -77,6 +98,12 @@ end
 
 function plymeta:Horde_UnsetGadget()
     if self.Horde_Gadget == nil then return end
+    if SERVER then
+        local item = HORDE.items[self.Horde_Gadget]
+        if item then
+            self:Horde_AddWeight(item.weight)
+        end
+    end
     hook.Run("Horde_OnUnsetGadget", self, self.Horde_Gadget)
     if SERVER then
         net.Start("Horde_Gadget")

@@ -2,7 +2,7 @@ GADGET.PrintName = "Cortex"
 GADGET.Description = "For each enemy near you, gain 1 Adrenaline stack.\nElite enemies grant 2 stacks."
 GADGET.Icon = "items/gadgets/cortex.png"
 GADGET.Duration = 0
-GADGET.Cooldown = 25
+GADGET.Cooldown = 20
 GADGET.Active = true
 GADGET.Params = {
 }

@@ -33,6 +33,7 @@ function scoreboard:show()
         draw.RoundedBox(5, 0, 0, w, 40, Color(40,40,40,200), true, true, false, false )
         draw.DrawText("Name", "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
         draw.DrawText("Class", "Content", 225, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
+        draw.DrawText("Gadget", "Content", 375, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
         draw.DrawText("Kill", "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
         draw.DrawText("Death", "Content", 921, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
         draw.DrawText("Ping", "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
@@ -42,6 +43,8 @@ function scoreboard:show()
         if not ply:IsValid() then goto cont end
         local class = HORDE.Class_Survivor
         if ply:Horde_GetClass() then class = ply:Horde_GetClass().name end
+
+        local gadget = ply:Horde_GetGadget()
 
         local list = lists:Add("DPanel")
         list:SetSize(lists:GetWide(), 45)
@@ -76,6 +79,17 @@ function scoreboard:show()
                     end
                     draw.DrawText(translate.Get("Class_" .. class), "Content", 250, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
                 end
+            end
+            
+            if gadget then
+                local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
+                surface.SetMaterial(mat) -- Use our cached material
+                if HORDE.gadgets[gadget].Active then
+                    surface.SetDrawColor(HORDE.color_gadget_active)
+                else
+                    surface.SetDrawColor(color_white)
+                end
+                surface.DrawTexturedRect(350, -2, 90, 45)
             end
             surface.SetDrawColor(255, 255, 255, 255)
             draw.DrawText(tostring(ply:Frags()), "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )

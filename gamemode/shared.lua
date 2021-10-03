@@ -8,6 +8,8 @@ CreateConVar("horde_enable_player_collision", 0, {FCVAR_SERVER_CAN_EXECUTE, FCVA
 
 DeriveGamemode("sandbox")
 
+game.AddParticles("particles/medicgun_beam.pcf")
+
 function GM:Initialize()
     game.AddAmmoType({
         name = "arccw_horde_nade_incendiary"

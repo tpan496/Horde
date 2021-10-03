@@ -59,6 +59,7 @@ util.AddNetworkString("Horde_SyncItems")
 util.AddNetworkString("Horde_SyncEnemies")
 util.AddNetworkString("Horde_SyncClasses")
 util.AddNetworkString("Horde_SyncStatus")
+util.AddNetworkString("Horde_SyncSpecialArmor")
 util.AddNetworkString("Horde_PlayerReadySync")
 util.AddNetworkString("Horde_AmmoboxCountdown")
 util.AddNetworkString("Horde_SyncBossSpawned")
@@ -67,12 +68,13 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.9.0"
+HORDE.version = "1.0.1.0"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
 HORDE.color_crimson_dim = Color(200, 0, 40)
 HORDE.color_crimson_dark = Color(100,0,0)
+HORDE.color_gadget_active = HORDE.color_crimson
 HORDE.color_hollow = Color(40,40,40,225)
 HORDE.color_hollow_dim = Color(80, 80, 80, 225)
 HORDE.color_config_bar = Color(50, 50, 50, 200)
@@ -110,6 +112,16 @@ HORDE.start_money = math.max(0, GetConVarNumber("horde_start_money"))
 HORDE.total_enemies_this_wave_fixed = 0
 HORDE.kill_reward_base = 90
 HORDE.round_bonus_base = GetConVar("horde_round_bonus"):GetInt()
+HORDE.disable_levels_restrictions = 0
+if CLIENT then
+net.Receive("Horde_Disable_Levels", function ()
+    HORDE.disable_levels_restrictions = 1
+end)
+end
+
+HORDE.SPAWN_PROXIMITY = 0
+HORDE.SPAWN_UNIFORM = 1
+HORDE.SPAWN_PROXIMITY_NOISY = 2
 
 -- Ammobox
 HORDE.ammobox_max_count_limit = 9

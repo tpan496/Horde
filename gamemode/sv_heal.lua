@@ -53,6 +53,8 @@ end
 
 -- Call this if you want Horde to recognize your healing
 function HORDE:OnPlayerHeal(ply, healinfo, silent)
+    if ply.Horde_Debuff_No_Heal then return end
+    if not ply:IsPlayer() then return end
     hook.Run("Horde_OnPlayerHeal", ply, healinfo)
     if (ply:GetMaxHealth() <= ply:Health()) and (healinfo:GetOverHealPercentage() <= 0) then return end
     ply:SetHealth(math.min(ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), ply:Health() + healinfo:GetHealAmount()))

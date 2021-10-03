@@ -11,6 +11,7 @@ util.AddNetworkString("Horde_RenderBreakCountDown")
 util.AddNetworkString("Horde_RenderEnemiesCount")
 util.AddNetworkString("Horde_RenderGameResult")
 util.AddNetworkString("Horde_Console_Commands")
+util.AddNetworkString("Horde_Disable_Levels")
 
 function HORDE:BroadcastPlayersReadyMessage(str)
     net.Start("Horde_RenderPlayersReady")
@@ -315,6 +316,20 @@ concommand.Add("horde_testing_wave_goto", function (ply, cmd, args)
         HORDE.current_wave = tonumber(args[1])
         HORDE:WaveStart()
     end
+end)
+
+concommand.Add("horde_testing_disable_level_restrictions", function (ply, cmd, args)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then return end
+    HORDE.disable_levels_restrictions = 1
+    net.Start("Horde_Disable_Levels")
+    net.Broadcast()
+end)
+
+concommand.Add("horde_testing_give_skull_tokens", function (ply, cmd, args)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then return end
+    local amount = math.floor(tonumber(args[1]))
+    ply:Horde_AddSkullTokens(amount)
+    ply:Horde_SyncEconomy()
 end)
 
 concommand.Add("horde_use_gadget", function (ply, cmd, args)
