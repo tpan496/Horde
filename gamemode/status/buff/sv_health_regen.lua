@@ -48,6 +48,7 @@ end
 
 hook.Add("PlayerTick", "Horde_HealthRegen", function(ply, mv)
     if not ply:Horde_GetHealthRegenEnabled() then return end
+    if ply.Horde_Debuff_No_Heal then return end
     if ply:Health() >= ply:GetMaxHealth() then
         ply:Horde_RemoveHealthRegen()
         return

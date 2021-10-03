@@ -9,7 +9,7 @@ PERK.Hooks = {}
 PERK.Hooks.EntityRemoved = function (ent)
     local ply = ent:GetNWEntity("HordeOwner")
     if (ent:IsNPC() and ply:IsPlayer() and ply:Horde_GetPerk("engineer_kamikaze")) or (ent.Horde_Has_Parasite and ent.Horde_Has_Parasite:IsPlayer() and ent.Horde_Has_Parasite:Horde_GetPerk("engineer_kamikaze")) then
-        if ent.Horde_Has_Parasite:IsPlayer() then
+        if ent.Horde_Has_Parasite and ent.Horde_Has_Parasite:IsPlayer() then
             ply = ent.Horde_Has_Parasite
         end
         local dmg = ent:GetMaxHealth() * 2

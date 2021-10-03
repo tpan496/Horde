@@ -9,6 +9,6 @@ GADGET.Params = {
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
-    if not ply:Horde_GetGadget() == "gadget_damage_booster" then return end
+    if ply:Horde_GetGadget() ~= "gadget_damage_booster" then return end
     bonus.increase = bonus.increase + 0.25
 end

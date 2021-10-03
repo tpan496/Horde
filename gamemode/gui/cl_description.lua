@@ -123,7 +123,7 @@ function PANEL:DoClick()
         --warning_panel:SetFont("Title")
         return
     end
-    if LocalPlayer():Horde_GetMoney() < self.item.price or LocalPlayer():Horde_GetWeight() < self.item.weight then return end
+    if LocalPlayer():Horde_GetMoney() < self.item.price or LocalPlayer():Horde_GetWeight() < self.item.weight or (not self.level_satisfy) then return end
     local drop_entities = LocalPlayer():Horde_GetDropEntities()
     if self.item.entity_properties and self.item.entity_properties.limit and self.item.entity_properties.limit > 0 and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP and drop_entities[self.item.class] and drop_entities[self.item.class] >= self.item.entity_properties.limit then return end
     -- Buy the item
@@ -181,6 +181,16 @@ function PANEL:SetData(item)
     if self.perk_layout then for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end end
     self.perk_panel:SetVisible(false)
     self.item = item
+    self.level_satisfy = true
+    if self.item and self.item.levels and (HORDE.disable_levels_restrictions == 0) then
+        for class, level in pairs(self.item.levels) do
+            if LocalPlayer():Horde_GetLevel(class) < level then
+                self.level_satisfy = false
+                break
+            end
+        end
+    end
+
     if self.item and self.item.class then
         if GetConVar("horde_default_item_config"):GetInt() == 1 then
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
@@ -401,7 +411,7 @@ function PANEL:Paint()
             draw.DrawText(self.loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             surface.SetMaterial(icon) -- Use our cached material
             if HORDE.gadgets[self.item.class].Active then
-                surface.SetDrawColor(HORDE.color_crimson)
+                surface.SetDrawColor(HORDE.color_gadget_active)
             else
                 surface.SetDrawColor(255, 255, 255, 255)
             end
@@ -517,6 +527,48 @@ function PANEL:Paint()
                 self.ammo_secondary_btn:SetVisible(false)
                 self.current_ammo_panel.Paint = function () end
             end
+        elseif not self.level_satisfy then
+            self.buy_btn:SetTextColor(Color(200,200,200))
+            self.buy_btn:SetText("Rank Requirement(s) Not Met")
+            
+            self.buy_btn.Paint = function ()
+                surface.SetDrawColor(HORDE.color_crimson_dark)
+                surface.DrawRect(0, 0, self:GetWide(), 200)
+            end
+
+            local x, y =  self.buy_btn:GetPos()
+            y = y - self.buy_btn:GetTall()
+            local start_pos = x + 15
+            local classes = {"Survivor", "Assault", "Heavy", "Medic", "Demolition", "Ghost", "Engineer", "Berserker", "Warden", "Cremator"}
+            for _, class in pairs(classes) do
+                local level = self.item.levels[class]
+                if level and level > 0 then
+                    local rank, rank_level = HORDE:LevelToRank(level)
+                    local mat = Material(HORDE.classes[class].icon, "mips smooth")
+                    surface.SetMaterial(mat) -- Use our cached material
+                    surface.SetDrawColor(HORDE.Rank_Colors[rank])
+                    surface.DrawTexturedRect(start_pos, y + 5, 40, 40)
+                    if rank == HORDE.Rank_Master then
+                        draw.SimpleText(rank_level, "Trebuchet18", start_pos - 5, y + 20, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    else
+                        if rank_level > 0 then
+                            local star = Material("star.png", "mips smooth")
+                            surface.SetMaterial(star)
+                            local y_pos = y + 32
+                            for i = 0, rank_level - 1 do
+                                surface.DrawTexturedRect(start_pos - 10, y_pos, 10, 10)
+                                y_pos = y_pos - 7
+                            end
+                        end
+                    end
+                    start_pos = start_pos + 50
+                end
+            end
+
+            self.ammo_panel:SetVisible(false)
+            self.ammo_secondary_btn:SetVisible(false)
+            self.current_ammo_panel.Paint = function () end
+            self.sell_btn:SetVisible(false)
         elseif LocalPlayer():Horde_GetMoney() < self.item.price or LocalPlayer():Horde_GetWeight() < self.item.weight then
             self.buy_btn:SetTextColor(Color(200,200,200))
             self.buy_btn:SetText("Not Enough Money or Carrying Capacity!")

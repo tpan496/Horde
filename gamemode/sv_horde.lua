@@ -1,4 +1,6 @@
 util.AddNetworkString("Horde_HighlightEntities")
+util.AddNetworkString("Horde_DeathMarkHighlight")
+util.AddNetworkString("Horde_RemoveDeathMarkHighlight")
 util.AddNetworkString("Horde_GameEnd")
 
 local horde_players_count = 0
@@ -7,6 +9,7 @@ local horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local horde_in_break = false
 local horde_perk_progress = 1
 local horde_current_enemies_list = {}
+local horde_use_strong_mutation = nil
 
 HORDE.horde_boss = nil
 HORDE.horde_boss_name = nil
@@ -70,6 +73,14 @@ hook.Add("InitPostEntity", "Horde_Init", function()
     end
 
     HORDE.has_buy_zone = not table.IsEmpty(ents.FindByClass("trigger_horde_buyzone"))
+
+    -- Check spawn distribution
+    HORDE.spawn_distribution = HORDE.SPAWN_PROXIMITY
+    if not table.IsEmpty(ents.FindByClass("info_horde_spawn_distribution_uniform")) then
+        HORDE.spawn_distribution = HORDE.SPAWN_UNIFORM
+    elseif not table.IsEmpty(ents.FindByClass("info_horde_spawn_distribution_proximity_noisy")) then
+        HORDE.spawn_distribution = HORDE.SPAWN_PROXIMITY_NOISY
+    end
 end)
 
 hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
@@ -447,7 +458,12 @@ function HORDE:SpawnEnemy(enemy, pos)
         if mut_prob > 0 then
             local p = math.random()
             if p <= mut_prob then
-                local mut = HORDE.mutations_sequential[math.random(1, #HORDE.mutations_sequential)]
+                local mut
+                if horde_use_strong_mutation then
+                    mut = HORDE.mutations_sequential[math.random(1, #HORDE.mutations_sequential_strong)]
+                else
+                    mut = HORDE.mutations_sequential[math.random(1, #HORDE.mutations_sequential)]
+                end
                 timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(mut) end)
             end
         end
@@ -519,6 +535,13 @@ end
 function HORDE:GetValidNodes(enemies)
     local valid_nodes = {}
     local invalid_nodes = {}
+    if HORDE.spawn_distribution == HORDE.SPAWN_UNIFORM then
+        for _, node in pairs(HORDE.ai_nodes) do
+            table.insert(valid_nodes, node["pos"])
+        end
+        return valid_nodes
+    end
+
     for _, node in pairs(HORDE.ai_nodes) do
         local valid = false
         local z_dist
@@ -560,9 +583,9 @@ function HORDE:GetValidNodes(enemies)
 
         ::cont::
     end
-    
+
     -- Add some noise to spawn
-    if HORDE.found_horde_nodes and #invalid_nodes > 0 then
+    if HORDE.found_horde_nodes and (HORDE.spawn_distribution == HORDE.SPAWN_PROXIMITY_NOISY or (#valid_nodes <= 0 and #invalid_nodes > 0)) then
         table.insert(valid_nodes, invalid_nodes[math.random(#invalid_nodes)])
     end
     return valid_nodes
@@ -800,6 +823,8 @@ function HORDE:WaveStart()
             HORDE.endless_health_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
         end
     end
+
+    if HORDE.current_wave >= math.floor(HORDE.max_waves * 0.5) then horde_use_strong_mutation = true end
     
     -- Additional custom scaling
     if GetConVar("horde_total_enemies_scaling"):GetInt() > 1 then

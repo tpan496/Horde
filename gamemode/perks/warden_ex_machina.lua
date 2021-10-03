@@ -16,6 +16,11 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
                 ent.Horde_EnableShockwave = true
             end
         end
+
+        if ply.Horde_Extra_Watchtower and ply.Horde_Extra_Watchtower:IsValid() then
+            ply.Horde_Extra_Watchtower:Horde_AddWardenAura()
+            ply.Horde_Extra_Watchtower.Horde_EnableShockwave = true
+        end
    end
 end
 
@@ -26,6 +31,11 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
                 ent:Horde_RemoveWardenAura()
                 ent.Horde_EnableShockwave = nil
             end
+        end
+
+        if ply.Horde_Extra_Watchtower and ply.Horde_Extra_Watchtower:IsValid() then
+            ply.Horde_Extra_Watchtower:Horde_RemoveWardenAura()
+            ply.Horde_Extra_Watchtower.Horde_EnableShockwave = nil
         end
    end
 end

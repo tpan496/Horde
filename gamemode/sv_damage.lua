@@ -61,6 +61,8 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     dmginfo:AddDamage(bonus.post_add)
     dmginfo:SetDamageCustom(HORDE.DMG_CALCULATED)
 
+    PrintTable(bonus)
+
     -- Play sound
     if hitgroup == HITGROUP_HEAD then
         sound.Play("horde/player/headshot.ogg", npc:GetPos())
@@ -124,6 +126,44 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
         end
     end
     if bonus.resistance >= 1.0 then return true end
+
+    if ply.Horde_Special_Armor then
+        local armor = ply.Horde_Special_Armor
+        local dmgtype = dmg:GetDamageType()
+        if armor == "armor_assault" then
+            if dmgtype == DMG_BULLET or dmgtype == DMG_BUCKSHOT or dmgtype == DMG_SNIPER then
+                bonus.resistance = bonus.resistance + 0.08
+            end
+        elseif armor == "armor_heavy" then
+        elseif armor == "armor_medic" then
+            if dmgtype == DMG_NERVEGAS or dmgtype == DMG_POISON or dmgtype == DMG_ACID or dmgtype == DMG_PARALYZE then
+                bonus.resistance = bonus.resistance + 0.08
+            end
+        elseif armor == "armor_demolition" then
+            if dmgtype == DMG_BLAST then
+                bonus.resistance = bonus.resistance + 0.08
+            end
+        elseif armor == "armor_ghost" then
+            bonus.evasion = bonus.evasion + 0.05
+        elseif armor == "armor_engineer" then
+            bonus.resistance = bonus.resistance + 0.05
+        elseif armor == "armor_warden" then
+            if dmgtype == DMG_SHOCK or dmgtype == DMG_SONIC then
+                bonus.resistance = bonus.resistance + 0.08
+            end
+        elseif armor == "armor_cremator" then
+            if dmgtype == DMG_BURN or dmgtype == DMG_SLOWBURN then
+                bonus.resistance = bonus.resistance + 0.08
+            end
+        elseif armor == "armor_berserker" then
+            if dmgtype == DMG_SLASH or dmgtype == DMG_CLUB then
+                bonus.resistance = bonus.resistance + 0.08
+            end
+        elseif armor == "armor_survivor" then
+            bonus.resistance = bonus.resistance + 0.05
+        end
+    end
+
     dmg:ScaleDamage(bonus.less * (1 - bonus.resistance))
     dmg:SubtractDamage(bonus.block)
 

@@ -43,6 +43,11 @@ function HORDE:GameEnd(status)
         net.WriteInt(1,2)
         net.Broadcast()
     end
+
+    for _, ply in pairs(player.GetAll()) do
+        ply:Horde_AddSkullTokens(math.floor(HORDE.current_wave / 2))
+    end
+
     HORDE.game_end = true
     local randomplayer = table.Random(player.GetAll())
     if not randomplayer then return end
@@ -318,6 +323,11 @@ function HORDE:PlayerInit(ply)
         net.WriteUInt(HORDE.current_wave, 16)
     net.Send(ply)
 
+    if HORDE.disable_levels_restrictions == 1 then
+        net.Start("Horde_Disable_Levels")
+        net.Send(ply)
+    end
+
     if not HORDE.start_game then
         HORDE.player_ready[ply] = 0
         net.Start("Horde_PlayerReadySync")
@@ -329,6 +339,7 @@ function HORDE:PlayerInit(ply)
         net.Start("Horde_RemoveReadyPanel")
         net.Send(ply)
         ply:Horde_SetMoney(HORDE.start_money + math.max(0, HORDE.current_wave - 1) * 150)
+        HORDE:LoadSkullTokens(ply)
         if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss_name then
             net.Start("Horde_SyncBossSpawned")
                 net.WriteString(HORDE.horde_boss_name)
@@ -345,6 +356,7 @@ function HORDE:PlayerInit(ply)
         end
     else
         ply:Horde_SetMoney(HORDE.start_money)
+        HORDE:LoadSkullTokens(ply)
     end
     ply:Horde_SetDropEntities({})
     ply:Horde_SetMaxWeight(HORDE.max_weight)

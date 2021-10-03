@@ -1,7 +1,12 @@
 local PANEL = {}
 
 function PANEL:Init()
-    self:SetSize(ScrW() / 1.25, ScrH() / 1.5)
+    if ScrW() < 1400 then
+        self:SetSize(ScrW(), ScrH())
+    else
+        self:SetSize(ScrW() / 1.25, ScrH() / 1.5)
+    end
+
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
@@ -56,6 +61,7 @@ function PANEL:Init()
     local category_editor
     local description_editor
     local shop_icon_editor
+    local level_editors
     local weapon_categories = HORDE.categories
     local entity_categories = HORDE.entity_categories
     local weight_editor
@@ -366,21 +372,56 @@ function PANEL:Init()
             local start_pos = 70
             local start_pos_2 = 70
             local i = 1
-            for _, class in pairs(HORDE.classes) do
+            local classes = {"Survivor", "Assault", "Heavy", "Medic", "Demolition", "Ghost", "Engineer", "Berserker", "Warden", "Cremator"}
+            for _, class in pairs(classes) do
                 local editor = vgui.Create("DCheckBoxLabel", panel)
                 editor:SetSize(75, height / 2)
-                if i <= 4 then
+                if i <= 5 then
                     editor:SetPos(start_pos, 25)
                     start_pos = start_pos + 75
                 else
                     editor:SetPos(start_pos_2, 45)
                     start_pos_2 = start_pos_2 + 75
                 end
-                editor:SetText(class.name)
+                editor:SetText(class)
                 editor:SetTextColor(Color(0,0,0))
                 editor:SetChecked(true)
                 table.insert(editors, editor)
-                i = i +1
+                i = i + 1
+            end
+
+            return editors
+        elseif name == "levels" then
+            local label = vgui.Create("DLabel", panel)
+            label:SetText("(0-99) 5=Amateur, 10=Skilled, 15=Pro, etc.")
+            label:SetTextColor(Color(0,0,0))
+            label:SetPos(80,100)
+            label:SetWide(200)
+
+            local editors = {}
+            local start_pos = 80
+            local start_pos_2 = 80
+            local i = 1
+            local classes = {"Survivor", "Assault", "Heavy", "Medic", "Demolition", "Ghost", "Engineer", "Berserker", "Warden", "Cremator"}
+            for _, class in pairs(classes) do
+                local editor = vgui.Create("DTextEntry", panel)
+                editor:SetSize(25, 25)
+
+                local editor_label = vgui.Create("DLabel", panel)
+                editor_label:SetText(class)
+                editor_label:SetTextColor(Color(0,0,0))
+                if i <= 5 then
+                    editor:SetPos(start_pos, 25)
+                    editor_label:SetPos(start_pos + 30, 25)
+                    start_pos = start_pos + 75
+                else
+                    editor:SetPos(start_pos_2, 65)
+                    editor_label:SetPos(start_pos_2 + 30, 65)
+                    start_pos_2 = start_pos_2 + 75
+                end
+
+                table.insert(editors, {editor=editor, label=editor_label})
+                i = i + 1
             end
 
             return editors
@@ -397,12 +438,14 @@ function PANEL:Init()
     category_editor = create_property_editor("category", 35, entity_type_panel, weapon_categories)
     local name_editor = create_property_editor("name", 35, entity_type_panel)
     local price_editor = create_property_editor("price", 35, entity_properties_panel)
+    local skull_tokens_editor = create_property_editor("skull tokens", 35, entity_properties_panel)
     weight_editor = create_property_editor("weight", 35, entity_properties_panel)
     description_editor = create_property_editor("description", 100, entity_properties_panel)
     local whitelist_editors = create_property_editor("whitelist", 40 * 2, entity_properties_panel)
     ammo_price_editor = create_property_editor("ammo price", 35, entity_properties_panel)
     secondary_ammo_price_editor = create_property_editor("alt ammo price", 35, entity_properties_panel)
     shop_icon_editor = create_property_editor("shop icon", 35, entity_properties_panel)
+    level_editors = create_property_editor("levels", 150, entity_properties_panel)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -416,6 +459,8 @@ function PANEL:Init()
 
     price_editor:SetNumeric(true)
     price_editor:SetValue("0")
+    skull_tokens_editor:SetNumeric(true)
+    skull_tokens_editor:SetValue("0")
     weight_editor:SetNumeric(true)
     weight_editor:SetValue("0")
     description_editor:SetMultiline(true)
@@ -485,6 +530,13 @@ function PANEL:Init()
 
         local shop_icon = shop_icon_editor:GetValue()
 
+        local levels = {}
+        for _, editor in pairs(level_editors) do
+            if editor.editor:GetInt() and editor.editor:GetInt() > 0 then
+                levels[editor.label:GetText()] = editor.editor:GetInt()
+            end
+        end
+
         if not category_editor:GetValue() or not name_editor:GetValue() or class == "" then return end
 
         HORDE:CreateItem(
@@ -498,7 +550,9 @@ function PANEL:Init()
             ammo_price_editor:GetInt() or 0,
             secondary_ammo_price_editor:GetInt() or 0,
             entity_properties,
-            shop_icon
+            shop_icon,
+            levels,
+            skull_tokens_editor:GetInt() or 0
         )
         -- Reload from disk
         local tab = util.TableToJSON(HORDE.items)
@@ -703,6 +757,7 @@ function PANEL:Init()
             category_editor:SetValue(item.category)
             name_editor:SetValue(item.name)
             price_editor:SetValue(item.price)
+            skull_tokens_editor:SetValue(item.skull_tokens or 0)
             weight_editor:SetValue(item.weight)
             description_editor:SetValue(item.description)
             for _, editor in pairs(whitelist_editors) do
@@ -719,6 +774,18 @@ function PANEL:Init()
             ammo_price_editor:SetValue(item.ammo_price and item.ammo_price or HORDE.default_ammo_price)
             secondary_ammo_price_editor:SetValue(item.secondary_ammo_price and item.secondary_ammo_price or -1)
             shop_icon_editor:SetValue(item.shop_icon or "")
+
+            for _, editor in pairs(level_editors) do
+                if item.levels then
+                    if item.levels[editor.label:GetText()] then
+                        editor.editor:SetValue(item.levels[editor.label:GetText()])
+                    else
+                        editor.editor:SetValue("")
+                    end
+                else
+                    editor.editor:SetValue("")
+                end
+            end
         end)
 
         menu:AddOption("Delete", function()

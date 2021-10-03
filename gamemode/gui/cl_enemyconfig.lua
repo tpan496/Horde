@@ -1,7 +1,12 @@
 local PANEL = {}
 
 function PANEL:Init()
-    self:SetSize(ScrW() / 1.25, ScrH() / 1.5)
+    if ScrW() < 1400 then
+        self:SetSize(ScrW(), ScrH())
+    else
+        self:SetSize(ScrW() / 1.25, ScrH() / 1.5)
+    end
+
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 

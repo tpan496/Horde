@@ -337,7 +337,7 @@ function SWEP:PrimaryAttack()
 
     local spread = ArcCW.MOAToAcc * self:GetBuff("AccuracyMOA")
 
-    dir:Rotate(Angle(0, ArcCW.StrafeTilt(self), 0))
+    --dir:Rotate(Angle(0, ArcCW.StrafeTilt(self), 0))
 
     dir = dir + VectorRand() * self:GetDispersion() / 360 / 60
 

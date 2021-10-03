@@ -16,7 +16,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     util.Effect("Explosion", effectdata)
     ply:EmitSound("phx/kaboom.wav", 125, 100, 1, CHAN_AUTO)
 
-    for _, ent in pairs(ents.FindInSphere(ply:GetPos(), 200)) do
+    for _, ent in pairs(ents.FindInSphere(ply:GetPos(), 225)) do
         if ent:IsNPC() then
             ent:Horde_AddStun(350)
         end

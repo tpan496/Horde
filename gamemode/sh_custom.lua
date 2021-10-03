@@ -2,6 +2,7 @@ function GM:RegisterCustomConfig(name)
     local classfiles, classdirectories = file.Find(self.FolderName .. "/gamemode/custom/*", "LUA")
     table.sort(classfiles)
     table.sort(classdirectories)
+    print("[HORDE] Attempting to register config: " .. name)
 
     for i, filename in ipairs(classfiles) do
         if string.sub(filename, -4) == ".lua" then
@@ -17,6 +18,7 @@ function GM:RegisterCustomConfig(name)
             end
 
             if CONFIG.name == name then
+                print("[HORDE] Config " .. CONFIG.name .. " selected!")
                 return true
             end
         end
@@ -91,20 +93,23 @@ end
 if GetConVar("horde_external_lua_config"):GetString() and GetConVar("horde_external_lua_config"):GetString() ~= "" then
     local found = GM:RegisterCustomConfig(GetConVar("horde_external_lua_config"):GetString())
     if not found then
-        local str = "Custom config " .. GetConVar("horde_external_lua_config"):GetString() .. " not found!"
+        local str = "Custom config " .. GetConVar("horde_external_lua_config"):GetString() .. " failed to load!"
         if CLIENT then
             timer.Simple(1,function () notification.AddLegacy(str, NOTIFY_ERROR, 5) end)
         end
-        print(str)
+        print("[HORDE] " .. str)
         return
     end
     local str = "Custom config " .. GetConVar("horde_external_lua_config"):GetString() .. " is loaded!"
     if CLIENT then
         timer.Simple(1, function() notification.AddLegacy(str, NOTIFY_GENERIC, 5) end)
     end
+    print("[HORDE] " .. str)
 
     if CONFIG.items then
         HORDE.items = CONFIG.items
+    else
+        HORDE:GetDefaultItemsData()
     end
 
     if CONFIG.enemies then
@@ -112,6 +117,8 @@ if GetConVar("horde_external_lua_config"):GetString() and GetConVar("horde_exter
         for _, enemy in pairs(CONFIG.enemies) do
             HORDE.enemies[enemy.name .. tostring(enemy.wave)] = enemy
         end
+    else
+        HORDE:GetDefaultEnemiesData()
     end
 
     HORDE.SaveTempData()

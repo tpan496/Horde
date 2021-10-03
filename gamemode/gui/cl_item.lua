@@ -40,7 +40,19 @@ function PANEL:SetData(item, description_panel)
     self.description = item.description
     self.weight = item.weight
     self.price = item.price
+    self.skull_tokens = item.skull_tokens
     self.description_panel = description_panel
+    self.player_class = LocalPlayer():Horde_GetClass().name
+
+    self.level_satisfy = true
+    if self.item.levels then
+        for class, level in pairs(self.item.levels) do
+            if LocalPlayer():Horde_GetLevel(class) < level then
+                self.level_satisfy = false
+                break
+            end
+        end
+    end
 
     local btn = vgui.Create("DButton", self)
     btn:Dock(FILL)
@@ -77,6 +89,7 @@ function PANEL:SetData(item, description_panel)
     price_panel:Dock(RIGHT)
     price_panel:SetSize(80, price_panel:GetTall())
     price_panel:SetFont("Item")
+    price_panel:SetContentAlignment(6)
     self.price_panel = price_panel
 
     if self.item.shop_icon and self.item.shop_icon ~= "" then
@@ -129,7 +142,7 @@ end
 
 function PANEL:Paint()
     if self.item ~= nil then
-        local is_rich = LocalPlayer():Horde_GetMoney() >= self.item.price and LocalPlayer():Horde_GetWeight() >= self.item.weight
+        local is_rich = LocalPlayer():Horde_GetMoney() >= self.item.price and LocalPlayer():Horde_GetSkullTokens() >= self.item.skull_tokens and LocalPlayer():Horde_GetWeight() >= self.item.weight
         surface.SetDrawColor(self.bg_color)
         surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
         surface.SetFont("Item")
@@ -147,10 +160,31 @@ function PANEL:Paint()
                 self.weight_panel:SetTextColor(self.text_color_poor)
                 self.price_panel:SetTextColor(self.text_color_poor)
             end
-            self.price_panel:SetText(tostring(self.price) .. "$")
+            if self.skull_tokens and self.skull_tokens > 0 then
+                if self.price <= 0 then
+                    self.price_panel:SetText(tostring(self.skull_tokens) .. "    ")
+                else
+                    self.price_panel:SetText(tostring(self.price) .. "$ " .. tostring(self.skull_tokens) .. "    ")
+                end
+                local mat = Material("skull.png", "mips smooth")
+                surface.SetMaterial(mat)
+                if is_rich then
+                    surface.SetDrawColor(self.text_color)
+                else
+                    surface.SetDrawColor(self.text_color_poor)
+                end
+                local x,y = self.price_panel:GetPos()
+                surface.DrawTexturedRect(x + self.price_panel:GetWide() - 20, y + 12, 14, 15)
+            else
+                self.price_panel:SetText(tostring(self.price) .. "$ ")
+            end
         end
 
-        surface.SetTextColor(Color(255,255,255))
+        if (not LocalPlayer():HasWeapon(self.item.class)) and (not self.level_satisfy) then
+            surface.SetTextColor(Color(80,80,80))
+        else
+            surface.SetTextColor(Color(255,255,255))
+        end
         surface.SetTextPos(10, self:GetTall() / 2 - 10)
         surface.DrawText(self.loc_name)
 
@@ -167,7 +201,7 @@ function PANEL:Paint()
             if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 if HORDE.gadgets[self.item.class].Active then
                     surface.SetMaterial(Material(HORDE.gadgets[self.item.class].Icon, "mips smooth"))
-                    surface.SetDrawColor(HORDE.color_crimson)
+                    surface.SetDrawColor(HORDE.color_gadget_active)
                     surface.DrawTexturedRect(self:GetWide() - 256, -5, 96, 48)
                 else
                     surface.SetMaterial(Material(HORDE.gadgets[self.item.class].Icon, "mips smooth"))
@@ -176,6 +210,7 @@ function PANEL:Paint()
                 end
                 return
             end
+            
             if GetConVar("horde_enable_shop_icons"):GetInt() == 0 then return end
             if self.item.shop_icon then
                 surface.SetMaterial(Material(self.item.shop_icon, "mips smooth"))
