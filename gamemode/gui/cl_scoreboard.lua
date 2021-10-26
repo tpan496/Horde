@@ -7,7 +7,7 @@ function scoreboard:show()
     title:SetSize(1000, 100)
     title:SetPos(ScrW()/2 - 1000 / 2, ScrH()/5 - 50)
     function title:Paint(w, h)
-        draw.SimpleText("Horde - " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "Title", 0, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
+        draw.SimpleText("Horde - " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) or HORDE.difficulty_text[HORDE.difficulty], "Title", 0, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
         draw.SimpleText(GetHostName(), "Title", 1000, 12, HORDE.color_crimson_dim, TEXT_ALIGN_RIGHT)
     end
 

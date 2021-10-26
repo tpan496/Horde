@@ -189,7 +189,7 @@ function ENT:CustomOnThink()
 			dmg:SetInflictor(self)
 			dmg:SetDamageType(DMG_CRUSH)
 			dmg:SetDamage(45)
-			util.BlastDamageInfo(dmg, self:GetPos(), 400)
+			util.BlastDamageInfo(dmg, self:GetPos(), 500)
 		end)
 		self.NextBlastTime = CurTime() + self.NextBlastCooldown
 	end

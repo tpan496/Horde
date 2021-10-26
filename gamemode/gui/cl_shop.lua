@@ -166,6 +166,8 @@ function PANEL:Init()
                 else
                     item.cmp = item.price
                 end
+                if not item.skull_tokens then item.skull_tokens = 0 end
+                if not item.total_levels then item.total_levels = 0 end
                 table.insert(items, item)
             end
         end

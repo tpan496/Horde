@@ -144,7 +144,7 @@ Horde_LoadGadgets()
 hook.Add("PlayerButtonDown", "Horde_UseKey", function(ply, key)
     if GetConVar("horde_disable_default_gadget_use_key"):GetInt() == 1 then return end
     if (key == KEY_T) then
-        RunConsoleCommand("horde_use_gadget")
+        ply:ConCommand("horde_use_gadget")
     end
 end)
 

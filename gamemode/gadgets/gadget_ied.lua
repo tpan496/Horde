@@ -6,7 +6,7 @@ You have 5 IED charges.
 IED recharges after detonation.]]
 GADGET.Icon = "items/gadgets/ied.png"
 GADGET.Duration = 0
-GADGET.Cooldown = 0.2
+GADGET.Cooldown = 0.5
 GADGET.Active = true
 GADGET.Params = {
     [1] = {value = 5},

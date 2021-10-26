@@ -5,7 +5,7 @@ Removes body regulations to increase combat capabilities.
 
 When you have more than 50% health, you lose 1 health per second.
 When you have less than 50% health, you gain 2 health per second.
-Increases your damage by 80% of your missing health percentage.]]
+For each 1% health missing, increase your damage by 0.8%.]]
 GADGET.Icon = "items/gadgets/ouroboros.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0

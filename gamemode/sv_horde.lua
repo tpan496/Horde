@@ -460,7 +460,7 @@ function HORDE:SpawnEnemy(enemy, pos)
             if p <= mut_prob then
                 local mut
                 if horde_use_strong_mutation then
-                    mut = HORDE.mutations_sequential[math.random(1, #HORDE.mutations_sequential_strong)]
+                    mut = HORDE.mutations_sequential_strong[math.random(1, #HORDE.mutations_sequential_strong)]
                 else
                     mut = HORDE.mutations_sequential[math.random(1, #HORDE.mutations_sequential)]
                 end
@@ -470,6 +470,7 @@ function HORDE:SpawnEnemy(enemy, pos)
     end
     
     --spawned_enemy:AddRelationship("player D_HT 99")
+    VJ_AddSpeed(spawned_enemy, 4)
     hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy
 end
@@ -599,6 +600,9 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
             local pos = table.Random(valid_nodes)
             if pos ~= nil then
                 table.RemoveByValue(valid_nodes, pos)
+                local z = pos.z
+                pos = pos + VectorRand() * 5
+                pos.z = z
                 local p = math.random()
                 local p_cum = 0
                 local spawned_enemy

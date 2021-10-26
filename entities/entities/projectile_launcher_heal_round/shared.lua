@@ -54,6 +54,7 @@ function ENT:Detonate()
     if !self:IsValid() or self.Removing then return end
     local effectdata = EffectData()
     effectdata:SetOrigin(self:GetPos())
+    effectdata:SetRadius(225)
     util.Effect("heal_mist", effectdata)
     self:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 90, 100, 1, CHAN_AUTO)
 

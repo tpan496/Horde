@@ -580,7 +580,22 @@ function PANEL:Paint()
             self.ammo_panel:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
-            self.sell_btn:SetVisible(false)
+            if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
+                local drop_entities = LocalPlayer():Horde_GetDropEntities()
+                if drop_entities[self.item.class] then
+                    self.sell_btn:SetVisible(true)
+                    self.sell_btn:SetTextColor(Color(255,255,255))
+                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class])) .. "$")
+                    self.sell_btn.Paint = function ()
+                        surface.SetDrawColor(HORDE.color_crimson)
+                        surface.DrawRect(0, 0, self:GetWide(), 200)
+                    end
+                else
+                    self.sell_btn:SetVisible(false)
+                end
+            else
+                self.sell_btn:SetVisible(false)
+            end
         else
             self.buy_btn:SetText(translate.Get("Shop_Buy_Item"))
             if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then

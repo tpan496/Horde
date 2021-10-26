@@ -20,6 +20,7 @@ LANGUAGE["Game_Difficulty_NORMAL"] = "NORMAL"
 LANGUAGE["Game_Difficulty_HARD"] = "HARD"
 LANGUAGE["Game_Difficulty_REALISM"] = "REALISM"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "NIGHTMARE"
+LANGUAGE["Game_Difficulty_APOCALYPSE"] = "APOCALYPSE"
 LANGUAGE["Game_Enemies"] = "Enemies"
 LANGUAGE["Game_HintBottomReady"] = "F3 - Shop/Perk, F4 - Ready"
 LANGUAGE["Game_HintBottom"] = "F3 - Shop/Perk, V - Drop $"
@@ -189,7 +190,7 @@ Complexity: HIGH
 
 {1} more headshot damage.
 Crouch to activate Camoflague, granting {2} evasion.
-Attacking, Running or Jumping REMOVES Camoflague.]]
+Attacking or Running REMOVES Camoflague.]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 The Engineer class is a minion-centered class that deals damage through minions.

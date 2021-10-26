@@ -107,6 +107,10 @@ function plymeta:Horde_RemoveDropEntity(class, entity_creation_id)
     if HORDE.player_drop_entities[self:SteamID()] then
         HORDE.player_drop_entities[self:SteamID()][entity_creation_id] = nil
     end
+    local item = HORDE.items[class]
+    if item then
+        self:Horde_AddWeight(item.weight)
+    end
 end
 
 function plymeta:Horde_SetMinionCount(count)
@@ -298,7 +302,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
     local price = HORDE.items[class].price
     local weight = HORDE.items[class].weight
     local levels = HORDE.items[class].levels
-    local skull_tokens = HORDE.items[class].skull_tokens
+    local skull_tokens = HORDE.items[class].skull_tokens or 0
     local level_satisfy = true
     if levels and (HORDE.disable_levels_restrictions == 0) then
         for c, level in pairs(levels) do
@@ -348,6 +352,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 
                 ply:Horde_AddMoney(-price)
                 ply:Horde_AddSkullTokens(-skull_tokens)
+                ply:Horde_AddWeight(-item.weight)
                 local ent = ents.Create(class)
                 local pos = ply:GetPos()
                 local dir = (ply:GetEyeTrace().HitPos - pos)
@@ -363,12 +368,23 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 if ent:IsNPC() then
                     -- Minions have no player collsion
                     ent:AddRelationship("player D_LI 99")
+                    ent:AddRelationship("ally D_LI 99")
+                    if HORDE.items["npc_vortigaunt"] then
+                        ent:AddRelationship("npc_vortigaunt D_LI 99")
+                    end
+                    if HORDE.items["npc_turret_floor"] then
+                        ent:AddRelationship("npc_turret_floor D_LI 99")
+                    end
+                    if HORDE.items["npc_manhack"] then
+                        ent:AddRelationship("npc_manhack D_LI 99")
+                    end
+
                     ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
                     local npc_info = list.Get("NPC")[ent:GetClass()]
                     if not npc_info then
                         print("[HORDE] NPC does not exist in ", list.Get("NPC"))
                     end
-
+                    
                     local wpns = npc_info["Weapons"]
                     if wpns then
                         local wpn = wpns[math.random(#wpns)]
@@ -377,12 +393,28 @@ net.Receive("Horde_BuyItem", function (len, ply)
 
                     -- Special case for turrets
                     local id = ent:GetCreationID()
-                    if ent:GetClass() == "npc_turret_floor" then
+                    if ent:GetClass() == "npc_turret_floor" or ent:GetClass() == "npc_vortigaunt" then
                         ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
-                        timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
-                            if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
-                            ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
-                        end)
+                        if ent:GetClass() == "npc_vortigaunt" then
+                            ent:Fire("enablearmorrecharge", "", 0)
+                            timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
+                                if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+                                ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+                            end)
+
+                            timer.Create("Horde_VortigauntFollow" .. id, 8, 0, function ()
+                                if not ent:IsValid() then timer.Remove("Horde_VortigauntFollow" .. id) return end
+                                if ply:IsValid() and ply:GetPos():DistToSqr(ent:GetPos()) > 400000 then
+                                    ent:SetLastPosition(ply:GetPos())
+                                    ent:SetSchedule(SCHED_FORCED_GO_RUN)
+                                end
+                            end)
+                        else
+                            timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
+                                if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+                                ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+                            end)
+                        end
                         HORDE:DropTurret(ent)
                     else
                         ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
@@ -395,14 +427,52 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     -- Count Minions
                     ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() + 1)
 
-                    ent:CallOnRemove("Horde_EntityRemoved", function()
-                        if ent:IsValid() and ply:IsValid() then
-                            timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
-                            ent:GetNWEntity("HordeOwner"):Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
-                            ent:GetNWEntity("HordeOwner"):Horde_SyncEconomy()
-                            ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
-                        end
-                    end)
+                    if ent:GetClass() == "npc_manhack" then
+                        ent:SetMaxHealth(100)
+                        ent.Horde_Minion_Respawn = true
+                        ent:CallOnRemove("Horde_EntityRemoved", function()
+                            timer.Remove("Horde_ManhackRepos" .. id)
+                            timer.Remove("Horde_MinionCollision" .. id)
+                            if ent:IsValid() and ply:IsValid() then
+                                if ent.Horde_Minion_Respawn then
+                                    ply:Horde_RemoveManhackEntity(ent:GetClass(), ent:GetCreationID())
+                                else
+                                    ply:Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
+                                end
+                                ply:Horde_SyncEconomy()
+                                ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
+                            end
+                            if ent.Horde_Minion_Respawn then
+                                timer.Remove("Horde_ManhackRespawn" .. id)
+                                local drop_ents = ply:Horde_GetDropEntities()
+                                local count = drop_ents[class]
+                                if (!count) or (count and count <= item.entity_properties.limit) then
+                                    timer.Create("Horde_ManhackRespawn" .. id, 4, 1, function ()
+                                        if ply:IsValid() and ply:Alive() then
+                                            HORDE:SpawnManhack(ply)
+                                        end
+                                    end)
+                                end
+                            end
+                        end)
+                        timer.Create("Horde_ManhackRepos" .. id, 30, 0, function ()
+                            if ent:IsValid() and ply:Alive() then
+                                ent:SetPos(ply:GetPos() + VectorRand())
+                            else
+                                timer.Remove("Horde_ManhackRepos" .. id)
+                                if ent:IsValid() then ent:Remove() end
+                            end
+                        end)
+                    else
+                        ent:CallOnRemove("Horde_EntityRemoved", function()
+                            if ent:IsValid() and ply:IsValid() then
+                                timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
+                                ply:Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
+                                ply:Horde_SyncEconomy()
+                                ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
+                            end
+                        end)
+                    end
                 end
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_ARMOR then
                 if ply:Armor() >= ply:GetMaxArmor() then return end
@@ -511,6 +581,8 @@ net.Receive("Horde_SellItem", function (len, ply)
                 -- Remove all the drop entiies of this player
                 for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
                     if ent:GetClass() == class then
+                        ent.Horde_Minion_Respawn = nil
+                        timer.Remove("Horde_ManhackRespawn" .. ent:GetCreationID())
                         ent:Remove()
                     end
                 end

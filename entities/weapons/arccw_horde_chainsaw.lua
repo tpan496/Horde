@@ -13,10 +13,10 @@ SWEP.AdminOnly = false
 SWEP.PrintName = "Chainsaw"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Brrrrrrrrrrrrrrrr"
-SWEP.Trivia_Manufacturer = "Horzine"
+SWEP.Trivia_Manufacturer = "Top Gear"
 SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Sharp Edge"
-SWEP.Trivia_Country = "Top Gear"
+SWEP.Trivia_Country = "Britain"
 SWEP.Trivia_Year = 1949
 
 SWEP.Slot = 0
@@ -35,7 +35,7 @@ SWEP.ViewModelFOV = 45
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
-SWEP.MeleeDamage = 200
+SWEP.MeleeDamage = 200 
 SWEP.Melee2Damage = 35
 
 SWEP.PrimaryBash = true

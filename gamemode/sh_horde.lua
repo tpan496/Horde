@@ -68,7 +68,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.0.1.0"
+HORDE.version = "1.1.0.0"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -144,7 +144,7 @@ HORDE.player_vote_map_change = {}
 HORDE.render_highlight_disable = 0
 HORDE.render_highlight_enemies = 1
 HORDE.render_highlight_ammoboxes = 2
-HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM", "NIGHTMARE"}
+HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM", "NIGHTMARE", "APOCALYPSE"}
 
 -- ArcCW Attachments
 if ArcCWInstalled then

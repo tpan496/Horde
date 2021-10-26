@@ -4,7 +4,7 @@ GADGET.Description =
 E-Parasite counts as a minion.
 E-Parasite deals continuous damage to enemies.
 You leech health from damage dealt by E-Parasite.
-Enemies killed while infected by E-Parasite explode on death."]]
+Enemies killed while infected by E-Parasite explode on death.]]
 GADGET.Icon = "items/gadgets/e_parasite.png"
 GADGET.Duration = 10
 GADGET.Cooldown = 20
@@ -64,7 +64,7 @@ GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
         dmginfo:SetAttacker(killer)
         dmginfo:SetInflictor(victim)
         dmginfo:SetDamagePosition(victim:GetPos())
-        dmginfo:SetDamage(victim:GetMaxHealth())
+        dmginfo:SetDamage(victim:GetMaxHealth() + 50)
         if killer:Horde_GetPerk("engineer_symbiosis") then
             dmginfo:ScaleDamage(1.25)
         end

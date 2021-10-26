@@ -1,8 +1,9 @@
 PERK.PrintName = "Phase Walk"
-PERK.Description = "Running/Jumping does not cancel Camoflague.\n{1} increased movement speed when you have Camoflague."
+PERK.Description = "Running does not cancel Camoflague.\n{1} increased movement speed when you have Camoflague.\n{2} increased evasion when you have Camoflague."
 PERK.Icon = "materials/perks/phase_walk.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},
+    [1] = {value = 0.10, percent = true},
 }
 
 PERK.Hooks = {}
@@ -24,4 +25,9 @@ PERK.Hooks.Horde_PlayerMoveBonus = function(ply, mv)
         ply:SetWalkSpeed(ply:GetWalkSpeed() * 1.25)
         ply:SetRunSpeed(ply:GetRunSpeed() * 1.25)
     end
+end
+
+PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
+    if not ply:Horde_GetPerk("ghost_phase_walk")  then return end
+    bonus.evasion = bonus.evasion + 0.10
 end

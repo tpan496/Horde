@@ -61,7 +61,17 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     dmginfo:AddDamage(bonus.post_add)
     dmginfo:SetDamageCustom(HORDE.DMG_CALCULATED)
 
-    PrintTable(bonus)
+    -- Vortigaunt damage
+    if (dmginfo:GetDamageType() == DMG_SHOCK) and dmginfo:GetInflictor():GetClass() == "npc_vortigaunt" then
+        -- Splash damaage
+        local dmg = DamageInfo()
+        dmg:SetAttacker(dmginfo:GetAttacker())
+        dmg:SetInflictor(dmginfo:GetInflictor())
+        dmg:SetDamageType(DMG_PLASMA)
+        dmg:SetDamage(dmginfo:GetDamage())
+        dmg:SetDamageCustom(HORDE.DMG_SPLASH)
+        util.BlastDamageInfo(dmg, dmginfo:GetDamagePosition(), 225)
+    end
 
     -- Play sound
     if hitgroup == HITGROUP_HEAD then
@@ -91,6 +101,7 @@ hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginf
         end
         if dmginfo:GetAttacker():IsPlayer() then
             HORDE:ApplyDamage(target, HITGROUP_GENERIC, dmginfo)
+            print(dmginfo, dmginfo:GetDamageType())
         end
     end
 end)
@@ -120,7 +131,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if bonus.evasion > 0 then
         local evade = math.random()
         if evade <= bonus.evasion then
-            sound.Play("horde/player/evade.ogg", ply:GetPos())
+            ply:EmitSound("horde/player/evade.ogg", 125, 100, 1, CHAN_AUTO)
             hook.Run("Horde_OnPlayerEvade", ply, dmg)
             return true
         end
