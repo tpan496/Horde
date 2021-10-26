@@ -53,13 +53,13 @@ local function Horde_LoadMutations()
         AddCSLuaFile(prefix .. f)
         include(prefix .. f)
         if MUTATION.Ignore then goto cont end
-        MUTATION.ClassName = string.lower(MUTATION.ClassName or string.Explode(".", f)[1])
+        MUTATION.ClassName = string.lower(MUTATION.PrintName or string.Explode(".", f)[1])
         MUTATION.SortOrder = MUTATION.SortOrder or 0
 
         hook.Run("Horde_OnLoadMutation", MUTATION)
 
         HORDE.mutations[MUTATION.ClassName] = MUTATION
-        if not MUTATION.strong then
+        if not MUTATION.Strong then
             table.insert(HORDE.mutations_sequential, MUTATION.ClassName)
         end
         table.insert(HORDE.mutations_sequential_strong, MUTATION.ClassName)

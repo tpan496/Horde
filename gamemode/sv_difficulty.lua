@@ -16,7 +16,7 @@ local difficulty_apocalypse = 4
 
 -- Multipliers
 local difficulty_damage_multiplier = {1, 1.25, 1.5, 1.7, 1.8}
-local difficulty_enemy_count_multiplier = {1, 1.3, 1.5, 1.5, 1.6}
+local difficulty_enemy_count_multiplier = {1, 1.3, 1.5, 1.5, 1.75}
 local difficulty_reward_base_multiplier = {1, 0.8, 0.6, 0.5, 0.4}
 HORDE.difficulty_health_multiplier = {1, 1.25, 1.5, 1.5, 1.55}
 local difficulty_start_money_multiplier = {1, 0.9, 0.8, 0.75, 0.6}

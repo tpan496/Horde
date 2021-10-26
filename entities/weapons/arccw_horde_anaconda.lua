@@ -1,4 +1,8 @@
 if not ArcCWInstalled then return end
+if CLIENT then
+    SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_horde_anaconda")
+    killicon.Add("arccw_horde_anaconda", "arccw/weaponicons/arccw_horde_anaconda", Color(0, 0, 0, 255))
+end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"

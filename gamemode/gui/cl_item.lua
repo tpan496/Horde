@@ -40,7 +40,7 @@ function PANEL:SetData(item, description_panel)
     self.description = item.description
     self.weight = item.weight
     self.price = item.price
-    self.skull_tokens = item.skull_tokens
+    self.skull_tokens = item.skull_tokens or 0
     self.description_panel = description_panel
     self.player_class = LocalPlayer():Horde_GetClass().name
 
@@ -142,7 +142,7 @@ end
 
 function PANEL:Paint()
     if self.item ~= nil then
-        local is_rich = LocalPlayer():Horde_GetMoney() >= self.item.price and LocalPlayer():Horde_GetSkullTokens() >= self.item.skull_tokens and LocalPlayer():Horde_GetWeight() >= self.item.weight
+        local is_rich = LocalPlayer():Horde_GetMoney() >= self.item.price and LocalPlayer():Horde_GetSkullTokens() >= (self.item.skull_tokens or 0) and LocalPlayer():Horde_GetWeight() >= self.item.weight
         surface.SetDrawColor(self.bg_color)
         surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
         surface.SetFont("Item")

@@ -13,6 +13,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     if ply:Horde_GetGadget() ~= "gadget_life_diffuser" then return end
     local effectdata = EffectData()
     effectdata:SetOrigin(ply:GetPos())
+    effectdata:SetRadius(225)
     util.Effect("heal_mist", effectdata)
     ply:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 90, 100, 1, CHAN_AUTO)
 

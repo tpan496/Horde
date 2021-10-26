@@ -2,7 +2,7 @@ GADGET.PrintName = "Proximity Defense"
 GADGET.Description = "Triggers an explosion that Stuns nearby enemies."
 GADGET.Icon = "items/gadgets/proximity_defense.png"
 GADGET.Duration = 0
-GADGET.Cooldown = 30
+GADGET.Cooldown = 20
 GADGET.Active = true
 GADGET.Params = {
 }

@@ -38,8 +38,8 @@ SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
 SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 45 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 45
+SWEP.Primary.ClipSize = 50 -- DefaultClip is automatically set.
+SWEP.ExtendedClipSize = 50
 SWEP.ReducedClipSize = 15
 
 SWEP.VisualRecoilMult = 0
@@ -323,3 +323,47 @@ SWEP.Animations = {
         LHIKOut = 0.5,
     },
 }
+
+function SWEP:Bash()
+    if self:GetNextSecondaryFire() > CurTime() then return end
+    if !self.CanBash and !self:GetBuff_Override("Override_CanBash") then return end
+    if CLIENT then return end
+    local ply = self:GetOwner()
+    local rocket = ents.Create("projectile_mp7m_heal_round")
+    local vel = 10000
+    local ang = ply:GetAimVector()
+
+    local src = self:GetShootSrc()
+
+    if !rocket:IsValid() then print("!!! INVALID ROUND " .. rocket) return end
+
+    local rocketAng = Angle(ang.p, ang.y, ang.r)
+
+    rocket:SetAngles(rocketAng)
+    rocket:SetPos(src)
+
+    rocket:SetOwner(ply)
+    rocket.Owner = ply
+    rocket.Horde_Wpn_Owner = self
+    rocket.Inflictor = rocket
+
+    local RealVelocity = (ply:GetAbsVelocity() or Vector(0, 0, 0)) + ang * vel / 0.0254
+    rocket.CurVel = RealVelocity -- for non-physical projectiles that move themselves
+
+    rocket:Spawn()
+    rocket:Activate()
+    if !rocket.NoPhys and rocket:GetPhysicsObject():IsValid() then
+        rocket:SetCollisionGroup(rocket.CollisionGroup or COLLISION_GROUP_DEBRIS)
+        rocket:GetPhysicsObject():SetVelocityInstantaneous(RealVelocity)
+    end
+
+    if rocket.Launch and rocket.SetState then
+        rocket:SetState(1)
+        rocket:Launch()
+    end
+
+    ply:EmitSound("horde/weapons/mp7m/heal.ogg", 125, 100, 1, CHAN_AUTO)
+
+    self:SetNextSecondaryFire(CurTime() + 1.5)
+    return true
+end

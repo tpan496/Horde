@@ -21,8 +21,11 @@ PERK.Hooks.EntityTakeDamage = function (target, dmginfo)
 end
 
 PERK.Hooks.Horde_OnPlayerMinionDamage = function (ply, npc, bonus, dmginfo)
-    if ply:Horde_GetPerk("engineer_base") and dmginfo:GetInflictor():GetClass() == "npc_turret_floor" then
-        bonus.more = bonus.more * 6
+    if ply:Horde_GetPerk("engineer_base") then
+        local class = dmginfo:GetInflictor():GetClass()
+        if  class == "npc_turret_floor" or class == "npc_vortigaunt" then
+            bonus.more = bonus.more * 6
+        end
     end
     bonus.increase = bonus.increase + 0.25
 end
@@ -41,6 +44,8 @@ PERK.Hooks.OnEntityCreated = function (ent)
                         ent:SetMaxHealth(500)
                     end
                 end
+            elseif ent:GetClass() == "npc_vortigaunt" then
+                ent:SetMaxHealth(650)
             end
             ent:SetMaxHealth(ent:GetMaxHealth() * 1.25)
             ent:SetHealth(ent:GetMaxHealth())

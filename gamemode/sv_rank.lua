@@ -7,6 +7,7 @@ end
 
 function HORDE:SaveSkullTokens(ply)
 	if GetConVar("horde_enable_sandbox"):GetInt() == 1 then return end
+	if not ply:IsValid() then return end
 	local path, strm
 
 	if not file.IsDir("horde/tokens", "DATA") then
@@ -23,6 +24,7 @@ end
 
 function HORDE:SaveRank(ply)
 	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
+	if not ply:IsValid() then return end
 	local path, strm
 
 	if not file.IsDir("horde/ranks", "DATA") then
@@ -42,6 +44,7 @@ function HORDE:SaveRank(ply)
 end
 
 function HORDE:LoadSkullTokens(ply)
+	if not ply:IsValid() then return end
 	local path, strm
 
 	if not file.IsDir("horde/tokens", "DATA") then
@@ -69,6 +72,7 @@ function HORDE:LoadSkullTokens(ply)
 end
 
 function HORDE:LoadRank(ply)
+	if not ply:IsValid() then return end
 	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
 	local path, strm
 

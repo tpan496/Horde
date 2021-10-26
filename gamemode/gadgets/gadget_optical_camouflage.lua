@@ -2,7 +2,7 @@ GADGET.PrintName = "Optical Camouflage"
 GADGET.Description = "Grants Camouflage for 5 seconds.\n50% increased evasion during Camouflage."
 GADGET.Icon = "items/gadgets/optical_camouflage.png"
 GADGET.Duration = 5
-GADGET.Cooldown = 25
+GADGET.Cooldown = 20
 GADGET.Active = true
 GADGET.Params = {
 }

@@ -20,6 +20,7 @@ LANGUAGE["Game_Difficulty_NORMAL"] = "NORMAL"
 LANGUAGE["Game_Difficulty_HARD"] = "DIFICIL"
 LANGUAGE["Game_Difficulty_REALISM"] = "REALISTA"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "PESADILLA"
+LANGUAGE["Game_Difficulty_APOCALYPSE"] = "Apocalipsis"
 LANGUAGE["Game_Enemies"] = "Enemigos"
 LANGUAGE["Game_HintBottomReady"] = "F3 - Tienda/Habilidades, F4 - Listo"
 LANGUAGE["Game_HintBottom"] = "F3 - Tienda/Habilidades, V - Soltar $"
@@ -177,7 +178,7 @@ La Clase Ghost se concentra en matar a jefes enemigos usando Camuflaje.
 Dificultad: ALTA
 {1} mas daño a la cabeza.
 Agachate para activar Camuflaje, dando un {2} de evasion.
-Atacar, Correr o Saltar REMUEVE Camuflaje.]]
+Atacar o Correr REMUEVE Camuflaje.]]
 
 LANGUAGE.Perk_engineer_base = [[
 La Clase Ingeniero es una clase que se concentra en hacer daño con estructuras a su favor.

@@ -1,7 +1,7 @@
 if not ArcCWInstalled then return end
 if CLIENT then
-    SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_go_awp")
-    killicon.Add("arccw_horde_barret", "arccw/weaponicons/arccw_go_awp", Color(0, 0, 0, 255))
+    SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_horde_barret")
+    killicon.Add("arccw_horde_barret", "arccw/weaponicons/arccw_horde_barret", Color(0, 0, 0, 255))
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = false

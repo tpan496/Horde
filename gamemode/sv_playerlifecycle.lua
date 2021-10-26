@@ -443,7 +443,11 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
     -- Remove all the entities he owns
     if HORDE.player_drop_entities[ply:SteamID()] then
         for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-            if ent:IsValid() then ent:Remove() end
+            if ent:IsValid() then
+                ent.Horde_Minion_Respawn = nil
+                timer.Remove("Horde_ManhackRespawn" .. ent:GetCreationID())
+                ent:Remove()
+            end
         end
     end
 

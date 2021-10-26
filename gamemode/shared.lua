@@ -136,3 +136,13 @@ function GM:ShouldCollide(ent1, ent2)
 
     return true
 end
+--[[
+function GM:SetupWorldFog()
+	render.FogMode(1)
+	render.FogStart(500)
+	render.FogEnd(1000)
+	render.FogMaxDensity(1)
+	--local col = self:GetFogColor()
+	render.FogColor(150,150,150)
+	return true
+end]]--
