@@ -54,7 +54,7 @@
 //       WAVE LOGIC      //
 ///////////////////////////
 
-@PointClass base(Targetname) = logic_waves : "Horde: Monitors/Controls wave information."
+@PointClass base(Targetname) = logic_horde_waves : "Horde: Monitors/Controls wave information."
 [
 	// Keys
 	wave(integer) : "Wave" : 1 : "Any On* outputs will watch for this wave. Use -1 for all waves."
@@ -78,7 +78,7 @@
 
 // You only need to place ONE such entity in your map.
 // To use default values, leave them as 0 or empty.
-@PointClass base(Targetname) = logic_economy : "Horde: Controls global game economy."
+@PointClass base(Targetname) = logic_horde_economy : "Horde: Controls global game economy."
 [
 	// Keys
 	startingmoney(integer) : "Starting Money" : 0 : "The amount of money to start with."
