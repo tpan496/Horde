@@ -64,7 +64,7 @@
 	input endwave(void)         : "Ends the current wave."
 	input setwave(integer)      : "Sets the wave to the number specified."
 	input setwaves(integer)     : "Sets the total amount of waves to the number specified."
-	input setwavestart(integer) : "Ends the wave and sets the break time to this value."
+	input setwavestart(integer) : "Ends the wave and sets the break time to the number specified. i.e. Setting the time for the next wave to start."
 	input setwaveend(integer)   : "Not yet implemented."
 
 	// Outputs
