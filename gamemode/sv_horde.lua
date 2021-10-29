@@ -83,7 +83,7 @@ hook.Add("InitPostEntity", "Horde_Init", function()
     end
 
     -- Load economy
-    for _, ent in pairs(ents.FindByClass("logic_economy")) do
+    for _, ent in pairs(ents.FindByClass("logic_horde_economy")) do
         ent:KeyValue("startingmoney", ent:GetInternalVariable("startingmoney"))
         ent:KeyValue("killrewardbase", ent:GetInternalVariable("killrewardbase"))
         ent:KeyValue("roundbonusbase", ent:GetInternalVariable("roundbonusbase"))
@@ -898,7 +898,7 @@ function HORDE:WaveStart()
         net.Broadcast()
     end
 
-    for _, ent in pairs(ents.FindByClass("logic_waves")) do
+    for _, ent in pairs(ents.FindByClass("logic_horde_waves")) do
         if ent.Wave == HORDE.current_wave or ent.Wave == -1 then
             ent:Input("onwavestart", ent, ent, HORDE.current_wave)
         end
@@ -1012,7 +1012,7 @@ function HORDE:WaveEnd()
         net.Broadcast()
     end
 
-    for _, ent in pairs(ents.FindByClass("logic_waves")) do
+    for _, ent in pairs(ents.FindByClass("logic_horde_waves")) do
         if ent.Wave == HORDE.current_wave or ent.Wave == -1 then
             ent:Input("onwaveend", ent, ent, HORDE.current_wave)
         end
