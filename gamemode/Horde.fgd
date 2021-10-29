@@ -77,6 +77,7 @@
 ///////////////////////////
 
 // You only need to place ONE such entity in your map.
+// To use default values, leave them as 0 or empty.
 @PointClass base(Targetname) = logic_economy : "Horde: Controls global game economy."
 [
 	// Keys
