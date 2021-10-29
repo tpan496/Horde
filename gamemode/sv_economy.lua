@@ -133,7 +133,7 @@ end
 
 function plymeta:Horde_AddWeight(weight)
     if not self:IsValid() then return end
-    self.Horde_weight = self.Horde_weight + weight
+    self.Horde_weight = (self.Horde_weight or 0) + weight
 end
 
 function plymeta:Horde_AddSkullTokens(tokens)
@@ -230,6 +230,16 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
         local item = HORDE.items[ply:Horde_GetGadget()]
         if item then
             ply:Horde_AddWeight(-item.weight)
+        end
+    end
+    if HORDE.player_drop_entities[ply:SteamID()] then
+        for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+            if ent:IsValid() then
+                local item = HORDE.items[ent:GetClass()]
+                if item then
+                    ply:Horde_AddWeight(-item.weight)
+                end
+            end
         end
     end
     ply:Horde_SyncEconomy()
@@ -367,19 +377,24 @@ net.Receive("Horde_BuyItem", function (len, ply)
 
                 if ent:IsNPC() then
                     -- Minions have no player collsion
-                    ent:AddRelationship("player D_LI 99")
-                    ent:AddRelationship("ally D_LI 99")
-                    if HORDE.items["npc_vortigaunt"] then
-                        ent:AddRelationship("npc_vortigaunt D_LI 99")
-                    end
-                    if HORDE.items["npc_turret_floor"] then
-                        ent:AddRelationship("npc_turret_floor D_LI 99")
-                    end
-                    if HORDE.items["npc_manhack"] then
-                        ent:AddRelationship("npc_manhack D_LI 99")
-                    end
-
-                    ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
+                    timer.Simple(0.1, function ()
+                        ent:AddRelationship("player D_LI 99")
+                        ent:AddRelationship("ally D_LI 99")
+                        if HORDE.items["npc_vj_horde_vortigaunt"] then
+                            ent:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
+                        end
+                        if HORDE.items["npc_vj_horde_combat_bot"] then
+                            ent:AddRelationship("npc_vj_horde_combat_bot D_LI 99")
+                        end
+                        if HORDE.items["npc_turret_floor"] then
+                            ent:AddRelationship("npc_turret_floor D_LI 99")
+                        end
+                        if HORDE.items["npc_manhack"] then
+                            ent:AddRelationship("npc_manhack D_LI 99")
+                        end
+    
+                        ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
+                    end)
                     local npc_info = list.Get("NPC")[ent:GetClass()]
                     if not npc_info then
                         print("[HORDE] NPC does not exist in ", list.Get("NPC"))
@@ -393,28 +408,12 @@ net.Receive("Horde_BuyItem", function (len, ply)
 
                     -- Special case for turrets
                     local id = ent:GetCreationID()
-                    if ent:GetClass() == "npc_turret_floor" or ent:GetClass() == "npc_vortigaunt" then
+                    if ent:GetClass() == "npc_turret_floor" then
                         ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
-                        if ent:GetClass() == "npc_vortigaunt" then
-                            ent:Fire("enablearmorrecharge", "", 0)
-                            timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
-                                if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
-                                ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
-                            end)
-
-                            timer.Create("Horde_VortigauntFollow" .. id, 8, 0, function ()
-                                if not ent:IsValid() then timer.Remove("Horde_VortigauntFollow" .. id) return end
-                                if ply:IsValid() and ply:GetPos():DistToSqr(ent:GetPos()) > 400000 then
-                                    ent:SetLastPosition(ply:GetPos())
-                                    ent:SetSchedule(SCHED_FORCED_GO_RUN)
-                                end
-                            end)
-                        else
-                            timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
-                                if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
-                                ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
-                            end)
-                        end
+                        timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
+                            if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+                            ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+                        end)
                         HORDE:DropTurret(ent)
                     else
                         ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
@@ -480,7 +479,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 ply:Horde_AddMoney(-price)
                 ply:Horde_AddSkullTokens(-skull_tokens)
                 ply:Horde_SyncEconomy()
-                if item.class == "armor100" then
+                if item.class == "armor100" or item.class == "armor150" then
                     ply.Horde_Special_Armor = nil
                 else
                     ply.Horde_Special_Armor = item.class
@@ -580,10 +579,19 @@ net.Receive("Horde_SellItem", function (len, ply)
                 ply:Horde_AddMoney(math.floor(0.25 * item.price * drop_entities[class]))
                 -- Remove all the drop entiies of this player
                 for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-                    if ent:GetClass() == class then
+                    if ent:IsValid() and ent:GetClass() == class then
                         ent.Horde_Minion_Respawn = nil
                         timer.Remove("Horde_ManhackRespawn" .. ent:GetCreationID())
                         ent:Remove()
+                        if not ent:IsNPC() then
+                            if ply.Horde_drop_entities and ply.Horde_drop_entities[class] then
+                                ply.Horde_drop_entities[class] = ply.Horde_drop_entities[class] - 1
+                                if ply.Horde_drop_entities[class] == 0 then
+                                    ply.Horde_drop_entities[class] = nil
+                                end
+                            end
+                            ply:Horde_AddWeight(item.weight)
+                        end
                     end
                 end
                 ply:Horde_SyncEconomy()
@@ -621,15 +629,17 @@ net.Receive("Horde_SelectClass", function (len, ply)
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
-    ply:Horde_SetMinionCount(0)
 
     -- Remove all entities
     if HORDE.player_drop_entities[ply:SteamID()] then
         for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-            if ent:IsValid() then ent:Remove() end
+            if ent:IsValid() then
+                ent:Remove()
+            end
         end
     end
     HORDE.player_drop_entities[ply:SteamID()] = {}
+    ply:Horde_SetMinionCount(0)
 
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
@@ -642,7 +652,6 @@ net.Receive("Horde_SelectClass", function (len, ply)
         ply.Horde_Special_Armor = nil
     end
     ply:Horde_UnsetGadget()
-    ply:Horde_SyncEconomy()
     ply:SetMaxHealth(class.max_hp)
     net.Start("Horde_ToggleShop")
     net.Send(ply)

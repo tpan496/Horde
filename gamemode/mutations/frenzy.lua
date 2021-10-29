@@ -5,14 +5,13 @@ MUTATION.Hooks = {}
 
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "frenzy" then
-        if CLIENT then
+        ent.Horde_Mutation_Frenzy = true
+        if SERVER then
             local e = EffectData()
                 e:SetOrigin(ent:GetPos())
                 e:SetEntity(ent)
             util.Effect("frenzy", e)
-        end
 
-        if SERVER then
             if ent.AnimationPlaybackRate then
                 ent.AnimationPlaybackRate = ent.AnimationPlaybackRate * 1.5
             else
@@ -20,4 +19,14 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
             end
         end
     end
+end
+
+MUTATION.Hooks.Horde_OnUnsetMutation = function (ent, mutation)
+    if not ent:IsValid() or mutation ~= "frenzy" then return end
+    if ent.AnimationPlaybackRate then
+        ent.AnimationPlaybackRate = ent.AnimationPlaybackRate / 1.5
+    else
+        ent:SetPlaybackRate(ent:GetPlaybackRate() / 1.5)
+    end
+    ent.Horde_Mutation_Frenzy = nil
 end

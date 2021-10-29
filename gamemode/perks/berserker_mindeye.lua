@@ -3,7 +3,7 @@ PERK.Description = "Each melee attack increases Mind's Eye stack by 1, up to {1}
 PERK.Icon = "materials/perks/mindeye.png"
 PERK.Params = {
     [1] = {value = 5},
-    [2] = {value = 0.15, percent = true},
+    [2] = {value = 0.10, percent = true},
     [3] = {value = 0.10, percent = true},
 }
 

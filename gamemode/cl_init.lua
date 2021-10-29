@@ -11,6 +11,7 @@ include("sh_perk.lua")
 include("sh_maps.lua")
 include("sh_custom.lua")
 include("sh_rank.lua")
+include("sh_sync.lua")
 include("cl_economy.lua")
 include("gui/cl_gameinfo.lua")
 include("gui/cl_status.lua")
@@ -125,6 +126,7 @@ function HORDE:ToggleConfigMenu()
 end
 
 -- Entity Highlights
+HORDE.Player_Looking_At_Minion = nil
 if GetConVarNumber("horde_enable_halo") == 1 then
     hook.Add("PreDrawHalos", "Horde_AddMinionHalos", function()
         local ent = util.TraceLine(util.GetPlayerTrace(LocalPlayer())).Entity
@@ -132,7 +134,10 @@ if GetConVarNumber("horde_enable_halo") == 1 then
             if ent:GetNWEntity("HordeOwner") and ent:GetNWEntity("HordeOwner") == LocalPlayer() then
                 -- Do not highlight minions if they do not belong to you
                 halo.Add({ent}, Color(0, 255, 0), 1, 1, 1, true, true)
+                HORDE.Player_Looking_At_Minion = ent
             end
+        else
+            HORDE.Player_Looking_At_Minion = nil
         end
     end)
 end

@@ -36,6 +36,7 @@ function HORDE:SpawnManhack(ply)
     if not ply:IsValid() then return end
     local class = "npc_manhack"
     local item = HORDE.items[class]
+    if not item.whitelist[ply:Horde_GetClass().name] then return end
     local ent = ents.Create(class)
     local pos = ply:GetPos()
     local dis = VectorRand()
@@ -47,19 +48,14 @@ function HORDE:SpawnManhack(ply)
     ent:Spawn()
     ent:SetMaxHealth(100)
     -- Minions have no player collsion
-    ent:AddRelationship("player D_LI 99")
-    if HORDE.items["npc_vortigaunt"] then
-        ent:AddRelationship("npc_vortigaunt D_LI 99")
-    end
-
-    if HORDE.items["npc_turret_floor"] then
+    timer.Simple(0.1, function ()
+        ent:AddRelationship("player D_LI 99")
+        ent:AddRelationship("ally D_LI 99")
+        ent:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
+        ent:AddRelationship("npc_vj_horde_combat_bot D_LI 99")
         ent:AddRelationship("npc_turret_floor D_LI 99")
-    end
-
-    if HORDE.items["npc_manhack"] then
-        ent:AddRelationship("npc_manhack D_LI 99")
-    end
-
+        ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
+    end)
     ent:SetOwner(ply)
     ent.Horde_Minion_Respawn = true
     local id = ent:GetCreationID()
@@ -81,6 +77,10 @@ function HORDE:SpawnManhack(ply)
         if ent.Horde_Minion_Respawn then
             timer.Remove("Horde_ManhackRespawn" .. id)
             local drop_ents = ply:Horde_GetDropEntities()
+            if not drop_pos then
+                return
+            end
+            if not item.whitelist[ply:Horde_GetClass().name] then return end
             local count = drop_ents[class]
             if (!count) or (count and count <= item.entity_properties.limit) then
                 timer.Create("Horde_ManhackRespawn" .. id, 4, 1, function ()

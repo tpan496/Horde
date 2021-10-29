@@ -8,6 +8,7 @@ end
 -- Instable pulse
 function EFFECT:Think()
     if not self.entity or not self.entity:IsValid() then return true end
+    if not self.entity.Horde_Mutation_Nemesis then return false end
     local pos = self.entity:GetPos()
     pos.z = pos.z + self.height / 2
 

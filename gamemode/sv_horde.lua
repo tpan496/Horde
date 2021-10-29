@@ -6,7 +6,7 @@ util.AddNetworkString("Horde_GameEnd")
 local horde_players_count = 0
 local horde_spawned_ammoboxes = {}
 local horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
-local horde_in_break = false
+local horde_in_break = nil
 local horde_perk_progress = 1
 local horde_current_enemies_list = {}
 local horde_use_strong_mutation = nil
@@ -80,6 +80,13 @@ hook.Add("InitPostEntity", "Horde_Init", function()
         HORDE.spawn_distribution = HORDE.SPAWN_UNIFORM
     elseif not table.IsEmpty(ents.FindByClass("info_horde_spawn_distribution_proximity_noisy")) then
         HORDE.spawn_distribution = HORDE.SPAWN_PROXIMITY_NOISY
+    end
+
+    -- Load economy
+    for _, ent in pairs(ents.FindByClass("logic_economy")) do
+        ent:KeyValue("startingmoney", ent:GetInternalVariable("startingmoney"))
+        ent:KeyValue("killrewardbase", ent:GetInternalVariable("killrewardbase"))
+        ent:KeyValue("roundbonusbase", ent:GetInternalVariable("roundbonusbase"))
     end
 end)
 
@@ -178,10 +185,6 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             horde_boss_properties = nil
             if boss_properties.end_wave and boss_properties.end_wave == true then
                 HORDE:WaveEnd()
-            end
-            timer.Remove("Horde_BossMusic")
-            if boss_music_loop then
-                boss_music_loop:Stop()
             end
 
             -- Boss reward is global.
@@ -300,7 +303,7 @@ function HORDE:HardResetDirector()
     HORDE.alive_enemies_this_wave = 0
     HORDE.current_wave = 0
     HORDE.current_break_time = HORDE.total_break_time
-    horde_in_break = false
+    horde_in_break = nil
     horde_boss_spawned = false
     HORDE.horde_boss = nil
     horde_boss_properties = nil
@@ -780,10 +783,14 @@ function HORDE:StartBreak()
                 net.WriteUInt(HORDE.current_wave, 16)
             net.Broadcast()
             HORDE:BroadcastBreakCountDownMessage(0, false)
-            horde_in_break = false
+            horde_in_break = nil
             timer.Remove("Horder_Counter")
         end
     end)
+end
+
+function HORDE:InBreak()
+    return horde_in_break
 end
 
 -- Starts a wave.
@@ -890,14 +897,25 @@ function HORDE:WaveStart()
         net.WriteUInt(0, 3)
         net.Broadcast()
     end
+
+    for _, ent in pairs(ents.FindByClass("logic_waves")) do
+        if ent.Wave == HORDE.current_wave or ent.Wave == -1 then
+            ent:Input("onwavestart", ent, ent, HORDE.current_wave)
+        end
+    end
 end
 
 -- Ends a wave.
 function HORDE:WaveEnd()
+    timer.Remove("Horde_BossMusic")
+    if boss_music_loop then
+        boss_music_loop:Stop()
+    end
+
     HORDE.current_break_time = HORDE.total_break_time
     HORDE.horde_boss = nil
     HORDE.horde_boss_name = nil
-    horde_in_break = false
+    horde_in_break = nil
     horde_boss_spawned = false
     horde_boss_properties = nil
     horde_boss_reposition = false
@@ -992,6 +1010,12 @@ function HORDE:WaveEnd()
         net.WriteUInt(HORDE.Status_CanBuy, 8)
         net.WriteUInt(1, 3)
         net.Broadcast()
+    end
+
+    for _, ent in pairs(ents.FindByClass("logic_waves")) do
+        if ent.Wave == HORDE.current_wave or ent.Wave == -1 then
+            ent:Input("onwaveend", ent, ent, HORDE.current_wave)
+        end
     end
 end
 

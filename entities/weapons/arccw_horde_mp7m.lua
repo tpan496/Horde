@@ -403,7 +403,7 @@ sound.Add({
     sound = "arccw_go/mp7/mp7_cliphit.wav"
 })
 
-function SWEP:Bash()
+function SWEP:ChangeFiremode(pred)
     if self:GetNextSecondaryFire() > CurTime() then return end
     if !self.CanBash and !self:GetBuff_Override("Override_CanBash") then return end
     if CLIENT then return end

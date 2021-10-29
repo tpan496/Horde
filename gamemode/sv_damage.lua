@@ -70,7 +70,7 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
         dmg:SetDamageType(DMG_PLASMA)
         dmg:SetDamage(dmginfo:GetDamage())
         dmg:SetDamageCustom(HORDE.DMG_SPLASH)
-        util.BlastDamageInfo(dmg, dmginfo:GetDamagePosition(), 225)
+        util.BlastDamageInfo(dmg, dmginfo:GetDamagePosition(), 250)
     end
 
     -- Play sound
@@ -101,7 +101,6 @@ hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginf
         end
         if dmginfo:GetAttacker():IsPlayer() then
             HORDE:ApplyDamage(target, HITGROUP_GENERIC, dmginfo)
-            print(dmginfo, dmginfo:GetDamageType())
         end
     end
 end)
@@ -123,6 +122,8 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     
     -- Prevent minion from damaging players
     if dmg:GetInflictor():GetNWEntity("HordeOwner"):IsPlayer() then return true end
+    
+    if dmg:GetDamage() <= 0.5 then return true end
 
     -- Apply bonus
     local bonus = {resistance=0, less=1, evasion=0, block=0}
@@ -178,6 +179,14 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     dmg:ScaleDamage(bonus.less * (1 - bonus.resistance))
     dmg:SubtractDamage(bonus.block)
 
+    if dmg:GetDamage() <= 0.5 then return true end
+end)
+
+hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function (target, dmg)
+    if not target:IsValid() or not target:IsNPC() then return end
+    if not target:GetNWEntity("HordeOwner"):IsPlayer() then return end
+    if dmg:GetAttacker():IsPlayer() and (dmg:GetInflictor() == dmg:GetAttacker()) then return true end
+    hook.Run("Horde_OnMinionDamageTaken", target, dmg)
     if dmg:GetDamage() <= 0.5 then return true end
 end)
 

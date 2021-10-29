@@ -29,7 +29,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         })
     end
 
-    if tr.Hit and IsValid(tr.Entity) and ((tr.Entity:IsNPC() and not (ply.Horde_Healing_Target:GetNWEntity("HordeOwner"):IsValid())) || tr.Entity:IsPlayer()) and tr.Entity:Health() > 0 then
+    if tr.Hit and IsValid(tr.Entity) and ((tr.Entity:IsNPC() and not (ply.Horde_Healing_Target and ply.Horde_Healing_Target:GetNWEntity("HordeOwner"):IsValid())) || tr.Entity:IsPlayer()) and tr.Entity:Health() > 0 then
         if SERVER then
             if ply.Horde_Healing_Target and ply.Horde_Healing_Target ~= tr.Entity then
                 if ply.Horde_Healing_Beam and ply.Horde_Healing_BeamTarget and ply.Horde_Healing_Beam:IsValid() and ply.Horde_Healing_BeamTarget:IsValid() then
@@ -103,7 +103,7 @@ GADGET.Hooks.Horde_OnSetGadget = function (ply, gadget)
             local healinfo = HealInfo:New({amount=1, healer=ply})
             HORDE:OnPlayerHeal(ply.Horde_Healing_Target, healinfo)
         end
-        if ply:GetPos():DistToSqr(ply.Horde_Healing_Target:GetPos()) > 160000 then
+        if ply:GetPos():DistToSqr(ply.Horde_Healing_Target:GetPos()) > 250000 then
             ply.Horde_Healing_Target = nil
         end
     end)

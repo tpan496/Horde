@@ -9,7 +9,7 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "warden_restock" then
         for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()])  do
-            if ent:GetClass() == "horde_watchtower" then
+            if HORDE:IsWatchTower(ent) then
                 ent.Horde_ThinkInterval = 15
             end
         end
@@ -19,7 +19,7 @@ end
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "warden_restock" then
         for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()])  do
-            if ent:GetClass() == "horde_watchtower" then
+            if HORDE:IsWatchTower(ent) then
                 ent.Horde_ThinkInterval = 30
             end
         end

@@ -162,7 +162,7 @@ function HORDE:GetDefaultGadgets()
 
     HORDE:CreateGadgetItem("gadget_displacer", 2000, 1, {Engineer=true}, {Engineer=5})
     HORDE:CreateGadgetItem("gadget_turret_pack", 2500, 3, {Engineer=true}, {Engineer=10})
-    HORDE:CreateGadgetItem("gadget_e_parasite", 2500, 3, {Engineer=true}, {Engineer=15})
+    HORDE:CreateGadgetItem("gadget_e_parasite", 2750, 2, {Engineer=true}, {Engineer=15})
 
     HORDE:CreateGadgetItem("gadget_berserk_armor", 2500, 2, {Berserker=true}, {Berserker=5})
     HORDE:CreateGadgetItem("gadget_flash", 2500, 2, {Berserker=true}, {Berserker=10})
@@ -189,10 +189,10 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Melee",      "Katana",         "arccw_horde_katana",  2000,  4, "Ninja sword.\nLong attack range and fast attack speed.",
     {Survivor=true, Berserker=true}, 10, -1)
     HORDE:CreateItem("Melee",      "Bat",            "arccw_horde_bat",     2000,  4, "Sturdy baseball bat.\nHits like a truck.",
-    {Survivor=true, Berserker=true}, 10, -1, nil, nil, {Berserker=1})
+    {Survivor=true, Berserker=true}, 10, -1)
     HORDE:CreateItem("Melee",      "Chainsaw",       "arccw_horde_chainsaw", 2500, 8, "Brrrrrrrrrrrrrrrr.\n\nHold RMB to saw through enemies.",
-    {Berserker=true}, 10, -1, nil, nil, {Berserker=3})
-    HORDE:CreateItem("Melee",      "Mjolnir",        "arccw_horde_mjolnir",  3000, 8, "A warhammer embued with concentrated electric energy.\nRight click to unleash an EMP thunderstorm around you.",
+    {Berserker=true}, 10, -1, nil, nil, {Berserker=2})
+    HORDE:CreateItem("Melee",      "Mjollnir",        "arccw_horde_mjollnir",  3000, 8, "A warhammer embued with electric energy.\nPress RMB to charge the weapon.\nCharged Mjollnir creates a lightning explosion on impact.",
     {Berserker=true}, 10, -1, nil, nil, {Berserker=3})
 
     HORDE:CreateItem("Pistol",     "9mm",            "weapon_pistol",     150,  0, "Combine standard sidearm.",
@@ -251,13 +251,13 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Shotgun",    "Pump-Action",    "weapon_shotgun",    1000, 4, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 10, -1)
-    HORDE:CreateItem("Shotgun",    "Nova",           "arccw_go_nova",     1500, 5, "Benelli Nova.\nItalian pump-action 12-gauge shotgun.",
+    HORDE:CreateItem("Shotgun",    "Nova",           "arccw_go_nova",     1500, 4, "Benelli Nova.\nItalian pump-action 12-gauge shotgun.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1)
-    HORDE:CreateItem("Shotgun",    "M870",           "arccw_go_870",      1500, 5, "Remington 870 Shotgun.\nManufactured in the United States.",
+    HORDE:CreateItem("Shotgun",    "M870",           "arccw_go_870",      1500, 4, "Remington 870 Shotgun.\nManufactured in the United States.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, {Engineer=1})
-    HORDE:CreateItem("Shotgun",    "MAG7",           "arccw_go_mag7",     1500, 5, "Techno Arms MAG-7.\nFires a specialized 60mm 12 gauge shell.",
+    HORDE:CreateItem("Shotgun",    "MAG7",           "arccw_go_mag7",     1500, 4, "Techno Arms MAG-7.\nFires a specialized 60mm 12 gauge shell.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1)
-    HORDE:CreateItem("Shotgun",    "XM1014",         "arccw_go_m1014",    2000, 6, "Benelli M4 Super 90.\nFully automatic shotgun.",
+    HORDE:CreateItem("Shotgun",    "XM1014",         "arccw_go_m1014",    2000, 5, "Benelli M4 Super 90.\nFully automatic shotgun.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1)
     HORDE:CreateItem("Shotgun",    "Double Barrel",  "arccw_horde_doublebarrel",    2000, 5, "Double Barrel Shotgun.\nDevastating power at close range.",
     {Survivor=true, Warden=true}, 10, -1)
@@ -344,28 +344,32 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Explosive",  "Molotov",   "arccw_horde_nade_molotov",        1500,   2, "Generates a pool of fire on impact.\nSets everything on fire within its effect.",
     {Cremator=true}, 100, -1, nil, nil, {Cremator=2})
     HORDE:CreateItem("Explosive",  "Incendiary Launcher",  "arccw_horde_incendiary_launcher", 3000,  8, "Incendiary Grenade Launcher.\nShoots incendiary grenades the erupt into flames on impact.",
-    {Cremator=true}, 50, -1, nil, nil, {Cremator=3})
+    {Cremator=true}, 50, -1)
 
     --HORDE:CreateItem("Special",    "Combine AR2",    "weapon_ar2",         2250, 7, "Overwatch standard issue rifle.\nDark energy-powered assault rifle.",
     --{Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 5, 100)
     HORDE:CreateItem("Special",    "Heat Crossbow",  "weapon_crossbow",     800,  4, "Improvised sniper weapon.\nShoots scorching rebars.",
     {Ghost=true, Engineer=true, Cremator=true}, 2, -1)
-    HORDE:CreateItem("Special",    "Turret",         "npc_turret_floor",    900,  4, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
-    {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/npc_turret_floor.png")
-    HORDE:CreateItem("Special",    "Manhack",        "npc_manhack",         900,  4, "Manhack that regenerates on death.\nManhack deals its health as damage to enemies.\nManhack dies on impact.",
+    HORDE:CreateItem("Special",    "Manhack",        "npc_manhack",          900,  4, "Manhack that regenerates on death.\nManhack deals its health as damage to enemies.\nManhack dies on impact.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/npc_manhack.png")
-    HORDE:CreateItem("Special",    "Vortigaunt",     "npc_vortigaunt",     2000,  6, "Xen Vortigaunts that can conjure concentrated shock energy blasts.\nThe energy blasts have long range and deal splash damage.",
+    HORDE:CreateItem("Special",    "Turret",         "npc_turret_floor",    1000,  4, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
+    {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/npc_turret_floor.png")
+    HORDE:CreateItem("Special",    "Vortigaunt",     "npc_vj_horde_vortigaunt",  1500,  5, "Xen Vortigaunts that can conjure concentrated shock energy blasts.\nThe energy blasts have long range and deal splash damage.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_vortigaunt.png")
-    HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   3000, 10, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
+    HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   2500, 8, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_combat_bot.png")
     HORDE:CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,  1, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
     {Medic=true}, 100, -1, nil, "items/arccw_nade_medic.png")
     HORDE:CreateItem("Special",    "Throwing Knives", "arccw_go_nade_knife",800,  2, "Ranged throwing knives.\nThrown blades are retrievable.",
-    {Berserker=true}, 10, -1, nil, nil, {Berserker=2})
-    HORDE:CreateItem("Special",    "Watchtower",      "horde_watchtower",     800,  0, "A watchtower that provides resupply.\nGenerates 1 ammobox every 30 seconds.\n(Entity Class: horde_watchtower)",
+    {Berserker=true}, 10, -1, nil, nil, {Berserker=1})
+    HORDE:CreateItem("Special",    "Watchtower",      "horde_watchtower",       800,  1, "A watchtower that provides resupply.\nGenerates 1 ammobox every 30 seconds.\n(Entity Class: horde_watchtower)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png")
-    HORDE:CreateItem("Special",    "Gauss Gun",       "horde_gauss",         2500,  7, "A device that uses electromagnetism to accelerate projectiles.\nHold RMB to charge.",
-    {Cremator=true}, 50, -1)
+    HORDE:CreateItem("Special",    "Watchtower MKII",  "horde_watchtower_mk2", 1000,  2, "A watchtower that provides resupply.\nGenerates 1 health vial every 30 seconds.\n(Entity Class: horde_watchtower_mk2)",
+    {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png")
+    HORDE:CreateItem("Special",    "Watchtower MKIII",  "horde_watchtower_mk3",1500,  3, "A watchtower that deters enemies.\nShocks 1 nearby enemy every 1 second.\nDoes 100 shock damage.\n(Entity Class: horde_watchtower_mk3)",
+    {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png")
+    HORDE:CreateItem("Special",    "Tau Cannon",      "horde_tau",         2500,  7, "A device that uses electromagnetism to ionize particles.\nHold RMB to charge and release a powerful shot.\nDeals more damage as you charge.\nDevice explodes if you overcharge.",
+    {Cremator=true}, 3, -1, nil, nil, {Cremator=3})
     HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",            2500,  8, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
     {Cremator=true}, 50, -1)
     --[[HORDE:CreateItem("Special",    "Taser",           "arccw_go_taser",      1000,  1, "Taser.",
@@ -759,6 +763,10 @@ HORDE.GetArcCWAttachments = function ()
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
     HORDE:CreateItem("Attachment", "Frantic Firing Frenzy",  "go_perk_rapidfire",  200,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Perk"})
+end
+
+function HORDE:IsWatchTower(ent)
+    return ent:IsValid() and ent.Horde_WatchTower
 end
 
 -- Startup

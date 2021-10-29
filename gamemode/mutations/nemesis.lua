@@ -5,7 +5,8 @@ MUTATION.Hooks = {}
 
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "nemesis" then
-        if CLIENT then
+        ent.Horde_Mutation_Nemesis = true
+        if SERVER then
             local col_min, col_max = ent:GetCollisionBounds()
             local height = math.abs(col_min.z - col_max.z)
             local radius = col_max:Distance(col_min) / 2
@@ -35,4 +36,9 @@ MUTATION.Hooks.Horde_OnEnemyKilled = function(victim, killer, weapon)
 
         sound.Play("vj_acid/acid_splat.wav", victim:GetPos())
     end
+end
+
+MUTATION.Hooks.Horde_OnUnsetMutation = function (ent, mutation)
+    if not ent:IsValid() or mutation ~= "nemesis" then return end
+    ent.Horde_Mutation_Nemesis = nil
 end

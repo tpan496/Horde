@@ -6,14 +6,15 @@ MUTATION.Strong = true
 
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "decay" then
-        if CLIENT then
+        ent.Horde_Mutation_Decay = true
+        if SERVER then
             local col_min, col_max = ent:GetCollisionBounds()
             local radius = col_max:Distance(col_min) / 2
             local e = EffectData()
                 e:SetOrigin(ent:GetPos())
                 e:SetEntity(ent)
                 e:SetRadius(radius)
-            util.Effect("decay", e)
+            util.Effect("decay", e, true, true)
         end
     end
 end
@@ -37,4 +38,9 @@ MUTATION.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
             end
         end)
     end
+end
+
+MUTATION.Hooks.Horde_OnUnsetMutation = function (ent, mutation)
+    if not ent:IsValid() or mutation ~= "decay" then return end
+    ent.Horde_Mutation_Decay = nil
 end

@@ -2,7 +2,7 @@ GADGET.PrintName = "Displacer"
 GADGET.Description = "Instantly moves the targeted minion to your side."
 GADGET.Icon = "items/gadgets/displacer.png"
 GADGET.Duration = 0
-GADGET.Cooldown = 5
+GADGET.Cooldown = 2
 GADGET.Params = {
 }
 GADGET.Hooks = {}

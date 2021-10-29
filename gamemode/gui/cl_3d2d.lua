@@ -78,6 +78,35 @@ local function Render(bdepth, bskybox)
         ::cont::
     end
 
+    if HORDE.Player_Looking_At_Minion then
+        local npc = HORDE.Player_Looking_At_Minion
+        if not npc:IsValid() or npc:Health() <= 0 then return end
+        local base_pos = Vector()
+        base_pos = (npc:LocalToWorld(npc:OBBCenter()) + npc:GetUp() * 24)
+
+        local render_pos = base_pos
+
+        -- Distance fading
+        local render_mindist = 800
+        local render_maxdist = render_mindist + 80
+
+        local dist = (render_pos - EyePos()):Length()
+        local dist_clamped = math.Clamp(dist, render_mindist, render_maxdist)
+        local dist_alpha = math.Remap(dist_clamped, render_mindist, render_maxdist, 200, 0)
+
+        if dist_alpha == 0 then return end -- Nothing to render
+
+        -- Render ang
+        local render_ang = EyeAngles()
+        render_ang:RotateAroundAxis(render_ang:Right(),90)
+        render_ang:RotateAroundAxis(-render_ang:Up(),90)
+
+        cam.IgnoreZ(true)
+        cam.Start3D2D(render_pos, render_ang, 0.35)
+            draw.SimpleTextOutlined(tostring(npc:Health()) .. "/" .. tostring(npc:GetMaxHealth()), "DermaDefault", 0, 0, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0,0,0))
+        cam.End3D2D()
+        cam.IgnoreZ(false)
+    end
 end
 
 if GetConVar("horde_enable_3d2d_icon"):GetInt() == 1 then

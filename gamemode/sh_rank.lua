@@ -23,6 +23,10 @@ HORDE.Rank_Colors = {
     [HORDE.Rank_Master] = HORDE.color_crimson
 }
 
+function HORDE:ScrubSteamID(ply)
+	return ply:SteamID():gsub(":", "_")
+end
+
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_GetExp(class_name)

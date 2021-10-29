@@ -1,11 +1,34 @@
 PERK.PrintName = "Tinkerer"
-PERK.Description = "Minions have {1} more health on spawn."
+PERK.Description = "{1} more minion health."
 PERK.Icon = "materials/perks/tinkerer.png"
 PERK.Params = {
-    [1] = {value = 0.25, percent = true},
+    [1] = {value = 0.20, percent = true},
 }
 
 PERK.Hooks = {}
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
+    if SERVER and perk == "engineer_golem" then
+        if not HORDE.player_drop_entities[ply:SteamID()] then return end
+        for id, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+            if ent:IsNPC() then
+                ent:SetMaxHealth(ent:GetMaxHealth() * 1.2)
+                ent:SetHealth(ent:GetMaxHealth())
+            end
+        end
+    end
+end
+
+PERK.Hooks.Horde_OnUnSetPerk = function(ply, perk)
+    if SERVER and perk == "engineer_golem" then
+        if not HORDE.player_drop_entities[ply:SteamID()] then return end
+        for id, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+            if ent:IsNPC() then
+                ent:SetMaxHealth(ent:GetMaxHealth() / 1.2)
+                ent:SetHealth(ent:GetMaxHealth())
+            end
+        end
+    end
+end
 
 PERK.Hooks.OnEntityCreated = function (ent)
     if not ent:IsValid() then return end
@@ -13,7 +36,7 @@ PERK.Hooks.OnEntityCreated = function (ent)
     timer.Simple(0.1, function()
         local ply = ent:GetNWEntity("HordeOwner")
         if ply:IsPlayer() and ply:Horde_GetPerk("engineer_tinkerer") and ent:IsNPC() then
-            ent:SetMaxHealth(ent:GetMaxHealth() * 1.25)
+            ent:SetMaxHealth(ent:GetMaxHealth() * 1.2)
             ent:SetHealth(ent:GetMaxHealth())
         end
     end)
