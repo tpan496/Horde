@@ -7,7 +7,7 @@ The mark lasts for 10 seconds.
 You can only mark 1 enemy at a time.]]
 GADGET.Icon = "items/gadgets/death_mark.png"
 GADGET.Duration = 0
-GADGET.Cooldown = 3
+GADGET.Cooldown = 1
 GADGET.Active = true
 GADGET.Params = {
     [1] = {value = 0.15, percent = true},

@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/dog.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = 1800
+ENT.StartHealth = 1500
 ENT.SightDistance = 8000
 ENT.HullType = HULL_HUMAN
 ENT.MovementType = VJ_MOVETYPE_GROUND
@@ -41,14 +41,19 @@ ENT.MeleeAttackBleedEnemyChance = 1 -- How much chance there is that the enemy w
 ENT.MeleeAttackBleedEnemyDamage = 1 -- How much damage will the enemy get on every rep?
 ENT.MeleeAttackBleedEnemyTime = 1 -- How much time until the next rep?
 ENT.MeleeAttackBleedEnemyReps = 5 -- How many reps?
-ENT.MeleeAttackDamageType = DMG_CRUSH
+ENT.MeleeAttackDamageType = DMG_CLUB
+ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
+ENT.MeleeAttackKnockBack_Forward1 = 100 -- How far it will push you forward | First in math.random
+ENT.MeleeAttackKnockBack_Forward2 = 130 -- How far it will push you forward | Second in math.random
+ENT.MeleeAttackKnockBack_Up1 = 250 -- How far it will push you up | First in math.random
+ENT.MeleeAttackKnockBack_Up2 = 260 -- How far it will push you up | Second in math.random
 -- Miscellaneous ---------------------------------------------------------------------------------------------------------------------------------------------	
 ENT.AnimTbl_IdleStand = {ACT_IDLE} -- The idle animation when AI is enabled
 ENT.AnimTbl_Walk = {ACT_WALK} -- Set the walking animations | Put multiple to let the base pick a random animation when it moves
 ENT.AnimTbl_Run = {ACT_RUN} -- Set the running animations | Put multiple to let the base pick a random animation when it moves
 ENT.AnimTbl_MeleeAttack = {"throw"} -- Melee Attack Animations
 -- ====== Other Variables ====== --
-ENT.RunAwayOnUnknownDamage = true -- Should run away on damage
+ENT.RunAwayOnUnknownDamage = false -- Should run away on damage
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.RangeAttackEntityToSpawn = "obj_boulder" -- The entity that is spawned when range attacking
 	-- ====== Animation Variables ====== --
@@ -57,7 +62,7 @@ ENT.AnimTbl_RangeAttack = {"apc_throw"} -- Range Attack Animations
 ENT.TimeUntilRangeAttackProjectileRelease = 3.8 -- How much time until the projectile code is ran?
 ENT.RangeAttackPos_Up = 47
 ENT.RangeDistance = 2000 -- This is how far away it can shoot
-ENT.RangeToMeleeDistance = 350 -- How close does it have to be until it uses melee?
+ENT.RangeToMeleeDistance = 0 -- How close does it have to be until it uses melee?
 ENT.NextRangeAttackTime = 5 -- How much time until it can use a range attack?
 ENT.HasFootStepSound = true
 ENT.SoundTbl_FootStep = {"npc/dog/dog_footstep_run1.wav","npc/dog/dog_footstep_run2.wav","npc/dog/dog_footstep_run3.wav","npc/dog/dog_footstep_run4.wav","npc/dog/dog_footstep_run5.wav","npc/dog/dog_footstep_run6.wav","npc/dog/dog_footstep_run7.wav","npc/dog/dog_footstep_run8.wav"}

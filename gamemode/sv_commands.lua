@@ -267,6 +267,10 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         ply:Horde_DropMoney()
     elseif text == "!rtv" then
         HORDE.VoteChangeMap(ply)
+    elseif text == "!sync_to_local" then
+        HORDE:SyncToLocal(ply)
+    elseif text == "!sync_to_server" then
+        HORDE:SyncToServer(ply)
     end
 end)
 

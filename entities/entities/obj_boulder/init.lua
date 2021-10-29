@@ -9,7 +9,7 @@ ENT.Model = {"models/props_lab/bigrock.mdl"} -- The models it should spawn with 
 ENT.DoesRadiusDamage = true -- Should it do a blast damage when it hits something?
 ENT.RadiusDamageRadius = 175 -- How far the damage go? The farther away it's from its enemy, the less damage it will do | Counted in world units
 ENT.RadiusDamage = 300 -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
-ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the enemy is from the position that the projectile hit?
+ENT.RadiusDamageUseRealisticRadius = false -- Should the damage decrease the farther away the enemy is from the position that the projectile hit?
 ENT.RadiusDamageType = DMG_CLUB -- Damage type
 --ENT.DecalTbl_DeathDecals = {"BeerSplash"}
 --ENT.SoundTbl_Idle = {"npc/antlion/antlion_poisonball1.wav"}
@@ -21,10 +21,13 @@ ENT.OnCollideSoundPitch1 = 140
 --------------------------------------------------------------------------------------
 function ENT:CustomPhysicsObjectOnInitialize(phys)
 	phys:Wake()
-	//phys:SetMass(1)
+	--phys:SetMass(1)
 	phys:SetBuoyancyRatio(0)
 	phys:EnableDrag(false)
-	phys:EnableGravity(false)
+	--phys:EnableGravity(true)
+	timer.Simple(10, function ()
+		if self:IsValid() then self:Remove() end
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()

@@ -18,6 +18,7 @@ function ENT:Initialize()
     self.Horde_EnableShockwave = nil
     self.Horde_NextShockWave = CurTime()
     self.Horde_ShockwaveInterval = 2
+    self.Horde_WatchTower = true
 
     if self.Horde_Owner:Horde_GetPerk("warden_restock") then
         self.Horde_ThinkInterval = 15

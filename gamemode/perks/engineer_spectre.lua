@@ -1,5 +1,5 @@
 PERK.PrintName = "Spectre"
-PERK.Description = "Minions leech {1} of damage dealt.\nMinions deal {2} more damage."
+PERK.Description = "Minions leech {1} of damage dealt.\n{2} more minion damage."
 PERK.Icon = "materials/perks/spectre.png"
 PERK.Params = {
     [1] = {value = 0.10, percent = true},

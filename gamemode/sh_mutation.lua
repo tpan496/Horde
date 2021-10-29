@@ -5,6 +5,7 @@
 if SERVER then
 util.AddNetworkString("Horde_SyncMutations")
 util.AddNetworkString("Horde_OnSetMutationEffect")
+util.AddNetworkString("Horde_OnUnsetMutationEffect")
 end
 
 local entmeta = FindMetaTable("Entity")
@@ -13,8 +14,27 @@ function entmeta:Horde_GetMutation()
     return self.Horde_Mutation
 end
 
+function entmeta:Horde_UnsetMutation()
+    if not self.Horde_Mutation then return end
+    hook.Run("Horde_OnUnsetMutation", self, self.Horde_Mutation)
+    if SERVER then
+        net.Start("Horde_OnUnsetMutationEffect")
+            net.WriteEntity(self)
+        net.Broadcast()
+    end
+    self.Horde_Mutation = nil
+end
+
 function entmeta:Horde_SetMutation(mutation)
+    if not mutation or mutation == "" then return end
+    if SERVER then
+        if self.Horde_Mutation then
+            self:Horde_UnsetMutation()
+        end
+    end
+
     self.Horde_Mutation = mutation
+
     hook.Run("Horde_OnSetMutation", self, mutation)
     if SERVER then
         net.Start("Horde_OnSetMutationEffect")
@@ -31,13 +51,18 @@ net.Receive("Horde_OnSetMutationEffect", function()
     if not ent:IsValid() then return end
     ent:Horde_SetMutation(mut)
 end)
+net.Receive("Horde_OnUnsetMutationEffect", function()
+    local ent = net.ReadEntity()
+    if not ent:IsValid() then return end
+    ent:Horde_UnsetMutation()
+end)
 end
 
 -- Remove mutations when enemies are dead
 hook.Add("EntityRemoved", "Horde_UnsetMutationOnEntityRemoved", function(ent)
     if CLIENT then return end
     if ent:IsNPC() and ent:Horde_GetMostRecentAttacker() then
-        hook.Run("Horde_OnUnsetMutation", ent)
+        --hook.Run("Horde_OnUnsetMutation", ent, ent.Horde_Mutation)
     end
 end)
 

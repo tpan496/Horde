@@ -61,7 +61,7 @@ function plymeta:Horde_GetEnableWardenAuraBuffBonus()
 end
 
 function plymeta:Horde_AddWardenAuraEffects(provider)
-    if provider:GetClass() == "horde_watchtower" then
+    if HORDE:IsWatchTower(provider) then
         self.Horde_WardenAuraProvider = provider:GetNWEntity("HordeOwner")
     else
         self.Horde_WardenAuraProvider = provider
@@ -88,6 +88,9 @@ function plymeta:Horde_RemoveWardenAuraEffects()
         net.WriteUInt(HORDE.Status_WardenAura, 8)
         net.WriteUInt(0, 3)
     net.Send(self)
+    if self.Horde_WardenAura then
+        self:Horde_AddWardenAuraEffects(self)
+    end
 end
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_WardenAuraDamageTaken", function(ply, dmginfo, bonus)

@@ -375,7 +375,7 @@ LANGUAGE["Perk_ghost_sniper"] = [[
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposition]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Phase Walk]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
-Running/Jumping does not cancel Camoflague.
+Running does not cancel Camoflague.
 25% increased movement speed when you have Camoflague.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Ghost Veil]]
@@ -398,13 +398,11 @@ When you have Camoflague:
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[Craftsmanship]]
 LANGUAGE["Perk_Title_engineer_tinkerer"] = [[Tinkerer]]
 LANGUAGE["Perk_engineer_tinkerer"] = [[
-Minions have {1} more health on spawn.]]
+{1} more minion health.]]
 
-LANGUAGE["Perk_Title_engineer_manhack"] = [[Manhack]]
-LANGUAGE["Perk_engineer_manhack"] = [[
-Your have Manhacks instead of Turrets.
-Manhack dies on impact and regenerates automatically.
-Manhack deals its health as damage.]]
+LANGUAGE["Perk_Title_engineer_pioneer"] = [[Pioneer]]
+LANGUAGE["Perk_engineer_pioneer"] = [[
+{1} increased minion damage.]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[Archetype]]
 LANGUAGE["Perk_Title_engineer_golem"] = [[Golem]]
@@ -415,7 +413,7 @@ Minion attacks have increased knockback.]]
 LANGUAGE["Perk_Title_engineer_spectre"] = [[Spectre]]
 LANGUAGE["Perk_engineer_spectre"] = [[
 Minions leech {1} of damage dealt.
-Minions deal {2} more damage.]]
+{2} more minion damage.]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Experimental]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[Symbiosis]]

@@ -1,0 +1,22 @@
+"UnlitGeneric"
+{
+	$additive 1
+	//$alphatest 1
+	"$basetexture" "effects/tau_beam"
+	$selfillum 1
+	//$translucent 1
+	"$selfillumtint" "[ 10 10 10]"
+	$vertexcolor 1
+	$vertexalpha 1
+
+//DO NOT CHANGE THIS WITH OUT CHANGING THE PARTICLES
+   	 "Proxies"  
+    	{  
+      	 	 "TextureScroll"  
+       	 	{  
+           			 "texturescrollvar" "$baseTextureTransform"  
+           			 "texturescrollrate" 1
+           	 		"texturescrollangle" 270.00  
+        		}  
+   	 }  
+}

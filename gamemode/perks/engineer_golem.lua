@@ -6,19 +6,34 @@ PERK.Params = {
 }
 
 PERK.Hooks = {}
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
+    if SERVER and perk == "engineer_golem" then
+        if not HORDE.player_drop_entities[ply:SteamID()] then return end
+        for id, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+            if ent:IsNPC() then
+                timer.Create("Horde_Golem" .. id, 1, 0, function()
+                    if not ent:IsValid() or not ply:IsValid() or not ply:Horde_GetPerk("engineer_golem") then timer.Remove("Horde_Golem" .. id) return end
+                    ent:SetHealth(math.min(ent:Health() + ent:GetMaxHealth() * 0.02, ent:GetMaxHealth()))
+                end)
+            end
+        end
+    end
+end
+
 PERK.Hooks.OnEntityCreated = function (ent)
     if not ent:IsValid() then return end
-    local ply = ent:GetNWEntity("HordeOwner")
-    if ply:IsValid() and ply:Horde_GetPerk("engineer_golem") and ent:IsNPC() then
-        timer.Simple(0.1, function()
-            if not ent:IsValid() then return end
+    if CLIENT then return end
+    timer.Simple(0.1, function()
+        if not ent:IsValid() then return end
+        local ply = ent:GetNWEntity("HordeOwner")
+        if ply:IsValid() and ply:Horde_GetPerk("engineer_golem") and ent:IsNPC() then
             local id = ent:GetCreationID()
-            timer.Create("Horde_Golem" .. id, function()
-                if not ent:IsValid() then timer.Remove("Horde_Golem" .. id) return end
+            timer.Create("Horde_Golem" .. id, 1, 0, function()
+                if not ent:IsValid() or not ply:IsValid() or not ply:Horde_GetPerk("engineer_golem") then timer.Remove("Horde_Golem" .. id) return end
                 ent:SetHealth(math.min(ent:Health() + ent:GetMaxHealth() * 0.02, ent:GetMaxHealth()))
             end)
-        end)
-    end
+        end
+    end)
 end
 
 PERK.Hooks.ScaleNPCDamage = function (npc, hitgroup, dmg)

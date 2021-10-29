@@ -8,6 +8,11 @@ end
 -- Bubbles
 function EFFECT:Think()
     if not self.entity or not self.entity:IsValid() then return true end
+    if self.entity:IsWeapon() then
+        if not self.entity.Mjollner_Charged then return false end
+    else
+        if not self.entity.Horde_Mutation_Charged then return false end
+    end
     local pos = self.entity:GetPos()
     if not self.emitter then
         self.emitter = ParticleEmitter(pos)
@@ -17,7 +22,7 @@ function EFFECT:Think()
     if self.emitter then
 		local particle = self.emitter:Add("particle/sparkles", pos + VectorRand() * self.radius)
 		particle:SetDieTime(0.25)
-		particle:SetColor(50,125,255)
+		particle:SetColor(0,150,255)
 		particle:SetStartAlpha(255)
 		particle:SetEndAlpha(0)
 		particle:SetStartSize(2)
@@ -32,8 +37,8 @@ function EFFECT:Think()
         if not self.dlight then
             self.dlight = DynamicLight(0)
             self.dlight.Pos = pos
-            self.dlight.r = 50
-            self.dlight.g = 50
+            self.dlight.r = 0
+            self.dlight.g = 150
             self.dlight.b = 255
             self.dlight.Brightness = 8
             self.dlight.Size = self.radius * 2

@@ -183,7 +183,7 @@ Atacar o Correr REMUEVE Camuflaje.]]
 LANGUAGE.Perk_engineer_base = [[
 La Clase Ingeniero es una clase que se concentra en hacer daño con estructuras a su favor.
 Dificultad: MEDIA
-{1} vida y daño de estructuras.
+{1} mas vida y daño de esbirros.
 Las Torretas tienen {2} de vida base y realiza {3} de daño base.]]
 
 LANGUAGE.Perk_berserker_base = [[
@@ -352,7 +352,7 @@ LANGUAGE["Perk_ghost_sniper"] = [[
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposicion]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Caminata de Fase]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
-Correr/Saltar ya no cancela el Camuflaje.
+Correr ya no cancela el Camuflaje.
 25% aumento de velocidad de movimiento mientras tengas Camuflaje.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Velo de Fantasma]]
@@ -375,34 +375,32 @@ Cuando tienes Camuflaje:
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[Artesania]]
 LANGUAGE["Perk_Title_engineer_tinkerer"] = [[Chapucero]]
 LANGUAGE["Perk_engineer_tinkerer"] = [[
-Construcciones tienen un {1} mas de vida al aparecer.]]
+{1} Mas vida de esbirros.]]
 
-LANGUAGE["Perk_Title_engineer_manhack"] = [[Manhack]]
-LANGUAGE["Perk_engineer_manhack"] = [[
-Tienes Manhacks en vez de Torretas.
-Los Manhack mueren al impacto y reaparecen automaticamente.
-Los Manhack hacen daño segun su vida.]]
+LANGUAGE["Perk_Title_engineer_pioneer"] = [[Pionero]]
+LANGUAGE["Perk_engineer_pioneer"] = [[
+{1} Aumento daño de esbirros.]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[Arquetipo]]
 LANGUAGE["Perk_Title_engineer_golem"] = [[Golem]]
 LANGUAGE["Perk_engineer_golem"] = [[
-Las Construcciones regeneran {1} de vida por segundo.
-Los ataques de las Construcciones tiene retroceso incrementado.]]
+Las Esbirros regeneran {1} de vida por segundo.
+Los ataques de las Esbirros tiene retroceso incrementado.]]
 
 LANGUAGE["Perk_Title_engineer_spectre"] = [[Espectro]]
 LANGUAGE["Perk_engineer_spectre"] = [[
-Las Construcciones roban un {1} de vida del daño hecho.
-Las Construcciones hacen un {2} mas de daño.]]
+Las Esbirros roban un {1} de vida del daño hecho.
+Las Esbirros hacen un {2} mas de daño.]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Experimental]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[Simbiosis]]
 LANGUAGE["Perk_engineer_symbiosis"] = [[
-Las Construcciones tienen un {1} mas de vida al aparecer.
+Las Esbirros tienen un {1} mas de vida al aparecer.
 {2} Disminucion de daño recibido por cada Construccion viva.]]
 
 LANGUAGE["Perk_Title_engineer_kamikaze"] = [[Kamikaze]]
 LANGUAGE["Perk_engineer_kamikaze"] = [[
-Las Consturcciones realizan un {1} de su vida maxima como daño explosivo en la muerte.]]
+Las Esbirros realizan un {1} de su vida maxima como daño explosivo en la muerte.]]
 
 -- Default Perks: Berserker
 LANGUAGE["Perk_Title_Berserker_Tier_1"] = [[Fundamentos]]

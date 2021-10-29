@@ -1,7 +1,7 @@
 PERK.PrintName = "Engineer Base"
 PERK.Description = "The Engineer is a minion-centered class that deals damage through minions.\nComplexity: MEDIUM\n\n{1} increased minion health and damage.\nTurrets have {2} base health and deals {3} base damage."
 PERK.Params = {
-    [1] = {value = 0.25, percent = true},
+    [1] = {value = 0.15, percent = true},
     [2] = {value = 500},
     [3] = {value = 18},
 }
@@ -23,11 +23,11 @@ end
 PERK.Hooks.Horde_OnPlayerMinionDamage = function (ply, npc, bonus, dmginfo)
     if ply:Horde_GetPerk("engineer_base") then
         local class = dmginfo:GetInflictor():GetClass()
-        if  class == "npc_turret_floor" or class == "npc_vortigaunt" then
+        if  class == "npc_turret_floor" then
             bonus.more = bonus.more * 6
         end
+        bonus.increase = bonus.increase + 0.15
     end
-    bonus.increase = bonus.increase + 0.25
 end
 
 PERK.Hooks.OnEntityCreated = function (ent)
@@ -44,10 +44,8 @@ PERK.Hooks.OnEntityCreated = function (ent)
                         ent:SetMaxHealth(500)
                     end
                 end
-            elseif ent:GetClass() == "npc_vortigaunt" then
-                ent:SetMaxHealth(650)
             end
-            ent:SetMaxHealth(ent:GetMaxHealth() * 1.25)
+            ent:SetMaxHealth(ent:GetMaxHealth() * 1.15)
             ent:SetHealth(ent:GetMaxHealth())
         end
     end)

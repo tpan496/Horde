@@ -11,7 +11,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "warden_ex_machina" then
         if not HORDE.player_drop_entities[ply:SteamID()] then return end
         for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()])  do
-            if ent:GetClass() == "horde_watchtower" then
+            if HORDE:IsWatchTower(ent) then
                 ent:Horde_AddWardenAura()
                 ent.Horde_EnableShockwave = true
             end
@@ -27,7 +27,7 @@ end
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "warden_ex_machina" then
         for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()])  do
-            if ent:GetClass() == "horde_watchtower" then
+            if HORDE:IsWatchTower(ent) then
                 ent:Horde_RemoveWardenAura()
                 ent.Horde_EnableShockwave = nil
             end

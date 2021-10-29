@@ -393,7 +393,7 @@ function HORDE:GetDefaultEnemiesData ()
     HORDE:CreateEnemy("Alpha Gonome",     "npc_vj_alpha_gonome",     1,    10, true,  1, 1, 10, 1, nil, nil, nil,
     {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song24.mp3", music_duration=105}, "fume")
     HORDE:CreateEnemy("Behemoth",         "npc_vj_behemoth",         1,    10, true,  1, 1, 10, 1, nil, nil, nil,
-    {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=0,  music="music/hl1_song24.mp3", music_duration=105}, "nemesis")
+    {is_boss=true, end_wave=true, unlimited_enemies_spawn=false, enemies_spawn_threshold=0,  music="music/hl1_song24.mp3", music_duration=105}, "shielding")
     
     HORDE:NormalizeEnemiesWeight()
 

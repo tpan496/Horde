@@ -187,7 +187,7 @@ function HORDE:GetDefaultClassesData()
         GetConVar("horde_base_runspeed"):GetInt(),
         "engineer_base",
         {
-            [1] = {title = "Craftsmanship", choices = {"engineer_tinkerer", "engineer_manhack"}},
+            [1] = {title = "Craftsmanship", choices = {"engineer_tinkerer", "engineer_pioneer"}},
             [2] = {title = "Archetype", choices = {"engineer_golem", "engineer_spectre"}},
             [3] = {title = "Experimental", choices = {"engineer_symbiosis", "engineer_kamikaze"}},
         },

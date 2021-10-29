@@ -3,9 +3,9 @@ local plymeta = FindMetaTable("Player")
 function plymeta:Horde_AddMindeyeStack()
     if self.Horde_MindeyeStack == self:Horde_GetMaxMindeyeStack() then return end
     self.Horde_MindeyeStack = self.Horde_MindeyeStack + 1
-    timer.Simple(self:Horde_GetMindeyeStackDuration(), function ()
+    --[[timer.Simple(self:Horde_GetMindeyeStackDuration(), function ()
         self:Horde_RemoveMindeyeStack()
-    end)
+    end)]]--
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Mindeye, 8)
         net.WriteUInt(self.Horde_MindeyeStack, 3)

@@ -1,10 +1,6 @@
 local EXPECTED_HEADER = "Horde_Rank"
 local EXPECTED_HEADER_TOKENS = "Horde_Skull_Tokens"
 
-local function ScrubSteamID(ply)
-	return ply:SteamID():gsub(":", "_")
-end
-
 function HORDE:SaveSkullTokens(ply)
 	if GetConVar("horde_enable_sandbox"):GetInt() == 1 then return end
 	if not ply:IsValid() then return end
@@ -14,7 +10,7 @@ function HORDE:SaveSkullTokens(ply)
 		file.CreateDir("horde/tokens", "DATA")
 	end
 
-	path = "horde/tokens/" .. ScrubSteamID(ply) .. ".txt"
+	path = "horde/tokens/" .. HORDE:ScrubSteamID(ply) .. ".txt"
 
 	strm = file.Open(path, "wb", "DATA" )
 		strm:Write(EXPECTED_HEADER_TOKENS)
@@ -31,7 +27,7 @@ function HORDE:SaveRank(ply)
 		file.CreateDir("horde/ranks", "DATA")
 	end
 
-	path = "horde/ranks/" .. ScrubSteamID(ply) .. ".txt"
+	path = "horde/ranks/" .. HORDE:ScrubSteamID(ply) .. ".txt"
 
 	strm = file.Open(path, "wb", "DATA" )
 		strm:Write(EXPECTED_HEADER)
@@ -51,7 +47,7 @@ function HORDE:LoadSkullTokens(ply)
 		file.CreateDir("horde/tokens", "DATA")
 	end
 
-	path = "horde/tokens/" .. ScrubSteamID(ply) .. ".txt"
+	path = "horde/tokens/" .. HORDE:ScrubSteamID(ply) .. ".txt"
 
 	if not file.Exists(path, "DATA") then
 		print("Path", path, "does not exist!")
@@ -80,7 +76,7 @@ function HORDE:LoadRank(ply)
 		file.CreateDir("horde/ranks", "DATA")
 	end
 
-	path = "horde/ranks/" .. ScrubSteamID(ply) .. ".txt"
+	path = "horde/ranks/" .. HORDE:ScrubSteamID(ply) .. ".txt"
 
 	if not file.Exists(path, "DATA") then
 		print("Path", path, "does not exist!")

@@ -190,7 +190,7 @@ LANGUAGE["Perk_ghost_base"] = [[
 
 {1} 更多爆头伤害。
 蹲下以激活“迷彩”状态，提供 {2} 闪避。
-攻击，奔跑或者跳跃会取消“迷彩”状态。]]
+攻击，奔跑会取消“迷彩”状态。]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 工程师是一个围绕着召唤物的职业。召唤物能有效地进行区域性防守并且为队友提供掩护。
@@ -377,7 +377,7 @@ LANGUAGE["Perk_ghost_sniper"] = [[
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[战略转移]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[幽灵漫步]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
-奔跑，跳跃不会取消“迷彩”状态。
+奔跑不会取消“迷彩”状态。
 迷彩状态下提升 {1} 移速。]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[幻影披风]]
@@ -398,15 +398,13 @@ LANGUAGE["Perk_ghost_decapitate"] = [[
 
 -- Default Perks: Engineer
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[制造]]
-LANGUAGE["Perk_Title_engineer_tinkerer"] = [[工匠]]
+LANGUAGE["Perk_Title_engineer_tinkerer"] = [[匠魂]]
 LANGUAGE["Perk_engineer_tinkerer"] = [[
-提升 {1} 召唤物最大生命值。]]
+{1} 更多召唤物生命值。]]
 
-LANGUAGE["Perk_Title_engineer_manhack"] = [[无人机]]
-LANGUAGE["Perk_engineer_manhack"] = [[
-步哨替换为无人机。
-无人机撞击敌人后死亡，死亡后会自动再生。
-无人机撞击伤害为自身生命值。]]
+LANGUAGE["Perk_Title_engineer_pioneer"] = [[先驱]]
+LANGUAGE["Perk_engineer_pioneer"] = [[
+提升 {2} 召唤物伤害。]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[原型]]
 LANGUAGE["Perk_Title_engineer_golem"] = [[魔像]]
@@ -417,12 +415,12 @@ LANGUAGE["Perk_engineer_golem"] = [[
 LANGUAGE["Perk_Title_engineer_spectre"] = [[鬼影]]
 LANGUAGE["Perk_engineer_spectre"] = [[
 召唤物吸收 {1} 对敌人造成的伤害为生命值。
-召唤物提升 {2} 伤害。]]
+{2} 更多召唤物伤害。]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[实验性模组]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[共生]]
 LANGUAGE["Perk_engineer_symbiosis"] = [[
-召唤物提升 {1} 最大生命值。
+{1} 更多召唤物最大生命值。
 每有一个存活的召唤物，提升 {2} 所有伤害抗性。]]
 
 LANGUAGE["Perk_Title_engineer_kamikaze"] = [[神风]]

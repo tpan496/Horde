@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+"$basetexture" "models\weapons\v_gauss\gausschrome"
+"$envmap" "env_cubemap"
+"$envmaptint" "[ 1 0.5 0 ]"
+}

@@ -17,7 +17,7 @@ local difficulty_apocalypse = 4
 -- Multipliers
 local difficulty_damage_multiplier = {1, 1.25, 1.5, 1.7, 1.8}
 local difficulty_enemy_count_multiplier = {1, 1.3, 1.5, 1.5, 1.75}
-local difficulty_reward_base_multiplier = {1, 0.8, 0.6, 0.5, 0.4}
+HORDE.difficulty_reward_base_multiplier = {1, 0.8, 0.6, 0.5, 0.4}
 HORDE.difficulty_health_multiplier = {1, 1.25, 1.5, 1.5, 1.55}
 local difficulty_start_money_multiplier = {1, 0.9, 0.8, 0.75, 0.6}
 local difficulty_spawn_radiuis_multiplier = {1, 0.75, 0.5, 0.5, 0.4}
@@ -42,6 +42,19 @@ HORDE.difficulty_elite_mutation_probability = {0, 0.05, 0.10, 0.30, 0.5}
 -- Turrets should not be one-shot
 function VJ_DestroyCombineTurret() end
 
+hook.Add("EntityTakeDamage", "Horde_mjollnirDamage", function (target, dmginfo)
+    -- mjollnir laser damage
+    local attacker = dmginfo:GetAttacker()
+    if attacker:GetClass() == "env_laser" then
+        if dmginfo:GetInflictor():GetOwner():IsValid() then
+            dmginfo:SetInflictor(dmginfo:GetInflictor():GetOwner())
+            if dmginfo:GetInflictor():GetOwner():IsValid() then
+                dmginfo:SetAttacker(dmginfo:GetInflictor():GetOwner())
+            end
+        end
+    end
+end)
+
 hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
     if not target:IsValid() then return end
     if target:IsPlayer() then
@@ -49,7 +62,7 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             if dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
                 -- Prevent minions from hurting players
                 return true
-            end
+            end 
             if dmg:GetDamageType() == DAMAGE_CRUSH then
                 -- Cap bullshit physics damage that can sometimes occur
                 dmg:SetDamage(math.min(dmg:GetDamage(),20))
@@ -91,6 +104,16 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
                     target:Fire("selfdestruct")
                 end
             end
+
+            if HORDE.endless == 1 then
+                dmg:ScaleDamage(difficulty_damage_multiplier[HORDE.difficulty] * HORDE.endless_damage_multiplier)
+            else
+                dmg:ScaleDamage(difficulty_damage_multiplier[HORDE.difficulty])
+            end
+
+            if dmg:GetAttacker():GetVar("damage_scale") then
+                dmg:ScaleDamage(dmg:GetAttacker():GetVar("damage_scale"))
+            end
         end
     end
 end)
@@ -114,8 +137,8 @@ for i, enemies_count in ipairs(HORDE.total_enemies_per_wave) do
 end
 
 -- Kill reward scaling
-HORDE.kill_reward_base = math.floor(HORDE.kill_reward_base * difficulty_reward_base_multiplier[HORDE.difficulty])
-HORDE.round_bonus_base = math.floor(HORDE.round_bonus_base * difficulty_reward_base_multiplier[HORDE.difficulty])
+HORDE.kill_reward_base = math.floor(HORDE.kill_reward_base * HORDE.difficulty_reward_base_multiplier[HORDE.difficulty])
+HORDE.round_bonus_base = math.floor(HORDE.round_bonus_base * HORDE.difficulty_reward_base_multiplier[HORDE.difficulty])
 
 -- Start money scaling
 HORDE.start_money = math.floor(HORDE.start_money * difficulty_start_money_multiplier[HORDE.difficulty])

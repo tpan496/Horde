@@ -1,5 +1,5 @@
 MUTATION.PrintName = "Shielding"
-MUTATION.Description = "Regenerable shield.\nShield durability = 5% max health."
+MUTATION.Description = "Regenerable shield.\nShield durability = max(300, 5% max health)."
 
 MUTATION.Hooks = {}
 
@@ -30,13 +30,14 @@ end
 
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "shielding" then
+        ent.Horde_Mutation_Shielding = true
         if CLIENT then
             local col_min, col_max = ent:GetCollisionBounds()
             local radius = col_max:Distance(col_min) / 2
             local height = math.abs(col_min.z - col_max.z)
             local id = ent:EntIndex()
             hook.Add("PostDrawTranslucentRenderables", "Horde_ShieldingEffect" .. id, function()
-                if not ent:IsValid() then
+                if not ent:IsValid() or not ent.Horde_Mutation_Shielding then
                     hook.Remove("PostDrawTranslucentRenderables", "Horde_ShieldingEffect" .. id)
                     return
                 end
@@ -51,7 +52,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
         if SERVER then
             local id = ent:GetCreationID()
             timer.Create("Horde_RegenShield" .. id, 10, 0, function ()
-                if not ent:IsValid() then timer.Remove("Horde_RegenShield" .. id) return end
+                if not ent:IsValid() or not ent.Horde_Mutation_Shielding then timer.Remove("Horde_RegenShield" .. id) return end
                 if ent:Horde_GetCanRegenShield() then
                     ent:Horde_SetShieldHealth(ent:Horde_GetMaxShieldHealth())
                     ent:SetNWBool("HasShield", true)
@@ -81,4 +82,12 @@ MUTATION.Hooks.EntityTakeDamage = function(target, dmg)
             return true
         end
     end
+end
+
+MUTATION.Hooks.Horde_OnUnsetMutation = function (ent, mutation)
+    if not ent:IsValid() or mutation ~= "shielding" then return end
+    ent.Horde_Mutation_Shielding = nil
+    local id = ent:EntIndex()
+    hook.Remove("PostDrawTranslucentRenderables", "Horde_ShieldingEffect" .. id)
+    timer.Remove("Horde_RegenShield" .. id)
 end
