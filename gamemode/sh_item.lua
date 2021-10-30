@@ -244,9 +244,9 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Survivor=true}, 15, -1, nil, nil, {Assault=1, Medic=2})
     HORDE:CreateItem("SMG",        "P90",            "arccw_go_p90",      2000, 6, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
     {Medic=true, Assault=true, Survivor=true}, 15, -1)
-    HORDE:CreateItem("SMG",        "MP7A1 Medic PDW","arccw_horde_mp7m"  ,2500, 6, "A modified version of MP7A1 for medical purposes.\n\nPress E+LMB to fire healing darts (replaces melee).\nHealing dart recharges every 1 second.",
+    HORDE:CreateItem("SMG",        "MP7A1 Medic PDW","arccw_horde_mp7m"  ,2500, 6, "A modified version of MP7A1 for medical purposes.\n\nPress B or ZOOM to fire healing darts (replaces melee).\nHealing dart recharges every 1 second.",
     {Medic=true}, 8, -1)
-    HORDE:CreateItem("SMG",        "Vector Medic PDW","arccw_horde_vector",3000, 6, "KRISS Vector Gen I equipped with a medical dart launcher.\nUses an unconventional blowback system that results in its high firerate.\n\nPress E+LMB to fire healing darts (replaces melee).\nHealing dart recharges every 1.5 seconds.",
+    HORDE:CreateItem("SMG",        "Vector Medic PDW","arccw_horde_vector",3000, 6, "KRISS Vector Gen I equipped with a medical dart launcher.\nUses an unconventional blowback system that results in its high firerate.\n\nPress B or ZOOM to fire healing darts (replaces melee).\nHealing dart recharges every 1.5 seconds.",
     {Medic=true}, 8, -1, nil, nil, {Medic=3})
 
     HORDE:CreateItem("Shotgun",    "Pump-Action",    "weapon_shotgun",    1000, 4, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
@@ -303,7 +303,6 @@ function HORDE:GetDefaultItemsData()
     {Ghost=true}, 15, -1)
     HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3500, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
     {Ghost=true}, 50, -1, nil, nil, {Ghost=3})
-    
 
     HORDE:CreateItem("Rifle",    "SSG08 Medic SR",   "arccw_horde_medic_rifle",  1500,   6, "A medic sniper rifle that shoots healing darts.\nDamages enemies and heals players.",
     {Medic=true}, 10, -1, nil, nil, {Medic=2})
@@ -354,9 +353,9 @@ function HORDE:GetDefaultItemsData()
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/npc_manhack.png")
     HORDE:CreateItem("Special",    "Turret",         "npc_turret_floor",    1000,  4, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/npc_turret_floor.png")
-    HORDE:CreateItem("Special",    "Vortigaunt",     "npc_vj_horde_vortigaunt",  1500,  5, "Xen Vortigaunts that can conjure concentrated shock energy blasts.\nThe energy blasts have long range and deal splash damage.",
+    HORDE:CreateItem("Special",    "Vortigaunt",     "npc_vj_horde_vortigaunt",  1750,  5, "Xen Vortigaunts that can conjure concentrated shock energy blasts.\nThe energy blasts have long range and deal splash damage.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_vortigaunt.png")
-    HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   2500, 8, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
+    HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   2750, 9, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_combat_bot.png")
     HORDE:CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,  1, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
     {Medic=true}, 100, -1, nil, "items/arccw_nade_medic.png")

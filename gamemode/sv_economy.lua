@@ -547,7 +547,7 @@ function HORDE:DropTurret(ent)
 end
 
 hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
-    if ent:GetNWEntity("HordeOwner") and (ent:GetClass() == "npc_turret_floor" or ent:GetClass() == "horde_watchtower") then
+    if ent:GetNWEntity("HordeOwner") and (ent:GetClass() == "npc_turret_floor") then
         -- Turrets should always stay straight.
         local a = ent:GetAngles()
         ent:SetAngles(Angle(0, a.y, 0))

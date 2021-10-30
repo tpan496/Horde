@@ -60,3 +60,11 @@ function ENT:Think()
         end
     end
 end
+
+hook.Add("PlayerUse", "PickUpWatchtower", function(ply, ent)
+	if HORDE:IsWatchTower(ent) and ent:GetNWEntity("HordeOwner"):IsValid() and ent:GetNWEntity("HordeOwner") == ply then
+        ply:PickupObject(ent)
+        local a = ply:GetAngles()
+        ent:SetAngles(Angle(0, a.y, 0))
+    end
+end )

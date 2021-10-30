@@ -5,16 +5,13 @@ end
 
 local EXPECTED_HEADER = "Horde_Rank"
 
-function HORDE:SyncToLocal(ply)
-    -- Sync ranks from server to local.
-    -- Player is already in the server so, just ask local to sync
-    if SERVER then
-        net.Start("Horde_SyncToLocal")
-        net.Send(ply)
-    end
+if CLIENT then
+concommand.Add("horde_sync_to_local", function ()
+	HORDE:SyncToLocal()
+end)
 end
 
-net.Receive("Horde_SyncToLocal", function ()
+function HORDE:SyncToLocal()
     if SERVER then return end
     local ply = LocalPlayer()
     if not ply:IsValid() then return end
@@ -74,7 +71,7 @@ net.Receive("Horde_SyncToLocal", function ()
 	strm:Close()
 
     notification.AddLegacy("Sucessfully synced local data from server.", NOTIFY_GENERIC, 5)
-end)
+end
 
 function HORDE:SyncToServer(ply)
 end
