@@ -24,7 +24,7 @@ MUTATION.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
         ply.Horde_Debuff_No_Heal = true
         local id = ply:SteamID()
         net.Start("Horde_SyncStatus")
-        net.WriteUInt(HORDE.Status_NoHeal, 8)
+        net.WriteUInt(HORDE.Status_Break, 8)
             net.WriteUInt(1, 3)
         net.Send(ply)
         timer.Remove("Horde_Decay_Effect" .. id)
@@ -32,7 +32,7 @@ MUTATION.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
             if ply:IsValid() then
                 ply.Horde_Debuff_No_Heal = nil
                 net.Start("Horde_SyncStatus")
-                    net.WriteUInt(HORDE.Status_NoHeal, 8)
+                    net.WriteUInt(HORDE.Status_Break, 8)
                     net.WriteUInt(0, 3)
                 net.Send(ply)
             end

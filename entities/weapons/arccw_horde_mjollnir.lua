@@ -33,7 +33,7 @@ SWEP.ViewModelFOV = 75
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
-SWEP.MeleeDamage = 185
+SWEP.MeleeDamage = 175
 SWEP.Melee2Damage = 0
 
 SWEP.PrimaryBash = true
@@ -51,20 +51,20 @@ SWEP.Melee2Time = 0.5
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.MeleeSwingSound = {
-    "horde/weapons/mjollnir/swing_1.wav",
-    "horde/weapons/mjollnir/swing_2.wav"
+    "horde/weapons/mjollnir/swing_1.ogg",
+    "horde/weapons/mjollnir/swing_2.ogg"
 }
 SWEP.MeleeMissSound = {
-    "horde/weapons/mjollnir/swing_1.wav",
-    "horde/weapons/mjollnir/swing_2.wav"
+    "horde/weapons/mjollnir/swing_1.ogg",
+    "horde/weapons/mjollnir/swing_2.ogg"
 }
 SWEP.MeleeHitSound = {
-    "horde/weapons/mjollnir/hitwall_1.wav",
-    "horde/weapons/mjollnir/hitwall_2.wav"
+    "horde/weapons/mjollnir/hitwall_1.ogg",
+    "horde/weapons/mjollnir/hitwall_2.ogg"
 }
 SWEP.MeleeHitNPCSound = {
-    "horde/weapons/mjollnir/hitflesh_1.wav",
-    "horde/weapons/mjollnir/hitflesh_2.wav"
+    "horde/weapons/mjollnir/hitflesh_1.ogg",
+    "horde/weapons/mjollnir/hitflesh_2.ogg"
 }
 SWEP.ChargeSound = Sound("horde/weapons/mjollnir/charge.ogg")
 SWEP.ChargeLoopSound = Sound("horde/weapons/mjollnir/charge_loop.ogg")
@@ -128,6 +128,7 @@ SWEP.Charged = nil
 SWEP.ChargeEffect = nil
 
 function SWEP:SecondaryAttack()
+    if self:GetNextSecondaryFire() > CurTime() then return end
     if self.Charged then return end
     self:EmitSound(self.ChargeSound)
     self.Charged = true
@@ -138,17 +139,17 @@ function SWEP:SecondaryAttack()
     e:SetRadius(50)
     self.Mjollner_Charged = true
     util.Effect("charged", e)
-	self.Weapon:SetNextSecondaryFire(CurTime() + 1)
+	self.Weapon:SetNextSecondaryFire(CurTime() + 1.5)
 end
 
 function SWEP:Hook_PostBash(info)
     if not self.Charged or not info.tr.Hit then return end
     if SERVER then
-        for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 125)) do
+        for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 100)) do
             if ent:IsPlayer() then
             elseif ent:IsNPC() then
                 local dmg = DamageInfo()
-                dmg:SetDamage(60)
+                dmg:SetDamage(50)
                 dmg:SetDamageType(DMG_SHOCK)
                 dmg:SetAttacker(self.Owner)
                 dmg:SetInflictor(self)
@@ -157,11 +158,11 @@ function SWEP:Hook_PostBash(info)
             end
         end
         timer.Simple(0.4, function ()
-            for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 125)) do
+            for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 100)) do
                 if ent:IsPlayer() then
                 elseif ent:IsNPC() then
                     local dmg = DamageInfo()
-                    dmg:SetDamage(60)
+                    dmg:SetDamage(50)
                     dmg:SetDamageType(DMG_SHOCK)
                     dmg:SetAttacker(self.Owner)
                     dmg:SetInflictor(self)
@@ -171,11 +172,11 @@ function SWEP:Hook_PostBash(info)
             end
         end)
         timer.Simple(0.8, function ()
-            for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 125)) do
+            for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 100)) do
                 if ent:IsPlayer() then
                 elseif ent:IsNPC() then
                     local dmg = DamageInfo()
-                    dmg:SetDamage(60)
+                    dmg:SetDamage(50)
                     dmg:SetDamageType(DMG_SHOCK)
                     dmg:SetAttacker(self.Owner)
                     dmg:SetInflictor(self)
@@ -189,6 +190,7 @@ function SWEP:Hook_PostBash(info)
     self.Charged = nil
     self.Mjollner_Charged = nil
     self.Weapon:EmitSound(self.ChargeHitSound)
+    self.Weapon:SetNextSecondaryFire(CurTime() + 1.5)
 end
 
 function SWEP:Hook_Think()

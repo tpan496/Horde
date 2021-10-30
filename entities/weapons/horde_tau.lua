@@ -100,7 +100,7 @@ SWEP.Primary.DefaultClip = 30
 SWEP.Primary.MaxAmmo = 500
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "GaussEnergy"
-SWEP.Primary.Damage = 65
+SWEP.Primary.Damage = 55
 SWEP.Primary.Spread = 0
 SWEP.Primary.TakeAmmo = 1
 SWEP.Primary.NumberofShots = 1
@@ -266,10 +266,10 @@ function SWEP:Think()
             bullet.Damage = self.Secondary.Damage
         end
         if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
-            bullet.Damage = self.Secondary.Damage * 4
+            bullet.Damage = self.Secondary.Damage * 5
         end
         if self.SpinTimer <= CurTime() + 6 then
-            bullet.Damage = self.Secondary.Damage * 8
+            bullet.Damage = self.Secondary.Damage * 10
         end
         bullet.AmmoType = self.Primary.Ammo
         self.Owner:FireBullets( bullet )
@@ -287,10 +287,10 @@ function SWEP:Think()
             self:TakePrimaryAmmo( self.Secondary.TakeAmmo )
         end
         if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
-            self:TakePrimaryAmmo( 10 )
+            self:TakePrimaryAmmo( 5 )
         end
         if self.SpinTimer <= CurTime() + 6 then
-            self:TakePrimaryAmmo( 20 )
+            self:TakePrimaryAmmo( 10 )
         end
         self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
         self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )

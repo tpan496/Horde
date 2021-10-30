@@ -44,13 +44,21 @@ function HORDE:GameEnd(status)
         net.Broadcast()
     end
 
-    for _, ply in pairs(player.GetAll()) do
+    for _, ply in pairs(player.GetHumans()) do
         ply:Horde_AddSkullTokens(math.floor(HORDE.current_wave / 2))
     end
 
     HORDE.game_end = true
-    local randomplayer = table.Random(player.GetAll())
-    if not randomplayer then return end
+    if not player.GetHumans() or player.GetCount() < 1 then
+        map_list = HORDE:GetNextMaps()
+
+        if not map_list then
+            map_list = {game.GetMapNext()}
+        end
+        timer.Simple(0, function() RunConsoleCommand("changelevel", table.Random(map_list)) end)
+        return
+    end
+    local randomplayer = player.GetHumans()[1]
 
     local mvp_player = randomplayer
     local mvp_damage = 0
@@ -69,7 +77,7 @@ function HORDE:GameEnd(status)
 
     local damage_player = randomplayer
     local most_damage = 0
-    local second_damage_player = 0
+    local second_damage_player = randomplayer
     local second_most_damage = 0
     local total_damage = 0
 
@@ -79,7 +87,7 @@ function HORDE:GameEnd(status)
     local elite_kill_player = randomplayer
     local most_elite_kills = 0
 
-    for _,ply in pairs(player.GetAll()) do
+    for _,ply in pairs(player.GetHumans()) do
         if not ply:IsValid() then goto cont end
         local id = ply:SteamID()
         if (not id) or (id == "") then goto cont end
@@ -141,14 +149,14 @@ function HORDE:GameEnd(status)
             mvp_kills = second_most_kills
             mvp_damage = most_damage
         else
-            if HORDE.player_elite_kills[damage_player:SteamID()] > HORDE.player_elite_kills[kills_player:SteamID()] then
+            if HORDE.player_elite_kills and HORDE.player_elite_kills[damage_player:SteamID()] > HORDE.player_elite_kills[kills_player:SteamID()] then
                 mvp_player = damage_player
                 mvp_kills = damage_player:Frags()
                 mvp_damage = most_damage
             else
                 mvp_player = kills_player
                 mvp_kills = most_kills
-                mvp_damage = HORDE.player_damage[kills_player:SteamID()]
+                mvp_damage = HORDE.player_damage[kills_player:SteamID()] or 0
             end
         end
     end
@@ -195,7 +203,7 @@ function HORDE:GameEnd(status)
     timer.Remove("Horder_Counter")
     HORDE:BroadcastGameResultMessage(status, HORDE.current_wave)
 
-    for _, ply in pairs(player.GetAll()) do
+    for _, ply in pairs(player.GetHumans()) do
         if not ply:IsValid() then goto cont end
         if GetConVar("horde_enable_rank"):GetInt() == 1 then
             HORDE:SaveRank(ply)
