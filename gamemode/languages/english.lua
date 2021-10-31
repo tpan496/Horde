@@ -995,3 +995,42 @@ LANGUAGE["Item_Desc_Full Kevlar Armor"] = [[
 Full kevlar armor set.
 Fills up 100% of your armor bar.
 ]]
+
+LANGUAGE["Item_Watchtower MKII"] = [[Watchtower MKII]]
+LANGUAGE["Item_Desc_Watchtower MKII"] = [[
+A watchtower that provides resupply.
+Generates 1 health vial every 30 seconds.
+(Entity Class: horde_watchtower_mk2)
+]]
+
+LANGUAGE["Item_Watchtower MKIII"] = [[Watchtower MKIII]]
+LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
+A watchtower that deters enemies.\nShocks 1 nearby enemy every 1 second.
+Does 100 shock damage.
+(Entity Class: horde_watchtower_mk3)
+]]
+
+LANGUAGE["Item_Tau Cannon"] = [[Tau Cannon]]
+LANGUAGE["Item_Desc_Tau Cannon"] = [[
+A device that uses electromagnetism to ionize particles.
+Hold RMB to charge and release a powerful shot.
+Deals more damage as you charge.
+Device explodes if you overcharge.
+]]
+
+LANGUAGE["Item_MP7A1 Medic PDW"] = [[MP7A1 Medic PDW]]
+LANGUAGE["Item_Desc_MP7A1 Medic PDW"] = [[
+A modified version of MP7A1 for medical purposes.
+
+Press B or ZOOM to fire healing darts.
+Healing dart recharges every 1 second.
+]]
+
+LANGUAGE["Item_Vector Medic PDW"] = [[Vector Medic PDW]]
+LANGUAGE["Item_Desc_Vector Medic PDW"] = [[
+KRISS Vector Gen I equipped with a medical dart launcher.
+Uses an unconventional blowback system that results in its high firerate.
+
+Press B or ZOOM to fire healing darts.
+Healing dart recharges every 1.5 seconds.
+]]
