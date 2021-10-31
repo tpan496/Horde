@@ -393,7 +393,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                             ent:AddRelationship("npc_manhack D_LI 99")
                         end
     
-                        ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
+                        --ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
                     end)
                     local npc_info = list.Get("NPC")[ent:GetClass()]
                     if not npc_info then

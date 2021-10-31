@@ -961,6 +961,48 @@ LANGUAGE["Item_Desc_Full Kevlar Armor"] = [[
 提供100%护甲。
 ]]
 
+LANGUAGE["Item_Watchtower MKII"] = [[守望塔 MKII]]
+LANGUAGE["Item_Desc_Watchtower MKII"] = [[
+一个能提供补给的守望塔。
+每 30 秒生成一个医疗包。
+(实体名称：horde_watchtower）: horde_watchtower_mk2)
+]]
+
+LANGUAGE["Item_Watchtower MKIII"] = [[守望塔 MKIII]]
+LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
+一个用来击退敌人的守望塔。
+每 1 秒对附近单个敌人发射电击。
+电击造成 100 范围伤害。
+(实体名称：horde_watchtower）: horde_watchtower_mk3)
+]]
+
+LANGUAGE["Item_Tau Cannon"] = [[高斯枪]]
+LANGUAGE["Item_Desc_Tau Cannon"] = [[
+使用强大的电磁力产生炙热的等离子体。
+
+长按右键进行蓄力。
+蓄力攻击造成更多伤害。
+蓄力时间过长会产生爆炸。
+]]
+
+LANGUAGE["Item_MP7A1 Medic PDW"] = [[MP7A1医疗冲锋枪]]
+LANGUAGE["Item_Desc_MP7A1 Medic PDW"] = [[
+MP7A1 医疗改进版。
+
+按 B 或者 放大键 发射医疗针。
+医疗针冷却时间为 1 秒。
+Healing dart recharges every 1 second.
+]]
+
+LANGUAGE["Item_Vector Medic PDW"] = [[Vector医疗冲锋枪]]
+LANGUAGE["Item_Desc_Vector Medic PDW"] = [[
+维克托冲锋枪，配备了先进的医疗针发射器。
+有着无与伦比的射速。
+
+按 B 或者 放大键 发射医疗针。
+医疗针冷却时间为 1.5 秒。
+]]
+
 LANGUAGE["Gadget_gadget_blast_plating"] = [[防爆涂层]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
 提升 {1} 爆炸和声波伤害抗性。
@@ -1079,8 +1121,15 @@ LANGUAGE["Gadget_Desc_iv_injection"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_proximity_defense"] = [[近身制御]]
+LANGUAGE["Gadget_Desc_proximity_defense"] = [[
+眩晕自身周围的所有敌人。
+]]
 
 LANGUAGE["Gadget_gadget_optical_camouflage"] = [[光学迷彩]]
+LANGUAGE["Gadget_Desc_optical_camouflage"] = [[
+强制提供 5 秒迷彩效果。
+迷彩效果期间，提升 50% 闪避概率。
+]]
 
 LANGUAGE["Gadget_gadget_life_diffuser"] = [[活体扩散器]]
 
@@ -1089,3 +1138,33 @@ LANGUAGE["Gadget_gadget_solar_array"] = [[太阳能阵列]]
 LANGUAGE["Gadget_gadget_turret_pack"] = [[便携步哨]]
 
 LANGUAGE["Gadget_gadget_cortex"] = [[皮层刺激器]]
+
+LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[精神统一]]
+
+LANGUAGE["Gadget_ouroboros"] = [[咬尾蛇]]
+
+LANGUAGE["Gadget_exoskeleton"] = [[外骨骼]]
+
+LANGUAGE["Gadget_t_virus"] = [[T-病毒]]
+
+LANGUAGE["Gadget_healing_beam"] = [[治疗光波]]
+
+LANGUAGE["Gadget_nitrous_propellor"] = [[氮气弹射器]]
+
+LANGUAGE["Gadget_ied"] = [[应急地雷]]
+
+LANGUAGE["Gadget_death_mark"] = [[死亡标记]]
+
+LANGUAGE["Gadget_gunslinger"] = [[神枪手]]
+
+LANGUAGE["Gadget_displacer"] = [[传送器]]
+
+LANGUAGE["Gadget_aerial_guard"] = [[空中制御]]
+
+LANGUAGE["Gadget_hemocannon"] = [[血能炮]]
+
+LANGUAGE["Gadget_watchtower_pack"] = [[便携守望塔]]
+
+LANGUAGE["Gadget_shock_nova"] = [[雷神]]
+
+LANGUAGE["Gadget_barbeque"] = [[烧烤]]

@@ -37,6 +37,17 @@ end
 
 function HORDE:GameEnd(status)
     if HORDE.game_end then return end
+    timer.Simple(HORDE.vote_remaining_time + 3, function ()
+        -- I don't know why some servers get stuck on voting.
+        -- Adding this to force map change.
+        map_list = HORDE:GetNextMaps()
+
+        if not map_list then
+            map_list = {game.GetMapNext()}
+        end
+        timer.Simple(0, function() RunConsoleCommand("changelevel", table.Random(map_list)) end)
+    end)
+
     if status == "DEFEAT" then
         net.Start("Horde_LegacyNotification")
         net.WriteString("All players are dead!")

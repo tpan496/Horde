@@ -14,7 +14,7 @@ ENT.DropWeaponOnDeath = false -- Should it drop its weapon on death?
 ENT.SightAngle = 180 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
 ENT.LastSeenEnemyTimeUntilReset = 60 -- Time until it resets its enemy if its current enemy is not visible
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_CITIZEN","CLASS_AMERICA_FRIENDLY","CIVILAN"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Oil" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasBloodDecal = true
 ENT.PlayerFriendly = true -- Makes the SNPC friendly to the player and HL2 Resistance
