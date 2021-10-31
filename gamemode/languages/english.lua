@@ -56,6 +56,7 @@ LANGUAGE["Rank_Professional"] = "Professional"
 LANGUAGE["Rank_Expert"] = "Expert"
 LANGUAGE["Rank_Champion"] = "Champion"
 LANGUAGE["Rank_Master"] = "Master"
+LANGUAGE["Rank_Not_Met"] = "Rank Requirement(s) Not Met"
 
 
 -- Shop
@@ -113,6 +114,11 @@ LANGUAGE["Class_Engineer"] = "Engineer"
 LANGUAGE["Class_Berserker"] = "Berserker"
 LANGUAGE["Class_Warden"] = "Warden"
 LANGUAGE["Class_Cremator"] = "Cremator"
+
+-- Gadgets
+LANGUAGE["Gadget_Activation"] = "Press T to activate."
+LANGUAGE["Gadget_Cooldown"] = "Cooldown"
+LANGUAGE["Gadget_Duration"] = "Duration"
 
 -- Default Class Extra Descriptions
 LANGUAGE["Class_Description_Survivor"] = [[
@@ -1005,7 +1011,8 @@ Generates 1 health vial every 30 seconds.
 
 LANGUAGE["Item_Watchtower MKIII"] = [[Watchtower MKIII]]
 LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
-A watchtower that deters enemies.\nShocks 1 nearby enemy every 1 second.
+A watchtower that deters enemies.
+Shocks 1 nearby enemy every 1 second.
 Does 100 shock damage.
 (Entity Class: horde_watchtower_mk3)
 ]]
@@ -1033,4 +1040,405 @@ Uses an unconventional blowback system that results in its high firerate.
 
 Press B or ZOOM to fire healing darts.
 Healing dart recharges every 1.5 seconds.
+]]
+
+LANGUAGE["Item_Chainsaw"] = [[Chainsaw]]
+LANGUAGE["Item_Desc_Chainsaw"] = [[
+Brrrrrrrrrrrrrrrr.
+
+Hold RMB to saw through enemies.
+]]
+
+LANGUAGE["Item_Mjollner"] = [[Mjollner]]
+LANGUAGE["Item_Desc_Mjollner"] = [[
+A warhammer embued with electric energy.
+
+Press RMB to charge the weapon.
+Charged Mjollnir creates a lightning explosion on impact.
+]]
+
+LANGUAGE["Item_Double Barrel"] = [[Double Barrel]]
+LANGUAGE["Item_Desc_Double Barrel"] = [[
+Double Barrel Shotgun.
+Devastating power at close range.
+]]
+
+LANGUAGE["Item_FN FAL"] = [[FN FAL]]
+LANGUAGE["Item_Desc_FN FAL"] = [[
+FN FAL.
+A battle rifle designed by Belgian and manufactured by FN Herstal.
+]]
+
+LANGUAGE["Item_AUG HBAR"] = [[AUG HBAR]]
+LANGUAGE["Item_Desc_AUG HBAR"] = [[
+Steyr AUG HBAR.
+A light-support machine gun variant of the AUG assault rifle.
+]]
+
+LANGUAGE["Item_Manhack"] = [[Manhack]]
+LANGUAGE["Item_Desc_Manhack"] = [[
+Manhack that regenerates on death.
+Manhack deals its health as damage to enemies.
+Manhack dies on impact.
+]]
+
+LANGUAGE["Item_Vortigaunt"] = [[Vortigaunt]]
+LANGUAGE["Item_Desc_Vortigaunt"] = [[
+Xen Vortigaunts that can conjure concentrated shock energy blasts.
+The energy blasts have long range and deal splash damage.
+]]
+
+LANGUAGE["Item_Combat Bot"] = [[Combat Bot]]
+LANGUAGE["Item_Desc_Combat Bot"] = [[
+A resilient humanoid robot designed to engage enemies head-on.
+Uses powerful melee attacks and ranged boulder attacks.
+]]
+
+LANGUAGE["Item_Advanced Kevlar Armor"] = [[Advanced Kevlar Armor]]
+LANGUAGE["Item_Desc_Advanced Kevlar Armor"] = [[
+Distinguished Survivor armor.
+
+Fills up 100% of your armor bar.
+Provides 5% increased damage resistance.
+]]
+
+LANGUAGE["Item_Assault Vest"] = [[Assault Vest]]
+LANGUAGE["Item_Desc_Assault Vest"] = [[
+Distinguished Assault armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Ballistic damage resistance.
+]]
+
+LANGUAGE["Item_Bulldozer Suit"] = [[Bulldozer Suit]]
+LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
+Distinguished Heavy armor.
+
+Fills up 125% of your armor bar.
+]]
+
+LANGUAGE["Item_Hazmat Suit"] = [[Hazmat Suit]]
+LANGUAGE["Item_Desc_Hazmat Suit"] = [[
+Distinguished Medic armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Poison damage resistance.
+]]
+
+LANGUAGE["Item_Bomb Suit"] = [[Bomb Suit]]
+LANGUAGE["Item_Desc_Bomb Suit"] = [[
+Distinguished Demolition armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Blast damage resistance.
+]]
+
+LANGUAGE["Item_Assassin's Cloak"] = [[Assassin's Cloak]]
+LANGUAGE["Item_Desc_Assassin's Cloak"] = [[
+Distinguished Ghost armor.
+
+Fills up 100% of your armor bar.
+Provides 5% increased evasion.
+]]
+
+LANGUAGE["Item_Defense Matrix"] = [[Defense Matrix]]
+LANGUAGE["Item_Desc_Defense Matrix"] = [[
+Distinguished Engineer armor.
+
+Fills up 100% of your armor bar.
+Provides 5% increased damage resistance.
+]]
+
+LANGUAGE["Item_Riot Armor"] = [[Riot Armor]]
+LANGUAGE["Item_Desc_Riot Armor"] = [[
+Distinguished Warden armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Shock and Sonic damage resistance.
+]]
+
+LANGUAGE["Item_Molten Armor"] = [[Molten Armor]]
+LANGUAGE["Item_Desc_Molten Armor"] = [[
+Distinguished Cremator armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Fire damage resistance.
+]]
+
+LANGUAGE["Item_Battle Vest"] = [[Battle Vest]]
+LANGUAGE["Item_Desc_Battle Vest"] = [[
+Distinguished Berserker armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Slashing/Blunt damage resistance.
+]]
+
+-- Gadgets
+LANGUAGE["Gadget_gadget_blast_plating"] = [[Blast Plating]]
+LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
+20% increased Blast damage resistance.
+]]
+
+LANGUAGE["Gadget_gadget_shock_plating"] = [[Shock Plating]]
+LANGUAGE["Gadget_Desc_gadget_shock_plating"] = [[
+20% increased Shock and Sonic damage resistance.
+]]
+
+LANGUAGE["Gadget_gadget_heat_plating"] = [[Heat Plating]]
+LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+20% increased Fire damage resistance.
+]]
+
+LANGUAGE["Gadget_gadget_detoxifier"] = [[Detoxifier]]
+LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+20% increased Poison damage resistance.
+]]
+
+LANGUAGE["Gadget_gadget_diamond_plating"] = [[Diamond Plating]]
+LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+10% increased Physical damage resistance.
+]]
+
+LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Corporate Mindset]]
+LANGUAGE["Gadget_Desc_gadget_corporate_mindset"] = [[
+"Set goals. Have a ten year plan. Invest. Wake up Early. CEO Mindset."
+
+Greatly increases skull tokens drop chance.
+]]
+
+-- Survivor Gadgets
+
+LANGUAGE["Gadget_gadget_vitality_booster"] = [[Vitality Booster]]
+LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
++25 to maximum health.
+]]
+
+LANGUAGE["Gadget_gadget_damage_booster"] = [[Damage Booster]]
+LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
+25% increased Global damage.
+]]
+
+-- Assault Gadgets
+LANGUAGE["Gadget_gadget_iv_injection"] = [[IV Injection]]
+LANGUAGE["Gadget_Desc_iv_injection"] = [[
+Recover 25 health.
+]]
+
+LANGUAGE["Gadget_gadget_cortex"] = [[Cortex]]
+LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
+For each enemy near you, gain 1 Adrenaline stack.
+Elite enemies grant 2 stacks.
+]]
+
+LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[Neuro Amplifier]]
+LANGUAGE["Gadget_Desc_neuro_amplifier"] = [[
+Adrenaline also increases 6% evasion.
+]]
+
+LANGUAGE["Gadget_ouroboros"] = [[Ouroboros]]
+LANGUAGE["Gadget_Desc_ouroboros"] = [[
+Ouroboros nervous system assistant.
+Removes body regulations to increase combat capabilities.
+
+When you have more than 50% health, you lose 1 health per second.
+When you have less than 50% health, you gain 2 health per second.
+For each 1% health missing, increase your damage by 0.8%.
+]]
+
+-- Heavy Gadgets
+LANGUAGE["Gadget_gadget_energy_shield"] = [[Energy Shield]]
+LANGUAGE["Gadget_Desc_energy_shield"] = [[
+Temporarily gain 25 armor.
+]]
+
+LANGUAGE["Gadget_gadget_hardening_injection"] = [[Hardening Injection]]
+LANGUAGE["Gadget_Desc_hardening_injection"] = [[
+Movespeed reduced by 50%.
+25% increased Global damage resistance.
+25% increased Physical damage resistance.
+]]
+
+LANGUAGE["Gadget_exoskeleton"] = [[Exoskeleton]]
+LANGUAGE["Gadget_Desc_exoskeleton"] = [[
+Using the active ability activates a short boost.
+
+You cannot run.
+Passively provides 20% increased Global damage resistance.
+]]
+
+LANGUAGE["Gadget_t_virus"] = [[T-Virus]]
+LANGUAGE["Gadget_Desc_t_virus"] = [[
+Converts your armor to health.
+Cannot convert pass 250% health.
+]]
+
+-- Medic Gadgets
+LANGUAGE["Gadget_gadget_life_diffuser"] = [[Life Diffuser]]
+LANGUAGE["Gadget_Desc_gadget_life_diffuser"] = [[
+Triggers a pulse that heals nearby players.
+Heals 20 health.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[Projectile Launcher (Heal)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
+Shoots a chemical projectile.
+Projectile deals 75 Poison damage.
+Projectile heals 25 health to nearby players.
+]]
+
+LANGUAGE["Gadget_healing_beam"] = [[Healing Beam]]
+LANGUAGE["Gadget_Desc_gadget_healing_beam"] = [[
+Connects a healing beam between the user and target.
+If the target is an enemy, leeches health from the target.
+If the target is an ally, restores health to the ally.
+]]
+
+-- Ghost Gadgets
+LANGUAGE["Gadget_gadget_optical_camouflage"] = [[Optical Camouflage]]
+LANGUAGE["Gadget_Desc_optical_camouflage"] = [[
+Grants Camouflage for 5 seconds.
+50% increased evasion during Camouflage.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_ballistic"] = [[Projectile Launcher (Ballistic)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
+Shoots a ballistic projectile.
+Projectile deals 150 Ballistic damage.
+Stuns enemy on hit.
+]]
+
+LANGUAGE["Gadget_death_mark"] = [[Death Mark]]
+LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
+Places a mark on the targeted enemy.
+Marked enemy takes 15% more damage.
+Marked enemy explodes on death, dealing damage based on its health.
+The mark lasts for 10 seconds.
+You can only mark 1 enemy at a time.
+]]
+
+LANGUAGE["Gadget_gunslinger"] = [[Gunslinger]]
+LANGUAGE["Gadget_Desc_gadget_gunslinger"] = [[
+25% more Pistol damage.
+25% more Pistol headshot damage.
+]]
+
+-- Demolition Gadgets
+LANGUAGE["Gadget_gadget_proximity_defense"] = [[Proximity Defense]]
+LANGUAGE["Gadget_Desc_proximity_defense"] = [[
+Triggers an explosion that Stuns nearby enemies.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[Projectile Launcher (Blast)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
+Shoots an explosive projectile.
+Projectile deals 100 Blast damage.
+Generates 3 extra explosions after a short delay.
+]]
+
+LANGUAGE["Gadget_nitrous_propellor"] = [[Nitrous Propellor]]
+LANGUAGE["Gadget_Desc_gadget_nitrous_propellor"] = [[
+Propells you forward and upward with a chemical explosion.
+]]
+
+LANGUAGE["Gadget_ied"] = [[IED]]
+LANGUAGE["Gadget_Desc_gadget_ied"] = [[
+Drops an Improvised Explosive Device on the ground.
+IED explodes when an enemy comes in range.
+You have 5 IED charges.
+IED recharges after detonation.
+]]
+
+-- Engineer Gadgets
+LANGUAGE["Gadget_displacer"] = [[Displacer]]
+LANGUAGE["Gadget_Desc_gadget_displacer"] = [[
+Instantly moves the targeted minion to your side.
+]]
+
+LANGUAGE["Gadget_gadget_turret_pack"] = [[Turret Pack]]
+LANGUAGE["Gadget_Desc_gadget_turret_pack"] = [[
+Deploys a temporary turret.
+Turret has 50% less health.
+Turret is destroyed when duration expires.
+]]
+
+LANGUAGE["Gadget_gadget_e_parasite"] = [[E-Parasite]]
+LANGUAGE["Gadget_Desc_gadget_e_parasite"] = [[
+Projects an E-Parasite capsule that infects enemies on contact.
+E-Parasite counts as a minion.
+E-Parasite deals continuous damage to enemies.
+You leech health from damage dealt by E-Parasite.
+Enemies killed while infected by E-Parasite explode on death.
+]]
+
+-- Berserker Gadgets
+LANGUAGE["Gadget_gadget_berserk_armor"] = [[Berserker Armor]]
+LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
+25% increased damage.
+25% increased Global damage resistance.
+25% increased move speed.
+]]
+
+LANGUAGE["Gadget_gadget_flash"] = [[Flash]]
+LANGUAGE["Gadget_Desc_flash"] = [[
+Dashes forward, dealing 100 Slashing damage to all enemies on the path.
+Provides a short invincibility frame.
+]]
+
+LANGUAGE["Gadget_gadget_aerial_guard"] = [[Aerial Guard]]
+LANGUAGE["Gadget_Desc_aerial_guard"] = [[
+While in air, take 65% less Physical damage.
+]]
+
+LANGUAGE["Gadget_gadget_hemocannon"] = [[Hemocannon]]
+LANGUAGE["Gadget_Desc_hemocannon"] = [[
+Shoots a projectile at the cost of 10 health.
+The projectile travels for a short distance and explodes.
+The explosion deals 100 Slashing damage.
+Has a maximum of 5 charges.
+Recharges after 5 seconds.
+]]
+
+-- Warden Gadgets
+LANGUAGE["Gadget_gadget_solar_array"] = [[Solar Array]]
+LANGUAGE["Gadget_Desc_gadget_solar_array"] = [[
+Drops an armor battery.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[Projectile Launcher (Shock)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
+Shoots a magnetic projectile that pierces enemies.
+Generates a shockwave each time the projectile hits an enemy.
+Shockwave deals 125 Shock damage.
+]]
+
+LANGUAGE["Gadget_watchtower_pack"] = [[Watchtower Pack]]
+LANGUAGE["Gadget_Desc_gadget_watchtower_pack"] = [[
+Deploys an extra watchtower.
+]]
+
+LANGUAGE["Gadget_shock_nova"] = [[Shock Nova]]
+LANGUAGE["Gadget_Desc_gadget_shock_nova"] = [[
+Warden Aura rapidly generates a series of shockwaves.
+Each shockwave deals 50 Shock damage.
+]]
+
+-- Cremator Gadgets
+LANGUAGE["Gadget_gadget_butane_can"] = [[Butane Can]]
+LANGUAGE["Gadget_Desc_gadget_butane_can"] = [[
+Drops a Butane Can that explodes on physical impact.
+Explosion deals 375 Fire damage.
+Only 1 Butane Can can be spawned at a time.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_fire"] = [[Projectile Launcher (Fire)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_fire"] = [[
+Shoots a flaming projectile.
+Ignites all enemies caught in the explosion.
+Deals 20 base Ignite damage.
+]]
+
+LANGUAGE["Gadget_barbeque"] = [[Barbeque]]
+LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
+Ignited enemies killed by you drop edible gibs.
+Each gib restores 5 health.
 ]]
