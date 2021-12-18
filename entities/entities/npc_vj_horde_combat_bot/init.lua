@@ -140,6 +140,11 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
 	return false
 end
 
+function ENT:DoRelationshipCheck(ent)
+    if ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid() then return false end
+    return true
+end
+
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2017 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,

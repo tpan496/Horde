@@ -82,6 +82,8 @@ function GM:PlayerGiveSWEP(ply,weapon,swep) return CheckAllowFeature() end
 
 function GM:HUDAmmoPickedUp(item, amount) return CheckAllowFeature() end
 
+function GM:ShowHelp(ply) StatsMenu(ply) end
+
 function GM:ShowTeam(ply) ConfigMenu(ply) end
 
 function GM:ShowSpare1(ply) Shop(ply) end

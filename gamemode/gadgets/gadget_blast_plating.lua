@@ -10,7 +10,7 @@ GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if ply:Horde_GetGadget() ~= "gadget_blast_plating" then return end
-    if dmginfo:GetDamageType() == DMG_BLAST then
+    if HORDE:IsBlastDamage(dmginfo) then
         bonus.resistance = bonus.resistance + 0.20
     end
 end

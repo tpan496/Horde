@@ -29,9 +29,9 @@ GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     end
 end
 
-GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, mv)
+GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus)
     if ply:Horde_GetGadget() ~= "gadget_hardening_injection" then return end
     if not ply.Horde_In_Hardening_Injection then return end
-    ply:SetWalkSpeed(ply:GetWalkSpeed() * 0.5)
-    ply:SetRunSpeed(ply:GetRunSpeed() * 0.5)
+    bonus.walkspd = bonus.walkspd * 0.5
+    bonus.sprintspd = bonus.sprintspd * 0.5
 end

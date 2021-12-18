@@ -9,7 +9,7 @@ local horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval / 2
 local horde_in_break = nil
 local horde_perk_progress = 1
 local horde_current_enemies_list = {}
-local horde_use_strong_mutation = nil
+local horde_force_spawn_enemies = {}
 
 HORDE.horde_boss = nil
 HORDE.horde_boss_name = nil
@@ -291,6 +291,10 @@ hook.Add("EntityRemoved", "Horde_EntityRemoved", function(ent)
             if count and count > 0 then
                 HORDE.spawned_enemies_count[ent:Horde_GetName()] = count - 1
             end
+            if ent.Horde_Forced_Spawn_Flag then
+                local name = ent.Horde_Forced_Spawn_Flag
+                table.insert(horde_force_spawn_enemies[name], math.random(1, HORDE.total_enemies_this_wave_fixed))
+            end
         end
     end
 end)
@@ -368,7 +372,11 @@ function HORDE:SpawnEnemy(enemy, pos)
     end
 
     if enemy.model_scale then
-        spawned_enemy:SetModelScale(enemy.model_scale)
+        timer.Simple(0, function()
+            if not spawned_enemy:IsValid() then return end
+            local scale = spawned_enemy:GetModelScale()
+            spawned_enemy:SetModelScale(enemy.model_scale * scale)
+        end)
     end
 
     if enemy.boss_properties and enemy.boss_properties.is_boss == true then
@@ -461,19 +469,19 @@ function HORDE:SpawnEnemy(enemy, pos)
         if mut_prob > 0 then
             local p = math.random()
             if p <= mut_prob then
-                local mut
-                if horde_use_strong_mutation then
-                    mut = HORDE.mutations_sequential_strong[math.random(1, #HORDE.mutations_sequential_strong)]
-                else
-                    mut = HORDE.mutations_sequential[math.random(1, #HORDE.mutations_sequential)]
-                end
+                local mut = HORDE.current_mutations[math.random(1, #HORDE.current_mutations)]
                 timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(mut) end)
             end
         end
     end
+
+    --[[spawned_enemy.DoRelationshipCheck = function (ent)
+        if ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid() then return true end
+        return false
+    end]]--
     
     --spawned_enemy:AddRelationship("player D_HT 99")
-    VJ_AddSpeed(spawned_enemy, 4)
+    --VJ_AddSpeed(spawned_enemy, 4)
     hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy
 end
@@ -620,7 +628,43 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                     return
                 end
 
+                -- Check if we need to force spawn
                 local renormalize = nil
+                for name, orders in pairs(horde_force_spawn_enemies) do
+                    for idx, order in pairs(orders) do
+                        if HORDE.total_enemies_this_wave < order then
+                            horde_force_spawn_enemies[name][idx] = nil
+                            -- Spawn
+                            local enemy = HORDE.enemies[name .. tostring(enemy_wave)]
+                            if enemy.spawn_limit and enemy.spawn_limit > 0 then
+                                -- Do not spawn if exceeds spawn limit
+                                local count = HORDE.spawned_enemies_count[name]
+                                if count and count >= enemy.spawn_limit then
+                                    renormalize = true
+                                    horde_current_enemies_list[name] = nil
+                                    goto cont3
+                                else
+                                    spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                                    table.insert(enemies, spawned_enemy)
+                                    spawned_enemy.Horde_Forced_Spawn_Flag = name
+                                    if count then
+                                        HORDE.spawned_enemies_count[name] = count + 1
+                                    else
+                                        HORDE.spawned_enemies_count[name] = 1
+                                    end
+                                    goto cont2
+                                end
+                            else
+                                spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+                                table.insert(enemies, spawned_enemy)
+                                spawned_enemy.Horde_Forced_Spawn_Flag = name
+                                goto cont2
+                            end
+                        end
+                    end
+                    ::cont3::
+                end
+
                 for name, weight in pairs(horde_current_enemies_list) do
                     p_cum = p_cum + weight
                     if p <= p_cum then
@@ -650,6 +694,8 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                     end
                     ::cont::
                 end
+
+                ::cont2::
 
                 if renormalize then
                     HORDE:NormalizeEnemiesWeightOnWave(horde_current_enemies_list)
@@ -835,7 +881,15 @@ function HORDE:WaveStart()
         end
     end
 
-    if HORDE.current_wave >= math.floor(HORDE.max_waves * 0.5) then horde_use_strong_mutation = true end
+    -- Get mutations
+    HORDE.current_mutations = {}
+    for _, mutation in pairs(HORDE.mutations_rand) do
+        if mutation.Wave and HORDE.current_wave >= mutation.Wave then
+            table.insert(HORDE.current_mutations, mutation.ClassName)
+        elseif not mutation.Wave then
+            table.insert(HORDE.current_mutations, mutation.ClassName)
+        end
+    end
     
     -- Additional custom scaling
     if GetConVar("horde_total_enemies_scaling"):GetInt() > 1 then
@@ -887,6 +941,10 @@ function HORDE:WaveStart()
             HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         end
     end
+
+    local enemy_wave = ((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1
+    horde_force_spawn_enemies = HORDE:GetForcedEnemiesOnWave(horde_current_enemies_list, enemy_wave, HORDE.total_enemies_this_wave_fixed)
+
     -- Close all the shop menus
     net.Start("Horde_ForceCloseShop")
     net.Broadcast()
@@ -894,13 +952,13 @@ function HORDE:WaveStart()
     if not HORDE.has_buy_zone then
         net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanBuy, 8)
-        net.WriteUInt(0, 3)
+        net.WriteUInt(0, 8)
         net.Broadcast()
     end
 
     for _, ent in pairs(ents.FindByClass("logic_horde_waves")) do
-        if ent.Wave == HORDE.current_wave or ent.Wave == -1 then
-            ent:Input("onwavestart", ent, ent, HORDE.current_wave)
+        if ent.Wave == current_wave or ent.Wave == -1 then
+            ent:Input("onwavestart", ent, ent, current_wave)
         end
     end
 end
@@ -1008,7 +1066,7 @@ function HORDE:WaveEnd()
     if not HORDE.has_buy_zone then
         net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanBuy, 8)
-        net.WriteUInt(1, 3)
+        net.WriteUInt(1, 8)
         net.Broadcast()
     end
 

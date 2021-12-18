@@ -10,7 +10,7 @@ GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if ply:Horde_GetGadget() ~= "gadget_detoxifier"  then return end
-    if dmginfo:GetDamageType() == DMG_POISON or dmginfo:GetDamageType() == DMG_ACID or dmginfo:GetDamageType() == DMG_NERVEGAS then
+    if HORDE:IsPoisonDamage(dmginfo) then
         bonus.resistance = bonus.resistance + 0.20
     end
 end

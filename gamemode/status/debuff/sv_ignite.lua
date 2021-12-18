@@ -45,3 +45,20 @@ end
 function entmeta:Horde_GetIgniteDamageTaken()
     return self.Horde_IgniteDamageTaken or 1
 end
+
+function entmeta:Horde_AddIgniteEffect(duration)
+    if self:IsPlayer() then
+        self:Ignite(duration, 0)
+        timer.Remove("Horde_RemoveIgnite" .. self:SteamID())
+        timer.Create("Horde_RemoveIgnite" .. self:SteamID(), duration, 1, function ()
+            self:Horde_RemoveIgnite()
+        end)
+    end
+end
+
+function entmeta:Horde_RemoveIgnite()
+    if not self:IsValid() then return end
+    if self:IsPlayer() then
+        self:Extinguish()
+    end
+end

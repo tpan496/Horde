@@ -4,7 +4,6 @@ function entmeta:Horde_AddBurst(damage, inflictor, attacker)
     if not self.Horde_BurstPower then self.Horde_BurstPower = 0 end
     self.Horde_BurstPower = self.Horde_BurstPower + damage
     if self.Horde_BurstPower >= 100 then
-        self.Burstned = true
         self.Horde_BurstPower = 0
         local dmginfo = DamageInfo()
         dmginfo:SetInflictor(inflictor)

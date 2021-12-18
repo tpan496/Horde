@@ -43,9 +43,9 @@ function plymeta:Horde_SetInBuyZone(can_buy)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanBuy, 8)
         if can_buy then
-            net.WriteUInt(1, 3)
+            net.WriteUInt(1, 8)
         else
-            net.WriteUInt(0, 3)
+            net.WriteUInt(0, 8)
         end
     net.Send(self)
 end
@@ -117,7 +117,7 @@ function plymeta:Horde_SetMinionCount(count)
     self.Horde_MinionCount = math.max(0,count)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Minion, 8)
-        net.WriteUInt(self.Horde_MinionCount, 3)
+        net.WriteUInt(self.Horde_MinionCount, 8)
     net.Send(self)
 end
 
@@ -133,7 +133,7 @@ end
 
 function plymeta:Horde_AddWeight(weight)
     if not self:IsValid() then return end
-    self.Horde_weight = (self.Horde_weight or 0) + weight
+    self.Horde_weight = math.max(0, (self.Horde_weight or 0) + weight)
 end
 
 function plymeta:Horde_AddSkullTokens(tokens)
@@ -156,7 +156,7 @@ function plymeta:Horde_GetDropEntities()
 end
 
 function plymeta:Horde_DropMoney()
-    if self:Horde_GetMoney() >= 50 then
+    if self:Horde_GetMoney() >= 50 and self:Alive() then
         self:Horde_AddMoney(-50)
         local money = ents.Create("horde_money")
         local pos = self:GetPos()
@@ -247,7 +247,7 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
         net.Start("Horde_SyncStatus")
             net.WriteUInt(HORDE.Status_ExpDisabled, 8)
-            net.WriteUInt(1, 3)
+            net.WriteUInt(1, 8)
         net.Send(ply)
     end
     
@@ -255,9 +255,9 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
         net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanBuy, 8)
         if HORDE.current_break_time > 0 then
-            net.WriteUInt(1, 3)
+            net.WriteUInt(1, 8)
         else
-            net.WriteUInt(0, 3)
+            net.WriteUInt(0, 8)
         end
         net.Send(ply)
     end
@@ -307,7 +307,7 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
 end)
 
 net.Receive("Horde_BuyItem", function (len, ply)
-    if not ply:IsValid() then return end
+    if not ply:IsValid() or not ply:Alive() then return end
     local class = net.ReadString()
     local price = HORDE.items[class].price
     local weight = HORDE.items[class].weight
@@ -474,13 +474,9 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     end
                 end
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_ARMOR then
-                if ply:Armor() >= ply:GetMaxArmor() then return end
-                ply:SetArmor(item.entity_properties.armor)
-                ply:Horde_AddMoney(-price)
-                ply:Horde_AddSkullTokens(-skull_tokens)
-                ply:Horde_SyncEconomy()
+                
                 if item.class == "armor100" or item.class == "armor150" then
-                    ply.Horde_Special_Armor = nil
+                    if ply:Armor() >= ply:GetMaxArmor() then return end
                 else
                     ply.Horde_Special_Armor = item.class
                     net.Start("Horde_SyncSpecialArmor")
@@ -488,6 +484,10 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         net.WriteUInt(1, 3)
                     net.Send(ply)
                 end
+                ply:SetArmor(item.entity_properties.armor)
+                ply:Horde_AddMoney(-price)
+                ply:Horde_AddSkullTokens(-skull_tokens)
+                ply:Horde_SyncEconomy()
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 ply:Horde_UnsetGadget()
                 ply:Horde_SetGadget(item.class)
@@ -607,22 +607,28 @@ end)
 
 net.Receive("Horde_SelectClass", function (len, ply)
     if not ply:IsValid() then return end
-    if HORDE.start_game and HORDE.current_break_time <= 0 then
-        net.Start("Horde_LegacyNotification")
-        net.WriteString("You cannot change class after a wave has started.")
-        net.WriteInt(1,2)
-        net.Send(ply)
-        return
-    end
-    if GetConVar("horde_testing_unlimited_class_change"):GetInt() == 0 and HORDE.player_class_changed[ply:SteamID()] then
-        net.Start("Horde_LegacyNotification")
-        net.WriteString("You cannot change class more than once per wave.")
-        net.WriteInt(1,2)
-        net.Send(ply)
-        return
+    if ply:Alive() then
+        if HORDE.start_game and HORDE.current_break_time <= 0 then
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("You cannot change class after a wave has started.")
+            net.WriteInt(1,2)
+            net.Send(ply)
+            return
+        end
+        if GetConVar("horde_testing_unlimited_class_change"):GetInt() == 0 and HORDE.player_class_changed[ply:SteamID()] then
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("You cannot change class more than once per wave.")
+            net.WriteInt(1,2)
+            net.Send(ply)
+            return
+        end
     end
     local name = net.ReadString()
     local class = HORDE.classes[name]
+
+    -- Clear status
+    net.Start("Horde_ClearStatus")
+    net.Send(ply)
 
     -- Drop all weapons
     ply:Horde_SetClass(class)
@@ -668,7 +674,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
 end)
 
 net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
-    if not ply:IsValid() then return end
+    if not ply:IsValid() or not ply:Alive() then return end
     local class = net.ReadString()
     local count = net.ReadUInt(4)
     if not ply:HasWeapon(class) then
@@ -689,7 +695,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
 end)
 
 net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
-    if not ply:IsValid() then return end
+    if not ply:IsValid() or not ply:Alive() then return end
     local class = net.ReadString()
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")

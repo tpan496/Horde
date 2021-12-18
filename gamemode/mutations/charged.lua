@@ -1,5 +1,6 @@
 MUTATION.PrintName = "Charged"
-MUTATION.Description = "25% more damage.\nDamage dealt is converted to Shock damage."
+MUTATION.Description = "Damage dealt is converted to Lightning damage.\nOnly randomly occurs starting from wave 6."
+MUTATION.Wave = 6
 
 MUTATION.Hooks = {}
 
@@ -21,7 +22,6 @@ end
 MUTATION.Hooks.EntityTakeDamage = function(ply, dmg)
     if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_GetMutation() == "charged" then
         dmg:SetDamageType(DMG_SHOCK)
-        dmg:ScaleDamage(1.25)
     end
 end
 

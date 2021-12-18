@@ -5,7 +5,7 @@ function plymeta:Horde_AddCamoflague()
     self.Horde_Camoflague = 1
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Camoflague, 8)
-        net.WriteUInt(1, 3)
+        net.WriteUInt(1, 8)
     net.Send(self)
 end
 
@@ -16,7 +16,7 @@ function plymeta:Horde_RemoveCamoflague()
     self.Horde_Camoflague = 0
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Camoflague, 8)
-        net.WriteUInt(0, 3)
+        net.WriteUInt(0, 8)
     net.Send(self)
 end
 
@@ -76,7 +76,7 @@ hook.Add("KeyPress", "Horde_CamoflagueOff", function(ply, key)
 end)
 
 hook.Add("PlayerTick", "Horde_CamoflagueOn", function(ply, mv)
-    if not ply:Horde_GetCamoflagueEnabled() then return end
+    if not ply:Horde_GetCamoflagueEnabled() or not ply:Alive() then return end
     if ply:Crouching() then
         if ply:Horde_GetCamoflague() == 1 or ply.Horde_ShouldCamoflague then return end
         ply.Horde_ShouldCamoflague = true
@@ -92,4 +92,10 @@ hook.Add("Horde_ResetStatus", "Horde_CamoflagueReset", function(ply)
     ply.Horde_Camoflague = 0
     ply.Horde_CamoflagueActivationTime = 0.5
     ply.Horde_RemoveCamoflagueOnRun = 1
+end)
+
+hook.Add("DoPlayerDeath", "Horde_CamoflagueDoPlayerDeath", function(victim)
+    if victim:IsPlayer() and victim:IsValid() then
+        victim:Horde_RemoveCamoflague()
+    end
 end)

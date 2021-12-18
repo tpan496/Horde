@@ -56,13 +56,20 @@ function ENT:CustomOnThink()
 
 	if SERVER then
 		if CurTime() >= self.NextTick then
-			local dmginfo = DamageInfo()
+			--[[local dmginfo = DamageInfo()
             dmginfo:SetAttacker(self)
             dmginfo:SetInflictor(ents.GetByIndex(0))
             dmginfo:SetDamageType(DMG_ACID)
             dmginfo:SetDamage(15)
             dmginfo:SetDamageForce(Vector(0,0,0))
-            util.BlastDamageInfo(dmginfo, self:GetPos(), 200)
+            util.BlastDamageInfo(dmginfo, self:GetPos(), 200)]]--
+
+			for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
+				if ent:IsPlayer() then
+					ent:Horde_AddDebuffBuildup(HORDE.Status_Break, 15)
+				end
+			end
+			
 			self.NextTick = CurTime() + 0.5
 			local e = EffectData()
 				e:SetOrigin(self:GetPos())

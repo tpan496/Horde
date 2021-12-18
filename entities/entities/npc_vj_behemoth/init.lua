@@ -27,11 +27,7 @@ ENT.SlowPlayerOnMeleeAttack = true -- If true, then the player will slow down
 ENT.SlowPlayerOnMeleeAttack_WalkSpeed = 100 -- Walking Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttack_RunSpeed = 100 -- Running Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttackTime = 5 -- How much time until player's Speed resets
-ENT.MeleeAttackBleedEnemy = true -- Should the player bleed when attacked by melee
-ENT.MeleeAttackBleedEnemyChance = 3 -- How chance there is that the play will bleed? | 1 = always
-ENT.MeleeAttackBleedEnemyDamage = 1 -- How much damage will the enemy get on every rep?
-ENT.MeleeAttackBleedEnemyTime = 1 -- How much time until the next rep?
-ENT.MeleeAttackBleedEnemyReps = 4 -- How many reps?
+ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
 ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
 ENT.MeleeAttackKnockBack_Forward1 = 100 -- How far it will push you forward | First in math.random
 ENT.MeleeAttackKnockBack_Forward2 = 130 -- How far it will push you forward | Second in math.random
@@ -190,6 +186,13 @@ function ENT:CustomOnThink()
 			dmg:SetDamageType(DMG_CRUSH)
 			dmg:SetDamage(45)
 			util.BlastDamageInfo(dmg, self:GetPos(), 500)
+
+			for _, ent in pairs(ents.FindInSphere(self:GetPos(), 450)) do
+				if ent:IsPlayer() then
+					ent:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 60)
+					ent:Horde_AddDebuffBuildup(HORDE.Status_Shock, 30)
+				end
+			end
 		end)
 		self.NextBlastTime = CurTime() + self.NextBlastCooldown
 	end
@@ -198,8 +201,6 @@ end
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(25, 25, 90), Vector(-25, -25, 0))
 	self:SetModelScale(1.25)
-	self:SetColor(100, 50, 50)
-	self:SetRenderMode(RENDERMODE_TRANSCOLOR)
 end
 
 

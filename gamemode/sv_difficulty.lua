@@ -22,7 +22,9 @@ HORDE.difficulty_health_multiplier = {1, 1.25, 1.5, 1.5, 1.55}
 local difficulty_start_money_multiplier = {1, 0.9, 0.8, 0.75, 0.6}
 local difficulty_spawn_radiuis_multiplier = {1, 0.75, 0.5, 0.5, 0.4}
 local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25, 1.25, 1.3}
-local difficulty_poison_headcrab_damage = {70, 80, 90, 90, 90}
+local difficulty_poison_headcrab_damage = {50, 60, 75, 75, 75}
+HORDE.difficulty_status_duration_bonus = {0, 1, 2, 3, 4}
+HORDE.difficulty_break_health_left = {0.25, 0.20, 0.15, 0.10, 0.10}
 
 -- Flat modifiers
 HORDE.difficulty_elite_health_scale_add = {0, 0.05, 0.075, 0.100, 0.125}
@@ -62,15 +64,10 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             if dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer() then
                 -- Prevent minions from hurting players
                 return true
-            end 
-            if dmg:GetDamageType() == DAMAGE_CRUSH then
+            end
+            if dmg:IsDamageType(DMG_CRUSH) then
                 -- Cap bullshit physics damage that can sometimes occur
                 dmg:SetDamage(math.min(dmg:GetDamage(),20))
-            end
-            if dmg:GetDamageType() == DMG_POISON or dmg:GetDamageType() == DMG_NERVEGAS then
-                -- Otherwise poison headcrabs can oneshot you
-                dmg:SetDamage(math.min(dmg:GetDamage(), difficulty_poison_headcrab_damage[HORDE.difficulty]))
-                return
             end
             
             if HORDE.endless == 1 then
@@ -85,7 +82,7 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
         elseif dmg:GetAttacker():IsPlayer() and dmg:GetAttacker() ~= target then
             -- Prevent PVP
             return true
-        elseif dmg:GetDamageType() == DAMAGE_CRUSH then
+        elseif dmg:IsDamageType(DMG_CRUSH) then
             dmg:SetDamage(math.min(dmg:GetDamage(), 20))
         end
     elseif target:GetNWEntity("HordeOwner"):IsPlayer() then
@@ -93,7 +90,7 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             -- Prevent player / player minions from damaging minions
             return true
         else
-            if dmg:GetDamageType() == DMG_POISON or dmg:GetDamageType() == DMG_NERVEGAS then
+            if dmg:GetAttacker():GetClass() == "npc_headcrab_poison" then
                 dmg:SetDamage(math.min(dmg:GetDamage(), difficulty_poison_headcrab_damage[HORDE.difficulty]))
             end
             
@@ -113,6 +110,16 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
 
             if dmg:GetAttacker():GetVar("damage_scale") then
                 dmg:ScaleDamage(dmg:GetAttacker():GetVar("damage_scale"))
+            end
+        end
+    elseif target:IsNPC() then
+        if not dmg:GetAttacker():IsNPC() then return end
+        if dmg:IsDamageType(DMG_POISON) and dmg:GetAttacker():GetClass() == "npc_headcrab_poison" then
+            dmg:SetDamage(0)
+        elseif dmg:IsDamageType(DMG_SHOCK) or dmg:IsDamageType(DMG_REMOVENORAGDOLL) then
+            local c = dmg:GetAttacker():GetClass()
+            if c == "npc_vj_horde_screecher" or c == "npc_vj_horde_weeper" then
+                dmg:SetDamage(0)
             end
         end
     end

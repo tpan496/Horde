@@ -1,23 +1,28 @@
 PERK.PrintName = "Ghost Veil"
-PERK.Description = "Attacking does not cancel Camoflague.\n{1} increased Camoflague activation speed.\n{2} increased damage when you have Camoflague."
+PERK.Description = "Attacking does not cancel Camoflague.\n{1} increased walk speed when you have Camoflague.\n{2} increased Ballistic damage when you have Camoflague."
 PERK.Icon = "materials/perks/ghost_veil.png"
 PERK.Params = {
-    [1] = {value = 1, percent = true},
-    [2] = {value = 0.10, percent = true},
+    [1] = {value = 0.15, percent = true},
+    [2] = {value = 0.1, percent = true}
 }
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "ghost_ghost_veil" then
-        ply:Horde_SetCamoflagueActivationTime(0.25)
         ply:Horde_SetRemoveCamoflagueOnAttack(0)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "ghost_ghost_veil" then
-        ply:Horde_SetCamoflagueActivationTime(0.5)
         ply:Horde_SetRemoveCamoflagueOnAttack(1)
+    end
+end
+
+PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus)
+    if not ply:Horde_GetPerk("ghost_ghost_veil") or not ply:Horde_GetCamoflagueEnabled() then return end
+    if ply:Horde_GetCamoflague() == 1 then
+        bonus.walkspd = bonus.walkspd * 1.15
     end
 end
 

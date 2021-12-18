@@ -9,7 +9,7 @@ ENT.Model = {"models/horde/hulk/hulk.mdl"} -- The game will pick a random model 
 ENT.StartHealth = 5500
 ENT.HullType = HULL_MEDIUM_TALL
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
@@ -51,12 +51,23 @@ ENT.RunAwayOnUnknownDamage = false
 ENT.InvestigateSoundDistance = 100 -- How far away can the SNPC hear sounds? | This number is timed by the calculated volume of the detectable sound.
 ENT.FindEnemy_CanSeeThroughWalls = true -- Should it be able to see through walls and objects? | Can be useful if you want to make it know where the enemy is at all times
 ENT.AnimationPlaybackRate = 1.25
+
+ENT.GeneralSoundPitch1 = 60
+ENT.GeneralSoundPitch2 = 65
+
+ENT.HasWorldShakeOnMove = true -- Should the world shake when it's moving?
+ENT.WorldShakeOnMoveAmplitude = 10 -- How much the screen will shake | From 1 to 16, 1 = really low 16 = really high
+ENT.WorldShakeOnMoveRadius = 300 -- How far the screen shake goes, in world units
+ENT.WorldShakeOnMoveDuration = 0.4 -- How long the screen shake will last, in seconds
+ENT.WorldShakeOnMoveFrequency = 100 -- Just leave it to 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
     self:SetCollisionBounds(Vector(18, 18, 90), Vector(-18, -18, 0))
     self:SetSkin(math.random(0,3))
     self:SetColor(Color(255,0,255))
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
+    self:AddRelationship("npc_headcrab_poison D_LI 99")
+	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()

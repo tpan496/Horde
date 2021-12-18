@@ -319,7 +319,7 @@ function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
     -- Entire 
-    if ScrW() < 1400 then
+    if ScrH() < 1080 then
         draw.RoundedBox(0, 0, 0, w, h, Color(40,40,40))
     else
         draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)

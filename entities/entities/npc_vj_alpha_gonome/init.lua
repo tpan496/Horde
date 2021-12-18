@@ -1,7 +1,5 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
-include('autorun/vj_controls.lua')
-
 
 -- Core
 ENT.Model = {"models/horde/gonome/gonome.mdl"}
@@ -54,11 +52,7 @@ ENT.MeleeAttackDamage = 40
 ENT.SlowPlayerOnMeleeAttack = true -- If true, then the player will slow down
 ENT.SlowPlayerOnMeleeAttack_WalkSpeed = 100 -- Walking Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttack_RunSpeed = 100 -- Running Speed when Slow Player is on
-ENT.MeleeAttackBleedEnemy = true -- Should the player bleed when attacked by melee
-ENT.MeleeAttackBleedEnemyChance = 3 -- How chance there is that the play will bleed? | 1 = always
-ENT.MeleeAttackBleedEnemyDamage = 1 -- How much damage will the enemy get on every rep?
-ENT.MeleeAttackBleedEnemyTime = 1 -- How much time until the next rep?
-ENT.MeleeAttackBleedEnemyReps = 4 -- How many reps?
+ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 ENT.MeleeAttackWorldShakeOnMiss = true
 ENT.MeleeAttackWorldShakeOnMissAmplitude = 8
@@ -167,6 +161,8 @@ ENT.SoundTbl_Death = {"horde/gonome/gonome_death.wav"}
 function ENT:CustomOnInitialize()
     self:SetCollisionBounds(Vector(20, 20, 85), Vector(-20, -20, 0))
     self:SetSkin(1)
+    self:AddRelationship("npc_headcrab_poison D_LI 99")
+	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(TheProjectile)

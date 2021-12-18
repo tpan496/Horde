@@ -1,5 +1,5 @@
 PERK.PrintName = "Deus Ex Machina"
-PERK.Description = "Watchtowers have Warden Aura.\nWatchtowers generate a shockwave every {1} seconds.\nShockwave deals {2} Shock damage."
+PERK.Description = "Watchtowers have Warden Aura.\nWatchtowers generate a shockwave every {1} seconds.\nShockwave deals {2} Lightning damage."
 PERK.Icon = "materials/perks/ex_machina.png"
 PERK.Params = {
     [1] = {value = 2},

@@ -13,7 +13,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         ply:Horde_AddEntropyShield()
     end
 end
-
+ 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "cremator_entropy_shield" then
         ply:Horde_SetEntropyShieldEnabled(nil)

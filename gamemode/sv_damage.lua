@@ -143,16 +143,16 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
         local armor = ply.Horde_Special_Armor
         local dmgtype = dmg:GetDamageType()
         if armor == "armor_assault" then
-            if dmgtype == DMG_BULLET or dmgtype == DMG_BUCKSHOT or dmgtype == DMG_SNIPER then
+            if HORDE:IsBallisticDamage(dmg) then
                 bonus.resistance = bonus.resistance + 0.08
             end
         elseif armor == "armor_heavy" then
         elseif armor == "armor_medic" then
-            if dmgtype == DMG_NERVEGAS or dmgtype == DMG_POISON or dmgtype == DMG_ACID or dmgtype == DMG_PARALYZE then
+            if HORDE:IsPoisonDamage(dmg) then
                 bonus.resistance = bonus.resistance + 0.08
             end
         elseif armor == "armor_demolition" then
-            if dmgtype == DMG_BLAST then
+            if HORDE:IsBlastDamage(dmg) then
                 bonus.resistance = bonus.resistance + 0.08
             end
         elseif armor == "armor_ghost" then
@@ -160,11 +160,11 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
         elseif armor == "armor_engineer" then
             bonus.resistance = bonus.resistance + 0.05
         elseif armor == "armor_warden" then
-            if dmgtype == DMG_SHOCK or dmgtype == DMG_SONIC then
+            if HORDE:IsLightningDamage(dmg) then
                 bonus.resistance = bonus.resistance + 0.08
             end
         elseif armor == "armor_cremator" then
-            if dmgtype == DMG_BURN or dmgtype == DMG_SLOWBURN then
+            if HORDE:IsFireDamage(dmg) then
                 bonus.resistance = bonus.resistance + 0.08
             end
         elseif armor == "armor_berserker" then
@@ -180,6 +180,47 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     dmg:SubtractDamage(bonus.block)
 
     if dmg:GetDamage() <= 0.5 then return true end
+
+    bonus = {apply = 1, more = 1}
+    local debuff = nil
+    if dmg:GetDamage() > 0 then
+        if HORDE:IsPoisonDamage(dmg) then
+            debuff = HORDE.Status_Break
+            bonus.more = 2
+        elseif HORDE:IsFireDamage(dmg) then
+            debuff = HORDE.Status_Ignite
+            bonus.more = 2
+        elseif HORDE:IsLightningDamage(dmg) then
+            debuff = HORDE.Status_Shock
+            bonus.more = 2
+        elseif HORDE:IsColdDamage(dmg) then
+            debuff = HORDE.Status_Frostbite
+            bonus.more = 2
+            local effectdata = EffectData()
+                effectdata:SetOrigin(ply:GetPos() + ply:GetUp() * 50)
+                effectdata:SetScale(10)
+                effectdata:SetMagnitude(10)
+		    util.Effect("GlassImpact", effectdata, true, true)
+		    util.Effect("GlassImpact", effectdata, true, true)
+        end
+
+        if not debuff then return end
+        hook.Run("Horde_OnPlayerDebuffApply", ply, debuff, bonus, dmg:GetAttacker())
+
+        if bonus.apply == 1 then
+            local buildup = dmg:GetDamage() * bonus.more
+            local class = dmg:GetAttacker():GetClass()
+            if class == "npc_headcrab_poison" or class == "npc_headcrab_black" then
+                dmg:SetDamage(1)
+                if debuff == HORDE.Status_Break then
+                    buildup = ply:Health() * 2
+                end
+            else
+                buildup = math.min(85, buildup)
+            end
+            ply:Horde_AddDebuffBuildup(debuff, buildup)
+        end
+    end
 end)
 
 hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function (target, dmg)
@@ -204,29 +245,9 @@ hook.Add("EntityTakeDamage", "Horde_SplashDamage", function (target, dmg)
     end
 end)
 
--- Hulk headshot multiplier reduction
-hook.Add("ScaleNPCDamage", "Horde_MutatedHulkDamage", function (npc, hitgroup, dmg)
-    if npc:IsValid() and npc:GetClass() == "npc_vj_mutated_hulk" then
-        if hitgroup == HITGROUP_HEAD then
-            dmg:ScaleDamage(0.65)
-        end
-    end
-end)
-
--- Gonome headshot multiplier reduction
-hook.Add("ScaleNPCDamage", "Horde_GonomeDamage", function (npc, hitgroup, dmg)
-    if npc:IsValid() and npc:GetClass() == "npc_vj_alpha_gonome" then
-        if hitgroup == HITGROUP_HEAD then
-            dmg:ScaleDamage(0.65)
-        end
-    end
-end)
-
--- Host headshot multiplier reduction
-hook.Add("ScaleNPCDamage", "Horde_HostDamage", function (npc, hitgroup, dmg)
-    if npc:IsValid() and npc:Horde_GetName() == "Host" then
-        if hitgroup == HITGROUP_HEAD then
-            dmg:ScaleDamage(0.65)
-        end
+-- Boss headshot multiplier reduction
+hook.Add("ScaleNPCDamage", "Horde_BossHeadshotDamage", function (npc, hitgroup, dmg)
+    if npc:IsValid() and npc:Horde_GetBossProperties() and hitgroup == HITGROUP_HEAD then
+        dmg:ScaleDamage(0.70)
     end
 end)

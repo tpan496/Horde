@@ -10,7 +10,7 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "demolition_base" then
         timer.Create("Horde_DemolitionBase" .. ply:SteamID(), 30, 0, function ()
-            if not ply:IsValid() then return end
+            if not ply:IsValid() or not ply:Alive() then return end
             if not ply:HasWeapon("weapon_frag") then
                 ply:Give("weapon_frag", ply:GetAmmoCount("Grenade") > 0)
             end
@@ -26,7 +26,7 @@ end
 
 PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("demolition_base")  then return end
-    if dmginfo:GetDamageType() == DMG_BLAST then
+    if HORDE:IsBlastDamage(dmginfo) then
         bonus.resistance = bonus.resistance + 0.85
     end
 end

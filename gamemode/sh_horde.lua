@@ -68,12 +68,13 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.1.0.0"
+HORDE.version = "1.1.1.0"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
 HORDE.color_crimson_dim = Color(200, 0, 40)
 HORDE.color_crimson_dark = Color(100,0,0)
+HORDE.color_crimson_violet = Color(146, 43, 62)
 HORDE.color_gadget_active = HORDE.color_crimson
 HORDE.color_hollow = Color(40,40,40,225)
 HORDE.color_hollow_dim = Color(80, 80, 80, 225)
@@ -84,7 +85,7 @@ HORDE.color_none = Color(0,0,0,0)
 HORDE.color_config_btn = Color(40,40,40)
 HORDE.start_game = false
 HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42, 45}
---HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+--HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 -- Director
 HORDE.difficulty = 1

@@ -18,7 +18,7 @@ function EFFECT:Init(effectdata)
 		particle:SetEndSize(200)
 		particle:SetRoll(math.Rand(-360, 360))
 		particle:SetRollDelta(math.Rand(-4.5, 4.5))
-		particle:SetColor(200, 50, 50)
+		particle:SetColor(200,50,200)
 	end
 	local ringstart = pos + normal * -3
 	for i=1, 3 do
@@ -32,7 +32,7 @@ function EFFECT:Init(effectdata)
 		particle:SetAngles(normal:Angle())
 		particle = emitter2:Add("effects/select_ring", ringstart)
 		particle:SetDieTime(0.2 + i * 0.1)
-		particle:SetColor(200, 50, 50)
+		particle:SetColor(200,50,200)
 		particle:SetStartAlpha(255)
 		particle:SetEndAlpha(150)
 		particle:SetStartSize(0)

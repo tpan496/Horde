@@ -19,7 +19,7 @@ function EFFECT:Think()
     if self.emitter then
         local particle = self.emitter:Add("sprites/glow04_noz", pos)
         particle:SetDieTime(0.1)
-        particle:SetColor(200, 50, 50)
+        particle:SetColor(200,50,200)
         particle:SetStartAlpha(255)
         particle:SetEndAlpha(255)
         particle:SetStartSize(self.radius)

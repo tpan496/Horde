@@ -1,5 +1,5 @@
 MUTATION.PrintName = "Nemesis"
-MUTATION.Description = "Explodes on death.\nDeals 25% maximum health as poison damage."
+MUTATION.Description = "Leaves behind poisonous clouds on death."
 
 MUTATION.Hooks = {}
 
@@ -22,19 +22,29 @@ end
 
 MUTATION.Hooks.Horde_OnEnemyKilled = function(victim, killer, weapon)
     if victim:Horde_GetMutation() == "nemesis" then
-        local e = EffectData()
-		    e:SetOrigin(victim:GetPos())
-	    util.Effect("nemesis_explosion", e, true, true)
-
-        local dmginfo = DamageInfo()
-        dmginfo:SetInflictor(killer)
-		dmginfo:SetAttacker(victim)
-		dmginfo:SetDamageType(DMG_ACID)
-		dmginfo:SetDamage(math.min(victim:GetMaxHealth() * 0.25, 50))
-        dmginfo:SetDamageForce(Vector(0,0,0))
-        util.BlastDamageInfo(dmginfo, victim:GetPos(), 250)
-
-        sound.Play("vj_acid/acid_splat.wav", victim:GetPos())
+        local victim_pos = victim:GetPos()
+        for i =0,10 do
+            timer.Simple(0.5 + i * 0.2, function ()
+                local rand = VectorRand()
+                if rand.z < 0 then rand.z = -rand.z end
+                local pos = victim_pos + rand * math.Rand(10, 50)
+                for _, e1 in pairs(ents.FindInSphere(pos, 150)) do
+                    if e1:IsPlayer() then
+                        local dmginfo = DamageInfo()
+                        dmginfo:SetDamage(5)
+                        dmginfo:SetAttacker(Entity(0))
+                        dmginfo:SetInflictor(Entity(0))
+                        dmginfo:SetDamagePosition(pos)
+                        dmginfo:SetDamageType(DMG_ACID)
+                        e1:TakeDamageInfo(dmginfo)
+                    end
+                end
+                local e = EffectData()
+                    e:SetOrigin(pos)
+                util.Effect("corruption", e, true, true)
+                sound.Play("ambient/levels/canals/toxic_slime_sizzle2.wav", pos)
+            end)
+        end
     end
 end
 

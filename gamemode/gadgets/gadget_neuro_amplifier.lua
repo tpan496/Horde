@@ -10,7 +10,7 @@ GADGET.Params = {
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmg, bonus)
-    if ply:Horde_GetAdrenalineStack() > 0 and ply:Horde_GetGadget() == "gadget_neuro_amplifier" then
+    if SERVER and ply:Horde_GetAdrenalineStack() > 0 and ply:Horde_GetGadget() == "gadget_neuro_amplifier" then
         bonus.evasion = bonus.evasion + ply:Horde_GetAdrenalineStack() * 0.06
     end
 end

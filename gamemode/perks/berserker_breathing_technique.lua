@@ -20,7 +20,7 @@ end
 
 PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("berserker_breathing_technique") then return end
-    if dmginfo:GetDamageType() == DMG_NERVEGAS or dmginfo:GetDamageType() == DMG_ACID or dmginfo:GetDamageType() == DMG_POISON then
+    if HORDE:IsPoisonDamage(dmginfo) then
         bonus.resistance = bonus.resistance + 1.0
     end
 end

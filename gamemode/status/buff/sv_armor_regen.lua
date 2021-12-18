@@ -6,7 +6,7 @@ function plymeta:Horde_AddArmorRegen()
     self.Horde_ArmorRegenCurTime = CurTime()
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_ArmorRegen, 8)
-        net.WriteUInt(1, 3)
+        net.WriteUInt(1, 8)
     net.Send(self)
 end
 
@@ -17,7 +17,7 @@ function plymeta:Horde_RemoveArmorRegen()
     self.Horde_ArmorRegenCurTime = CurTime()
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_ArmorRegen, 8)
-        net.WriteUInt(0, 3)
+        net.WriteUInt(0, 8)
     net.Send(self)
 end
 
@@ -55,7 +55,7 @@ function plymeta:Horde_SetArmorRegenEnabled(enabled)
 end
 
 hook.Add("PlayerTick", "Horde_ArmorRegen", function(ply, mv)
-    if not ply:Horde_GetArmorRegenEnabled() then return end
+    if not ply:Horde_GetArmorRegenEnabled() or not ply:Alive() then return end
     if ply:Armor() >= ply:Horde_GetArmorRegenMax() then
         ply:Horde_RemoveArmorRegen()
         return

@@ -53,20 +53,20 @@ vgui.Register("HordePlayerReadyPanel", PANEL, "DPanel")
 
 HORDE.PlayerReadyPanel = vgui.Create("HordePlayerReadyPanel")
 HORDE.HelpPanel = vgui.Create("DPanel")
-HORDE.HelpPanel:SetSize(400, 50)
+HORDE.HelpPanel:SetSize(500, 50)
 HORDE.HelpPanel:SetPos(ScrW() / 2 - 200, ScrH() - 75)
 HORDE.HelpPanel.Paint = function (w,h)
     if HORDE.current_wave > 0 then
         local text = translate.Get("Game_HintBottom")
         if not text or not surface.GetTextSize(text) then return end
-        local len = math.min(400, surface.GetTextSize(text) * 1.5)
-        draw.RoundedBox(10, math.max(0, 200 - len/2), 0, len, 50, HORDE.color_hollow)
+        local len = math.min(500, surface.GetTextSize(text) * 1.5)
+        draw.RoundedBox(10, math.max(0, 250 - len/2), 0, len, 50, HORDE.color_hollow)
         draw.SimpleText(text, "Info", math.max(0, 200 - len/2) + len / 2, 13, HORDE.color_white, TEXT_ALIGN_CENTER)
     else
         local text = translate.Get("Game_HintBottomReady")
         if not text  or not surface.GetTextSize(text) then return end
-        local len = math.min(400, surface.GetTextSize(text) * 1.5)
-        draw.RoundedBox(10, math.max(0, 200 - len/2), 0, len, 50, HORDE.color_hollow)
+        local len = math.min(500, surface.GetTextSize(text) * 1.5)
+        draw.RoundedBox(10, math.max(0, 250 - len/2), 0, len, 50, HORDE.color_hollow)
         draw.SimpleText(text, "Info", math.max(0, 200 - len/2) + len / 2, 13, HORDE.color_white, TEXT_ALIGN_CENTER)
     end
 end
