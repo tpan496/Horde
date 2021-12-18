@@ -11,7 +11,7 @@ function plymeta:Horde_AddBerserk(duration)
     self.Horde_Berserk = 1
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Berserk, 8)
-        net.WriteUInt(1, 3)
+        net.WriteUInt(1, 8)
     net.Send(self)
 end
 
@@ -21,7 +21,7 @@ function plymeta:Horde_RemoveBerserk()
     self.Horde_Berserk = 0
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Berserk, 8)
-        net.WriteUInt(0, 3)
+        net.WriteUInt(0, 8)
     net.Send(self)
 end
 
@@ -35,11 +35,11 @@ hook.Add("Horde_OnPlayerDamage", "Horde_BerserkDamage", function (ply, npc, bonu
     end
 end)
 
-hook.Add("Horde_PlayerMoveBonus", "Horde_BerserkMovespeed", function(ply, mv)
+hook.Add("Horde_PlayerMoveBonus", "Horde_BerserkMovespeed", function(ply, bonus)
     if ply:Horde_GetBerserk() == 1 then
-        local bonus = (1 + 0.15 * (1 + ply:Horde_GetApplyBuffMore()))
-        ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus)
-        ply:SetRunSpeed(ply:Horde_GetClass().sprintspd * bonus)
+        local bonus2 = 1 + 0.15 * (1 + ply:Horde_GetApplyBuffMore())
+        bonus.walkspd = bonus.walkspd * bonus2
+        bonus.sprintspd = bonus.sprintspd * bonus2
     end
 end)
 

@@ -22,8 +22,8 @@ LANGUAGE["Game_Difficulty_REALISM"] = "REALISM"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "NIGHTMARE"
 LANGUAGE["Game_Difficulty_APOCALYPSE"] = "APOCALYPSE"
 LANGUAGE["Game_Enemies"] = "Enemies"
-LANGUAGE["Game_HintBottomReady"] = "F3 - Shop/Perk, F4 - Ready"
-LANGUAGE["Game_HintBottom"] = "F3 - Shop/Perk, V - Drop $"
+LANGUAGE["Game_HintBottomReady"] = "F2 - Info/Config, F3 - Shop/Perk, F4 - Ready"
+LANGUAGE["Game_HintBottom"] = "F2 - Info/Config, F3 - Shop/Perk, V - Drop $"
 LANGUAGE["Game_Result_VICTORY"] = "VICTORY"
 LANGUAGE["Game_Result_DEFEAT"] = "DEFEAT"
 LANGUAGE["Game_Result_Change Map"] = "Change Map"
@@ -119,6 +119,8 @@ LANGUAGE["Class_Cremator"] = "Cremator"
 LANGUAGE["Gadget_Activation"] = "Press T to activate."
 LANGUAGE["Gadget_Cooldown"] = "Cooldown"
 LANGUAGE["Gadget_Duration"] = "Duration"
+LANGUAGE["Gadget_Owned_Warning"] = "Only 1 Gadget can be OWNED!"
+LANGUAGE["Gadget_Seconds"] = "seconds"
 
 -- Default Class Extra Descriptions
 LANGUAGE["Class_Description_Survivor"] = [[
@@ -382,12 +384,14 @@ LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposition]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Phase Walk]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
 Running does not cancel Camoflague.
-25% increased movement speed when you have Camoflague.]]
+{1} increased movement speed when you have Camoflague.
+{2} increased evasion when you have Camoflague.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Ghost Veil]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
 Attacking does not cancel Camoflague.
-100% increased Camoflague activation speed.]]
+{1} increased walk speed when you have Camoflague.
+{2} increased Ballistic damage when you have Camoflague.]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Disposal]]
 LANGUAGE["Perk_Title_ghost_coup"] = [[Coup De Grace]]
@@ -491,7 +495,7 @@ LANGUAGE["Perk_Title_warden_ex_machina"] = [[Deus Ex Machina]]
 LANGUAGE["Perk_warden_ex_machina"] = [[
 Watchtowers have Warden Aura.
 Watchtowers generate a shockwave every {1} seconds.
-Shockwave deals {2} Shock damage.]]
+Shockwave deals {2} Lightning damage.]]
 
 LANGUAGE["Perk_Title_warden_resonance_cascade"] = [[Resonance Cascade]]
 LANGUAGE["Perk_warden_resonance_cascade"] = [[
@@ -892,8 +896,8 @@ A standard frag grenade.
 Good for crowd control.
 ]]
 
-LANGUAGE["Item_Resistance RPG"] = [[Resistance RPG]]
-LANGUAGE["Item_Desc_Resistance RPG"] = [[
+LANGUAGE["Item_DamageResistance RPG"] = [[Resistance RPG]]
+LANGUAGE["Item_Desc_DamageResistance RPG"] = [[
 Laser-guided rocket propulsion device.
 ]]
 
@@ -1013,7 +1017,7 @@ LANGUAGE["Item_Watchtower MKIII"] = [[Watchtower MKIII]]
 LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
 A watchtower that deters enemies.
 Shocks 1 nearby enemy every 1 second.
-Does 100 shock damage.
+Does 100 Lightning damage.
 (Entity Class: horde_watchtower_mk3)
 ]]
 
@@ -1049,8 +1053,8 @@ Brrrrrrrrrrrrrrrr.
 Hold RMB to saw through enemies.
 ]]
 
-LANGUAGE["Item_Mjollner"] = [[Mjollner]]
-LANGUAGE["Item_Desc_Mjollner"] = [[
+LANGUAGE["Item_Mjollnir"] = [[Mjollner]]
+LANGUAGE["Item_Desc_Mjollnir"] = [[
 A warhammer embued with electric energy.
 
 Press RMB to charge the weapon.
@@ -1170,7 +1174,7 @@ LANGUAGE["Item_Desc_Battle Vest"] = [[
 Distinguished Berserker armor.
 
 Fills up 100% of your armor bar.
-Provides 8% increased Slashing/Blunt damage resistance.
+Provides 8% increased Slashing and Blunt damage resistance.
 ]]
 
 -- Gadgets
@@ -1181,7 +1185,7 @@ LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
 
 LANGUAGE["Gadget_gadget_shock_plating"] = [[Shock Plating]]
 LANGUAGE["Gadget_Desc_gadget_shock_plating"] = [[
-20% increased Shock and Sonic damage resistance.
+20% increased Lightning damage resistance.
 ]]
 
 LANGUAGE["Gadget_gadget_heat_plating"] = [[Heat Plating]]
@@ -1190,13 +1194,13 @@ LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_detoxifier"] = [[Detoxifier]]
-LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
 20% increased Poison damage resistance.
 ]]
 
 LANGUAGE["Gadget_gadget_diamond_plating"] = [[Diamond Plating]]
-LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
-10% increased Physical damage resistance.
+LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
+15% increased Physical damage resistance.
 ]]
 
 LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Corporate Mindset]]
@@ -1408,7 +1412,7 @@ LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[Projectile Launcher (Sho
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
 Shoots a magnetic projectile that pierces enemies.
 Generates a shockwave each time the projectile hits an enemy.
-Shockwave deals 125 Shock damage.
+Shockwave deals 125 Lightning damage.
 ]]
 
 LANGUAGE["Gadget_watchtower_pack"] = [[Watchtower Pack]]
@@ -1419,7 +1423,7 @@ Deploys an extra watchtower.
 LANGUAGE["Gadget_shock_nova"] = [[Shock Nova]]
 LANGUAGE["Gadget_Desc_gadget_shock_nova"] = [[
 Warden Aura rapidly generates a series of shockwaves.
-Each shockwave deals 50 Shock damage.
+Each shockwave deals 50 Lightning damage.
 ]]
 
 -- Cremator Gadgets

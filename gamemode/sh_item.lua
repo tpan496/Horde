@@ -128,6 +128,7 @@ end
 function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_detoxifier", 1500, 0, nil, {Medic=4})
     HORDE:CreateGadgetItem("gadget_heat_plating", 1500, 0, nil, {Cremator=4})
+    HORDE:CreateGadgetItem("gadget_arctic_plating", 1500, 0, nil)
     HORDE:CreateGadgetItem("gadget_shock_plating", 1500, 0, nil, {Warden=4})
     HORDE:CreateGadgetItem("gadget_blast_plating", 1500, 0, nil, {Demolition=4})
     HORDE:CreateGadgetItem("gadget_diamond_plating", 1750, 0, nil, {Berserker=3,Heavy=3})
@@ -365,7 +366,7 @@ function HORDE:GetDefaultItemsData()
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png")
     HORDE:CreateItem("Special",    "Watchtower MKII",  "horde_watchtower_mk2", 1000,  2, "A watchtower that provides resupply.\nGenerates 1 health vial every 30 seconds.\n(Entity Class: horde_watchtower_mk2)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png")
-    HORDE:CreateItem("Special",    "Watchtower MKIII",  "horde_watchtower_mk3",1500,  3, "A watchtower that deters enemies.\nShocks 1 nearby enemy every 1 second.\nDoes 100 shock damage.\n(Entity Class: horde_watchtower_mk3)",
+    HORDE:CreateItem("Special",    "Watchtower MKIII",  "horde_watchtower_mk3",1500,  3, "A watchtower that deters enemies.\nShocks 1 nearby enemy every 1 second.\nDoes 100 Lightning damage.\n(Entity Class: horde_watchtower_mk3)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png", {Warden=3})
     HORDE:CreateItem("Special",    "Tau Cannon",      "horde_tau",         2500,  7, "A device that uses electromagnetism to ionize particles.\nHold RMB to charge and release a powerful shot.\nDeals more damage as you charge.\nDevice explodes if you overcharge.",
     {Cremator=true}, 3, -1, nil, nil, {Cremator=3})

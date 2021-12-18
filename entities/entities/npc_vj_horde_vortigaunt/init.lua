@@ -19,7 +19,7 @@ ENT.SightDistance = 8000
 ENT.HullType = HULL_HUMAN
 ENT.PlayerFriendly = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.AllowIgnition = false -- Can this SNPC be set on fire?
 ENT.Immune_AcidPoisonRadiation = false -- Immune to Acid, Poison and Radiation
@@ -94,20 +94,34 @@ ENT.SoundTbl_OnPlayerSight = {
 "vo/npc/vortigaunt/putaside.wav",
 }
 ENT.DisableDefaultRangeAttackCode = true
+ENT.DisableMakingSelfEnemyToNPCs = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
     
 end
 
+function ENT:OnRemove()
+    self:StopSound("npc/vort/attack_charge.wav")
+end
+
+function ENT:DoRelationshipCheck(ent)
+    if ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid() then return false end
+    return true
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomRangeAttackCode()
 	local ene = self:GetEnemy()
+    if not ene:IsValid() or ene:IsPlayer() then return false end
 	if ene:GetPos():Distance(self:GetPos()) <= self.RangeDistance then
         local chargeSound = CreateSound(self, "npc/vort/attack_charge.wav");
         chargeSound:Play()
         local pos = ene:GetPos() + ene:OBBCenter()
         timer.Simple(1.5, function ()
-            if not self:IsValid() then return end
+            if not self:IsValid() then
+                chargeSound:Stop()
+                return
+            end
             chargeSound:Stop()
             if ene:IsValid() then
                 pos = ene:GetPos() + ene:OBBCenter()

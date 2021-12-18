@@ -67,8 +67,7 @@ hook.Add("EntityRemoved", "Horde_UnsetMutationOnEntityRemoved", function(ent)
 end)
 
 HORDE.mutations = {}
-HORDE.mutations_sequential = {}
-HORDE.mutations_sequential_strong = {}
+HORDE.mutations_rand = {}
 
 local prefix = "horde/gamemode/mutations/"
 local function Horde_LoadMutations()
@@ -84,10 +83,9 @@ local function Horde_LoadMutations()
         hook.Run("Horde_OnLoadMutation", MUTATION)
 
         HORDE.mutations[MUTATION.ClassName] = MUTATION
-        if not MUTATION.Strong then
-            table.insert(HORDE.mutations_sequential, MUTATION.ClassName)
+        if not (MUTATION.NoRand) then
+            HORDE.mutations_rand[MUTATION.ClassName] = MUTATION
         end
-        table.insert(HORDE.mutations_sequential_strong, MUTATION.ClassName)
 
         for k, v in pairs(MUTATION.Hooks or {}) do
             hook.Add(k, "horde_mutation_" .. MUTATION.ClassName, v)

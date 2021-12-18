@@ -25,7 +25,7 @@ LANGUAGE["Game_Difficulty_REALISM"] = "写实"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "噩梦"
 LANGUAGE["Game_Difficulty_APOCALYPSE"] = "天启"
 LANGUAGE["Game_Enemies"] = "敌人数"
-LANGUAGE["Game_HintBottomReady"] = "  F3 - 商店/技能, F4 - 准备"
+LANGUAGE["Game_HintBottomReady"] = "  F2 - 信息/设置, F3 - 商店/技能, F4 - 准备"
 LANGUAGE["Game_HintBottom"] = "  F3 - 商店/技能, V - 扔钱"
 LANGUAGE["Game_Result_VICTORY"] = "胜利"
 LANGUAGE["Game_Result_DEFEAT"] = "失败"
@@ -883,8 +883,8 @@ LANGUAGE["Item_Desc_Frag Grenade"] = [[
 能对大片敌人造成伤害。
 ]]
 
-LANGUAGE["Item_Resistance RPG"] = [[反抗军RPG]]
-LANGUAGE["Item_Desc_Resistance RPG"] = [[
+LANGUAGE["Item_DamageResistance RPG"] = [[反抗军RPG]]
+LANGUAGE["Item_Desc_DamageResistance RPG"] = [[
 反抗军粗制火箭筒。
 ]]
 
@@ -1019,12 +1019,12 @@ LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_diamond_plating"] = [[钻石涂层]]
-LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
 提升 {1} 物理伤害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_detoxifier"] = [[抗毒剂]]
-LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
 提升 {1} 毒素伤害抗性。
 ]]
 

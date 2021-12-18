@@ -1,7 +1,7 @@
 GADGET.PrintName = "Shock Nova"
 GADGET.Description =
 [[Warden Aura rapidly generates a series of shockwaves.
-Each shockwave deals 50 Shock damage.]]
+Each shockwave deals 50 Lightning damage.]]
 GADGET.Icon = "items/gadgets/shock_nova.png"
 GADGET.Duration = 5
 GADGET.Cooldown = 10

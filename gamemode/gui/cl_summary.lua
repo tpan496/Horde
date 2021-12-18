@@ -91,9 +91,9 @@ function PANEL:Init()
         name_label:SetFont("Content")
         name_label.Paint = function ()
             if (players_diff_votes[diff] <= 0) or vote_btn_hovered or (self.diff_btns[vote_btn] == 1) then
-                draw.SimpleText(diff, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
+                draw.SimpleText(translate.Get("Game_Difficulty_" .. diff), "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
             else
-                draw.SimpleText(diff, "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
+                draw.SimpleText(translate.Get("Game_Difficulty_" .. diff), "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
             end
         end
 
@@ -335,10 +335,10 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
         draw.SimpleText(translate.Get("Game_Result_" .. status) .. "! " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
     end
 
-    self.create_diff_panel(translate.Get("Game_Difficulty_NORMAL"))
-    self.create_diff_panel(translate.Get("Game_Difficulty_HARD"))
-    self.create_diff_panel(translate.Get("Game_Difficulty_REALISM"))
-    self.create_diff_panel(translate.Get("Game_Difficulty_NIGHTMARE"))
+    self.create_diff_panel("NORMAL")
+    self.create_diff_panel("HARD")
+    self.create_diff_panel("REALISM")
+    self.create_diff_panel("NIGHTMARE")
 end
 
 function PANEL:Paint(w, h)

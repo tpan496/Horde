@@ -1,5 +1,5 @@
 PERK.PrintName = "Cremator Base"
-PERK.Description = "The Cremator builds its offense and defense around Fire damage.\n\n{1} increased Fire damage resistance.\nAttacks have {2} chance to Ignite enemies.\n\nIgnite base duration is {3}.\nIgnite deals {4} of most recent damage received over time.\nFire damage has {5} Ignite chance."
+PERK.Description = "The Cremator builds its offense and defense around Fire damage.\n\n{1} increased Fire damage resistance.\nImmune to Ignite.\nAttacks have {2} chance to Ignite enemies.\n\nIgnite base duration is {3}.\nIgnite deals {4} of most recent damage received over time.\nFire damage has {5} Ignite chance."
 PERK.Params = {
     [1] = {value = 0.85, percent = true},
     [2] = {value = 0.15, percent = true},
@@ -23,7 +23,15 @@ end
 
 PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("cremator_base")  then return end
-    if dmginfo:GetDamageType() == DMG_BURN or dmginfo:GetDamageType() == DMG_SLOWBURN then
+    if HORDE:IsFireDamage(dmginfo) then
         bonus.resistance = bonus.resistance + 0.85
+    end
+end
+
+PERK.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus)
+    if not ply:Horde_GetPerk("cremator_base")  then return end
+    if debuff == HORDE.Status_Ignite then
+        bonus.apply = 0
+        return true
     end
 end

@@ -27,7 +27,7 @@ GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     bonus.resistance = bonus.resistance + 0.2
 end
 
-GADGET.Hooks.Horde_PlayerMoveBonus = function (ply, mv)
+GADGET.Hooks.Horde_PlayerMoveBonus = function (ply, bonus)
     if ply:Horde_GetGadget() ~= "gadget_exoskeleton"  then return end
     ply:SetRunSpeed(ply:Horde_GetClass().movespd)
 end

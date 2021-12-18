@@ -8,7 +8,7 @@ function plymeta:Horde_AddMindeyeStack()
     end)]]--
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Mindeye, 8)
-        net.WriteUInt(self.Horde_MindeyeStack, 3)
+        net.WriteUInt(self.Horde_MindeyeStack, 8)
     net.Send(self)
 end
 
@@ -18,7 +18,7 @@ function plymeta:Horde_RemoveMindeyeStack()
     self.Horde_MindeyeStack = math.max(0, self.Horde_MindeyeStack - 1)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Mindeye, 8)
-        net.WriteUInt(self.Horde_MindeyeStack, 3)
+        net.WriteUInt(self.Horde_MindeyeStack, 8)
     net.Send(self)
 end
 
@@ -38,7 +38,7 @@ function plymeta:Horde_ClearMindeyeStack()
     self.Horde_MindeyeStack = 0
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Mindeye, 8)
-        net.WriteUInt(self.Horde_MindeyeStack, 3)
+        net.WriteUInt(self.Horde_MindeyeStack, 8)
     net.Send(self)
 end
 

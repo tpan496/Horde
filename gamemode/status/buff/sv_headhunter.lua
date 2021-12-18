@@ -8,7 +8,7 @@ function plymeta:Horde_AddHeadhunterStack()
     end)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Headhunter, 8)
-        net.WriteUInt(self.Horde_HeadhunterStack, 3)
+        net.WriteUInt(self.Horde_HeadhunterStack, 8)
     net.Send(self)
 end
 
@@ -18,7 +18,7 @@ function plymeta:Horde_RemoveHeadhunterStack()
     self.Horde_HeadhunterStack = math.max(0, self.Horde_HeadhunterStack - 1)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Headhunter, 8)
-        net.WriteUInt(self.Horde_HeadhunterStack, 3)
+        net.WriteUInt(self.Horde_HeadhunterStack, 8)
     net.Send(self)
 end
 

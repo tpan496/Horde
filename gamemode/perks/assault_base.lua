@@ -18,8 +18,8 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.Horde_PlayerMoveBonus = function(ply, mv)
+PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus)
     if not ply:Horde_GetPerk("assault_base") then return end
-    ply:SetWalkSpeed(ply:GetWalkSpeed() * 1.20)
-    ply:SetRunSpeed(ply:GetRunSpeed() * 1.20)
+    bonus.walkspd = bonus.walkspd * 1.2
+    bonus.sprintspd = bonus.sprintspd * 1.2
 end

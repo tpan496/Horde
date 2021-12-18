@@ -6,7 +6,7 @@ Deactivates all perks except for your base perk.
 You cannot use any weapons.
 Press T to cycle between:
 - Fireball: AOE, deals 100 Fire damage.
-- Lightning Spear: Penetration, deals 125 Shock damage.
+- Lightning Spear: Penetration, deals 125 Lightning damage.
 - Energy Blast: AOE self, deals 150 Plasma damage.]]
 GADGET.Icon = "items/gadgets/artificer.png"
 GADGET.Duration = 0

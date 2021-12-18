@@ -110,7 +110,7 @@ end
 if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_rank"):GetInt() == 1 then
 	hook.Add("Horde_OnEnemyKilled", "Horde_GiveExp", function(victim, killer, wpn)
 		if HORDE.current_wave <= 0 or GetConVar("sv_cheats"):GetInt() == 1 then return end
-		if killer:IsPlayer() and killer:IsValid() then
+		if killer:IsPlayer() and killer:IsValid() and killer:Horde_GetClass() then
 			local class_name = killer:Horde_GetClass().name
 			if killer:Horde_GetLevel(class_name) >= HORDE.max_level then return end
 			if victim:GetVar("is_elite") then

@@ -7,6 +7,8 @@ util.AddNetworkString("Horde_VotediffSync")
 util.AddNetworkString("Horde_RemainingTime")
 util.AddNetworkString("Horde_ClearStatus")
 util.AddNetworkString("Horde_SyncGameInfo")
+util.AddNetworkString("Horde_SaveAchievements")
+util.AddNetworkString("Horde_SaveExtraAchievements")
 
 HORDE.vote_remaining_time = 60
 HORDE.game_end = nil
@@ -52,6 +54,11 @@ function HORDE:GameEnd(status)
         net.Start("Horde_LegacyNotification")
         net.WriteString("All players are dead!")
         net.WriteInt(1,2)
+        net.Broadcast()
+    end
+
+    if status == "VICTORY" then
+        net.Start("Horde_SaveAchievements")
         net.Broadcast()
     end
 
@@ -409,7 +416,7 @@ function HORDE:PlayerInit(ply)
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
         net.Start("Horde_SyncStatus")
             net.WriteUInt(HORDE.Status_ExpDisabled, 8)
-            net.WriteUInt(1, 3)
+            net.WriteUInt(1, 8)
         net.Send(ply)
     end
 
@@ -417,9 +424,9 @@ function HORDE:PlayerInit(ply)
         net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanBuy, 8)
         if HORDE.current_break_time > 0 then
-            net.WriteUInt(1, 3)
+            net.WriteUInt(1, 8)
         else
-            net.WriteUInt(0, 3)
+            net.WriteUInt(0, 8)
         end
         net.Send(ply)
     end
@@ -523,10 +530,11 @@ end)
 
 hook.Add("Move", "Horde_PlayerMove", function (ply, mv)
     if ply:Horde_GetClass() then
-        ply:SetWalkSpeed(ply:Horde_GetClass().movespd)
-        ply:SetRunSpeed(ply:Horde_GetClass().sprintspd)
         ply:SetJumpPower(150)
-        hook.Run("Horde_PlayerMoveBonus", ply, mv)
+        local bonus = { walkspd = 1, sprintspd = 1}
+        hook.Run("Horde_PlayerMoveBonus", ply, bonus)
+        ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus.walkspd)
+        ply:SetRunSpeed(ply:Horde_GetClass().sprintspd * bonus.sprintspd)
     end
 end)
 

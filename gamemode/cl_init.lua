@@ -12,7 +12,10 @@ include("sh_maps.lua")
 include("sh_custom.lua")
 include("sh_rank.lua")
 include("sh_sync.lua")
+include("sh_damage.lua")
+
 include("cl_economy.lua")
+include("cl_achievement.lua")
 include("gui/cl_gameinfo.lua")
 include("gui/cl_status.lua")
 include("gui/cl_ready.lua")
@@ -25,6 +28,7 @@ include("gui/cl_enemyconfig.lua")
 include("gui/cl_mapconfig.lua")
 include("gui/cl_configmenu.lua")
 include("gui/cl_shop.lua")
+include("gui/cl_stats.lua")
 include("gui/cl_summary.lua")
 include("gui/cl_scoreboard.lua")
 include("gui/cl_3d2d.lua")
@@ -44,9 +48,37 @@ function HORDE:ToggleShop()
         gui.EnableScreenClicker(false)
     else
         HORDE.ShopGUI:Remove()
+        if HORDE.StatsGUI then
+            HORDE.StatsGUI:Remove()
+        end
         HORDE.ShopGUI = vgui.Create("HordeShop")
         HORDE.ShopGUI:Show()
         gui.EnableScreenClicker(true)
+    end
+end
+
+function HORDE:ToggleStats()
+    if not HORDE.StatsGUI then
+        HORDE.StatsGUI = vgui.Create("HordeStats")
+        HORDE.StatsGUI:SetVisible(false)
+    end
+
+    if HORDE.StatsGUI:IsVisible() then
+        HORDE.StatsGUI:Hide()
+        gui.EnableScreenClicker(false)
+        timer.Remove("Horde_PollStats")
+    else
+        if HORDE.ShopGUI then
+            HORDE.ShopGUI:Remove()
+        end
+        HORDE.StatsGUI:Remove()
+        HORDE.StatsGUI = vgui.Create("HordeStats")
+        HORDE.StatsGUI:Show()
+        gui.EnableScreenClicker(true)
+        HORDE:GetStats()
+        timer.Create("Horde_PollStats", 1, 0, function ()
+            HORDE:GetStats()
+        end)
     end
 end
 
@@ -204,6 +236,10 @@ end)
 
 net.Receive("Horde_ToggleConfigMenu", function ()
     HORDE:ToggleConfigMenu()
+end)
+
+net.Receive("Horde_ToggleStats", function ()
+    HORDE:ToggleStats()
 end)
 
 net.Receive("Horde_ForceCloseShop", function ()

@@ -90,3 +90,18 @@
 	input setkillrewardbase(integer) : "Sets the base reward for killing an enemy."
 	input setroundbonusbase(integer) : "Sets the bonus after clearing a wave."
 ]
+
+////////////////////////////
+//     ACHIEVEMENTS      //
+///////////////////////////
+// You only need to place ONE such entity in your map.
+// To use default values, leave them as 0 or empty.
+@PointClass base(Targetname) = logic_horde_achievement : "Horde: Achievements."
+[
+	// Keys
+	achievement(string) : "Achievement Name" : 0 : "The name of the achievement."
+	description(string) : "Achievement Description" : 0 : "The description of the achievement."
+
+	// Inputs
+	input activateachievement(target_destination) : "Activates the achievement for the entity (player)."
+]

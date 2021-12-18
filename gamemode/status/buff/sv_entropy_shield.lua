@@ -6,7 +6,7 @@ function plymeta:Horde_AddEntropyShield()
     self.Horde_EntropyShield = 1
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_EntropyShield, 8)
-        net.WriteUInt(1, 3)
+        net.WriteUInt(1, 8)
     net.Send(self)
 end
 
@@ -16,7 +16,7 @@ function plymeta:Horde_RemoveEntropyShield()
     self.Horde_EntropyShield = 0
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_EntropyShield, 8)
-        net.WriteUInt(0, 3)
+        net.WriteUInt(0, 8)
     net.Send(self)
 end
 
@@ -32,7 +32,8 @@ function plymeta:Horde_GetEntropyShieldEnabled()
     return self.Horde_EntropyShieldEnabled or nil
 end
 
-hook.Add("Horde_OnPlayerDamageTaken", "Horde_EntropyShieldDamage", function (ply, dmginfo, bonus)
+hook.Add("Horde_OnPlayerDamageTaken", "Horde_EntropyShieldDamage", function (ply, dmginfo, bonus, silent)
+    if silent then return end
     if ply:Horde_GetEntropyShieldEnabled() and ply:Horde_GetEntropyShield() == 1 then
         bonus.resistance = 1
         local dmg = DamageInfo()

@@ -6,12 +6,10 @@ function plymeta:Horde_AddFortify(duration)
         self:Horde_RemoveFortify()
     end)
 
-    if self.Horde_Fortify == 1 then return end
-
     self.Horde_Fortify = 1
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Fortify, 8)
-        net.WriteUInt(1, 3)
+        net.WriteUInt(1, 8)
     net.Send(self)
 end
 
@@ -21,7 +19,7 @@ function plymeta:Horde_RemoveFortify()
     self.Horde_Fortify = 0
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Fortify, 8)
-        net.WriteUInt(0, 3)
+        net.WriteUInt(0, 8)
     net.Send(self)
 end
 

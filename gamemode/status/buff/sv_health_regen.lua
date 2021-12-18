@@ -6,7 +6,7 @@ function plymeta:Horde_AddHealthRegen()
     self.Horde_HealthRegenCurTime = CurTime()
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_HealthRegen, 8)
-        net.WriteUInt(1, 3)
+        net.WriteUInt(1, 8)
     net.Send(self)
 end
 
@@ -17,7 +17,7 @@ function plymeta:Horde_RemoveHealthRegen()
     self.Horde_HealthRegenCurTime = CurTime()
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_HealthRegen, 8)
-        net.WriteUInt(0, 3)
+        net.WriteUInt(0, 8)
     net.Send(self)
 end
 
@@ -47,8 +47,8 @@ function plymeta:Horde_SetHealthRegenEnabled(enabled)
 end
 
 hook.Add("PlayerTick", "Horde_HealthRegen", function(ply, mv)
-    if not ply:Horde_GetHealthRegenEnabled() then return end
-    if ply.Horde_Debuff_No_Heal then return end
+    if not ply:Horde_GetHealthRegenEnabled() or (ply.Horde_Debuff_Active and ply.Horde_Debuff_Active[HORDE.Status_Decay]) then return end
+    if not ply:Alive() then return end
     if ply:Health() >= ply:GetMaxHealth() then
         ply:Horde_RemoveHealthRegen()
         return

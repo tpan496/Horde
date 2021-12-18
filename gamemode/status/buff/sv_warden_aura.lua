@@ -75,7 +75,7 @@ function plymeta:Horde_AddWardenAuraEffects(provider)
     end
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_WardenAura, 8)
-        net.WriteUInt(1, 3)
+        net.WriteUInt(1, 8)
     net.Send(self)
 end
 
@@ -86,7 +86,7 @@ function plymeta:Horde_RemoveWardenAuraEffects()
     self.Horde_WardenAuraDamageBonus = nil
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_WardenAura, 8)
-        net.WriteUInt(0, 3)
+        net.WriteUInt(0, 8)
     net.Send(self)
     if self.Horde_WardenAura then
         self:Horde_AddWardenAuraEffects(self)
@@ -105,6 +105,7 @@ end)
 
 hook.Add("PlayerTick", "Horde_WardenAuraHealthRegen", function(ply, mv)
     if not ply.Horde_WardenAuraHealthRegen then return end
+    if not ply:Alive() then return end
 
     if CurTime() >= ply.Horde_WardenAuraHealthRegenCurTime + 1 then
         local amount = 1

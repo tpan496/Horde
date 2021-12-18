@@ -1,7 +1,7 @@
 local PANEL = {}
 
 function PANEL:Init()
-    self:SetSize(256, 325)
+    self:SetSize(256, 400)
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
     self:MakePopup()
 
@@ -59,6 +59,17 @@ function PANEL:Init()
     mapconfig:SetFont("Heading")
     mapconfig.DoClick = function()
         RunConsoleCommand("horde_map_config")
+        HORDE:ToggleConfigMenu()
+    end
+
+    local stats = vgui.Create("DButton", self)
+    stats:SetSize(700, 64)
+    stats:Dock(TOP)
+    stats:DockMargin(10, 4, 10, 0)
+    stats:SetText("Player Info")
+    stats:SetFont("Heading")
+    stats.DoClick = function()
+        RunConsoleCommand("horde_stats")
         HORDE:ToggleConfigMenu()
     end
 end

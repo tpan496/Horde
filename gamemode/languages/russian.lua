@@ -21,7 +21,7 @@ LANGUAGE["Game_Difficulty_HARD"] = "Сложный"
 LANGUAGE["Game_Difficulty_REALISM"] = "Реалистичный"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "Кошмарный"
 LANGUAGE["Game_Enemies"] = "Враги"
-LANGUAGE["Game_HintBottomReady"] = "F3-Магазин/Умение, F4-Готов"
+LANGUAGE["Game_HintBottomReady"] = "F2-знания, F3-Магазин/Умение, F4-Готов"
 LANGUAGE["Game_HintBottom"] = "F3-Магазин/Умение, V-Выкинуть $"
 LANGUAGE["Game_Result_VICTORY"] = "ПОБЕДА!"
 LANGUAGE["Game_Result_DEFEAT"] = "ПОРАЖЕНИЕ..."
@@ -29,7 +29,7 @@ LANGUAGE["Game_Result_Change Map"] = "Смена карты"
 LANGUAGE["Game_Wave"] = "Волна"
 LANGUAGE["Game_Wave_Has_Started"] = "Волна %d началась"
 LANGUAGE["Game_Wave_Completed"] = "Волна пройдена"
-LANGUAGE["Game_Remaining_Time"] = "Осталось времени"
+LANGUAGE["Game_Remaining_Time"] = "Время"
 LANGUAGE["Game_Vote_Map"] = "Голосование карты"
 LANGUAGE["Game_Game_Summary"] = "Итог игры"
 LANGUAGE["Game_Most_Damage_Dealt"] = "Наибольшой нанесенный урон"
@@ -69,9 +69,10 @@ LANGUAGE["Shop_SMG"] = "ПП"
 LANGUAGE["Shop_Rifle"] = "Винтовки"
 LANGUAGE["Shop_MG"] = "Пулеметы"
 LANGUAGE["Shop_Explosive"] = "Взрывчатки"
-LANGUAGE["Shop_Special"] = "Специалезированные"
+LANGUAGE["Shop_Special"] = "Специализированные"
 LANGUAGE["Shop_Equipment"] = "Снаряжение"
 LANGUAGE["Shop_Attachment"] = "Обвесы"
+LANGUAGE["Shop_Gadget"] = "Гаджеты"
 
 -- Attachments
 LANGUAGE["Shop_Optic"] = "Прицелы"
@@ -150,13 +151,11 @@ LANGUAGE["Class_Description_Cremator"] = [[
 LANGUAGE["Perk_survivor_base"] = [[
 Класс Выживший можно превратить в любой класс, чтобы заполнить недостающие роли для команды.
 Сложность: ЛЕГКО
-
 Нет бонусов.]]
 
 LANGUAGE["Perk_assault_base"] = [[
 Класс Штурмовик это универсальный боец с высокой мобильностью и сосредоточенное на зарядах адреналина.
 Сложность: ЛЕГКО
-
 На {1} увеличена скорость передвижения.
 Убивая врага вы получаете заряд адреналина.
 Заряд адреналина увеличивает урон и скорость передвижения на {2}.]]
@@ -164,7 +163,6 @@ LANGUAGE["Perk_assault_base"] = [[
 LANGUAGE["Perk_heavy_base"] = [[
 Класс Солдат это класс танков, обеспечивающий сильную огневую мощь.
 Сложность: ЛЕГКО
-
 Добавляет {1} к максимальной весу переноса оружий.
 Регенерирует по {2} брони в секунду.
 Восстановливает до {3} брони.]]
@@ -172,20 +170,17 @@ LANGUAGE["Perk_heavy_base"] = [[
 LANGUAGE["Perk_medic_base"] = [[
 Класс Медик это прочный класс поддержки, который фокусируется на лечении и усилении товарищей по команде.
 Сложность: СРЕДНЯЯ
-
 Восстановливает {1} здоровьи в секунду.]]
 
 LANGUAGE["Perk_demolition_base"] = [[
 Класс Подрывник это класс по борьбе с толпой, который также обеспечивает высокий урон по одиночной цели.
 Сложность: СРЕДНЯЯ
-
 На {1} увеличивает сопротивление урону от взрыва.
 Восстанавливает {2} осколочную гранату каждый {3} секунд, если у вас ее нет.]]
 
 LANGUAGE["Perk_ghost_base"] = [[
 Класс Призрак ориентирован на уничтожение врагов-боссов с помощью камуфляжа.
 Сложность: ВЫСОКАЯ
-
 На 25% больше урона в голову.
 В приседе активирует камуфляж, дающую 15% к уклонению.
 Атака, бег или прыжок убирает камуфляж.]]
@@ -193,21 +188,18 @@ LANGUAGE["Perk_ghost_base"] = [[
 LANGUAGE["Perk_engineer_base"] = [[
 Класс Инженер это класс, ориентированный на миньонов, которые наносят урон.
 Сложность: СРЕДНЯЯ
-
 На {1} увеличено здоровье и урон миньонов.
 Турели имеют здоровье в {2} единиц и урон в {3} единиц. ]]
 
 LANGUAGE["Perk_berserker_base"] = [[
 Класс Берсеркер это класс, ориентированный на рукопашный бой, которым можно играть как в нападении, так и в защите.
 Сложность: ВЫСОКАЯ
-
 На {1} сопротивление к глобальному урону.
 На {2} сопротивление к яду. ]]
 
 LANGUAGE["Perk_warden_base"] = [[
 Класс Смотритель это класс поддержки, который использует эффекты ауры и структуры для усиления товарищей по команде.
 Сложность: СРЕДНЯЯ
-
 Игроки находящие рядом с вами получают эффект ауры Смотритель.
 Аура Смотрителя блокирует {1} урона.]]
 
@@ -215,7 +207,6 @@ LANGUAGE["Perk_cremator_base"] = [[
 Крематор предпочитает наносить урон Огнём.
 На {1} увеличенная защита от Огня.
 Атаки имеют {2} шанс Воспламенения противника.
-
 Базовая длительность Воспламенения составляет {3} и наносит постепенный урон в зависимости от нанесённых повреждений.
 Урон от огня имеет шанс воспламенения {5}.]]
 
@@ -868,8 +859,8 @@ LANGUAGE["Item_Desc_Frag Grenade"] = [[
 Подходит для сдерживания толпы.
 ]]
 
-LANGUAGE["Item_Resistance RPG"] = [[РПУ]]
-LANGUAGE["Item_Desc_Resistance RPG"] = [[
+LANGUAGE["Item_DamageResistance RPG"] = [[РПУ]]
+LANGUAGE["Item_Desc_DamageResistance RPG"] = [[
 Ракетная Пусковая Установка с лазерным наведением.
 ]]
 
@@ -879,9 +870,9 @@ LANGUAGE["Item_Desc_RPG-7"] = [[
 Противотанковая ракетная установка разработки Советского Союза.
 ]]
 
-LANGUAGE["Item_SLAM"] = [[СЛАМ]]
+LANGUAGE["Item_SLAM"] = [[ВЛУБ]]
 LANGUAGE["Item_Desc_SLAM"] = [[
-Selectable Lightweight Attack Munition.
+Выбираемый Легкий Ударный Боеприпас.
 ПКМ для взрыва. Прикрепите к стене в активном лазерном режиме.
 ]]
 
@@ -916,9 +907,9 @@ LANGUAGE["Item_Desc_Throwing Knives"] = [[
 Брошенные лезвия можно извлечь.
 ]]
 
-LANGUAGE["Item_Watchtower"] = [[Watchtower]]
+LANGUAGE["Item_Watchtower"] = [[Сторожевая башня]]
 LANGUAGE["Item_Desc_Watchtower"] = [[
-Сторожевая вышка, обеспечивающая пополнение запасов.
+Сторожевая башня, обеспечивающая пополнение запасов.
 Создает 1 боеприпас каждые 30 секунд.
 (Класс сущности: horde_watchtower)
 ]]
@@ -946,4 +937,427 @@ LANGUAGE["Item_Full Kevlar Armor"] = [[ Полный комплект кевла
 LANGUAGE["Item_Desc_Full Kevlar Armor"] = [[
 Полный комплект кевларовой брони.
 Заполняет 100% вашей панели брони.
+]]
+
+LANGUAGE["Item_Watchtower MKII"] = [[Сторожевая башня - Модель II]]
+LANGUAGE["Item_Desc_Watchtower MKII"] = [[
+Сторожевая башня обеспечивающая пополнение припасов.
+Генерирует 1 мелкую аптечку каждые 30 секунд.
+(Entity Class: horde_watchtower_mk2)
+]]
+
+LANGUAGE["Item_Watchtower MKIII"] = [[Сторожевая башня - Модель III]]
+LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
+Башня отпугивающая врагов. Бьёт током каждого противника вблизи каждую секунду.
+100 урона током.
+(Entity Class: horde_watchtower_mk3)
+]]
+
+LANGUAGE["Item_Tau Cannon"] = [[Тау Пушка]]
+LANGUAGE["Item_Desc_Tau Cannon"] = [[
+Устройство использует электромагнетизм для ионизации частиц.
+Зажмите ПКМ для заряда и отпустите для мощного выстрела.
+Наносит больше урона при заряде.
+Устройство взрывается при избытке заряда.
+]]
+
+LANGUAGE["Item_MP7A1 Medic PDW"] = [[MP7A1 PDW Медика]]
+LANGUAGE["Item_Desc_MP7A1 Medic PDW"] = [[
+Модифицированный для медицинский задач MP7A1.
+Зажмите B или ZOOM для стрельбы лечащими дротиками.
+Лечащий дротик восстанавливается каждую секунду.
+]]
+
+LANGUAGE["Item_Vector Medic PDW"] = [[KRISS Vector PDW Медика]]
+LANGUAGE["Item_Desc_Vector Medic PDW"] = [[
+KRISS Vector Gen I оснащённый средством запуска лечащих дротиков.
+Использует необычную отдачу Vector, обеспечивающую высокую скорость срабатывания.
+Зажмите B или ZOOM для стрельбы лечащими дротиками.
+Лечащий дротик восстанавливается каждые 1.5 секунд.
+]]
+
+LANGUAGE["Item_Chainsaw"] = [[Бензопила]]
+LANGUAGE["Item_Desc_Chainsaw"] = [[
+Брррррррррррррррррррр
+Зажми ПКМ чтобы резать сквозь врагов.
+]]
+
+LANGUAGE["Item_Mjollnir"] = [[Мьёльнер]]
+LANGUAGE["Item_Desc_Mjollnir"] = [[
+Боевой молот заряженный электрической энергией.
+Зажмите ПКМ для заряда молота.
+Заряженный Мьёльнер создаёт мощный электрический взрыв при ударе.
+]]
+
+LANGUAGE["Item_Double Barrel"] = [[Двустволка]]
+LANGUAGE["Item_Desc_Double Barrel"] = [[
+Двуствольный дробовик
+Огромный урон на низком расстоянии.
+]]
+
+LANGUAGE["Item_FN FAL"] = [[FN FAL]]
+LANGUAGE["Item_Desc_FN FAL"] = [[
+FN FAL.
+Автоматическая винтовка разработанная в Бельгии и произведённая FN Herstal.
+]]
+
+LANGUAGE["Item_AUG HBAR"] = [[AUG HBAR]]
+LANGUAGE["Item_Desc_AUG HBAR"] = [[
+Steyr AUG HBAR.
+Вариант легкого пулемета поддержки штурмовой винтовки AUG.
+]]
+
+LANGUAGE["Item_Manhack"] = [[Менхэк]]
+LANGUAGE["Item_Desc_Manhack"] = [[
+Менхэк регенирирует после смерти.
+Менхэк наносит врагам урон своим здоровьем.
+Менхэк умирает при ударе.
+]]
+
+LANGUAGE["Item_Vortigaunt"] = [[Вортигонт]]
+LANGUAGE["Item_Desc_Vortigaunt"] = [[
+Зеновские Вортигонты могут вызвать концентрированные взрывы Шоковой энергии.
+Энергетические взрывы имеют большую дальность действия и наносят урон по площади.
+]]
+
+LANGUAGE["Item_Combat Bot"] = [[Боевой Бот]]
+LANGUAGE["Item_Desc_Combat Bot"] = [[
+Жизнерадостный гуманоидный робот, предназначенный для прямого столкновения с врагами.
+Использует мощные атаки ближнего боя и дальние атаки валунами.
+]]
+
+LANGUAGE["Item_Advanced Kevlar Armor"] = [[Продвинутая Кевларовая броня]]
+LANGUAGE["Item_Desc_Advanced Kevlar Armor"] = [[
+Наилучшая броня Выжившего.
+Заполняет 100% вашей полоски брони.
+Увеличевает на 5% защиту от Урона.
+]]
+
+LANGUAGE["Item_Assault Vest"] = [[Штурмовой жилет]]
+LANGUAGE["Item_Desc_Assault Vest"] = [[
+Наилучшая броня Штурмовика.
+Заполняет 100% вашей полоски брони.
+Увеличевает на 8% устойчивость к Баллистическим повреждениям.
+]]
+
+LANGUAGE["Item_Bulldozer Suit"] = [[Броня Бульдозер]]
+LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
+Наилучшая Тяжёлая броня.
+Заполняет 125% вашей полоски брони.
+]]
+
+LANGUAGE["Item_Hazmat Suit"] = [[Костюм Химзащиты]]
+LANGUAGE["Item_Desc_Hazmat Suit"] = [[
+Наилучшая броня Медика.
+Заполняет 100% вашей полоски брони.
+Увеличевает на 8% устойчивость к Ядовитым повреждениям.
+]]
+
+LANGUAGE["Item_Bomb Suit"] = [[Костюм Подрывника]]
+LANGUAGE["Item_Desc_Bomb Suit"] = [[
+Наилучшая Броня для сноса.
+Заполняет 100% вашей полоски брони.
+Увеличевает на 8% устойчивость к повреждениям от Взрыва.
+]]
+
+LANGUAGE["Item_Assassin's Cloak"] = [[Плащ Наёмника]]
+LANGUAGE["Item_Desc_Assassin's Cloak"] = [[
+Наилучшая броня Призрака.
+Заполняет 100% вашей полоски брони.
+Увеличевает на 5% увеличенное уклонение.
+]]
+
+LANGUAGE["Item_Defense Matrix"] = [[Защитная Матрица]]
+LANGUAGE["Item_Desc_Defense Matrix"] = [[
+Наилучшая броня Инженера.
+Заполняет 100% вашей полоски брони.
+Увеличевает на 5% устойчивость к повреждениям.
+]]
+
+LANGUAGE["Item_Riot Armor"] = [[Броня Революции]]
+LANGUAGE["Item_Desc_Riot Armor"] = [[
+Наилучшая броня Надзирателя.
+Заполняет 100% вашей полоски брони.
+Увеличевает на 8% устойчивость к Шоковым и Звуковым повреждениям.
+]]
+
+LANGUAGE["Item_Molten Armor"] = [[Плавящаяся Броня]]
+LANGUAGE["Item_Desc_Molten Armor"] = [[
+Наилучшая броня Крематор.
+Заполняет 100% вашей полоски брони.
+Увеличевает на 8% устойчивость к Огневым повреждениям.
+]]
+
+LANGUAGE["Item_Battle Vest"] = [[Боевой Желет]]
+LANGUAGE["Item_Desc_Battle Vest"] = [[
+Наилучшая броня Берсерка.
+Заполняет 100% вашей полоски брони.
+Увеличевает на 8% устойчивость к повреждениям в Ближнем бою.
+]]
+
+-- Gadgets
+LANGUAGE["Gadget_gadget_blast_plating"] = [[Покрытие от Взрывов]]
+LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
+На 20% увеличенна устойчивость к повреждениям от взрыва.
+]]
+
+LANGUAGE["Gadget_gadget_shock_plating"] = [[Изоляционное покрытие]]
+LANGUAGE["Gadget_Desc_gadget_shock_plating"] = [[
+На 20% увеличенна устойчивость к молния повреждениям.
+]]
+
+LANGUAGE["Gadget_gadget_heat_plating"] = [[Термостойкое покрытие]]
+LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+На 20% увеличенна устойчивость к Огневым повреждениям.
+]]
+
+LANGUAGE["Gadget_gadget_detoxifier"] = [[Детоксикатор]]
+LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
+На 20% увеличенна устойчивость к Ядовитым повреждениям.
+]]
+
+LANGUAGE["Gadget_gadget_diamond_plating"] = [[Алмазное покрытие]]
+LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
+На 15% увеличенна устойчивость к Физическим повреждениям.
+]]
+
+LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Корпоративное Мышление]]
+LANGUAGE["Gadget_Desc_gadget_corporate_mindset"] = [[
+"Установить цели. Имейте десятилетний план. Инвестируй. Просыпайся Пораньше. Образ мышления ген-директора."
+Значительно увеличивает шанс выпадения жетонов черепа.
+]]
+
+-- Survivor Gadgets
+
+LANGUAGE["Gadget_gadget_vitality_booster"] = [[Бустер к Жизнеспособности]]
+LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
++25 к максимуму здоровья.
+]]
+
+LANGUAGE["Gadget_gadget_damage_booster"] = [[Бустер Урона]]
+LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
+На 25% увеличин Урон всего.
+]]
+
+-- Assault Gadgets
+LANGUAGE["Gadget_gadget_iv_injection"] = [[Внутривенная Инъекция]]
+LANGUAGE["Gadget_Desc_iv_injection"] = [[
+Восстанавливает 25 ед. здоровья.
+]]
+
+LANGUAGE["Gadget_gadget_cortex"] = [[Кора головного мозга]]
+LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
+За каждого врага рядом с вами получите 1 шприц Адреналина.
+Элитные враги предоставляют 2 шприца.
+]]
+
+LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[Нейроусилитель]]
+LANGUAGE["Gadget_Desc_neuro_amplifier"] = [[
+Адреналин увеличивает уклонение на 6 %.
+]]
+
+LANGUAGE["Gadget_ouroboros"] = [[Уроборос]]
+LANGUAGE["Gadget_Desc_ouroboros"] = [[
+Помощник по нервной системе Уроборос.
+Убирает ограничения тела для повышения боевых возможностей.
+Когда у вас более 50 % здоровья, вы теряете 1 здоровье в секунду.
+Когда у вас меньше 50 % здоровья, вы получаете 2 здоровья в секунду.
+За каждый потеряный 1% здоровья, урон увеличивается на 0.8%.
+]]
+
+-- Heavy Gadgets
+LANGUAGE["Gadget_gadget_energy_shield"] = [[Энергитический Щит]]
+LANGUAGE["Gadget_Desc_energy_shield"] = [[
+Временно даёт 25 ед. здоровья.
+]]
+
+LANGUAGE["Gadget_gadget_hardening_injection"] = [[Закаливающая Инъекция]]
+LANGUAGE["Gadget_Desc_hardening_injection"] = [[
+Скорость движения уменьшена на 50%.
+На 25% увеличена вся устойчивость к повреждениям.
+На 25% повышена устойчивость к Физическому урону.
+]]
+
+LANGUAGE["Gadget_exoskeleton"] = [[Экзоскилет]]
+LANGUAGE["Gadget_Desc_exoskeleton"] = [[
+Использование активной способности активирует короткий буст.
+Ты не можешь бежать.
+Пассивно увеличевает на 20% устойчивость к всем повреждениям.
+]]
+
+LANGUAGE["Gadget_t_virus"] = [[T-Вирус]]
+LANGUAGE["Gadget_Desc_t_virus"] = [[
+Преобразует вашу броню в здоровье.
+Не удается преобразовать больше 250% здоровья.
+]]
+
+-- Medic Gadgets
+LANGUAGE["Gadget_gadget_life_diffuser"] = [[Диффузор жизни]]
+LANGUAGE["Gadget_Desc_gadget_life_diffuser"] = [[
+Запускает импульс, который исцеляет близлежащих игроков.
+Исцеляет 20 ед. здоровья.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[Пушка для снарядов (Лечащая)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
+Стреляет химическим снарядом.
+Снаряд наносит 75 повреждений Ядом.
+Снаряд лечит 25 ед. здоровья близлежащих игроков.
+]]
+
+LANGUAGE["Gadget_healing_beam"] = [[Лечащий Луч]]
+LANGUAGE["Gadget_Desc_gadget_healing_beam"] = [[
+Соединяет Лечащий Луч между пользователем и целью.
+Если цель - враг, забирают здоровье у цели.
+Если целью является союзник, восстанавливает здоровье союзника.
+]]
+
+-- Ghost Gadgets
+LANGUAGE["Gadget_gadget_optical_camouflage"] = [[Оптический Камуфляж]]
+LANGUAGE["Gadget_Desc_optical_camouflage"] = [[
+Обеспечивает Маскировку на 5 секунд.
+На 50% увеличено Уклонение во время Маскировки.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_ballistic"] = [[Пушка для снарядов (Балистическая)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
+Стреляет баллистическим снарядом.
+Снаряд наносит 150 баллистических повреждений.
+Оглушает врага при попадании.
+]]
+
+LANGUAGE["Gadget_death_mark"] = [[Чёрная Метка]]
+LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
+Ставит метку на выбранном враге.
+Отмеченный враг получает на 15% больше урона.
+Отмеченный враг взрывается при смерти, нанося урон, основанный на его здоровье.
+Метка длится 10 секунд.
+Вы можете отметить только 1 врага одновременно.
+]]
+
+LANGUAGE["Gadget_gunslinger"] = [[Ковбой]]
+LANGUAGE["Gadget_Desc_gadget_gunslinger"] = [[
+На 25% больше урона от Пистолета.
+На 25% больше урона от Выстрела в Голову из Пистолета.
+]]
+
+-- Demolition Gadgets
+LANGUAGE["Gadget_gadget_proximity_defense"] = [[Защита от близости]]
+LANGUAGE["Gadget_Desc_proximity_defense"] = [[
+Вызывает взрыв, который оглушает ближайших врагов.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[Пушка для снарядов  (Взрывная)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
+Стреляет Взрывным Снарядом.
+Снаряд наносит 100 ед. урона от взрыва.
+Генерирует 3 дополнительных взрыва после небольшой задержки.
+]]
+
+LANGUAGE["Gadget_nitrous_propellor"] = [[Азотистый Пропеллер]]
+LANGUAGE["Gadget_Desc_gadget_nitrous_propellor"] = [[
+Подталкивает вас вперед и вверх с помощью химического взрыва.
+]]
+
+LANGUAGE["Gadget_ied"] = [[СВУ]]
+LANGUAGE["Gadget_Desc_gadget_ied"] = [[
+Бросает на землю Самодельное Взрывное Устройство.
+СВУ взрывается, когда враг приближается на расстояние выстрела.
+У вас есть 5 зарядов СВУ.
+СВУ перезаряжается после детонации.
+]]
+
+-- Engineer Gadgets
+LANGUAGE["Gadget_displacer"] = [[Вытеснитель]]
+LANGUAGE["Gadget_Desc_gadget_displacer"] = [[
+Мгновенно перемещает выделенного миньона на вашу сторону.
+]]
+
+LANGUAGE["Gadget_gadget_turret_pack"] = [[Комплект Турелей]]
+LANGUAGE["Gadget_Desc_gadget_turret_pack"] = [[
+Развертывает временную Турель.
+У Турели на 50% меньше здоровья.
+Турель уничтожается по истечении срока действия.
+]]
+
+LANGUAGE["Gadget_gadget_e_parasite"] = [[E-Паразит]]
+LANGUAGE["Gadget_Desc_gadget_e_parasite"] = [[
+Проецирует капсулу с E-Паразитами, которая заражает врагов при контакте.
+E-Паразит считается минионом.
+E-Паразит наносит непрерывный урон врагам.
+Вы получаете здоровье от урона, нанесенного E-Паразитом.
+Враги, убитые будучи заражеными Е-Паразитом, взрываются при смерти.
+]]
+
+-- Berserker Gadgets
+LANGUAGE["Gadget_gadget_berserk_armor"] = [[Броня Берсерка]]
+LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
+Урон увеличен на 25%.
+На 25% увеличена общая устойчивость к повреждениям.
+На 25% увеличена скорость передвижения.
+]]
+
+LANGUAGE["Gadget_gadget_flash"] = [[Флеш]]
+LANGUAGE["Gadget_Desc_flash"] = [[
+Импульс вперед, нанося 100 Рубящего урона всем врагам на пути.
+Даёт короткое окно неуязвимости.
+]]
+
+LANGUAGE["Gadget_gadget_aerial_guard"] = [[Воздушная защита]]
+LANGUAGE["Gadget_Desc_aerial_guard"] = [[
+Находясь в воздухе, получаете на 65% меньше физического урона.
+]]
+
+LANGUAGE["Gadget_gadget_hemocannon"] = [[Гемоцианин]]
+LANGUAGE["Gadget_Desc_hemocannon"] = [[
+Стреляет снарядом ценой 10 здоровья.
+Снаряд пролетает небольшое расстояние и взрывается.
+Взрыв наносит 100 Режущих повреждений.
+Имеет максимум 5 зарядов.
+Перезаряжается через 5 секунд.
+]]
+
+-- Warden Gadgets
+LANGUAGE["Gadget_gadget_solar_array"] = [[Solar Array]]
+LANGUAGE["Gadget_Desc_gadget_solar_array"] = [[
+Drops an armor battery.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[Пушка для снарядов (Шоковый)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
+Стреляет магнитным снарядом, который пронзает врагов.
+Генерирует ударную волну каждый раз, когда снаряд попадает во врага.
+Ударная волна наносит 125 молния урона.
+]]
+
+LANGUAGE["Gadget_watchtower_pack"] = [[Комплект Сторожевых башен]]
+LANGUAGE["Gadget_Desc_gadget_watchtower_pack"] = [[
+Развертывает дополнительную сторожевую башню.
+]]
+
+LANGUAGE["Gadget_shock_nova"] = [[Шоковая звезда]]
+LANGUAGE["Gadget_Desc_gadget_shock_nova"] = [[
+Аура Надзирателя быстро генерирует серию шоковых волн.
+Каждая шоковая волна наносит 50 урона молния.
+]]
+
+-- Cremator Gadgets
+LANGUAGE["Gadget_gadget_butane_can"] = [[Баллон с Бутаном]]
+LANGUAGE["Gadget_Desc_gadget_butane_can"] = [[
+Роняет Баллон с Бутаном, который взрывается при физическом воздействии.
+Взрыв наносит 375 урона Огнём.
+За один раз можно кинуть только 1 Баллон.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_fire"] = [[Пушка для снарядов  (Огненный)]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_fire"] = [[
+Стреляет Горящим снарядом.
+Воспламеняет всех врагов, попавших в зону взрыва.
+Наносит 20 урона Огнём.
+]]
+
+LANGUAGE["Gadget_barbeque"] = [[Барбекю]]
+LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
+Воспламененные враги, убитые вами, сбрасывают съедобные конечности.
+Каждая конечность восстанавливает 5 единиц здоровья.
 ]]

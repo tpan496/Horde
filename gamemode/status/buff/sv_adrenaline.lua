@@ -11,7 +11,7 @@ function plymeta:Horde_AddAdrenalineStack()
     end)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Adrenaline, 8)
-        net.WriteUInt(self.Horde_AdrenalineStack, 3)
+        net.WriteUInt(self.Horde_AdrenalineStack, 8)
     net.Send(self)
 end
 
@@ -22,7 +22,7 @@ function plymeta:Horde_RemoveAdrenalineStack()
     self.Horde_AdrenalineStack = math.max(0, self.Horde_AdrenalineStack - 1)
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Adrenaline, 8)
-        net.WriteUInt(self.Horde_AdrenalineStack, 3)
+        net.WriteUInt(self.Horde_AdrenalineStack, 8)
     net.Send(self)
     timer.Create("Horde_AdrenalineTracker" .. self:SteamID(), self:Horde_GetAdrenalineStackDuration(), 1, function()
         self:Horde_RemoveAdrenalineStack()
@@ -63,11 +63,11 @@ hook.Add("Horde_OnPlayerDamage", "Horde_AdrenalineStackDamage", function (ply, n
     end
 end)
 
-hook.Add("Horde_PlayerMoveBonus", "Horde_AdrenalineStackMovespeed", function(ply, mv)
+hook.Add("Horde_PlayerMoveBonus", "Horde_AdrenalineStackMovespeed", function(ply, bonus)
     if ply:Horde_GetAdrenalineStack() > 0 then
-        local bonus = (1 + ply:Horde_GetAdrenalineStack() * 0.06)
-        ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus)
-        ply:SetRunSpeed(ply:Horde_GetClass().sprintspd * bonus)
+        local bonus2 = (1 + ply:Horde_GetAdrenalineStack() * 0.06)
+        bonus.walkspd = bonus.walkspd * bonus2
+        bonus.sprintspd = bonus.sprintspd * bonus2
     end
 end)
 

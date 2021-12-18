@@ -1,5 +1,5 @@
 GADGET.PrintName = "Projectile Launcher (Shock)"
-GADGET.Description = "Shoots a magnetic projectile that pierces enemies.\nGenerates a shockwave each time the projectile hits an enemy.\nShockwave deals 125 Shock damage."
+GADGET.Description = "Shoots a magnetic projectile that pierces enemies.\nGenerates a shockwave each time the projectile hits an enemy.\nShockwave deals 125 Lightning damage."
 GADGET.Icon = "items/gadgets/projectile_launcher_shock.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
