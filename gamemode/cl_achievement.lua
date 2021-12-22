@@ -117,7 +117,7 @@ function HORDE:SaveMapAchievements()
         HORDE.achievements_map[map].extra = HORDE.achievements_map[map].extra or {}
 
         HORDE.achievements_map[map].diffculty = math.max(HORDE.achievements_map[map].diffculty, HORDE.difficulty)
-        HORDE.achievements_map[map].players = math.max(HORDE.achievements_map[map].players, player.GetCount())
+        HORDE.achievements_map[map].players = math.max(HORDE.achievements_map[map].players, #player.GetHumans())
         if GetConVarNumber("horde_default_item_config") == 1
         and GetConVarNumber("horde_default_class_config") == 1
         and GetConVarNumber("horde_default_enemy_config") == 1
@@ -229,6 +229,12 @@ function HORDE:LoadMapAchievements()
 	end
 
 	path = "horde/achievements/maps.txt"
+    if file.Exists(path, "DATA") == false then
+        strm = file.Open(path, "wb", "DATA" )
+            strm:Write(EXPECTED_HEADER)
+            strm:Write(util.TableToJSON(HORDE.achievements_map))
+        strm:Close()
+    end
 
 	strm = file.Open(path, "rb", "DATA" )
 		local header = strm:Read(#EXPECTED_HEADER)

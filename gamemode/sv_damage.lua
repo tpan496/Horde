@@ -121,7 +121,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end
     
     -- Prevent minion from damaging players
-    if dmg:GetInflictor():GetNWEntity("HordeOwner"):IsPlayer() then return true end
+    if HORDE:IsPlayerMinion(dmg:GetInflictor()) or HORDE:IsPlayerMinion(dmg:GetAttacker()) then return true end
     
     if dmg:GetDamage() <= 0.5 then return true end
 
@@ -224,11 +224,48 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
 end)
 
 hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function (target, dmg)
-    if not target:IsValid() or not target:IsNPC() then return end
-    if not target:GetNWEntity("HordeOwner"):IsPlayer() then return end
+    if not target:IsValid() or not HORDE:IsPlayerMinion(target) then return end
     if dmg:GetAttacker():IsPlayer() and (dmg:GetInflictor() == dmg:GetAttacker()) then return true end
     hook.Run("Horde_OnMinionDamageTaken", target, dmg)
     if dmg:GetDamage() <= 0.5 then return true end
+
+    local debuff = nil
+    local bonus = {more = 1}
+    if dmg:GetDamage() > 0 then
+        if HORDE:IsPoisonDamage(dmg) then
+            debuff = HORDE.Status_Break
+            bonus.more = 2
+        elseif HORDE:IsFireDamage(dmg) then
+            debuff = HORDE.Status_Ignite
+            bonus.more = 2
+        elseif HORDE:IsLightningDamage(dmg) then
+            debuff = HORDE.Status_Shock
+            bonus.more = 2
+        elseif HORDE:IsColdDamage(dmg) then
+            debuff = HORDE.Status_Frostbite
+            bonus.more = 2
+            local effectdata = EffectData()
+                effectdata:SetOrigin(target:GetPos() + target:GetUp() * 50)
+                effectdata:SetScale(10)
+                effectdata:SetMagnitude(10)
+		    util.Effect("GlassImpact", effectdata, true, true)
+		    util.Effect("GlassImpact", effectdata, true, true)
+        end
+
+        if not debuff then return end
+
+        local buildup = dmg:GetDamage() * bonus.more
+        local class = dmg:GetAttacker():GetClass()
+        if class == "npc_headcrab_poison" or class == "npc_headcrab_black" then
+            dmg:SetDamage(1)
+            if debuff == HORDE.Status_Break then
+                buildup = target:Health() * 2
+            end
+        else
+            buildup = math.min(85, buildup)
+        end
+        target:Horde_AddDebuffBuildup(debuff, buildup)
+    end
 end)
 
 -- Enemy damage.

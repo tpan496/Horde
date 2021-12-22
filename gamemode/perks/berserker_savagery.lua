@@ -9,14 +9,14 @@ PERK.Params = {
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "berserker_savagery" then
-        ply:SetMaxHealth(ply:GetMaxHealth() * 1.25)
+        ply:SetMaxHealth(125)
         ply:SetHealth(ply:GetMaxHealth())
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "berserker_savagery" then
-        ply:SetMaxHealth(ply:GetMaxHealth() / 1.25)
+        ply:SetMaxHealth(100)
         ply:SetHealth(ply:GetMaxHealth())
     end
 end

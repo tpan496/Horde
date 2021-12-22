@@ -81,7 +81,7 @@ function ENT:CustomOnThink()
 				dmg:SetDamageType(DMG_REMOVENORAGDOLL)
 				dmg:SetDamage(5)
 				for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
-					if ent:IsPlayer() then
+					if ent:IsPlayer() or HORDE:IsPlayerMinion(ent) then
 						ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 4)
 						ent:TakeDamageInfo(dmg)
 						dmg:SetDamagePosition(ent:GetPos())

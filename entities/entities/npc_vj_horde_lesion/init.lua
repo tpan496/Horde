@@ -16,7 +16,7 @@ ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
 ENT.MeleeAttackDistance = 32 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 85 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = 0.2 -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDamage = 30
+ENT.MeleeAttackDamage = 42
 ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
 ENT.HasLeapAttack = true -- Should the SNPC have a leap attack?
 ENT.NextAnyAttackTime_Melee = 0.6
@@ -111,7 +111,6 @@ function ENT:UnRage()
     self.Raging = nil
     self.DamageReceived = 0
     self.HasLeapAttack = false
-    self.Attacks = 0
     self.AnimTbl_Run = ACT_WALK
     self:SetColor(Color(255, 150, 150))
     local id = self:GetCreationID()
@@ -122,25 +121,11 @@ function ENT:UnRage()
     end)
 end
 
-function ENT:CustomOnMeleeAttack_Miss()
-    self.Attacks = self.Attacks + 1
-    if self.Attacks >= 4 then
-        self:UnRage()
-    end
-end
-
-function ENT:CustomOnLeapAttack_Miss()
-    self.Attacks = self.Attacks + 1
-    if self.Attacks >= 4 then
-        self:UnRage()
-    end
-end
-
 function ENT:CustomOnLeapAttack_AfterChecks(hitEnt, isProp)
     if isProp then return end
-    if hitEnt and IsValid(hitEnt) and hitEnt:IsPlayer() then
+    if hitEnt and IsValid(hitEnt) and HORDE:IsPlayerOrMinion(hitEnt) then
         self:UnRage()
-        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 50)
+        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 60)
     end
 end
 

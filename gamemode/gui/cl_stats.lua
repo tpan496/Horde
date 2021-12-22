@@ -299,7 +299,7 @@ function PANEL:Init()
       - decay: Now applies a debuff buildup that prevents healing when full. Randomly appears starting from wave 9.]]
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Update 1.1.1", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Update 1.1.2", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
@@ -343,11 +343,11 @@ function PANEL:Init()
         draw.SimpleText("Ignite:", 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Buildup from Fire damage. When inflicted, deals Fire damage over time.", 'Content', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Frostbite:", 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from Cold damage. When inflicted, reduces movement speed by 40%.", 'Content', 100, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Buildup from Cold damage. When inflicted, reduces movement speed by 40/45/50/50%.", 'Content', 100, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Shock:", 'Heading', 100, 450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from Lightning damage. When inflicted, causes player to receive 15% more damage.", 'Content', 100, 500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Buildup from Lightning damage. When inflicted, causes player to receive 15/20/25/25% more damage.", 'Content', 100, 500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Break:", 'Heading', 100, 550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from Poison damage. When inflicted, removes a large portion of player health that will be recovered in time.", 'Content', 100, 600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Buildup from Poison damage. When inflicted, removes 80%/85%/90%/90% of player health that is recovered slowly.", 'Content', 100, 600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Decay:", 'Heading', 100, 650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Buildup from Decay mutation. When inflicted, prevents healing.", 'Content', 100, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
@@ -437,7 +437,7 @@ function PANEL:Init()
 
         draw.SimpleText("Elite Enemies", 'LargeTitle', 50, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Exploder", 'Heading', 50, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Explodes on death, dealing Poison damage. Does not explode when decapitated. Immune to Poison damage.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Explodes on death, dealing Poison damage. Does not explode when decapitated. Weak to headshots. Immune to Poison damage.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Vomitter", 'Heading', 50, 850, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Ranged attackers that throw flesh at enemies. Inflicts Bleeding.", 'Content', 100, 900, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Scorcher", 'Heading', 50, 950, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -564,6 +564,7 @@ function PANEL:Init()
 
         for perk_level, v in pairs(HORDE.classes[class].perks) do
             if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then goto cont end
+            if not LocalPlayer().Horde_PerkChoices then break end
             local choice = v.choices[LocalPlayer().Horde_PerkChoices[class][perk_level] or 1]
             if not choice then error("Invalid choice in perk level " .. perk_level .. " for " .. class .. "!") return end
             local perk = HORDE.perks[choice]
@@ -821,6 +822,26 @@ function PANEL:Init()
     learn_btn.OnCursorExited = function ()
         surface.PlaySound("UI/buttonrollover.wav")
         learn_hovered = false
+    end
+
+    local discord_btn = vgui.Create("DButton", self)
+    local discord_activated = false
+    local discord_hovered = false
+    discord_btn:SetText("Discord")
+    discord_btn:SetTextColor(Color(255,255,255))
+    discord_btn:SetFont("Title")
+    discord_btn:SetSize(250, 50)
+    discord_btn:SetPos(750, 0)
+    discord_btn.Paint = function ()
+        if discord_hovered then draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_crimson) return end
+        if discord_activated then
+            draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_crimson)
+        else
+            draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_hollow)
+        end
+    end
+    discord_btn.DoClick = function ()
+        gui.OpenURL("https://discord.gg/6jKa74u2")
     end
 
     local close_btn = vgui.Create("DButton", self)

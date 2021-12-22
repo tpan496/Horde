@@ -212,7 +212,7 @@ The Berserker class is a melee-centered class that can be played both offensivel
 Complexity: HIGH
 
 {1} increased Global damage resistance.
-{2} increased Poison damage resistance.]]
+{2} increased melee damage.]]
 
 LANGUAGE["Perk_warden_base"] = [[
 The Warden is a support class that uses aura effects and structures to buff teammates.

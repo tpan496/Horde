@@ -26,11 +26,13 @@ function plymeta:Horde_GetApplyDebuffMore()
     return self.Horde_ApplyDebuffMore or 0
 end
 
-function entmeta:Horde_AddDebuffBuildup(debuff, buildup)
-    if not IsValid(self) or not self:Alive() then return end
+function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor)
+    if not IsValid(self) or (self:IsPlayer() and not self:Alive()) then return end
     if buildup < 2 then return end
     if not self.Horde_Debuff_Active then self.Horde_Debuff_Active = {} end
     if not self.Horde_Debuff_Buildup then self.Horde_Debuff_Buildup = {} end
+    if not self.Horde_Debuff_Cooldown then self.Horde_Debuff_Cooldown = {} end
+    if self.Horde_Debuff_Cooldown[debuff] then return end
     if self.Horde_Debuff_Active[debuff] then return end
     if not self.Horde_Debuff_Buildup[debuff] then self.Horde_Debuff_Buildup[debuff] = 0 end
     if self.Horde_Debuff_Buildup[debuff] >= 100 then return end
@@ -58,6 +60,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup)
     if HORDE.Status_Trigger_Sounds[debuff] then
         sound.Play(HORDE.Status_Trigger_Sounds[debuff], self:GetPos())
     end
+
     if self:IsPlayer() then
         local duration = 5 + HORDE.difficulty_status_duration_bonus[HORDE.difficulty]
         local str = "Horde_Remove_" .. tostring(debuff) .. "_" .. self:SteamID()
@@ -68,11 +71,31 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup)
 
         -- Apply debuff effect
         if debuff == HORDE.Status_Bleeding then
-            self:Horde_AddBleedingEffect()
+            self:Horde_AddBleedingEffect(inflictor)
         elseif debuff == HORDE.Status_Frostbite then
             self:Horde_AddFrostbiteEffect()
         elseif debuff == HORDE.Status_Ignite then
-            self:Horde_AddIgniteEffect(duration)
+            self:Horde_AddIgniteEffect(duration, inflictor)
+        elseif debuff == HORDE.Status_Break then
+            timer.Simple(0, function() self:Horde_AddBreakEffect(duration) end)
+        elseif debuff == HORDE.Status_Psychosis then
+            self:TakeDamage(50, self, self)
+        end
+    else
+        local duration = 5
+        local str = "Horde_Remove_" .. tostring(debuff) .. "_" .. self:GetCreationID()
+        timer.Remove(str)
+        timer.Create(str, duration, 1, function ()
+            self:Horde_RemoveDebuff(debuff)
+        end)
+
+        -- Apply debuff effect
+        if debuff == HORDE.Status_Bleeding then
+            self:Horde_AddBleedingEffect(inflictor)
+        elseif debuff == HORDE.Status_Frostbite then
+            self:Horde_AddFrostbiteEffect(duration)
+        elseif debuff == HORDE.Status_Ignite then
+            self:Horde_AddIgniteEffect(duration, inflictor)
         elseif debuff == HORDE.Status_Break then
             timer.Simple(0, function() self:Horde_AddBreakEffect(duration) end)
         elseif debuff == HORDE.Status_Psychosis then
@@ -91,15 +114,21 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup)
 end
 
 function entmeta:Horde_RemoveDebuff(debuff)
-    if not self.Horde_Debuff_Active[debuff] then return end
+    if not self:IsValid() or not self.Horde_Debuff_Active[debuff] then return end
     self.Horde_Debuff_Active[debuff] = nil
     self.Horde_Debuff_Buildup[debuff] = 0
-    net.Start("Horde_SyncStatus")
-        net.WriteUInt(debuff, 8)
-        net.WriteUInt(0, 8)
-    net.Send(self)
-
-    -- Unapply debuff effect
+    if self:IsPlayer() then
+        net.Start("Horde_SyncStatus")
+            net.WriteUInt(debuff, 8)
+            net.WriteUInt(0, 8)
+        net.Send(self)
+    else
+        self.Horde_Debuff_Cooldown[debuff] = true
+        timer.Simple(5, function ()
+            if not self:IsValid() then return end
+            self.Horde_Debuff_Cooldown[debuff] = nil
+        end)
+    end
 end
 
 hook.Add("Horde_ResetStatus", "Horde_PlayerStatusReset", function(ply)

@@ -24,7 +24,9 @@ local difficulty_spawn_radiuis_multiplier = {1, 0.75, 0.5, 0.5, 0.4}
 local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25, 1.25, 1.3}
 local difficulty_poison_headcrab_damage = {50, 60, 75, 75, 75}
 HORDE.difficulty_status_duration_bonus = {0, 1, 2, 3, 4}
-HORDE.difficulty_break_health_left = {0.25, 0.20, 0.15, 0.10, 0.10}
+HORDE.difficulty_break_health_left = {0.20, 0.15, 0.10, 0.10, 0.08}
+HORDE.difficulty_shock_damage_increase = {0.15, 0.20, 0.25, 0.25, 0.30}
+HORDE.difficulty_frostbite_slow = {0.40, 0.45, 0.50, 0.50, 0.55}
 
 -- Flat modifiers
 HORDE.difficulty_elite_health_scale_add = {0, 0.05, 0.075, 0.100, 0.125}
@@ -85,8 +87,8 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
         elseif dmg:IsDamageType(DMG_CRUSH) then
             dmg:SetDamage(math.min(dmg:GetDamage(), 20))
         end
-    elseif target:GetNWEntity("HordeOwner"):IsPlayer() then
-        if (dmg:GetAttacker():IsPlayer() or dmg:GetAttacker():GetNWEntity("HordeOwner"):IsPlayer()) then
+    elseif HORDE:IsPlayerMinion(target) then
+        if dmg:GetAttacker():IsPlayer() or HORDE:IsPlayerMinion(dmg:GetAttacker()) then
             -- Prevent player / player minions from damaging minions
             return true
         else

@@ -1,18 +1,18 @@
 local entmeta = FindMetaTable("Entity")
 
-function entmeta:Horde_AddFrostbiteEffect()
+function entmeta:Horde_AddFrostbiteEffect(duration)
     if self:IsPlayer() then
     else
         timer.Remove("Horde_RemoveFrostbite" .. self:GetCreationID())
-        timer.Create("Horde_RemoveFrostbite" .. self:GetCreationID(), 5, 1, function ()
+        timer.Create("Horde_RemoveFrostbite" .. self:GetCreationID(), duration, 1, function ()
             self:Horde_RemoveFrostbite()
         end)
 
         self.Horde_Frostbite = 1
         -- VJ
         if self:IsNPC() then
-            if (not self.Horde_StoredAnimationPlaybackRateFrostbite) or (self.Horde_Frostbite_More < more) then
-                if self.Horde_StoredAnimationPlaybackRateFrostbite and (self.Horde_Frostbite_More < more) then
+            if not self.Horde_StoredAnimationPlaybackRateFrostbite then
+                if self.Horde_StoredAnimationPlaybackRateFrostbite then
                     if self.AnimationPlaybackRate then
                         self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRateFrostbite
                     else
@@ -21,10 +21,10 @@ function entmeta:Horde_AddFrostbiteEffect()
                 end
                 if self.AnimationPlaybackRate then
                     self.Horde_StoredAnimationPlaybackRateFrostbite = self.AnimationPlaybackRate
-                    self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRateFrostbite * 0.6
+                    self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRateFrostbite * 0.25
                 else
                     self.Horde_StoredAnimationPlaybackRateFrostbite = self:GetPlaybackRate()
-                    self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRateFrostbite *  0.6)
+                    self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRateFrostbite *  0.4)
                 end
             end
         end
@@ -33,8 +33,8 @@ end
 
 hook.Add("Horde_PlayerMoveBonus", "Horde_FrostbiteMovespeed", function(ply, bonus)
     if ply.Horde_Debuff_Active and ply.Horde_Debuff_Active[HORDE.Status_Frostbite] then
-        bonus.walkspd = bonus.walkspd * 0.5
-        bonus.sprintspd = bonus.sprintspd * 0.5
+        bonus.walkspd = bonus.walkspd * HORDE.difficulty_frostbite_slow[HORDE.difficulty]
+        bonus.sprintspd = bonus.sprintspd * 0.5 * HORDE.difficulty_frostbite_slow[HORDE.difficulty]
     end
 end)
 
