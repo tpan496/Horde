@@ -31,6 +31,15 @@ hook.Add("EntityTakeDamage", "ManhackContactDamage", function (target, dmginfo)
     end
 end)
 
+function HORDE:IsPlayerOrMinion(ent)
+    return ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid()
+    
+end
+
+function HORDE:IsPlayerMinion(ent)
+    return ent:GetNWEntity("HordeOwner"):IsValid()
+end
+
 function HORDE:SpawnManhack(ply)
     if CLIENT then return end
     if not ply:IsValid() then return end

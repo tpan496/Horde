@@ -42,6 +42,7 @@ ENT.NextBlastTime = CurTime()
 ENT.NextBlastCooldown = 5
 ENT.Immune_Electricity = true
 ENT.AnimTbl_MeleeAttack = {}
+ENT.Critical = nil
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetModelScale(1.25)
@@ -57,6 +58,13 @@ function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
 	end
 end
 
+function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
+	if not self.Critical and self:Health() < self:GetMaxHealth() / 1.5 then
+        self.Critical = true
+		self.AnimTbl_Run = {ACT_RUN}
+    end
+end
+
 function ENT:ShockAttack(delay)
 	timer.Simple(delay, function()
 		if not self:IsValid() then return end
@@ -64,7 +72,7 @@ function ENT:ShockAttack(delay)
 		dmg:SetAttacker(self)
 		dmg:SetInflictor(self)
 		dmg:SetDamageType(DMG_REMOVENORAGDOLL)
-		dmg:SetDamage(9)
+		dmg:SetDamage(15)
 		util.BlastDamageInfo(dmg, self:GetPos(), 350)
 
 		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 400)) do

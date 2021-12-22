@@ -53,6 +53,7 @@ end
 function plymeta:Horde_SetLevel(class_name, level)
     if not self:IsValid() then return end
     if not self.Horde_Levels then self.Horde_Levels = {} end
+    if not class_name then return end
     self.Horde_Levels[class_name] = level
     local rank, rank_level = HORDE:LevelToRank(level)
     self:Horde_SetRankLevel(class_name, rank_level)
@@ -123,6 +124,7 @@ net.Receive("Horde_SyncExp", function(length)
     local class_order = net.ReadUInt(4)
     local exp = net.ReadUInt(32)
     local level = net.ReadUInt(8)
+    if not ply:IsValid() then return end
     ply:Horde_SetLevel(HORDE.order_to_class_name[class_order], level)
     ply:Horde_SetExp(HORDE.order_to_class_name[class_order], exp)
 end)

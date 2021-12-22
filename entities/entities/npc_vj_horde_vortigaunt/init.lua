@@ -14,7 +14,7 @@ PrecacheParticleSystem( "vortigaunt_beam_b" )
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/vortigaunt.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = 600
+ENT.StartHealth = 550
 ENT.SightDistance = 8000
 ENT.HullType = HULL_HUMAN
 ENT.PlayerFriendly = true
@@ -31,7 +31,7 @@ ENT.FootStepTimeRun = 0.3 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.6 -- Next foot step sound when it is walking
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 ENT.NextRangeAttackTime = 1.75
-ENT.NextAnyAttackTime_Range = 2
+ENT.NextAnyAttackTime_Range = 3
 ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
 ENT.RangeUseAttachmentForPosID = "mouth" -- The attachment used on the range attack if RangeUseAttachmentForPos is set to true
 ENT.RangeAttackEntityToSpawn = nil -- The entity that is spawned when range attacking
@@ -117,7 +117,7 @@ function ENT:CustomRangeAttackCode()
         local chargeSound = CreateSound(self, "npc/vort/attack_charge.wav");
         chargeSound:Play()
         local pos = ene:GetPos() + ene:OBBCenter()
-        timer.Simple(1.5, function ()
+        timer.Simple(1.5 / self.AnimationPlaybackRate, function ()
             if not self:IsValid() then
                 chargeSound:Stop()
                 return
@@ -135,7 +135,7 @@ function ENT:CustomRangeAttackCode()
             dmg:SetAttacker(self)
             dmg:SetInflictor(self)
             dmg:SetDamageType(DMG_SHOCK)
-            dmg:SetDamage(200)
+            dmg:SetDamage(175)
             util.BlastDamageInfo(dmg, tr.HitPos, 150)
             local data = EffectData();
             data:SetOrigin(tr.HitPos)

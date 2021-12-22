@@ -63,7 +63,7 @@ function ENT:Think()
         dmg:SetDamageType(DMG_SHOCK)
         dmg:SetDamage(100)
         for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
-            if ent:IsValid() and ent:IsNPC() and ent:Health() > 0 then
+            if ent:IsValid() and ent:IsNPC() and ent:Health() > 0 and not HORDE:IsPlayerMinion(ent) then
                 dmg:SetDamagePosition(ent:GetPos() + ent:OBBCenter())
                 self:EmitSound("npc/vort/attack_shoot.wav")
                 util.BlastDamageInfo(dmg, ent:GetPos(), 100)

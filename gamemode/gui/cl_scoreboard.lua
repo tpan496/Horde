@@ -7,7 +7,7 @@ function scoreboard:show()
     title:SetSize(1000, 100)
     title:SetPos(ScrW()/2 - 1000 / 2, ScrH()/5 - 50)
     function title:Paint(w, h)
-        draw.SimpleText("Horde - " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) or HORDE.difficulty_text[HORDE.difficulty], "Title", 0, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
+        draw.SimpleText("Horde - " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "Title", 0, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
         draw.SimpleText(GetHostName(), "Title", 1000, 12, HORDE.color_crimson_dim, TEXT_ALIGN_RIGHT)
     end
 
@@ -39,7 +39,12 @@ function scoreboard:show()
         draw.DrawText("Ping", "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
     end
 
-    for _, ply in ipairs(player.GetAll()) do
+    local player_score = {}
+    for _, ply in pairs(player.GetAll()) do
+        player_score[ply] = ply:Frags()
+    end
+
+    for ply, _ in SortedPairsByValue(player_score) do
         if not ply:IsValid() then goto cont end
         local class = HORDE.Class_Survivor
         if ply:Horde_GetClass() then class = ply:Horde_GetClass().name end

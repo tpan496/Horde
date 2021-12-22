@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/zombie/zm_fast.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = 50
+ENT.StartHealth = 30
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"} -- NPCs with the same class with be allied to each other
@@ -16,9 +16,9 @@ ENT.AnimTbl_MeleeAttack = {"vjseq_melee"} -- Melee Attack Animations
 ENT.MeleeAttackDistance = 32 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 85 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDamage = 15
+ENT.MeleeAttackDamage = 10
 ENT.TimeUntilMeleeAttackDamage = 0.2
-ENT.NextAnyAttackTime_Melee = 0.8
+ENT.NextAnyAttackTime_Melee = 0.6
 ENT.HasLeapAttack = false -- Should the SNPC have a leap attack?
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 	-- ====== Sound File Paths ====== --

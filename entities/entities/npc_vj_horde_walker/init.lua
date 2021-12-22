@@ -18,7 +18,7 @@ ENT.Model = {
     "models/zombie/zclassic_10.mdl",
     "models/zombie/zclassic_11.mdl",
     "models/zombie/zclassic_12.mdl",} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = 100
+ENT.StartHealth = 75
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"} -- NPCs with the same class with be allied to each other

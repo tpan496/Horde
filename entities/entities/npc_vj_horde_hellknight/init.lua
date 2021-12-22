@@ -52,7 +52,6 @@ ENT.GeneralSoundPitch2 = 75
 ENT.Raging = nil
 ENT.Raged = nil
 ENT.DamageReceived = 0
-ENT.Attacks = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Rage()
     if self.Raging or self.Raged then return end
@@ -101,7 +100,6 @@ function ENT:UnRage()
     self.Raging = nil
     self.DamageReceived = 0
     self.HasLeapAttack = false
-    self.Attacks = 0
     self.AnimTbl_Run = ACT_WALK
     self:SetColor(Color(25, 25, 25))
     local id = self:GetCreationID()
@@ -112,32 +110,18 @@ function ENT:UnRage()
     end)
 end
 
-function ENT:CustomOnMeleeAttack_Miss()
-    self.Attacks = self.Attacks + 1
-    if self.Attacks >= 4 then
-        self:UnRage()
-    end
-end
-
-function ENT:CustomOnLeapAttack_Miss()
-    self.Attacks = self.Attacks + 1
-    if self.Attacks >= 4 then
-        self:UnRage()
-    end
-end
-
 function ENT:CustomOnLeapAttack_AfterChecks(hitEnt, isProp)
     if isProp then return end
     if not self.Raged then return end
     if hitEnt and IsValid(hitEnt) and hitEnt:IsPlayer() then
         self:UnRage()
-        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 45)
+        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 60)
     end
 end
 
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     self.DamageReceived = self.DamageReceived + dmginfo:GetDamage()
-    if self.DamageReceived >= self:GetMaxHealth() * 0.25 then
+    if self.DamageReceived >= self:GetMaxHealth() * 0.10 then
         self:Rage()
         self.DamageReceived = 0
     end

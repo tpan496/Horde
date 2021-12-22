@@ -13,14 +13,26 @@ HORDE.Status_Mindeye = 8
 HORDE.Status_WardenAura = 9
 HORDE.Status_EntropyShield = 10
 HORDE.Status_CanBuy = 11
-HORDE.Status_ExpDisabled = 12
-HORDE.Status_Bleeding = 13
-HORDE.Status_Ignite = 14
-HORDE.Status_Frostbite = 15
-HORDE.Status_Shock = 16
-HORDE.Status_Break = 17
-HORDE.Status_Decay = 18
-HORDE.Status_Psychosis = 19
+
+HORDE.Status_Armor_Survivor = 12
+HORDE.Status_Armor_Assault = 13
+HORDE.Status_Armor_Heavy = 14
+HORDE.Status_Armor_Demolition = 15
+HORDE.Status_Armor_Ghost = 16
+HORDE.Status_Armor_Medic = 17
+HORDE.Status_Armor_Engineer = 18
+HORDE.Status_Armor_Warden = 19
+HORDE.Status_Armor_Cremator = 20
+HORDE.Status_Armor_Berserker = 21
+
+HORDE.Status_ExpDisabled = 22
+HORDE.Status_Bleeding = 23
+HORDE.Status_Ignite = 24
+HORDE.Status_Frostbite = 25
+HORDE.Status_Shock = 26
+HORDE.Status_Break = 27
+HORDE.Status_Decay = 28
+HORDE.Status_Psychosis = 29
 
 HORDE.Status_Icon = {}
 HORDE.Status_Icon[HORDE.Status_Camoflague] = "materials/status/camoflague.png"
@@ -36,6 +48,17 @@ HORDE.Status_Icon[HORDE.Status_WardenAura] = "materials/warden.png"
 HORDE.Status_Icon[HORDE.Status_EntropyShield] = "materials/perks/entropy_shield.png"
 HORDE.Status_Icon[HORDE.Status_CanBuy] = "materials/status/canbuy.png"
 HORDE.Status_Icon[HORDE.Status_ExpDisabled] = "materials/status/exp_disabled.png"
+
+HORDE.Status_Icon[HORDE.Status_Armor_Survivor] = "items/armor_survivor.png"
+HORDE.Status_Icon[HORDE.Status_Armor_Assault] = "items/armor_assault.png"
+HORDE.Status_Icon[HORDE.Status_Armor_Heavy] = "items/armor_heavy.png"
+HORDE.Status_Icon[HORDE.Status_Armor_Demolition] = "items/armor_demolition.png"
+HORDE.Status_Icon[HORDE.Status_Armor_Ghost] = "items/armor_ghost.png"
+HORDE.Status_Icon[HORDE.Status_Armor_Medic] = "items/armor_medic.png"
+HORDE.Status_Icon[HORDE.Status_Armor_Engineer] = "items/armor_engineer.png"
+HORDE.Status_Icon[HORDE.Status_Armor_Warden] = "items/armor_warden.png"
+HORDE.Status_Icon[HORDE.Status_Armor_Cremator] = "items/armor_cremator.png"
+HORDE.Status_Icon[HORDE.Status_Armor_Berserker] = "items/armor_berserker.png"
 
 HORDE.Status_Icon[HORDE.Status_Bleeding] = "materials/status/bleeding.png"
 HORDE.Status_Icon[HORDE.Status_Ignite] = "materials/status/ignite.png"
@@ -65,5 +88,5 @@ function HORDE:IsStatusStackable(status)
 end
 
 function HORDE:IsDebuff(status)
-    return status > 12
+    return status > 22
 end

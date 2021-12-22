@@ -26,9 +26,9 @@ local status_color = {
 -- Stack = 0 means enabled for non-stacking status
 local function DrawStatus(status, stack, displacement)
     if stack <= 0 then return end
-    
+    if not HORDE.Status_Icon[status] then return end
     local mat
-    if HORDE.Status_Icon[status] then
+    if status <= HORDE.Status_CanBuy or status >= HORDE.Status_ExpDisabled then
         local color = color_white
         if status_color[status] then
             color = status_color[status]
@@ -52,7 +52,7 @@ local function DrawStatus(status, stack, displacement)
         surface.DrawTexturedRect(5 + displacement, 5, 40, 40)
     else
         draw.RoundedBox(10, 0 + displacement, 0, 50, 50, Color(40,40,40,200))
-        mat = Material("items/" .. status .. ".png")
+        mat = Material(HORDE.Status_Icon[status])
         surface.SetMaterial(mat)
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(-15 + displacement, 5, 80, 40)
@@ -123,6 +123,7 @@ status_panel.Paint = function ()
         end
         for status, stack in SortedPairs(LocalPlayer():GetStatusTable()) do
             if HORDE:IsDebuff(status) and stack < 100 then goto cont end
+            if not HORDE.Status_Icon[status] then goto cont end
             DrawStatus(status, stack, pos)
             pos = pos + 55
             ::cont::
@@ -170,12 +171,25 @@ net.Receive("Horde_SyncStatus", function()
     end
 end)
 
+local armor_table = {
+    armor_survivor = HORDE.Status_Armor_Survivor,
+    armor_assault = HORDE.Status_Armor_Assault,
+    armor_heavy = HORDE.Status_Armor_Heavy,
+    armor_demolition = HORDE.Status_Armor_Demolition,
+    armor_ghost = HORDE.Status_Armor_Ghost,
+    armor_medic = HORDE.Status_Armor_Medic,
+    armor_engineer = HORDE.Status_Armor_Engineer,
+    armor_warden = HORDE.Status_Armor_Warden,
+    armor_cremator = HORDE.Status_Armor_Cremator,
+    armor_berserker = HORDE.Status_Armor_Berserker,
+}
+
 net.Receive("Horde_SyncSpecialArmor", function()
     local armor = net.ReadString()
     local on = net.ReadUInt(3)
 
     if LocalPlayer().SetStatus then
-        LocalPlayer():SetStatus(armor, on)
+        LocalPlayer():SetStatus(armor_table[armor], on)
     end
 end)
 

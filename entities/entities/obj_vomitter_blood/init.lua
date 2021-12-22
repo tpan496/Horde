@@ -44,7 +44,11 @@ function ENT:CustomOnPhysicsCollide(data, phys)
 	if self.Dead then return end
 	self.Dead = true
 	local dmg = DamageInfo()
-	dmg:SetAttacker(self.Owner)
+	if self.Owner:IsValid() then
+		dmg:SetAttacker(self.Owner)
+	else
+		dmg:SetAttacker(self)
+	end
 	dmg:SetInflictor(self)
 	dmg:SetDamageType(DMG_GENERIC)
 	dmg:SetDamage(20)
@@ -60,16 +64,7 @@ function ENT:CustomOnPhysicsCollide(data, phys)
 		util.Decal(VJ_PICK(self.DecalTbl_DeathDecals), data.HitPos + data.HitNormal, data.HitPos - data.HitNormal)
 	end
 	self:SetDeathVariablesTrue(data, phys, true)
-	if self.DelayedRemove > 0 then
-		self:SetNoDraw(true)
-		self:SetMoveType(MOVETYPE_NONE)
-		self:AddSolidFlags(FSOLID_NOT_SOLID)
-		self:SetLocalVelocity(Vector())
-		SafeRemoveEntityDelayed(self, self.DelayedRemove)
-		self:OnRemove()
-	else
-		self:Remove()
-	end
+	self:Remove()
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2018 by DrVrej, All rights reserved. ***

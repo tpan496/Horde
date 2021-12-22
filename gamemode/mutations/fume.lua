@@ -16,8 +16,8 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
             timer.Create("Horde_Mutation_Fume" .. id, 0.5, 0, function()
                 if not ent:IsValid() then timer.Remove("Horde_Mutation_Fume" .. id) return end
                 for _, e1 in pairs(ents.FindInSphere(ent:GetPos(), 200)) do
-                    if e1:IsPlayer() then
-                        e1:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 15)
+                    if HORDE:IsPlayerOrMinion(e1) then
+                        e1:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 15, ent)
                     end
                 end
             end)

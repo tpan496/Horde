@@ -40,6 +40,7 @@ ENT.NextBlastTime = CurTime()
 ENT.NextBlastCooldown = 5
 ENT.Immune_Electricity = true
 ENT.AnimTbl_MeleeAttack = {}
+ENT.Critical = nil
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetModelScale(1.25)
@@ -55,7 +56,7 @@ function ENT:ShockAttack(delay)
 		dmg:SetAttacker(self)
 		dmg:SetInflictor(self)
 		dmg:SetDamageType(DMG_SHOCK)
-		dmg:SetDamage(8)
+		dmg:SetDamage(12)
 		util.BlastDamageInfo(dmg, self:GetPos(), 300)
 
 		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 300)) do
@@ -69,6 +70,13 @@ function ENT:ShockAttack(delay)
 			e:SetNormal(Vector(0,0,1))
 		util.Effect("screecher_blast", e, true, true)
 	end)
+end
+
+function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
+	if not self.Critical and self:Health() < self:GetMaxHealth() / 2 then
+        self.Critical = true
+		self.AnimTbl_Run = {ACT_RUN}
+    end
 end
 
 function ENT:CustomOnThink()

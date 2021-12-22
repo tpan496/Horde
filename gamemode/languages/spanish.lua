@@ -213,7 +213,7 @@ La clase Berserker es una class centrado en cuerpo a cuerpo que puede ser utiliz
 Complejidad: ALTA
 
 {1} de resistencia al daño Global incrementada.
-{2} de resistencia al daño Venenoso incrementada.]]
+{2} de daño cuerpo a cuerpo.]]
 
 LANGUAGE["Perk_warden_base"] = [[
 El Guardián es una clase soporte que usa sus efectos de aura y estructuras para mejorar a los aliados.
