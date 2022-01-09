@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+"$basetexture" "models/weapons/v_models/kf/law/law_d"
+$nocull 1
+}

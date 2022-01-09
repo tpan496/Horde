@@ -133,11 +133,11 @@ function SWEP:SecondaryAttack()
     self:EmitSound(self.ChargeSound)
     self.Charged = true
     self.ChargeLoopCooldown = CurTime() + 1.25
+    self.Mjollner_Charged = true
     local e = EffectData()
     e:SetOrigin(self.Weapon:GetPos())
     e:SetEntity(self.Weapon)
     e:SetRadius(50)
-    self.Mjollner_Charged = true
     util.Effect("charged", e)
 	self.Weapon:SetNextSecondaryFire(CurTime() + 1.5)
 end
@@ -194,6 +194,9 @@ function SWEP:Hook_PostBash(info)
 end
 
 function SWEP:Hook_Think()
+    if self.Charged then
+        ParticleEffectAttach("eml_generic_shock_ligtning", PATTACH_POINT_FOLLOW, self.Weapon, 0)
+    end
     if self.Charged and self.ChargeLoopCooldown - CurTime() <= 0 then
         self.Weapon:EmitSound(self.ChargeLoopSound)
         self.ChargeLoopCooldown = CurTime() + 3.5

@@ -11,6 +11,7 @@ util.AddNetworkString("Horde_BuyItemAmmoPrimary")
 util.AddNetworkString("Horde_BuyItemAmmoSecondary")
 util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
+util.AddNetworkString("Horde_InitClass")
 util.AddNetworkString("Horde_SyncEconomy")
 util.AddNetworkString("Horde_SyncDifficulty")
 util.AddNetworkString("Horde_RemoveReadyPanel")
@@ -62,7 +63,6 @@ function plymeta:Horde_SetClassModel(class)
         timer.Simple(0.2, function()
             local mdlhands = player_manager.TranslatePlayerHands(mdl)
             local hands_ent = self:GetHands()
-            PrintTable(mdlhands)
             if hands_ent and mdlhands and istable(mdlhands) then
                 if hands_ent:GetModel() ~= mdlhands.model then
                     if (IsValid(hands_ent)) then
@@ -126,7 +126,7 @@ function plymeta:Horde_GetMinionCount()
 end
 
 function plymeta:Horde_AddMoney(money)
-    if not self:IsValid() and not money then return end
+    if not self:IsValid() or not money then return end
     if not self.Horde_money then self.Horde_money = 0 end
     self.Horde_money = self.Horde_money + money
 end
@@ -433,11 +433,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                             timer.Remove("Horde_ManhackRepos" .. id)
                             timer.Remove("Horde_MinionCollision" .. id)
                             if ent:IsValid() and ply:IsValid() then
-                                if ent.Horde_Minion_Respawn then
-                                    ply:Horde_RemoveManhackEntity(ent:GetClass(), ent:GetCreationID())
-                                else
-                                    ply:Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
-                                end
+                                ply:Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
                                 ply:Horde_SyncEconomy()
                                 ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
                             end
@@ -447,8 +443,8 @@ net.Receive("Horde_BuyItem", function (len, ply)
                                 local count = drop_ents[class]
                                 if (!count) or (count and count <= item.entity_properties.limit) then
                                     timer.Create("Horde_ManhackRespawn" .. id, 4, 1, function ()
-                                        if ply:IsValid() and ply:Alive() then
-                                            HORDE:SpawnManhack(ply)
+                                        if ply:IsValid() then
+                                            HORDE:SpawnManhack(ply, id)
                                         end
                                     end)
                                 end
@@ -605,6 +601,18 @@ net.Receive("Horde_SellItem", function (len, ply)
     end
 end)
 
+net.Receive("Horde_InitClass", function (len, ply)
+    local name = net.ReadString()
+    local class = HORDE.classes[name]
+    if not class then return end
+    ply:Horde_SetClass(class)
+    ply:Horde_SetMaxWeight(HORDE.max_weight)
+    ply:Horde_ApplyPerksForClass()
+    ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
+    ply:SetMaxHealth(class.max_hp)
+    ply:Horde_SyncEconomy()
+end)
+
 net.Receive("Horde_SelectClass", function (len, ply)
     if not ply:IsValid() then return end
     if ply:Alive() then
@@ -625,6 +633,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
     local name = net.ReadString()
     local class = HORDE.classes[name]
+    if not class then return end
 
     -- Clear status
     net.Start("Horde_ClearStatus")

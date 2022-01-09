@@ -4,6 +4,8 @@ MUTATION.Description = "Regenerable shield.\nShield durability = max(300, 5% max
 MUTATION.Hooks = {}
 
 local entmeta = FindMetaTable("Entity")
+local shldmat = Material('models/props_combine/portalball001_sheet')
+
 function entmeta:Horde_SetMaxShieldHealth(health)
     self.Horde_MaxShieldHealth = health
 end
@@ -42,10 +44,10 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
                     return
                 end
                 if ent:GetNWBool("HasShield") == false then return end
-                render.SetColorMaterial()
+                render.SetMaterial(shldmat)
                 local pos = ent:GetPos()
                 pos.z = pos.z + height / 2
-                render.DrawSphere(pos, radius + 5, 50, 50, Color(175, 175, 175, 50))
+                render.DrawSphere(pos, radius + 5, 50, 50)
             end)
         end
 

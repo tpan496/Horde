@@ -63,7 +63,7 @@ function ENT:Initialize()
 	local phys = self:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:Wake()
-		phys:EnableGravity(true)
+		phys:EnableGravity(false)
 		phys:SetBuoyancyRatio(0)
 	end
 

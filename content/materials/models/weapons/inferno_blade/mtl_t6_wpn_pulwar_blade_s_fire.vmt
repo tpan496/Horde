@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/inferno_blade/blade_col_fire"
+	$color2 "[1.0 1.0 1.0]"
+	$additive  "1"
+	"$bumpmap" "models/weapons/inferno_blade/blade_nml"
+}

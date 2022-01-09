@@ -11,14 +11,14 @@ SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "RPG7"
-SWEP.TrueName = "Rocket Lawwncher"
+SWEP.TrueName = "Ruchnoy Protivotankoviy Granatomyot"
 SWEP.Trivia_Class = "Rocket Launcher"
-SWEP.Trivia_Desc = "A custom made Rocket launcher"
+SWEP.Trivia_Desc = "Designed by the Soviet Union."
 SWEP.Trivia_Manufacturer = "???"
 SWEP.Trivia_Calibre = "Rockets"
-SWEP.Trivia_Mechanism = "Electric pulse"
-SWEP.Trivia_Country = "UK"
-SWEP.Trivia_Year = 1960
+SWEP.Trivia_Mechanism = "Explosive"
+SWEP.Trivia_Country = "Soviet Union"
+SWEP.Trivia_Year = 1958
 
 SWEP.Slot = 3
 
@@ -35,7 +35,7 @@ SWEP.DamageMin = 500 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 0
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "obj_vj_rocket" -- entity to fire, if any
+SWEP.ShootEntity = "obj_vj_rpg_rocket" -- entity to fire, if any
 SWEP.MuzzleVelocity = 2000 -- projectile or phys bullet muzzle velocity
 
 SWEP.CanFireUnderwater = false
@@ -79,8 +79,8 @@ SWEP.ShootSoundSilenced = "vj_weapons/rpg/rpg_fire_far.wav"
 SWEP.DistantShootSound = "vj_weapons/rpg/rpg_fire_far.wav"
 
 --SWEP.MuzzleEffect = "muzzleflash_pistol"
-SWEP.ShellModel = "models/shells/shell_9mm.mdl"
-SWEP.ShellScale = 1
+--SWEP.ShellModel = "models/shells/shell_9mm.mdl"
+--SWEP.ShellScale = 1
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on

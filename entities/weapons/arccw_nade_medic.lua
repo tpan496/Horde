@@ -43,14 +43,16 @@ SWEP.TTTWeaponType = "weapon_ttt_medicgrenade"
 SWEP.NPCWeaponType = "weapon_grenade"
 SWEP.NPCWeight = 50
 
-SWEP.PullPinTime = 0.5
+SWEP.PullPinTime = 0.25
 
 SWEP.Animations = {
     ["draw"] = {
         Source = "deploy",
+        Time = 0.25,
     },
     ["pre_throw"] = {
         Source = "pullpin",
+        Time = 0.25,
     },
     ["throw"] = {
         Source = "throw",

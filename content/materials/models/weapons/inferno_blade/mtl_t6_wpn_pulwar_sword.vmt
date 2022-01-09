@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/inferno_blade/sword_col"
+	$color2 "[0 0 0]"
+	$blendtintbybasealpha  "1"
+	"$bumpmap" "models/weapons/inferno_blade/sword_nml"
+}

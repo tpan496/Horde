@@ -30,8 +30,8 @@ SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_snip_sg550.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 1000
-SWEP.DamageMin = 1000
+SWEP.Damage = 900
+SWEP.DamageMin = 900
 SWEP.Range = 4000 -- in METRES
 SWEP.Penetration = 22
 
@@ -78,7 +78,7 @@ SWEP.ShellRotateAngle = Angle(0, 90, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 1
+SWEP.SpeedMult = 0.9
 SWEP.SightedSpeedMult = 0.40
 SWEP.SightTime = 0.4 / 1.25
 

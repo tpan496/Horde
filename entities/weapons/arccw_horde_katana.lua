@@ -1,9 +1,9 @@
 if not ArcCWInstalled then return end
 if CLIENT then
-    SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/weapon_l4d2_katana")
+    SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/arccw_horde_katana")
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
-    killicon.Add("arccw_horde_katana", "vgui/hud/weapon_l4d2_katana", Color(0, 0, 0, 255))
+    killicon.Add("arccw_horde_katana", "vgui/hud/arccw_horde_katana", Color(0, 0, 0, 255))
 end
 
 SWEP.Base = "arccw_base_melee"

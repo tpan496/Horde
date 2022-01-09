@@ -11,6 +11,10 @@ concommand.Add("horde_sync_to_local", function ()
 end)
 end
 
+net.Receive("Horde_SyncClientExps", function ()
+	HORDE:SyncToLocal()
+end)
+
 function HORDE:SyncToLocal()
     if SERVER then return end
     local ply = LocalPlayer()
@@ -25,12 +29,8 @@ function HORDE:SyncToLocal()
 
 	path = "horde/ranks/" .. HORDE:ScrubSteamID(ply) .. ".txt"
 
-	if not file.Exists(path, "DATA") then
-		print("Path", path, "does not exist!")
-		return
-	end
-
-	strm = file.Open(path, "rb", "DATA")
+	if file.Exists(path, "DATA") then
+		strm = file.Open(path, "rb", "DATA")
 		local header = strm:Read(#EXPECTED_HEADER)
 
 		if header == EXPECTED_HEADER then
@@ -41,8 +41,10 @@ function HORDE:SyncToLocal()
 				if order == nil then
 				else
 					local class_name = HORDE.order_to_class_name[order]
-					local_levels[class_name] = level
-					local_exps[class_name] = exp
+					if class_name then
+						local_levels[class_name] = level
+						local_exps[class_name] = exp
+					end
 				end
             end
 		else
@@ -51,7 +53,8 @@ function HORDE:SyncToLocal()
 				local_exps[class.name] = 0
             end
 		end
-	strm:Close()
+		strm:Close()
+	end
 
     for name, class in pairs(HORDE.classes) do
         local server_level = ply:Horde_GetLevel(name)

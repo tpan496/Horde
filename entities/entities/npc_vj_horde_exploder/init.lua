@@ -11,6 +11,7 @@ ENT.BloodColor = "Red" -- The blood type, this will determine what it should use
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.MeleeAttackDistance = 32 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 65 -- How far does the damage go?
+ENT.TimeUntilMeleeAttackDamage = 0.8
 ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
 ENT.FootStepTimeRun = 1 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 1 -- Next foot step sound when it is walking
@@ -35,7 +36,7 @@ ENT.HasGibOnDeath = true
 ENT.Immune_AcidPoisonRadiation = true
 
 function ENT:CustomOnInitialize()
-	self:SetModelScale(1.35)
+    self:SetModelScale(1.35)
     self:SetBodygroup(1,1)
     self:SetColor(Color(255, 0, 255))
     self.HeadHealth = self.HeadHealth * HORDE.difficulty_health_multiplier[HORDE.difficulty]
@@ -61,7 +62,6 @@ function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
 end
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-    local dmgtype = dmginfo:GetDamageType()
     if hitgroup == HITGROUP_HEAD then
         self.HeadHealth = self.HeadHealth - dmginfo:GetDamage()
         if self.HeadHealth <= 0 then

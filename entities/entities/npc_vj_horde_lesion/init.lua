@@ -15,7 +15,7 @@ ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
 ENT.MeleeAttackDistance = 32 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 85 -- How far does the damage go?
-ENT.TimeUntilMeleeAttackDamage = 0.2 -- This counted in seconds | This calculates the time until it hits something
+ENT.TimeUntilMeleeAttackDamage = 0.4 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 42
 ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
 ENT.HasLeapAttack = true -- Should the SNPC have a leap attack?
@@ -50,7 +50,6 @@ ENT.GeneralSoundPitch1 = 75
 ENT.GeneralSoundPitch2 = 75
 
 ENT.HasSoundTrack = false
-ENT.SoundTbl_SoundTrack = {"npc/fast_zombie/fz_alert_far1.wav"}
 
 ENT.Raging = nil
 ENT.Raged = nil
@@ -95,7 +94,7 @@ function ENT:CustomOnInitialize()
     self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 
-    self:EmitSound("vfastzombie/leap1.wav", 1500, 20, 1, CHAN_STATIC)
+    self:EmitSound("horde/lesion/lesion_roar.ogg", 1500, 80, 1, CHAN_STATIC)
 end
 
 function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)

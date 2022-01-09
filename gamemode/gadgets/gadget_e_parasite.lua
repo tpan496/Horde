@@ -71,7 +71,7 @@ GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
         if killer:Horde_GetPerk("engineer_tinkerer") then
             dmginfo:ScaleDamage(1.25)
         end
-        dmginfo:SetDamageType(DMG_CRUSH)
+        dmginfo:SetDamageType(DMG_CLUB)
         util.BlastDamageInfo(dmginfo, victim:GetPos(), rad)
     end
 end

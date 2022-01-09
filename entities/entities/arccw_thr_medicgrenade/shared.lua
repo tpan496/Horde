@@ -135,9 +135,9 @@ function ENT:Think()
             self.NextDamageTick = CurTime() + 0.5
             self.ArcCW_Killable = false
         else
-            local emitter = ParticleEmitter(self:GetPos())
+            if not self.emitter then self.emitter = ParticleEmitter(self:GetPos()) end
             if self.Ticks % 5 == 0 then
-                local smoke = emitter:Add("particles/smokey", self:GetPos())
+                local smoke = self.emitter:Add("particles/smokey", self:GetPos())
                 smoke:SetGravity( Vector(0, 0, 1500) )
                 smoke:SetDieTime( math.Rand(0.5, 1) )
                 smoke:SetStartAlpha(40)

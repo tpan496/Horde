@@ -22,7 +22,7 @@ LANGUAGE["Game_Difficulty_REALISM"] = "Реалистичный"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "Кошмарный"
 LANGUAGE["Game_Enemies"] = "Враги"
 LANGUAGE["Game_HintBottomReady"] = "F2-знания, F3-Магазин/Умение, F4-Готов"
-LANGUAGE["Game_HintBottom"] = "F3-Магазин/Умение, V-Выкинуть $"
+LANGUAGE["Game_HintBottom"] = "F2-знания, F3-Магазин/Умение, V-Выкинуть $"
 LANGUAGE["Game_Result_VICTORY"] = "ПОБЕДА!"
 LANGUAGE["Game_Result_DEFEAT"] = "ПОРАЖЕНИЕ..."
 LANGUAGE["Game_Result_Change Map"] = "Смена карты"
@@ -252,14 +252,13 @@ LANGUAGE["Perk_assault_cardiac_overload"] = [[
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Подавление]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Липкое соединение]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
-Противники, пораженные баллистическим уроном, замедляются.
-Замедленные враги имеют на {1} пониженную скорость действия.]]
+Враги, пораженные баллистическим уроном, Скован.
+Скован врагам наносят на {1} меньший урона.]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Неочищенная обсадная колонна]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
-Враги, пораженные баллистическим уроном, ослабляются.
-Ослабленные враги наносят на {1} меньший урона.
-Ослабленные враги получают на {2} больше урона.]]
+Враги, пораженные баллистическим уроном, Ослабленные.
+Ослабленные враги получают на {1} больше урона.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Защитная броня]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[Жидкая броня]]
@@ -399,7 +398,8 @@ LANGUAGE["Perk_engineer_golem"] = [[
 LANGUAGE["Perk_Title_engineer_spectre"] = [[Приведение]]
 LANGUAGE["Perk_engineer_spectre"] = [[
 Миньоны восстанавливают здоровья на {1} от нанесенного урона.
-Миньоны наносят на {2} больше урона.]]
+Восстановливает здоровья на {2} единиц за удар.
+Миньоны наносят на {3} больше урона.]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Экспериментальные]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[Симбиоз]]

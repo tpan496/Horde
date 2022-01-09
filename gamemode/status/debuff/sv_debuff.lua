@@ -2,11 +2,12 @@ local plymeta = FindMetaTable("Player")
 local entmeta = FindMetaTable("Entity")
 
 HORDE.Debuff_Notifications = {
-    [HORDE.Status_Bleeding] = "You are inflicted by Bleeding.\nYou take physical damage over time.",
-    [HORDE.Status_Ignite] = "You are inflicted by Ignite.\nYou take fire damage over time.",
+    [HORDE.Status_Bleeding] = "You are inflicted by Bleeding.\nYou take Physical damage over time.",
+    [HORDE.Status_Ignite] = "You are inflicted by Ignite.\nYou take Fire damage over time.",
     [HORDE.Status_Frostbite] = "You are inflicted by Frostbite.\nYour movement speed is reduced.",
     [HORDE.Status_Shock] = "You are inflicted by Shock.\nYou take increased damage from all sources.",
     [HORDE.Status_Break] = "You are inflicted by Break.\nYour health is reduced drastically and will recover slowly.",
+    [HORDE.Status_Decay] = "You are inflicted by Decay.\nYou cannot heal.",
     [HORDE.Status_Psychosis] = "Y'ai 'ng'ngah, Yog-Sothoth h'ee - l'geb f'ai throdog uaaah.",
 }
 
@@ -78,8 +79,8 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor)
             self:Horde_AddIgniteEffect(duration, inflictor)
         elseif debuff == HORDE.Status_Break then
             timer.Simple(0, function() self:Horde_AddBreakEffect(duration) end)
-        elseif debuff == HORDE.Status_Psychosis then
-            self:TakeDamage(50, self, self)
+        --elseif debuff == HORDE.Status_Psychosis then
+        --    self:TakeDamage(50, self, self)
         end
     else
         local duration = 5
@@ -98,8 +99,8 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor)
             self:Horde_AddIgniteEffect(duration, inflictor)
         elseif debuff == HORDE.Status_Break then
             timer.Simple(0, function() self:Horde_AddBreakEffect(duration) end)
-        elseif debuff == HORDE.Status_Psychosis then
-            self:TakeDamage(50, self, self)
+        --elseif debuff == HORDE.Status_Psychosis then
+        --    self:TakeDamage(50, self, self)
         end
     end
 

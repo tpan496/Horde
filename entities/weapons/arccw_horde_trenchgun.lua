@@ -10,7 +10,7 @@ SWEP.Trivia_Class = "Shotgun"
 SWEP.Trivia_Desc = "Fires incendiary pellets."
 
 if CLIENT then
-SWEP.Trivia_Manufacturer = "Winchester"
+SWEP.Trivia_Manufacturer = "M1887 Trench Gun"
 SWEP.Trivia_Calibre = "12 Gauge"
 SWEP.Trivia_Mechanism = "Pump-Action"
 SWEP.Trivia_Country = "USA"

@@ -204,7 +204,7 @@ function HORDE:GetDefaultClassesData()
         {
             [1] = {title = "Fundamentals", choices = {"berserker_breathing_technique", "berserker_bloodlust"}},
             [2] = {title = "Technique", choices = {"berserker_bushido", "berserker_savagery"}},
-            [3] = {title = "Combat Arts", choices = {"berserker_mindeye", "berserker_rip_and_tear"}},
+            [3] = {title = "Combat Arts", choices = {"berserker_phalanx", "berserker_rip_and_tear"}},
         },
         7
     )

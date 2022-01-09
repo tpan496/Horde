@@ -124,7 +124,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if HORDE:IsPlayerMinion(dmg:GetInflictor()) or HORDE:IsPlayerMinion(dmg:GetAttacker()) then return true end
     
     if dmg:GetDamage() <= 0.5 then return true end
-
+    
     -- Apply bonus
     local bonus = {resistance=0, less=1, evasion=0, block=0}
     hook.Run("Horde_OnPlayerDamageTaken", ply, dmg, bonus)

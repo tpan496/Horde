@@ -125,10 +125,9 @@ function HORDE:SaveMapAchievements()
         and GetConVarNumber("horde_round_bonus") <= 500
         and GetConVarNumber("horde_base_walkspeed") <= 180
         and GetConVarNumber("horde_base_runspeed") <= 220 then
-            if HORDE.achievements_map[map].config == 0 then
-                has_new_achievements = true
-            end
             HORDE.achievements_map[map].config = 1
+        else
+            HORDE.achievements_map[map].config = math.max(0, HORDE.achievements_map[map].config)
         end
         HORDE.achievements_map[map].wave = math.max(HORDE.achievements_map[map].wave, HORDE.current_wave)
     end
@@ -169,20 +168,30 @@ function HORDE:ActivateExtraMapAchievement(map, achievement)
     HORDE:SaveMapAchievements()
 end
 
+HORDE.has_new_update = nil
 function HORDE:CheckUpdate()
     path = "horde/achievements/update.txt"
     if not file.IsDir("horde/achievements/", "DATA") then
 		file.CreateDir("horde/achievements/", "DATA")
+        HORDE.has_new_update = true
         RunConsoleCommand("horde_stats")
         strm = file.Open(path, "wb", "DATA" )
             strm:Write(HORDE.version)
         strm:Close()
         return
 	end
-    
-    strm = file.Open(path, "rb", "DATA" )
+
+    if file.Exists(path, "DATA") == false then
+        HORDE.has_new_update = true
+        RunConsoleCommand("horde_stats")
+        strm = file.Open(path, "wb", "DATA" )
+            strm:Write(HORDE.version)
+        strm:Close()
+    else
+        strm = file.Open(path, "rb", "DATA" )
 		local header = strm:Read(#HORDE.version)
         if header ~= HORDE.version then
+            HORDE.has_new_update = true
             RunConsoleCommand("horde_stats")
             strm:Close()
 
@@ -190,7 +199,8 @@ function HORDE:CheckUpdate()
                 strm:Write(HORDE.version)
             strm:Close()
         end
-	strm:Close()
+        strm:Close()
+    end
 end
 
 function HORDE:SaveClassAchievemnts()
@@ -238,8 +248,11 @@ function HORDE:LoadMapAchievements()
 
 	strm = file.Open(path, "rb", "DATA" )
 		local header = strm:Read(#EXPECTED_HEADER)
+        local f = strm:Read()
         if header == EXPECTED_HEADER then
-            HORDE.achievements_map = util.JSONToTable(strm:Read())
+            if f then
+                HORDE.achievements_map = util.JSONToTable(f)
+            end
         else
             HORDE.achievements_map = {}
             HORDE.achievements_map[game.GetMap()] = {}
@@ -270,6 +283,7 @@ function HORDE:LoadClassAchievements()
 end
 
 net.Receive("Horde_SaveAchievements", function ()
+    HORDE:LoadMapAchievements()
     HORDE:SaveMapAchievements()
     --HORDE:SaveClassAchievemnts()
 end)

@@ -2,7 +2,6 @@ AddCSLuaFile("shared.lua")
 include('shared.lua')
 include('autorun/vj_controls.lua')
 
-
 -- Core
 ENT.Model = {"models/horde/gonome/gonome.mdl"}
 ENT.StartHealth = 7500
@@ -151,14 +150,14 @@ ENT.DeathSoundPitch2 = "UseGeneralPitch"
 
     -- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
-ENT.SoundTbl_FootStep = {"horde/gonome/gonome_step1.wav","horde/gonome/gonome_step2.wav","horde/gonome/gonome_step3.wav","horde/gonome/gonome_step4.wav","horde/gonome/gonome_run.wav"}
-ENT.SoundTbl_Idle = {"horde/gonome/gonome_idle1.wav","horde/gonome/gonome_idle2.wav"}
-ENT.SoundTbl_MeleeAttack = {"horde/gonome/gonome_melee1.wav","horde/gonome/gonome_melee2.wav"}
-ENT.SoundTbl_MeleeAttackMiss = {"horde/gonome/gonome_melee1.wav","horde/gonome/gonome_melee2.wav"}
+ENT.SoundTbl_FootStep = {"horde/gonome/gonome_step1.ogg","horde/gonome/gonome_step2.ogg","horde/gonome/gonome_step3.ogg","horde/gonome/gonome_step4.ogg"}
+ENT.SoundTbl_Idle = {"horde/gonome/gonome_idle1.ogg","horde/gonome/gonome_idle2.ogg"}
+ENT.SoundTbl_MeleeAttack = {"horde/gonome/gonome_melee1.ogg","horde/gonome/gonome_melee2.ogg"}
+ENT.SoundTbl_MeleeAttackMiss = {"horde/gonome/gonome_melee1.ogg","horde/gonome/gonome_melee2.ogg"}
 ENT.SoundTbl_BeforeLeapAttack = nil
-ENT.SoundTbl_LeapAttackJump = {"horde/gonome/gonome_jumpattack.wav"}
-ENT.SoundTbl_Pain = {"horde/gonome/gonome_pain1.wav","horde/gonome/gonome_pain2.wav","horde/gonome/gonome_pain3.wav","horde/gonome/gonome_pain4.wav"}
-ENT.SoundTbl_Death = {"horde/gonome/gonome_death.wav"}
+ENT.SoundTbl_LeapAttackJump = {"horde/gonome/gonome_jumpattack.ogg"}
+ENT.SoundTbl_Pain = {"horde/gonome/gonome_pain1.ogg","horde/gonome/gonome_pain2.ogg","horde/gonome/gonome_pain3.ogg","horde/gonome/gonome_pain4.ogg"}
+ENT.SoundTbl_Death = {"horde/gonome/gonome_death.ogg"}
 
 ENT.NextBlastTime = CurTime()
 ENT.NextBlastCooldown = 10
@@ -171,7 +170,7 @@ function ENT:CustomOnInitialize()
     self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
----------------------------------------------------------------------------------------------------------------------------------------------
+
 function ENT:RangeAttackCode_GetShootPos(TheProjectile)
     return (self:GetEnemy():GetPos() - self:LocalToWorld(Vector(math.random(-30,30),math.random(-30,30),math.random(20,30))))*2 + self:GetUp()*300
 end
@@ -201,13 +200,9 @@ function ENT:ColdAttack(delay)
 				ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 4)
 			end
 		end
-		
-		local e = EffectData()
-			e:SetOrigin(pos)
-			e:SetNormal(Vector(0,0,1))
-            e:SetScale(1)
-		util.Effect("weeper_blast", e, true, true)
-        util.Effect("GlassImpact", e, true, true)
+
+        ParticleEffect("cryo_explosion_large", pos, Angle(0,0,0), self)
+        sound.Play("horde/status/cold_explosion.ogg", pos, 80, math.random(70, 90))
 	end)
 end
 
@@ -217,7 +212,7 @@ function ENT:CustomOnThink()
         local EnemyDistance = self.NearestPointToEnemyDistance
         if EnemyDistance < 350 then
             if CurTime() > self.NextBlastTime then
-                sound.Play("horde/gonome/gonome_jumpattack.wav", self:GetPos(), 100, 30)
+                sound.Play("horde/gonome/gonome_jumpattack.ogg", self:GetPos(), 100, 30)
                 self:VJ_ACT_PLAYACTIVITY("big_flinch", true, 5, false)
                 for i = 1, 25 do
                     self:ColdAttack(3 + i * math.random() / 5)

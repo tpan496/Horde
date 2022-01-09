@@ -23,7 +23,7 @@ ENT.FootStepTimeWalk = 0.5 -- Next foot step sound when it is walking
 
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.AnimTbl_RangeAttack = {ACT_MELEE_ATTACK1} -- Range Attack Animations
-ENT.RangeAttackEntityToSpawn = "obj_vomitter_blood" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_horde_vomitter_projectile" -- The entity that is spawned when range attacking
 ENT.RangeDistance = 850 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 100 -- How close does it have to be until it uses melee?
 ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?

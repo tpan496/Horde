@@ -1,0 +1,13 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/gau/bullets"
+	"$phongalbedotint" "1"
+                "$halflambert" "1"
+                "$phong" "1"
+                "$phongboost" "0.85"
+                "$phongfresnelranges" "[1 7 4]"
+	//"$envmap" "models/weapons/v_models/bo_mp5k/body"
+                //"$envmaptint" "[0.3 0.3 0.2]"
+	//"$envmapcontrast" 0.9
+	//"$envmapsaturation" 0.7
+}

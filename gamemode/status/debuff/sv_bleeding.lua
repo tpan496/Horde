@@ -2,8 +2,9 @@ local entmeta = FindMetaTable("Entity")
 
 function entmeta:Horde_AddBleedingEffect(inflictor)
     if self:IsPlayer() then
-        timer.Create("Horde_BleedingEffect" .. self:SteamID(), 0.5, 0, function ()
-            if not self.Horde_Debuff_Active[HORDE.Status_Bleeding] then return end
+        local id = "Horde_BleedingEffect" .. self:SteamID()
+        timer.Create(id, 0.5, 0, function ()
+            if not self:IsValid() or not self.Horde_Debuff_Active[HORDE.Status_Bleeding] then timer.Remove(id) return end
             local dmg = DamageInfo()
             dmg:SetAttacker(Entity(0))
             dmg:SetInflictor(Entity(0))
@@ -16,10 +17,15 @@ function entmeta:Horde_AddBleedingEffect(inflictor)
         local perc_health = self:GetMaxHealth() * 0.01
         local id = self:GetCreationID()
         timer.Create("Horde_BleedingEffect" .. id, 0.5, 0, function ()
-            if not self:IsValid() or not self.Horde_Debuff_Active[HORDE.Status_Bleeding] then return end
+            if not self:IsValid() or not self.Horde_Debuff_Active[HORDE.Status_Bleeding] then timer.Remove(id) return end
             local dmg = DamageInfo()
-            dmg:SetAttacker(inflictor)
-            dmg:SetInflictor(inflictor)
+            if inflictor then
+                dmg:SetAttacker(inflictor)
+                dmg:SetInflictor(inflictor)
+            else
+                dmg:SetAttacker(self)
+                dmg:SetInflictor(self)
+            end
             dmg:SetDamageType(DMG_SLASH)
             dmg:SetDamage(15 + perc_health)
             self:TakeDamageInfo(dmg)

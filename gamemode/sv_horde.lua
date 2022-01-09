@@ -49,6 +49,7 @@ end
 hook.Add("InitPostEntity", "Horde_Init", function()
     HORDE.ai_nodes = {}
     local horde_nodes = ents.FindByClass("info_horde_enemy_spawn")
+    local horde_boss_nodes = ents.FindByClass("info_horde_boss_spawn")
     HORDE.spawned_enemies = {}
     HORDE.found_ai_nodes = false
     HORDE.found_horde_nodes = false
@@ -62,6 +63,13 @@ hook.Add("InitPostEntity", "Horde_Init", function()
         HORDE.found_ai_nodes = true
     else
         ParseFile()
+    end
+
+    if not table.IsEmpty(horde_boss_nodes) then
+        HORDE.boss_spawns = {}
+        for _, node in pairs(horde_boss_nodes) do
+            table.insert(HORDE.boss_spawns, node:GetPos())
+        end
     end
 
     HORDE.ammobox_nodes = {}
@@ -153,7 +161,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         local boss_properties = victim:Horde_GetBossProperties()
         local defer_reward = false
         local reward = 0
-        if killer:IsPlayer() or killer:GetNWEntity("HordeOwner"):IsPlayer() then
+        if killer:IsValid() and killer:IsPlayer() or killer:GetNWEntity("HordeOwner"):IsPlayer() then
             if killer:GetNWEntity("HordeOwner"):IsPlayer() then killer = killer:GetNWEntity("HordeOwner") end
             local scale = 1
             if victim:GetVar("reward_scale") then
@@ -230,9 +238,15 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                 HORDE.player_damage[id] = HORDE.player_damage[id] + dmg:GetDamage()
                 ent:Horde_SetMostRecentAttacker(dmg:GetAttacker())
                 if GetConVar("horde_testing_display_damage"):GetInt() == 1 then
+                    local dmgtype = HORDE:GetDamageType(dmg)
                     net.Start("Horde_LegacyNotification")
-                        net.WriteString("You dealt " .. dmg:GetDamage() .. " damage to " .. ent:GetClass())
-                        net.WriteInt(0,2)
+                        if dmgtype == HORDE.DMG_PURE then
+                            net.WriteString("You dealt " .. dmg:GetDamage() .. " damage to " .. ent:GetClass())
+                            net.WriteInt(0,2)
+                        else
+                            net.WriteString("You dealt " .. dmg:GetDamage() .. " " .. HORDE.DMG_TYPE_STRING[dmgtype] .. " damage to " .. ent:GetClass())
+                            net.WriteInt(0,2)
+                        end
                     net.Send(dmg:GetAttacker())
                 end
 
@@ -243,12 +257,15 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                     net.Broadcast()
 
                     -- Some special music for horde default boss.
-                    if GetConVar("horde_default_enemy_config"):GetInt() == 1 and boss_music_loop and not horde_boss_critical and ent:Health() < ent:GetMaxHealth() / 2 and ent:GetClass() == "npc_vj_alpha_gonome" then
+                    if GetConVar("horde_default_enemy_config"):GetInt() == 1 and boss_music_loop and not horde_boss_critical and ent.Critical then
                         timer.Remove("Horde_BossMusic")
                         boss_music_loop:Stop()
-                        boss_music_loop = CreateSound(game.GetWorld(), "music/hl1_song10.mp3")
+                        local fierce_music = {"music/hl1_song10.mp3", "music/hl2_song4.mp3", "music/hl2_song25_teleporter.mp3"}
+                        local fierce_music_duration = {103, 65, 43}
+                        local selected_id = math.random(#fierce_music)
+                        boss_music_loop = CreateSound(game.GetWorld(), fierce_music[selected_id])
                         boss_music_loop:SetSoundLevel(0)
-                        timer.Create("Horde_BossMusic", 103, 0, function()
+                        timer.Create("Horde_BossMusic", fierce_music_duration[selected_id], 0, function()
                             boss_music_loop:Stop()
                             boss_music_loop:Play()
                         end)
@@ -262,9 +279,15 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
             if not HORDE.player_damage_taken[id] then HORDE.player_damage_taken[id] = 0 end
             HORDE.player_damage_taken[id] = HORDE.player_damage_taken[id] + dmg:GetDamage()
             if GetConVar("horde_testing_display_damage"):GetInt() == 1 then
+                local dmgtype = HORDE:GetDamageType(dmg)
                 net.Start("Horde_LegacyNotification")
-                    net.WriteString("You received " .. dmg:GetDamage() .. " damage from " .. dmg:GetAttacker():GetClass())
-                    net.WriteInt(0,2)
+                    if dmgtype == HORDE.DMG_PURE then
+                        net.WriteString("You received " .. dmg:GetDamage() .. " damage from " .. dmg:GetAttacker():GetClass())
+                        net.WriteInt(0,2)
+                    else
+                        net.WriteString("You received " .. dmg:GetDamage() .. " " .. HORDE.DMG_TYPE_STRING[dmgtype] ..  " damage from " .. dmg:GetAttacker():GetClass())
+                        net.WriteInt(0,2)
+                    end
                 net.Send(ent)
             end
         end
@@ -344,7 +367,7 @@ function HORDE:SpawnEnemy(enemy, pos)
 
     local spawned_enemy = ents.Create(enemy.class)
     spawned_enemy:SetPos(pos)
-    spawned_enemy:SetAngles(Angle(0, math.random(0, 360), 0))
+    timer.Simple(0, function() spawned_enemy:SetAngles(Angle(0, math.random(0, 360), 0)) end)
     spawned_enemy:Spawn()
 
     HORDE.spawned_enemies[spawned_enemy:EntIndex()] = true
@@ -371,7 +394,7 @@ function HORDE:SpawnEnemy(enemy, pos)
         spawned_enemy:SetNPCState(NPC_STATE_COMBAT)
     end
 
-    if enemy.model_scale then
+    if enemy.model_scale and enemy.model_scale ~= 1 then
         timer.Simple(0, function()
             if not spawned_enemy:IsValid() then return end
             local scale = spawned_enemy:GetModelScale()
@@ -474,7 +497,6 @@ function HORDE:SpawnEnemy(enemy, pos)
             end
         end
     end
-
     --[[spawned_enemy.DoRelationshipCheck = function (ent)
         if ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid() then return true end
         return false
@@ -689,7 +711,7 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                             spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
                             table.insert(enemies, spawned_enemy)
                         end
-                        
+
                         break
                     end
                     ::cont::
@@ -700,7 +722,7 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                 if renormalize then
                     HORDE:NormalizeEnemiesWeightOnWave(horde_current_enemies_list)
                 end
-                
+
                 HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
                 HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
             end
@@ -778,7 +800,7 @@ function HORDE:CheckBossStuck()
     })
     if tr.Hit then
         local ent = tr.Entity
-        if ent:IsValid() and (ent:GetClass() == "npc_turret_floor" or ent:IsNPC()) then return end
+        if ent:IsValid() and (ent:GetClass() == "npc_turret_floor" or ent:IsNPC() or ent:IsPlayer()) then return end
         horde_boss_reposition = true
         print("[HORDE] Boss is stuck. Attempting to reposition...")
     end
@@ -993,6 +1015,14 @@ function HORDE:WaveEnd()
         -- TODO: change this magic number
         if boss_music_loop then boss_music_loop:Stop() end
         HORDE:GameEnd("VICTORY")
+
+        boss_music_loop = CreateSound(game.GetWorld(), "music/hl2_song23_suitsong3.mp3")
+        boss_music_loop:SetSoundLevel(0)
+        timer.Create("Horde_BossMusic", 43, 0, function()
+            boss_music_loop:Stop()
+            boss_music_loop:Play()
+        end)
+        boss_music_loop:Play()
     else
         HORDE:BroadcastBreakCountDownMessage(0, true)
         net.Start("Horde_LegacyNotification")
@@ -1174,7 +1204,11 @@ function HORDE:Direct()
         if wave == 0 then wave = 10 end
         local has_boss = HORDE.bosses_normalized[wave]
         if has_boss and (not horde_boss_spawned) and (not HORDE.horde_boss) then
-            HORDE:SpawnBoss(enemies, valid_nodes)
+            if HORDE.boss_spawns and #HORDE.boss_spawns > 0 then
+                HORDE:SpawnBoss(enemies, HORDE.boss_spawns)
+            else
+                HORDE:SpawnBoss(enemies, valid_nodes)
+            end
             hook.Run("HordeBossSpawn", HORDE.horde_boss)
             horde_boss_spawned = true
         elseif horde_boss_reposition then

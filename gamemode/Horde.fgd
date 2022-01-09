@@ -44,6 +44,12 @@
 
 ]
 
+@PointClass base(Targetname, Angles) studio("models/zombie/poison.mdl") = info_horde_boss_spawn :
+	"If this is present in a map, Horde will use those points to spawn bosses."
+[
+
+]
+
 @PointClass base(Targetname, Angles) studio("models/Items/BoxMRounds.mdl") = info_horde_ammobox_spawn :
 	"An ammo box spawn point. If this is present in a map, Horde will spawn ammo boxes only on those points."
 [
