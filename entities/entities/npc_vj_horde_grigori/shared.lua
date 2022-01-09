@@ -1,11 +1,15 @@
 ENT.Base 			= "npc_vj_human_base" -- Full list of bases is in the base, or go back to this link and read the list: https://saludos.sites.google.com/site/vrejgaming/makingvjbaseaddon
 ENT.Type 			= "ai"
-ENT.PrintName 		= "Father Grigori"
+ENT.PrintName 		= "Gorlami"
 ENT.Author 			= "Comrade Communist"
 ENT.Contact 		= ""
 ENT.Purpose 		= "Spawn it and fight with it!"
 ENT.Instructions 	= "Click on the spawnicon to spawn it."
 ENT.Category		= "Horde"
+
+VJ.AddNPC_HUMAN("Father Grigori","npc_vj_horde_grigori",{"weapon_vj_horde_annabelle"}, "Horde")
+
+VJ.AddNPCWeapon("VJ Annabelle", "weapon_vj_horde_annabelle")
 
 if (CLIENT) then
 	local Name = "Father Grigori"
