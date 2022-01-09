@@ -117,6 +117,8 @@ function PANEL:DoClick()
                 net.Start("Horde_SelectClass")
                 net.WriteString(self.item.name)
                 net.SendToServer()
+
+                file.Write("horde/class_choices.txt", self.item.name)
             end,
             "No", function() end
         )
@@ -199,7 +201,6 @@ function PANEL:SetData(item)
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
                 self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
-                --self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
                 if HORDE.gadgets[self.item.class].Active then
                     local activate_loc = translate.Get("Gadget_Activation") or "Press T to activate."
                     self.loc_desc = activate_loc .. "\n\n" .. self.loc_desc
@@ -224,7 +225,6 @@ function PANEL:SetData(item)
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
                 self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
-                --self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
                 if HORDE.gadgets[self.item.class].Active then
                     local activate_loc = translate.Get("Gadget_Activation") or "Press T to activate."
                     self.loc_desc = activate_loc .. "\n\n" .. self.loc_desc
@@ -427,6 +427,21 @@ function PANEL:Paint()
             local icon = Material(HORDE.gadgets[self.item.class].Icon, "mips smooth")
             draw.DrawText(self.loc_name, "Title", self:GetWide() / 2 - surface.GetTextSize(self.loc_name) / 2 + 16, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             draw.DrawText(self.loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            local w, h = surface.GetTextSize(self.loc_desc .. "\n")
+            if self.loc_desc[-1] ~= "\n" then
+                w, h = surface.GetTextSize(self.loc_desc .. "\n\n")
+            end
+            if self.item.dmgtype then
+                draw.DrawText("Damage Type: ", "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                local px = 0
+                for _, dmgtype in SortedPairs(self.item.dmgtype) do
+                    local icon2 = Material(HORDE.DMG_TYPE_ICON[dmgtype], "mips smooth")
+                    surface.SetMaterial(icon2)
+                    surface.SetDrawColor(HORDE.DMG_COLOR[dmgtype])
+                    surface.DrawTexturedRect(75 + px + 100, 80 + h - 5, 30, 30)
+                    px = px + 30
+                end
+            end
             surface.SetMaterial(icon) -- Use our cached material
             if HORDE.gadgets[self.item.class].Active then
                 surface.SetDrawColor(HORDE.color_gadget_active)
@@ -436,6 +451,23 @@ function PANEL:Paint()
             surface.DrawTexturedRect(self:GetWide() / 2 + surface.GetTextSize(self.loc_name) / 2 - 32, 16, 128, 64)
         else
             draw.DrawText(self.loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            local w, h
+            if string.sub(self.loc_desc,-1) == "\n" then
+                w, h = surface.GetTextSize(self.loc_desc)
+            else
+                w, h = surface.GetTextSize(self.loc_desc .. "\n")
+            end
+            if self.item.dmgtype then
+                draw.DrawText("Damage Type: ", "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                local px = 0
+                for _, dmgtype in SortedPairs(self.item.dmgtype) do
+                    local icon = Material(HORDE.DMG_TYPE_ICON[dmgtype], "mips smooth")
+                    surface.SetMaterial(icon)
+                    surface.SetDrawColor(HORDE.DMG_COLOR[dmgtype])
+                    surface.DrawTexturedRect(75 + px + 100, 80 + h - 5, 30, 30)
+                    px = px + 30
+                end
+            end
             draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
         end
 

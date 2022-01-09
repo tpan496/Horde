@@ -40,11 +40,28 @@ function HORDE:IsPlayerMinion(ent)
     return ent:GetNWEntity("HordeOwner"):IsValid()
 end
 
-function HORDE:SpawnManhack(ply)
+function HORDE:SpawnManhack(ply, id)
     if CLIENT then return end
     if not ply:IsValid() then return end
     local class = "npc_manhack"
     local item = HORDE.items[class]
+    if ply:Horde_GetWeight() - item.weight < 0 then return end
+    if not ply:Alive() then
+        timer.Remove("Horde_ManhackRespawn" .. id)
+        local drop_ents = ply:Horde_GetDropEntities()
+        if not drop_ents then
+            return
+        end
+        if not item.whitelist[ply:Horde_GetClass().name] then return end
+        local count = drop_ents[class]
+        if (!count) or (count and count <= item.entity_properties.limit) then
+            timer.Create("Horde_ManhackRespawn" .. id, 4, 1, function ()
+                if ply:IsValid() then
+                    HORDE:SpawnManhack(ply, id)
+                end
+            end)
+        end
+    end
     if not item.whitelist[ply:Horde_GetClass().name] then return end
     local ent = ents.Create(class)
     local pos = ply:GetPos()
@@ -53,11 +70,14 @@ function HORDE:SpawnManhack(ply)
     local drop_pos = pos + dis
     ent:SetPos(drop_pos)
     ply:Horde_AddDropEntity(ent:GetClass(), ent)
+    ply:Horde_AddWeight(-item.weight)
     ent:SetNWEntity("HordeOwner", ply)
     ent:Spawn()
     ent:SetMaxHealth(100)
+    ply:Horde_SyncEconomy()
     -- Minions have no player collsion
     timer.Simple(0.1, function ()
+        if not ent:IsValid() then return end
         ent:AddRelationship("player D_LI 99")
         ent:AddRelationship("ally D_LI 99")
         ent:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
@@ -75,26 +95,22 @@ function HORDE:SpawnManhack(ply)
         timer.Remove("Horde_ManhackRepos" .. id)
         timer.Remove("Horde_MinionCollision" .. id)
         if ent:IsValid() and ply:IsValid() then
-            if ent.Horde_Minion_Respawn then
-                ply:Horde_RemoveManhackEntity(ent:GetClass(), ent:GetCreationID())
-            else
-                ply:Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
-            end
+            ply:Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
             ply:Horde_SyncEconomy()
             ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
         end
-        if ent.Horde_Minion_Respawn then
+        if ent.Horde_Minion_Respawn and ply:IsValid() then
             timer.Remove("Horde_ManhackRespawn" .. id)
             local drop_ents = ply:Horde_GetDropEntities()
-            if not drop_pos then
+            if not drop_ents then
                 return
             end
             if not item.whitelist[ply:Horde_GetClass().name] then return end
             local count = drop_ents[class]
             if (!count) or (count and count <= item.entity_properties.limit) then
                 timer.Create("Horde_ManhackRespawn" .. id, 4, 1, function ()
-                    if ply:IsValid() and ply:Alive() then
-                        HORDE:SpawnManhack(ply)
+                    if ply:IsValid() then
+                        HORDE:SpawnManhack(ply, id)
                     end
                 end)
             end
@@ -107,24 +123,8 @@ function HORDE:SpawnManhack(ply)
             ent:SetPos(ply:GetPos() + VectorRand())
         else
             timer.Remove("Horde_ManhackRepos" .. id)
-            if ent:IsValid() then ent:Remove() end
         end
     end)
 
     ply:Horde_SyncEconomy()
-end
-
-local plymeta = FindMetaTable("Player")
-
-function plymeta:Horde_RemoveManhackEntity(class, entity_creation_id)
-    if not self:IsValid() then return end
-    if self.Horde_drop_entities and self.Horde_drop_entities[class] then
-        self.Horde_drop_entities[class] = self.Horde_drop_entities[class] - 1
-        if self.Horde_drop_entities[class] == 0 then
-            self.Horde_drop_entities[class] = nil
-        end
-    end
-    if HORDE.player_drop_entities[self:SteamID()] then
-        HORDE.player_drop_entities[self:SteamID()][entity_creation_id] = nil
-    end
 end

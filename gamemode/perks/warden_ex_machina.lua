@@ -3,7 +3,7 @@ PERK.Description = "Watchtowers have Warden Aura.\nWatchtowers generate a shockw
 PERK.Icon = "materials/perks/ex_machina.png"
 PERK.Params = {
     [1] = {value = 2},
-    [2] = {value = 100},
+    [2] = {value = 80},
 }
 
 PERK.Hooks = {}

@@ -55,7 +55,7 @@ ENT.AnimTbl_MeleeAttack = {"throw"} -- Melee Attack Animations
 -- ====== Other Variables ====== --
 ENT.RunAwayOnUnknownDamage = false -- Should run away on damage
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
-ENT.RangeAttackEntityToSpawn = "obj_boulder" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_horde_boulder" -- The entity that is spawned when range attacking
 	-- ====== Animation Variables ====== --
 ENT.AnimTbl_RangeAttack = {"apc_throw"} -- Range Attack Animations
 -- ====== Distance Variables ====== --

@@ -9,7 +9,7 @@ HORDE.Status_Berserk = 4
 HORDE.Status_ArmorRegen = 5
 HORDE.Status_HealthRegen = 6
 HORDE.Status_Minion = 7
-HORDE.Status_Mindeye = 8
+HORDE.Status_Phalanx = 8
 HORDE.Status_WardenAura = 9
 HORDE.Status_EntropyShield = 10
 HORDE.Status_CanBuy = 11
@@ -43,7 +43,7 @@ HORDE.Status_Icon[HORDE.Status_Berserk] = "materials/perks/berserk.png"
 HORDE.Status_Icon[HORDE.Status_ArmorRegen] = "materials/status/armorregen.png"
 HORDE.Status_Icon[HORDE.Status_HealthRegen] = "materials/status/healthregen.png"
 HORDE.Status_Icon[HORDE.Status_Minion] = "materials/status/minion.png"
-HORDE.Status_Icon[HORDE.Status_Mindeye] = "materials/perks/mindeye.png"
+HORDE.Status_Icon[HORDE.Status_Phalanx] = "materials/perks/phalanx.png"
 HORDE.Status_Icon[HORDE.Status_WardenAura] = "materials/warden.png"
 HORDE.Status_Icon[HORDE.Status_EntropyShield] = "materials/perks/entropy_shield.png"
 HORDE.Status_Icon[HORDE.Status_CanBuy] = "materials/status/canbuy.png"
@@ -83,7 +83,7 @@ HORDE.Status_Trigger_Sounds[HORDE.Status_Shock] = "ambient/energy/zap1.wav"
 HORDE.Status_Trigger_Sounds[HORDE.Status_Break] = "horde/status/break_trigger.ogg"
 
 function HORDE:IsStatusStackable(status)
-    if status == HORDE.Status_Adrenaline or status == HORDE.Status_Headhunter or status == HORDE.Status_Minion or status == HORDE.Status_Mindeye then return true end
+    if status == HORDE.Status_Adrenaline or status == HORDE.Status_Headhunter or status == HORDE.Status_Minion or status == HORDE.Status_Phalanx then return true end
     return false
 end
 

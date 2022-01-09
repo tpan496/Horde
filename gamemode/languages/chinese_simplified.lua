@@ -264,14 +264,13 @@ LANGUAGE["Perk_assault_cardiac_overload"] = [[
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[压制]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[粘性化合物]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
-子弹伤害击中的敌人受到“减速”异常状态。
-“减速”状态下，行动速度减少 {1}。]]
+子弹伤害击中的敌人受到“抑制”异常状态。
+“抑制”状态下，造成 {1} 更少伤害。]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[粗糙弹壳]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 子弹伤害击中的敌人受到“虚弱”异常状态。
-“虚弱”状态下，受到 {1} 更多伤害。
-“虚弱”状态下，造成 {2} 更少伤害。]]
+“虚弱”状态下，受到 {1} 更多伤害。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[护甲强化]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[流体装甲]]

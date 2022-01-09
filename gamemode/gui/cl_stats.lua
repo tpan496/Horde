@@ -253,53 +253,57 @@ function PANEL:Init()
     description_panel:SetSize(self:GetParent():GetWide() - 266, self:GetParent():GetTall())
 
     local update_text_panel = vgui.Create("DPanel", description_panel)
-    update_text_panel:SetSize(self:GetParent():GetWide(), 1200)
+    update_text_panel:SetSize(self:GetParent():GetWide(), 1300)
     update_text_panel:SetVisible(true)
     local update_text = [[
-    -- Damage Buildup System
-    The damage system in Horde is more complete.
-    Certain damage types can inflict status effect buildups on players.
-    When the buildup bar reaches 100%, player will be inflicted with a corresponding status effect.
+        Major Update 1.1.3
 
+        -- New Weapons:
+            - Inferno Blade (arccw_horde_inferno_blade, Cremator/Berserker)
+            - GAU-19 Minigun (arccw_horde_gau, Heavy)
+            - M72 LAW (arccw_horde_law, Demolition)
+            - Winchester LAR (arccw_horde_winchester, Ghost)
 
-    -- Default Config Enemies Rework
-    The default config enemies are completely reworked.
-    Please note that some of the enemies that I think are terrible have been completely removed (e.g. lurker). If you are using custom config with default config as base please remember to update.
-    New/Modified NPCs:
-      - Walker
-      - Sprinter
-      - Crawler
-      - Exploder
-      - Charred Zombine
-      - Vomitter/???
-      - Screecher/???
-      - Hulk/???
-      - Lesion/???
-      - Santa Claus
-    Behemoth removed from default config for now.
+        -- New Enemies:
+            - Boss: Father Grigori (npc_vj_horde_grigori)
+            - Boss: Wallace Breen (npc_vj_horde_breen)
 
+        -- New Mutation:
+            - Shadow: Enemies have decreased opacity and converts 100% of their damage to Cold damage.
 
-    -- Info UI Panel
-    Press F1/F2 to view the new info panel.
-    A new panel has been added to display useful information. This includes:
-      - Stats: Shows in-depth gameplay data, like damage resistances.
-      - Mechanics: A mini in-game wiki.
-      - Achievements: View achievements.
+        -- Custom Config:
+            - Now support adding damage type label to weapons.
+            - Use horde_testing_display_damage 1 to see the damage type of your weapons.
 
+        -- Mapping Entity:
+            - Added info_horde_boss_spawn. If this is present, boss will only spawn on those points.
 
-    -- Achievement System
-    Complete your favorite maps on 10 waves to earn achievements!
-    You can view your achievements in the info panel.
-      - new map entity: logic_horde_achievement. See the fgd for more info.
+        -- Perk Changes:
+            - Berserker: Mindeye removed, replaced with Berserker - Phalanx
 
+        -- New Console Command:
+            - horde_disable_f1: Disables F1 hotkey to open the stats menu. Server-side.
 
-    -- Mutation changes
-      - nemesis: No longer causes death explosions. Instead, spawns poisonous clouds after death.
-      - charged: Randomly appears now only starting from wave 6.
-      - decay: Now applies a debuff buildup that prevents healing when full. Randomly appears starting from wave 9.]]
+        -- Balance Changes:
+            - Increased reload speed for Double Barrel.
+            - Increased hip fire accuracy for M200 Obrez.
+            - Added magazine for Tau Cannon.
+            - Greatly increased deploy speed for all non HL2 grenades.
+            - Reduced the price and requirement for Berserker Gadget: Aerial Guard.
+            
+            - Warden Aura block reduced from 3 to 2.
+            - Reduced Warden: Dues Ex Machina AOE shock damage from 100 to 80.
+            - Engineer: Spectre now has a leech cap of 20 hp per hit.
+            - Heavy: Sticky Compound does not affect action speed any more. Instead, reduces enemy damage.
+            - Heavy: Crude Casing does not reduce enemy damage any more.
+
+            - Nemesis post explosions now deal damage based on health percentage.
+
+        -- Bug Fixes:
+            - Minions are now susceptible to Decay status.]]
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Update 1.1.2", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Update 1.1.3", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
@@ -356,42 +360,47 @@ function PANEL:Init()
     damage_text_panel:SetSize(self:GetParent():GetWide(), 1200)
     damage_text_panel:SetVisible(false)
     damage_text_panel.Paint = function ()
-        local mat = Material("materials/damagetype/ballistic.png", "mips smooth")
+        local mat = Material(HORDE.DMG_TYPE_ICON[HORDE.DMG_BALLISTIC], "mips smooth")
         surface.SetMaterial(mat)
-        surface.SetDrawColor(color_white)
+        surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_PHYSICAL])
         surface.DrawTexturedRect(50, 130, 40, 40)
 
-        mat = Material("materials/damagetype/slash.png", "mips smooth")
+        mat = Material(HORDE.DMG_TYPE_ICON[HORDE.DMG_SLASH], "mips smooth")
         surface.SetMaterial(mat)
-        surface.SetDrawColor(color_white)
+        surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_PHYSICAL])
         surface.DrawTexturedRect(50, 230, 40, 40)
 
-        mat = Material("materials/damagetype/blunt.png", "mips smooth")
+        mat = Material(HORDE.DMG_TYPE_ICON[HORDE.DMG_BLUNT], "mips smooth")
         surface.SetMaterial(mat)
-        surface.SetDrawColor(color_white)
+        surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_PHYSICAL])
         surface.DrawTexturedRect(50, 330, 40, 40)
 
-        mat = Material("materials/damagetype/fire.png", "mips smooth")
+        mat = Material(HORDE.DMG_TYPE_ICON[HORDE.DMG_PHYSICAL], "mips smooth")
+        surface.SetMaterial(mat)
+        surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_PHYSICAL])
+        surface.DrawTexturedRect(50, 430, 40, 40)
+
+        mat = Material(HORDE.DMG_TYPE_ICON[HORDE.DMG_FIRE], "mips smooth")
         surface.SetMaterial(mat)
         surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_FIRE])
         surface.DrawTexturedRect(50, 530, 40, 40)
 
-        mat = Material("materials/damagetype/cold.png", "mips smooth")
+        mat = Material(HORDE.DMG_TYPE_ICON[HORDE.DMG_COLD], "mips smooth")
         surface.SetMaterial(mat)
         surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_COLD])
         surface.DrawTexturedRect(50, 630, 40, 40)
 
-        mat = Material("materials/damagetype/lightning.png", "mips smooth")
+        mat = Material(HORDE.DMG_TYPE_ICON[HORDE.DMG_LIGHTNING], "mips smooth")
         surface.SetMaterial(mat)
         surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_LIGHTNING])
         surface.DrawTexturedRect(50, 730, 40, 40)
 
-        mat = Material("materials/damagetype/poison.png", "mips smooth")
+        mat = Material(HORDE.DMG_TYPE_ICON[HORDE.DMG_POISON], "mips smooth")
         surface.SetMaterial(mat)
         surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_POISON])
         surface.DrawTexturedRect(50, 830, 40, 40)
 
-        mat = Material("materials/damagetype/blast.png", "mips smooth")
+        mat = Material(HORDE.DMG_TYPE_ICON[HORDE.DMG_BLAST], "mips smooth")
         surface.SetMaterial(mat)
         surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_BLAST])
         surface.DrawTexturedRect(50, 930, 40, 40)
@@ -454,6 +463,33 @@ function PANEL:Init()
         draw.SimpleText("Extremely dangerous enemy with high health and agility. Rages periodically or when provoked.", 'Content', 100, 1500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
+    local donate_text_panel = vgui.Create("DPanel", description_panel)
+    donate_text_panel:SetSize(self:GetParent():GetWide(), 800)
+    donate_text_panel:SetVisible(false)
+    donate_text_panel.Paint = function () end
+
+    local paypal_btn = vgui.Create("DButton", donate_text_panel)
+    paypal_btn:SetSize(250, 80)
+    paypal_btn:Dock(TOP)
+    paypal_btn:SetText("")
+    paypal_btn.Paint = function ()
+        draw.SimpleText("Paypal", "Content", 50, 25, Color(51,102,187), TEXT_ALIGN_LEFT)
+    end
+    paypal_btn.DoClick = function ()
+        gui.OpenURL("https://steamcommunity.com/linkfilter/?url=https://www.paypal.com/donate?business=XSZEUMTKKC8ZU&no_recurring=0&item_name=Author+of+Horde+Gamemode&currency_code=USD")
+    end
+
+    local patreon_btn = vgui.Create("DButton", donate_text_panel)
+    patreon_btn:SetSize(250, 80)
+    patreon_btn:Dock(TOP)
+    patreon_btn:SetText("")
+    patreon_btn.Paint = function ()
+        draw.SimpleText("Patreon", "Content", 50, 25, Color(51,102,187), TEXT_ALIGN_LEFT)
+    end
+    patreon_btn.DoClick = function ()
+        gui.OpenURL("https://www.patreon.com/user?u=67559435")
+    end
+
     self.mechanic_btns = {}
     self.create_mechanic_btn = function (text, panel)
         local mechanic_btn = vgui.Create("DButton", mechanics_panel)
@@ -483,6 +519,7 @@ function PANEL:Init()
             damage_text_panel:SetVisible(false)
             debuff_text_panel:SetVisible(false)
             enemies_text_panel:SetVisible(false)
+            donate_text_panel:SetVisible(false)
             panel:SetVisible(true)
             surface.PlaySound("UI/buttonclick.wav")
         end
@@ -498,6 +535,8 @@ function PANEL:Init()
         end
 
         self.mechanic_btns[mechanic_btn] = 0
+
+        return mechanic_btn
     end
 
     self.create_mechanic_btn("Latest Update", update_text_panel)
@@ -506,6 +545,7 @@ function PANEL:Init()
     if GetConVarNumber("horde_default_enemy_config") == 1 then
         self.create_mechanic_btn("Enemies", enemies_text_panel)
     end
+    self.create_mechanic_btn("Donate $", donate_text_panel)
 
     local basic_stats_panel = vgui.Create("DPanel", stats_panel)
     basic_stats_panel:Dock(LEFT)
@@ -612,6 +652,11 @@ function PANEL:Init()
         surface.SetMaterial(mat)
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(50, 180, 40, 40)
+
+        mat = Material("materials/damagetype/physical.png", "mips smooth")
+        surface.SetMaterial(mat)
+        surface.SetDrawColor(color_white)
+        surface.DrawTexturedRect(50, 230, 40, 40)
 
         draw.SimpleText("Physical Resistances", 'Heading', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Ballistic Resistance:", 'Heading', 100, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -852,6 +897,10 @@ function PANEL:Init()
     close_btn:SetSize(32, 32)
     close_btn:SetPos(self:GetWide() - 40, 8)
     close_btn.DoClick = function() HORDE:ToggleStats() end
+
+    if HORDE.has_new_update then
+        learn_btn:DoClick() 
+    end
 end
 
 function PANEL:Paint(w, h)

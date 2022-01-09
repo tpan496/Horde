@@ -16,7 +16,35 @@ HORDE.DMG_LIGHTNING = 7
 HORDE.DMG_POISON = 8
 HORDE.DMG_BLAST = 9
 
+HORDE.DMG_TYPE_STRING = {
+    [HORDE.DMG_PHYSICAL] = "Other Physical",
+    [HORDE.DMG_BALLISTIC] =  "Ballistic",
+    [HORDE.DMG_BLUNT] =  "Blunt",
+    [HORDE.DMG_SLASH] =  "Slashing",
+    [HORDE.DMG_FIRE] = "Fire",
+    [HORDE.DMG_COLD] = "Cold",
+    [HORDE.DMG_LIGHTNING] = "Lightning",
+    [HORDE.DMG_POISON] = "Poison",
+    [HORDE.DMG_BLAST] = "Blast",
+}
+
+HORDE.DMG_TYPE_ICON = {
+    [HORDE.DMG_PHYSICAL] = "materials/damagetype/physical.png",
+    [HORDE.DMG_SLASH] =  "materials/damagetype/slash.png",
+    [HORDE.DMG_BLUNT] =  "materials/damagetype/blunt.png",
+    [HORDE.DMG_BALLISTIC] =  "materials/damagetype/ballistic.png",
+    [HORDE.DMG_FIRE] = "materials/damagetype/fire.png",
+    [HORDE.DMG_COLD] = "materials/damagetype/cold.png",
+    [HORDE.DMG_LIGHTNING] = "materials/damagetype/lightning.png",
+    [HORDE.DMG_POISON] = "materials/damagetype/poison.png",
+    [HORDE.DMG_BLAST] = "materials/damagetype/blast.png",
+}
+
 HORDE.DMG_COLOR = {
+    [HORDE.DMG_PHYSICAL] = Color(255, 255, 255),
+    [HORDE.DMG_SLASH] =  Color(255, 255, 255),
+    [HORDE.DMG_BLUNT] =  Color(255, 255, 255),
+    [HORDE.DMG_BALLISTIC] =  Color(255, 255, 255),
     [HORDE.DMG_FIRE] = Color(255,51,51),
     [HORDE.DMG_COLD] = Color(0,191,255),
     [HORDE.DMG_LIGHTNING] = Color(255,215,0),

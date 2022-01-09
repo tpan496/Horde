@@ -65,6 +65,7 @@ function PANEL:Init()
     local weapon_categories = HORDE.categories
     local entity_categories = HORDE.entity_categories
     local weight_editor
+    local dmgtype_editors
     local function create_property_editor(name, height, cat_panel, categories)
         local panel = vgui.Create("DPanel", cat_panel)
         panel:DockPadding(10, 5, 10, 5)
@@ -425,6 +426,50 @@ function PANEL:Init()
             end
 
             return editors
+        elseif name == "damage type" then
+            local editors = {}
+            local start_pos = 70
+            local start_pos_2 = 70
+            local i = 1
+            local dmgs =
+                {a=HORDE.DMG_BALLISTIC, b=HORDE.DMG_SLASH, c=HORDE.DMG_BLUNT, d=HORDE.DMG_PHYSICAL,
+                e=HORDE.DMG_FIRE, f=HORDE.DMG_COLD, g=HORDE.DMG_LIGHTNING, h=HORDE.DMG_POISON, i=HORDE.DMG_BLAST}
+            for _, dmg in SortedPairs(dmgs) do
+                local editor = vgui.Create("DCheckBoxLabel", panel)
+                local lb = vgui.Create("DLabel", panel)
+                lb:SetWidth(100)
+                local icon = vgui.Create("DPanel", panel)
+                icon.Paint = function ()
+                    local icon2 = Material(HORDE.DMG_TYPE_ICON[dmg], "mips smooth")
+                    surface.SetMaterial(icon2)
+                    local color = HORDE.DMG_COLOR[dmg]
+                    if color == color_white then color = Color(100, 100, 100) end
+                    surface.SetDrawColor(color)
+                    surface.DrawTexturedRect(0, 0, 15, 15)
+                end
+                editor:SetSize(100, height / 2)
+                if i <= 4 then
+                    editor:SetPos(start_pos, 25)
+                    lb:SetPos(start_pos + 40, 25)
+                    icon:SetPos(start_pos + 20, 25)
+                    start_pos = start_pos + 90
+                else
+                    editor:SetPos(start_pos_2, 45)
+                    lb:SetPos(start_pos_2 + 40, 45)
+                    icon:SetPos(start_pos_2 + 20, 45)
+                    start_pos_2 = start_pos_2 + 90
+                end
+                lb:SetText(HORDE.DMG_TYPE_STRING[dmg])
+                lb:SetTextColor(Color(0,0,0))
+                editor:SetText("")
+                editor:SetTextColor(Color(0,0,0))
+                editor:SetChecked(true)
+                editor.dmgtype = dmg
+                table.insert(editors, editor)
+                i = i + 1
+            end
+
+            return editors
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(200, height)
@@ -446,6 +491,7 @@ function PANEL:Init()
     secondary_ammo_price_editor = create_property_editor("alt ammo price", 35, entity_properties_panel)
     shop_icon_editor = create_property_editor("shop icon", 35, entity_properties_panel)
     level_editors = create_property_editor("levels", 150, entity_properties_panel)
+    dmgtype_editors = create_property_editor("damage type", 100, entity_properties_panel)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -537,6 +583,13 @@ function PANEL:Init()
             end
         end
 
+        local dmgtypes = {}
+        for _, editor in pairs(dmgtype_editors) do
+            if editor:GetChecked() then
+                table.insert(dmgtypes,editor.dmgtype)
+            end
+        end
+
         if not category_editor:GetValue() or not name_editor:GetValue() or class == "" then return end
 
         HORDE:CreateItem(
@@ -552,7 +605,8 @@ function PANEL:Init()
             entity_properties,
             shop_icon,
             levels,
-            skull_tokens_editor:GetInt() or 0
+            skull_tokens_editor:GetInt() or 0,
+            dmgtypes
         )
         -- Reload from disk
         local tab = util.TableToJSON(HORDE.items)
@@ -784,6 +838,18 @@ function PANEL:Init()
                     end
                 else
                     editor.editor:SetValue("")
+                end
+            end
+
+            for _, editor in pairs(dmgtype_editors) do
+                if item.dmgtype then
+                    if table.HasValue(item.dmgtype, editor.dmgtype) then
+                        editor:SetChecked(true)
+                    else
+                        editor:SetChecked(false)
+                    end
+                else
+                    editor:SetChecked(false)
                 end
             end
         end)

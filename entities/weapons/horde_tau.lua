@@ -95,9 +95,9 @@ SWEP.Recoil = 0
 SWEP.RecoilTimer = CurTime()
 
 SWEP.Primary.Sound = Sound( "Weapon_Horde_Tau_Cannon.Single" )
-SWEP.Primary.ClipSize = -1
+SWEP.Primary.ClipSize = 30
 SWEP.Primary.DefaultClip = 30
-SWEP.Primary.MaxAmmo = 500
+SWEP.Primary.MaxAmmo = 9999
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "GaussEnergy"
 SWEP.Primary.Damage = 55
@@ -112,8 +112,9 @@ SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
-SWEP.Secondary.Damage = 65
+SWEP.Secondary.Damage = 60
 SWEP.Secondary.TakeAmmo = 5
+SWEP.ReloadSound            = "ambient/machines/keyboard2_clicks.wav"
 
 function SWEP:Initialize()
     self:SetWeaponHoldType( self.HoldType )
@@ -151,6 +152,7 @@ function SWEP:Holster()
 end
 
 function SWEP:PrimaryAttack()
+    if (not self:CanPrimaryAttack()) then return end
     if self.Spin == 1 then return end
     if self.Weapon:Ammo1() <= 0 then
         self.Weapon:EmitSound( "Weapon_Horde_Tau_Cannon.DryFire" )
@@ -202,6 +204,7 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
+    if (not self:CanPrimaryAttack()) then return end
     if self.Spin == 1 then return end
     if self.Weapon:Ammo1() < 5 then
         self.Weapon:EmitSound( "Weapon_Horde_Tau_Cannon.DryFire" )
@@ -226,6 +229,9 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Reload()
+    if self:Clip1() >= self:GetMaxClip1() then return end
+    self:EmitSound(Sound(self.ReloadSound))
+    self.Weapon:DefaultReload(ACT_VM_RELOAD);
 end
 
 function SWEP:Think()
@@ -284,13 +290,13 @@ function SWEP:Think()
         self.Owner:SetAnimation( PLAYER_ATTACK1 )
         self.Owner:MuzzleFlash()
         if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
-            self:TakePrimaryAmmo( self.Secondary.TakeAmmo )
+            self:TakePrimaryAmmo(math.min(self.Weapon:Clip1(), self.Secondary.TakeAmmo ))
         end
         if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
-            self:TakePrimaryAmmo( 5 )
+            self:TakePrimaryAmmo( math.min(self.Weapon:Clip1(), 5 ) )
         end
         if self.SpinTimer <= CurTime() + 6 then
-            self:TakePrimaryAmmo( 10 )
+            self:TakePrimaryAmmo( math.min(self.Weapon:Clip1(), 10 ) )
         end
         self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
         self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )

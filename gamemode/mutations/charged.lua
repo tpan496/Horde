@@ -19,7 +19,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     end
 end
 
-MUTATION.Hooks.EntityTakeDamage = function(ply, dmg)
+MUTATION.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
     if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_GetMutation() == "charged" then
         dmg:SetDamageType(DMG_SHOCK)
     end

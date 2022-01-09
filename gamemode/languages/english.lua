@@ -273,14 +273,13 @@ Adds {2} maximum Adrenaline stacks.]]
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Suppression]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Sticky Compound]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
-Enemies you hit with Ballistic damage are Slowed.
-Slowed enemies have {1} reduced action speed.]]
+Enemies you hit with Ballistic damage are Hindered.
+Hindered enemies deal {1} reduced damage.]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Crude Casing]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 Enemies you hit with Ballistic damage are Weakened.
-Weakened enemies deal {1} reduced damage.
-Weakened enemies receive {2} increased damage.]]
+Weakened enemies receive {1} increased damage.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Armor Protection]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[Liquid Armor]]
@@ -423,7 +422,8 @@ Minion attacks have increased knockback.]]
 LANGUAGE["Perk_Title_engineer_spectre"] = [[Spectre]]
 LANGUAGE["Perk_engineer_spectre"] = [[
 Minions leech {1} of damage dealt.
-{2} more minion damage.]]
+Leech is capped at {2} hp per hit.
+{3} more minion damage.]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Experimental]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[Symbiosis]]
@@ -459,11 +459,11 @@ LANGUAGE["Perk_berserker_savagery"] = [[
 {2} increased maximum health.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Combat Arts]]
-LANGUAGE["Perk_Title_berserker_mindeye"] = [[Mind's Eye]]
-LANGUAGE["Perk_berserker_mindeye"] = [[
-Each melee attack increases Mind's Eye stack by 1, up to {1}.
-Each stack increases {2} evasion and {3} melee damage.
-Loses all stacks when you are hit or exceeded max stack.]]
+LANGUAGE["Perk_Title_berserker_phalanx"] = [[Phalanx]]
+LANGUAGE["Perk_berserker_phalanx"] = [[
+Gain 1 Phalanx stack every 2 seconds, up to {1}.
+Each stack increases {2} physical damage resistance and {3} melee damage.
+Lose stacks when you attack.]]
 
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[Rip and Tear]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[

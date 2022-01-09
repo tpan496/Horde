@@ -66,7 +66,7 @@ function ENT:CustomOnThink()
 		self.AnimTbl_Walk = {ACT_WALK}
 		self.AnimTbl_Run = {ACT_RUN}
 	end
-	if self.Critical then
+	if self.Critical and self:IsOnGround() then
 		self:SetLocalVelocity(self:GetMoveVelocity() * 1.5)
 	end
 end

@@ -8,8 +8,6 @@ CreateConVar("horde_enable_player_collision", 0, {FCVAR_SERVER_CAN_EXECUTE, FCVA
 
 DeriveGamemode("sandbox")
 
-game.AddParticles("particles/medicgun_beam.pcf")
-
 function GM:Initialize()
     game.AddAmmoType({
         name = "arccw_horde_nade_incendiary"
@@ -82,7 +80,17 @@ function GM:PlayerGiveSWEP(ply,weapon,swep) return CheckAllowFeature() end
 
 function GM:HUDAmmoPickedUp(item, amount) return CheckAllowFeature() end
 
-function GM:ShowHelp(ply) StatsMenu(ply) end
+CreateConVar("horde_disable_f1", 0, FCVAR_ARCHIVE, "Disables F1 hotkey for stats menu.")
+
+if GetConVar("horde_disable_f1"):GetInt() == 0 then
+function GM:ShowHelp(ply)
+    if GetConVar("horde_enable_sandbox"):GetBool() then
+        ply:SendLua( "hook.Run( 'StartSearch' )" )
+    else
+        StatsMenu(ply)
+    end
+end
+end
 
 function GM:ShowTeam(ply) ConfigMenu(ply) end
 

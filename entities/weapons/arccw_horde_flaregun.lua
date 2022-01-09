@@ -36,7 +36,7 @@ SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 0
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = "obj_vj_flare" -- entity to fire, if any
-SWEP.MuzzleVelocity = 1500 -- projectile or phys bullet muzzle velocity
+SWEP.MuzzleVelocity = 3000 -- projectile or phys bullet muzzle velocity
 
 SWEP.CanFireUnderwater = false
 

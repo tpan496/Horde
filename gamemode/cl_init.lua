@@ -1,7 +1,9 @@
 include("shared.lua")
+include("sh_particles.lua")
 include("sh_translate.lua")
 include("sh_horde.lua")
 include("sh_gadget.lua")
+include("sh_damage.lua")
 include("sh_item.lua")
 include("sh_class.lua")
 include("sh_mutation.lua")
@@ -12,7 +14,6 @@ include("sh_maps.lua")
 include("sh_custom.lua")
 include("sh_rank.lua")
 include("sh_sync.lua")
-include("sh_damage.lua")
 
 include("cl_economy.lua")
 include("cl_achievement.lua")
@@ -292,10 +293,16 @@ end)
 
 net.Receive("Horde_SyncClasses", function ()
     HORDE.classes = net.ReadTable()
-    local class = LocalPlayer():Horde_GetClass() or HORDE.classes[HORDE.Class_Survivor]
-    HORDE:SendSavedPerkChoices(class.name)
     for name, c in pairs(HORDE.classes) do
         HORDE.order_to_class_name[c.order] = name
+    end
+    local class = LocalPlayer():Horde_GetClass() or HORDE.classes[HORDE.Class_Survivor]
+    HORDE:SendSavedPerkChoices(class.name)
+
+    local f = file.Read("horde/class_choices.txt", "DATA")
+
+    if f then
+        HORDE:SendSavedPerkChoices(f)
     end
 end)
 
@@ -319,6 +326,13 @@ hook.Add("HUDShouldDraw", "Horde_RemoveRetardRedScreen", function(name)
 end)
 
 hook.Add("InitPostEntity", "Horde_PlayerInit", function()
+    local f = file.Read("horde/class_choices.txt", "DATA")
+    if f then
+        local class = f
+        net.Start("Horde_InitClass")
+        net.WriteString(class)
+        net.SendToServer()
+    end
     net.Start("Horde_PlayerInit")
     net.SendToServer()
 end)

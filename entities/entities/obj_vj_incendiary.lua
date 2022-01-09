@@ -30,8 +30,6 @@ ENT.DecalTbl_DeathDecals = {"Scorch"}
 ENT.SoundTbl_Idle = nil
 ENT.SoundTbl_OnCollide = {"ambient/explosions/explode_9.wav"}
 ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
-game.AddParticles("particles/combineball.pcf")
-PrecacheParticleSystem("combineball")
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetColor(Color(250, 0, 0))

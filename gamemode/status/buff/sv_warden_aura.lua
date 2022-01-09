@@ -96,9 +96,9 @@ end
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_WardenAuraDamageTaken", function(ply, dmginfo, bonus)
     if ply.Horde_WardenAuraDamageBlock then
         if ply.Horde_WardenAuraProvider.Horde_EnableWardenAuraBuffBonus then
-            bonus.block = 4.5
-        else
             bonus.block = 3
+        else
+            bonus.block = 2
         end
     end
 end)

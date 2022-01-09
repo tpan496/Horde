@@ -37,6 +37,7 @@ end
 function plymeta:Horde_SetExp(class_name, exp)
     if not self:IsValid() then return end
     if not self.Horde_Exps then self.Horde_Exps = {} end
+    if not class_name then return end
     self.Horde_Exps[class_name] = exp
     local level = self:Horde_GetLevel(class_name)
     if exp >= HORDE:GetExpToNextLevel(level + 1) then

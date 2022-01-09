@@ -35,6 +35,8 @@ function ENT:Initialize()
         if !IsValid(self) then return end
         self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
     end)
+
+    ParticleEffectAttach("ice_tracer_smoke", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 
 function ENT:Think()
@@ -94,22 +96,26 @@ function ENT:Detonate()
             util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
         end
     })
+    
     self.Removing = true
     self:Remove()
 end
 
 function ENT:PhysicsCollide(colData, collider)
     if !self:IsValid() or self.Removing then return end
+    local pos = colData.HitPos
+    local dmg = DamageInfo()
+    dmg:SetAttacker(self.Owner)
+    dmg:SetInflictor(self)
+    dmg:SetDamageType(DMG_REMOVENORAGDOLL)
+    dmg:SetDamage(150)
+    dmg:SetDamagePosition(self:GetPos())
+    util.BlastDamageInfo(dmg, pos, 200)
     if colData.HitEntity:IsNPC() then
-        local dmg = DamageInfo()
-        dmg:SetAttacker(self.Owner)
-        dmg:SetInflictor(self)
-        dmg:SetDamageType(DMG_REMOVENORAGDOLL)
-        dmg:SetDamage(200)
-        dmg:SetDamagePosition(self:GetPos())
-        colData.HitEntity:TakeDamageInfo(dmg)
         colData.HitEntity:Horde_AddFrostbite(5, 1)
     end
+    ParticleEffect("cryo_explosion_large", pos, Angle(0,0,0), self.Owner)
+    sound.Play("horde/status/cold_explosion.ogg", pos, 80, math.random(70, 90))
     self:Detonate()
 end
 

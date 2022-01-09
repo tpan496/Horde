@@ -44,7 +44,7 @@ function scoreboard:show()
         player_score[ply] = ply:Frags()
     end
 
-    for ply, _ in SortedPairsByValue(player_score) do
+    for ply, _ in SortedPairsByValue(player_score, true) do
         if not ply:IsValid() then goto cont end
         local class = HORDE.Class_Survivor
         if ply:Horde_GetClass() then class = ply:Horde_GetClass().name end

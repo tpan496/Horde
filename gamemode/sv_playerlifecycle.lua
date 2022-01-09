@@ -9,6 +9,7 @@ util.AddNetworkString("Horde_ClearStatus")
 util.AddNetworkString("Horde_SyncGameInfo")
 util.AddNetworkString("Horde_SaveAchievements")
 util.AddNetworkString("Horde_SaveExtraAchievements")
+util.AddNetworkString("Horde_SyncClientExps")
 
 HORDE.vote_remaining_time = 60
 HORDE.game_end = nil
@@ -331,6 +332,8 @@ end)
 
 -- Player Spawn Initialize
 function HORDE:PlayerInit(ply)
+    HORDE:LoadRank(ply)
+
     net.Start("Horde_SyncItems")
     local str = HORDE.GetCachedHordeItems()
     net.WriteUInt(string.len(str), 32)
@@ -386,7 +389,10 @@ function HORDE:PlayerInit(ply)
     end
     ply:Horde_SetDropEntities({})
     ply:Horde_SetMaxWeight(HORDE.max_weight)
-    ply:Horde_SetClass(HORDE.classes[HORDE.Class_Survivor])
+    if not ply:Horde_GetClass() then
+        ply:Horde_SetClass(HORDE.classes[HORDE.Class_Survivor])
+    end
+
     hook.Run("Horde_ResetStatus", ply)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
@@ -398,7 +404,6 @@ function HORDE:PlayerInit(ply)
 
     HORDE:GiveStarterWeapons(ply)
 
-    HORDE:LoadRank(ply)
     ply:Horde_SyncExp()
     for _, other_ply in pairs(player.GetAll()) do
         if other_ply == ply then goto cont end
@@ -412,6 +417,8 @@ function HORDE:PlayerInit(ply)
         end
         ::cont::
     end
+    net.Start("Horde_SyncClientExps")
+    net.Send(ply)
 
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
         net.Start("Horde_SyncStatus")
@@ -541,7 +548,7 @@ end)
 local function Horde_DeathSpectatingFunction(victim, inflictor, attacker)
     if not HORDE.start_game or HORDE.current_break_time > 0 then return end
     timer.Simple(1, function()
-        if victim:IsValid() then
+        if victim:IsValid() and (not victim:Alive()) then
             victim:SetObserverMode(OBS_MODE_ROAMING)
             victim:SetMoveType(MOVETYPE_OBSERVER)
         end

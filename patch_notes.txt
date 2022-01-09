@@ -1,0 +1,45 @@
+Major Update 1.1.3
+
+-- New Weapons:
+    - Inferno Blade (arccw_horde_inferno_blade, Cremator/Berserker)
+    - GAU-19 Minigun (arccw_horde_gau, Heavy)
+    - M72 LAW (arccw_horde_law, Demolition)
+    - Winchester LAR (arccw_horde_winchester, Ghost)
+
+-- New Enemies:
+    - Boss: Father Grigori (npc_vj_horde_grigori)
+    - Boss: Wallace Breen (npc_vj_horde_breen)
+
+-- New Mutation:
+    - Shadow: Enemies have decreased opacity and converts 100% of their damage to Cold damage.
+
+-- Custom Config:
+    - Now support adding damage type label to weapons.
+    - Use horde_testing_display_damage 1 to see the damage type of your weapons.
+
+-- Mapping Entity:
+    - Added info_horde_boss_spawn. If this is present, boss will only spawn on those points.
+
+-- Perk Changes:
+    - Berserker: Mindeye removed, replaced with Berserker - Phalanx
+
+-- New Console Command:
+    - horde_disable_f1: Disables F1 hotkey to open the stats menu. Server-side.
+
+-- Balance Changes:
+    - Increased reload speed for Double Barrel.
+    - Increased hip fire accuracy for M200 Obrez.
+    - Added magazine for Tau Cannon.
+    - Greatly increased deploy speed for all non HL2 grenades.
+    - Reduced the price and requirement for Berserker Gadget: Aerial Guard.
+    
+    - Warden Aura block reduced from 3 to 2.
+    - Reduced Warden: Dues Ex Machina AOE shock damage from 100 to 80.
+    - Engineer: Spectre now has a leech cap of 20 hp per hit.
+    - Heavy: Sticky Compound does not affect action speed any more. Instead, reduces enemy damage.
+    - Heavy: Crude Casing does not reduce enemy damage any more.
+
+    - Nemesis post explosions now deal damage based on health percentage.
+
+-- Bug Fixes:
+    - Minions are now susceptible to Decay status.

@@ -1,5 +1,5 @@
 MUTATION.PrintName = "Nemesis"
-MUTATION.Description = "Leaves behind poisonous clouds on death."
+MUTATION.Description = "Leaves behind poisonous clouds on death.\nClouds deal Poison damage based on victim's health."
 
 MUTATION.Hooks = {}
 
@@ -29,9 +29,9 @@ MUTATION.Hooks.Horde_OnEnemyKilled = function(victim, killer, weapon)
                 if rand.z < 0 then rand.z = -rand.z end
                 local pos = victim_pos + rand * math.Rand(10, 50)
                 for _, e1 in pairs(ents.FindInSphere(pos, 150)) do
-                    if e1:IsPlayer() then
+                    if HORDE:IsPlayerOrMinion(e1) then
                         local dmginfo = DamageInfo()
-                        dmginfo:SetDamage(5)
+                        dmginfo:SetDamage(math.max(5, 0.05 * e1:GetMaxHealth()))
                         dmginfo:SetAttacker(Entity(0))
                         dmginfo:SetInflictor(Entity(0))
                         dmginfo:SetDamagePosition(pos)

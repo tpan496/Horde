@@ -55,6 +55,7 @@ SWEP.PullPinTime = 1
 SWEP.Animations = {
     ["draw"] = {
         Source = "deploy",
+        Time = 0.25,
     },
     ["pre_throw"] = {
         Source = "pullpin",

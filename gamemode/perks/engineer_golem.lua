@@ -13,6 +13,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
             if ent:IsNPC() then
                 timer.Create("Horde_Golem" .. id, 1, 0, function()
                     if not ent:IsValid() or not ply:IsValid() or not ply:Horde_GetPerk("engineer_golem") then timer.Remove("Horde_Golem" .. id) return end
+                    if ent.Horde_Debuff_Active and ent.Horde_Debuff_Active[HORDE.Status_Decay] then return end
                     ent:SetHealth(math.min(ent:Health() + ent:GetMaxHealth() * 0.02, ent:GetMaxHealth()))
                 end)
             end
@@ -30,6 +31,7 @@ PERK.Hooks.OnEntityCreated = function (ent)
             local id = ent:GetCreationID()
             timer.Create("Horde_Golem" .. id, 1, 0, function()
                 if not ent:IsValid() or not ply:IsValid() or not ply:Horde_GetPerk("engineer_golem") then timer.Remove("Horde_Golem" .. id) return end
+                if ent.Horde_Debuff_Active and ent.Horde_Debuff_Active[HORDE.Status_Decay] then return end
                 ent:SetHealth(math.min(ent:Health() + ent:GetMaxHealth() * 0.02, ent:GetMaxHealth()))
             end)
         end

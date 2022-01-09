@@ -25,7 +25,7 @@ LANGUAGE["Game_Difficulty_NIGHTMARE"] = "PESADILLA"
 LANGUAGE["Game_Difficulty_APOCALYPSE"] = "APOCALIPSIS"
 LANGUAGE["Game_Enemies"] = "Enemigos"
 LANGUAGE["Game_HintBottomReady"] = "F2 - Info/Config, F3 - Tienda/Habilidad, F4 - Listo"
-LANGUAGE["Game_HintBottom"] = "F3 - Tienda/Habilidad, V - Soltar $"
+LANGUAGE["Game_HintBottom"] = "F2 - Info/Config, F3 - Tienda/Habilidad, V - Soltar $"
 LANGUAGE["Game_Result_VICTORY"] = "VICTORIA"
 LANGUAGE["Game_Result_DEFEAT"] = "DERROTA"
 LANGUAGE["Game_Result_Change Map"] = "Cambio de Mapa"
@@ -274,14 +274,13 @@ Agrega {2} de cargas máximas de Adrenalina.]]
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Supresión]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Compuesto Pegajoso]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
-Enemigos dañados con daño Balístico son Ralentizados.
-Enemigos Ralentizados tienen {1} de velocidad de acción reducido.]]
+Enemigos dañados con daño Balístico son Obstaculizados.
+Enemigos Obstaculizados realizan {1} de daño reducido.]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Carcasa Cruda]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 Enemigos dañados con daño Balístico son Debilitados.
-Enemigos Debilitados realizan {1} de daño reducido.
-Enemigos Debilitados reciben {2} de daño incrementado.]]
+Enemigos Debilitados reciben {1} de daño incrementado.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Protección de Armadura]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[Armadura Líquida]]
@@ -422,7 +421,8 @@ Los ataques de los esbirros tienen retroceso incrementado.]]
 LANGUAGE["Perk_Title_engineer_spectre"] = [[Espectro]]
 LANGUAGE["Perk_engineer_spectre"] = [[
 Los ebirros roban un {1} de vida del daño hecho.
-Los esbirros hacen un {2} mas de daño.]]
+Robo de vida está limitado hasta un {2} de vida por golpe.]
+Los esbirros hacen un {3} mas de daño.]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Experimental]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[Simbiosis]]
