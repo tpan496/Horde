@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/horde/gonome_beast/gonome.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = 8000
+ENT.StartHealth = 9000
 ENT.HullType = HULL_MEDIUM_TALL
 ENT.FindEnemy_CanSeeThroughWalls = true
 
