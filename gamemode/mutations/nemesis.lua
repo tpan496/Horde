@@ -21,7 +21,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
 end
 
 MUTATION.Hooks.Horde_OnEnemyKilled = function(victim, killer, weapon)
-    if victim:Horde_GetMutation() == "nemesis" then
+    if victim:Horde_HasMutation("nemesis") then
         local victim_pos = victim:GetPos()
         for i =0,10 do
             timer.Simple(0.5 + i * 0.2, function ()

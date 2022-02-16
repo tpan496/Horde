@@ -167,74 +167,84 @@ LANGUAGE["Perk_assault_base"] = [[
 The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
 Complexity: EASY
 
-{1} increased movement speed.
+{1} increased movement speed. ({2} per level, up to {3}).
+
 Gain Adrenaline when you kill an enemy.
-Adrenaline increases damage and speed by {2}.]]
+Adrenaline increases damage and speed by {4}.]]
 
 LANGUAGE["Perk_heavy_base"] = [[
 The Heavy class is a tank class that provides strong suppression firepower.
 Complexity: EASY
 
-Adds {1} to maximum carrying capacity.
-Regenerate {2} armor per second.
-Regenerate up to {3} armor.]]
+Regenerate {1} armor per second.
+Regenerate up to {2} armor. ({3} + {4} per level, up to {5})]]
 
 LANGUAGE["Perk_medic_base"] = [[
 The Medic class is a durable support class that focuses on healing and buffing teammates.
 Complexity: MEDIUM
 
-Regenerate {1} health per second.]]
+Amplifies healing by {1}. ({2} per level, up to {3}).
+
+Regenerate {4} health per second.]]
 
 LANGUAGE["Perk_demolition_base"] = [[
 The Demolition class is a crowd-control class that can also provide high single target damage.
 Complexity: MEDIUM
 
-{1} increased Blast damage resistance.
-Regenerate {2} frag grenade every {3} seconds, if you do not have one.]]
+{1} increased Blast damage resistance. ({2} + {3} per level, up to {4}).
+
+Regenerate {5} frag grenade every {6} seconds, if you do not have one.]]
 
 LANGUAGE["Perk_ghost_base"] = [[
 The Ghost class is focused on taking down boss enemies using Camoflague.
 Complexity: HIGH
 
-{1} more headshot damage.
-Crouch to activate Camoflague, granting {2} evasion.
+{1} more headshot damage. ({2} per level, up to {3}).
+
+Crouch to activate Camoflague, granting {4} evasion.
 Attacking or Running REMOVES Camoflague.]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 The Engineer class is a minion-centered class that deals damage through minions.
 Complexity: MEDIUM
 
-{1} increased minion health and damage.
-Turrets have {2} base health and deals {3} base damage.]]
+{1} increased minion damage. ({2} per level, up to {3}).
+
+Turrets have {4} base health and deals {5} base damage.]]
 
 LANGUAGE["Perk_berserker_base"] = [[
 The Berserker class is a melee-centered class that can be played both offensively and defensively.
 Complexity: HIGH
 
-{1} increased Global damage resistance.
-{2} increased melee damage.]]
+{1} increased Slashing and Blunt damage. ({2} per level, up to {3}).
+{4} increased Global damage resistance. ({5} per level, up to {6}).
+
+Aerial Parry: Jump to reduce Physical damage taken by {7}.]]
 
 LANGUAGE["Perk_warden_base"] = [[
 The Warden is a support class that uses aura effects and structures to buff teammates.
 Complexity: MEDIUM
 
+{1} increased Warden Aura radius. ({2} per level, up to {3}).
+
 Players near you are affected by Warden Aura.
-Warden Aura blocks {1} damage.]]
+Warden Aura blocks {4} damage.]]
 
 LANGUAGE["Perk_cremator_base"] = [[
 The Cremator builds its offense and defense around Fire damage.
 Complexity: EASY
 
-{1} increased Fire damage resistance.
-Attacks have {2} chance to Ignite enemies.
+{1} increased Fire damage resistance. ({2} + {3} per level, up to {4}).
 
-Ignite base duration is {3} and deals damage over time based on hit damage.
-Fire damage has {5} Ignite chance.]]
+Attacks have {5} chance to Ignite enemies.
+Ignite base duration is {6} and deals damage over time based on hit damage.
+Fire damage has {7} Ignite chance.]]
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[Survival]]
 LANGUAGE["Perk_Title_Survivor_Tier_2"] = [[Improvise]]
-LANGUAGE["Perk_Title_Survivor_Tier_3"] = [[Inspired Learning]]
+LANGUAGE["Perk_Title_Survivor_Tier_3"] = [[Defense]]
+LANGUAGE["Perk_Title_Survivor_Tier_4"] = [[Inspired Learning]]
 
 -- Default Perks: Assault
 LANGUAGE["Perk_Title_Assault_Tier_1"] = [[Maneuverability]]
@@ -255,17 +265,29 @@ Recover {2} health for each enemy you killed.]]
 
 LANGUAGE["Perk_Title_assault_overclock"] = [[Overclock]]
 LANGUAGE["Perk_assault_overclock"] = [[
+Adds {1} maximum Adrenaline stacks.]]
+
+LANGUAGE["Perk_Title_Assault_Tier_3"] = [[Aggression]]
+
+LANGUAGE["Perk_Title_assault_cardiac_resonance"] = [[Cardiac Resonance]]
+LANGUAGE["Perk_assault_cardiac_resonance"] = [[
+Every time you kill an enemy,
+Players near you also gain {1} Adrenaline, up to {2}.
+Adds {3} maximum Adrenaline stacks.]]
+
+LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[Cardiac Overload]]
+LANGUAGE["Perk_assault_cardiac_overload"] = [[
 Adrenaline duration increased by {1}.
 Adds {2} maximum Adrenaline stacks.]]
 
-LANGUAGE["Perk_Title_Assault_Tier_3"] = [[Conditioning]]
+LANGUAGE["Perk_Title_Assault_Tier_4"] = [[Conditioning]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[Heightened Reflex]]
 LANGUAGE["Perk_assault_heightened_reflex"] = [[
 {1} increased headshot damage.
 {2} increased global damage resistance on full health.]]
 
-LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[Cardiac Overload]]
-LANGUAGE["Perk_assault_cardiac_overload"] = [[
+LANGUAGE["Perk_Title_assault_merciless_assault"] = [[Merciless Assault]]
+LANGUAGE["Perk_assault_merciless_assault"] = [[
 {1} chance to add 1 Adrenaline stack on headshot.
 Adds {2} maximum Adrenaline stacks.]]
 
@@ -281,22 +303,30 @@ LANGUAGE["Perk_heavy_crude_casing"] = [[
 Enemies you hit with Ballistic damage are Weakened.
 Weakened enemies receive {1} increased damage.]]
 
-LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Armor Protection]]
+LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Backup]]
+LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[Repair Catalyst]]
+LANGUAGE["Perk_heavy_repair_catalyst"] = [[
+Adds {1} to maximum armor regeneration.]]
+
+LANGUAGE["Perk_Title_heavy_floating_carrier"] = [[Floating Carrier]]
+LANGUAGE["Perk_heavy_floating_carrier"] = [[
+Adds 5 to maximum weight.]]
+
+LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[Armor Protection]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[Liquid Armor]]
 LANGUAGE["Perk_heavy_liquid_armor"] = [[
 While you have at least {1} armor:
-  {2} increasaed Physical damage resistance.]]
+  {2} less Physical damage taken.]]
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[Reactive Armor]]
 LANGUAGE["Perk_heavy_reactive_armor"] = [[
 While you have at least {1} armor:
-  Immune to Poison, Fire and Blast damage.]]
+  Immune to Fire and Blast damage.]]
 
-LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[Technology]]
+LANGUAGE["Perk_Title_Heavy_Tier_4"] = [[Technology]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[Nanomachine]]
 LANGUAGE["Perk_heavy_nanomachine"] = [[
-{1} increased armor regeneration rate.
-You can now regenerate up to {2} armor.]]
+{1} increased armor regeneration rate.]]
 
 LANGUAGE["Perk_Title_heavy_ballistic_shock"] = [[Ballistic Shock]]
 LANGUAGE["Perk_heavy_ballistic_shock"] = [[
@@ -317,14 +347,24 @@ LANGUAGE["Perk_Title_Medic_Tier_2"] = [[Bio-Engineering]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[Berserk]]
 LANGUAGE["Perk_medic_berserk"] = [[
 Players you heal have Berserk for {1} seconds.
-{2} increased damage and speed while you have Berserk.]]
+{2} increased damage while you have Berserk.]]
 
 LANGUAGE["Perk_Title_medic_fortify"] = [[Fortify]]
 LANGUAGE["Perk_medic_fortify"] = [[
 Players you heal have Fortify for {1} seconds.
 {2} less damage taken while you have Fortify.]]
 
-LANGUAGE["Perk_Title_Medic_Tier_3"] = [[Natural Selection]]
+LANGUAGE["Perk_Title_Medic_Tier_3"] = [[Enhancement]]
+LANGUAGE["Perk_Title_medic_purify"] = [[Purify]]
+LANGUAGE["Perk_medic_purify"] = [[
+Your healing directly decreases buildup for Bleeding, Break and Stun.]]
+
+LANGUAGE["Perk_Title_medic_haste"] = [[Haste]]
+LANGUAGE["Perk_medic_haste"] = [[
+Players you heal have Haste for {1} seconds.
+{2} increased movement speed while you have Haste.]]
+
+LANGUAGE["Perk_Title_Medic_Tier_4"] = [[Natural Selection]]
 LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[Cellular Implosion]]
 LANGUAGE["Perk_medic_cellular_implosion"] = [[
 Enemies you killed have {1} chance to generate a healing cloud.]]
@@ -338,30 +378,41 @@ Buffs you apply have {2} increased duration.]]
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Grenade]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[Impact Grenade]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
-{1} increased Blast damage.
-{2} increased Grenade damage.]]
+{1} increased Grenade damage on impact.
+Grenades explode on impact.
+Impact explosions increases Stun buildup.]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[Cluster Grenade]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[
 Grenades and SLAMs spawn {1} mini-nades on detonation.
 Mini-nades do {2} less damage.]]
 
-LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[Approach]]
+LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[Weaponry]]
+LANGUAGE["Perk_Title_demolition_direct_hit"] = [[Direct Hit]]
+LANGUAGE["Perk_demolition_direct_hit"] = [[
+{1} increased Blast damage against enemies close to explosions.]]
+
+LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[Seismic Wave]]
+LANGUAGE["Perk_demolition_seismic_wave"] = [[
+Explosive projectiles create an extra delayed explosion.
+Delayed explosion deals {1} explosion damage as Physical damage.]]
+
+LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Approach]]
 LANGUAGE["Perk_Title_demolition_fragmentation"] = [[Fragmentation]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
-{1} increased Blast damage against enemies on full health.]]
+{1} increased Blast damage.]]
 
 LANGUAGE["Perk_Title_demolition_knockout"] = [[Knockout]]
 LANGUAGE["Perk_demolition_knockout"] = [[
-Blast damage builds up stun power.
-Stuns enemy for {1} seconds when power reaches {2}.
-Stun cooldown is {3} seconds.]]
+Blast damage increases Stun buildup.
+Enemies affected by Stun is paralyzed for {1} seconds.
+Stun cooldown is {2} seconds.]]
 
-LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Destruction]]
+LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[Destruction]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Pressurized Warhead]]
 LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
 {1} increased Blast damage against elites.
-Explosions deal {2} of enemies' current health as extra Blast damage.]]
+Explosions deal {2} to {3} of enemies' current health as extra Blast damage.]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Chain Reaction]]
 LANGUAGE["Perk_demolition_chain_reaction"] = [[
@@ -392,7 +443,20 @@ Attacking does not cancel Camoflague.
 {1} increased walk speed when you have Camoflague.
 {2} increased Ballistic damage when you have Camoflague.]]
 
-LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Disposal]]
+LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Trajectory]]
+LANGUAGE["Perk_Title_ghost_brain_snap"] = [[Brain Snap]]
+LANGUAGE["Perk_ghost_brain_snap"] = [[
+Headshots increases Frostbite buildup based on weapon damage.
+Enemies affected by Frostbite has drastically reduced action speed for {1} seconds.
+Frostbite cooldown is {2} seconds.]]
+
+LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[Kinetic Impact]]
+LANGUAGE["Perk_ghost_ghost_kinetic_impact"] = [[
+Increases Ballistic damage based on distance.
+Increases {1} damage for each {2} units.
+Increase caps at {3}.]]
+
+LANGUAGE["Perk_Title_Ghost_Tier_4"] = [[Disposal]]
 LANGUAGE["Perk_Title_ghost_coup"] = [[Coup De Grace]]
 LANGUAGE["Perk_ghost_coup"] = [[
 Instantly kills enemies with less than 20% health.]]
@@ -400,8 +464,8 @@ Instantly kills enemies with less than 20% health.]]
 LANGUAGE["Perk_Title_ghost_decapitate"] = [[Decapitate]]
 LANGUAGE["Perk_ghost_decapitate"] = [[
 When you have Camoflague:
-  25% increased Ballistic damage.
-  50% increased headshot damage against elites.]]
+  {1} increased Ballistic damage.
+  {2} increased headshot damage against elites.]]
 
 -- Default Perks: Engineer
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[Craftsmanship]]
@@ -413,22 +477,34 @@ LANGUAGE["Perk_Title_engineer_pioneer"] = [[Pioneer]]
 LANGUAGE["Perk_engineer_pioneer"] = [[
 {1} increased minion damage.]]
 
-LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[Archetype]]
-LANGUAGE["Perk_Title_engineer_golem"] = [[Golem]]
-LANGUAGE["Perk_engineer_golem"] = [[
+LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[Core]]
+LANGUAGE["Perk_Title_engineer_fusion"] = [[Fusion]]
+LANGUAGE["Perk_engineer_fusion"] = [[
 Minions regenerate {1} health per second.
-Minion attacks have increased knockback.]]
+{2} increased minion damage while minion is on full health.]]
 
-LANGUAGE["Perk_Title_engineer_spectre"] = [[Spectre]]
-LANGUAGE["Perk_engineer_spectre"] = [[
-Minions leech {1} of damage dealt.
-Leech is capped at {2} hp per hit.
-{3} more minion damage.]]
+LANGUAGE["Perk_Title_engineer_metabolism"] = [[Metabolism]]
+LANGUAGE["Perk_engineer_metabolism"] = [[
+Minions leech {1} of damage dealt, up to {2} hp per hit.
+{3} increased minion damage while leeching.]]
 
-LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Experimental]]
+LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Manipulation]]
+LANGUAGE["Perk_Title_engineer_antimatter_shield"] = [[Anti-Matter Shield]]
+LANGUAGE["Perk_engineer_antimatter_shield"] = [[
+Press Shift+E to deploy a shield on a targeted minion.
+The shield absorbs damage up to {1} of the minion's health.
+Shield explodes on depletion and has a cooldown of {2} seconds.]]
+
+LANGUAGE["Perk_Title_engineer_displacer"] = [[Displacer]]
+LANGUAGE["Perk_engineer_displacer"] = [[
+Press SHIFT+E to teleport a targeted minion to your side.
+Recover {1} of the teleported minion's health.
+Displacer has a cooldown of {2} seconds.]]
+
+LANGUAGE["Perk_Title_Engineer_Tier_4"] = [[Experimental]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[Symbiosis]]
 LANGUAGE["Perk_engineer_symbiosis"] = [[
-Minions have {1} more health on spawn.
+{1} more minion health.
 {2} less damage taken for each minion alive.]]
 
 LANGUAGE["Perk_Title_engineer_kamikaze"] = [[Kamikaze]]
@@ -444,8 +520,8 @@ Immune to Poison damage.]]
 
 LANGUAGE["Perk_Title_berserker_bloodlust"] = [[Bloodlust]]
 LANGUAGE["Perk_berserker_bloodlust"] = [[
-Leech {1} of melee damage done.
-Leech is capped at {2} hp per hit.]]
+Leech {1} of melee damage dealt, up to {2} hp per hit.
+Immune to Bleeding.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[Technique]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[Bushido]]
@@ -458,11 +534,24 @@ LANGUAGE["Perk_berserker_savagery"] = [[
 {1} increased Blunt damage.
 {2} increased maximum health.]]
 
-LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Combat Arts]]
+LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Parry]]
+LANGUAGE["Perk_Title_berserker_graceful_guard"] = [[Graceful Guard]]
+LANGUAGE["Perk_berserker_graceful_guard"] = [[
+On successful Aerial Parry:
+  - Removes all debuff and debuff buildups.
+  - Recover {1} health.]]
+
+LANGUAGE["Perk_Title_berserker_unwavering_guard"] = [[Unwavering Guard]]
+LANGUAGE["Perk_berserker_unwavering_guard"] = [[
+On successful Aerial Parry:
+  - {1} increased Physical damage for {3} seconds.
+  - {2} less damage taken for {3} seconds.]]
+
+LANGUAGE["Perk_Title_Berserker_Tier_4"] = [[Combat Arts]]
 LANGUAGE["Perk_Title_berserker_phalanx"] = [[Phalanx]]
 LANGUAGE["Perk_berserker_phalanx"] = [[
 Gain 1 Phalanx stack every 2 seconds, up to {1}.
-Each stack increases {2} physical damage resistance and {3} melee damage.
+Each stack increases {2} Physical damage resistance and {3} melee damage.
 Lose stacks when you attack.]]
 
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[Rip and Tear]]
@@ -490,12 +579,20 @@ LANGUAGE["Perk_Title_warden_energize"] = [[Energize]]
 LANGUAGE["Perk_warden_energize"] = [[
 Aura adds {1} base damage to attacks.]]
 
-LANGUAGE["Perk_Title_Warden_Tier_3"] = [[Coverage]]
-LANGUAGE["Perk_Title_warden_ex_machina"] = [[Deus Ex Machina]]
-LANGUAGE["Perk_warden_ex_machina"] = [[
-Watchtowers have Warden Aura.
+LANGUAGE["Perk_Title_Warden_Tier_3"] = [[Escort]]
+LANGUAGE["Perk_Title_warden_rejection_pulse"] = [[Rejection Pulse]]
+LANGUAGE["Perk_warden_rejection_pulse"] = [[
 Watchtowers generate a shockwave every {1} seconds.
 Shockwave deals {2} Lightning damage.]]
+
+LANGUAGE["Perk_Title_warden_inoculation"] = [[Inoculation]]
+LANGUAGE["Perk_warden_inoculation"] = [[
+Aura reduces {1} buildups taken from Ignite, Shock and Frostbite.]]
+
+LANGUAGE["Perk_Title_Warden_Tier_4"] = [[Coverage]]
+LANGUAGE["Perk_Title_warden_ex_machina"] = [[Deus Ex Machina]]
+LANGUAGE["Perk_warden_ex_machina"] = [[
+Watchtowers have Warden Aura.]]
 
 LANGUAGE["Perk_Title_warden_resonance_cascade"] = [[Resonance Cascade]]
 LANGUAGE["Perk_warden_resonance_cascade"] = [[
@@ -510,8 +607,7 @@ LANGUAGE["Perk_cremator_methane"] = [[
 
 LANGUAGE["Perk_Title_cremator_napalm"] = [[Napalm]]
 LANGUAGE["Perk_cremator_napalm"] = [[
-{1} increased Ignite radius.
-{2} increased Ignite duration.]]
+{1} increased Ignite duration.]]
 
 LANGUAGE["Perk_Title_Cremator_Tier_2"] = [[Energy Absorption]]
 LANGUAGE["Perk_Title_cremator_positron_array"] = [[Positron Array]]
@@ -521,21 +617,31 @@ Absorb {1} of Fire damage taken as health.]]
 
 LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[Entropy Shield]]
 LANGUAGE["Perk_cremator_entropy_shield"] = [[
-Gain a shield that negates damage taken.
+Gain a shield that negates damage taken from enemies.
 Shield explodes on hit and recharges after {1} seconds.
 Explosion deals {2} Fire damage.]]
 
-LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[Energy Discharge]]
+LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[Heat Manipulation]]
+LANGUAGE["Perk_Title_cremator_hyperthermia"] = [[Hyperthermia]]
+LANGUAGE["Perk_cremator_hyperthermia"] = [[
+Increase Fire damage based on enemy proximity to you.
+Increase caps at {1}.]]
+
+LANGUAGE["Perk_Title_cremator_ionization"] = [[Ionization]]
+LANGUAGE["Perk_cremator_ionization"] = [[
+{1} increased Ignite damage.
+Fire damage ignores enemy Fire resistance.]]
+
+LANGUAGE["Perk_Title_Cremator_Tier_4"] = [[Energy Discharge]]
 LANGUAGE["Perk_Title_cremator_firestorm"] = [[Firestorm]]
 LANGUAGE["Perk_cremator_firestorm"] = [[
-Fire damage builds up Burst power in enemies.
-Creates an explosion when Burst power reaches {1}.
-Explosion deals {2} Blast damage.]]
+Fire damage increases Burst buildup in enemies.
+Creates an explosion when Burst buildup is full.
+Explosion deals {1} Blast damage.]]
 
 LANGUAGE["Perk_Title_cremator_incineration"] = [[Incineration]]
 LANGUAGE["Perk_cremator_incineration"] = [[
-{1} increased Ignite damage.
-{2} increased Ignite chance.]]
+{1} increased Ignite damage.]]
 
 
 -- Default Config Shop Items

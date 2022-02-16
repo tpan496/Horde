@@ -7,7 +7,7 @@ include('shared.lua')
 -----------------------------------------------*/
 
 ENT.Model = {"models/monk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = 5000
+ENT.StartHealth = 4500
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
@@ -108,7 +108,7 @@ end
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     if not self.Critical and self:Health() <= self:GetMaxHealth() * 0.25 then
         self.Critical = true
-        self.AnimationPlaybackRate = 1.25
+        --self.AnimationPlaybackRate = 1.25
     end
 end
 

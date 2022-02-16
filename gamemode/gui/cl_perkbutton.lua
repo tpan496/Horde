@@ -108,6 +108,9 @@ function PANEL:SetData(classname, perk_level, choice)
         for i, v in pairs(perk.Params) do
             local replaced = "{" .. i .. "}"
             if not string.find(loc_desc, replaced) then goto cont end
+            if v.level then
+                v.value = math.min(v.max, LocalPlayer():Horde_GetLevel(classname) * v.level)
+            end
             local formatted = v.value
             if v.percent then
                 formatted = math.Round(formatted * 100) .. "%"

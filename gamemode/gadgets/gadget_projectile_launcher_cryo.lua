@@ -14,7 +14,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     if ply:Horde_GetGadget() ~= "gadget_projectile_launcher_cryo" then return end
 
     local rocket = ents.Create("projectile_launcher_cryo_round")
-    local vel = 4000
+    local vel = 10000
     local ang = ply:EyeAngles()
 
     local src = ply:GetPos() + Vector(0,0,50) + ply:GetEyeTrace().Normal * 5

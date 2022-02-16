@@ -286,8 +286,10 @@ function HORDE:GameEnd(status)
                 GetConVar("horde_difficulty"):SetInt(1)
             elseif chosen_diff == "REALISM" then
                 GetConVar("horde_difficulty"):SetInt(2)
-            else
+            elseif chosen_diff == "NIGHTMARE" then
                 GetConVar("horde_difficulty"):SetInt(3)
+            else
+                GetConVar("horde_difficulty"):SetInt(4)
             end
 
             timer.Simple(0, function() RunConsoleCommand("changelevel", chosen_map) end)
@@ -332,6 +334,7 @@ end)
 
 -- Player Spawn Initialize
 function HORDE:PlayerInit(ply)
+    HORDE.current_players = player.GetAll()
     HORDE:LoadRank(ply)
 
     net.Start("Horde_SyncItems")
@@ -367,7 +370,12 @@ function HORDE:PlayerInit(ply)
     if HORDE.start_game then
         net.Start("Horde_RemoveReadyPanel")
         net.Send(ply)
-        ply:Horde_SetMoney(HORDE.start_money + math.max(0, HORDE.current_wave - 1) * 150)
+        if HORDE.player_money_wave[ply:SteamID()] and HORDE.player_money[ply:SteamID()] and HORDE.player_money_wave[ply:SteamID()] == HORDE.current_wave then
+            -- Already provided social welfare.
+            ply:Horde_SetMoney(HORDE.player_money[ply:SteamID()])
+        else
+            ply:Horde_SetMoney(HORDE.start_money + math.max(0, HORDE.current_wave - 1) * 150)
+        end
         HORDE:LoadSkullTokens(ply)
         if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss_name then
             net.Start("Horde_SyncBossSpawned")
@@ -384,7 +392,11 @@ function HORDE:PlayerInit(ply)
             net.Send(ply)
         end
     else
-        ply:Horde_SetMoney(HORDE.start_money)
+        if HORDE.player_money[ply:SteamID()] then
+            ply:Horde_SetMoney(HORDE.player_money[ply:SteamID()])
+        else
+            ply:Horde_SetMoney(HORDE.start_money)
+        end
         HORDE:LoadSkullTokens(ply)
     end
     ply:Horde_SetDropEntities({})
@@ -460,10 +472,20 @@ net.Receive("Horde_PlayerInit", function (len, ply)
     HORDE:PlayerInit(ply)
 end)
 
+HORDE.player_money = {}
+HORDE.player_money_wave = {}
 hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
+    HORDE.current_players = player.GetAll()
     if HORDE.player_vote_map_change[ply] then
         HORDE.player_vote_map_change[ply] = nil
     end
+
+    -- Keep player money to prevent money duping
+    if ply:IsValid() then
+        HORDE.player_money[ply:SteamID()] = ply:Horde_GetMoney()
+        HORDE.player_money_wave[ply:SteamID()] = HORDE.current_wave
+    end
+
     if (not HORDE.start_game) and HORDE.player_ready[ply] then
         HORDE.player_ready[ply] = nil
         net.Start("Horde_PlayerReadySync")
@@ -519,7 +541,7 @@ HORDE.VoteChangeMap = function (ply)
         end)
     else
         net.Start("Horde_LegacyNotification")
-        net.WriteString(ply:GetName() .. " wants to change the map. (" .. tostring(table.Count(HORDE.player_vote_map_change)) .. "/" .. tostring(table.Count(player.GetAll())) .. ")")
+    net.WriteString(ply:GetName() .. " wants to change the map. (" .. tostring(table.Count(HORDE.player_vote_map_change)) .. "/" .. tostring(table.Count(player.GetAll())) .. ")")
         net.WriteInt(0,2)
         net.Broadcast()
     end
@@ -555,10 +577,111 @@ local function Horde_DeathSpectatingFunction(victim, inflictor, attacker)
     end)
 end
 
+local function Horde_GetAllLivingPlayers()
+    if not HORDE.alive_players then HORDE.alive_players = {} end
+    if HORDE.refresh_living_players then
+        HORDE.alive_players = {}
+        for _, ply in pairs(player.GetAll()) do
+            if ply:Alive() then
+                table.insert(HORDE.alive_players, ply)
+            end
+        end
+        HORDE.refresh_living_players = nil
+    end
+end
+
+function plymeta:Horde_SpectatePrevPlayer()
+    local plys = HORDE.alive_players
+    if #plys > 0 then
+        local cur_target = self:GetObserverTarget()
+        local index
+
+        if !IsValid( cur_target ) then
+            index = 1
+        else
+            for i, v in ipairs( plys ) do
+                if v == cur_target then
+                    index = i - 1
+                    break
+                end
+            end
+        end
+
+        if !index then index = 1 end
+
+        if index < 1 then
+            index = #plys
+        end
+
+        local target = plys[index]
+
+        if target ~= cur_target then
+            self:SpectateEntity( target )
+        end
+    end
+end
+
+function plymeta:Horde_SpectateNextPlayer()
+    local plys = HORDE.alive_players
+    if #plys > 0 then
+        local cur_target = self:GetObserverTarget()
+        local index
+
+        if !IsValid( cur_target ) or (not cur_target:Alive()) then
+            index = 1
+        else
+            for i, v in ipairs( plys ) do
+                if v == cur_target then
+                    index = i + 1
+                    break
+                end
+            end
+        end
+
+        if !index then index = 1 end
+
+        if index > #plys then
+            index = 1
+        end
+
+        local target = plys[index]
+
+        if target ~= cur_target then
+            self:SpectateEntity( target )
+        end
+    end
+end
+
+hook.Add("KeyPress", "PlayerChangeSpectate", function(ply, key)
+    if ply:Alive() then return end
+    Horde_GetAllLivingPlayers()
+    if #HORDE.alive_players == 0 then
+        ply:SetObserverMode(OBS_MODE_ROAMING)
+        return
+    end
+	if (key == IN_JUMP) then
+		if ply:GetObserverMode() == OBS_MODE_ROAMING then
+            ply:SetObserverMode(OBS_MODE_CHASE)
+            ply:Horde_SpectateNextPlayer()
+        else
+            ply:SetObserverMode(OBS_MODE_ROAMING)
+        end
+	end
+
+    if (key == IN_ATTACK) and ply:GetObserverMode() == OBS_MODE_CHASE then
+        ply:Horde_SpectateNextPlayer()
+    end
+
+    if (key == IN_ATTACK2) and ply:GetObserverMode() == OBS_MODE_CHASE then
+        ply:Horde_SpectatePrevPlayer()
+    end
+end)
+
 hook.Add("PlayerDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
 hook.Add("PlayerSilentDeath", "Horde_DeathSpectatingFunction", Horde_DeathSpectatingFunction)
 
 function HORDE:CheckAlivePlayers()
+    HORDE.refresh_living_players = true
     local aliveplayers = 0
     local deadplayers = 0
     for _, ply in pairs(player.GetAll()) do
@@ -594,7 +717,7 @@ hook.Add("PlayerDeathThink", "Horde_PlayerDeathThink", function (ply)
     if HORDE.current_break_time > 0 then return true end
     if HORDE.start_game then return false end
     return true
-end);
+end)
 
 hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     net.Start("Horde_ClearStatus")

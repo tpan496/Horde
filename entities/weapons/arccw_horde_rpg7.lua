@@ -4,6 +4,7 @@ if (CLIENT) then
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
 	killicon.Add("arccw_horde_rpg7", "vgui/hud/arccw_horde_rpg7", color_white)
+    killicon.Add("obj_vj_rpg_rocket", "vgui/hud/arccw_horde_rpg7", color_white)
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true

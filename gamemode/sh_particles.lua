@@ -18,3 +18,8 @@ PrecacheParticleSystem("eml_generic_shock_ligtning")
 PrecacheParticleSystem("tbolt_core")
 PrecacheParticleSystem("eml_generic_shock")
 PrecacheParticleSystem("ice_smoke")
+PrecacheParticleSystem("ice_freezing_halo")
+PrecacheParticleSystem("snowcore_small") -- Charged Void Spear
+PrecacheParticleSystem("ice_impact") -- Void Spear Impact (Small)
+PrecacheParticleSystem("ice_impact_heavy") -- Void Spear Impact (Large)
+PrecacheParticleSystem("jotunn_muzzle")

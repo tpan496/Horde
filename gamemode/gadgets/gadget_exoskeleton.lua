@@ -29,5 +29,5 @@ end
 
 GADGET.Hooks.Horde_PlayerMoveBonus = function (ply, bonus)
     if ply:Horde_GetGadget() ~= "gadget_exoskeleton"  then return end
-    ply:SetRunSpeed(ply:Horde_GetClass().movespd)
+    bonus.sprintspd = 0.8
 end

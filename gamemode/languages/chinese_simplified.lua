@@ -159,69 +159,78 @@ LANGUAGE["Perk_assault_base"] = [[
 突击兵拥有出色的移动力和稳定的输出，从而能应对任何场景。
 复杂度: 简单
 
-提升 {1} 移速。
+提升 {1} 移速。（每级提升 {2}，最多至 {3}）。
+
 杀死敌人后获得“肾上腺素”状态。通过技能的选择，“肾上腺素”可以进行堆叠。
-“肾上腺素”提升 {2} 移速和输出。]]
+“肾上腺素”提升 {4} 移速和输出。]]
 
 LANGUAGE["Perk_heavy_base"] = [[
 重装兵拥有高超的护甲防御机制，同时能使用重武器对敌人造成火力压制。
 复杂度: 简单
 
-+{1} 最大负重。
-每秒恢复 {2} 点护甲。
-护甲回复上限为 {3}。]]
+每秒恢复 {1} 点护甲。
+护甲回复上限为 {2}。（基础{3} + 每级提升 {4}，最多至 {5}）。]]
 
 LANGUAGE["Perk_medic_base"] = [[
 医疗兵拥有强大的生命恢复能力，同时能为队友提供治疗以及各种增益效果。
 复杂度: 中等
 
-每秒恢复 {1} 生命值。]]
+提升 {1} 治疗量。（每级提升 {2}，最多至 {3}）。
+
+每秒恢复 {4} 生命值。]]
 
 LANGUAGE["Perk_demolition_base"] = [[
 爆破兵拥有强大的范围性输出。根据技能的选择，爆破兵也能提供超群的单体输出能力。
 复杂度: 中等
 
-提升 {1} 爆炸伤害抗性。
-在没有高爆手雷的前提下，每 {3} 秒获得 {2} 个高爆手雷。]]
+提升 {1} 爆炸伤害抗性。（基础 {2} + 每级提升 {3}，最多至 {4}）。
+
+在没有高爆手雷的前提下，每 {5} 秒获得 {6} 个高爆手雷。]]
 
 LANGUAGE["Perk_ghost_base"] = [[
 幻影是一个围绕着精准度和“迷彩”机制的职业。使用恰当的话，幻影可以提供无以匹敌的单体输出。
 复杂度: 困难
 
-{1} 更多爆头伤害。
-蹲下以激活“迷彩”状态，提供 {2} 闪避。
+{1} 更多爆头伤害。（每级提升 {2}，最多至 {3}）。
+
+蹲下以激活“迷彩”状态，提供 {4} 闪避。
 攻击，奔跑会取消“迷彩”状态。]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 工程师是一个围绕着召唤物的职业。召唤物能有效地进行区域性防守并且为队友提供掩护。
 复杂度: 中等
 
-提升 {1} 召唤物生命值和伤害。
-步哨拥有 {2} 基础生命值和 {3} 基础伤害。]]
+提升 {1} 召唤物伤害。（每级提升 {2}，最多至 {3}）。
+
+步哨拥有 {4} 基础生命值和 {5} 基础伤害。]]
 
 LANGUAGE["Perk_berserker_base"] = [[
 狂战士是近距离格斗专家。
 复杂度: 困难
 
-提升 {1} 所有伤害抗性。
-提升 {2} 近战伤害。]]
+提升 {1} 所有伤害抗性。（每级提升 {2}，最多至 {3}）。
+提升 {4} 近战伤害。（每级提升 {5}，最多至 {6}）。
+
+空中格挡：跳跃中减少 {7} 受到的物理伤害。]]
 
 LANGUAGE["Perk_warden_base"] = [[
 守望者是是一个使用自身光环和建筑来为队友提供各种有利效果的辅助职业。
 复杂度：中等
 
+提升 {1} “守望光环”半径。（每级提升 {2}，最多至 {3}）。
+
 自身以及附近的玩家会受到“守望光环”效果。
-“守望光环”阻挡 {1} 伤害。]]
+“守望光环”阻挡 {4} 伤害。]]
 
 LANGUAGE["Perk_cremator_base"] = [[
 喷火兵使用火焰伤害进行进攻和防御。
 复杂度：简单
 
-提升 {1} 火焰伤害抗性。
-攻击有 {2} 概率引燃敌人。
+提升 {1} 火焰伤害抗性。（基础 {2} + 每级提升 {3}，最多至 {4}）。
 
-引燃持续时间为 {3} 秒，造成基于攻击伤害的持续伤害。
-火焰伤害有 {1} 概率引燃敌人。]]
+攻击有 {5} 概率引燃敌人。
+引燃持续时间为 {6} 秒，造成基于攻击伤害的持续伤害。
+火焰伤害有 {7} 概率引燃敌人。]]
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[生存]]
@@ -230,7 +239,7 @@ LANGUAGE["Perk_Title_Survivor_Tier_3"] = [[技巧复制]]
 
 -- Default Perks: Assault
 LANGUAGE["Perk_Title_Assault_Tier_1"] = [[机动性]]
-LANGUAGE["Perk_Title_assault_ambush"] = [[强袭]]
+LANGUAGE["Perk_Title_assault_ambush"] = [[袭击]]
 LANGUAGE["Perk_assault_ambush"] = [[
 提升 {1} 爆头伤害。]]
 
@@ -242,21 +251,33 @@ LANGUAGE["Perk_Title_Assault_Tier_2"] = [[适应性]]
 LANGUAGE["Perk_Title_assault_drain"] = [[生命汲取]]
 LANGUAGE["Perk_assault_drain"] = [[
 满血前提下，提升 {1} 爆头伤害。
-每击杀一个敌人恢复 {2} 最大生命值。]]
+每击杀一个敌人恢复 {2} 生命值。]]
 
 LANGUAGE["Perk_Title_assault_overclock"] = [[代谢超频]]
 LANGUAGE["Perk_assault_overclock"] = [[
 “肾上腺素”持续时间提升 {1}。
 “肾上腺素”最大堆叠次数 +{2}。]]
 
-LANGUAGE["Perk_Title_Assault_Tier_3"] = [[条件反射]]
-LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[精神统一]]
-LANGUAGE["Perk_assault_heightened_reflex"] = [[
-提升 {1} 爆头伤害。
-满血前提下，提升 {2} 所有伤害抗性。]]
+LANGUAGE["Perk_Title_Assault_Tier_3"] = [[进攻]]
+LANGUAGE["Perk_Title_assault_cardiac_resonance"] = [[心室共鸣]]
+LANGUAGE["Perk_assault_cardiac_resonance"] = [[
+每次击杀敌人后，
+附近玩家获得 {1} “肾上腺素”, 最多至 {2}.
+“肾上腺素”最大堆叠次数 +{3}.]]
 
 LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[心脏过载]]
 LANGUAGE["Perk_assault_cardiac_overload"] = [[
+爆头有 {1} 几率 +1 层“肾上腺素”。
+“肾上腺素”最大堆叠次数 +{2}。]]
+
+LANGUAGE["Perk_Title_Assault_Tier_4"] = [[条件反射]]
+LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[精神统一]]
+LANGUAGE["Perk_assault_heightened_reflex"] = [[
+提升 {1} 爆头伤害。
+满“肾上腺素”前提下，提升 {2} 所有伤害抗性。]]
+
+LANGUAGE["Perk_Title_assault_merciless_assault"] = [[势如破竹]]
+LANGUAGE["Perk_assault_merciless_assault"] = [[
 爆头有 {1} 几率 +1 层“肾上腺素”。
 “肾上腺素”最大堆叠次数 +{2}。]]
 
@@ -272,7 +293,16 @@ LANGUAGE["Perk_heavy_crude_casing"] = [[
 子弹伤害击中的敌人受到“虚弱”异常状态。
 “虚弱”状态下，受到 {1} 更多伤害。]]
 
-LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[护甲强化]]
+LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[备用]]
+LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[修复催化剂]]
+LANGUAGE["Perk_heavy_repair_catalyst"] = [[
++{1} 最大护甲值恢复值。]]
+
+LANGUAGE["Perk_Title_heavy_floating_carrier"] = [[悬浮仓]]
+LANGUAGE["Perk_heavy_floating_carrier"] = [[
++5 最大负重.]]
+
+LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[护甲强化]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[流体装甲]]
 LANGUAGE["Perk_heavy_liquid_armor"] = [[
 护甲值至少有 {1} 的前提下：
@@ -281,13 +311,12 @@ LANGUAGE["Perk_heavy_liquid_armor"] = [[
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[反应装甲]]
 LANGUAGE["Perk_heavy_reactive_armor"] = [[
 护甲值至少有 {1} 的前提下：
-  免疫火焰，毒素，爆炸伤害。]]
+  免疫火焰，爆炸伤害。]]
 
-LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[先进科技]]
+LANGUAGE["Perk_Title_Heavy_Tier_4"] = [[先进科技]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[纳米机器]]
 LANGUAGE["Perk_heavy_nanomachine"] = [[
-提升 {1} 护甲值恢复速度.
-护甲值可以最多恢复至 {2} 点。]]
+提升 {1} 护甲值恢复速度.]]
 
 LANGUAGE["Perk_Title_heavy_ballistic_shock"] = [[弹道冲击]]
 LANGUAGE["Perk_heavy_ballistic_shock"] = [[
@@ -309,7 +338,7 @@ LANGUAGE["Perk_Title_medic_berserk"] = [[狂化]]
 LANGUAGE["Perk_medic_berserk"] = [[
 治疗的对象获得“狂化”增益状态。
 “狂化”状态持续 {1} 秒。
-“狂化”状态下，提升 {2} 伤害和移速。]]
+“狂化”状态下，提升 {2} 伤害。]]
 
 LANGUAGE["Perk_Title_medic_fortify"] = [[坚固]]
 LANGUAGE["Perk_medic_fortify"] = [[
@@ -317,7 +346,18 @@ LANGUAGE["Perk_medic_fortify"] = [[
 “坚固”状态持续 {1} 秒。
 “坚固”状态下，受到 {2} 更少伤害。]]
 
-LANGUAGE["Perk_Title_Medic_Tier_3"] = [[物竞天择]]
+LANGUAGE["Perk_Title_Medic_Tier_3"] = [[增强]]
+LANGUAGE["Perk_Title_medic_purify"] = [[净化]]
+LANGUAGE["Perk_medic_purify"] = [[
+直接减少治疗对象的流血，破坏，眩晕累计值。]]
+
+LANGUAGE["Perk_Title_medic_haste"] = [[加速]]
+LANGUAGE["Perk_medic_haste"] = [[
+治疗的对象获得“加速”增益状态。
+“加速”状态持续 {1} 秒。
+“加速”状态下，提升 {2} 移速。]]
+
+LANGUAGE["Perk_Title_Medic_Tier_4"] = [[物竞天择]]
 LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[细胞坍缩]]
 LANGUAGE["Perk_medic_cellular_implosion"] = [[
 击杀的敌人有 {1} 概率产生治疗烟雾。]]
@@ -331,27 +371,37 @@ LANGUAGE["Perk_medic_xcele"] = [[
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[手雷改装]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[冲击起爆]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
-提升 {1} 爆炸伤害。
-提升 {2} 手雷伤害。]]
+提升 {1} 手雷冲击引爆伤害。
+手雷击中敌人后直接引爆。
+冲击引爆增加敌人的眩晕累计值。]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[子母弹]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[
 手雷爆炸后产生 {1} 个子雷。
 子雷伤害比母雷少 {2}。]]
 
-LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[爆破途径]]
-LANGUAGE["Perk_Title_demolition_fragmentation"] = [[冲击]]
+LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[武器]]
+LANGUAGE["Perk_Title_demolition_direct_hit"] = [[精确打击]]
+LANGUAGE["Perk_demolition_direct_hit"] = [[
+提升 {1} 起爆点附近敌人的爆炸伤害。]]
+
+LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[震荡波]]
+LANGUAGE["Perk_demolition_seismic_wave"] = [[
+爆炸类发射物在引爆后产生额外的冲击波。
+冲击波造成原本爆炸伤害 {1} 的物理伤害。]]
+
+LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[爆破途径]]
+LANGUAGE["Perk_Title_demolition_fragmentation"] = [[破片]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
-对满血敌人造成的爆炸伤害提升 {1}。]]
+提升 {1} 爆炸伤害。]]
 
 LANGUAGE["Perk_Title_demolition_knockout"] = [[击晕]]
 LANGUAGE["Perk_demolition_knockout"] = [[
-爆炸伤害对敌人累计眩晕值。
-眩晕值到达 {2} 后，对敌人造成 {1} 秒眩晕。
-眩晕冷却时间为 {3} 秒。
-]]
+爆炸伤害提升敌人的眩晕累计值。
+眩晕累计值饱和后，对敌人造成 {1} 秒眩晕。
+眩晕冷却时间为 {2} 秒。]]
 
-LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[毁灭]]
+LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[毁灭]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[高压弹头]]
 LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
 提升 {1} 对精英敌人造成的爆炸伤害。
@@ -384,6 +434,19 @@ LANGUAGE["Perk_ghost_ghost_veil"] = [[
 攻击不会取消“迷彩”状态。
 迷彩激活速度提升 {1}。]]
 
+LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[弹道]]
+LANGUAGE["Perk_Title_ghost_brain_snap"] = [[蚀脑]]
+LANGUAGE["Perk_ghost_brain_snap"] = [[
+爆头提升“霜冻”累计值，基于武器原始伤害。
+“霜冻”状态下，大幅度减缓敌人行动速度 {1} 秒。
+“霜冻”状态冷却时间为 {2} 秒。]]
+
+LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[蓄能冲击]]
+LANGUAGE["Perk_ghost_ghost_kinetic_impact"] = [[
+基于攻击距离提升子弹伤害。
+每 {2} 距离，提升 {1} 子弹伤害。
+最多提升 {3} 子弹伤害。]]
+
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[歼灭]]
 LANGUAGE["Perk_Title_ghost_coup"] = [[恩赐解脱]]
 LANGUAGE["Perk_ghost_coup"] = [[
@@ -405,18 +468,31 @@ LANGUAGE["Perk_Title_engineer_pioneer"] = [[先驱]]
 LANGUAGE["Perk_engineer_pioneer"] = [[
 提升 {2} 召唤物伤害。]]
 
-LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[原型]]
-LANGUAGE["Perk_Title_engineer_golem"] = [[魔像]]
-LANGUAGE["Perk_engineer_golem"] = [[
+LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[核心]]
+LANGUAGE["Perk_Title_engineer_fusion"] = [[聚变反应]]
+LANGUAGE["Perk_engineer_fusion"] = [[
 召唤物每秒恢复 {1} 最大生命值。
-召唤物攻击带有增强的击退效果。]]
+召唤物满血前提下，提升 {2} 召唤物伤害。]]
 
-LANGUAGE["Perk_Title_engineer_spectre"] = [[鬼影]]
-LANGUAGE["Perk_engineer_spectre"] = [[
+LANGUAGE["Perk_Title_engineer_metabolism"] = [[新陈代谢]]
+LANGUAGE["Perk_engineer_metabolism"] = [[
 召唤物吸收 {1} 对敌人造成的伤害为生命值。
-{2} 更多召唤物伤害。]]
+召唤物不满血前提下，提升 {2} 召唤物伤害。]]
 
-LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[实验性模组]]
+LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[操控]]
+LANGUAGE["Perk_Title_engineer_antimatter_shield"] = [[反物质护盾]]
+LANGUAGE["Perk_engineer_antimatter_shield"] = [[
+按 Shift+E 对目标召唤物附加护盾。
+护盾吸收目标召唤物 {1} 最大生命值的伤害。
+护盾殆尽后爆炸，冷却时间为 {2} 秒。]]
+
+LANGUAGE["Perk_Title_engineer_displacer"] = [[传送器]]
+LANGUAGE["Perk_engineer_displacer"] = [[
+按 Shift+E 传送目标召唤物至身前。
+传送后，目标召唤物恢复 {1} 最大生命值。
+传送器冷却时间为 {2} 秒。]]
+
+LANGUAGE["Perk_Title_Engineer_Tier_4"] = [[实验性模组]]
 LANGUAGE["Perk_Title_engineer_symbiosis"] = [[共生]]
 LANGUAGE["Perk_engineer_symbiosis"] = [[
 {1} 更多召唤物最大生命值。
@@ -450,7 +526,20 @@ LANGUAGE["Perk_berserker_savagery"] = [[
 提升 {1} 钝器伤害。
 提升 {2} 最大生命值。]]
 
-LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[秘技]]
+LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[格挡]]
+LANGUAGE["Perk_Title_berserker_graceful_guard"] = [[Graceful Guard]]
+LANGUAGE["Perk_berserker_graceful_guard"] = [[
+空中格挡成功后:
+  - 移除所有的异常状态和异常状态累计值。
+  - 恢复 {1} 生命值。]]
+
+LANGUAGE["Perk_Title_berserker_unwavering_guard"] = [[Unwavering Guard]]
+LANGUAGE["Perk_berserker_unwavering_guard"] = [[
+空中格挡成功后:
+  - 提升 {1} 物理伤害，持续 {3} 秒。
+  - 减少 {2} 受到的伤害，持续 {3} 秒。]]
+
+LANGUAGE["Perk_Title_Berserker_Tier_4"] = [[秘技]]
 LANGUAGE["Perk_Title_berserker_mindeye"] = [[心眼]]
 LANGUAGE["Perk_berserker_mindeye"] = [[
 每次近战攻击可以获得一层心眼状态，最多 {1} 层。
@@ -478,16 +567,24 @@ LANGUAGE["Perk_Title_warden_restock"] = [[快速补充]]
 LANGUAGE["Perk_warden_restock"] = [[
 守望塔资源生成冷却时间减少 {1}。]]
 
-LANGUAGE["Perk_Title_warden_energize"] = [[残暴]]
+LANGUAGE["Perk_Title_warden_energize"] = [[充能]]
 LANGUAGE["Perk_warden_energize"] = [[
 光环提供 +{1} 额外基础伤害。]]
+
+LANGUAGE["Perk_Title_Warden_Tier_3"] = [[护送]]
+LANGUAGE["Perk_Title_warden_rejection_pulse"] = [[排斥力场]]
+LANGUAGE["Perk_warden_rejection_pulse"] = [[
+守望塔每 {1} 秒产生冲击波。
+冲击波造成 {2} 电击伤害。]]
+
+LANGUAGE["Perk_Title_warden_inoculation"] = [[无垢化]]
+LANGUAGE["Perk_warden_inoculation"] = [[
+光环玩家内玩家获得 {1} 更少引燃，电感，霜冻累计值。]]
 
 LANGUAGE["Perk_Title_Warden_Tier_3"] = [[广域化]]
 LANGUAGE["Perk_Title_warden_ex_machina"] = [[机械降神]]
 LANGUAGE["Perk_warden_ex_machina"] = [[
-守望塔提供“守望光环”。
-守望塔每 {1} 秒产生冲击波。
-冲击波造成 {2} 电击伤害。]]
+守望塔提供“守望光环”。]]
 
 LANGUAGE["Perk_Title_warden_resonance_cascade"] = [[级联共振]]
 LANGUAGE["Perk_warden_resonance_cascade"] = [[
@@ -517,7 +614,19 @@ LANGUAGE["Perk_cremator_entropy_shield"] = [[
 护盾被击中后爆炸，在 {1} 秒后重生。
 护盾爆炸造成 {2} 火焰伤害。]]
 
-LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[能量释放]]
+LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[热量操控]]
+LANGUAGE["Perk_Title_cremator_hyperthermia"] = [[超高温]]
+LANGUAGE["Perk_cremator_hyperthermia"] = [[
+基于敌人和玩家间的距离提升火焰伤害。
+距离越近，火焰伤害越高。
+火焰伤害最多提升 {1}。]]
+
+LANGUAGE["Perk_Title_cremator_ionization"] = [[电离化]]
+LANGUAGE["Perk_cremator_ionization"] = [[
+提升 {1} 引燃伤害。
+火焰伤害无视敌人火焰抗性。]]
+
+LANGUAGE["Perk_Title_Cremator_Tier_4"] = [[能量释放]]
 LANGUAGE["Perk_Title_cremator_firestorm"] = [[烈焰风暴]]
 LANGUAGE["Perk_cremator_firestorm"] = [[
 火焰伤害对敌人累计爆裂值。

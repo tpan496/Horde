@@ -2,7 +2,7 @@ PERK.PrintName = "Rip and Tear"
 PERK.Description = "{1} more melee damage.\nYour melee attack can splash.\n Splash damage is {2} of your melee damage."
 PERK.Icon = "materials/perks/rip_and_tear.png"
 PERK.Params = {
-    [1] = {value = 0.25, percent = true},
+    [1] = {value = 0.20, percent = true},
     [2] = {value = 0.50, percent = true},
 }
 

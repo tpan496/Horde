@@ -417,8 +417,11 @@ function HORDE:SpawnEnemy(enemy, pos)
         else
             scale = math.min(8, horde_players_count)
             add = 0.60
+            if scale > 4 then
+                add = 0.55
+            end
         end
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, scale * (add + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(HORDE.difficulty_elite_health_scale_multiplier[HORDE.difficulty], scale * HORDE.difficulty_elite_health_scale_multiplier[HORDE.difficulty] * (add + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
     end
 
     if enemy.health_scale then
@@ -1063,7 +1066,7 @@ function HORDE:WaveEnd()
     net.Broadcast()
 
     -- Global Wave End Effects
-    if horde_perk_progress <= 3 and HORDE.current_wave >= HORDE:Horde_GetWaveForPerk(horde_perk_progress) then
+    if horde_perk_progress <= 4 and HORDE:Horde_GetWaveForPerk(horde_perk_progress) and HORDE.current_wave >= HORDE:Horde_GetWaveForPerk(horde_perk_progress) then
         timer.Simple(1, function()
             net.Start("Horde_LegacyNotification")
                 net.WriteString("Tier " .. horde_perk_progress .. " perks have been unlocked!")

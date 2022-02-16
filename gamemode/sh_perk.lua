@@ -6,6 +6,10 @@ HORDE.NET_PERK_BITS = 2
 
 HORDE.perks = HORDE.perks or {}
 
+if SERVER then
+util.AddNetworkString("Horde_PerkStartCooldown")
+end
+
 if CLIENT then
     net.Receive("Horde_Perk", function()
         if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
@@ -138,4 +142,65 @@ end
 
 if GetConVar("horde_enable_perk"):GetInt() == 1 then
     Horde_LoadPerks()
+end
+
+if CLIENT then
+hook.Add("PlayerButtonDown", "Horde_UseKeyAndShift", function(ply, key)
+    if (key == KEY_E) and input.IsButtonDown(KEY_LSHIFT) then
+        ply:ConCommand("horde_use_perk_skill")
+    end
+end)
+end
+
+function plymeta:Horde_GetPerkNextThink()
+    return self.Horde_PerkNextThink or 0
+end
+
+function plymeta:Horde_SetPerkNextThink(t)
+    self.Horde_PerkNextThink = t
+end
+
+function plymeta:Horde_SetPerkDuration(d)
+    self.Horde_PerkDuration = d
+end
+
+function plymeta:Horde_GetPerkDuration()
+    return self.Horde_PerkDuration or 0
+end
+
+function plymeta:Horde_SetPerkCooldown(cd)
+    self.Horde_PerkCooldown = cd
+end
+
+function plymeta:Horde_SetPerkInternalCooldown(cd)
+    self.Horde_PerkInternalCooldown = cd
+end
+
+function plymeta:Horde_GetPerkInternalCooldown()
+    return self.Horde_PerkInternalCooldown or 0
+end
+
+function plymeta:Horde_GetPerkCooldown()
+    return self.Horde_PerkCooldown or 0
+end
+
+if SERVER then
+    function HORDE:UsePerkSkill(ply)
+        if ply:Horde_GetPerkInternalCooldown() <= 0 and ply:Alive() then
+            local res = hook.Run("Horde_UseActivePerk", ply)
+            if res then return end
+            ply:Horde_SetPerkInternalCooldown(ply:Horde_GetPerkCooldown())
+            net.Start("Horde_PerkStartCooldown")
+                net.WriteUInt(ply:Horde_GetPerkCooldown(), 8)
+            net.Send(ply)
+        end
+    end
+
+    hook.Add("PlayerPostThink", "Horde_PerkCooldown", function(ply)
+        if CurTime() >= ply:Horde_GetPerkNextThink() then
+            if ply:Horde_GetPerkInternalCooldown() <= 0 then return end
+            ply:Horde_SetPerkInternalCooldown(ply:Horde_GetPerkInternalCooldown() - 1)
+            ply:Horde_SetPerkNextThink(CurTime() + 1)
+        end
+    end)
 end

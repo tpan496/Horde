@@ -1,5 +1,5 @@
 MUTATION.PrintName = "Shadow"
-MUTATION.Description = "Reduced opacity.\nDamage dealt is converted to Cold damage.\nOnly randomly occurs starting from wave 6."
+MUTATION.Description = "Reduced opacity.\nDamage dealt is converted to Cold damage.\nOnly randomly occurs starting from wave 8."
 MUTATION.Wave = 8
 
 MUTATION.Hooks = {}
@@ -14,7 +14,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
 end
 
 MUTATION.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
-    if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_GetMutation() == "shadow" then
+    if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_HasMutation("shadow") then
         dmg:SetDamageType(DMG_REMOVENORAGDOLL)
     end
 end

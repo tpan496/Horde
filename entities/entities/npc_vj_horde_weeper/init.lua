@@ -72,15 +72,15 @@ function ENT:ShockAttack(delay)
 		dmg:SetAttacker(self)
 		dmg:SetInflictor(self)
 		dmg:SetDamageType(DMG_REMOVENORAGDOLL)
-		dmg:SetDamage(15)
+		dmg:SetDamage(12)
 		util.BlastDamageInfo(dmg, self:GetPos(), 350)
 
-		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 400)) do
+		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 350)) do
 			if ent:IsPlayer() then
-				ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 4)
+				ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 4, self)
 			end
 		end
-		
+
 		local e = EffectData()
 			e:SetOrigin(self:GetPos())
 			e:SetNormal(Vector(0,0,1))

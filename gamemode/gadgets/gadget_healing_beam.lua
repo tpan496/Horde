@@ -100,7 +100,7 @@ GADGET.Hooks.Horde_OnSetGadget = function (ply, gadget)
             local healinfo = HealInfo:New({amount=1, healer=ply})
             HORDE:OnPlayerHeal(ply, healinfo)
         else
-            local healinfo = HealInfo:New({amount=1, healer=ply})
+            local healinfo = HealInfo:New({amount=2, healer=ply})
             HORDE:OnPlayerHeal(ply.Horde_Healing_Target, healinfo)
         end
         if ply:GetPos():DistToSqr(ply.Horde_Healing_Target:GetPos()) > 250000 then

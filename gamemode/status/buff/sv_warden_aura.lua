@@ -7,9 +7,9 @@ function entmeta:Horde_AddWardenAura()
     ent:SetPos(self:GetPos())
     ent:SetParent(self)
     if self:GetNWEntity("HordeOwner"):IsPlayer() then
-        ent:Horde_SetAuraRadius(self:GetNWEntity("HordeOwner"):Horde_GetWardenAuraRadius())
+        ent:Horde_SetAuraRadius(self:GetNWEntity("HordeOwner"):Horde_GetWardenAuraRadius() * self:Horde_GetPerkLevelBonus("warden_base"))
     else
-        ent:Horde_SetAuraRadius(self:Horde_GetWardenAuraRadius())
+        ent:Horde_SetAuraRadius(self:Horde_GetWardenAuraRadius() * self:Horde_GetPerkLevelBonus("warden_base"))
         timer.Simple(0, function() self:Horde_AddWardenAuraEffects(self) end)
     end
     ent:Spawn()
@@ -33,7 +33,7 @@ function plymeta:Horde_SetWardenAuraRadius(radius)
 end
 
 function plymeta:Horde_GetWardenAuraRadius()
-    return self.Horde_WardenAuraRadius or 200
+    return (self.Horde_WardenAuraRadius or 160)
 end
 
 function plymeta:Horde_SetEnableWardenAuraHealthRegen(enable)
@@ -50,6 +50,14 @@ end
 
 function plymeta:Horde_GetEnableWardenAuraDamageBonus()
     return self.Horde_EnableWardenAuraDamageBonus or nil
+end
+
+function plymeta:Horde_SetEnableWardenAuraInoculation(enable)
+    self.Horde_EnableWardenAuraInoculation = enable
+end
+
+function plymeta:Horde_GetEnableWardenAuraInoculation()
+    return self.Horde_EnableWardenAuraInoculation or nil
 end
 
 function plymeta:Horde_SetEnableWardenAuraBuffBonus(enable)
@@ -72,6 +80,9 @@ function plymeta:Horde_AddWardenAuraEffects(provider)
     end
     if self.Horde_WardenAuraProvider:Horde_GetEnableWardenAuraDamageBonus() then
         self.Horde_WardenAuraDamageBonus = true
+    end
+    if self.Horde_WardenAuraProvider:Horde_GetEnableWardenAuraInoculation() then
+        self.Horde_WardenAuraInoculation = true
     end
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_WardenAura, 8)
@@ -99,6 +110,18 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_WardenAuraDamageTaken", function(pl
             bonus.block = 3
         else
             bonus.block = 2
+        end
+    end
+end)
+
+hook.Add("Horde_OnPlayerDebuffApply", "Horde_WardenAuraInoculation", function (ply, debuff, bonus, inflictor)
+    if ply.Horde_WardenAuraInoculation then
+        if debuff == HORDE.Status_Ignite or debuff == HORDE.Status_Frostbite or debuff == HORDE.Status_Shock then
+            if ply.Horde_WardenAuraProvider.Horde_EnableWardenAuraBuffBonus then
+                bonus.more = bonus.more * 0.7
+            else
+                bonus.more = bonus.more * 0.85
+            end
         end
     end
 end)

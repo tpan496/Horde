@@ -1,32 +1,22 @@
 PERK.PrintName = "Cardiac Overload"
-PERK.Description = "{1} chance to add 1 Adrenaline stack on headshot.\nAdds {2} maximum Adrenaline stacks."
+PERK.Description = "Adrenaline duration increased by {1}.\nAdds {2} maximum Adrenaline stacks."
 PERK.Icon = "materials/perks/cardiac_overload.png"
 PERK.Params = {
-    [1] = {value = 0.25, percent = true},
-    [2] = {value = 2},
+    [1] = {value = 0.5, percent = true},
+    [2] = {value = 1},
 }
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "assault_cardiac_overload" then
-        ply:Horde_SetMaxAdrenalineStack(ply:Horde_GetMaxAdrenalineStack() + 2)
+        ply:Horde_SetMaxAdrenalineStack(ply:Horde_GetMaxAdrenalineStack() + 1)
+        ply:Horde_SetAdrenalineStackDuration(ply:Horde_GetAdrenalineStackDuration() * 1.5)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "assault_cardiac_overload" then
-        ply:Horde_SetMaxAdrenalineStack(ply:Horde_GetMaxAdrenalineStack() - 2)
-    end
-end
-
-PERK.Hooks.ScaleNPCDamage = function(npc, hitgroup, dmginfo)
-    local attacker = dmginfo:GetAttacker()
-    if not attacker:IsValid() or not attacker:IsPlayer() then return end
-    if not attacker:Horde_GetPerk("assault_cardiac_overload")  then return end
-    if hitgroup == HITGROUP_HEAD then
-        local p = math.random()
-        if p <= 0.25 then
-            attacker:Horde_AddAdrenalineStack()
-        end
+        ply:Horde_SetMaxAdrenalineStack(ply:Horde_GetMaxAdrenalineStack() - 1)
+        ply:Horde_SetAdrenalineStackDuration(ply:Horde_GetAdrenalineStackDuration() / 1.5)
     end
 end

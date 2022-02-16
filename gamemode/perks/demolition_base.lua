@@ -1,9 +1,18 @@
 PERK.PrintName = "Demolition Base"
-PERK.Description = "The Demolition is a crowd-control class that can also provide high single target damage.\nComplexity: MEDIUM\n\n{1} increased Blast damage resistance.\nRegenerate {2} frag grenade every {3} seconds, if you do not have one."
+PERK.Description = [[
+The Demolition class is a crowd-control class that can also provide high single target damage.
+Complexity: MEDIUM
+
+{1} increased Blast damage resistance. ({2} + {3} per level, up to {4}).
+
+Regenerate {5} frag grenade every {6} seconds, if you do not have one.]]
 PERK.Params = {
-    [1] = {value = 0.85, percent = true},
-    [2] = {value = 1},
-    [3] = {value = 30},
+    [1] = {percent = true, base = 0.5, level = 0.01, max = 0.75, classname = HORDE.Class_Demolition},
+    [2] = {value = 0.5, percent = true},
+    [3] = {value = 0.01, percent = true},
+    [4] = {value = 0.75, percent = true},
+    [5] = {value = 1},
+    [6] = {value = 30},
 }
 
 PERK.Hooks = {}
@@ -27,6 +36,12 @@ end
 PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("demolition_base")  then return end
     if HORDE:IsBlastDamage(dmginfo) then
-        bonus.resistance = bonus.resistance + 0.85
+        bonus.resistance = bonus.resistance + ply:Horde_GetPerkLevelBonus("demolition_base")
+    end
+end
+
+PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
+    if SERVER then
+        ply:Horde_SetPerkLevelBonus("demolition_base", math.min(0.75, 0.5 + 0.01 * ply:Horde_GetLevel(HORDE.Class_Demolition)))
     end
 end

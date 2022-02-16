@@ -4,6 +4,8 @@ local EXPECTED_HEADER_TOKENS = "Horde_Skull_Tokens"
 function HORDE:SaveSkullTokens(ply)
 	if GetConVar("horde_enable_sandbox"):GetInt() == 1 then return end
 	if not ply:IsValid() then return end
+	if not ply.Horde_Skull_Tokens_Loaded then return end
+
 	local path, strm
 
 	if not file.IsDir("horde/tokens", "DATA") then
@@ -21,6 +23,8 @@ end
 function HORDE:SaveRank(ply)
 	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
 	if not ply:IsValid() then return end
+	if not ply.Horde_Rank_Loaded then return end
+
 	local path, strm
 
 	if not file.IsDir("horde/ranks", "DATA") then
@@ -52,6 +56,7 @@ function HORDE:LoadSkullTokens(ply)
 	if not file.Exists(path, "DATA") then
 		print("Path", path, "does not exist!")
 		ply:Horde_SetSkullTokens(0)
+		ply.Horde_Skull_Tokens_Loaded = true
 		return
 	end
 
@@ -65,11 +70,14 @@ function HORDE:LoadSkullTokens(ply)
 			ply:Horde_SetSkullTokens(0)
 		end
 	strm:Close()
+
+	ply.Horde_Skull_Tokens_Loaded = true
 end
 
 function HORDE:LoadRank(ply)
 	if not ply:IsValid() then return end
 	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
+
 	local path, strm
 
 	if not file.IsDir("horde/ranks", "DATA") then
@@ -80,6 +88,7 @@ function HORDE:LoadRank(ply)
 
 	if not file.Exists(path, "DATA") then
 		print("Path", path, "does not exist!")
+		ply.Horde_Rank_Loaded = true
 		return
 	end
 
@@ -105,6 +114,8 @@ function HORDE:LoadRank(ply)
             end
 		end
 	strm:Close()
+
+	ply.Horde_Rank_Loaded = true
 end
 
 if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_rank"):GetInt() == 1 then

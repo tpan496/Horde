@@ -400,9 +400,12 @@ function PANEL:Paint()
                     for i, v in pairs(perk.Params) do
                         local replaced = "{" .. i .. "}"
                         if not string.find(loc_perk_desc, replaced) then goto cont end
+                        if v.level then
+                            v.value = math.min(v.max, (v.base or 0) + LocalPlayer():Horde_GetLevel(v.classname) * v.level)
+                        end
                         local formatted = v.value
                         if v.percent then
-                            formatted = math.Round(formatted * 100) .. "%"
+                            formatted = formatted * 100 .. "%"
                         end
                         loc_perk_desc = string.Replace(loc_perk_desc, replaced, formatted)
                         ::cont::

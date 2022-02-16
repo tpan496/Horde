@@ -9,6 +9,7 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "berserker_breathing_technique" then
         ply:Horde_SetHealthRegenEnabled(true)
+        ply:Horde_SetHealthRegenPercentage(0.02)
     end
 end
 

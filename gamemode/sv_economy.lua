@@ -15,15 +15,31 @@ util.AddNetworkString("Horde_InitClass")
 util.AddNetworkString("Horde_SyncEconomy")
 util.AddNetworkString("Horde_SyncDifficulty")
 util.AddNetworkString("Horde_RemoveReadyPanel")
+util.AddNetworkString("Horde_SyncMaxWeight")
 
 local plymeta = FindMetaTable("Player")
 
-function plymeta:Horde_SetMaxWeight(weight)
-    self.Horde_max_weight = weight
+function plymeta:Horde_SetWeight(weight)
+    self.Horde_weight = math.max(weight, self:Horde_GetMaxWeight())
 end
 
-function plymeta:Horde_SetWeight(weight)
-    self.Horde_weight = math.max(weight, self.Horde_max_weight)
+function plymeta:Horde_SetMaxWeight(weight)
+    if self.Horde_max_weight then
+        if self.Horde_max_weight > weight then
+            local old_max_weight = self:Horde_GetMaxWeight()
+            self.Horde_max_weight = weight
+            self:Horde_RecalcWeight()
+            self.Horde_weight = math.min(weight, self:Horde_GetWeight() - (old_max_weight - weight))
+            self:Horde_SyncEconomy()
+        else
+            self.Horde_weight = math.min(weight, self:Horde_GetWeight() + weight - self:Horde_GetMaxWeight())
+            self:Horde_SyncEconomy()
+        end
+    end
+    self.Horde_max_weight = weight
+    net.Start("Horde_SyncMaxWeight")
+        net.WriteUInt(self.Horde_max_weight, 5)
+    net.Send(self)
 end
 
 function plymeta:Horde_SetMoney(money)
@@ -176,7 +192,7 @@ function plymeta:Horde_GetMaxWeight()
 end
 
 function plymeta:Horde_GetWeight()
-    return self.Horde_weight
+    return self.Horde_weight or 0
 end
 
 function plymeta:Horde_GetClass()
@@ -215,6 +231,7 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     net.Start("Horde_ClearStatus")
     net.Send(ply)
     ply:SetCustomCollisionCheck(true)
+    HORDE.refresh_living_players = true
     if not ply:IsValid() then return end
     if not ply:Horde_GetClass() then return end
     ply:Horde_SetMaxWeight(HORDE.max_weight)

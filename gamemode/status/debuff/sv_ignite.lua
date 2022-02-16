@@ -1,14 +1,6 @@
 local plymeta = FindMetaTable("Player")
 local entmeta = FindMetaTable("Entity")
 
-function plymeta:Horde_SetApplyIgniteRadius(radius)
-    self.Horde_ApplyIgniteRadius = radius
-end
-
-function plymeta:Horde_GetApplyIgniteRadius()
-    return self.Horde_ApplyIgniteRadius or 25
-end
-
 function plymeta:Horde_SetApplyIgniteDuration(duration)
     self.Horde_ApplyIgniteDuration = duration
 end
@@ -48,7 +40,7 @@ end
 
 function entmeta:Horde_AddIgniteEffect(duration)
     if self:IsPlayer() then
-        self:Ignite(duration, 0)
+        self:Ignite(duration)
         timer.Remove("Horde_RemoveIgnite" .. self:SteamID())
         timer.Create("Horde_RemoveIgnite" .. self:SteamID(), duration, 1, function ()
             self:Horde_RemoveIgnite()

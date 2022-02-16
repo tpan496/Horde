@@ -235,7 +235,7 @@ function SWEP:Hook_Think()
             self.Weapon:EmitSound(self.ChargeLoopSound)
             self.ChargeLoopCooldown = CurTime() + 10
         end
-        if self.Immolate_Last <= CurTime() then
+        if SERVER and self.Immolate_Last <= CurTime() and self.Owner and self.Owner:IsValid() then
             local dmg = DamageInfo()
             dmg:SetDamage(1)
             dmg:SetDamageType(DMG_BURN)

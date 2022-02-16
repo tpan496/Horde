@@ -34,11 +34,11 @@ function plymeta:Horde_GetArmorRegenAmount(amount)
 end
 
 function plymeta:Horde_SetArmorRegenMax(max)
-    self.Horde_ArmorRegenMax = max
+    self.Horde_ArmorRegenMax = math.max(0, max)
 end
 
 function plymeta:Horde_GetArmorRegenMax()
-    return self.Horde_ArmorRegenMax or 25
+    return self.Horde_ArmorRegenMax or 0
 end
 
 function plymeta:Horde_GetArmorRegenEnabled()
@@ -72,6 +72,5 @@ end)
 hook.Add("Horde_ResetStatus", "Horde_ArmorRegenReset", function(ply)
     ply.Horde_ArmorRegen = 0
     ply.Horde_ArmorRegenAmount = 1
-    ply.Horde_ArmorRegenMax = 25
     ply.Horde_ArmorRegenCurTime = CurTime()
 end)

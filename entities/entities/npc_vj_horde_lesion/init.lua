@@ -101,7 +101,7 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
     if isProp then return end
     if hitEnt and IsValid(hitEnt) and hitEnt:IsPlayer() then
         self:UnRage()
-        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 40)
+        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 30, self)
     end
 end
 
@@ -124,7 +124,7 @@ function ENT:CustomOnLeapAttack_AfterChecks(hitEnt, isProp)
     if isProp then return end
     if hitEnt and IsValid(hitEnt) and HORDE:IsPlayerOrMinion(hitEnt) then
         self:UnRage()
-        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 60)
+        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 60, self)
     end
 end
 

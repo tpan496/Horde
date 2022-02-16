@@ -53,21 +53,6 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert()
-	if self.VJ_IsBeingControlled == true then return end
-	self:VJ_ACT_PLAYACTIVITY({"throwwarning"},true,false,true)
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	if self:IsOnFire() then
-		self.AnimTbl_Walk = {self:GetSequenceActivity(self:LookupSequence("FireWalk"))}
-		self.AnimTbl_Run = {self:GetSequenceActivity(self:LookupSequence("FireWalk"))}
-	else
-		self.AnimTbl_Walk = {ACT_WALK}
-		self.AnimTbl_Run = {ACT_RUN}
-	end
-end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2018 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,

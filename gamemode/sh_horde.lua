@@ -35,7 +35,7 @@ CreateConVar("horde_endless", 0, FCVAR_SERVER_CAN_EXECUTE, "Endless.")
 CreateConVar("horde_total_enemies_scaling", 0, FCVAR_SERVER_CAN_EXECUTE, "Forces the gamemode to multiply maximum enemy count by this.")
 
 CreateConVar("horde_perk_start_wave", 1, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "The wave when Tier 1 perks are active.")
-CreateConVar("horde_perk_scaling", 3, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "The multiplier to the level for which wave it is unlocked. e.g. at 1.5, perk level 4 is unlocked at start_wave + 6.", 0)
+CreateConVar("horde_perk_scaling", 2, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "The multiplier to the level for which wave it is unlocked. e.g. at 1.5, perk level 4 is unlocked at start_wave + 6.", 0)
 
 CreateConVar("horde_enable_starter", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Enables starter weapons.")
 CreateConVar("horde_arccw_attinv_free", 1, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "Free ArcCW attachments.")
@@ -68,7 +68,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.1.3.0"
+HORDE.version = "1.1.4.0"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -162,12 +162,16 @@ if ArcCWInstalled then
         ArcCW.AttachmentBlacklistTable["go_perk_last"] = true
         ArcCW.AttachmentBlacklistTable["go_perk_refund"] = true
         ArcCW.AttachmentBlacklistTable["go_perk_slow"] = true
+        ArcCW.AttachmentBlacklistTable["go_m249_mag_12g_45"] = true
     end
 end
 
 
 -- Disable Godmode
 RunConsoleCommand("sbox_godmode", "0")
+RunConsoleCommand("vj_npc_addfrags", "0")
+RunConsoleCommand("vj_npc_knowenemylocation", "1")
+RunConsoleCommand("vj_npc_bleedenemyonmelee", "0")
 
 -- Util functions
 function HORDE:GiveAmmo(ply, wpn, count)

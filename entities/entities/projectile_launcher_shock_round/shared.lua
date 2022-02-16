@@ -99,7 +99,6 @@ function ENT:StartTouch(ent)
 end
 
 function ENT:PhysicsCollide(colData, collider)
-    if not colData.HitEntity:IsWorld() then return end
     self:Detonate()
 end
 

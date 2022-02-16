@@ -41,6 +41,12 @@ function ENT:Initialize()
             self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
         end)
     end
+
+    local owner = self:GetOwner()
+    self.has_burner = nil
+    if owner and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
+        self.has_burner = true
+    end
 end
 
 function ENT:PhysicsCollide(data, physobj)
@@ -83,6 +89,9 @@ function ENT:Think()
             fire:SetThinkFunction( function(pa)
                 if !pa then return end
                 local col1 = Color(255, 135, 0)
+                if self.has_burner then
+                    col1 = Color(0, 135, 255)
+                end
                 local col2 = Color(255, 255, 255)
 
                 local col3 = col1

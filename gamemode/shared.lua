@@ -54,7 +54,11 @@ hook.Add("SpawnMenuOpen", "Horde_SpawnMenu", CheckAllowFeature)
 
 function GM:ContextMenuOpen() return CheckAllowHook("ContextMenuOpen") end
 
-function GM:PlayerNoClip(ply,desiredState) return CheckAllowFeature() end
+function GM:PlayerNoClip(ply,desiredState)
+    if SERVER then
+        ply:Horde_DropMoney()
+    end
+end
 
 function GM:PlayerDeathSound() return true end
 

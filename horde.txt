@@ -59,7 +59,7 @@
 		7
 		{
 			"name"		"horde_difficulty"
-			"text"		"Difficulty (0=Normal, 1=Hard, 2=Realism, 3=Nightmare)"
+			"text"		"Difficulty (0=Normal, 1=Hard, 2=Realism, 3=Nightmare, 4=Apocalypse)"
 			"type"		"Numeric"
 			"default"	"0"
 			"singleplayer" ""

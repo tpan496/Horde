@@ -2,7 +2,7 @@ local plymeta = FindMetaTable("Player")
 local entmeta = FindMetaTable("Entity")
 
 HORDE.Debuff_Notifications = {
-    [HORDE.Status_Bleeding] = "You are inflicted by Bleeding.\nYou take Physical damage over time.",
+    [HORDE.Status_Bleeding] = "You are inflicted by Bleeding.\nYour health is removed over time.",
     [HORDE.Status_Ignite] = "You are inflicted by Ignite.\nYou take Fire damage over time.",
     [HORDE.Status_Frostbite] = "You are inflicted by Frostbite.\nYour movement speed is reduced.",
     [HORDE.Status_Shock] = "You are inflicted by Shock.\nYou take increased damage from all sources.",
@@ -27,9 +27,18 @@ function plymeta:Horde_GetApplyDebuffMore()
     return self.Horde_ApplyDebuffMore or 0
 end
 
-function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor)
+function plymeta:Horde_ReduceDebuffBuildup(debuff, amount)
+    if not self.Horde_Debuff_Buildup[debuff] or self.Horde_Debuff_Buildup[debuff] <= 0 or self.Horde_Debuff_Active[debuff] then return end
+    self.Horde_Debuff_Buildup[debuff] = math.max(0, self.Horde_Debuff_Buildup[debuff] - amount)
+    net.Start("Horde_SyncStatus")
+        net.WriteUInt(debuff, 8)
+        net.WriteUInt(self.Horde_Debuff_Buildup[debuff], 8)
+    net.Send(self)
+end
+
+function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
     if not IsValid(self) or (self:IsPlayer() and not self:Alive()) then return end
-    if buildup < 2 then return end
+    if inflictor and inflictor:IsPlayer() and self:IsPlayer() and inflictor ~= self then return end
     if not self.Horde_Debuff_Active then self.Horde_Debuff_Active = {} end
     if not self.Horde_Debuff_Buildup then self.Horde_Debuff_Buildup = {} end
     if not self.Horde_Debuff_Cooldown then self.Horde_Debuff_Cooldown = {} end
@@ -37,13 +46,22 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor)
     if self.Horde_Debuff_Active[debuff] then return end
     if not self.Horde_Debuff_Buildup[debuff] then self.Horde_Debuff_Buildup[debuff] = 0 end
     if self.Horde_Debuff_Buildup[debuff] >= 100 then return end
-    if HORDE.Status_Buildup_Sounds[debuff] then
-        sound.Play(HORDE.Status_Buildup_Sounds[debuff], self:GetPos(), 100, math.random(80,110))
-    end
-    self.Horde_Debuff_Buildup[debuff] = math.min(100, self.Horde_Debuff_Buildup[debuff] + buildup)
+
     if self:IsPlayer() then
+        local bonus = {apply = 1, more = 1}
+        hook.Run("Horde_OnPlayerDebuffApply", self, debuff, bonus, inflictor)
+        if bonus.apply == 0 then return end
+        buildup = buildup * bonus.more
+        if buildup < 1 then return end
+
+        if HORDE.Status_Buildup_Sounds[debuff] then
+            sound.Play(HORDE.Status_Buildup_Sounds[debuff], self:GetPos(), 100, math.random(80,110))
+        end
+        self.Horde_Debuff_Buildup[debuff] = math.min(100, self.Horde_Debuff_Buildup[debuff] + buildup)
+
         local str = "Horde_RemoveBuildup_" .. tostring(debuff) .. "_" .. self:SteamID()
         timer.Create(str, 1, 0, function ()
+            if not self:IsValid() then return end
             if not self.Horde_Debuff_Buildup[debuff] or self.Horde_Debuff_Buildup[debuff] <= 0 or self.Horde_Debuff_Active[debuff] then timer.Remove(str) return end
             self.Horde_Debuff_Buildup[debuff] = math.max(0, self.Horde_Debuff_Buildup[debuff] - 5)
             net.Start("Horde_SyncStatus")
@@ -56,6 +74,20 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor)
             net.WriteUInt(debuff, 8)
             net.WriteUInt(self.Horde_Debuff_Buildup[debuff], 8)
         net.Send(self)
+    else
+        if HORDE.Status_Buildup_Sounds[debuff] then
+            sound.Play(HORDE.Status_Buildup_Sounds[debuff], self:GetPos(), 100, math.random(80,110))
+        end
+        self.Horde_Debuff_Buildup[debuff] = math.min(100, self.Horde_Debuff_Buildup[debuff] + buildup)
+
+        if debuff == HORDE.Status_Frostbite and pos then
+            local effectdata = EffectData()
+                effectdata:SetOrigin(pos)
+                effectdata:SetScale(10)
+                effectdata:SetMagnitude(10)
+            util.Effect("GlassImpact", effectdata, true, true)
+            util.Effect("GlassImpact", effectdata, true, true)
+        end
     end
     if self.Horde_Debuff_Buildup[debuff] < 100 then return end
     if HORDE.Status_Trigger_Sounds[debuff] then
@@ -94,7 +126,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor)
         if debuff == HORDE.Status_Bleeding then
             self:Horde_AddBleedingEffect(inflictor)
         elseif debuff == HORDE.Status_Frostbite then
-            self:Horde_AddFrostbiteEffect(duration)
+            self:Horde_AddFrostbiteEffect(3)
         elseif debuff == HORDE.Status_Ignite then
             self:Horde_AddIgniteEffect(duration, inflictor)
         elseif debuff == HORDE.Status_Break then

@@ -14,7 +14,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
 end
 
 MUTATION.Hooks.EntityTakeDamage = function(ply, dmg)
-    if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_GetMutation() == "charged" then
+    if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_HasMutation("giant") then
         dmg:ScaleDamage(1.25)
     end
 end

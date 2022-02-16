@@ -24,7 +24,7 @@ local function SpawnManhack(ply)
     ply:Horde_AddDropEntity(ent:GetClass(), ent)
     ent:SetNWEntity("HordeOwner", ply)
     ent:Spawn()
-    ent:SetMaxHealth(100)
+    ent:SetMaxHealth(150)
     -- Minions have no player collsion
     ent:AddRelationship("player D_LI 99")
     ent:SetOwner(ply)

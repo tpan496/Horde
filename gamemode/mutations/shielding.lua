@@ -73,7 +73,7 @@ end
 
 MUTATION.Hooks.EntityTakeDamage = function(target, dmg)
     if CLIENT then return end
-    if target:IsNPC() and target:Horde_GetMutation() == "shielding" then
+    if target:IsNPC() and target:Horde_HasMutation("shielding") then
         local health = target:Horde_GetShieldHealth()
         if health > 0 then
             target:Horde_SetShieldHealth(health - dmg:GetDamage())

@@ -1,38 +1,46 @@
 -- Status Mapping
 -- Please use the variable names instead of the values!
 
-HORDE.Status_Camoflague = 0
-HORDE.Status_Adrenaline = 1
-HORDE.Status_Headhunter = 2
-HORDE.Status_Fortify = 3
-HORDE.Status_Berserk = 4
-HORDE.Status_ArmorRegen = 5
-HORDE.Status_HealthRegen = 6
-HORDE.Status_Minion = 7
-HORDE.Status_Phalanx = 8
-HORDE.Status_WardenAura = 9
-HORDE.Status_EntropyShield = 10
-HORDE.Status_CanBuy = 11
+if SERVER then
+util.AddNetworkString("Horde_SyncActivePerk")
+end
 
-HORDE.Status_Armor_Survivor = 12
-HORDE.Status_Armor_Assault = 13
-HORDE.Status_Armor_Heavy = 14
-HORDE.Status_Armor_Demolition = 15
-HORDE.Status_Armor_Ghost = 16
-HORDE.Status_Armor_Medic = 17
-HORDE.Status_Armor_Engineer = 18
-HORDE.Status_Armor_Warden = 19
-HORDE.Status_Armor_Cremator = 20
-HORDE.Status_Armor_Berserker = 21
+HORDE.Status_CanBuy = 0
+HORDE.Status_Minion = 1
+HORDE.Status_Camoflague = 2
+HORDE.Status_Adrenaline = 3
+HORDE.Status_Headhunter = 4
+HORDE.Status_Fortify = 5
+HORDE.Status_Berserk = 6
+HORDE.Status_Haste = 7
+HORDE.Status_ArmorRegen = 8
+HORDE.Status_HealthRegen = 9
+HORDE.Status_Phalanx = 10
+HORDE.Status_WardenAura = 11
+HORDE.Status_EntropyShield = 12
+HORDE.Status_AntimatterShield = 13
+HORDE.Status_Displacer = 14
+HORDE.Status_Unwavering_Guard = 15
 
-HORDE.Status_ExpDisabled = 22
-HORDE.Status_Bleeding = 23
-HORDE.Status_Ignite = 24
-HORDE.Status_Frostbite = 25
-HORDE.Status_Shock = 26
-HORDE.Status_Break = 27
-HORDE.Status_Decay = 28
-HORDE.Status_Psychosis = 29
+HORDE.Status_Armor_Survivor = 16
+HORDE.Status_Armor_Assault = 17
+HORDE.Status_Armor_Heavy = 18
+HORDE.Status_Armor_Demolition = 19
+HORDE.Status_Armor_Ghost = 20
+HORDE.Status_Armor_Medic = 21
+HORDE.Status_Armor_Engineer = 22
+HORDE.Status_Armor_Warden = 23
+HORDE.Status_Armor_Cremator = 24
+HORDE.Status_Armor_Berserker = 25
+
+HORDE.Status_ExpDisabled = 26
+HORDE.Status_Bleeding = 27
+HORDE.Status_Ignite = 28
+HORDE.Status_Frostbite = 29
+HORDE.Status_Shock = 30
+HORDE.Status_Break = 31
+HORDE.Status_Decay = 32
+HORDE.Status_Psychosis = 33
 
 HORDE.Status_Icon = {}
 HORDE.Status_Icon[HORDE.Status_Camoflague] = "materials/status/camoflague.png"
@@ -40,12 +48,16 @@ HORDE.Status_Icon[HORDE.Status_Adrenaline] = "materials/status/adrenaline.png"
 HORDE.Status_Icon[HORDE.Status_Headhunter] = "materials/perks/headhunter.png"
 HORDE.Status_Icon[HORDE.Status_Fortify] = "materials/perks/fortify.png"
 HORDE.Status_Icon[HORDE.Status_Berserk] = "materials/perks/berserk.png"
+HORDE.Status_Icon[HORDE.Status_Haste] = "materials/perks/haste.png"
 HORDE.Status_Icon[HORDE.Status_ArmorRegen] = "materials/status/armorregen.png"
 HORDE.Status_Icon[HORDE.Status_HealthRegen] = "materials/status/healthregen.png"
 HORDE.Status_Icon[HORDE.Status_Minion] = "materials/status/minion.png"
 HORDE.Status_Icon[HORDE.Status_Phalanx] = "materials/perks/phalanx.png"
 HORDE.Status_Icon[HORDE.Status_WardenAura] = "materials/warden.png"
 HORDE.Status_Icon[HORDE.Status_EntropyShield] = "materials/perks/entropy_shield.png"
+HORDE.Status_Icon[HORDE.Status_AntimatterShield] = "materials/perks/antimatter_shield.png"
+HORDE.Status_Icon[HORDE.Status_Displacer] = "materials/perks/displacer.png"
+HORDE.Status_Icon[HORDE.Status_Unwavering_Guard] = "materials/perks/unwavering_guard.png"
 HORDE.Status_Icon[HORDE.Status_CanBuy] = "materials/status/canbuy.png"
 HORDE.Status_Icon[HORDE.Status_ExpDisabled] = "materials/status/exp_disabled.png"
 
@@ -88,5 +100,5 @@ function HORDE:IsStatusStackable(status)
 end
 
 function HORDE:IsDebuff(status)
-    return status > 22
+    return status > HORDE.Status_ExpDisabled
 end
