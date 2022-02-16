@@ -56,6 +56,7 @@ ENT.DamageReceived = 0
 function ENT:Rage()
     if self.Raging or self.Raged then return end
     self.Raging = true
+    self:Ignite(99999999)
     sound.Play("npc/fast_zombie/fz_frenzy1.wav", self:GetPos())
     self:VJ_ACT_PLAYACTIVITY("BR2_Roar", true, 1.5, false)
     timer.Simple(1.5, function ()
@@ -91,7 +92,7 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
     if not self.Raged then return end
     if hitEnt and IsValid(hitEnt) and hitEnt:IsPlayer() then
         self:UnRage()
-        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 35)
+        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 35, self)
     end
 end
 
@@ -115,7 +116,7 @@ function ENT:CustomOnLeapAttack_AfterChecks(hitEnt, isProp)
     if not self.Raged then return end
     if hitEnt and IsValid(hitEnt) and hitEnt:IsPlayer() then
         self:UnRage()
-        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 60)
+        hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 50, self)
     end
 end
 

@@ -4,6 +4,7 @@ if (CLIENT) then
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
 	killicon.Add("arccw_horde_law", "vgui/hud/arccw_horde_law", color_white)
+    killicon.Add("obj_vj_law_rocket", "vgui/hud/arccw_horde_law", color_white)
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
@@ -59,7 +60,7 @@ sound.Add({
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/kf1/c_kf_law.mdl"
+SWEP.ViewModel = "models/horde/weapons/c_law.mdl"
 SWEP.WorldModel = "models/weapons/w_rocket_launcher.mdl"
 SWEP.ViewModelFOV = 45
 

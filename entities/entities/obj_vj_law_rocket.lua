@@ -74,7 +74,7 @@ end
 
 function ENT:CustomOnPhysicsCollide(data, phys)
 	self.Dead = true
-	util.BlastDamage(self.Inflictor, self.Owner, self:GetPos(), 150, 700)
+	util.BlastDamage(self, self.Owner, self:GetPos(), 150, 700)
 	self:OnCollideSoundCode()
 	if self.PaintDecalOnDeath == true && VJ_PICK(self.DecalTbl_DeathDecals) != false && self.AlreadyPaintedDeathDecal == false then 
 		self.AlreadyPaintedDeathDecal = true 

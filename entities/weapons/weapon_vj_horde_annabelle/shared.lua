@@ -24,13 +24,13 @@ SWEP.HoldType 					= "shotgun"
 SWEP.Spawnable					= true
 SWEP.AdminSpawnable				= false
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Primary.Damage				= 50 -- Damage
+SWEP.Primary.Damage				= 15 -- Damage
 SWEP.Primary.PlayerDamage		= 15 -- Only applies for players | "Same" = Same as self.Primary.Damage, "Double" = Double the self.Primary.Damage OR put a number to be different from self.Primary.Damage
 SWEP.Primary.Force				= 3 -- Force applied on the object the bullet hits
 SWEP.Primary.NumberOfShots		= 1 -- How many shots per attack?
 SWEP.Primary.ClipSize			= 2 -- Max amount of bullets per clip
 SWEP.Primary.Cone				= 2 -- How accurate is the bullet? (Players)
-SWEP.Primary.Delay				= 2 -- Time until it can shoot again
+SWEP.Primary.Delay				= 5 -- Time until it can shoot again
 SWEP.Primary.Automatic			= false -- Is it automatic?
 SWEP.Primary.Ammo				= "Buckshot" -- Ammo type
 SWEP.Primary.Sound				= {"Weapon_Shotgun.Single"}

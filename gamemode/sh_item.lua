@@ -146,6 +146,7 @@ function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_life_diffuser", 2000, 1, {Medic=true}, {Medic=5}, {HORDE.DMG_POISON})
     HORDE:CreateGadgetItem("gadget_projectile_launcher_heal", 2500, 2, {Medic=true}, {Medic=10}, {HORDE.DMG_POISON})
     HORDE:CreateGadgetItem("gadget_healing_beam", 2500, 2, {Medic=true}, {Medic=15}, {HORDE.DMG_POISON})
+    HORDE:CreateGadgetItem("gadget_steroid", 3000, 1, {Medic=true}, {Medic=20})
 
     HORDE:CreateGadgetItem("gadget_energy_shield", 2000, 1, {Heavy=true}, {Heavy=5})
     HORDE:CreateGadgetItem("gadget_hardening_injection", 2500, 1, {Heavy=true}, {Heavy=10})
@@ -162,11 +163,12 @@ function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_death_mark", 2500, 2, {Ghost=true}, {Ghost=15}, {HORDE.DMG_BLUNT})
     HORDE:CreateGadgetItem("gadget_gunslinger", 3000, 2, {Ghost=true}, {Ghost=20})
 
-    HORDE:CreateGadgetItem("gadget_displacer", 2000, 1, {Engineer=true}, {Engineer=5})
-    HORDE:CreateGadgetItem("gadget_turret_pack", 2500, 3, {Engineer=true}, {Engineer=10})
-    HORDE:CreateGadgetItem("gadget_e_parasite", 2750, 2, {Engineer=true}, {Engineer=15}, {HORDE.DMG_BLUNT})
+    HORDE:CreateGadgetItem("gadget_quantum_tunnel", 2000, 1, {Engineer=true}, {Engineer=5})
+    HORDE:CreateGadgetItem("gadget_voidout", 2250, 1, {Engineer=true}, {Engineer=10})
+    HORDE:CreateGadgetItem("gadget_turret_pack", 2500, 3, {Engineer=true}, {Engineer=15})
+    HORDE:CreateGadgetItem("gadget_e_parasite", 2750, 2, {Engineer=true}, {Engineer=20}, {HORDE.DMG_BLUNT})
 
-    HORDE:CreateGadgetItem("gadget_aerial_guard", 2500, 2, {Berserker=true}, {Berserker=5})
+    HORDE:CreateGadgetItem("gadget_chakra", 2500, 2, {Berserker=true}, {Berserker=5})
     HORDE:CreateGadgetItem("gadget_flash", 2500, 2, {Berserker=true}, {Berserker=10}, {HORDE.DMG_SLASH})
     HORDE:CreateGadgetItem("gadget_berserk_armor", 2500, 2, {Berserker=true}, {Berserker=15})
     HORDE:CreateGadgetItem("gadget_hemocannon", 3000, 3, {Berserker=true}, {Berserker=20}, {HORDE.DMG_SLASH})
@@ -178,7 +180,8 @@ function HORDE:GetDefaultGadgets()
 
     HORDE:CreateGadgetItem("gadget_butane_can", 2000, 1, {Cremator=true}, {Cremator=5}, {HORDE.DMG_FIRE})
     HORDE:CreateGadgetItem("gadget_projectile_launcher_fire", 2500, 2, {Cremator=true}, {Cremator=10}, {HORDE.DMG_FIRE})
-    HORDE:CreateGadgetItem("gadget_barbeque", 2750, 3, {Cremator=true}, {Cremator=15})
+    HORDE:CreateGadgetItem("gadget_barbeque", 2750, 2, {Cremator=true}, {Cremator=15})
+    HORDE:CreateGadgetItem("gadget_hydrogen_burner", 3000, 3, {Cremator=true}, {Cremator=20})
 end
 
 function HORDE:GetDefaultItemsData()
@@ -301,7 +304,7 @@ function HORDE:GetDefaultItemsData()
     {Ghost=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "AWP",            "arccw_horde_awp",     2500, 8, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
     {Ghost=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Rifle",      "SCAR",           "arccw_go_scar",       2500, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
+    HORDE:CreateItem("Rifle",      "SCAR-H",           "arccw_go_scar",       2500, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
     {Survivor=true,  Ghost=true}, 15, -1, nil, nil, {Ghost=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "G3",             "arccw_horde_g3",      3000, 8, "G3 Battle Rifle.\nA 7.62×51mm NATO, select-fire battle rifle developed by H&K.",
     {Ghost=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
@@ -369,6 +372,8 @@ function HORDE:GetDefaultItemsData()
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_vortigaunt.png", {Engineer=2}, nil, {HORDE.DMG_LIGHTNING})
     HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   2750, 9, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_combat_bot.png", {Engineer=3}, nil, {HORDE.DMG_BLUNT})
+    HORDE:CreateItem("Special",    "Hivehand",       "horde_hivehand",       2000,  6, "Organic weapon used by Xen soldiers.\nHas infinite ammo.\nPrimary fire generates homing ricocheting shots.\nSecondary fire rapidly unloads the entire weapon.",
+    {Engineer=true}, 2, -1, nil, nil, {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,  1, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
     {Medic=true}, 100, -1, nil, "items/arccw_nade_medic.png", nil, nil, {HORDE.DMG_POISON})
     HORDE:CreateItem("Special",    "Throwing Knives", "arccw_go_nade_knife",800,  2, "Ranged throwing knives.\nThrown blades are retrievable.",
@@ -383,6 +388,8 @@ function HORDE:GetDefaultItemsData()
     {Cremator=true}, 15, -1, nil, nil, {Cremator=3}, nil, {HORDE.DMG_FIRE})
     HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",            2500,  8, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
     {Cremator=true}, 50, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE})
+    HORDE:CreateItem("Special",    "Gluon Gun", "horde_gluon",            3000,  8, "Quantum Destabilizer.\nAn experimental weapon that fires a devastating laser.",
+    {Cremator=true}, 40, -1, nil, nil, {Cremator=4}, nil, {HORDE.DMG_FIRE})
     --[[HORDE:CreateItem("Special",    "Taser",           "arccw_go_taser",      1000,  1, "Taser.",
     {Engineer=true}, 50, -1)]]--
 
@@ -700,8 +707,8 @@ HORDE.GetArcCWAttachments = function ()
 
     HORDE:CreateItem("Attachment", "[Negev] 100-Round 5.56mm",   "go_negev_belt_100",  100,  0, "",
     {Heavy=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_negev"})
-    HORDE:CreateItem("Attachment", "[M249] 45-Round 12 Gauge",   "go_m249_mag_12g_45",  100,  0, "",
-    {Heavy=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m249para"})
+    --HORDE:CreateItem("Attachment", "[M249] 45-Round 12 Gauge",   "go_m249_mag_12g_45",  100,  0, "",
+    --{Heavy=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m249para"})
     HORDE:CreateItem("Attachment", "[M249] 200-Round 9mm",   "go_m249_mag_9_200",  50,  0, "",
     {Heavy=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m249para"})
 

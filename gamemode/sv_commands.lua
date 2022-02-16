@@ -376,3 +376,140 @@ end)
 concommand.Add("horde_use_gadget", function (ply, cmd, args)
     HORDE:UseGadget(ply)
 end)
+
+concommand.Add("horde_use_perk_skill", function (ply, cmd, args)
+    HORDE:UsePerkSkill(ply)
+end)
+
+concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
+        net.Start("Horde_LegacyNotification")
+            net.WriteString("Command only available in sandbox mode.")
+            net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
+    local name = args[1]
+    local wave = args[2]
+    local mutation = args[3]
+    local enemy = HORDE.enemies[name .. tostring(wave)]
+    local npc_info = list.Get("NPC")[enemy.class]
+    if not npc_info then
+        print("[HORDE] NPC does not exist in ", list.Get("NPC"))
+    end
+
+    local spawned_enemy = ents.Create(enemy.class)
+    local trace = ply:GetEyeTrace()
+    if not trace.Hit then return end
+    spawned_enemy:SetPos(trace.HitPos)
+    timer.Simple(0, function() spawned_enemy:SetAngles(Angle(0, math.random(0, 360), 0)) end)
+    spawned_enemy:Spawn()
+
+    spawned_enemy:Horde_SetName(enemy.name)
+
+    if npc_info["Model"] then
+        spawned_enemy:SetModel(npc_info["Model"])
+    end
+
+    if npc_info["SpawnFlags"] then
+        -- We need to cleanup corpses otherwise it's going to be a mess
+        spawned_enemy:SetKeyValue("spawnflags", bit.bor(npc_info["SpawnFlags"], SF_NPC_FADE_CORPSE))
+    end
+
+    if npc_info["KeyValues"] then
+        for k, v in pairs(npc_info["KeyValues"]) do
+            spawned_enemy:SetKeyValue(k, v)
+        end
+    end
+
+    spawned_enemy:Fire("StartPatrolling")
+    spawned_enemy:Fire("SetReadinessHigh")
+    if spawned_enemy:IsNPC() then
+        spawned_enemy:SetNPCState(NPC_STATE_COMBAT)
+    end
+
+    if enemy.model_scale and enemy.model_scale ~= 1 then
+        timer.Simple(0, function()
+            if not spawned_enemy:IsValid() then return end
+            local scale = spawned_enemy:GetModelScale()
+            spawned_enemy:SetModelScale(enemy.model_scale * scale)
+        end)
+    end
+
+    if enemy.boss_properties and enemy.boss_properties.is_boss == true then
+        spawned_enemy:Horde_SetBossProperties(enemy.boss_properties)
+    end
+
+    -- Health settings
+    local horde_players_count = table.Count(player.GetAll())
+    if enemy.is_elite and enemy.is_elite == true then
+        spawned_enemy:SetVar("is_elite", true)
+        local scale
+        local add
+        if enemy.boss_properties and enemy.boss_properties.is_boss == true then
+            scale = horde_players_count
+            add = 0.75
+        else
+            scale = math.min(8, horde_players_count)
+            add = 0.60
+        end
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, scale * (add + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
+    end
+
+    if enemy.health_scale then
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * enemy.health_scale)
+    end
+
+    if HORDE.endless == 1 then
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.endless_health_multiplier)
+    end
+
+    spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.difficulty_health_multiplier[HORDE.difficulty])
+
+    spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
+
+    if enemy.reward_scale then
+        spawned_enemy:SetVar("reward_scale", enemy.reward_scale)
+    end
+
+    if enemy.damage_scale then
+        spawned_enemy:SetVar("damage_scale", enemy.damage_scale)
+    end
+
+    if enemy.color then
+        spawned_enemy:SetColor(enemy.color)
+        spawned_enemy:SetRenderMode(RENDERMODE_TRANSCOLOR)
+    end
+
+    if enemy.weapon then
+        if enemy.weapon == "" or enemy.weapon == "_gmod_none" then
+            -- Do nothing
+        elseif enemy.weapon == "_gmod_default" then
+            local wpns = npc_info["Weapons"]
+            if wpns then
+                local wpn = wpns[math.random(#wpns)]
+                spawned_enemy:Give(wpn)
+            end
+        else
+            spawned_enemy:Give(enemy.weapon)
+        end
+    end
+
+    if enemy.skin then
+        spawned_enemy:SetSkin(enemy.skin)
+    end
+
+    if enemy.model then
+        spawned_enemy:SetModel(enemy.model)
+    end
+
+    spawned_enemy:SetLagCompensated(true)
+
+    if args[3] then
+        timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(args[3]) end)
+    end
+
+    if args[4] then
+        timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(args[4]) end)
+    end
+end)

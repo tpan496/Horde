@@ -56,11 +56,6 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert()
-	if self.VJ_IsBeingControlled == true then return end
-	self:VJ_ACT_PLAYACTIVITY({"throwwarning"},true,false,true)
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	if self:IsOnFire() then
 		self.AnimTbl_Walk = {self:GetSequenceActivity(self:LookupSequence("FireWalk"))}

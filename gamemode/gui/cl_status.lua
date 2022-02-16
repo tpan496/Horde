@@ -28,7 +28,24 @@ local function DrawStatus(status, stack, displacement)
     if stack <= 0 then return end
     if not HORDE.Status_Icon[status] then return end
     local mat
-    if status <= HORDE.Status_CanBuy or status >= HORDE.Status_ExpDisabled then
+    if status < HORDE.Status_Armor_Survivor or status >= HORDE.Status_ExpDisabled then
+        if status == HORDE.Status_AntimatterShield or status == HORDE.Status_Displacer then
+            draw.RoundedBox(10, 0 + displacement, 0, 50, 50, Color(40,40,40,200))
+    
+            mat = Material(HORDE.Status_Icon[status], "mips smooth")
+    
+            surface.SetMaterial(mat)
+            surface.SetDrawColor(color_white)
+            surface.DrawTexturedRect(5 + displacement, 5, 40, 40)
+    
+            local cd = LocalPlayer():Horde_GetPerkInternalCooldown()
+            if cd > 0 then
+                draw.RoundedBox(10, displacement, 0, 50, 50, Color(40,40,40,200))
+                surface.SetDrawColor(color_white)
+                draw.SimpleText(cd, "Trebuchet24", displacement + 25, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            end
+            return
+        end
         local color = color_white
         if status_color[status] then
             color = status_color[status]
@@ -131,6 +148,22 @@ status_panel.Paint = function ()
     end
 end
 
+local function DrawActivePerk(perk, cd, pos)
+    draw.RoundedBox(10, pos, 0, 50, 50, Color(40,40,40,200))
+
+    local mat = Material(HORDE.Status_Icon[perk], "mips smooth")
+    surface.SetMaterial(mat) -- Use our cached material
+    --surface.SetDrawColor(HORDE.color_gadget_active)
+    surface.SetDrawColor(color_white)
+    surface.DrawTexturedRect(5 + pos, 5, 40, 40)
+
+    if cd > 0 then
+        draw.RoundedBox(10, pos, 0, 50, 50, Color(40,40,40,200))
+        surface.SetDrawColor(color_white)
+        draw.SimpleText(cd, "Trebuchet24", pos + 25, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    end
+end
+
 local total_buildup = 0
 local buildup_panel = vgui.Create("DPanel")
 buildup_panel:SetSize(500, 100)
@@ -193,6 +226,21 @@ net.Receive("Horde_SyncSpecialArmor", function()
     end
 end)
 
+net.Receive("Horde_SyncActivePerk", function()
+    local status = net.ReadUInt(8)
+    local on = net.ReadUInt(3)
+
+    if on == 1 then
+        LocalPlayer().Horde_ActivePerk = status
+    else
+        LocalPlayer().Horde_ActivePerk = nil
+    end
+
+    if LocalPlayer().SetStatus then
+        LocalPlayer():SetStatus(status, on)
+    end
+end)
+
 net.Receive("Horde_ClearStatus", function()
     LocalPlayer().Horde_StatusTable = {}
 end)
@@ -204,6 +252,15 @@ if CLIENT then
         timer.Create("Horde_LocalGadgetCooldown", 1, 0, function()
             if LocalPlayer():Horde_GetGadgetInternalCooldown() <= 0 then timer.Remove("Horde_LocalGadgetCooldown") return end
             LocalPlayer():Horde_SetGadgetInternalCooldown(LocalPlayer():Horde_GetGadgetInternalCooldown() - 1)
+        end)
+    end)
+
+    net.Receive("Horde_PerkStartCooldown", function ()
+        LocalPlayer():Horde_SetPerkInternalCooldown(net.ReadUInt(8))
+        if LocalPlayer():Horde_GetPerkInternalCooldown() <= 0 then return end
+        timer.Create("Horde_LocalPerkCooldown", 1, 0, function()
+            if LocalPlayer():Horde_GetPerkInternalCooldown() <= 0 then timer.Remove("Horde_LocalPerkCooldown") return end
+            LocalPlayer():Horde_SetPerkInternalCooldown(LocalPlayer():Horde_GetPerkInternalCooldown() - 1)
         end)
     end)
 

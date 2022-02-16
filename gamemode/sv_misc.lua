@@ -27,7 +27,22 @@ hook.Add("EntityTakeDamage", "ManhackContactDamage", function (target, dmginfo)
     local ply = inflictor:GetNWEntity("HordeOwner")
     if ply:IsPlayer() and inflictor:GetClass() == "npc_manhack" then
         dmginfo:SetDamage(math.max(dmginfo:GetDamage(), inflictor:GetMaxHealth()))
-        timer.Simple(0, function() if inflictor:IsValid() then inflictor:Remove() end end)
+        timer.Simple(0, function() if inflictor:IsValid() then
+            if inflictor.Horde_Has_Antimatter_Shield then
+                local effectdata = EffectData()
+                effectdata:SetOrigin(inflictor:GetPos())
+                util.Effect("antimatter_explosion", effectdata)
+                if target:GetNWEntity("HordeOwner"):IsValid() then
+                    local dd = DamageInfo()
+                        dd:SetAttacker(inflictor:GetNWEntity("HordeOwner"))
+                        dd:SetInflictor(inflictor:GetNWEntity("HordeOwner"))
+                        dd:SetDamageType(DMG_CRUSH)
+                        dd:SetDamage(inflictor.Horde_Has_Antimatter_Shield)
+                    util.BlastDamageInfo(dd, inflictor:GetPos(), 200)
+                end
+            end
+            inflictor:Remove() end
+        end)
     end
 end)
 
@@ -73,7 +88,7 @@ function HORDE:SpawnManhack(ply, id)
     ply:Horde_AddWeight(-item.weight)
     ent:SetNWEntity("HordeOwner", ply)
     ent:Spawn()
-    ent:SetMaxHealth(100)
+    ent:SetMaxHealth(150)
     ply:Horde_SyncEconomy()
     -- Minions have no player collsion
     timer.Simple(0.1, function ()

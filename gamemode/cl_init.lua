@@ -14,6 +14,7 @@ include("sh_maps.lua")
 include("sh_custom.lua")
 include("sh_rank.lua")
 include("sh_sync.lua")
+include("sh_misc.lua")
 
 include("cl_economy.lua")
 include("cl_achievement.lua")

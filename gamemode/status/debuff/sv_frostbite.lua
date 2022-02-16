@@ -9,24 +9,29 @@ function entmeta:Horde_AddFrostbiteEffect(duration)
         end)
 
         self.Horde_Frostbite = 1
+        self:SetSchedule(SCHED_IDLE_STAND)
+
         -- VJ
         if self:IsNPC() then
-            if not self.Horde_StoredAnimationPlaybackRateFrostbite then
-                if self.Horde_StoredAnimationPlaybackRateFrostbite then
+            timer.Simple(0, function ()
+                if not self:IsValid() then return end
+                if not self.Horde_StoredAnimationPlaybackRateFrostbite then
+                    if self.Horde_StoredAnimationPlaybackRateFrostbite then
+                        if self.AnimationPlaybackRate then
+                            self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRateFrostbite
+                        else
+                            self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRateFrostbite)
+                        end
+                    end
                     if self.AnimationPlaybackRate then
-                        self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRateFrostbite
+                        self.Horde_StoredAnimationPlaybackRateFrostbite = self.AnimationPlaybackRate
+                        self.AnimationPlaybackRate = 0.1
                     else
-                        self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRateFrostbite)
+                        self.Horde_StoredAnimationPlaybackRateFrostbite = self:GetPlaybackRate()
+                        self:SetPlaybackRate(0.1)
                     end
                 end
-                if self.AnimationPlaybackRate then
-                    self.Horde_StoredAnimationPlaybackRateFrostbite = self.AnimationPlaybackRate
-                    self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRateFrostbite * 0.25
-                else
-                    self.Horde_StoredAnimationPlaybackRateFrostbite = self:GetPlaybackRate()
-                    self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRateFrostbite *  0.4)
-                end
-            end
+            end)
         end
     end
 end

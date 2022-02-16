@@ -45,13 +45,17 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     else
         if dmginfo:GetDamageType() == DMG_BURN then
             dmginfo:SetDamageType(DMG_SLOWBURN)
-            npc:Horde_SetMostRecentFireAttacker(ply, dmginfo)
-            npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
+            if ply:Horde_GetGadget() ~= "gadget_hydrogen_burner" then
+                npc:Horde_SetMostRecentFireAttacker(ply, dmginfo)
+                npc:Ignite(ply:Horde_GetApplyIgniteDuration())
+            end
         elseif ply:Horde_GetApplyIgniteChance() > 0 then
             local ignite = math.random()
             if ignite <= ply:Horde_GetApplyIgniteChance() then
-                npc:Horde_SetMostRecentFireAttacker(ply, dmginfo)
-                npc:Ignite(ply:Horde_GetApplyIgniteDuration(), ply:Horde_GetApplyIgniteRadius())
+                if ply:Horde_GetGadget() ~= "gadget_hydrogen_burner" then
+                    npc:Horde_SetMostRecentFireAttacker(ply, dmginfo)
+                    npc:Ignite(ply:Horde_GetApplyIgniteDuration())
+                end
             end
         end
     end
@@ -62,7 +66,7 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     dmginfo:SetDamageCustom(HORDE.DMG_CALCULATED)
 
     -- Vortigaunt damage
-    if (dmginfo:GetDamageType() == DMG_SHOCK) and dmginfo:GetInflictor():GetClass() == "npc_vortigaunt" then
+    if HORDE:IsLightningDamage(dmginfo) and dmginfo:GetInflictor():GetClass() == "npc_vortigaunt" then
         -- Splash damaage
         local dmg = DamageInfo()
         dmg:SetAttacker(dmginfo:GetAttacker())
@@ -77,6 +81,8 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     if hitgroup == HITGROUP_HEAD then
         sound.Play("horde/player/headshot.ogg", npc:GetPos())
     end
+
+    hook.Run("Horde_OnPlayerDamagePost", ply, npc, bonus, hitgroup, dmginfo)
 end
 
 hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginfo)
@@ -181,21 +187,21 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
 
     if dmg:GetDamage() <= 0.5 then return true end
 
-    bonus = {apply = 1, more = 1}
+    local more = 1
     local debuff = nil
     if dmg:GetDamage() > 0 then
         if HORDE:IsPoisonDamage(dmg) then
             debuff = HORDE.Status_Break
-            bonus.more = 2
+            more = 2
         elseif HORDE:IsFireDamage(dmg) then
             debuff = HORDE.Status_Ignite
-            bonus.more = 2
+            more = 2
         elseif HORDE:IsLightningDamage(dmg) then
             debuff = HORDE.Status_Shock
-            bonus.more = 2
+            more = 2
         elseif HORDE:IsColdDamage(dmg) then
             debuff = HORDE.Status_Frostbite
-            bonus.more = 2
+            more = 2
             local effectdata = EffectData()
                 effectdata:SetOrigin(ply:GetPos() + ply:GetUp() * 50)
                 effectdata:SetScale(10)
@@ -205,29 +211,30 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
         end
 
         if not debuff then return end
-        hook.Run("Horde_OnPlayerDebuffApply", ply, debuff, bonus, dmg:GetAttacker())
 
-        if bonus.apply == 1 then
-            local buildup = dmg:GetDamage() * bonus.more
-            local class = dmg:GetAttacker():GetClass()
-            if class == "npc_headcrab_poison" or class == "npc_headcrab_black" then
-                dmg:SetDamage(1)
-                if debuff == HORDE.Status_Break then
-                    buildup = ply:Health() * 2
-                end
-            else
-                buildup = math.min(85, buildup)
+        local buildup = dmg:GetDamage() * more
+        local class = dmg:GetAttacker():GetClass()
+        if class == "npc_headcrab_poison" or class == "npc_headcrab_black" then
+            dmg:SetDamage(1)
+            if debuff == HORDE.Status_Break then
+                buildup = ply:Health() * 2
             end
-            ply:Horde_AddDebuffBuildup(debuff, buildup)
+        else
+            buildup = math.min(85, buildup)
         end
+        ply:Horde_AddDebuffBuildup(debuff, buildup, dmg:GetAttacker())
     end
 end)
 
 hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function (target, dmg)
     if not target:IsValid() or not HORDE:IsPlayerMinion(target) then return end
-    if dmg:GetAttacker():IsPlayer() and (dmg:GetInflictor() == dmg:GetAttacker()) then return true end
+    if dmg:GetAttacker():IsPlayer() then return true end
     hook.Run("Horde_OnMinionDamageTaken", target, dmg)
     if dmg:GetDamage() <= 0.5 then return true end
+
+    if dmg:GetAttacker():GetClass() == "npc_vj_horde_grigori" then
+        dmg:ScaleDamage(2)
+    end
 
     local debuff = nil
     local bonus = {more = 1}

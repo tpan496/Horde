@@ -1,14 +1,14 @@
 local PANEL = {}
 
 function PANEL:Init()
-    if ScrW() < 1400 then
+    if ScrW() <= 1600 then
         self:SetSize(ScrW(), ScrH())
     else
         self:SetSize(ScrW() / 1.25, ScrH() / 1.5)
     end
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
 
-    local close_btn = vgui.Create("DButton", self)
+    local close_btn = vgui.Create("DButton", self) 
     close_btn:SetFont("marlett")
     close_btn:SetText("r")
     close_btn.Paint = function() end
@@ -332,13 +332,8 @@ function PANEL:Paint(w, h)
     
     local text
     local weight_text
-    if LocalPlayer():Horde_GetClass().name == HORDE.Class_Heavy then
-        weight_text = translate.Get("Shop_Weight") .. ': [' .. tostring(HORDE.max_weight + 5 - LocalPlayer():Horde_GetWeight()) .. "/" .. HORDE.max_weight + 5 .. "]"
-        text = translate.Get("Shop_Cash") .. ": " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(LocalPlayer():Horde_GetSkullTokens()) .. '       ' .. weight_text
-    else
-        weight_text = translate.Get("Shop_Weight") .. ': [' .. tostring(HORDE.max_weight - LocalPlayer():Horde_GetWeight()) .. "/" .. HORDE.max_weight .. "]"
-        text = translate.Get("Shop_Cash") .. ": " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(LocalPlayer():Horde_GetSkullTokens()) .. '       ' .. weight_text
-    end
+    weight_text = translate.Get("Shop_Weight") .. ': [' .. tostring(LocalPlayer():Horde_GetMaxWeight() - LocalPlayer():Horde_GetWeight()) .. "/" .. LocalPlayer():Horde_GetMaxWeight() .. "]"
+    text = translate.Get("Shop_Cash") .. ": " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(LocalPlayer():Horde_GetSkullTokens()) .. '       ' .. weight_text
     draw.SimpleText(text, 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
     local mat = Material("skull.png", "mips smooth")

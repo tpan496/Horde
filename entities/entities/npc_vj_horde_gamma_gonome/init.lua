@@ -197,7 +197,7 @@ function ENT:ColdAttack(delay)
 
 		for _, ent in pairs(ents.FindInSphere(pos, 300)) do
 			if ent:IsPlayer() then
-				ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 4)
+				ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 4, self)
 			end
 		end
 

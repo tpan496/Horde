@@ -19,8 +19,8 @@ ENT.Removing = nil
 if SERVER then
 
 function ENT:Initialize()
-    local pb_vert = 1
-    local pb_hor = 1
+    local pb_vert = 0.5
+    local pb_hor = 0.5
     self:SetModel(self.Model)
     self:PhysicsInitBox( Vector(-pb_vert,-pb_hor,-pb_hor), Vector(pb_vert,pb_hor,pb_hor) )
 
@@ -93,7 +93,7 @@ function ENT:Detonate()
         attacker = self.Owner
     end
 
-    util.BlastDamage(self, attacker, self:GetPos(), 225, 175)
+    util.BlastDamage(self, attacker, self:GetPos(), 200, 200)
 
     self:FireBullets({
         Attacker = attacker,

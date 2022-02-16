@@ -12,6 +12,10 @@ function plymeta:Horde_GetWeight()
     return self.Horde_weight or 0
 end
 
+function plymeta:Horde_GetMaxWeight()
+    return self.Horde_max_weight or 0
+end
+
 function plymeta:Horde_GetClass()
     return self.Horde_class
 end
@@ -27,4 +31,9 @@ net.Receive("Horde_SyncEconomy", function(length)
     ply.Horde_weight = net.ReadInt(32)
     ply.Horde_class = HORDE.classes[net.ReadString()]
     ply.Horde_drop_entities = net.ReadTable()
+end)
+
+net.Receive("Horde_SyncMaxWeight", function (len, ply)
+    local max_weight = net.ReadUInt(5)
+    LocalPlayer().Horde_max_weight = max_weight
 end)

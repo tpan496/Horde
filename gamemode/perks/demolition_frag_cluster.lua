@@ -14,7 +14,7 @@ PERK.Hooks.EntityRemoved = function(ent)
         owner = ent.Owner
     end
     if not owner then ent = ent:GetInternalVariable("m_hOwner") end
-     if SERVER and IsValid(ent) and exp[ent:GetClass()] and IsValid(owner)
+    if SERVER and IsValid(ent) and exp[ent:GetClass()] and IsValid(owner)
             and owner:IsPlayer() and owner:Horde_GetPerk("demolition_frag_cluster") then
         local dmg = exp[ent:GetClass()]
         local rad = 200

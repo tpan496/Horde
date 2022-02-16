@@ -47,6 +47,7 @@ function ENT:DeathEffects(data,phys)
 	local effectdata = EffectData()
 	effectdata:SetOrigin(data.HitPos)
 	effectdata:SetScale(2)
+	effectdata:SetEntity(self.Owner)
 	util.Effect("m2_flame_explosion", effectdata )
 
 	local expLight = ents.Create("light_dynamic")

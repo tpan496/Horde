@@ -3,8 +3,8 @@ PERK.Description = "Gain 1 Phalanx stack every 2 seconds, up to {1}.\nEach stack
 PERK.Icon = "materials/perks/phalanx.png"
 PERK.Params = {
     [1] = {value = 5},
-    [2] = {value = 0.6, percent = true},
-    [3] = {value = 0.6, percent = true},
+    [2] = {value = 0.06, percent = true},
+    [3] = {value = 0.06, percent = true},
 }
 
 PERK.Hooks = {}

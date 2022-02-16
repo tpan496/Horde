@@ -31,10 +31,14 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_GetExp(class_name)
     if not self.Horde_Exps then self.Horde_Exps = {} end
+    if SERVER then
+    end
     return self.Horde_Exps[class_name] or 0
 end
 
 function plymeta:Horde_SetExp(class_name, exp)
+    if SERVER then
+    end
     if not self:IsValid() then return end
     if not self.Horde_Exps then self.Horde_Exps = {} end
     if not class_name then return end
@@ -59,6 +63,19 @@ function plymeta:Horde_SetLevel(class_name, level)
     local rank, rank_level = HORDE:LevelToRank(level)
     self:Horde_SetRankLevel(class_name, rank_level)
     self:Horde_SetRank(class_name, rank)
+
+    if SERVER then
+        hook.Run("Horde_PrecomputePerkLevelBonus", self)
+    end
+end
+
+function plymeta:Horde_SetPerkLevelBonus(perk, bonus)
+    if not self.Horde_Perk_Level_Bonus then self.Horde_Perk_Level_Bonus = {} end
+    self.Horde_Perk_Level_Bonus[perk] = bonus
+end
+
+function plymeta:Horde_GetPerkLevelBonus(perk)
+    return self.Horde_Perk_Level_Bonus[perk] or 0
 end
 
 function plymeta:Horde_GetRankLevel(class_name)

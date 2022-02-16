@@ -79,6 +79,7 @@ function ENT:Detonate()
     local effectdata = EffectData()
     effectdata:SetOrigin( self:GetPos() )
 	effectdata:SetScale(2)
+    effectdata:SetEntity(self.Owner)
 	util.Effect("m2_flame_explosion", effectdata )
     self:EmitSound("ambient/explosions/explode_9.wav", 125, 100, 1, CHAN_AUTO)
     local attacker = self

@@ -80,7 +80,7 @@ function ENT:CustomOnThink()
 				dmg:SetInflictor(self)
 				dmg:SetDamageType(DMG_REMOVENORAGDOLL)
 				dmg:SetDamage(5)
-				for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
+				for _, ent in pairs(ents.FindInSphere(self:GetPos(), 150)) do
 					if ent:IsPlayer() or HORDE:IsPlayerMinion(ent) then
 						ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 4)
 						ent:TakeDamageInfo(dmg)
@@ -106,7 +106,7 @@ end
 
 function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
 	if hitEnt and IsValid(hitEnt) and hitEnt:IsPlayer() then
-		hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 85)
+		hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 75)
 	end
 end
 /*-----------------------------------------------

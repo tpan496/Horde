@@ -2,7 +2,7 @@ PERK.PrintName = "Cellular Implosion"
 PERK.Description = "Enemies you killed have {1} chance to generate a healing cloud."
 PERK.Icon = "materials/perks/cellular_implosion.png"
 PERK.Params = {
-    [1] = {value = 0.20, percent = true},
+    [1] = {value = 0.25, percent = true},
 }
 
 PERK.Hooks = {}

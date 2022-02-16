@@ -35,14 +35,6 @@ hook.Add("Horde_OnPlayerDamage", "Horde_BerserkDamage", function (ply, npc, bonu
     end
 end)
 
-hook.Add("Horde_PlayerMoveBonus", "Horde_BerserkMovespeed", function(ply, bonus)
-    if ply:Horde_GetBerserk() == 1 then
-        local bonus2 = 1 + 0.15 * (1 + ply:Horde_GetApplyBuffMore())
-        bonus.walkspd = bonus.walkspd * bonus2
-        bonus.sprintspd = bonus.sprintspd * bonus2
-    end
-end)
-
 hook.Add("Horde_ResetStatus", "Horde_BerserkReset", function(ply)
     ply.Horde_Berserk = 0
 end)

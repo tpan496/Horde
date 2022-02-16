@@ -61,7 +61,7 @@ function ENT:ShockAttack(delay)
 
 		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 300)) do
 			if ent:IsPlayer() then
-				ent:Horde_AddDebuffBuildup(HORDE.Status_Shock, 4)
+				ent:Horde_AddDebuffBuildup(HORDE.Status_Shock, 4, self)
 			end
 		end
 		

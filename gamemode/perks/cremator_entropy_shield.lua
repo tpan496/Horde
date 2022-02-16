@@ -1,5 +1,5 @@
 PERK.PrintName = "Entropy Shield"
-PERK.Description = "Gain a shield that negates damage taken.\nShield explodes on hit and recharges after {1} seconds.\nExplosion deals {2} Fire damage."
+PERK.Description = "Gain a shield that negates damage taken from enemies.\nShield explodes on hit and recharges after {1} seconds.\nExplosion deals {2} Fire damage."
 PERK.Icon = "materials/perks/entropy_shield.png"
 PERK.Params = {
     [1] = {value = 5},

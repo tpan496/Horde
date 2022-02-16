@@ -1,6 +1,11 @@
-function EFFECT:Init(data)	
+function EFFECT:Init(data)
 	local Startpos = self:GetTracerShootPos(self.Position, data:GetEntity(), data:GetAttachment())
 	local Hitpos = data:GetOrigin()
+	local owner = data:GetEntity().Owner
+	local has_burner = nil
+	if owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
+		has_burner = true
+	end
 
 	if data:GetEntity():IsValid() && Startpos && Hitpos then
 		self.Emitter = ParticleEmitter(Startpos)
@@ -8,7 +13,11 @@ function EFFECT:Init(data)
 
 		for i = 1, 20 do
 			local p = self.Emitter:Add("particles/flamelet1", Startpos)
-			p:SetColor(220,150,0)
+			if not has_burner then
+				p:SetColor(220,150,0)
+			else
+				p:SetColor(0,100,255)
+			end
             p:SetDieTime(1.8)
 			p:SetStartAlpha(255)
 			p:SetEndAlpha(0)

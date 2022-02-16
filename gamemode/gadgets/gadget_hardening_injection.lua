@@ -24,7 +24,7 @@ GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if ply:Horde_GetGadget() ~= "gadget_hardening_injection" then return end
     if not ply.Horde_In_Hardening_Injection then return end
     bonus.resistance = bonus.resistance + 0.25
-    if dmginfo:GetDamageType() == DMG_BULLET or dmginfo:GetDamageType() == DMG_CRUSH or dmginfo:GetDamageType() == DMG_GENERIC or dmginfo:GetDamageType() == DMG_BUCKSHOT or dmginfo:GetDamageType() == DMG_SLASH or dmginfo:GetDamageType() == DMG_CLUB or dmginfo:GetDamageType() == DMG_SNIPER then
+    if HORDE:IsPhysicalDamage(dmginfo) then
         bonus.resistance = bonus.resistance + 0.25
     end
 end

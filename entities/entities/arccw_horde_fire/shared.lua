@@ -91,6 +91,12 @@ function ENT:Initialize()
             self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
         end)
     end
+
+    local owner = self:GetOwner()
+    self.has_burner = nil
+    if owner and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
+        self.has_burner = true
+    end
 end
 
 local fired = {
@@ -113,18 +119,22 @@ function ENT:Think()
         if !self:IsValid() or self:WaterLevel() > 2 then return end
         if !IsValid(emitter) then return end
 
-        if math.random(1, 100) < 10 then
-            local fire = emitter:Add(GetFireParticle(), self:GetPos() + (VectorRand() * 16))
+        for i = 1,10 do
+            local fire = emitter:Add(GetFireParticle(), self:GetPos() + (VectorRand() * 30))
             fire:SetVelocity( VectorRand() * 500 * VectorRand() )
-            fire:SetGravity( Vector(0, 0, 100) )
-            fire:SetDieTime( math.Rand(0.5, 0.75) )
+            fire:SetGravity( Vector(0, 0, 1000) )
+            fire:SetDieTime( math.Rand(0.2, 0.5) )
             fire:SetStartAlpha( 255 )
             fire:SetEndAlpha( 0 )
-            fire:SetStartSize( 25 )
-            fire:SetEndSize( 150 )
+            fire:SetStartSize( 0 )
+            fire:SetEndSize( 50 )
             fire:SetRoll( math.Rand(-180, 180) )
             fire:SetRollDelta( math.Rand(-0.2,0.2) )
-            fire:SetColor( 255, 255, 255 )
+            if self.has_burner then
+                fire:SetColor( 0, 135, 255 )
+            else
+                fire:SetColor( 255, 255, 255 )
+            end 
             fire:SetAirResistance( 150 )
             local pos = VectorRand() * math.random(20,100)
             pos.z = 0
@@ -135,7 +145,10 @@ function ENT:Think()
             fire:SetNextThink( CurTime() + FrameTime() )
             fire:SetThinkFunction( function(pa)
                 if !pa then return end
-                local col1 = Color(255, 255, 255)
+                local col1 = Color(255, 135, 0)
+                if self.has_burner then
+                    col1 = Color(0, 135, 255)
+                end
                 local col2 = Color(0, 0, 0)
 
                 local col3 = col1
@@ -147,40 +160,6 @@ function ENT:Think()
                 pa:SetColor(col3.r, col3.g, col3.b)
                 pa:SetNextThink( CurTime() + FrameTime() )
             end )
-        end
-
-        if math.random(1, 100) < 5 then
-            local fire = emitter:Add("particles/smokey", self:GetPos())
-                fire:SetVelocity( VectorRand() * 25 )
-                fire:SetGravity( Vector(0, 0, 1500) )
-                fire:SetDieTime( math.Rand(0.25, 1) )
-                fire:SetStartAlpha( 255 )
-                fire:SetEndAlpha( 0 )
-                fire:SetStartSize( 10 )
-                fire:SetEndSize( 150 )
-                fire:SetRoll( math.Rand(-180, 180) )
-                fire:SetRollDelta( math.Rand(-0.2,0.2) )
-                fire:SetColor( 255, 255, 255 )
-                fire:SetAirResistance( 150 )
-                fire:SetPos( self:GetPos() )
-                fire:SetLighting( false )
-                fire:SetCollide(true)
-                fire:SetBounce(0.75)
-                fire:SetNextThink( CurTime() + FrameTime() )
-                fire:SetThinkFunction( function(pa)
-                    if !pa then return end
-                    local col1 = Color(255, 135, 0)
-                    local col2 = Color(150, 150, 150)
-
-                    local col3 = col1
-                    local d = pa:GetLifeTime() / pa:GetDieTime()
-                    col3.r = Lerp(d, col1.r, col2.r)
-                    col3.g = Lerp(d, col1.g, col2.g)
-                    col3.b = Lerp(d, col1.b, col2.b)
-
-                    pa:SetColor(col3.r, col3.g, col3.b)
-                    pa:SetNextThink( CurTime() + FrameTime() )
-                end )
         end
 
         emitter:Finish()

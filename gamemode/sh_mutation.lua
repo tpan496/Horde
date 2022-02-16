@@ -1,7 +1,4 @@
 -- Simliar to player perks, Horde enemies can have mutations
--- Mutated monsters have 25% increased health and deal 25% increased damage.
--- Adaptor: When attacked using same type of damage, gain 25% damage resistance to that damage type.
--- Shadow: Turns invisible sometimes.
 if SERVER then
 util.AddNetworkString("Horde_SyncMutations")
 util.AddNetworkString("Horde_OnSetMutationEffect")
@@ -10,30 +7,29 @@ end
 
 local entmeta = FindMetaTable("Entity")
 
-function entmeta:Horde_GetMutation()
-    return self.Horde_Mutation
+function entmeta:Horde_HasMutation(mutation)
+    if not self.Horde_Mutation then return end
+    return self.Horde_Mutation[mutation]
 end
 
-function entmeta:Horde_UnsetMutation()
+function entmeta:Horde_UnsetMutations()
     if not self.Horde_Mutation then return end
-    hook.Run("Horde_OnUnsetMutation", self, self.Horde_Mutation)
+    for _, mutation in pairs(self.Horde_Mutation) do
+        self.Horde_Mutation[mutation] = nil
+        hook.Run("Horde_OnUnsetMutation", self, mutation)
+    end
     if SERVER then
         net.Start("Horde_OnUnsetMutationEffect")
             net.WriteEntity(self)
         net.Broadcast()
     end
-    self.Horde_Mutation = nil
 end
 
 function entmeta:Horde_SetMutation(mutation)
     if not mutation or mutation == "" then return end
-    if SERVER then
-        if self.Horde_Mutation then
-            self:Horde_UnsetMutation()
-        end
-    end
-
-    self.Horde_Mutation = mutation
+    if not self.Horde_Mutation then self.Horde_Mutation = {} end
+    if self.Horde_Mutation[mutation] then return end
+    self.Horde_Mutation[mutation] = true
 
     hook.Run("Horde_OnSetMutation", self, mutation)
     if SERVER then

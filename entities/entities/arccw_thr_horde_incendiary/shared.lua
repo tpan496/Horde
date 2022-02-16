@@ -8,7 +8,7 @@ ENT.Spawnable = false
 ENT.AdminSpawnable = false
 
 ENT.Model = "models/weapons/arccw_go/w_eq_incendiarygrenade_thrown.mdl"
-ENT.FuseTime = 5
+ENT.FuseTime = 2
 ENT.ArmTime = 0
 ENT.FireTime = 10
 ENT.ImpactFuse = false
@@ -79,6 +79,12 @@ function ENT:Initialize()
             self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
         end)
     end
+
+    local owner = self.Owner
+    self.has_burner = nil
+    if owner and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
+        self.has_burner = true
+    end
 end
 
 function ENT:PhysicsCollide(data, physobj)
@@ -145,9 +151,15 @@ function ENT:Think()
                 self.Light = DynamicLight(self:EntIndex())
                 if (self.Light) then
                     self.Light.Pos = self:GetPos()
-                    self.Light.r = 255
-                    self.Light.g = 135
-                    self.Light.b = 0
+                    if self.has_burner then
+                        self.Light.r = 0
+                        self.Light.g = 100
+                        self.Light.b = 255
+                    else
+                        self.Light.r = 255
+                        self.Light.g = 135
+                        self.Light.b = 0
+                    end
                     self.Light.Brightness = 8
                     self.Light.Size = 256
                     self.Light.DieTime = CurTime() + self.FireTime
@@ -182,6 +194,9 @@ function ENT:Think()
                 fire:SetThinkFunction( function(pa)
                     if !pa then return end
                     local col1 = Color(255, 135, 0)
+                    if self.has_burner then
+                        col1 = Color(0, 135, 255)
+                    end
                     local col2 = Color(255, 255, 255)
 
                     local col3 = col1
@@ -206,7 +221,12 @@ function ENT:Think()
                 fire:SetEndSize( 0 )
                 fire:SetRoll( math.Rand(-180, 180) )
                 fire:SetRollDelta( math.Rand(-0.2,0.2) )
-                fire:SetColor( 255, 255, 255 )
+                if self.has_burner then
+                    fire:SetColor( 0, 135, 255 )
+                else
+                    fire:SetColor( 255, 255, 255 )
+                end
+                
                 fire:SetAirResistance( 50 )
                 fire:SetPos( self:GetPos() )
                 fire:SetLighting( false )
@@ -267,6 +287,9 @@ function ENT:Think()
                         afire:SetThinkFunction( function(apa)
                             if !apa then return end
                             local col1 = Color(255, 135, 0)
+                            if self.has_burner then
+                                col1 = Color(0, 135, 255)
+                            end
                             local col2 = Color(255, 255, 255)
 
                             local col3 = col1
@@ -340,8 +363,14 @@ function ENT:Draw()
         if !self:GetArmed() then return end
 
         cam.Start3D() -- Start the 3D function so we can draw onto the screen.
-            render.SetMaterial( Material("sprites/orangeflare1") ) -- Tell render what material we want, in this case the flash from the gravgun
-            render.DrawSprite( self:GetPos(), math.random(400, 500), math.random(400, 500), Color(255, 255, 255) ) -- Draw the sprite in the middle of the map, at 16x16 in it's original colour with full alpha.
+            
+            if self.has_burner then
+                render.SetMaterial( Material("sprites/orangeflare1") ) -- Tell render what material we want, in this case the flash from the gravgun
+                render.DrawSprite( self:GetPos(), math.random(400, 500), math.random(400, 500), Color(0, 130, 255) ) -- Draw the sprite in the middle of the map, at 16x16 in it's original colour with full alpha.
+            else
+                render.SetMaterial( Material("sprites/orangeflare1") ) -- Tell render what material we want, in this case the flash from the gravgun
+                render.DrawSprite( self:GetPos(), math.random(400, 500), math.random(400, 500), Color(255, 255, 255) ) -- Draw the sprite in the middle of the map, at 16x16 in it's original colour with full alpha.
+            end
         cam.End3D()
     end
 end

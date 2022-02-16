@@ -2,7 +2,7 @@ PERK.PrintName = "Coup De Grace"
 PERK.Description = "Instantly kills enemies with less than {1} health."
 PERK.Icon = "materials/perks/coup.png"
 PERK.Params = {
-     [1] = {value = 0.20, percent = true},
+     [1] = {value = 0.15, percent = true},
 }
 
 PERK.Hooks = {}
@@ -12,8 +12,8 @@ PERK.Hooks.EntityTakeDamage = function(target, dmg)
     if not attacker:Horde_GetPerk("ghost_coup") then return end
     if not target:IsNPC() then return end
 
-    if not target:GetNWEntity("HordeOwner"):IsPlayer() and (target:Health() <= 0.2 * target:GetMaxHealth()) then
-        dmg:SetDamage(0.2 * target:GetMaxHealth() + 1)
+    if not target:GetNWEntity("HordeOwner"):IsPlayer() and (target:Health() <= 0.15 * target:GetMaxHealth()) then
+        dmg:SetDamage(0.15 * target:GetMaxHealth() + 1)
         dmg:SetDamageType(DMG_DIRECT)
     end
 end

@@ -33,6 +33,23 @@ if (CLIENT) then
     killicon.Add("entityflame", "vgui/hud/fire", color_white)
 end
 
+function SWEP:DrawHUD()
+    if CLIENT then
+    local x, y
+    if ( self.Owner == LocalPlayer() and self.Owner:ShouldDrawLocalPlayer() ) then
+    local tr = util.GetPlayerTrace( self.Owner )
+    local trace = util.TraceLine( tr )
+    local coords = trace.HitPos:ToScreen()
+    x, y = coords.x, coords.y
+    else
+    x, y = ScrW() / 2, ScrH() / 2
+    end
+    surface.SetTexture( surface.GetTextureID( "vgui/hud/gluon_crosshair" ) )
+    surface.SetDrawColor( 255, 255, 255, 255 )
+    surface.DrawTexturedRect( x - 16, y - 16, 32, 32 )
+    end
+end
+
 function SWEP:Initialize()
 	self:SetWeaponHoldType( self.HoldType )
 end
@@ -74,6 +91,8 @@ function SWEP:PrimaryAttack()
             if (SERVER) and trace.Hit then
                 local firefx = EffectData()
                 firefx:SetOrigin(trace.HitPos)
+                firefx:SetScale(1)
+                firefx:SetEntity(self.Weapon.Owner)
                 util.Effect("m2_flame_explosion",firefx,true,true)
             end
         end

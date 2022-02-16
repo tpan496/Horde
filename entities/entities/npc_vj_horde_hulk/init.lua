@@ -54,6 +54,7 @@ function ENT:CustomOnInitialize()
 	self:SetSkin(math.random(0,3))
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
+	self:SetMoveVelocity(Vector(0,0,0))
 
 	self:EmitSound("zsszombie/vj_bossz_call.wav", 1500, 90, 1, CHAN_STATIC)
 end

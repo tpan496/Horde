@@ -20,7 +20,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
 end
 
 MUTATION.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
-    if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_GetMutation() == "decay" then
+    if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_HasMutation("decay") then
         ply:Horde_AddDebuffBuildup(HORDE.Status_Decay, dmg:GetDamage() * 2)
     end
 end

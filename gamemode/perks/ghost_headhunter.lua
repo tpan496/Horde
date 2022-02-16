@@ -3,7 +3,7 @@ PERK.Description = "Headshot damage stacks up to {1} times.\nEach stack increase
 PERK.Icon = "materials/perks/headhunter.png"
 PERK.Params = {
     [1] = {value = 5},
-    [2] = {value = 0.08, percent = true}
+    [2] = {value = 0.07, percent = true}
 }
 
 PERK.Hooks = {}
