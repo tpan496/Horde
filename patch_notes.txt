@@ -1,21 +1,5 @@
-Major Update 1.1.4
+music after boss wave 
 
--- Expanded perk system to four tiers
-    - Added two new perks for each class, 18 in total.
-    - A lot of the perks have been added/changed/revamped. Translation has been invalidated due to perk changes.
+watchtower physics
 
--- Progression skills
-    - Class base skills now scale with player level, up to Champion I (Level 25).
-
--- Third-person Spectator Mode After Death
-
--- Gadget changes:
-    - Removed gadget_displacer, gadget_aerial_guard.
-    - Added gadget_chakra, gadget_quantum_tunnel, gadget_voidout, gadget_hydrogen_burner.
-
--- New Difficulty: Apocalypse
-    - Enemies in Apocalypse difficulty have a chance to spawn with double mutations.
-
--- New weapons:
-    - Hornet Gun (engineer)
-    - Gluon Gun (cremator)
+chinese

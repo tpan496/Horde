@@ -75,6 +75,7 @@ function plymeta:Horde_SetPerkLevelBonus(perk, bonus)
 end
 
 function plymeta:Horde_GetPerkLevelBonus(perk)
+    if not self.Horde_Perk_Level_Bonus then return 0 end
     return self.Horde_Perk_Level_Bonus[perk] or 0
 end
 

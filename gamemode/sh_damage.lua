@@ -121,7 +121,7 @@ function HORDE:CalcResistance(ply, stats, dmgtype, horde_dmgtype)
 end
 
 function HORDE:CalcImmunity(ply, stats, debuff)
-    local bonus = {apply = 1}
+    local bonus = {apply = 1, more = 1}
     hook.Run("Horde_OnPlayerDebuffApply", ply, debuff, bonus)
     stats[debuff] = 1 - bonus.apply
 end

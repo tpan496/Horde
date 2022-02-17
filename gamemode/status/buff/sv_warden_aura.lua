@@ -7,7 +7,7 @@ function entmeta:Horde_AddWardenAura()
     ent:SetPos(self:GetPos())
     ent:SetParent(self)
     if self:GetNWEntity("HordeOwner"):IsPlayer() then
-        ent:Horde_SetAuraRadius(self:GetNWEntity("HordeOwner"):Horde_GetWardenAuraRadius() * self:Horde_GetPerkLevelBonus("warden_base"))
+        ent:Horde_SetAuraRadius(self:GetNWEntity("HordeOwner"):Horde_GetWardenAuraRadius() * self:GetNWEntity("HordeOwner"):Horde_GetPerkLevelBonus("warden_base"))
     else
         ent:Horde_SetAuraRadius(self:Horde_GetWardenAuraRadius() * self:Horde_GetPerkLevelBonus("warden_base"))
         timer.Simple(0, function() self:Horde_AddWardenAuraEffects(self) end)
@@ -95,6 +95,7 @@ function plymeta:Horde_RemoveWardenAuraEffects()
     self.Horde_WardenAuraDamageBlock = nil
     self.Horde_WardenAuraHealthRegen = nil
     self.Horde_WardenAuraDamageBonus = nil
+    self.Horde_WardenAuraInoculation = nil
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_WardenAura, 8)
         net.WriteUInt(0, 8)

@@ -1,7 +1,7 @@
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_AddAdrenalineStack(override_max)
-    if not override_max or self.Horde_GetMaxAdrenalineStack() > 0 then
+    if not override_max or self:Horde_GetMaxAdrenalineStack() > 0 then
         self.Horde_AdrenalineStack = math.min(self:Horde_GetMaxAdrenalineStack(), self.Horde_AdrenalineStack + 1)
     else
         self.Horde_AdrenalineStack = math.min(2, self.Horde_AdrenalineStack + 1)
@@ -62,6 +62,7 @@ function plymeta:Horde_SetAdrenalineEnabled(enabled)
 end
 
 function plymeta:Horde_GetCardiacResonanceEnabled()
+    if not self:IsValid() then return end
     return self.Horde_CardiacResonanceEnabled
 end
 
@@ -89,7 +90,7 @@ hook.Add("Horde_OnEnemyKilled", "Horde_AdrenalineApply", function(victim, killer
     killer:Horde_AddAdrenalineStack()
     if killer:Horde_GetCardiacResonanceEnabled() then
         for _, ent in pairs(ents.FindInSphere(killer:GetPos(), 200)) do
-            if ent:IsPlayer() then
+            if ent:IsValid() and ent:IsPlayer() and ent:Alive() and not (ent:IsBot()) and not (ent == killer) then
                 ent:Horde_AddAdrenalineStack(true)
             end
         end

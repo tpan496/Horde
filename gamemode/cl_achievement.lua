@@ -16,9 +16,12 @@ HORDE.MapAchievements = {
     hard = "Hard Completion",
     realism = "Realism Completion",
     nightmare = "Nightmare Completion",
+    apocalypse = "Apocalpyse Completion",
     coop = "Coop Completion",
     horde = "Horde Completion",
+    hardcore_horde = "Hardcode Completion",
     coop_horde = "Coop Horde Completion",
+    hardcore_coop_horde = "Hardcore Coop Completion",
     endless_20 = "Endless Wave 20",
     endless_30 = "Endless Wave 30",
 }
@@ -28,9 +31,12 @@ HORDE.MapAchievement_Descriptions = {
     [HORDE.MapAchievements.hard] = "Complete 10 waves on HARD difficulty.",
     [HORDE.MapAchievements.realism] = "Complete 10 waves on REALISM difficulty.",
     [HORDE.MapAchievements.nightmare] = "Complete 10 waves on NIGHTMARE difficulty.",
+    [HORDE.MapAchievements.apocalypse] = "Complete 10 waves on APOCALYPSE difficulty.",
     [HORDE.MapAchievements.coop] = "Complete 10 waves with at least 4 players.",
     [HORDE.MapAchievements.horde] = "Complete 10 waves on NIGHTMARE difficulty with default config and settings.",
     [HORDE.MapAchievements.coop_horde] = "Complete 10 waves on NIGHTMARE difficulty with at least 4 players, default config and settings.",
+    [HORDE.MapAchievements.hardcore_horde] = "Complete 10 waves on APOCALYPSE difficulty with default config and settings.",
+    [HORDE.MapAchievements.hardcore_coop_horde] = "Complete 10 waves on APOCALYPSE difficulty with at least 4 players, default config and settings.",
     [HORDE.MapAchievements.endless_20] = "Complete 20 waves on Endless mode.",
     [HORDE.MapAchievements.endless_30] = "Complete 30 waves on Endless mode.",
 }
@@ -56,6 +62,18 @@ function HORDE:GetMapAchievements(map)
                 if stats.diffculty >= 4 then
                     achievements[HORDE.MapAchievements.nightmare] = true
                     count = count + 1
+                    if stats.diffculty >= 5 then
+                        achievements[HORDE.MapAchievements.apocalypse] = true
+                        count = count + 1
+                        if stats.config >= 1 then
+                            achievements[HORDE.MapAchievements.hardcore_horde] = true
+                            count = count + 1
+                            if stats.players >= 4 then
+                                achievements[HORDE.MapAchievements.hardcore_coop_horde] = true
+                                count = count + 1
+                            end
+                        end
+                    end
                     if stats.config >= 1 then
                         achievements[HORDE.MapAchievements.horde] = true
                         count = count + 1

@@ -235,7 +235,8 @@ LANGUAGE["Perk_cremator_base"] = [[
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[生存]]
 LANGUAGE["Perk_Title_Survivor_Tier_2"] = [[随机应变]]
-LANGUAGE["Perk_Title_Survivor_Tier_3"] = [[技巧复制]]
+LANGUAGE["Perk_Title_Survivor_Tier_3"] = [[防御]]
+LANGUAGE["Perk_Title_Survivor_Tier_4"] = [[技巧复制]]
 
 -- Default Perks: Assault
 LANGUAGE["Perk_Title_Assault_Tier_1"] = [[机动性]]
@@ -255,8 +256,7 @@ LANGUAGE["Perk_assault_drain"] = [[
 
 LANGUAGE["Perk_Title_assault_overclock"] = [[代谢超频]]
 LANGUAGE["Perk_assault_overclock"] = [[
-“肾上腺素”持续时间提升 {1}。
-“肾上腺素”最大堆叠次数 +{2}。]]
+“肾上腺素”最大堆叠次数 +{1}。]]
 
 LANGUAGE["Perk_Title_Assault_Tier_3"] = [[进攻]]
 LANGUAGE["Perk_Title_assault_cardiac_resonance"] = [[心室共鸣]]
@@ -267,7 +267,7 @@ LANGUAGE["Perk_assault_cardiac_resonance"] = [[
 
 LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[心脏过载]]
 LANGUAGE["Perk_assault_cardiac_overload"] = [[
-爆头有 {1} 几率 +1 层“肾上腺素”。
+“肾上腺素”持续时间提升 {1}。
 “肾上腺素”最大堆叠次数 +{2}。]]
 
 LANGUAGE["Perk_Title_Assault_Tier_4"] = [[条件反射]]
@@ -442,7 +442,7 @@ LANGUAGE["Perk_ghost_brain_snap"] = [[
 “霜冻”状态冷却时间为 {2} 秒。]]
 
 LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[蓄能冲击]]
-LANGUAGE["Perk_ghost_ghost_kinetic_impact"] = [[
+LANGUAGE["Perk_ghost_kinetic_impact"] = [[
 基于攻击距离提升子弹伤害。
 每 {2} 距离，提升 {1} 子弹伤害。
 最多提升 {3} 子弹伤害。]]
@@ -581,7 +581,7 @@ LANGUAGE["Perk_Title_warden_inoculation"] = [[无垢化]]
 LANGUAGE["Perk_warden_inoculation"] = [[
 光环玩家内玩家获得 {1} 更少引燃，电感，霜冻累计值。]]
 
-LANGUAGE["Perk_Title_Warden_Tier_3"] = [[广域化]]
+LANGUAGE["Perk_Title_Warden_Tier_4"] = [[广域化]]
 LANGUAGE["Perk_Title_warden_ex_machina"] = [[机械降神]]
 LANGUAGE["Perk_warden_ex_machina"] = [[
 守望塔提供“守望光环”。]]
@@ -1109,6 +1109,72 @@ LANGUAGE["Item_Desc_Vector Medic PDW"] = [[
 
 按 B 或者 放大键 发射医疗针。
 医疗针冷却时间为 1.5 秒。
+]]
+
+LANGUAGE["Item_Chainsaw"] = [[电锯]]
+LANGUAGE["Item_Desc_Chainsaw"] = [[
+Brrrrrrrrrrrrrrrr.
+
+长按右键进行持续劈砍。
+]]
+
+LANGUAGE["Item_Mjollnir"] = [[雷神之锤]]
+LANGUAGE["Item_Desc_Mjollnir"] = [[
+蕴含着雷电力量的战锤。
+
+右键对武器进行充能。
+充能后，下次武器攻击命中敌人会造成范围性雷电伤害。
+]]
+
+LANGUAGE["Item_Inferno Blade"] = [[恶魔刀锋]]
+LANGUAGE["Item_Desc_Inferno Blade"] = [[
+蕴含着火焰力量的弯刀。
+
+右键开启火焰模式，使攻击附带范围性火焰伤害。
+火焰模式会对使用者造成持续的火焰伤害。
+]]
+
+LANGUAGE["Item_Double Barrel"] = [[双管猎枪]]
+LANGUAGE["Item_Desc_Double Barrel"] = [[
+双管猎枪。
+
+对近距离的敌人能造成大量伤害。
+]]
+
+LANGUAGE["Item_Manhack"] = [[巡逻无人机]]
+LANGUAGE["Item_Desc_Manhack"] = [[
+会自我再生的巡逻无人机。
+巡逻无人机攻击敌人后直接死亡。
+巡逻无人机对敌人造成自生生命值的伤害。
+]]
+
+LANGUAGE["Item_Vortigaunt"] = [[弗地冈]]
+LANGUAGE["Item_Desc_Vortigaunt"] = [[
+XEN星球的弗地冈地外种族。
+会发射长距离的范围性雷电攻击。
+]]
+
+LANGUAGE["Item_Combat Bot"] = [[战斗机器人]]
+LANGUAGE["Item_Desc_Combat Bot"] = [[
+解释可靠的战斗机器人。
+会使用威力巨大的近距离攻击和远距离投掷攻击。
+]]
+
+LANGUAGE["Item_Hivehand"] = [[蜂巢枪]]
+LANGUAGE["Item_Desc_Hivehand"] = [[
+XEN星球士兵使用的生物兵器。
+
+左键发射带有追踪功能的蜂群。
+右键能够快速射出无追踪能力的蜂群。
+]]
+
+LANGUAGE["Item_M2 Flamethrower"] = [[M2 喷火器]]
+
+LANGUAGE["Item_Gluon Gun"] = [[胶子枪]]
+LANGUAGE["Item_Desc_Gluon Gun"] = [[
+量子热力学溶解类武器。
+
+能够发射极其危险的超高温镭射。
 ]]
 
 LANGUAGE["Gadget_gadget_blast_plating"] = [[防爆涂层]]

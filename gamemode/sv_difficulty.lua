@@ -16,7 +16,7 @@ local difficulty_apocalypse = 4
 
 -- Multipliers
 local difficulty_damage_multiplier = {1, 1.25, 1.5, 1.7, 1.9}
-local difficulty_enemy_count_multiplier = {1, 1.3, 1.5, 1.5, 1.75}
+local difficulty_enemy_count_multiplier = {1, 1.3, 1.5, 1.6, 1.7}
 HORDE.difficulty_reward_base_multiplier = {1, 0.8, 0.6, 0.5, 0.4}
 HORDE.difficulty_health_multiplier = {1, 1.25, 1.5, 1.5, 1.5}
 local difficulty_start_money_multiplier = {1, 0.9, 0.8, 0.75, 0.6}
@@ -24,7 +24,7 @@ local difficulty_spawn_radiuis_multiplier = {1, 0.75, 0.5, 0.5, 0.4}
 local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25, 1.25, 1.3}
 local difficulty_poison_headcrab_damage = {50, 60, 75, 75, 75}
 HORDE.difficulty_status_duration_bonus = {0, 1, 2, 3, 4}
-HORDE.difficulty_break_health_left = {0.20, 0.15, 0.10, 0.10, 0.08}
+HORDE.difficulty_break_health_left = {0.20, 0.15, 0.10, 0.10, 0.05}
 HORDE.difficulty_shock_damage_increase = {0.15, 0.20, 0.25, 0.25, 0.30}
 HORDE.difficulty_frostbite_slow = {0.40, 0.45, 0.50, 0.50, 0.55}
 

@@ -1,7 +1,7 @@
 function EFFECT:Init(data)
     local owner = data:GetEntity()
 	local has_burner = nil
-	if owner and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
+	if owner and owner:IsPlayer() and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
 		has_burner = true
 	end
     local light = DynamicLight(0);

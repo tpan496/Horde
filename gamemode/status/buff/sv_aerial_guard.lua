@@ -40,7 +40,7 @@ function plymeta:Horde_SetGracefulGuardEnabled(enabled)
 end
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_AerialGuardDamageTaken", function (ply, dmginfo, bonus, silent)
-    if not ply:Horde_GetAerialGuardEnabled() then return end
+    if ply:Horde_GetAerialGuardEnabled() == 0 then return end
     if ply.HasUnwaveringGuardBuff then
         bonus.less = bonus.less * 0.75
     end
@@ -55,6 +55,7 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_AerialGuardDamageTaken", function (
                 if not ply:IsValid() then return end
                 for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
                     ply:Horde_RemoveDebuff(debuff)
+                    ply:Horde_ReduceDebuffBuildup(debuff, buildup)
                 end
             end)
             local healinfo = HealInfo:New({amount=10, healer=ply})

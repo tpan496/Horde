@@ -85,7 +85,7 @@ function PANEL:Init()
                 editor:AddChoice(class)
             end
             return editor
-        elseif name == "Tier 1" or name == "Tier 2" or name == "Tier 3" then
+        elseif name == "Tier 1" or name == "Tier 2" or name == "Tier 3" or name == "Tier 4" then
             local editor_title = vgui.Create("DTextEntry", panel)
             editor_title:SetSize(175, 30)
             editor_title:SetPos(110, 15)
@@ -146,6 +146,7 @@ function PANEL:Init()
     local perks1_editors = create_property_editor("Tier 1", 120, perks_panel)
     local perks2_editors = create_property_editor("Tier 2", 120, perks_panel)
     local perks3_editors = create_property_editor("Tier 3", 120, perks_panel)
+    local perks4_editors = create_property_editor("Tier 4", 120, perks_panel)
 
     name_editor:SetText("")
     display_name_editor:SetText("")
@@ -210,6 +211,15 @@ function PANEL:Init()
 
         local perk3r = nil
         if perks3_editors.editor_right:GetValue() ~= "" then perk3r = perks3_editors.editor_right:GetValue() end
+
+        local perk4title = nil
+        if perks4_editors.editor_title:GetValue() ~= "" then perk4title = perks4_editors.editor_title:GetValue() end
+    
+        local perk4l = nil
+        if perks4_editors.editor_left:GetValue() ~= "" then perk4l = perks4_editors.editor_left:GetValue() end
+
+        local perk4r = nil
+        if perks4_editors.editor_right:GetValue() ~= "" then perk4r = perks4_editors.editor_right:GetValue() end
         
         if name and HORDE.classes[name] then
             HORDE.classes[name].display_name = display_name_editor:GetValue()
@@ -222,18 +232,22 @@ function PANEL:Init()
                     [1] = {title = "", choices = {"", ""}},
                     [2] = {title = "", choices = {"", ""}},
                     [3] = {title = "", choices = {"", ""}},
+                    [4] = {title = "", choices = {"", ""}},
                 }
             end
 
             if perk1title then HORDE.classes[name].perks[1].title = perk1title end
             if perk2title then HORDE.classes[name].perks[2].title = perk2title end
             if perk3title then HORDE.classes[name].perks[3].title = perk3title end
+            if perk4title then HORDE.classes[name].perks[4].title = perk4title end
             if perk1l then HORDE.classes[name].perks[1].choices[1] = perk1l end
             if perk1r then HORDE.classes[name].perks[1].choices[2] = perk1r end
             if perk2l then HORDE.classes[name].perks[2].choices[1] = perk2l end
             if perk2r then HORDE.classes[name].perks[2].choices[2] = perk2r end
             if perk3l then HORDE.classes[name].perks[3].choices[1] = perk3l end
             if perk3r then HORDE.classes[name].perks[3].choices[2] = perk3r end
+            if perk4l then HORDE.classes[name].perks[4].choices[1] = perk4l end
+            if perk4r then HORDE.classes[name].perks[4].choices[2] = perk4r end
 
             net.Start("Horde_SetClassData")
             net.WriteTable(HORDE.classes)
@@ -297,6 +311,7 @@ function PANEL:Init()
             LoadPerks(class, perks1_editors, 1)
             LoadPerks(class, perks2_editors, 2)
             LoadPerks(class, perks3_editors, 3)
+            LoadPerks(class, perks4_editors, 4)
         end)
 
         menu:AddSpacer()
