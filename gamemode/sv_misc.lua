@@ -57,7 +57,7 @@ end
 
 function HORDE:SpawnManhack(ply, id)
     if CLIENT then return end
-    if not ply:IsValid() then return end
+    if not ply:IsValid() or not ply:Alive() then return end
     local class = "npc_manhack"
     local item = HORDE.items[class]
     if ply:Horde_GetWeight() - item.weight < 0 then return end

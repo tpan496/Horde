@@ -5,7 +5,7 @@ PERK.Params = {
 }
 
 PERK.Hooks = {}
-PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)
+PERK.Hooks.Horde_PostOnPlayerHeal = function(ply, healinfo)
     local healer = healinfo:GetHealer()
     if healer:IsPlayer() and healer:Horde_GetPerk("medic_purify") then
         for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do

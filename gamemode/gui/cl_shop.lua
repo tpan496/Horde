@@ -1,7 +1,7 @@
 local PANEL = {}
 
 function PANEL:Init()
-    if ScrW() <= 1600 then
+    if ScrW() <= 1600 or ScrH() < 1080 then
         self:SetSize(ScrW(), ScrH())
     else
         self:SetSize(ScrW() / 1.25, ScrH() / 1.5)

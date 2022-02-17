@@ -68,7 +68,9 @@ function plymeta:Horde_SetPerk(perk, shared)
     if not HORDE.perks[perk] then error("Tried to use nonexistent perk '" .. perk .. "' in Horde_SetPerk!") return end
     self.Horde_Perks = self.Horde_Perks or {}
     self.Horde_Perks[perk] = true
-
+    if SERVER then
+        hook.Run("Horde_PrecomputePerkLevelBonus", self)
+    end
     hook.Run("Horde_OnSetPerk", self, perk)
 
     if SERVER and not shared then

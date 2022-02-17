@@ -1,10 +1,11 @@
 GADGET.PrintName = "Chakra"
 GADGET.Description =
-[[Removes all debuff buildups and debuffs.\nRecover 10 health.]]
+[[Removes all debuff buildups and debuffs.
+Recover 10 health.]]
 GADGET.Icon = "items/gadgets/chakra.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 5
-GADGET.Active = false
+GADGET.Active = true
 GADGET.Params = {
 }
 GADGET.Hooks = {}
@@ -15,6 +16,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
 
     for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
         ply:Horde_RemoveDebuff(debuff)
+        ply:Horde_ReduceDebuffBuildup(debuff, buildup)
     end
 
     sound.Play("items/medshot4.wav", ply:GetPos())

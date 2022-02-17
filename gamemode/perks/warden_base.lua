@@ -29,6 +29,6 @@ end
 
 PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
     if SERVER then
-        ply:Horde_SetPerkLevelBonus("warden_base", 1 + math.min(0.25, 0.01 * ply:Horde_GetLevel(HORDE.Class_Berserker)))
+        ply:Horde_SetPerkLevelBonus("warden_base", 1 + math.min(0.25, 0.01 * ply:Horde_GetLevel(HORDE.Class_Warden)))
     end
 end
