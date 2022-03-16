@@ -257,7 +257,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
 
                 -- Prevent players from purchasing turrets if they have the manhack skill.
                 if item.class == "npc_turret_floor" and ply:Horde_GetPerk("engineer_manhack") then return end
-                
+
                 ply:Horde_AddMoney(-price)
                 local ent = ents.Create(class)
                 local pos = ply:GetPos()
@@ -273,7 +273,9 @@ net.Receive("Horde_BuyItem", function (len, ply)
 
                 if ent:IsNPC() then
                     -- Minions have no player collsion
+                    -- Set NPC relationship to be allies of players
                     ent:AddRelationship("player D_LI 99")
+                    ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
                     local npc_info = list.Get("NPC")[ent:GetClass()]
                     if not npc_info then
                         print("[HORDE] NPC does not exist in ", list.Get("NPC"))
@@ -356,7 +358,7 @@ function HORDE:DropTurret(ent)
         filter = ent,
         collisiongroup =  COLLISION_GROUP_WORLD
     })
-    
+
     if IsValid(tr.Entity) or tr.HitWorld then
         local dist_sqr = turret_pos:DistToSqr(tr.HitPos)
         -- If you drop turrets from somewhere too high, they will just fall over.
@@ -474,7 +476,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         net.Send(ply)
         return
     end
-    
+
     local price = HORDE.items[class].ammo_price * count
     if ply:Horde_GetMoney() >= price then
         ply:Horde_AddMoney(-price)
@@ -494,7 +496,7 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         net.Send(ply)
         return
     end
-    
+
     local price = HORDE.items[class].secondary_ammo_price
     if ply:Horde_GetMoney() >= price then
         ply:Horde_AddMoney(-price)

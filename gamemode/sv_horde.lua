@@ -88,13 +88,13 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
             HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
         end
-        
+
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
             net.Start("Horde_HighlightEntities")
             net.WriteInt(HORDE.render_highlight_enemies, 3)
             net.Broadcast()
         end
-        
+
         if HORDE.endless == 1 then
             if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
                 HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. "/∞", 0)
@@ -108,7 +108,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
                 HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
             end
         end
-        
+
         local boss_properties = victim:Horde_GetBossProperties()
         local defer_reward = false
         local reward = 0
@@ -118,7 +118,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             if victim:GetVar("reward_scale") then
                 scale = victim:GetVar("reward_scale")
             end
-            
+
             reward = HORDE.kill_reward_base * scale
             if boss_properties and boss_properties.is_boss then
                 -- Boss reward is global. Defer reward.
@@ -417,8 +417,12 @@ function HORDE:SpawnEnemy(enemy, pos)
             end
         end
     end
-    
-    --spawned_enemy:AddRelationship("player D_HT 99")
+
+    -- enemy alliance and hatred toward player
+    spawned_enemy:AddRelationship("player D_HT 99")
+    spawned_enemy:AddRelationship("horde_enemies D_LI 99")
+    ent.VJ_NPC_Class = {"CLASS_HORDE_ENEMY"}
+
     hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy
 end
@@ -566,7 +570,7 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                             spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
                             table.insert(enemies, spawned_enemy)
                         end
-                        
+
                         break
                     end
                     ::cont::
@@ -575,7 +579,7 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                 if renormalize then
                     HORDE:NormalizeEnemiesWeightOnWave(horde_current_enemies_list)
                 end
-                
+
                 HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
                 HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
             end
@@ -751,13 +755,13 @@ function HORDE:WaveStart()
             HORDE.endless_health_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
         end
     end
-    
+
     -- Additional custom scaling
     if GetConVar("horde_total_enemies_scaling"):GetInt() > 1 then
         HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave * GetConVar("horde_total_enemies_scaling"):GetInt()
     end
 
-    
+
     HORDE.total_enemies_this_wave_fixed = HORDE.total_enemies_this_wave
     local max_enemies_alive_base = GetConVarNumber("horde_max_enemies_alive_base")
     local scale = GetConVarNumber("horde_max_enemies_alive_scale_factor")
@@ -898,7 +902,7 @@ function HORDE:WaveEnd()
         if GetConVar("horde_enable_rank"):GetInt() == 1 then
             HORDE:SaveRank(ply)
         end
-        
+
         ply:Horde_SyncExp()
     end
 end
@@ -980,7 +984,7 @@ function HORDE:Direct()
         net.WriteInt(horde_ammobox_refresh_timer, 8)
         net.Broadcast()
     end
-    
+
     -- Check enemy
     local enemies = HORDE:ScanEnemies()
     HORDE:RemoveDistantEnemies(enemies)
@@ -1016,7 +1020,7 @@ function HORDE:Direct()
                 HORDE:SpawnEnemies(enemies, valid_nodes)
             end
         end
-        
+
         -- Spawn ammoboxes
         if horde_ammobox_refresh_timer <= 0 then
             HORDE:SpawnAmmoboxes(valid_nodes)
