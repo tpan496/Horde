@@ -92,7 +92,7 @@ LANGUAGE["Shop_Perk"] = "武器技能"
 
 -- Class Panel
 LANGUAGE["Shop_Class/Perks"] = "職業/技能"
-LANGUAGE["Shop_Select_Class"] = "選擇職業（擁有物品會被去除）"
+LANGUAGE["Shop_Select_Class"] = "選擇職業（失去擁有物品）"
 LANGUAGE["Shop_Show_Perks"] = "顯示技能樹"
 LANGUAGE["Shop_Hide_Perks"] = "隱藏技能樹"
 LANGUAGE["Shop_Unlocks_After_Wave"] = "第 %d 波後解鎖"
