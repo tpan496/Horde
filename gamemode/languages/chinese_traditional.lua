@@ -886,13 +886,13 @@ A lightweight semi-automatic rifle based on ArmaLite AR-15 design.
 LANGUAGE["Item_FAMAS"] = [[FAMAS]]
 LANGUAGE["Item_Desc_FAMAS"] = [[
 FAMAS bullpup assault rifle.
-Recognised for its high rate of fire."
+Recognised for its high rate of fire.
 ]]
 
 LANGUAGE["Item_Galil"] = [[Galil]]
 LANGUAGE["Item_Desc_Galil"] = [[
 Galil ACE 22.
-Developed and originally manufactured by Israel Military Industries.
+Developed and originally manufactured by IMI.
 ]]
 
 LANGUAGE["Item_AK47"] = [[AK47]]
@@ -1071,12 +1071,12 @@ LANGUAGE["Item_Desc_Health Vial"] = [[
 
 LANGUAGE["Item_Kevlar Armor Battery"] = [[護甲包]]
 LANGUAGE["Item_Desc_Kevlar Armor Battery"] = [[
-提供15護甲。
+提供 15 護甲。
 ]]
 
 LANGUAGE["Item_Full Kevlar Armor"] = [[全套護甲]]
 LANGUAGE["Item_Desc_Full Kevlar Armor"] = [[
-提供100%護甲。
+提供 100% 護甲。
 ]]
 
 LANGUAGE["Item_Watchtower MKII"] = [[守望塔 MKII]]
@@ -1189,56 +1189,56 @@ LANGUAGE["Item_Desc_Gluon Gun"] = [[
 
 LANGUAGE["Gadget_gadget_blast_plating"] = [[防爆塗層]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
-提升 {1} 爆炸和聲波傷害抗性。
+提升 20% 爆炸和聲波傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_shock_plating"] = [[絕緣塗層]]
 LANGUAGE["Gadget_Desc_gadget_shock_plating"] = [[
-提升 {1} 雷電傷害抗性。
+提升 20% 雷電傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_heat_plating"] = [[抗熱塗層]]
 LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
-提升 {1} 火焰傷害抗性。
+提升 20% 火焰傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_diamond_plating"] = [[鑽石塗層]]
 LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
-提升 {1} 物理傷害抗性。
+提升 15% 物理傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_detoxifier"] = [[抗毒劑]]
 LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
-提升 {1} 毒素傷害抗性。
+提升 20% 毒素傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_vitality_booster"] = [[體力提升]]
 LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
-增加 {1} 最大生命值。
+增加 25 最大生命值。
 ]]
 
 LANGUAGE["Gadget_gadget_damage_booster"] = [[傷害提升]]
 LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
-提升 {1} 全局傷害。
+提升 25% 全局傷害。
 ]]
 
 LANGUAGE["Gadget_gadget_berserk_armor"] = [[狂戰盔甲]]
 LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
-提升 {1} 全局傷害。
-提升 {2} 全局傷害抗性。
-提升 {3} 移動速度。
+提升 25% 全局傷害。
+提升 25% 全局傷害抗性。
+提升 25% 移動速度。
 ]]
 
 LANGUAGE["Gadget_gadget_flash"] = [[一閃]]
 LANGUAGE["Gadget_Desc_flash"] = [[
-向前快速移動，對路徑上的所有敵人造成 {1} 利器傷害。
+向前快速移動，對路徑上的所有敵人造成 100 利器傷害。
 提供短暫的無敵時間。
 ]]
 
 LANGUAGE["Gadget_gadget_butane_can"] = [[易燃物]]
 LANGUAGE["Gadget_Desc_gadget_butane_can"] = [[
 產生一個丙烷氣罐。
-丙烷氣罐被攻擊後爆炸，造成 {1} 範圍性火焰傷害。
+丙烷氣罐被攻擊後爆炸，造成 375 範圍性火焰傷害。
 每個玩家最多保留一個產生的丙烷氣罐。
 ]]
 
@@ -1246,20 +1246,20 @@ LANGUAGE["Gadget_gadget_projectile_launcher_fire"] = [[發射器（火焰彈）]
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_fire"] = [[
 發射灼熱的火焰彈。
 火焰彈引燃效果範圍內所有敵人。
-火焰彈基礎引燃傷害為 {1}。
+火焰彈基礎引燃傷害為 20。
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[發射器（雷電彈）]]
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
 發射能夠穿透敵人的雷電彈。
-雷電彈每穿透一個敵人，造成 {1} 範圍性雷電傷害。
+雷電彈每穿透一個敵人，造成 125 範圍性雷電傷害。
 ]]
 
 
 LANGUAGE["Gadget_gadget_projectile_launcher_ballistic"] = [[發射器（衝擊彈）]]
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
 發射能產生大量衝擊的弓箭。
-弓箭造成 {1} 子彈傷害。
+弓箭造成 150 子彈傷害。
 弓箭對擊中敵人造成眩暈效果。
 ]]
 
@@ -1267,15 +1267,15 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
 LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[發射器（破片彈）]]
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
 發射不穩定爆破彈。
-爆破彈造成 {1} 範圍性爆炸傷害。
-爆破彈爆炸後，產生 {2} 個額外破片爆炸。
+爆破彈造成 100 範圍性爆炸傷害。
+爆破彈爆炸後，產生 3 個額外破片爆炸。
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[發射器（治癒彈）]]
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
 發射帶有治癒效果的化學藥彈。
-治癒彈造成 {1} 範圍性毒素傷害。
-治癒彈對範圍內友軍提供 {2} 生命恢復。
+治癒彈造成 75 範圍性毒素傷害。
+治癒彈對範圍內友軍提供 25 生命恢復。
 ]]
 
 LANGUAGE["Gadget_gadget_e_parasite"] = [[E-寄生蟲]]
@@ -1294,9 +1294,9 @@ LANGUAGE["Gadget_Desc_energy_shield"] = [[
 
 LANGUAGE["Gadget_gadget_hardening_injection"] = [[硬化注射劑]]
 LANGUAGE["Gadget_Desc_hardening_injection"] = [[
-移動速度減緩 {1}。
-提升 {2} 全局傷害抗性。
-提升 {3} 物理傷害抗性。
+移動速度減緩 50%。
+提升 25% 全局傷害抗性。
+提升 25% 物理傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_iv_injection"] = [[生命注射劑]]
