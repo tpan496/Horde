@@ -119,7 +119,7 @@ LANGUAGE["Class_Warden"] = "守望者"
 LANGUAGE["Class_Cremator"] = "火焰兵"
 
 -- Gadgets
-LANGUAGE["Gadget_Activation"] = "按下 T 啟動。"
+LANGUAGE["Gadget_Activation"] = "按 T 啟動。"
 LANGUAGE["Gadget_Cooldown"] = "冷卻時間"
 LANGUAGE["Gadget_Duration"] = "持續時間"
 LANGUAGE["Gadget_Owned_Warning"] = "只能擁有 1 個道具！"
@@ -170,8 +170,8 @@ LANGUAGE["Perk_assault_base"] = [[
 
 提升 {1} 移動速度。（每級提升 {2}，最多至 {3}）。
 
-殺死敵人後獲得“腎上腺素”狀態。通過技能的選擇，“腎上腺素”可以進行堆疊。
-“腎上腺素”提升 {4} 移動速度和輸出。]]
+殺死敵人後獲得「腎上腺素」狀態。通過技能的選擇，「腎上腺素」可以進行堆疊。
+「腎上腺素」提升 {4} 移動速度和輸出。]]
 
 LANGUAGE["Perk_heavy_base"] = [[
 重裝兵擁有高超的護甲防禦機制，同時能使用重武器對敵人造成火力壓制。
@@ -197,13 +197,13 @@ LANGUAGE["Perk_demolition_base"] = [[
 在沒有高爆手榴彈的前提下，每 {5} 秒獲得 {6} 個高爆手榴彈。]]
 
 LANGUAGE["Perk_ghost_base"] = [[
-幻影是一個圍繞著精準度和“迷彩”機制的職業。使用恰當的話，幻影可以提供無以匹敵的單體輸出。
+幻影是一個圍繞著精準度和「迷彩」機制的職業。使用恰當的話，幻影可以提供無以匹敵的單體輸出。
 複雜度：困難
 
 {1} 更多爆頭傷害。（每級提升 {2}，最多至 {3}）。
 
-蹲下以啟動“迷彩”狀態，提供 {4} 閃避。
-攻擊、奔跑會取消“迷彩”狀態。]]
+蹲下以啟動「迷彩」狀態，提供 {4} 閃避。
+攻擊、奔跑會取消「迷彩」狀態。]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 工程師是一個圍繞著召喚物的職業。召喚物能有效地進行區域性防守並且為隊友提供掩護。
@@ -226,10 +226,10 @@ LANGUAGE["Perk_warden_base"] = [[
 守望者是是一個使用自身光環和建築來為隊友提供各種有利效果的輔助職業。
 複雜度：中等
 
-提升 {1} “守望光環”半徑。（每級提升 {2}，最多至 {3}）。
+提升 {1} 「守望光環」半徑。（每級提升 {2}，最多至 {3}）。
 
-自身以及附近的玩家會受到“守望光環”效果。
-“守望光環”阻擋 {4} 傷害。]]
+自身以及附近的玩家會受到「守望光環」效果。
+「守望光環」阻擋 {4} 傷害。]]
 
 LANGUAGE["Perk_cremator_base"] = [[
 火焰兵使用火焰傷害進行進攻和防禦。
@@ -255,7 +255,7 @@ LANGUAGE["Perk_assault_ambush"] = [[
 
 LANGUAGE["Perk_Title_assault_charge"] = [[蓄能]]
 LANGUAGE["Perk_assault_charge"] = [[
-“腎上腺素”最大堆疊次數 +{1}。
+「腎上腺素」最大堆疊次數 +{1}。
 （每層堆疊提升 {2} 傷害和移動速度。）]]
 
 LANGUAGE["Perk_Title_Assault_Tier_2"] = [[適應性]]
@@ -266,42 +266,42 @@ LANGUAGE["Perk_assault_drain"] = [[
 
 LANGUAGE["Perk_Title_assault_overclock"] = [[代謝超頻]]
 LANGUAGE["Perk_assault_overclock"] = [[
-“腎上腺素”最大堆疊次數 +{1}。]]
+「腎上腺素」最大堆疊次數 +{1}。]]
 
 LANGUAGE["Perk_Title_Assault_Tier_3"] = [[進攻]]
 LANGUAGE["Perk_Title_assault_cardiac_resonance"] = [[心室共鳴]]
 LANGUAGE["Perk_assault_cardiac_resonance"] = [[
 每次擊殺敵人後，
-附近玩家獲得 {1} “腎上腺素”, 最多至 {2}.
-“腎上腺素”最大堆疊次數 +{3}.]]
+附近玩家獲得 {1} 「腎上腺素」, 最多至 {2}.
+「腎上腺素」最大堆疊次數 +{3}.]]
 
 LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[心臟過載]]
 LANGUAGE["Perk_assault_cardiac_overload"] = [[
-“腎上腺素”持續時間提升 {1}。
-“腎上腺素”最大堆疊次數 +{2}。]]
+「腎上腺素」持續時間提升 {1}。
+「腎上腺素」最大堆疊次數 +{2}。]]
 
 LANGUAGE["Perk_Title_Assault_Tier_4"] = [[條件反射]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[精神統一]]
 LANGUAGE["Perk_assault_heightened_reflex"] = [[
 提升 {1} 爆頭傷害。
-滿“腎上腺素”前提下，提升 {2} 所有傷害抗性。]]
+滿「腎上腺素」前提下，提升 {2} 所有傷害抗性。]]
 
 LANGUAGE["Perk_Title_assault_merciless_assault"] = [[勢如破竹]]
 LANGUAGE["Perk_assault_merciless_assault"] = [[
-爆頭有 {1} 機率 +1 層“腎上腺素”。
-“腎上腺素”最大堆疊次數 +{2}。]]
+爆頭有 {1} 機率 +1 層「腎上腺素」。
+「腎上腺素」最大堆疊次數 +{2}。]]
 
 -- Default Perks: Heavy
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[壓制]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[黏性化合物]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
-子彈傷害擊中的敵人受到“抑制”異常狀態。
-“抑制”狀態下，造成 {1} 更少傷害。]]
+子彈傷害擊中的敵人受到「抑制」異常狀態。
+「抑制」狀態下，造成 {1} 更少傷害。]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[粗糙彈殼]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
-子彈傷害擊中的敵人受到“虛弱”異常狀態。
-“虛弱”狀態下，受到 {1} 更多傷害。]]
+子彈傷害擊中的敵人受到「虛弱」異常狀態。
+「虛弱」狀態下，受到 {1} 更多傷害。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[備用]]
 LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[修復催化劑]]
@@ -346,15 +346,15 @@ LANGUAGE["Perk_medic_painkillers"] = [[
 LANGUAGE["Perk_Title_Medic_Tier_2"] = [[生物工程]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[狂化]]
 LANGUAGE["Perk_medic_berserk"] = [[
-治療的對象獲得“狂化”增益狀態。
-“狂化”狀態持續 {1} 秒。
-“狂化”狀態下，提升 {2} 傷害。]]
+治療的對象獲得「狂化」增益狀態。
+「狂化」狀態持續 {1} 秒。
+「狂化」狀態下，提升 {2} 傷害。]]
 
 LANGUAGE["Perk_Title_medic_fortify"] = [[堅固]]
 LANGUAGE["Perk_medic_fortify"] = [[
-治療的對象獲得“堅固”增益狀態。
-“堅固”狀態持續 {1} 秒。
-“堅固”狀態下，受到 {2} 更少傷害。]]
+治療的對象獲得「堅固」增益狀態。
+「堅固」狀態持續 {1} 秒。
+「堅固」狀態下，受到 {2} 更少傷害。]]
 
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[增強]]
 LANGUAGE["Perk_Title_medic_purify"] = [[凈化]]
@@ -363,9 +363,9 @@ LANGUAGE["Perk_medic_purify"] = [[
 
 LANGUAGE["Perk_Title_medic_haste"] = [[加速]]
 LANGUAGE["Perk_medic_haste"] = [[
-治療的對象獲得“加速”增益狀態。
-“加速”狀態持續 {1} 秒。
-“加速”狀態下，提升 {2} 移動速度。]]
+治療的對象獲得「加速」增益狀態。
+「加速」狀態持續 {1} 秒。
+「加速」狀態下，提升 {2} 移動速度。]]
 
 LANGUAGE["Perk_Title_Medic_Tier_4"] = [[物競天擇]]
 LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[細胞坍縮]]
@@ -436,20 +436,20 @@ LANGUAGE["Perk_ghost_sniper"] = [[
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[戰略轉移]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[幽靈漫步]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
-奔跑不會取消“迷彩”狀態。
+奔跑不會取消「迷彩」狀態。
 迷彩狀態下提升 {1} 移動速度。]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[幻影披風]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
-攻擊不會取消“迷彩”狀態。
+攻擊不會取消「迷彩」狀態。
 迷彩啟動速度提升 {1}。]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[彈道]]
 LANGUAGE["Perk_Title_ghost_brain_snap"] = [[蝕腦]]
 LANGUAGE["Perk_ghost_brain_snap"] = [[
-爆頭提升“霜凍”累計值，基於武器原始傷害。
-“霜凍”狀態下，大幅度減緩敵人行動速度 {1} 秒。
-“霜凍”狀態冷卻時間為 {2} 秒。]]
+爆頭提升「霜凍」累計值，基於武器原始傷害。
+「霜凍」狀態下，大幅度減緩敵人行動速度 {1} 秒。
+「霜凍」狀態冷卻時間為 {2} 秒。]]
 
 LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[蓄能衝擊]]
 LANGUAGE["Perk_ghost_kinetic_impact"] = [[
@@ -464,7 +464,7 @@ LANGUAGE["Perk_ghost_coup"] = [[
 
 LANGUAGE["Perk_Title_ghost_decapitate"] = [[斬首]]
 LANGUAGE["Perk_ghost_decapitate"] = [[
-“迷彩”狀態下：
+「迷彩」狀態下：
   提升 {1} 子彈傷害。
   提升 {2} 對精英敵人造成的爆頭傷害。]]
 
@@ -594,7 +594,7 @@ LANGUAGE["Perk_warden_inoculation"] = [[
 LANGUAGE["Perk_Title_Warden_Tier_4"] = [[廣域化]]
 LANGUAGE["Perk_Title_warden_ex_machina"] = [[機械降神]]
 LANGUAGE["Perk_warden_ex_machina"] = [[
-守望塔提供“守望光環”。]]
+守望塔提供「守望光環」。]]
 
 LANGUAGE["Perk_Title_warden_resonance_cascade"] = [[級聯共振]]
 LANGUAGE["Perk_warden_resonance_cascade"] = [[
