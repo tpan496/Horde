@@ -15,8 +15,8 @@ LANGUAGE["Default_Font"] = "微軟雅黑"
 LANGUAGE["Default_Font_Scale"] = 1.20
 
 -- Game Info
-LANGUAGE["Game_Ready"] = "     準備"
-LANGUAGE["Game_Not Ready"] = "     未準備"
+LANGUAGE["Game_Ready"] = "    準備"
+LANGUAGE["Game_Not Ready"] = "    未準備"
 LANGUAGE["Game_Players_Ready"] = "等待玩家"
 LANGUAGE["Game_Next_Wave_Starts_In"] = "下一波在 %d 秒後開始"
 LANGUAGE["Game_Difficulty_NORMAL"] = "普通"
@@ -269,6 +269,7 @@ LANGUAGE["Perk_assault_overclock"] = [[
 「腎上腺素」最大堆疊次數 +{1}。]]
 
 LANGUAGE["Perk_Title_Assault_Tier_3"] = [[進攻]]
+
 LANGUAGE["Perk_Title_assault_cardiac_resonance"] = [[心室共鳴]]
 LANGUAGE["Perk_assault_cardiac_resonance"] = [[
 每次擊殺敵人後，
@@ -364,8 +365,7 @@ LANGUAGE["Perk_medic_purify"] = [[
 LANGUAGE["Perk_Title_medic_haste"] = [[加速]]
 LANGUAGE["Perk_medic_haste"] = [[
 治療的對象獲得「加速」增益狀態。
-「加速」狀態持續 {1} 秒。
-「加速」狀態下，提升 {2} 移動速度。]]
+「加速」狀態持續 {1} 秒。「加速」狀態下，提升 {2} 移動速度。]]
 
 LANGUAGE["Perk_Title_Medic_Tier_4"] = [[物競天擇]]
 LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[細胞坍縮]]
@@ -437,12 +437,14 @@ LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[戰略轉移]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[幽靈漫步]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
 奔跑不會取消「迷彩」狀態。
-迷彩狀態下提升 {1} 移動速度。]]
+迷彩狀態下提升 {1} 移動速度。
+迷彩狀態下提升 {2} 閃避機率。]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[幻影披風]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
 攻擊不會取消「迷彩」狀態。
-迷彩啟動速度提升 {1}。]]
+迷彩啟動速度提升 {1}。
+「迷彩」狀態下提升 {2} 子彈傷害。]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[彈道]]
 LANGUAGE["Perk_Title_ghost_brain_snap"] = [[蝕腦]]
@@ -609,8 +611,7 @@ LANGUAGE["Perk_cremator_methane"] = [[
 
 LANGUAGE["Perk_Title_cremator_napalm"] = [[凝固汽油彈]]
 LANGUAGE["Perk_cremator_napalm"] = [[
-提升 {1} 引燃半徑。
-提升 {2} 引燃持續時間。]]
+提升 {1} 引燃持續時間。]]
 
 LANGUAGE["Perk_Title_Cremator_Tier_2"] = [[能量汲取]]
 LANGUAGE["Perk_Title_cremator_positron_array"] = [[陽電子陣列]]
@@ -645,8 +646,8 @@ LANGUAGE["Perk_cremator_firestorm"] = [[
 
 LANGUAGE["Perk_Title_cremator_incineration"] = [[燃燒殆盡]]
 LANGUAGE["Perk_cremator_incineration"] = [[
-提升 {1} 引燃傷害。
-提升 {2} 引燃機率。]]
+提升 {1} 引燃傷害。]]
+
 
 -- Default Config Shop Items
 -- Optional
@@ -763,6 +764,12 @@ Steyr TMP.
 A select-fire 9×19mm Parabellum caliber machine pistol.
 ]]
 
+LANGUAGE["Item_Flare Gun"] = [[Flare Gun]]
+LANGUAGE["Item_Desc_Flare Gun"] = [[
+Orion Safety Flare Gun.
+Ignites enemies and deals Fire damage.
+]]
+
 LANGUAGE["Item_Anaconda"] = [[Anaconda]]
 LANGUAGE["Item_Desc_Anaconda"] = [[
 Colt Anaconda.
@@ -856,6 +863,12 @@ LANGUAGE["Item_XM1014"] = [[XM1014]]
 LANGUAGE["Item_Desc_XM1014"] = [[
 Benelli M4 Super 90.
 Fully automatic shotgun.
+]]
+
+LANGUAGE["Item_Trench Gun"] = [[Trench Gun]]
+LANGUAGE["Item_Desc_Trench Gun"] = [[
+Winchester Model 1200.
+Shoots incendiary pellets.
 ]]
 
 LANGUAGE["Item_SPAS-12"] = [[SPAS-12]]
@@ -981,13 +994,6 @@ M249 light machine gun.
 A gas operated and air-cooled weapon of destruction.
 ]]
 
-LANGUAGE["Item_M240B"] = [[M240B]]
-LANGUAGE["Item_Desc_M240B"] = [[
-M240 Bravo.
-Fires 7.62mm NATO ammunition.
-Equipped by U.S. Armed Forces.
-]]
-
 LANGUAGE["Item_MG4"] = [[MG4]]
 LANGUAGE["Item_Desc_MG4"] = [[
 Heckler & Koch MG4.
@@ -1006,6 +1012,18 @@ LANGUAGE["Item_Desc_DamageResistance RPG"] = [[
 反抗軍粗製火箭筒。
 ]]
 
+LANGUAGE["Item_M79 GL"] = [[M79 GL]]
+LANGUAGE["Item_Desc_M79 GL"] = [[
+M79 Grenade Launcher.
+Shoots 40x46mm grenades the explodes on impact.
+]]
+
+LANGUAGE["Item_M32 GL"] = [[M32 GL]]
+LANGUAGE["Item_Desc_M32 GL"] = [[
+Milkor Multiple Grenade Launcher.
+A lightweight 40mm six-shot revolver grenade launcher.
+]]
+
 LANGUAGE["Item_RPG-7"] = [[RPG-7]]
 LANGUAGE["Item_Desc_RPG-7"] = [[
 Ruchnoy Protivotankoviy Granatomyot.
@@ -1022,6 +1040,18 @@ LANGUAGE["Item_Incendiary Grenade"] = [[燃燒手榴彈]]
 LANGUAGE["Item_Desc_Incendiary Grenade"] = [[
 引爆後產生大量火焰。
 火焰對敵人造成持續傷害。
+]]
+
+LANGUAGE["Item_Molotov"] = [[Molotov]]
+LANGUAGE["Item_Desc_Molotov"] = [[
+Generates a pool of fire on impact.
+Sets everything on fire within its effect.
+]]
+
+LANGUAGE["Item_Incendiary Launcher"] = [[Incendiary Launcher]]
+LANGUAGE["Item_Desc_Incendiary Launcher"] = [[
+Incendiary Grenade Launcher.
+Shoots incendiary grenades the erupt into flames on impact.
 ]]
 
 
@@ -1054,6 +1084,12 @@ LANGUAGE["Item_Desc_Watchtower"] = [[
 一個能提供補給的守望塔。
 每 30 秒產生 1 個彈藥包。
 （實體名稱：horde_watchtower）
+]]
+
+LANGUAGE["Item_M2 Flamethrower"] = [[M2 噴火器]]
+LANGUAGE["Item_Desc_M2 Flamethrower"] = [[
+M2-2 Flamethrower.
+An American man-portable backpack flamethrower.
 ]]
 
 
@@ -1097,7 +1133,6 @@ LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
 LANGUAGE["Item_Tau Cannon"] = [[高斯槍]]
 LANGUAGE["Item_Desc_Tau Cannon"] = [[
 使用強大的電磁力產生炙熱的等離子體。
-
 長按右鍵進行蓄力。
 蓄力攻擊造成更多傷害。
 蓄力時間過長會產生爆炸。
@@ -1109,7 +1144,6 @@ MP7A1 醫療改進版。
 
 按 B 或者 放大鍵 發射醫療針。
 醫療針冷卻時間為 1 秒。
-Healing dart recharges every 1 second.
 ]]
 
 LANGUAGE["Item_Vector Medic PDW"] = [[Vector 醫療衝鋒槍]]
@@ -1136,19 +1170,22 @@ LANGUAGE["Item_Desc_Mjollnir"] = [[
 充能後，下次武器攻擊命中敵人會造成範圍性雷電傷害。
 ]]
 
-LANGUAGE["Item_Inferno Blade"] = [[惡魔刀鋒]]
-LANGUAGE["Item_Desc_Inferno Blade"] = [[
-蘊含著火焰力量的彎刀。
-
-右鍵開啟火焰模式，使攻擊附帶範圍性火焰傷害。
-火焰模式會對使用者造成持續的火焰傷害。
-]]
-
 LANGUAGE["Item_Double Barrel"] = [[雙管獵槍]]
 LANGUAGE["Item_Desc_Double Barrel"] = [[
 雙管獵槍。
-
 對近距離的敵人能造成大量傷害。
+]]
+
+LANGUAGE["Item_FN FAL"] = [[FN FAL]]
+LANGUAGE["Item_Desc_FN FAL"] = [[
+FN FAL.
+A battle rifle designed by Belgian and manufactured by FN Herstal.
+]]
+
+LANGUAGE["Item_AUG HBAR"] = [[AUG HBAR]]
+LANGUAGE["Item_Desc_AUG HBAR"] = [[
+Steyr AUG HBAR.
+A light-support machine gun variant of the AUG assault rifle.
 ]]
 
 LANGUAGE["Item_Manhack"] = [[巡邏無人機]]
@@ -1170,23 +1207,86 @@ LANGUAGE["Item_Desc_Combat Bot"] = [[
 會使用威力巨大的近距離攻擊和遠距離投擲攻擊。
 ]]
 
-LANGUAGE["Item_Hivehand"] = [[蜂巢槍]]
-LANGUAGE["Item_Desc_Hivehand"] = [[
-XEN 星球士兵使用的生物兵器。
+LANGUAGE["Item_Advanced Kevlar Armor"] = [[Advanced Kevlar Armor]]
+LANGUAGE["Item_Desc_Advanced Kevlar Armor"] = [[
+Distinguished Survivor armor.
 
-左鍵發射帶有追蹤功能的蜂群。
-右鍵能夠快速射出無追蹤能力的蜂群。
+Fills up 100% of your armor bar.
+Provides 5% increased damage resistance.
 ]]
 
-LANGUAGE["Item_M2 Flamethrower"] = [[M2 噴火器]]
+LANGUAGE["Item_Assault Vest"] = [[Assault Vest]]
+LANGUAGE["Item_Desc_Assault Vest"] = [[
+Distinguished Assault armor.
 
-LANGUAGE["Item_Gluon Gun"] = [[膠子槍]]
-LANGUAGE["Item_Desc_Gluon Gun"] = [[
-量子熱力學溶解類武器。
-
-能夠發射極其危險的超高溫雷射。
+Fills up 100% of your armor bar.
+Provides 8% increased Ballistic damage resistance.
 ]]
 
+LANGUAGE["Item_Bulldozer Suit"] = [[Bulldozer Suit]]
+LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
+Distinguished Heavy armor.
+
+Fills up 125% of your armor bar.
+]]
+
+LANGUAGE["Item_Hazmat Suit"] = [[Hazmat Suit]]
+LANGUAGE["Item_Desc_Hazmat Suit"] = [[
+Distinguished Medic armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Poison damage resistance.
+]]
+
+LANGUAGE["Item_Bomb Suit"] = [[Bomb Suit]]
+LANGUAGE["Item_Desc_Bomb Suit"] = [[
+Distinguished Demolition armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Blast damage resistance.
+]]
+
+LANGUAGE["Item_Assassin's Cloak"] = [[Assassin's Cloak]]
+LANGUAGE["Item_Desc_Assassin's Cloak"] = [[
+Distinguished Ghost armor.
+
+Fills up 100% of your armor bar.
+Provides 5% increased evasion.
+]]
+
+LANGUAGE["Item_Defense Matrix"] = [[Defense Matrix]]
+LANGUAGE["Item_Desc_Defense Matrix"] = [[
+Distinguished Engineer armor.
+
+Fills up 100% of your armor bar.
+Provides 5% increased damage resistance.
+]]
+
+LANGUAGE["Item_Riot Armor"] = [[Riot Armor]]
+LANGUAGE["Item_Desc_Riot Armor"] = [[
+Distinguished Warden armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Shock and Sonic damage resistance.
+]]
+
+LANGUAGE["Item_Molten Armor"] = [[Molten Armor]]
+LANGUAGE["Item_Desc_Molten Armor"] = [[
+Distinguished Cremator armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Fire damage resistance.
+]]
+
+LANGUAGE["Item_Battle Vest"] = [[Battle Vest]]
+LANGUAGE["Item_Desc_Battle Vest"] = [[
+Distinguished Berserker armor.
+
+Fills up 100% of your armor bar.
+Provides 8% increased Slashing and Blunt damage resistance.
+]]
+
+-- Gadgets
 LANGUAGE["Gadget_gadget_blast_plating"] = [[防爆塗層]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
 提升 20% 爆炸和聲波傷害抗性。
@@ -1202,15 +1302,24 @@ LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
 提升 20% 火焰傷害抗性。
 ]]
 
+LANGUAGE["Gadget_gadget_detoxifier"] = [[抗毒劑]]
+LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
+提升 20% 毒素傷害抗性。
+]]
+
 LANGUAGE["Gadget_gadget_diamond_plating"] = [[鑽石塗層]]
 LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
 提升 15% 物理傷害抗性。
 ]]
 
-LANGUAGE["Gadget_gadget_detoxifier"] = [[抗毒劑]]
-LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
-提升 20% 毒素傷害抗性。
+LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Corporate Mindset]]
+LANGUAGE["Gadget_Desc_gadget_corporate_mindset"] = [[
+"Set goals. Have a ten year plan. Invest. Wake up Early. CEO Mindset."
+
+Greatly increases skull tokens drop chance.
 ]]
+
+-- Survivor Gadgets
 
 LANGUAGE["Gadget_gadget_vitality_booster"] = [[體力提升]]
 LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
@@ -1222,6 +1331,159 @@ LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
 提升 25% 全局傷害。
 ]]
 
+-- Assault Gadgets
+LANGUAGE["Gadget_gadget_iv_injection"] = [[生命注射劑]]
+LANGUAGE["Gadget_Desc_iv_injection"] = [[
+恢復 25 點生命值。
+]]
+
+LANGUAGE["Gadget_gadget_cortex"] = [[皮層刺激器]]
+LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
+For each enemy near you, gain 1 Adrenaline stack.
+Elite enemies grant 2 stacks.
+]]
+
+LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[精神統一]]
+LANGUAGE["Gadget_Desc_neuro_amplifier"] = [[
+Adrenaline also increases 6% evasion.
+]]
+
+LANGUAGE["Gadget_ouroboros"] = [[咬尾蛇]]
+LANGUAGE["Gadget_Desc_ouroboros"] = [[
+Ouroboros nervous system assistant.
+Removes body regulations to increase combat capabilities.
+
+When you have more than 50% health, you lose 1 health per second.
+When you have less than 50% health, you gain 2 health per second.
+For each 1% health missing, increase your damage by 0.8%.
+]]
+
+-- Heavy Gadgets
+LANGUAGE["Gadget_gadget_energy_shield"] = [[能量盾]]
+LANGUAGE["Gadget_Desc_energy_shield"] = [[
+暫時獲得額外 25 點護甲。
+]]
+
+LANGUAGE["Gadget_gadget_hardening_injection"] = [[硬化注射劑]]
+LANGUAGE["Gadget_Desc_hardening_injection"] = [[
+移動速度減緩 50%。
+提升 25% 全局傷害抗性。
+提升 25% 物理傷害抗性。
+]]
+
+LANGUAGE["Gadget_exoskeleton"] = [[外骨骼]]
+LANGUAGE["Gadget_Desc_exoskeleton"] = [[
+Using the active ability activates a short boost.
+
+You cannot run.
+Passively provides 20% increased Global damage resistance.
+]]
+
+LANGUAGE["Gadget_t_virus"] = [[T-病毒]]
+LANGUAGE["Gadget_Desc_t_virus"] = [[
+Converts your armor to health.
+Cannot convert pass 250% health.
+]]
+
+-- Medic Gadgets
+LANGUAGE["Gadget_gadget_life_diffuser"] = [[活體擴散器]]
+LANGUAGE["Gadget_Desc_gadget_life_diffuser"] = [[
+Triggers a pulse that heals nearby players.
+Heals 20 health.
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[發射器（治癒彈）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
+發射帶有治癒效果的化學藥彈。
+治癒彈造成 75 範圍性毒素傷害。
+治癒彈對範圍內友軍提供 25 生命恢復。
+]]
+
+LANGUAGE["Gadget_healing_beam"] = [[治療光波]]
+LANGUAGE["Gadget_Desc_gadget_healing_beam"] = [[
+Connects a healing beam between the user and target.
+If the target is an enemy, leeches health from the target.
+If the target is an ally, restores health to the ally.
+]]
+
+-- Ghost Gadgets
+LANGUAGE["Gadget_gadget_optical_camouflage"] = [[光學迷彩]]
+LANGUAGE["Gadget_Desc_optical_camouflage"] = [[
+強制提供 5 秒迷彩效果。
+迷彩效果期間，提升 50% 閃避機率。
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_ballistic"] = [[發射器（衝擊彈）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
+發射能產生大量衝擊的弓箭。
+弓箭造成 150 子彈傷害。
+弓箭對擊中敵人造成眩暈效果。
+]]
+
+LANGUAGE["Gadget_death_mark"] = [[死亡標記]]
+LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
+Places a mark on the targeted enemy.
+Marked enemy takes 15% more damage.
+Marked enemy explodes on death, dealing damage based on its health.
+The mark lasts for 10 seconds.
+You can only mark 1 enemy at a time.
+]]
+
+LANGUAGE["Gadget_gunslinger"] = [[神槍手]]
+LANGUAGE["Gadget_Desc_gadget_gunslinger"] = [[
+25% 更多手槍傷害。
+25% 更多手槍爆頭傷害。
+]]
+
+-- Demolition Gadgets
+LANGUAGE["Gadget_gadget_proximity_defense"] = [[近身制御]]
+LANGUAGE["Gadget_Desc_proximity_defense"] = [[
+眩暈自身周圍的所有敵人。
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[發射器（破片彈）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
+發射不穩定爆破彈。
+爆破彈造成 100 範圍性爆炸傷害。
+爆破彈爆炸後，產生 3 個額外破片爆炸。
+]]
+
+LANGUAGE["Gadget_nitrous_propellor"] = [[氮氣彈射器]]
+LANGUAGE["Gadget_Desc_gadget_nitrous_propellor"] = [[
+Propells you forward and upward with a chemical explosion.
+]]
+
+LANGUAGE["Gadget_ied"] = [[應急地雷]]
+LANGUAGE["Gadget_Desc_gadget_ied"] = [[
+Drops an Improvised Explosive Device on the ground.
+IED explodes when an enemy comes in range.
+You have 5 IED charges.
+IED recharges after detonation.
+]]
+
+-- Engineer Gadgets
+LANGUAGE["Gadget_displacer"] = [[傳送器]]
+LANGUAGE["Gadget_Desc_gadget_displacer"] = [[
+Instantly moves the targeted minion to your side.
+]]
+
+LANGUAGE["Gadget_gadget_turret_pack"] = [[便攜步哨]]
+LANGUAGE["Gadget_Desc_gadget_turret_pack"] = [[
+Deploys a temporary turret.
+Turret has 50% less health.
+Turret is destroyed when duration expires.
+]]
+
+LANGUAGE["Gadget_gadget_e_parasite"] = [[E-寄生蟲]]
+LANGUAGE["Gadget_Desc_gadget_e_parasite"] = [[
+發射E-寄生蟲，感染擊中的目標。
+E-寄生蟲享有全部的召喚物技能效果。
+E-寄生蟲對感染目標造成持續傷害。
+E-寄生蟲為使用者提供持續生命恢復。
+被感染的目標死亡後，造成等於目標最大生命值的爆炸傷害。
+]]
+
+-- Berserker Gadgets
 LANGUAGE["Gadget_gadget_berserk_armor"] = [[狂戰盔甲]]
 LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
 提升 25% 全局傷害。
@@ -1235,6 +1497,44 @@ LANGUAGE["Gadget_Desc_flash"] = [[
 提供短暫的無敵時間。
 ]]
 
+LANGUAGE["Gadget_aerial_guard"] = [[空中制御]]
+LANGUAGE["Gadget_Desc_aerial_guard"] = [[
+While in air, take 65% less Physical damage.
+]]
+
+LANGUAGE["Gadget_hemocannon"] = [[血能炮]]
+LANGUAGE["Gadget_Desc_hemocannon"] = [[
+Shoots a projectile at the cost of 10 health.
+The projectile travels for a short distance and explodes.
+The explosion deals 100 Slashing damage.
+Has a maximum of 5 charges.
+Recharges after 5 seconds.
+]]
+
+-- Warden Gadgets
+LANGUAGE["Gadget_gadget_solar_array"] = [[太陽能陣列]]
+LANGUAGE["Gadget_Desc_gadget_solar_array"] = [[
+產生一個護甲包。
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[發射器（雷電彈）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
+發射能夠穿透敵人的雷電彈。
+雷電彈每穿透一個敵人，造成 125 範圍性雷電傷害。
+]]
+
+LANGUAGE["Gadget_watchtower_pack"] = [[便攜守望塔]]
+LANGUAGE["Gadget_Desc_gadget_watchtower_pack"] = [[
+部署額外的守望塔。
+]]
+
+LANGUAGE["Gadget_shock_nova"] = [[雷神]]
+LANGUAGE["Gadget_Desc_gadget_shock_nova"] = [[
+Warden Aura rapidly generates a series of shockwaves.
+Each shockwave deals 50 Lightning damage.
+]]
+
+-- Cremator Gadgets
 LANGUAGE["Gadget_gadget_butane_can"] = [[易燃物]]
 LANGUAGE["Gadget_Desc_gadget_butane_can"] = [[
 產生一個丙烷氣罐。
@@ -1249,106 +1549,8 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_fire"] = [[
 火焰彈基礎引燃傷害為 20。
 ]]
 
-LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[發射器（雷電彈）]]
-LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
-發射能夠穿透敵人的雷電彈。
-雷電彈每穿透一個敵人，造成 125 範圍性雷電傷害。
-]]
-
-
-LANGUAGE["Gadget_gadget_projectile_launcher_ballistic"] = [[發射器（衝擊彈）]]
-LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
-發射能產生大量衝擊的弓箭。
-弓箭造成 150 子彈傷害。
-弓箭對擊中敵人造成眩暈效果。
-]]
-
-
-LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[發射器（破片彈）]]
-LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
-發射不穩定爆破彈。
-爆破彈造成 100 範圍性爆炸傷害。
-爆破彈爆炸後，產生 3 個額外破片爆炸。
-]]
-
-LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[發射器（治癒彈）]]
-LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
-發射帶有治癒效果的化學藥彈。
-治癒彈造成 75 範圍性毒素傷害。
-治癒彈對範圍內友軍提供 25 生命恢復。
-]]
-
-LANGUAGE["Gadget_gadget_e_parasite"] = [[E-寄生蟲]]
-LANGUAGE["Gadget_Desc_gadget_e_parasite"] = [[
-發射E-寄生蟲，感染擊中的目標。
-E-寄生蟲享有全部的召喚物技能效果。
-E-寄生蟲對感染目標造成持續傷害。
-E-寄生蟲為使用者提供持續生命恢復。
-被感染的目標死亡後，造成等於目標最大生命值的爆炸傷害。
-]]
-
-LANGUAGE["Gadget_gadget_energy_shield"] = [[能量盾]]
-LANGUAGE["Gadget_Desc_energy_shield"] = [[
-暫時獲得額外 25 點護甲。
-]]
-
-LANGUAGE["Gadget_gadget_hardening_injection"] = [[硬化注射劑]]
-LANGUAGE["Gadget_Desc_hardening_injection"] = [[
-移動速度減緩 50%。
-提升 25% 全局傷害抗性。
-提升 25% 物理傷害抗性。
-]]
-
-LANGUAGE["Gadget_gadget_iv_injection"] = [[生命注射劑]]
-LANGUAGE["Gadget_Desc_iv_injection"] = [[
-恢復 25 點生命值。
-]]
-
-LANGUAGE["Gadget_gadget_proximity_defense"] = [[近身制御]]
-LANGUAGE["Gadget_Desc_proximity_defense"] = [[
-眩暈自身周圍的所有敵人。
-]]
-
-LANGUAGE["Gadget_gadget_optical_camouflage"] = [[光學迷彩]]
-LANGUAGE["Gadget_Desc_optical_camouflage"] = [[
-強制提供 5 秒迷彩效果。
-迷彩效果期間，提升 50% 閃避機率。
-]]
-
-LANGUAGE["Gadget_gadget_life_diffuser"] = [[活體擴散器]]
-
-LANGUAGE["Gadget_gadget_solar_array"] = [[太陽能陣列]]
-
-LANGUAGE["Gadget_gadget_turret_pack"] = [[便攜步哨]]
-
-LANGUAGE["Gadget_gadget_cortex"] = [[皮層刺激器]]
-
-LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[精神統一]]
-
-LANGUAGE["Gadget_ouroboros"] = [[咬尾蛇]]
-
-LANGUAGE["Gadget_exoskeleton"] = [[外骨骼]]
-
-LANGUAGE["Gadget_t_virus"] = [[T-病毒]]
-
-LANGUAGE["Gadget_healing_beam"] = [[治療光波]]
-
-LANGUAGE["Gadget_nitrous_propellor"] = [[氮氣彈射器]]
-
-LANGUAGE["Gadget_ied"] = [[應急地雷]]
-
-LANGUAGE["Gadget_death_mark"] = [[死亡標記]]
-
-LANGUAGE["Gadget_gunslinger"] = [[神槍手]]
-
-LANGUAGE["Gadget_displacer"] = [[傳送器]]
-
-LANGUAGE["Gadget_aerial_guard"] = [[空中制御]]
-
-LANGUAGE["Gadget_hemocannon"] = [[血能炮]]
-
-LANGUAGE["Gadget_watchtower_pack"] = [[便攜守望塔]]
-
-LANGUAGE["Gadget_shock_nova"] = [[雷神]]
-
 LANGUAGE["Gadget_barbeque"] = [[燒烤]]
+LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
+Ignited enemies killed by you drop edible gibs.
+Each gib restores 5 health.
+]]
