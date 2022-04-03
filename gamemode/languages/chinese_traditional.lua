@@ -11,9 +11,6 @@ resistance vs. less damage taken: same as above.
 
 translate.AddLanguage("zh-TW", "Chinese Traditional")
 
-LANGUAGE["Default_Font"] = "微軟雅黑"
-LANGUAGE["Default_Font_Scale"] = 1.20
-
 -- Game Info
 LANGUAGE["Game_Ready"] = "    準備"
 LANGUAGE["Game_Not Ready"] = "    未準備"
@@ -1042,7 +1039,7 @@ LANGUAGE["Item_Desc_Incendiary Grenade"] = [[
 火焰對敵人造成持續傷害。
 ]]
 
-LANGUAGE["Item_Molotov"] = [[Molotov]]
+LANGUAGE["Item_Molotov"] = [[莫洛托夫汽油彈]]
 LANGUAGE["Item_Desc_Molotov"] = [[
 Generates a pool of fire on impact.
 Sets everything on fire within its effect.
