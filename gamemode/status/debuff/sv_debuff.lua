@@ -9,6 +9,7 @@ HORDE.Debuff_Notifications = {
     [HORDE.Status_Break] = "You are inflicted by Break.\nYour health is reduced drastically and will recover slowly.",
     [HORDE.Status_Decay] = "You are inflicted by Decay.\nYou cannot heal.",
     [HORDE.Status_Psychosis] = "Y'ai 'ng'ngah, Yog-Sothoth h'ee - l'geb f'ai throdog uaaah.",
+    [HORDE.Status_Necrosis] = "You are killed by Necrosis."
 }
 
 function plymeta:Horde_SetApplyDebuffDuration(duration)
@@ -52,7 +53,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         hook.Run("Horde_OnPlayerDebuffApply", self, debuff, bonus, inflictor)
         if bonus.apply == 0 then return end
         buildup = buildup * bonus.more
-        if buildup < 1 then return end
+        if buildup < 1  then return end
 
         if HORDE.Status_Buildup_Sounds[debuff] then
             sound.Play(HORDE.Status_Buildup_Sounds[debuff], self:GetPos(), 100, math.random(80,110))
@@ -80,13 +81,18 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         end
         self.Horde_Debuff_Buildup[debuff] = math.min(100, self.Horde_Debuff_Buildup[debuff] + buildup)
 
-        if debuff == HORDE.Status_Frostbite and pos then
+        if not pos then pos = self:GetPos() end
+        if (debuff == HORDE.Status_Frostbite) or (debuff == HORDE.Status_Freeze) then
             local effectdata = EffectData()
                 effectdata:SetOrigin(pos)
                 effectdata:SetScale(10)
                 effectdata:SetMagnitude(10)
             util.Effect("GlassImpact", effectdata, true, true)
             util.Effect("GlassImpact", effectdata, true, true)
+        elseif debuff == HORDE.Status_Shock then
+            local data = EffectData();
+            data:SetOrigin(pos)
+            util.Effect("StunstickImpact", data);
         end
     end
     if self.Horde_Debuff_Buildup[debuff] < 100 then return end
@@ -106,13 +112,22 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         if debuff == HORDE.Status_Bleeding then
             self:Horde_AddBleedingEffect(inflictor)
         elseif debuff == HORDE.Status_Frostbite then
-            self:Horde_AddFrostbiteEffect()
+            self:Horde_AddFrostbiteEffect(duration)
         elseif debuff == HORDE.Status_Ignite then
             self:Horde_AddIgniteEffect(duration, inflictor)
         elseif debuff == HORDE.Status_Break then
-            timer.Simple(0, function() self:Horde_AddBreakEffect(duration) end)
-        --elseif debuff == HORDE.Status_Psychosis then
-        --    self:TakeDamage(50, self, self)
+            timer.Simple(0, function() self:Horde_AddBreakEffect(duration, inflictor) end)
+        elseif debuff == HORDE.Status_Necrosis then
+            timer.Simple(0.2, function ()
+                local dmginfo = DamageInfo()
+                dmginfo:SetAttacker(inflictor)
+                dmginfo:SetInflictor(inflictor)
+                dmginfo:SetDamageType(DMG_DIRECT)
+                dmginfo:SetDamage(self:GetMaxHealth() + 5)
+                if self:IsValid() then self:TakeDamageInfo(dmginfo) end
+            end)
+        elseif debuff == HORDE.Status_Freeze then
+            self:Horde_AddFreezeEffect(duration)
         end
     else
         local duration = 5
@@ -130,7 +145,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         elseif debuff == HORDE.Status_Ignite then
             self:Horde_AddIgniteEffect(duration, inflictor)
         elseif debuff == HORDE.Status_Break then
-            timer.Simple(0, function() self:Horde_AddBreakEffect(duration) end)
+            timer.Simple(0, function() self:Horde_AddBreakEffect(duration, inflictor) end)
         --elseif debuff == HORDE.Status_Psychosis then
         --    self:TakeDamage(50, self, self)
         end

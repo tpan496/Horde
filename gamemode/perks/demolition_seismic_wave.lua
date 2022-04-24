@@ -6,7 +6,7 @@ PERK.Params = {
     [1] = {value = 0.3, percent = true},
 }
 
-local exp = {obj_vj_law_rocket = 200, obj_vj_rpg_rocket = 100, arccw_he_round = 75, env_explosion = 50, rpg_missile = 50}
+local exp = {obj_vj_law_rocket = 200, obj_vj_rpg_rocket = 100, arccw_he_round = 75, env_explosion = 50, rpg_missile = 50, horde_sticky_bomb = 75}
 PERK.Hooks = {}
 
 PERK.Hooks.EntityRemoved = function(ent)

@@ -6,7 +6,7 @@ if CLIENT then
     killicon.Add("arccw_horde_katana", "vgui/hud/arccw_horde_katana", Color(0, 0, 0, 255))
 end
 
-SWEP.Base = "arccw_base_melee"
+SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -16,7 +16,7 @@ SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Japanese Sword."
 SWEP.Trivia_Manufacturer = "Arasaki"
 SWEP.Trivia_Calibre = "N/A"
-SWEP.Trivia_Mechanism = "Shashing Weapon"
+SWEP.Trivia_Mechanism = "Slashing Weapon"
 SWEP.Trivia_Country = "Japan"
 SWEP.Trivia_Year = 2020
 
@@ -33,8 +33,8 @@ SWEP.ViewModelFOV = 60
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
-SWEP.MeleeDamage = 135
-SWEP.Melee2Damage = 80
+SWEP.MeleeDamage = 108
+SWEP.Melee2Damage = 64
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true

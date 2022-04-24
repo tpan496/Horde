@@ -40,7 +40,7 @@ HORDE.endless_damage_multiplier = 1
 
 -- Mutation
 HORDE.difficulty_mutation_probability = {0, 0.05, 0.10, 0.20, 0.30}
-HORDE.difficulty_elite_mutation_probability = {0, 0.05, 0.10, 0.30, 0.50}
+HORDE.difficulty_elite_mutation_probability = {0, 0.05, 0.10, 0.30, 0.40}
 
 -- Hook settings
 -- Damage scaling/handling

@@ -19,7 +19,8 @@ local status_color = {
     [HORDE.Status_Shock] = HORDE.DMG_COLOR[HORDE.DMG_LIGHTNING],
     [HORDE.Status_Break] = HORDE.DMG_COLOR[HORDE.DMG_POISON],
     [HORDE.Status_Bleeding] = HORDE.color_crimson_violet,
-    [HORDE.Status_Decay] = Color(50, 150, 50)
+    [HORDE.Status_Decay] = HORDE.STATUS_COLOR[HORDE.Status_Decay],
+    [HORDE.Status_Necrosis] = HORDE.STATUS_COLOR[HORDE.Status_Necrosis]
 }
 
 -- Stack < 0 means disabled

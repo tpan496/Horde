@@ -1080,7 +1080,7 @@ LANGUAGE["Item_Watchtower MKIII"] = [[守望塔 MKIII]]
 LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
 一个用来击退敌人的守望塔。
 每 1 秒对附近单个敌人发射电击。
-电击造成 100 范围伤害。
+电击造成 80 范围伤害。
 (实体名称：horde_watchtower）: horde_watchtower_mk3)
 ]]
 

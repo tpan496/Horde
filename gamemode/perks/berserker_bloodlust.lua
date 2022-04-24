@@ -1,5 +1,5 @@
 PERK.PrintName = "Bloodlust"
-PERK.Description = "Leech {1} of melee damage dealt, up to {2} hp per hit."
+PERK.Description = "Leech {1} of melee damage dealt, up to {2} hp per hit.\nImmune to Bleeding."
 PERK.Icon = "materials/perks/bloodlust.png"
 PERK.Params = {
     [1] = {value = 0.10, percent = true},

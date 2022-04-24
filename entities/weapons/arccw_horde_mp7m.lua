@@ -408,37 +408,35 @@ function SWEP:ChangeFiremode(pred)
     if !self.CanBash and !self:GetBuff_Override("Override_CanBash") then return end
     if CLIENT then return end
     local ply = self:GetOwner()
-    local rocket = ents.Create("projectile_mp7m_heal_round")
-    local vel = 10000
-    local ang = ply:GetAimVector()
+    local filter = {self:GetOwner()}
+    local tr = util.TraceHull({
+        start = self:GetOwner():GetShootPos(),
+        endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 5000,
+        filter = filter,
+        mins = Vector(-16, -16, -8),
+        maxs = Vector(16, 16, 8),
+        mask = MASK_SHOT_HULL
+    })
+    if tr.Hit then
+        local effectdata = EffectData()
+        effectdata:SetOrigin(tr.HitPos)
+        effectdata:SetRadius(50)
+        util.Effect("heal_mist", effectdata)
 
-    local src = self:GetShootSrc()
-
-    if !rocket:IsValid() then print("!!! INVALID ROUND " .. rocket) return end
-
-    local rocketAng = Angle(ang.p, ang.y, ang.r)
-
-    rocket:SetAngles(rocketAng)
-    rocket:SetPos(src)
-
-    rocket:SetOwner(ply)
-    rocket.Owner = ply
-    rocket.Horde_Wpn_Owner = self
-    rocket.Inflictor = rocket
-
-    local RealVelocity = (ply:GetAbsVelocity() or Vector(0, 0, 0)) + ang * vel / 0.0254
-    rocket.CurVel = RealVelocity -- for non-physical projectiles that move themselves
-
-    rocket:Spawn()
-    rocket:Activate()
-    if !rocket.NoPhys and rocket:GetPhysicsObject():IsValid() then
-        rocket:SetCollisionGroup(rocket.CollisionGroup or COLLISION_GROUP_DEBRIS)
-        rocket:GetPhysicsObject():SetVelocityInstantaneous(RealVelocity)
-    end
-
-    if rocket.Launch and rocket.SetState then
-        rocket:SetState(1)
-        rocket:Launch()
+        for _, ent in pairs(ents.FindInSphere(tr.HitPos, 100)) do
+            if ent:IsPlayer() then
+                local healinfo = HealInfo:New({amount=10, healer=ply})
+                HORDE:OnPlayerHeal(ent, healinfo)
+            elseif ent:IsNPC() then
+                local dmg = DamageInfo()
+                dmg:SetDamage(25)
+                dmg:SetDamageType(DMG_NERVEGAS)
+                dmg:SetAttacker(ply)
+                dmg:SetInflictor(self)
+                dmg:SetDamagePosition(tr.HitPos)
+                ent:TakeDamageInfo(dmg)
+            end
+        end
     end
 
     ply:EmitSound("horde/weapons/mp7m/heal.ogg", 125, 100, 1, CHAN_AUTO)

@@ -257,7 +257,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                     net.Broadcast()
 
                     -- Some special music for horde default boss.
-                    if GetConVar("horde_default_enemy_config"):GetInt() == 1 and boss_music_loop and not horde_boss_critical and ent.Critical then
+                    if GetConVar("horde_default_enemy_config"):GetInt() == 1 and HORDE.horde_boss and HORDE.horde_boss:IsValid() and boss_music_loop and not horde_boss_critical and ent.Critical then
                         timer.Remove("Horde_BossMusic")
                         boss_music_loop:Stop()
                         local fierce_music = {"music/hl1_song10.mp3", "music/hl2_song4.mp3", "music/hl2_song25_teleporter.mp3"}
@@ -397,8 +397,13 @@ function HORDE:SpawnEnemy(enemy, pos)
     if enemy.model_scale and enemy.model_scale ~= 1 then
         timer.Simple(0, function()
             if not spawned_enemy:IsValid() then return end
-            local scale = spawned_enemy:GetModelScale()
-            spawned_enemy:SetModelScale(enemy.model_scale * scale)
+            local scale = spawned_enemy:GetModelScale() * enemy.model_scale
+            if not scale or scale == 0 or scale < 0.5 or scale > 10 then
+                scale = 1
+            end
+            if scale ~= spawned_enemy:GetModelScale() then
+                spawned_enemy:SetModelScale(scale)
+            end
         end)
     end
 
@@ -503,7 +508,7 @@ function HORDE:SpawnEnemy(enemy, pos)
                 p = math.random()
                 if p <= 0.25 then
                     local mut = HORDE.current_mutations[math.random(1, #HORDE.current_mutations)]
-                    timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(mut) end)
+                    timer.Simple(0.2, function() spawned_enemy:Horde_SetMutation(mut) end)
                 end
             end
         end

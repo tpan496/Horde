@@ -40,7 +40,10 @@ HORDE.Status_Frostbite = 29
 HORDE.Status_Shock = 30
 HORDE.Status_Break = 31
 HORDE.Status_Decay = 32
-HORDE.Status_Psychosis = 33
+HORDE.Status_Necrosis = 33
+HORDE.Status_Psychosis = 34
+HORDE.Status_Stun = 35
+HORDE.Status_Freeze = 36
 
 HORDE.Status_Icon = {}
 HORDE.Status_Icon[HORDE.Status_Camoflague] = "materials/status/camoflague.png"
@@ -78,6 +81,7 @@ HORDE.Status_Icon[HORDE.Status_Frostbite] = "materials/status/frostbite.png"
 HORDE.Status_Icon[HORDE.Status_Shock] = "materials/status/shock.png"
 HORDE.Status_Icon[HORDE.Status_Break] = "materials/status/break.png"
 HORDE.Status_Icon[HORDE.Status_Decay] = "materials/status/decay.png"
+HORDE.Status_Icon[HORDE.Status_Necrosis] = "materials/status/necrosis.png"
 HORDE.Status_Icon[HORDE.Status_Psychosis] = "materials/status/psychosis.png"
 
 HORDE.Status_Buildup_Sounds = {}

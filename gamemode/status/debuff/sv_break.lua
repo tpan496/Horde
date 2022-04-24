@@ -1,6 +1,6 @@
 local entmeta = FindMetaTable("Entity")
 
-function entmeta:Horde_AddBreakEffect(duration)
+function entmeta:Horde_AddBreakEffect(duration, inflictor)
     if self:IsPlayer() then
         local old_health = self:Health()
         self:SetHealth(math.min(old_health, self:GetMaxHealth() * HORDE.difficulty_break_health_left[HORDE.difficulty]))
@@ -12,6 +12,17 @@ function entmeta:Horde_AddBreakEffect(duration)
             self:SetHealth(math.min(old_health, self:Health() + recover))
         end)
     else
-        self:SetHealth(self:Health() * 0.9)
+        if not self:IsValid() then return end
+        local dmg = DamageInfo()
+        if inflictor and inflictor:IsValid() then
+            dmg:SetAttacker(inflictor)
+            dmg:SetInflictor(inflictor)
+        else
+            dmg:SetAttacker(self)
+            dmg:SetInflictor(self)
+        end
+        dmg:SetDamageType(DMG_NERVEGAS)
+        dmg:SetDamage(self:Health() * 0.1)
+        self:TakeDamageInfo(dmg)
     end
 end

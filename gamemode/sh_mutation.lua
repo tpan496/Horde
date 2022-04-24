@@ -27,6 +27,12 @@ end
 
 function entmeta:Horde_SetMutation(mutation)
     if not mutation or mutation == "" then return end
+    if mutation == "giant" then
+        local class = self:GetClass()
+        if class == "npc_vj_horde_weeper" or class == "npc_vj_horde_vomitter" or class == "npc_vj_horde_screecher" or class == "npc_vj_horde_exploder" then
+            return
+        end
+    end
     if not self.Horde_Mutation then self.Horde_Mutation = {} end
     if self.Horde_Mutation[mutation] then return end
     self.Horde_Mutation[mutation] = true
