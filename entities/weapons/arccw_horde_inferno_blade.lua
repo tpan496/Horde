@@ -6,7 +6,7 @@ if CLIENT then
     killicon.Add("arccw_horde_inferno_blade", "vgui/hud/arccw_horde_inferno_blade", Color(0, 0, 0, 255))
 end
 
-SWEP.Base = "arccw_base_melee"
+SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -33,8 +33,8 @@ SWEP.ViewModelFOV = 60
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
-SWEP.MeleeDamage = 150
-SWEP.Melee2Damage = 80
+SWEP.MeleeDamage = 120
+SWEP.Melee2Damage = 64
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
@@ -52,7 +52,7 @@ SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.MeleeSwingSound = {
     "horde/weapons/inferno_blade/swing_00.ogg",
-    "horde/weapons/inferno_blade/swing_01.ogg"
+    "horde/weapons/inferno_bla de/swing_01.ogg"
 }
 SWEP.MeleeMissSound = {
     "horde/weapons/inferno_blade/swing_00.ogg",

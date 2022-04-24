@@ -189,7 +189,7 @@ SWEP.Animations = {
     },
     ["sgreload_start"] = {
         Source = "start_reload",
-        Time = 1,
+        Time = 0.5,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
         LHIK = true,
         LHIKIn = 0.5,
@@ -197,7 +197,7 @@ SWEP.Animations = {
     },
     ["sgreload_insert"] = {
         Source = "insert",
-        Time = 1.5,
+        Time = 0.75,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
         TPAnimStartTime = 0.3,
         LHIK = true,

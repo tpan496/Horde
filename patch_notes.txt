@@ -1,5 +1,23 @@
+weapon infusion
+
 music after boss wave 
 
 watchtower physics
 
 chinese
+
+spore launcher (medic)
+
+sticky launcher (demo)
+
+scar-l (assault)
+
+rpk (heavy)
+
+fireaxe (all)
+
+melee headshots
+
+medshots from mp7/vector changes to hitscan
+
+fix medic healing not amplifying correctly based on level

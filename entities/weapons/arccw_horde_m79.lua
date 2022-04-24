@@ -187,7 +187,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload",
-        Time = 3,
+        Time = 2,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
         FrameRate = 30,
         LHIK = true,

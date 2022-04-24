@@ -15,7 +15,7 @@ HORDE.max_weight = 15
 HORDE.default_ammo_price = 10
 
 -- Creates a Horde item. The item will appear in the shop.
-function HORDE:CreateItem(category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price, entity_properties, shop_icon, levels, skull_tokens, dmgtype)
+function HORDE:CreateItem(category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price, entity_properties, shop_icon, levels, skull_tokens, dmgtype, infusions)
     if category == nil or name == nil or class == nil or price == nil or weight == nil or description == nil then return end
     if name == "" or class == "" then return end
     if not table.HasValue(HORDE.categories, category) then return end
@@ -53,6 +53,7 @@ function HORDE:CreateItem(category, name, class, price, weight, description, whi
         item.total_levels = total_levels
     end
     item.dmgtype = dmgtype or nil
+    item.infusions = infusions or nil
     HORDE.items[item.class] = item
     HORDE:SetItemsData()
 end
@@ -129,7 +130,7 @@ end
 function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_detoxifier", 1500, 0, nil, {Medic=4})
     HORDE:CreateGadgetItem("gadget_heat_plating", 1500, 0, nil, {Cremator=4})
-    HORDE:CreateGadgetItem("gadget_arctic_plating", 1500, 0, nil)
+    HORDE:CreateGadgetItem("gadget_arctic_plating", 1500, 0, nil) 
     HORDE:CreateGadgetItem("gadget_shock_plating", 1500, 0, nil, {Warden=4})
     HORDE:CreateGadgetItem("gadget_blast_plating", 1500, 0, nil, {Demolition=4})
     HORDE:CreateGadgetItem("gadget_diamond_plating", 1750, 0, nil, {Berserker=3,Heavy=3})
@@ -184,12 +185,108 @@ function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_hydrogen_burner", 3000, 3, {Cremator=true}, {Cremator=20})
 end
 
+function HORDE:GetDefaultItemInfusions()
+    local melee_blunt_infusions = {HORDE.Infusion_Concussive, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    local melee_slash_infusions = {HORDE.Infusion_Hemo, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    HORDE.items["weapon_stunstick"].infusions = melee_blunt_infusions
+    HORDE.items["weapon_crowbar"].infusions = melee_blunt_infusions
+    HORDE.items["arccw_horde_knife"].infusions = melee_slash_infusions
+    HORDE.items["arccw_horde_axe"].infusions = melee_slash_infusions
+    HORDE.items["arccw_horde_katana"].infusions = {HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_bat"].infusions = melee_blunt_infusions
+    HORDE.items["arccw_horde_chainsaw"].infusions = melee_slash_infusions
+    HORDE.items["arccw_horde_inferno_blade"].infusions = {HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_mjollnir"].infusions = {HORDE.Infusion_Hemo, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+
+    local ballistic_infusions_light = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver}
+    local ballistic_infusions_heavy = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium}
+    -- Pistols
+    HORDE.items["weapon_pistol"].infusions = ballistic_infusions_light
+    HORDE.items["weapon_357"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_glock"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_usp"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_p2000"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_p250"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_r8"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_deagle"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_mw2_m1911"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_anaconda"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_cz75"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_m9"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_fiveseven"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_tec9"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_mw2_tmp"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_flaregun"].infusions = {HORDE.Infusion_Quality}
+
+    -- SMGs
+    HORDE.items["weapon_smg1"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_mac10"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_mp9"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_mw2_mp5k"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_mp5"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_ump"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_bizon"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_p90"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_mp7m"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Septic, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_vector"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Septic, HORDE.Infusion_Rejuvenating}
+
+    -- Shotguns
+    HORDE.items["weapon_shotgun"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_nova"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_870"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_mag7"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_go_m1014"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_doublebarrel"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Concussive}
+    HORDE.items["arccw_horde_trenchgun"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_mw2_spas12"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
+    HORDE.items["arccw_horde_striker"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
+    HORDE.items["arccw_horde_aa12"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
+
+    local ballistic_infusions_rifles = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Hemo, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
+    -- Rifles
+    HORDE.items["arccw_go_ar15"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_go_famas"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_go_ace"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_go_ak47"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_go_m4"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_go_sg556"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_go_aug"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_horde_f2000"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_horde_tavor"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_horde_scarl"].infusions = ballistic_infusions_rifles
+    
+    local ballistic_infusions_sniper_rifles = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Arctic, HORDE.Infusion_Siphoning}
+    HORDE.items["arccw_horde_winchester"].infusions = ballistic_infusions_sniper_rifles
+    HORDE.items["arccw_mw2_acr"].infusions = ballistic_infusions_sniper_rifles
+    HORDE.items["arccw_horde_m200"].infusions = ballistic_infusions_sniper_rifles
+    HORDE.items["arccw_horde_awp"].infusions = ballistic_infusions_sniper_rifles
+    HORDE.items["arccw_go_scar"].infusions = ballistic_infusions_sniper_rifles
+    HORDE.items["arccw_horde_g3"].infusions = ballistic_infusions_sniper_rifles
+    HORDE.items["arccw_horde_fal"].infusions = ballistic_infusions_sniper_rifles
+    HORDE.items["arccw_horde_barret"].infusions = ballistic_infusions_sniper_rifles
+
+    HORDE.items["arccw_horde_medic_rifle"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
+    HORDE.items["arccw_horde_m16m203"].infusions = ballistic_infusions_rifles
+
+    local ballistic_infusions_mg_rifles = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium, HORDE.Infusion_Siphoning}
+    -- MG
+    HORDE.items["arccw_go_negev"].infusions = ballistic_infusions_mg_rifles
+    HORDE.items["arccw_go_m249para"].infusions = ballistic_infusions_mg_rifles
+    HORDE.items["arccw_horde_l86"].infusions = ballistic_infusions_mg_rifles
+    HORDE.items["arccw_mw2_mg4"].infusions = ballistic_infusions_mg_rifles
+    HORDE.items["arccw_mw2_m240"].infusions = ballistic_infusions_mg_rifles
+    HORDE.items["arccw_horde_aug_hbar"].infusions = ballistic_infusions_mg_rifles
+    HORDE.items["arccw_horde_gau"].infusions = ballistic_infusions_mg_rifles
+end
+
 function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Melee",      "Stunstick",      "weapon_stunstick",     100,  0, "Electric baton.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLUNT})
     HORDE:CreateItem("Melee",      "Crowbar",        "weapon_crowbar",       100,  0, "A rusty crowbar.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLUNT})
-    HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_go_melee_knife", 500,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
+    HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_horde_knife",    500,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
+    nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
+    HORDE:CreateItem("Melee",      "Fireaxe",        "arccw_horde_axe",     1500,  4, "Fireaxe.\nChops enemies in half.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Melee",      "Katana",         "arccw_horde_katana",  2000,  4, "Ninja sword.\nLong attack range and fast attack speed.",
     {Survivor=true, Berserker=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
@@ -235,8 +332,8 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Pistol",     "Flare Gun",      "arccw_horde_flaregun",  1000,  4, "Orion Safety Flare Gun.\nIgnites enemies and deals Fire damage.",
     {Cremator=true}, 3, -1, nil, nil, {Cremator=2}, nil, {HORDE.DMG_FIRE})
 
-    HORDE:CreateItem("SMG",        "SMG1",           "weapon_smg1",       750, 3, "A compact, fully automatic firearm.\nArmed with an M203 launcher.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Cremator=true}, 3, 50, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_BLAST})
+    HORDE:CreateItem("SMG",        "SMG1",           "weapon_smg1",       500, 3, "A compact, fully automatic firearm.\nArmed with an M203 launcher.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Cremator=true}, 5, 100, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_BLAST})
     HORDE:CreateItem("SMG",        "Mac10",          "arccw_go_mac10",    1500, 4, "Military Armament Corporation Model 10.\nBoasts a high rate of fire,\nwith poor spread accuracy and high recoil as trade-offs.",
     {Medic=true, Assault=true, Heavy=true, Survivor=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "MP9",            "arccw_go_mp9",      1500, 4, "Brügger & Thomet MP9.\nManufactured in Switzerland,\nthe MP9 is favored by private security firms world-wide.",
@@ -252,12 +349,12 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("SMG",        "P90",            "arccw_go_p90",      2000, 6, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
     {Medic=true, Assault=true, Survivor=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "MP7A1 Medic PDW","arccw_horde_mp7m"  ,2500, 6, "A modified version of MP7A1 for medical purposes.\n\nPress B or ZOOM to fire healing darts.\nHealing dart recharges every 1 second.",
-    {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
+    {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON}, {HORDE.Infusion_Quality, HORDE.Infusion_Impaling, HORDE.Infusion_Rejuvenating, HORDE.Infusion_Septic})
     HORDE:CreateItem("SMG",        "Vector Medic PDW","arccw_horde_vector",3000, 6, "KRISS Vector Gen I equipped with a medical dart launcher.\nUses an unconventional blowback system that results in its high firerate.\n\nPress B or ZOOM to fire healing darts.\nHealing dart recharges every 1.5 seconds.",
-    {Medic=true}, 8, -1, nil, nil, {Medic=3}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
+    {Medic=true}, 8, -1, nil, nil, {Medic=3}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON}, {HORDE.Infusion_Quality, HORDE.Infusion_Impaling, HORDE.Infusion_Rejuvenating, HORDE.Infusion_Septic})
 
-    HORDE:CreateItem("Shotgun",    "Pump-Action",    "weapon_shotgun",    1000, 4, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
-    {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Shotgun",    "Pump-Action",    "weapon_shotgun",    550, 4, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
+    {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 6, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "Nova",           "arccw_go_nova",     1500, 4, "Benelli Nova.\nItalian pump-action 12-gauge shotgun.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "M870",           "arccw_go_870",      1500, 4, "Remington 870 Shotgun.\nManufactured in the United States.",
@@ -269,7 +366,7 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Shotgun",    "Double Barrel",  "arccw_horde_doublebarrel",    2000, 5, "Double Barrel Shotgun.\nDevastating power at close range.",
     {Survivor=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "Trench Gun",     "arccw_horde_trenchgun", 2250, 6, "Winchester Model 1200.\nShoots incendiary pellets.",
-    {Warden=true, Cremator=true}, 15, -1, nil, nil, {Warden=1, Cremator=1}, nil, {HORDE.DMG_FIRE})
+    {Warden=true, Cremator=true}, 15, -1, nil, nil, {Warden=1, Cremator=1}, nil, {HORDE.DMG_FIRE}, {HORDE.Infusion_Quality, HORDE.Infusion_Impaling})
     HORDE:CreateItem("Shotgun",    "SPAS-12",        "arccw_mw2_spas12",  2250, 7, "Franchi SPAS-12.\nA combat shotgun manufactured by Italian firearms company Franchi.",
     {Survivor=true, Warden=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "Striker",        "arccw_horde_striker", 2500, 8, "Armsel Striker.\nA 12-gauge shotgun with a revolving cylinder from South Africa.",
@@ -295,6 +392,8 @@ function HORDE:GetDefaultItemsData()
     {Assault=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "Tavor",          "arccw_horde_tavor", 3000, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
     {Assault=true}, 10, -1, nil, nil, {Assault=3}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Rifle",      "SCAR-L",         "arccw_horde_scarl", 3500, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
+    {Assault=true}, 15, -1, nil, nil, {Assault=4}, nil, {HORDE.DMG_BALLISTIC})
 
     HORDE:CreateItem("Rifle",      "Winchester LAR",     "arccw_horde_winchester",1500, 5, "Winchester Lever Action Rifle.\nAn all-time classic.",
     {Ghost=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
@@ -342,15 +441,17 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Explosive",  "Stun Grenade",   "arccw_horde_nade_stun", 800,  2, "Deals damage and Stuns enemy for 3 seconds.\nStun cooldown is 10 seconds.",
     {Assault=true}, 100, -1, nil, "items/arccw_nade_stun.png", nil, nil, {HORDE.DMG_BLAST})
     HORDE:CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         1500,  5, "Laser-guided rocket propulsion device.",
-    {Demolition=true, Survivor=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST})
+    {Demolition=true, Survivor=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "M79 GL",         "arccw_horde_m79",    2000,  6, "M79 Grenade Launcher.\nShoots 40x46mm grenades the explodes on impact.",
-    {Demolition=true, Survivor=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST})
+    {Demolition=true, Survivor=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
+    HORDE:CreateItem("Explosive",  "Sticky Launcher",  "horde_sticky_launcher", 2500,  7, "Sticky grenade launcher.",
+    {Demolition=true}, 50, -1, nil, nil, {Demolition=4}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "M32 GL",         "arccw_horde_m32",    3000,  8, "Milkor Multiple Grenade Launcher.\nA lightweight 40mm six-shot revolver grenade launcher.",
-    {Demolition=true}, 50, -1, nil, nil, {Demolition=3}, nil, {HORDE.DMG_BLAST})
-    HORDE:CreateItem("Explosive",  "RPG-7",          "arccw_horde_rpg7",   3000,  9, "Ruchnoy Protivotankoviy Granatomyot.\nAnti-tank rocket launcher developed by Soviet Union.",
-    {Demolition=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST})
+    {Demolition=true}, 50, -1, nil, nil, {Demolition=3}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
+    HORDE:CreateItem("Explosive",  "RPG-7",          "arccw_horde_rpg7",   3000,  8, "Ruchnoy Protivotankoviy Granatomyot.\nAnti-tank rocket launcher developed by Soviet Union.",
+    {Demolition=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "M72 LAW",        "arccw_horde_law",   3500,  9, "M72 Light Anti-Armor Weapon.\nFocuses on raw destructive power instead of area of effect.",
-    {Demolition=true}, 15, -1, nil, nil, {Demolition=5}, nil, {HORDE.DMG_BLAST})
+    {Demolition=true}, 15, -1, nil, nil, {Demolition=5}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "SLAM",           "weapon_slam",        1250,   1, "Selectable Lightweight Attack Munition.\nRMB to detonate. Attach to wall to active laser mode.",
     {Demolition=true}, 0, 20, nil, nil, nil, nil, {HORDE.DMG_BLAST})
     HORDE:CreateItem("Explosive",  "Incendiary Grenade",   "arccw_horde_nade_incendiary",        1500,   2, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
@@ -362,7 +463,7 @@ function HORDE:GetDefaultItemsData()
 
     --HORDE:CreateItem("Special",    "Combine AR2",    "weapon_ar2",         2250, 7, "Overwatch standard issue rifle.\nDark energy-powered assault rifle.",
     --{Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=false, Engineer=true}, 5, 100)
-    HORDE:CreateItem("Special",    "Heat Crossbow",  "weapon_crossbow",     800,  4, "Improvised sniper weapon.\nShoots scorching rebars.",
+    HORDE:CreateItem("Special",    "Heat Crossbow",  "weapon_crossbow",     550,  4, "Improvised sniper weapon.\nShoots scorching rebars.",
     {Ghost=true, Engineer=true, Cremator=true}, 2, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Manhack",        "npc_manhack",          900,  4, "Manhack that regenerates on death.\nManhack deals its health as damage to enemies.\nManhack dies on impact.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/npc_manhack.png", nil, nil, {HORDE.DMG_SLASH})
@@ -374,8 +475,10 @@ function HORDE:GetDefaultItemsData()
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_combat_bot.png", {Engineer=3}, nil, {HORDE.DMG_BLUNT})
     HORDE:CreateItem("Special",    "Hivehand",       "horde_hivehand",       2000,  6, "Organic weapon used by Xen soldiers.\nHas infinite ammo.\nPrimary fire generates homing ricocheting shots.\nSecondary fire rapidly unloads the entire weapon.",
     {Engineer=true}, 2, -1, nil, nil, {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Special",    "Spore Launcher", "horde_spore_launcher",2500,  7, "Improvised biological weapon.\nShoots out acidic projectiles that explodes after a short delay.\nHeals players and damages enemies.",
+    {Medic=true, Survivor=true}, 40, -1, nil, nil, {Medic=2, Engineer=2}, nil, {HORDE.DMG_POISON})
     HORDE:CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,  1, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
-    {Medic=true}, 100, -1, nil, "items/arccw_nade_medic.png", nil, nil, {HORDE.DMG_POISON})
+    {Medic=true}, 100, -1, nil, "items/arccw_nade_medic.png", nil,  nil, {HORDE.DMG_POISON})
     HORDE:CreateItem("Special",    "Throwing Knives", "arccw_go_nade_knife",800,  2, "Ranged throwing knives.\nThrown blades are retrievable.",
     {Berserker=true}, 10, -1, nil, nil, {Berserker=1}, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Special",    "Watchtower",      "horde_watchtower",       800,  1, "A watchtower that provides resupply.\nGenerates 1 ammobox every 30 seconds.\n(Entity Class: horde_watchtower)",
@@ -424,6 +527,7 @@ function HORDE:GetDefaultItemsData()
     
 
     HORDE:GetDefaultGadgets()
+    HORDE:GetDefaultItemInfusions()
 
     if ArcCWInstalled == true and GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
         print("[HORDE] ArcCW detected. Loading attachments into shop.")

@@ -131,6 +131,7 @@ end
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     self.DamageReceived = self.DamageReceived + dmginfo:GetDamage()
     if self.DamageReceived >= self:GetMaxHealth() * 0.25 then
+        if self.Horde_Stunned then return end
         self:Rage()
         self.DamageReceived = 0
     end

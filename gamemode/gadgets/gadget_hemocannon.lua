@@ -2,7 +2,7 @@ GADGET.PrintName = "Hemocannon"
 GADGET.Description =
 [[Shoots a projectile at the cost of 10 health.
 The projectile travels for a short distance and explodes.
-The explosion deals 100 Slashing damage.
+The explosion deals 100 Slashing damage and inflicts Bleeding buildup.
 Has a maximum of 5 charges.
 Recharges after 5 seconds.]]
 GADGET.Icon = "items/gadgets/hemocannon.png"
@@ -49,6 +49,12 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         dmg:SetDamageType(DMG_SLASH)
         dmg:SetDamage(100)
         util.BlastDamageInfo(dmg, trace.HitPos, 128)
+
+        for _, ent in pairs(ents.FindInSphere(trace.HitPos, 128)) do
+            if ent:IsNPC () and (not HORDE:IsPlayerOrMinion(ent)) then
+                ent:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 50, ply)
+            end
+        end
         
         if (SERVER) then
             local firefx = EffectData()

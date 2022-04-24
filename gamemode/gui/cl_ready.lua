@@ -54,7 +54,7 @@ vgui.Register("HordePlayerReadyPanel", PANEL, "DPanel")
 HORDE.PlayerReadyPanel = vgui.Create("HordePlayerReadyPanel")
 HORDE.HelpPanel = vgui.Create("DPanel")
 HORDE.HelpPanel:SetSize(500, 50)
-HORDE.HelpPanel:SetPos(ScrW() / 2 - 200, ScrH() - 75)
+HORDE.HelpPanel:SetPos(ScrW() / 2 - 250, ScrH() - 75)
 HORDE.HelpPanel.Paint = function (w,h)
     if HORDE.current_wave > 0 then
         local text = translate.Get("Game_HintBottom")

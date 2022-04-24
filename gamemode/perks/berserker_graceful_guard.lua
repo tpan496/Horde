@@ -4,7 +4,7 @@ PERK.Description = [[On successful Aerial Parry:
     - Recover {1} health.]]
 PERK.Icon = "materials/perks/graceful_guard.png"
 PERK.Params = {
-    [1] = {value = 10},
+    [1] = {value = 20},
 }
 
 PERK.Hooks = {}

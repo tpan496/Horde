@@ -30,7 +30,7 @@ end
 PERK.Hooks.Horde_OnPlayerHeal = function(ply, healinfo)
     local healer = healinfo:GetHealer()
     if healer:IsPlayer() and healer:Horde_GetPerk("medic_base") then
-        healinfo:SetHealAmount(healinfo:GetHealAmount() * ply:Horde_GetPerkLevelBonus("medic_base"))
+        healinfo:SetHealAmount(healinfo:GetHealAmount() * healer:Horde_GetPerkLevelBonus("medic_base"))
     end
 end
 

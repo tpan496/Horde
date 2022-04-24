@@ -3,7 +3,7 @@ function EFFECT:Init(data)
 	local Hitpos = data:GetOrigin()
 	local owner = data:GetEntity().Owner
 	local has_burner = nil
-	if owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
+	if owner:IsValid() and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
 		has_burner = true
 	end
 

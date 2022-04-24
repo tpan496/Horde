@@ -189,6 +189,7 @@ function SWEP:SecondaryAttack()
         entity:SetOwner( self.Owner )
         entity:SetNWEntity("HordeOwner", self.Owner)
         if IsValid( entity ) then
+            self.Owner:Horde_SetMinionCount(self.Owner:Horde_GetMinionCount() + 1)
             local Forward = self.Owner:EyeAngles():Forward()
             local Right = self.Owner:EyeAngles():Right()
             local Up = self.Owner:EyeAngles():Up()

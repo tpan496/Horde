@@ -10,7 +10,10 @@ PERK.Hooks = {}
 PERK.Hooks.OnNPCKilled = function(victim, killer, wpn)
     if not killer:IsPlayer() or not killer:Horde_GetPerk("assault_drain")  then return end
     if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
-    killer:SetHealth(math.min(killer:GetMaxHealth(), killer:Health() + killer:GetMaxHealth() * 0.02))
+
+    local leech = killer:GetMaxHealth() * 0.02
+    local healinfo = HealInfo:New({amount=leech, healer=killer})
+    HORDE:OnPlayerHeal(killer, healinfo)
 end
 
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup)

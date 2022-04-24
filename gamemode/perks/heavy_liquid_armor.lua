@@ -10,6 +10,6 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("heavy_liquid_armor") then return end
     if ply:Armor() >= 5 and HORDE:IsPhysicalDamage(dmginfo) then
-        bonus.less = bonus.less * 0.40
+        bonus.less = bonus.less * 0.60
     end
 end

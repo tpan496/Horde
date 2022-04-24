@@ -29,8 +29,8 @@ end
 
 PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus)
     if not ply:Horde_GetPerk("assault_base") then return end
-    bonus.walkspd = bonus.walkspd * (1 or ply:Horde_GetPerkLevelBonus("assault_base"))
-    bonus.sprintspd = bonus.sprintspd * (1 or ply:Horde_GetPerkLevelBonus("assault_base"))
+    bonus.walkspd = bonus.walkspd * ply:Horde_GetPerkLevelBonus("assault_base")
+    bonus.sprintspd = bonus.sprintspd * ply:Horde_GetPerkLevelBonus("assault_base")
 end
 
 PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)

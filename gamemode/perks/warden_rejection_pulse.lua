@@ -3,7 +3,7 @@ PERK.Description = "Watchtowers generate a shockwave every {1} seconds.\nShockwa
 PERK.Icon = "materials/perks/rejection_pulse.png"
 PERK.Params = {
     [1] = {value = 2},
-    [2] = {value = 80},
+    [2] = {value = 50},
 }
 
 PERK.Hooks = {}

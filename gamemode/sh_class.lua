@@ -13,7 +13,7 @@ HORDE.Class_Warden = "Warden"
 HORDE.Class_Cremator = "Cremator"
 
 -- Creates a Horde class
-function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, base_perk, perks, order, display_name, model, icon)
+function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, base_perk, perks, order, display_name, model, icon, infusions)
     if name == nil or name == "" then return end
     local class = {}
     class.name = name
@@ -27,6 +27,7 @@ function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, 
     class.display_name = display_name or name
     class.model = model or nil
     class.icon = icon or (class.name .. ".png")
+    class.infusions = infusions or {}
     HORDE.order_to_class_name[class.order] = class.name
     HORDE.classes[class.name] = class
 end
@@ -102,7 +103,10 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Imprinting", choices = {"heavy_liquid_armor", "cremator_entropy_shield"}},
             [4] = {title = "Inspired Learning", choices = {"ghost_headhunter", "engineer_symbiosis"}},
         },
-        0
+        0,nil,nil,nil,
+        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
+        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling,
+        HORDE.Infusion_Rejuvenating}
     )
 
     HORDE:CreateClass(
@@ -118,7 +122,9 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Aggression", choices = {"assault_cardiac_resonance", "assault_cardiac_overload"}},
             [4] = {title = "Conditioning", choices = {"assault_heightened_reflex", "assault_merciless_assault"}},
         },
-        1
+        1,nil,nil,nil,
+        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
+        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
     )
 
     HORDE:CreateClass(
@@ -134,7 +140,9 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Armor Protection", choices = {"heavy_liquid_armor", "heavy_reactive_armor"}},
             [4] = {title = "Technology", choices = {"heavy_nanomachine", "heavy_ballistic_shock"}},
         },
-        2
+        2,nil,nil,nil,
+        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
+        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
     )
 
     HORDE:CreateClass(
@@ -150,7 +158,8 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Enhancement", choices = {"medic_purify", "medic_haste"}},
             [4] = {title = "Natural Selection", choices = {"medic_cellular_implosion", "medic_xcele"}},
         },
-        3
+        3,nil,nil,nil,
+        {HORDE.Infusion_Septic, HORDE.Infusion_Quality, HORDE.Infusion_Impaling, HORDE.Infusion_Rejuvenating}
     )
 
     HORDE:CreateClass(
@@ -166,7 +175,9 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Approach", choices = {"demolition_fragmentation", "demolition_knockout"}},
             [4] = {title = "Destruction", choices = {"demolition_pressurized_warhead", "demolition_chain_reaction"}},
         },
-        4
+        4,nil,nil,nil,
+        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
+        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
     )
 
     HORDE:CreateClass(
@@ -182,7 +193,8 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Trajectory", choices = {"ghost_brain_snap", "ghost_kinetic_impact"}},
             [4] = {title = "Disposal", choices = {"ghost_coup", "ghost_decapitate"}},
         },
-        5
+        5,nil,nil,nil,
+        {HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
     )
 
     HORDE:CreateClass(
@@ -198,7 +210,9 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Manipulation", choices = {"engineer_antimatter_shield", "engineer_displacer"}},
             [4] = {title = "Experimental", choices = {"engineer_symbiosis", "engineer_kamikaze"}},
         },
-        6
+        6,nil,nil,nil,
+        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
+        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
     )
 
     HORDE:CreateClass(
@@ -214,7 +228,10 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Parry", choices = {"berserker_graceful_guard", "berserker_unwavering_guard"}},
             [4] = {title = "Combat Arts", choices = {"berserker_phalanx", "berserker_rip_and_tear"}},
         },
-        7
+        7,nil,nil,nil,
+        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
+        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling,
+        HORDE.Infusion_Rejuvenating}
     )
 
     HORDE:CreateClass(
@@ -230,7 +247,8 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Escort", choices = {"warden_rejection_pulse", "warden_inoculation"}},
             [4] = {title = "Coverage", choices = {"warden_ex_machina", "warden_resonance_cascade"}},
         },
-        8
+        8,nil,nil,nil,
+        {HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
     )
 
     HORDE:CreateClass(
@@ -246,7 +264,8 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Heat Manipulation", choices = {"cremator_hyperthermia", "cremator_ionization"}},
             [4] = {title = "Energy Discharge", choices = {"cremator_firestorm", "cremator_incineration"}},
         },
-        9
+        9,nil,nil,nil,
+        {HORDE.Infusion_Flaming, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
     )
 end
 

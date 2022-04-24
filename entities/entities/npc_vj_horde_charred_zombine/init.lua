@@ -45,7 +45,7 @@ ENT.CanFlinch = 1
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(13, 13, 60), Vector(-13, -13, 0))
 	self:Ignite(9999999)
-	self:SetColor(Color(50,50,50))
+	self:SetColor(Color(125,50,50))
 	self:SetBodygroup( 1,1 )
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")

@@ -45,8 +45,8 @@ ENT.AnimTbl_MeleeAttack = {}
 ENT.Critical = nil
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-	self:SetModelScale(1.25)
 	self:SetCollisionBounds(Vector(12, 12, 65), Vector(-12, -12, 0))
+	self:SetModelScale(self:GetModelScale() * 1.25, 0)
 	self:SetColor(Color(0, 150, 250))
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
@@ -66,6 +66,7 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
 end
 
 function ENT:ShockAttack(delay)
+	if self.Horde_Stunned then return end
 	timer.Simple(delay, function()
 		if not self:IsValid() then return end
 		local dmg = DamageInfo()

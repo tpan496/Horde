@@ -14,7 +14,7 @@ PERK.Params = {
     [4] = {percent = true, level = 0.008, max = 0.20, classname = HORDE.Class_Berserker},
     [5] = {value = 0.008, percent = true},
     [6] = {value = 0.20, percent = true},
-    [7] = {value = 0.50, percent = true},
+    [7] = {value = 0.65, percent = true},
 }
 
 PERK.Hooks = {}
