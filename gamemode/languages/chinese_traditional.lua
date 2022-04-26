@@ -11,6 +11,8 @@ resistance vs. less damage taken: same as above.
 
 translate.AddLanguage("zh-TW", "Chinese Traditional")
 
+LANGUAGE["Default_Font_Scale"] = 1.20
+
 -- Game Info
 LANGUAGE["Game_Ready"] = "    準備"
 LANGUAGE["Game_Not Ready"] = "    未準備"
@@ -1123,7 +1125,7 @@ LANGUAGE["Item_Watchtower MKIII"] = [[守望塔 MKIII]]
 LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
 一個用來擊退敵人的守望塔。
 每 1 秒對附近單個敵人發射電擊。
-電擊造成 100 範圍傷害。
+電擊造成 80 範圍傷害。
 (實體名稱：horde_watchtower）: horde_watchtower_mk3)
 ]]
 
