@@ -21,3 +21,5 @@ melee headshots
 medshots from mp7/vector changes to hitscan
 
 fix medic healing not amplifying correctly based on level
+
+sacrifical dagger

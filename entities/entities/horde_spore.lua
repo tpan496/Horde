@@ -41,18 +41,18 @@ end
 
 if SERVER then
     local dmg = DamageInfo()
-dmg:SetAttacker(self.Owner)
-dmg:SetInflictor(self)
-dmg:SetDamageType(DMG_NERVEGAS)
-dmg:SetDamage(150)
-dmg:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
-util.BlastDamageInfo(dmg, self:GetPos(), 150)
-for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
-    if ent:IsPlayer() then
-        local healinfo = HealInfo:New({amount=20, healer=self.Owner})
-        HORDE:OnPlayerHeal(ent, healinfo)
+    dmg:SetAttacker(self.Owner)
+    dmg:SetInflictor(self)
+    dmg:SetDamageType(DMG_NERVEGAS)
+    dmg:SetDamage(150)
+    dmg:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
+    util.BlastDamageInfo(dmg, self:GetPos(), 150)
+    for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
+        if ent:IsPlayer() then
+            local healinfo = HealInfo:New({amount=20, healer=self.Owner})
+            HORDE:OnPlayerHeal(ent, healinfo)
+        end
     end
-end
 end
 self.Entity:EmitSound( "Weapon_HLOF_Spore_Launcher.Impact" )
 end

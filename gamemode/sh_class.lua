@@ -13,7 +13,7 @@ HORDE.Class_Warden = "Warden"
 HORDE.Class_Cremator = "Cremator"
 
 -- Creates a Horde class
-function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, base_perk, perks, order, display_name, model, icon, infusions)
+function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, base_perk, perks, order, display_name, model, icon, subclasses)
     if name == nil or name == "" then return end
     local class = {}
     class.name = name
@@ -28,6 +28,7 @@ function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, 
     class.model = model or nil
     class.icon = icon or (class.name .. ".png")
     class.infusions = infusions or {}
+    class.subclasses = subclasses or {}
     HORDE.order_to_class_name[class.order] = class.name
     HORDE.classes[class.name] = class
 end
@@ -104,9 +105,7 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Inspired Learning", choices = {"ghost_headhunter", "engineer_symbiosis"}},
         },
         0,nil,nil,nil,
-        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
-        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling,
-        HORDE.Infusion_Rejuvenating}
+        {HORDE.Class_Survivor}
     )
 
     HORDE:CreateClass(
@@ -123,8 +122,7 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Conditioning", choices = {"assault_heightened_reflex", "assault_merciless_assault"}},
         },
         1,nil,nil,nil,
-        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
-        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
+        {HORDE.Class_Assault}
     )
 
     HORDE:CreateClass(
@@ -141,8 +139,7 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Technology", choices = {"heavy_nanomachine", "heavy_ballistic_shock"}},
         },
         2,nil,nil,nil,
-        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
-        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
+        {HORDE.Class_Heavy}
     )
 
     HORDE:CreateClass(
@@ -159,7 +156,7 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Natural Selection", choices = {"medic_cellular_implosion", "medic_xcele"}},
         },
         3,nil,nil,nil,
-        {HORDE.Infusion_Septic, HORDE.Infusion_Quality, HORDE.Infusion_Impaling, HORDE.Infusion_Rejuvenating}
+        {HORDE.Class_Medic}
     )
 
     HORDE:CreateClass(
@@ -176,8 +173,7 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Destruction", choices = {"demolition_pressurized_warhead", "demolition_chain_reaction"}},
         },
         4,nil,nil,nil,
-        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
-        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
+        {HORDE.Class_Demolition}
     )
 
     HORDE:CreateClass(
@@ -194,7 +190,7 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Disposal", choices = {"ghost_coup", "ghost_decapitate"}},
         },
         5,nil,nil,nil,
-        {HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
+        {HORDE.Class_Ghost}
     )
 
     HORDE:CreateClass(
@@ -211,8 +207,7 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Experimental", choices = {"engineer_symbiosis", "engineer_kamikaze"}},
         },
         6,nil,nil,nil,
-        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
-        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
+        {HORDE.Class_Engineer}
     )
 
     HORDE:CreateClass(
@@ -229,9 +224,7 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Combat Arts", choices = {"berserker_phalanx", "berserker_rip_and_tear"}},
         },
         7,nil,nil,nil,
-        {HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Septic, HORDE.Infusion_Flaming,
-        HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling,
-        HORDE.Infusion_Rejuvenating}
+        {HORDE.Class_Berserker}
     )
 
     HORDE:CreateClass(
@@ -248,7 +241,7 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Coverage", choices = {"warden_ex_machina", "warden_resonance_cascade"}},
         },
         8,nil,nil,nil,
-        {HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
+        {HORDE.Class_Warden}
     )
 
     HORDE:CreateClass(
@@ -265,25 +258,13 @@ function HORDE:GetDefaultClassesData()
             [4] = {title = "Energy Discharge", choices = {"cremator_firestorm", "cremator_incineration"}},
         },
         9,nil,nil,nil,
-        {HORDE.Infusion_Flaming, HORDE.Infusion_Quality, HORDE.Infusion_Impaling}
+        {HORDE.Class_Cremator}
     )
 end
 
--- TODO: Should we support adding custom classes?
-local prefix = "horde/gamemode/classes/"
-local function Horde_LoadClasses()
-    for _, f in ipairs(file.Find(prefix .. "*", "LUA")) do
-        PERK = {}
-        AddCSLuaFile(prefix .. f)
-        include(prefix .. f)
-    end
-    PERK = nil
-end
-
--- Startup
-Horde_LoadClasses()
 if SERVER then
     util.AddNetworkString("Horde_SetClassData")
+    util.AddNetworkString("Horde_SetSubclass")
     HORDE:GetDefaultClassesData()
     if GetConVar("horde_default_class_config"):GetInt() == 1 then
         -- Do nothing
@@ -299,4 +280,122 @@ if SERVER then
         HORDE:SetClassData()
         SyncClasses()
     end)
+
+    net.Receive("Horde_SetSubclass", function (len, ply)
+        local class_name = net.ReadString()
+        local subclass = net.ReadString()
+        ply:Horde_SetSubclass(class_name, subclass)
+
+        if not ply:IsValid() then return end
+
+        -- Clear status
+        net.Start("Horde_ClearStatus")
+        net.Send(ply)
+
+        ply:Horde_ApplyPerksForClass()
+        ply:Horde_SyncEconomy()
+    end)
+end
+
+if CLIENT then
+    net.Receive("Horde_SyncClasses", function ()
+        HORDE.classes = net.ReadTable()
+        for name, c in pairs(HORDE.classes) do
+            HORDE.order_to_class_name[c.order] = name
+        end
+        local class = LocalPlayer():Horde_GetClass() or HORDE.classes[HORDE.Class_Survivor]
+        HORDE:SendSavedPerkChoices(class.name)
+
+        local f = file.Read("horde/class_choices.txt", "DATA")
+
+        if f then
+            HORDE:SendSavedPerkChoices(f)
+        end
+    end)
+end
+
+HORDE.subclasses = {}
+HORDE.classes_to_subclasses = {
+    [HORDE.Class_Survivor] = {HORDE.Class_Survivor},
+    [HORDE.Class_Assault] = {HORDE.Class_Assault},
+    [HORDE.Class_Medic] = {HORDE.Class_Medic},
+    [HORDE.Class_Heavy] = {HORDE.Class_Heavy},
+    [HORDE.Class_Demolition] = {HORDE.Class_Demolition},
+    [HORDE.Class_Cremator] = {HORDE.Class_Cremator},
+    [HORDE.Class_Ghost] = {HORDE.Class_Ghost},
+    [HORDE.Class_Warden] = {HORDE.Class_Warden},
+    [HORDE.Class_Berserker] = {HORDE.Class_Berserker},
+    [HORDE.Class_Engineer] = {HORDE.Class_Engineer},
+}
+local prefix = "horde/gamemode/subclasses/"
+local function Horde_LoadSubclasses()
+    local dev = GetConVar("developer"):GetBool()
+    for _, f in ipairs(file.Find(prefix .. "*", "LUA")) do
+        SUBCLASS = {}
+        AddCSLuaFile(prefix .. f)
+        include(prefix .. f)
+        if SUBCLASS.Ignore then goto cont end
+        SUBCLASS.ClassName = string.lower(SUBCLASS.ClassName or string.Explode(".", f)[1])
+        SUBCLASS.SortOrder = SUBCLASS.SortOrder or 0
+
+        HORDE.subclasses[string.lower(SUBCLASS.ClassName)] = SUBCLASS
+        
+        if SUBCLASS.ParentClass then
+            table.insert(HORDE.classes_to_subclasses[SUBCLASS.ParentClass], SUBCLASS.ClassName)
+        end
+
+        if dev then print("[Horde] Loaded subclass '" .. SUBCLASS.ClassName .. "'.") end
+        ::cont::
+    end
+    PERK = nil
+end
+
+Horde_LoadSubclasses()
+
+local plymeta = FindMetaTable("Player")
+
+function plymeta:Horde_SetClass(class)
+    self.Horde_class = class
+    self:Horde_SetClassModel(class)
+end
+
+function plymeta:Horde_SetSubclass(class_name, subclass_name)
+    if not self.Horde_subclasses then self.Horde_subclasses = {} end
+    self.Horde_subclasses[class_name] = subclass_name
+    if SERVER then
+        net.Start("Horde_LegacyNotification")
+            net.WriteString(class_name .. " subclass changed to " .. HORDE.subclasses[subclass_name].PrintName)
+            net.WriteInt(0,2)
+        net.Send(self)
+    end
+    if CLIENT then
+        net.Start("Horde_SetSubclass")
+            net.WriteString(class_name)
+            net.WriteString(subclass_name)
+        net.SendToServer()
+    end
+end
+
+function plymeta:Horde_SetSubclassUnlocked(subclass, unlocked)
+    if not self.Horde_subclasses_unlocked then self.Horde_subclasses_unlocked = {} end
+    self.Horde_subclasses_unlocked[subclass] = unlocked
+end
+
+function plymeta:Horde_GetClass()
+    return self.Horde_class
+end
+
+function plymeta:Horde_GetSubclass(class_name)
+    if self.Horde_subclasses and self.Horde_subclasses[class_name] then
+        return self.Horde_subclasses[class_name]
+    else
+        -- return parent class
+        return class_name
+    end
+end
+
+function plymeta:Horde_GetSubclassUnlocked(subclass)
+    if not self.Horde_subclasses_unlocked then self.Horde_subclasses_unlocked = {} end
+    return nil
+    --return self.Horde_subclasses_unlocked[subclass] == true
 end

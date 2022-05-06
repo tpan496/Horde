@@ -1,3 +1,36 @@
+sound.Add({
+name = "Weapon_Void_Projector.Double_2",
+channel = CHAN_WEAPON,
+volume = VOL_NORM,
+pitch = 100,
+soundlevel = SNDLVL_NORM,
+sound = "horde/weapons/gauss/pulsemachine.ogg"
+})
+sound.Add({
+name = "Weapon_Void_Projector.Double_3",
+channel = CHAN_WEAPON,
+volume = VOL_NORM,
+pitch = 125,
+soundlevel = SNDLVL_NORM,
+sound = "horde/weapons/gauss/pulsemachine.ogg"
+})
+sound.Add({
+name = "Weapon_Void_Projector.Double_4",
+channel = CHAN_WEAPON,
+volume = VOL_NORM,
+pitch = 150,
+soundlevel = SNDLVL_NORM,
+sound = "horde/weapons/gauss/pulsemachine.ogg"
+})
+
+if CLIENT then
+    SWEP.WepSelectIcon = surface.GetTextureID( "vgui/hud/horde_void_projector" )
+    SWEP.DrawWeaponInfoBox = false
+    SWEP.BounceWeaponIcon = false
+    killicon.Add( "horde_void_projector", "vgui/hud/horde_void_projector", Color( 255, 255, 255, 255 ) )
+	killicon.Add( "projectile_horde_void_projectile", "vgui/hud/horde_void_projector", Color( 255, 255, 255, 255 ) )
+end
+
 SWEP.IronSightsPos = Vector(5.15, 0, 0.72)
 SWEP.IronSightsAng = Vector(0, 0, 0)
 
@@ -21,10 +54,9 @@ SWEP.AutoSwitchFrom = true
 SWEP.Slot 			= 2
 SWEP.SlotPos        = 2
 
-SWEP.Primary.ClipSize		= 1000
-SWEP.Primary.DefaultClip	= 1000
+SWEP.Primary.DefaultClip	= 100
 SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo		= "Dark Energy"
+SWEP.Primary.Ammo		= "Thumper"
 
 SWEP.HoldType = "magic"
 
@@ -38,6 +70,9 @@ SWEP.DrawCrosshair = true
 SWEP.Category = "ArcCW - Horde"
 
 SWEP.DrawAmmo = true
+
+SWEP.Primary.MaxAmmo = 100
+SWEP.Primary.ClipSize = -1
 
 if ( CLIENT ) then
 --SWEP.WepSelectIcon = surface.GetTextureID( "/vgui/icons/icon_pyromancyflame1.vmt" )
@@ -72,23 +107,38 @@ end
 
 SWEP.base = "weapon_base"
 
-SWEP.Secondary.NumberofShots = 0
-SWEP.Secondary.Force = 0
-SWEP.Secondary.Spread = 0
 SWEP.Secondary.Sound = "Weapon_Pistol.NPC_Single"
-SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
-SWEP.Secondary.Recoil = 0
 SWEP.Secondary.Delay = 0
-SWEP.Secondary.TakeAmmo = 0
-SWEP.Secondary.ClipSize = 0
-SWEP.Secondary.Damage = 0
-SWEP.Secondary.Magnitude = "0"
+SWEP.Secondary.DefaultClip = 0
+SWEP.Secondary.ClipSize = 100
+
+SWEP.Delay = 1
+
+SWEP.Charging = 0
+SWEP.ChargingTimer = 0
+SWEP.ChargeSoundTimer = 0
+
+SWEP.SecondaryCharging = 0
+SWEP.SecondaryChargingTimer = 0
+SWEP.SecondaryChargeSoundTimer = 0
+
+SWEP.EnergyRegenTimer = 0
+SWEP.SpectreMaxCount = 1
+
+if SERVER then
+	--[[hook.Add("Horde_OnPlayerDamagePost", "Horde_VoidProjectorDamage", function (ply, npc, bonus, hitgroup, dmginfo)
+		if dmginfo:GetInflictor() and dmginfo:GetInflictor():GetClass() == "projectile_horde_void_projectile" then
+			local wpn = ply:GetWeapon("horde_void_projector")
+			wpn:SetClip2(math.min(100, wpn:Clip1() + dmginfo:GetDamage() / 2))
+		end
+	end)]]--
+end
 
 function SWEP:Initialize()
 	self:SetHoldType("magic")
-	ParticleEffectAttach("snowcore_small", PATTACH_ABSORIGIN_FOLLOW, self, 1)
+	
 
 	if CLIENT then
 		self.VElements = table.FullCopy( self.VElements )
@@ -114,41 +164,343 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
-    if self:CanPrimaryAttack() then
+    if self:CanPrimaryAttack() and self.Weapon:Clip1() >= 5 then
         if IsValid(self.Owner) then
-            self:EmitSound ("weapons/airboat/airboat_gun_lastshot1.wav")
-            self.Weapon:SendWeaponAnim(ACT_VM_THROW)
-            self.Weapon:SetNextPrimaryFire( CurTime() + 1 )
-            self:Project()
+            self.Weapon:SendWeaponAnim( ACT_VM_PULLBACK_HIGH )
+			self:SetNextPrimaryFire( CurTime() + self.Delay )
+			--self:SetNextSecondaryFire( CurTime() + self.Delay )
+			self.Charging = 1
+			self.ChargingTimer = CurTime() + 1
         end
     end
 end
 
 function SWEP:SecondaryAttack()
+	if CLIENT then return end
+	if IsValid(self.Owner) then
+		self.SecondaryCharging = 1
+		self.SecondaryChargingTimer = CurTime() + 1
+	end
 end
 
-function SWEP:Project()
+function SWEP:CreateSpectre(ply, properties, pos)
+	local ent = ents.Create("npc_vj_horde_spectre")
+	ent.properties = properties
+	local pos = ply:GetPos()
+	local dir = (ply:GetEyeTrace().HitPos - pos)
+	dir:Normalize()
+	local drop_pos = pos + dir * 50
+	drop_pos.z = pos.z + 24
+	if pos then
+		drop_pos = pos
+	end
+	ent:SetPos(drop_pos)
+	ent:SetAngles(Angle(0, ply:GetAngles().y, 0))
+	ply:Horde_AddDropEntity(ent:GetClass(), ent)
+	ent:SetNWEntity("HordeOwner", ply)
+	ent:Spawn()
+
+	timer.Simple(0.1, function ()
+		ent:AddRelationship("player D_LI 99")
+		ent:AddRelationship("ally D_LI 99")
+		if HORDE.items["npc_vj_horde_vortigaunt"] then
+			ent:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
+		end
+		if HORDE.items["npc_vj_horde_combat_bot"] then
+			ent:AddRelationship("npc_vj_horde_combat_bot D_LI 99")
+		end
+		if HORDE.items["npc_turret_floor"] then
+			ent:AddRelationship("npc_turret_floor D_LI 99")
+		end
+		if HORDE.items["npc_manhack"] then
+			ent:AddRelationship("npc_manhack D_LI 99")
+		end
+
+		--ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
+	end)
+	local npc_info = list.Get("NPC")[ent:GetClass()]
+	if not npc_info then
+		print("[HORDE] NPC does not exist in ", list.Get("NPC"))
+	end
+
+	-- Special case for turrets
+	local id = ent:GetCreationID()
+	ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+	timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
+		if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+		ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+	end)
+
+	-- Count Minions
+	self.Owner:Horde_SetMinionCount(self.Owner:Horde_GetMinionCount() + 1)
+
+	ent:CallOnRemove("Horde_EntityRemoved", function()
+		if ent:IsValid() and ply:IsValid() then
+			timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
+			ply:Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
+			ply:Horde_SyncEconomy()
+			ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
+		end
+	end)
+end
+
+function SWEP:RaiseSpectre()
+	local cost = 40
+	local properties = {hollow_essence = false, abyssal_might = false, necromastery = false, level = self.Owner:Horde_GetUpgrade("horde_void_projector")}
+	hook.Run("Horde_OnRaiseSpectre", self.Owner, properties)
+	if properties.hollow_essence == true then
+		cost = cost - 16
+	end
+	--if properties.necromastery == true then
+	--	cost = cost - 12.5
+	--end
+	if self.Weapon:Clip1() >= cost then
+		--self:SetNextSecondaryFire( CurTime() + self.Delay / 2 )
+		local ply = self.Owner
+		if ply.Horde_drop_entities["npc_vj_horde_spectre"] and ply.Horde_drop_entities["npc_vj_horde_spectre"] >= (ply.Horde_Spectre_Max_Count) then
+			return
+		end
+		self.SecondaryCharging = 0
+		self:TakePrimaryAmmo(cost)
+		self:CreateSpectre(ply, properties)
+	end
+end
+
+function SWEP:RecoverEnergy(energy)
+	if CLIENT then return end
+	self:SetClip1(math.min(self.Primary.MaxAmmo, self:Clip1() + energy))
+end
+
+function SWEP:Launch(charged)
     if CLIENT then return end
-	local ent = ents.Create("projectile_horde_void_spear")
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+	if self.Weapon:Ammo1() < 5 then return end
+	self.Owner:EmitSound("weapons/airboat/airboat_gun_lastshot1.wav", 150, 40)
+	local properties = {sphere = false, battery = false, energy = self.Weapon:Ammo1(), field = false, charged = charged, beacon_of_void = false, level = self.Owner:Horde_GetUpgrade("horde_void_projector")}
+	hook.Run("Horde_OnVoidProjectorLaunch", self.Owner, properties)
+	local ent = ents.Create("projectile_horde_void_projectile")
     ent:SetOwner(self.Owner)
     ent.Owner = self.Owner
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	ent.properties = properties
+	ent:SetNWInt("charged", charged)
     if (!IsValid(ent)) then return end
-    self:TakePrimaryAmmo(5)
+	if charged == 2 and self.Weapon:Clip1() >= 20 then
+		self:TakePrimaryAmmo(20)
+	elseif charged == 1 and self.Weapon:Clip1() >= 10 then
+		self:TakePrimaryAmmo(10)
+	else
+		self:TakePrimaryAmmo(5)
+	end
     ent:SetPos( self.Owner:EyePos() + (self.Owner:GetAimVector() * 16 ))
 	ent:SetAngles( self.Owner:EyeAngles() )
 	ent:Spawn()
+
+	if charged == 1 then
+		local p2 = table.Copy(properties)
+		p2.charged = 0
+		local ent1 = ents.Create("projectile_horde_void_projectile")
+		ent1:SetOwner(self.Owner)
+		ent1.Owner = self.Owner
+		ent1.properties = p2
+		ent1:SetNWInt("charged", 0)
+		if (!IsValid(ent1)) then return end
+		local ar = self.Owner:EyeAngles()
+		ar:RotateAroundAxis(ar:Up(), 15 )
+		ent1:SetPos( self.Owner:EyePos() + (ar:Forward() * 16 ))
+		ent1:SetAngles(ar)
+		ent1:Spawn()
+		local phys1 = ent1:GetPhysicsObject()
+		local v1 = ar:Forward()
+		v1 = v1 * 1000
+		phys1:ApplyForceCenter(v1)
+
+		local ent2 = ents.Create("projectile_horde_void_projectile")
+		ent2:SetOwner(self.Owner)
+		ent2.Owner = self.Owner
+		ent2.properties = p2
+		ent2:SetNWInt("charged", 0)
+		if (!IsValid(ent2)) then return end
+		local al = self.Owner:EyeAngles()
+		al:RotateAroundAxis(ar:Up(), -15 )
+		ent2:SetPos( self.Owner:EyePos() + (al:Forward() * 16 ))
+		ent2:SetAngles(al)
+		ent2:Spawn()
+		local phys2 = ent2:GetPhysicsObject()
+		local v2 = al:Forward()
+		v2 = v2 * 1000
+		phys2:ApplyForceCenter(v2)
+	end
 	local phys = ent:GetPhysicsObject()
 	if (!IsValid( phys )) then ent:Remove() return end
     local velocity = self.Owner:GetAimVector()
 	velocity = velocity * 1000
-	velocity = velocity + (VectorRand() * 10) -- a random element
+	--velocity = velocity + (VectorRand() * 10) -- a random element
 	phys:ApplyForceCenter(velocity)
 	timer.Create("UniqueName1", 1, 1, function() if IsValid(self) then
             self.Weapon:DefaultReload( ACT_VM_DRAW )
             self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
         end
     end)
+end
+
+function SWEP:Reload()
+	if CLIENT then return end
+	HORDE:UsePerkSkill(self.Owner)
+end
+
+function SWEP:VoidCascade()
+	if CLIENT then return end
+	if self.Weapon:Ammo1() < 30 then return true end
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+	local ent = ents.Create("projectile_horde_void_projectile")
+    ent:SetOwner(self.Owner)
+    ent.Owner = self.Owner
+	local properties = {sphere = false, battery = false, energy = self.Weapon:Ammo1(), field = false, charged = 2, beacon_of_void = false, level = self.Owner:Horde_GetUpgrade("horde_void_projector"), cascade=true}
+	hook.Run("Horde_OnVoidProjectorLaunch", self.Owner, properties)
+	ent.properties = properties
+	ent:SetNWInt("charged", 1)
+    if (!IsValid(ent)) then return end
+	self:TakePrimaryAmmo(30)
+    ent:SetPos( self.Owner:EyePos() + (self.Owner:GetAimVector() * 16 ))
+	ent:SetAngles( self.Owner:EyeAngles() )
+	ent:Spawn()
+
+	local phys = ent:GetPhysicsObject()
+	if (!IsValid( phys )) then ent:Remove() return end
+    local velocity = self.Owner:GetAimVector()
+	velocity = velocity * 100
+	--velocity = velocity + (VectorRand() * 10) -- a random element
+	phys:ApplyForceCenter(velocity)
+	timer.Create("UniqueName1", 1, 1, function() if IsValid(self) then
+            self.Weapon:DefaultReload( ACT_VM_DRAW )
+            self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
+        end
+    end)
+end
+
+function SWEP:Recall()
+	if CLIENT then return end
+	if not HORDE.player_drop_entities[self.Owner:SteamID()] then return true end
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+	for id, ent in pairs(HORDE.player_drop_entities[self.Owner:SteamID()]) do
+		if ent:IsNPC() and ent:GetClass() == "npc_vj_horde_spectre" then
+			local rand = VectorRand() * 50
+			rand.z = 0
+			ent:SetPos(self.Owner:GetPos() + rand)
+			--local healinfo = HealInfo:New({amount=10, healer=self.Owner})
+            --HORDE:OnPlayerHeal(self.Owner, healinfo)
+			--self:SetClip1(math.min(100, self:Clip1() + 20))
+		end
+	end
+	timer.Create("UniqueName1", 1, 1, function() if IsValid(self) then
+		self.Weapon:DefaultReload( ACT_VM_DRAW )
+		self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
+	end
+	self.SecondaryChargingTimer = CurTime() + 1
+	self:SetNextSecondaryFire( CurTime() + self.Delay )
+end)
+end
+
+function SWEP:Devour()
+	if CLIENT then return end
+	local ply = self.Owner
+
+	local filter = {self:GetOwner()}
+    local tr = util.TraceLine({
+        start = self:GetOwner():GetShootPos(),
+        endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 500,
+        filter = filter,
+        mask = MASK_SHOT_HULL
+    })
+	if !IsValid(tr.Entity) or not HORDE:IsEnemy(tr.Entity) then return true end
+	if tr.Entity:GetVar("is_elite") then return true end
+
+	if ply.Horde_drop_entities["npc_vj_horde_spectre"] and ply.Horde_drop_entities["npc_vj_horde_spectre"] >= (ply.Horde_Spectre_Max_Count) then
+		return
+	end
+
+	tr.Entity:TakeDamage(tr.Entity:GetMaxHealth() + 1, ply, ply)
+
+	local properties = {hollow_essence = false, abyssal_might = false, necromastery = false, level = self.Owner:Horde_GetUpgrade("horde_void_projector")}
+	hook.Run("Horde_OnRaiseSpectre", self.Owner, properties)
+	self:CreateSpectre(ply, properties, tr.Entity:GetPos())
+	sound.Play("horde/weapons/void_projector/devour.ogg", tr.Entity:GetPos(), 150, 100)
+
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+
+	timer.Create("UniqueName1", 1, 1, function() if IsValid(self) then
+		self.Weapon:DefaultReload( ACT_VM_DRAW )
+		self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
+	end
+end)
+end
+
+function SWEP:Think()
+	if self.Charging == 1 and !self.Owner:KeyDown( IN_ATTACK ) then
+        self:SetNextPrimaryFire( CurTime() + self.Delay )
+        --self:SetNextSecondaryFire( CurTime() + self.Delay )
+        self.Charging = 0
+        --self.Idle = 0
+        --self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
+
+		if self.ChargingTimer <= CurTime() then
+			self:Launch(2)
+		elseif self.ChargingTimer <= CurTime() + 0.5 then
+			self:Launch(1)
+		else
+			self:Launch(0)
+		end
+
+		self.Owner:StopSound( "Weapon_Void_Projector.Double_2" )
+		self.Owner:StopSound( "Weapon_Void_Projector.Double_3" )
+		self.Owner:StopSound( "Weapon_Void_Projector.Double_4" )
+    end
+
+	if self.SecondaryCharging == 1 and !self.Owner:KeyDown( IN_ATTACK2 ) then
+        --self:SetNextPrimaryFire( CurTime() + self.Delay )
+        --self:SetNextSecondaryFire( CurTime() + self.Delay )
+        self.SecondaryCharging = 0
+        --self.Idle = 0
+        --self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
+
+		if self.SecondaryChargingTimer <= CurTime() then
+			self:Recall()
+		elseif self.SecondaryChargingTimer <= CurTime() + 0.5 then
+			self:Recall()
+		else
+			self:RaiseSpectre()
+		end
+
+		self.Owner:StopSound( "Weapon_Void_Projector.Double_2" )
+		self.Owner:StopSound( "Weapon_Void_Projector.Double_3" )
+		self.Owner:StopSound( "Weapon_Void_Projector.Double_4" )
+    end
+
+	if SERVER and self.SecondaryCharging == 1 and self.SecondaryChargingTimer <= CurTime() then
+		self:Recall()
+		self.SecondaryCharging = 0
+	end
+
+	if SERVER and self.Charging == 1 and self.ChargeSoundTimer <= CurTime() then
+		if self.ChargingTimer <= CurTime() then
+			self.Owner:EmitSound( "Weapon_Void_Projector.Double_4" )
+		elseif self.ChargingTimer <= CurTime() + 0.5 then
+			self.Owner:EmitSound( "Weapon_Void_Projector.Double_3" )
+		else
+			self.Owner:EmitSound( "Weapon_Void_Projector.Double_2" )
+		end
+
+		self.ChargeSoundTimer = CurTime() + 0.25
+	end
+
+	if SERVER and self.EnergyRegenTimer <= CurTime() then
+		self.EnergyRegenTimer = CurTime() + 0.25
+		self:SetClip1(math.min(self.Primary.MaxAmmo, self:Clip1() + 1))
+	end
 end
 
 /********************************************************

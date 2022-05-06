@@ -122,7 +122,7 @@ end
 
 function ENT:CustomOnLeapAttack_AfterChecks(hitEnt, isProp)
     if isProp then return end
-    if hitEnt and IsValid(hitEnt) and HORDE:IsPlayerOrMinion(hitEnt) then
+    if hitEnt and IsValid(hitEnt) and (HORDE:IsPlayerOrMinion(hitEnt) == true) then
         self:UnRage()
         hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 60, self)
     end

@@ -16,13 +16,6 @@ function entmeta:Horde_AddFreezeEffect(duration)
             timer.Simple(0, function ()
                 if not self:IsValid() then return end
                 if not self.Horde_StoredAnimationPlaybackRateFreeze then
-                    if self.Horde_StoredAnimationPlaybackRateFreeze then
-                        if self.AnimationPlaybackRate then
-                            self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRateFreeze
-                        else
-                            self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRateFreeze)
-                        end
-                    end
                     if self.AnimationPlaybackRate then
                         self.Horde_StoredAnimationPlaybackRateFreeze = self.AnimationPlaybackRate
                         self.AnimationPlaybackRate = 0.1

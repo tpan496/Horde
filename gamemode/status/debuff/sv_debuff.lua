@@ -12,6 +12,24 @@ HORDE.Debuff_Notifications = {
     [HORDE.Status_Necrosis] = "You are killed by Necrosis."
 }
 
+function HORDE:ApplyDebuffInRadius(debuff, pos, radius, buildup, inflictor, callback)
+    for _, ent in pairs(ents.FindInSphere(pos, radius)) do
+        if ent:IsNPC() and HORDE:IsPlayerOrMinion(ent) ~= true then
+            ent:Horde_AddDebuffBuildup(debuff, buildup, inflictor)
+        end
+    end
+end
+
+function HORDE:ApplyDamageInRadius(pos, radius, dmginfo, callback)
+    for _, ent in pairs(ents.FindInSphere(pos, radius)) do
+        if ent:IsNPC() and HORDE:IsPlayerOrMinion(ent) ~= true then
+            ent:TakeDamageInfo(dmginfo)
+            dmginfo:SetDamagePosition(ent:GetPos())
+            callback(ent)
+        end
+    end
+end
+
 function plymeta:Horde_SetApplyDebuffDuration(duration)
     self.Horde_ApplyDebuffDuration = duration
 end
@@ -37,9 +55,15 @@ function plymeta:Horde_ReduceDebuffBuildup(debuff, amount)
     net.Send(self)
 end
 
+function entmeta:Horde_HasDebuff(debuff)
+    if self.Horde_Debuff_Active then
+        return self.Horde_Debuff_Active[debuff]
+    end
+    return nil
+end
 function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
     if not IsValid(self) or (self:IsPlayer() and not self:Alive()) then return end
-    if inflictor and inflictor:IsPlayer() and self:IsPlayer() and inflictor ~= self then return end
+    if inflictor and (HORDE:IsPlayerOrMinion(inflictor) == true) and (HORDE:IsPlayerOrMinion(self) == true) and inflictor ~= self then return end
     if not self.Horde_Debuff_Active then self.Horde_Debuff_Active = {} end
     if not self.Horde_Debuff_Buildup then self.Horde_Debuff_Buildup = {} end
     if not self.Horde_Debuff_Cooldown then self.Horde_Debuff_Cooldown = {} end
@@ -76,12 +100,19 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
             net.WriteUInt(self.Horde_Debuff_Buildup[debuff], 8)
         net.Send(self)
     else
+        local bonus = {apply = 1, more = 1, increase = 0}
+        if inflictor and inflictor:IsValid() and inflictor:IsPlayer() then
+            hook.Run("Horde_OnEnemyDebuffApply", self, debuff, bonus, inflictor)
+        end
+        if bonus.apply == 0 then return end
+        buildup = buildup * bonus.more * (1 + bonus.increase)
+
         if HORDE.Status_Buildup_Sounds[debuff] then
             sound.Play(HORDE.Status_Buildup_Sounds[debuff], self:GetPos(), 100, math.random(80,110))
         end
         self.Horde_Debuff_Buildup[debuff] = math.min(100, self.Horde_Debuff_Buildup[debuff] + buildup)
 
-        if not pos then pos = self:GetPos() end
+        if not pos then pos = self:GetPos() + self:OBBCenter() end
         if (debuff == HORDE.Status_Frostbite) or (debuff == HORDE.Status_Freeze) then
             local effectdata = EffectData()
                 effectdata:SetOrigin(pos)
@@ -93,6 +124,11 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
             local data = EffectData();
             data:SetOrigin(pos)
             util.Effect("StunstickImpact", data);
+        elseif debuff == HORDE.Status_Bleeding then
+            local data = EffectData()
+            data:SetOrigin(pos)
+            data:SetRadius(50)
+            util.Effect("hemo_mist", data, true, true)
         end
     end
     if self.Horde_Debuff_Buildup[debuff] < 100 then return end
@@ -172,7 +208,7 @@ function entmeta:Horde_RemoveDebuff(debuff)
         net.Send(self)
     else
         self.Horde_Debuff_Cooldown[debuff] = true
-        timer.Simple(5, function ()
+        timer.Simple(3, function ()
             if not self:IsValid() then return end
             self.Horde_Debuff_Cooldown[debuff] = nil
         end)

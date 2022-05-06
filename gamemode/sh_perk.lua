@@ -8,6 +8,7 @@ HORDE.perks = HORDE.perks or {}
 
 if SERVER then
 util.AddNetworkString("Horde_PerkStartCooldown")
+util.AddNetworkString("Horde_PerkChargesUpdate")
 end
 
 if CLIENT then
@@ -139,6 +140,29 @@ local function Horde_LoadPerks()
         if dev then print("[Horde] Loaded perk '" .. PERK.ClassName .. "'.") end
         ::cont::
     end
+
+    for subclass_name, subclass in pairs(HORDE.subclasses) do
+        prefix = "horde/gamemode/perks/" .. subclass_name .. "/"
+        for _, f in ipairs(file.Find(prefix .. "*", "LUA")) do
+            PERK = {}
+            AddCSLuaFile(prefix .. f)
+            include(prefix .. f)
+            if PERK.Ignore then goto cont end
+            PERK.ClassName = string.lower(PERK.ClassName or string.Explode(".", f)[1])
+            PERK.SortOrder = PERK.SortOrder or 0
+    
+            hook.Run("Horde_OnLoadPerk", PERK)
+    
+            HORDE.perks[PERK.ClassName] = PERK
+    
+            for k, v in pairs(PERK.Hooks or {}) do
+                hook.Add(k, "horde_perk_" .. PERK.ClassName, v)
+            end
+    
+            if dev then print("[Horde] Loaded perk '" .. PERK.ClassName .. "'.") end
+            ::cont::
+        end
+    end
     PERK = nil
 end
 
@@ -178,6 +202,15 @@ function plymeta:Horde_SetPerkInternalCooldown(cd)
     self.Horde_PerkInternalCooldown = cd
 end
 
+function plymeta:Horde_SetPerkCharges(charges)
+    self.Horde_PerkCharges = charges
+    if SERVER then
+        net.Start("Horde_PerkChargesUpdate")
+            net.WriteInt(charges, 8)
+        net.Send(self)
+    end
+end
+
 function plymeta:Horde_GetPerkInternalCooldown()
     return self.Horde_PerkInternalCooldown or 0
 end
@@ -185,6 +218,11 @@ end
 function plymeta:Horde_GetPerkCooldown()
     return self.Horde_PerkCooldown or 0
 end
+
+function plymeta:Horde_GetPerkCharges(charges)
+    return self.Horde_PerkCharges or -1
+end
+
 
 if SERVER then
     function HORDE:UsePerkSkill(ply)
@@ -196,6 +234,13 @@ if SERVER then
                 net.WriteUInt(ply:Horde_GetPerkCooldown(), 8)
             net.Send(ply)
         end
+    end
+
+    function HORDE:RefreshPerkCooldown(ply)
+        ply:Horde_SetPerkInternalCooldown(0)
+        net.Start("Horde_PerkStartCooldown")
+            net.WriteUInt(0, 8)
+        net.Send(ply)
     end
 
     hook.Add("PlayerPostThink", "Horde_PerkCooldown", function(ply)

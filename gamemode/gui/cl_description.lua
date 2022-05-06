@@ -14,15 +14,33 @@ function PANEL:Init()
         surface.PlaySound("UI/buttonrollover.wav")
     end
 
-    self.sell_btn = vgui.Create("DButton", self)
-    self.sell_btn:Dock(BOTTOM)
-    self.sell_btn:DockMargin(5,2.5,5,2.5)
+    self.sell_panel = vgui.Create("DPanel", self)
+    self.sell_panel:Dock(BOTTOM)
+    self.sell_panel:DockMargin(5,2.5,5,2.5)
+    self.sell_panel:SetTall(50)
+    self.sell_panel.Paint = function ()
+    end
+
+    self.sell_btn = vgui.Create("DButton", self.sell_panel)
+    self.sell_btn:Dock(LEFT)
+    self.sell_btn:DockMargin(0,0,2.5,0)
     self.sell_btn:SetFont("Content")
     self.sell_btn:SetTall(50)
     self.sell_btn.OnCursorEntered = function ()
         surface.PlaySound("UI/buttonrollover.wav")
     end
     self.sell_btn:SetVisible(false)
+
+    self.subclass_btn = vgui.Create("DButton", self.sell_panel)
+    self.subclass_btn:Dock(LEFT)
+    self.subclass_btn:DockMargin(2.5,0,0,0)
+    self.subclass_btn:SetFont("Content")
+    self.subclass_btn:SetTall(50)
+    self.subclass_btn:SetText("Change Subclass")
+    self.subclass_btn.OnCursorEntered = function ()
+        surface.PlaySound("UI/buttonrollover.wav")
+    end
+    self.subclass_btn:SetVisible(false)
 
     self.ammo_panel = vgui.Create("DPanel", self)
     self.ammo_panel:Dock(BOTTOM)
@@ -97,13 +115,22 @@ function PANEL:Init()
     end
 
     function self.sell_btn:DoClick()
-        self:GetParent():SellDoClick()
+        self:GetParent():GetParent():SellDoClick()
+    end
+
+    function self.subclass_btn:DoClick()
+        self:GetParent():GetParent():SubclassDoClick()
     end
 
     self.perk_panel = vgui.Create("DPanel", self)
     self.perk_panel:Dock(FILL)
     self.perk_panel:SetVisible(false)
     self.perk_panel:SetBackgroundColor(Color(40,40,40))
+
+    self.subclass_panel = vgui.Create("DPanel", self)
+    self.subclass_panel:Dock(FILL)
+    self.subclass_panel:SetVisible(false)
+    self.subclass_panel:SetBackgroundColor(Color(40,40,40))
 end
 
 function PANEL:DoClick()
@@ -139,6 +166,12 @@ function PANEL:AmmoDoClick(count)
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
     if not LocalPlayer():Alive() then return end
+    if self.item.ammo_price < 0 then
+        net.Start("Horde_BuyItemUpgrade")
+        net.WriteString(self.item.class)
+        net.SendToServer()
+        return
+    end
     if count == -1 then
         -- Secondary ammo
         if self.item.secondary_ammo_price <= 0 or LocalPlayer():Horde_GetMoney() < self.item.secondary_ammo_price then return end
@@ -164,6 +197,9 @@ function PANEL:SellDoClick()
     if not self.item.class then
         -- Toggle perks
         self.perk_panel:SetVisible(not self.perk_panel:IsVisible())
+        if self.perk_panel:IsVisible() then
+            self.subclass_panel:SetVisible(false)
+        end
         return
     end
     if not LocalPlayer():Alive() then return end
@@ -181,10 +217,24 @@ function PANEL:SellDoClick()
     end
 end
 
+function PANEL:SubclassDoClick()
+    surface.PlaySound("UI/buttonclick.wav")
+    if not self.item then return end
+    if not self.item.class then
+        -- Toggle subclasses
+        self.perk_panel:SetVisible(false)
+        self.subclass_panel:SetVisible(not self.subclass_panel:IsVisible())
+        return
+    end
+end
+
 function PANEL:SetData(item)
     self.perk_panel:SetSize(self:GetWide(), self:GetTall())
+    self.subclass_btn:SetSize(self:GetWide(), self:GetTall())
     if self.perk_layout then for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end end
+    if self.subclass_layout then for _, v in pairs(self.subclass_layout:GetChildren()) do v:Remove() end end
     self.perk_panel:SetVisible(false)
+    self.subclass_btn:SetVisible(false)
     self.item = item
     self.level_satisfy = true
     if self.item and self.item.levels and (HORDE.disable_levels_restrictions == 0) then
@@ -263,7 +313,14 @@ function PANEL:SetData(item)
             for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end
         end
         local class = self.item
-        for perk_level, v in SortedPairs(class.perks) do
+        local name = class.name
+        local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(name)]
+        local perks = class.perks
+        if subclass and subclass.ParentClass then
+            name = subclass.ClassName
+            perks = subclass.Perks
+        end
+        for perk_level, v in SortedPairs(perks) do
             if not v.choices then goto cont end
             local title = self.perk_layout:Add("DLabel")
             title:SetSize(self.perk_layout:GetWide(), 24)
@@ -281,7 +338,7 @@ function PANEL:SetData(item)
             cur_panel:DockMargin(0, 10, 0, 0)
 
             local unlocked_level = HORDE:Horde_GetWaveForPerk(perk_level)
-            local loc_title = translate.Get("Perk_Title_" .. class.name .. "_Tier_" .. perk_level) or (v.title or "")
+            local loc_title = translate.Get("Perk_Title_" .. name .. "_Tier_" .. perk_level) or (v.title or "")
             if unlocked_level > 0 and unlocked_level > HORDE.current_wave then
                 title:SetText("[" .. translate.Format("Shop_Unlocks_After_Wave", unlocked_level) .. "] "  .. loc_title)
                 title:SetColor(color_gray)
@@ -302,8 +359,49 @@ function PANEL:SetData(item)
                 else
                     perkbutton:SetSize(cur_panel:GetWide() / 2, 82)
                 end
-                perkbutton:SetData(class.name, perk_level, choice)
+                perkbutton:SetData(name, perk_level, choice, subclass)
             end
+            ::cont::
+        end
+
+        if not self.subclass_scroll_panel then
+            self.subclass_scroll_panel = vgui.Create("DScrollPanel", self.subclass_panel)
+            self.subclass_scroll_panel:SetSize(self:GetWide(), self:GetTall() - 80)
+            self.subclass_layout = vgui.Create("DIconLayout", self.subclass_scroll_panel)
+            self.subclass_layout:Dock(FILL)
+            self.subclass_layout:DockMargin(4, 10, 0, 4)
+            self.subclass_layout:DockPadding(0, 0, 0, 50)
+            self.subclass_layout:SetSpaceY(8)
+            for _, v in pairs(self.subclass_layout:GetChildren()) do v:Remove() end
+        end
+        
+        local cur_panel = self.subclass_layout:Add("DIconLayout")
+        cur_panel:SetSpaceX(4)
+        cur_panel:SetSize(self:GetWide() - 8, 82)
+        cur_panel:Dock(TOP)
+        cur_panel:DockMargin(0, 10, 0, 0)
+        for _, subclass_name in SortedPairs(HORDE.classes_to_subclasses[class.name]) do
+            subclass_name = string.lower(subclass_name)
+
+            --[[local unlocked_level = HORDE:Horde_GetWaveForPerk(perk_level)
+            local loc_title = translate.Get("Subclass_Title_" .. class.name) or (v.title or "")
+            if unlocked_level > 0 and unlocked_level > HORDE.current_wave then
+                title:SetText("[Locked]")
+                title:SetColor(color_gray)
+            else
+                title:SetText(loc_title)
+                title:SetColor(color_white)
+            end]]--
+
+            local subclassbutton = cur_panel:Add("HordeSubclassButton")
+            --if unlocked_level > 0 and unlocked_level > HORDE.current_wave then
+                subclassbutton:SetLocked(true)
+            --else
+            --    subclassbutton:SetLocked(nil)
+            --end
+
+            subclassbutton:SetSize(cur_panel:GetWide() / 3, 82)
+            subclassbutton:SetData(class.name, subclass_name)
             ::cont::
         end
     end
@@ -349,6 +447,7 @@ function PANEL:Paint()
     if self.item then
         self.buy_btn:SetVisible(true)
         self.sell_btn:SetVisible(true)
+        self.sell_btn:SetWide(self:GetWide())
         --[[surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
         local mat = Material("damagetype/fire.png", "mips smooth")
         surface.SetMaterial(mat) -- Use our cached material
@@ -392,6 +491,7 @@ function PANEL:Paint()
             self.class_progress:SetVisible(not self.perk_panel:IsVisible())
             local loc_name = translate.Get("Class_" .. self.item.display_name) or self.item.display_name
             draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            
             local loc_desc = translate.Get("Class_Description_" .. self.item.display_name) or self.item.extra_description
             if GetConVar("horde_enable_perk"):GetInt() == 1 then
                 local perk = HORDE.perks[self.item.base_perk]
@@ -471,7 +571,11 @@ function PANEL:Paint()
                     px = px + 30
                 end
             end
-            draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            if self.item.class == "horde_void_projector" then
+                draw.DrawText(self.loc_name .. " +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class)), "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            else
+                draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            end
         end
 
         -- Check if this is a class or an item
@@ -485,6 +589,25 @@ function PANEL:Paint()
 
             -- Use the sell button to toggle perks
             self.sell_btn:SetVisible(true)
+            self.sell_btn:SetWide(self:GetWide() / 2)
+
+            self.subclass_btn:SetVisible(true)
+            self.subclass_btn:SetWide(self:GetWide() / 2)
+            self.subclass_btn:SetTextColor(color_white)
+            self.subclass_btn.Paint = function ()
+                surface.SetDrawColor(Color(153,50,204))
+                surface.DrawRect(0, 0, self:GetWide(), 200)
+                if not self.item then return end
+                local mat = Material(self.item.icon, "mips smooth")
+                local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(self.item.name)]
+                if subclass and subclass.ParentClass then
+                    mat = Material(subclass.Icon, "mips smooth")
+                end
+                surface.SetDrawColor(color_white)
+                surface.SetMaterial(mat) -- Use our cached material
+                surface.DrawTexturedRect(self.subclass_btn:GetWide() / 2 + surface.GetTextSize(self.subclass_btn:GetText()) / 2 + 10, 5, 40, 40)
+            end
+
             local text_hide = translate.Get("Shop_Hide_Perks")
             local text_show = translate.Get("Shop_Show_Perks")
             if self.perk_panel:IsVisible() then
@@ -497,11 +620,11 @@ function PANEL:Paint()
             self.sell_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
-                if not self.item then return end
+                --[[
                 local mat = Material(self.item.icon, "mips smooth")
                 surface.SetDrawColor(color_white)
                 surface.SetMaterial(mat) -- Use our cached material
-                surface.DrawTexturedRect(self:GetWide() / 2 + text_len / 2 + 10, 5, 40, 40)
+                surface.DrawTexturedRect(self.sell_btn:GetWide() / 2 + text_len / 2 + 10, 5, 40, 40)]]--
             end
 
             self.ammo_panel:SetVisible(false)
@@ -559,7 +682,21 @@ function PANEL:Paint()
                         surface.DrawRect(0, 0, self:GetWide(), 200)
                     end
                 else
-                    self.ammo_secondary_btn:SetVisible(false)
+                    if self.item.class == "horde_void_projector" and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 then
+                        self.ammo_one_btn:SetTextColor(Color(255,255,255))
+                        local price = 800 + 25 * LocalPlayer():Horde_GetUpgrade(self.item.class)
+                        self.ammo_one_btn:SetText("Upgrade to +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
+                        self.ammo_one_btn:SetWide(self:GetWide())
+                        self.ammo_one_btn.Paint = function ()
+                            surface.SetDrawColor(Color(153,50,204))
+                            surface.DrawRect(0, 0, self:GetParent():GetParent():GetWide(), 200)
+                        end
+
+
+                        self.ammo_ten_btn:SetWide(0)
+                    else
+                        self.ammo_secondary_btn:SetVisible(false)
+                    end
                 end
 
                 self.current_ammo_panel.Paint = function ()

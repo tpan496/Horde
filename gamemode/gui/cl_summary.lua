@@ -209,9 +209,16 @@ function PANEL:Init()
         local class_icon = vgui.Create("DPanel", panel)
         class_icon:SetPos(430, 22)
         class_icon:SetSize(40, 40)
+        local class = ply:Horde_GetClass().name
+        local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(HORDE.classes[class].name)]
+        local mat
+        if subclass and subclass.ParentClass then
+            mat = Material(subclass.Icon, "mips smooth")
+        else
+            mat = Material(ply:Horde_GetClass().icon, "mips smooth")
+        end
         class_icon.Paint = function ()
             if not ply:Horde_GetClass() then return end
-            local mat = Material(ply:Horde_GetClass().icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
             surface.DrawTexturedRect(0, 0, 40, 40)
         end

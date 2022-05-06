@@ -28,7 +28,7 @@ function EFFECT:Init(effectdata)
 		particle:SetStartAlpha(255)
 		particle:SetEndAlpha(0)
 		particle:SetStartSize(0)
-		particle:SetEndSize(250)
+		particle:SetEndSize(250 * scale)
 		particle:SetAngles(normal:Angle())
 	end
 
