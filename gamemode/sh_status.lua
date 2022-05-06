@@ -18,32 +18,37 @@ HORDE.Status_HealthRegen = 9
 HORDE.Status_Phalanx = 10
 HORDE.Status_WardenAura = 11
 HORDE.Status_EntropyShield = 12
-HORDE.Status_AntimatterShield = 13
-HORDE.Status_Displacer = 14
-HORDE.Status_Unwavering_Guard = 15
+HORDE.Status_Foresight = 13
+HORDE.Status_AntimatterShield = 14
+HORDE.Status_Displacer = 15
+HORDE.Status_Void_Cascade = 16
+HORDE.Status_Recall = 17
+HORDE.Status_Quickstep = 18
 
-HORDE.Status_Armor_Survivor = 16
-HORDE.Status_Armor_Assault = 17
-HORDE.Status_Armor_Heavy = 18
-HORDE.Status_Armor_Demolition = 19
-HORDE.Status_Armor_Ghost = 20
-HORDE.Status_Armor_Medic = 21
-HORDE.Status_Armor_Engineer = 22
-HORDE.Status_Armor_Warden = 23
-HORDE.Status_Armor_Cremator = 24
-HORDE.Status_Armor_Berserker = 25
+HORDE.Status_Unwavering_Guard = 30
 
-HORDE.Status_ExpDisabled = 26
-HORDE.Status_Bleeding = 27
-HORDE.Status_Ignite = 28
-HORDE.Status_Frostbite = 29
-HORDE.Status_Shock = 30
-HORDE.Status_Break = 31
-HORDE.Status_Decay = 32
-HORDE.Status_Necrosis = 33
-HORDE.Status_Psychosis = 34
-HORDE.Status_Stun = 35
-HORDE.Status_Freeze = 36
+HORDE.Status_Armor_Survivor = 31
+HORDE.Status_Armor_Assault = 32
+HORDE.Status_Armor_Heavy = 33
+HORDE.Status_Armor_Demolition = 34
+HORDE.Status_Armor_Ghost = 35
+HORDE.Status_Armor_Medic = 36
+HORDE.Status_Armor_Engineer = 37
+HORDE.Status_Armor_Warden = 38
+HORDE.Status_Armor_Cremator = 39
+HORDE.Status_Armor_Berserker = 40
+
+HORDE.Status_ExpDisabled = 41
+HORDE.Status_Bleeding = 42
+HORDE.Status_Ignite = 43
+HORDE.Status_Frostbite = 44
+HORDE.Status_Shock = 45
+HORDE.Status_Break = 46
+HORDE.Status_Decay = 47
+HORDE.Status_Necrosis = 48
+HORDE.Status_Psychosis = 49
+HORDE.Status_Stun = 50
+HORDE.Status_Freeze = 51
 
 HORDE.Status_Icon = {}
 HORDE.Status_Icon[HORDE.Status_Camoflague] = "materials/status/camoflague.png"
@@ -60,6 +65,11 @@ HORDE.Status_Icon[HORDE.Status_WardenAura] = "materials/warden.png"
 HORDE.Status_Icon[HORDE.Status_EntropyShield] = "materials/perks/entropy_shield.png"
 HORDE.Status_Icon[HORDE.Status_AntimatterShield] = "materials/perks/antimatter_shield.png"
 HORDE.Status_Icon[HORDE.Status_Displacer] = "materials/perks/displacer.png"
+HORDE.Status_Icon[HORDE.Status_Void_Cascade] = "materials/abilities/void_cascade.png"
+HORDE.Status_Icon[HORDE.Status_Recall] = "materials/abilities/recall.png"
+HORDE.Status_Icon[HORDE.Status_Quickstep] = "materials/abilities/quickstep.png"
+HORDE.Status_Icon[HORDE.Status_Foresight] = "materials/perks/foresight.png"
+
 HORDE.Status_Icon[HORDE.Status_Unwavering_Guard] = "materials/perks/unwavering_guard.png"
 HORDE.Status_Icon[HORDE.Status_CanBuy] = "materials/status/canbuy.png"
 HORDE.Status_Icon[HORDE.Status_ExpDisabled] = "materials/status/exp_disabled.png"
@@ -105,4 +115,12 @@ end
 
 function HORDE:IsDebuff(status)
     return status > HORDE.Status_ExpDisabled
+end
+
+function HORDE:IsSkillStatus(status)
+    return status >= HORDE.Status_AntimatterShield and status < HORDE.Status_Unwavering_Guard
+end
+
+function HORDE:IsStackableSkillStatus(status)
+    if status == HORDE.Status_Quickstep then return true end
 end

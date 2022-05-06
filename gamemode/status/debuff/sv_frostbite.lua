@@ -12,16 +12,10 @@ function entmeta:Horde_AddFrostbiteEffect(duration)
 
         -- VJ
         if self:IsNPC() then
+            self:SetSchedule(SCHED_IDLE_STAND)
             timer.Simple(0, function ()
                 if not self:IsValid() then return end
                 if not self.Horde_StoredAnimationPlaybackRateFrostbite then
-                    if self.Horde_StoredAnimationPlaybackRateFrostbite then
-                        if self.AnimationPlaybackRate then
-                            self.AnimationPlaybackRate = self.Horde_StoredAnimationPlaybackRateFrostbite
-                        else
-                            self:SetPlaybackRate(self.Horde_StoredAnimationPlaybackRateFrostbite)
-                        end
-                    end
                     if self.AnimationPlaybackRate then
                         self.Horde_StoredAnimationPlaybackRateFrostbite = self.AnimationPlaybackRate
                         self.AnimationPlaybackRate = 0.6

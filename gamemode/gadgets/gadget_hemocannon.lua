@@ -51,7 +51,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         util.BlastDamageInfo(dmg, trace.HitPos, 128)
 
         for _, ent in pairs(ents.FindInSphere(trace.HitPos, 128)) do
-            if ent:IsNPC () and (not HORDE:IsPlayerOrMinion(ent)) then
+            if ent:IsNPC () and (HORDE:IsPlayerOrMinion(ent) ~= true) then
                 ent:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 50, ply)
             end
         end

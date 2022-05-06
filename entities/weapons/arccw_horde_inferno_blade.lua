@@ -211,7 +211,7 @@ function SWEP:Hook_PostBash(info)
     if not self.Charged or not info.tr.Hit then return end
     if SERVER then
         for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 75)) do
-            if HORDE:IsPlayerOrMinion(ent) then
+            if (HORDE:IsPlayerOrMinion(ent) == true) then
             elseif ent:IsNPC() then
                 local dmg = DamageInfo()
                 dmg:SetDamage(60)

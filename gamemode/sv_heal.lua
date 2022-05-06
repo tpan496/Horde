@@ -81,3 +81,8 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
         healer:Horde_AddHealAmount(healinfo:GetHealAmount())
     end
 end
+
+function HORDE:SelfHeal(ply, amount)
+    local healinfo = HealInfo:New({amount=amount, healer=ply})
+    HORDE:OnPlayerHeal(ply, healinfo)
+end

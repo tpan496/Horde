@@ -48,11 +48,14 @@ end)
 
 function HORDE:IsPlayerOrMinion(ent)
     return ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid()
-    
 end
 
 function HORDE:IsPlayerMinion(ent)
     return ent:GetNWEntity("HordeOwner"):IsValid()
+end
+
+function HORDE:IsEnemy(ent)
+    return ent:IsNPC() and (not ent:IsPlayer()) and (not ent:GetNWEntity("HordeOwner"):IsValid())
 end
 
 function HORDE:SpawnManhack(ply, id)
@@ -142,4 +145,24 @@ function HORDE:SpawnManhack(ply, id)
     end)
 
     ply:Horde_SyncEconomy()
+end
+
+function HORDE:CheckDemonStompCharges(ply)
+    timer.Simple(0.5, function ()
+        if not ply:IsValid() or not ply:Horde_GetPerk("samurai_base") then return end
+        local max_charges = 1
+        if ply:Horde_GetPerk("samurai_focus_slash") then
+            max_charges = max_charges + 1
+        end
+        if ply:Horde_GetPerk("samurai_demon_stomp") then
+            max_charges = max_charges + 1
+        end
+        if ply:Horde_GetPerk("samurai_blade_dance") then
+            max_charges = max_charges + 1
+        end
+        if ply:Horde_GetPerk("samurai_foresight") then
+            max_charges = max_charges + 1
+        end
+        ply:Horde_SetPerkCharges(max_charges)
+    end)
 end

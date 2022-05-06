@@ -51,6 +51,10 @@ timer.Simple(5, function ()
             draw.SimpleText(loc_display_name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Info", 160, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
             local mat = Material(HORDE.classes[name].icon, "mips smooth")
+            local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(name)]
+            if subclass and subclass.ParentClass then
+                mat = Material(subclass.Icon, "mips smooth")
+            end
             surface.SetMaterial(mat) -- Use our cached material
             local pos = math.max(15, 140 - 40 - string.len(loc_display_name) * 7 - 25)
             local level = LocalPlayer():Horde_GetLevel(name)

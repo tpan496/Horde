@@ -9,6 +9,7 @@ end)
 util.AddNetworkString("Horde_BuyItem")
 util.AddNetworkString("Horde_BuyItemAmmoPrimary")
 util.AddNetworkString("Horde_BuyItemAmmoSecondary")
+util.AddNetworkString("Horde_BuyItemUpgrade")
 util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
 util.AddNetworkString("Horde_InitClass")
@@ -48,11 +49,6 @@ end
 
 function plymeta:Horde_SetSkullTokens(tokens)
     self.Horde_skull_tokens = tokens
-end
-
-function plymeta:Horde_SetClass(class)
-    self.Horde_class = class
-    self:Horde_SetClassModel(class)
 end
 
 function plymeta:Horde_SetInBuyZone(can_buy)
@@ -193,10 +189,6 @@ end
 
 function plymeta:Horde_GetWeight()
     return self.Horde_weight or 0
-end
-
-function plymeta:Horde_GetClass()
-    return self.Horde_class
 end
 
 function plymeta:Horde_SyncEconomy()
@@ -743,9 +735,34 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
     end
 end)
 
+net.Receive("Horde_BuyItemUpgrade", function (len, ply)
+    if not ply:IsValid() or not ply:Alive() then return end
+    local class = net.ReadString()
+    if not ply:HasWeapon(class) then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("You don't have this weapon!")
+        net.WriteInt(0,2)
+        net.Send(ply)
+        return
+    end
+
+    if ply:Horde_GetUpgrade(class) >= 10 then return end
+
+    local price = 800 + 25 * ply:Horde_GetUpgrade(class)
+    if ply:Horde_GetMoney() >= price then
+        ply:Horde_AddMoney(-price)
+        ply:Horde_SetUpgrade(class, ply:Horde_GetUpgrade(class) + 1)
+        ply:Horde_SyncEconomy()
+    end
+end)
+
 function HORDE:CanSell(ply, class)
     if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
         return false, "You can't sell grenades as Demolition class!"
+    end
+
+    if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "necromancer" and class == "horde_void_projector" then
+        return false, "You can't sell Void Projector as Necromancer subclass!"
     end
 
     return true

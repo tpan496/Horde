@@ -466,6 +466,9 @@ function HORDE:PlayerInit(ply)
     end
 
     HORDE:BroadcastPlayersReadyMessage(tostring(ready_count) .. "/" .. tostring(total_player))
+
+    -- Misc stuff
+    ply.Horde_Spectre_Max_Count = 1
 end
 
 net.Receive("Horde_PlayerInit", function (len, ply)

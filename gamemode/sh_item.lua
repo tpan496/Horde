@@ -186,19 +186,19 @@ function HORDE:GetDefaultGadgets()
 end
 
 function HORDE:GetDefaultItemInfusions()
-    local melee_blunt_infusions = {HORDE.Infusion_Concussive, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
-    local melee_slash_infusions = {HORDE.Infusion_Hemo, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    local melee_blunt_infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Concussive, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    local melee_slash_infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
     HORDE.items["weapon_stunstick"].infusions = melee_blunt_infusions
     HORDE.items["weapon_crowbar"].infusions = melee_blunt_infusions
     HORDE.items["arccw_horde_knife"].infusions = melee_slash_infusions
     HORDE.items["arccw_horde_axe"].infusions = melee_slash_infusions
-    HORDE.items["arccw_horde_katana"].infusions = {HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_katana"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
     HORDE.items["arccw_horde_bat"].infusions = melee_blunt_infusions
     HORDE.items["arccw_horde_chainsaw"].infusions = melee_slash_infusions
-    HORDE.items["arccw_horde_inferno_blade"].infusions = {HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
-    HORDE.items["arccw_horde_mjollnir"].infusions = {HORDE.Infusion_Hemo, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_inferno_blade"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_mjollnir"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
 
-    local ballistic_infusions_light = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver}
+    local ballistic_infusions_light = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver}
     local ballistic_infusions_heavy = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium}
     -- Pistols
     HORDE.items["weapon_pistol"].infusions = ballistic_infusions_light
@@ -216,7 +216,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_fiveseven"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_tec9"].infusions = ballistic_infusions_light
     HORDE.items["arccw_mw2_tmp"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_horde_flaregun"].infusions = {HORDE.Infusion_Quality}
+    HORDE.items["arccw_horde_flaregun"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Quality}
 
     -- SMGs
     HORDE.items["weapon_smg1"].infusions = ballistic_infusions_light
@@ -227,8 +227,8 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_ump"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_bizon"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_p90"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_horde_mp7m"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Septic, HORDE.Infusion_Rejuvenating}
-    HORDE.items["arccw_horde_vector"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Septic, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_mp7m"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Septic, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_vector"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Septic, HORDE.Infusion_Rejuvenating}
 
     -- Shotguns
     HORDE.items["weapon_shotgun"].infusions = ballistic_infusions_light
@@ -236,13 +236,13 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_870"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_mag7"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_m1014"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_horde_doublebarrel"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Concussive}
-    HORDE.items["arccw_horde_trenchgun"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Flaming}
-    HORDE.items["arccw_mw2_spas12"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
-    HORDE.items["arccw_horde_striker"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
-    HORDE.items["arccw_horde_aa12"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
+    HORDE.items["arccw_horde_doublebarrel"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Concussive}
+    HORDE.items["arccw_horde_trenchgun"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_mw2_spas12"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
+    HORDE.items["arccw_horde_striker"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
+    HORDE.items["arccw_horde_aa12"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
 
-    local ballistic_infusions_rifles = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Hemo, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
+    local ballistic_infusions_rifles = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Hemo, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
     -- Rifles
     HORDE.items["arccw_go_ar15"].infusions = ballistic_infusions_rifles
     HORDE.items["arccw_go_famas"].infusions = ballistic_infusions_rifles
@@ -255,7 +255,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_tavor"].infusions = ballistic_infusions_rifles
     HORDE.items["arccw_horde_scarl"].infusions = ballistic_infusions_rifles
     
-    local ballistic_infusions_sniper_rifles = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Arctic, HORDE.Infusion_Siphoning}
+    local ballistic_infusions_sniper_rifles = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Arctic, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_winchester"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_mw2_acr"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_m200"].infusions = ballistic_infusions_sniper_rifles
@@ -265,10 +265,10 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_fal"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_barret"].infusions = ballistic_infusions_sniper_rifles
 
-    HORDE.items["arccw_horde_medic_rifle"].infusions = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
+    HORDE.items["arccw_horde_medic_rifle"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_m16m203"].infusions = ballistic_infusions_rifles
-
-    local ballistic_infusions_mg_rifles = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium, HORDE.Infusion_Siphoning}
+  
+    local ballistic_infusions_mg_rifles = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium, HORDE.Infusion_Siphoning}
     -- MG
     HORDE.items["arccw_go_negev"].infusions = ballistic_infusions_mg_rifles
     HORDE.items["arccw_go_m249para"].infusions = ballistic_infusions_mg_rifles
@@ -495,6 +495,19 @@ function HORDE:GetDefaultItemsData()
     {Cremator=true}, 40, -1, nil, nil, {Cremator=4}, nil, {HORDE.DMG_FIRE})
     --[[HORDE:CreateItem("Special",    "Taser",           "arccw_go_taser",      1000,  1, "Taser.",
     {Engineer=true}, 50, -1)]]--
+    
+    HORDE:CreateItem("Special",    "Void Projector",   "horde_void_projector",   0,  11,
+    [[Void Projector. Only usable by the Necromancer subclass.
+    
+    LMB: Void Spear (5/10/20 Energy)
+    Releases a projectile that deals Cold damage.
+    Hold for different effects.
+    
+    RMB: Raise Spectre (40 Energy)
+    Conjures a Spectre minion.
+    The Spectre minion deals Physical damage and applies Frostbite buildup.
+    Hold to recover Spectres and recover energy.]],
+    {Engineer=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_COLD, HORDE.DMG_PHYSICAL})
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
     nil, 10, -1, nil, "items/weapon_medkit.png")
@@ -915,4 +928,34 @@ if SERVER then
         HORDE.InvalidateHordeItemCache = 1
         HORDE:SetItemsData()
     end)
+end
+
+if SERVER then
+    util.AddNetworkString("Horde_SetUpgrades")
+end
+
+if CLIENT then
+    net.Receive("Horde_SetUpgrades", function(len, ply)
+        local class = net.ReadString()
+        local level = net.ReadUInt(8)
+        LocalPlayer():Horde_SetUpgrade(class, level)
+    end)
+end
+
+local plymeta = FindMetaTable("Player")
+
+function plymeta:Horde_GetUpgrade(class)
+    if not self.Horde_Upgrades then self.Horde_Upgrades = {} end
+    return self.Horde_Upgrades[class] or 0
+end
+
+function plymeta:Horde_SetUpgrade(class, level)
+    if not self.Horde_Upgrades then self.Horde_Upgrades = {} end
+    if SERVER then
+        net.Start("Horde_SetUpgrades")
+            net.WriteString(class)
+            net.WriteUInt(level, 8)
+        net.Send(self)
+    end
+    self.Horde_Upgrades[class] = level
 end
