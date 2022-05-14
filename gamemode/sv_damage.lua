@@ -1,8 +1,8 @@
 local plymeta = FindMetaTable("Player")
 
 HORDE.DMG_CALCULATED = 1
-HORDE.DMG_SPLASH = 2
-HORDE.DMG_FRIENDLY = 3
+HORDE.DMG_SPLASH = -4
+HORDE.DMG_PLAYER_FRIENDLY = -3
 HORDE.DMG_PARASITE = 4
 
 -- Player damage.
@@ -119,6 +119,7 @@ end)
 -- Player damage taken
 hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if not target:IsValid() or not target:IsPlayer() then return end
+    if dmg:GetDamageCustom() <= HORDE.DMG_PLAYER_FRIENDLY then return true end
     local ply = target
 
     if dmg:GetAttacker():IsPlayer() and (dmg:GetInflictor() == dmg:GetAttacker()) then return true end
@@ -208,6 +209,9 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
                 effectdata:SetMagnitude(10)
 		    util.Effect("GlassImpact", effectdata, true, true)
 		    util.Effect("GlassImpact", effectdata, true, true)
+        elseif dmg:IsDamageType(DMG_DISSOLVE) then
+            debuff = HORDE.Status_Necrosis
+            more = 2
         end
 
         if not debuff then return end
@@ -294,4 +298,10 @@ hook.Add("ScaleNPCDamage", "Horde_BossHeadshotDamage", function (npc, hitgroup, 
     if npc:IsValid() and npc:Horde_GetBossProperties() and hitgroup == HITGROUP_HEAD then
         dmg:ScaleDamage(0.70)
     end
+end)
+
+hook.Add("OnNPCKilled", "Horde_OnNPCKilledHook", function (victim, killer, wpn)
+    if not killer:IsPlayer() then return end
+    if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
+    hook.Run("Horde_OnNPCKilled", victim, killer, wpn)
 end)

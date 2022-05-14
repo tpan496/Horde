@@ -6,7 +6,7 @@ MUTATION.Hooks = {}
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "giant" then
         if SERVER then
-            ent:SetModelScale(ent:GetModelScale() * 1.25)
+            ent:SetModelScale(math.min(2.5, math.max(1, ent:GetModelScale()) * 1.25))
             ent:SetMaxHealth(ent:GetMaxHealth() * 1.25)
             ent:SetHealth(ent:GetMaxHealth() * 1.25)
         end
@@ -22,7 +22,6 @@ end
 MUTATION.Hooks.Horde_OnUnsetMutation = function (ent, mutation)
     if not ent:IsValid() or mutation ~= "giant" then return end
     if SERVER then
-        ent:SetModelScale(ent:GetModelScale() / 1.25)
         ent:SetMaxHealth(ent:GetMaxHealth() / 1.25)
     end
 end

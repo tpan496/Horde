@@ -65,7 +65,7 @@ function ENT:Rage()
         self.HasLeapAttack = true
         self.Raged = true
         self.Raging = false
-        self:SetColor(Color(100, 25, 25))
+        self:SetColor(Color(125, 50, 50))
     end)
 end
 

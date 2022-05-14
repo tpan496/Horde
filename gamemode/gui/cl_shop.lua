@@ -35,6 +35,11 @@ function PANEL:Init()
     description_panel:Dock(LEFT)
     description_panel:SetSize(self:GetWide() / 2, self:GetTall() - 100)
 
+    local infusion_panel = vgui.Create("HordeInfusion", self)
+    infusion_panel:Dock(LEFT)
+    infusion_panel:SetSize(self:GetWide() / 2, self:GetTall() - 100)
+    infusion_panel:SetVisible(false)
+
     local btns = {}
     local firstBtn = true
     local attachments = {}
@@ -212,7 +217,7 @@ function PANEL:Init()
                 if item.category == category then
                     local model = vgui.Create("HordeShopItem")
                     model:SetSize(container:GetWide() - 16, 40)
-                    model:SetData(item, description_panel)
+                    model:SetData(item, description_panel, infusion_panel)
                     ShopCategoryTabLayout:Add(model)
                 end
             end

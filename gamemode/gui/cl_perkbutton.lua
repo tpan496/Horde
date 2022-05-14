@@ -46,6 +46,7 @@ function PANEL:DoClick()
         net.WriteUInt(self.info.perk_level, 4)
         net.WriteUInt(self.info.choice, 4)
     net.SendToServer()
+    print(self.info.class, self.info.perk_level, self.info.choice)
 end
 
 function PANEL:OnCursorEntered()
@@ -65,9 +66,15 @@ function PANEL:OnCursorExited()
     surface.PlaySound("UI/buttonrollover.wav")
 end
 
-function PANEL:SetData(classname, perk_level, choice)
+function PANEL:SetData(classname, perk_level, choice, subclass)
     self.locked_icon:SetPos(self:GetWide() - 20, 5)
-    local perk_choice = HORDE.classes[classname].perks[perk_level].choices[choice]
+    local perk_choice
+    if subclass and subclass.ParentClass then
+        perk_choice = subclass.Perks[perk_level].choices[choice]
+    else
+        perk_choice = HORDE.classes[classname].perks[perk_level].choices[choice]
+    end
+    
     if not perk_choice then error("Could not find choice! class: " .. classname .. ", level: " .. perk_level .. ", choice: " .. choice) return end
     self.info = {class = classname, perk_level = perk_level, choice = choice}
 

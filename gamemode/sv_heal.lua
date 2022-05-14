@@ -55,6 +55,7 @@ end
 function HORDE:OnPlayerHeal(ply, healinfo, silent)
     if (ply.Horde_Debuff_Active and ply.Horde_Debuff_Active[HORDE.Status_Decay]) then return end
     if not ply:IsPlayer() then return end
+    if not ply:Alive() then return end
     hook.Run("Horde_OnPlayerHeal", ply, healinfo)
     hook.Run("Horde_PostOnPlayerHeal", ply, healinfo)
     if (ply:GetMaxHealth() <= ply:Health()) and (healinfo:GetOverHealPercentage() <= 0) then return end
@@ -79,4 +80,9 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
 
         healer:Horde_AddHealAmount(healinfo:GetHealAmount())
     end
+end
+
+function HORDE:SelfHeal(ply, amount)
+    local healinfo = HealInfo:New({amount=amount, healer=ply})
+    HORDE:OnPlayerHeal(ply, healinfo)
 end

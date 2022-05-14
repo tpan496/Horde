@@ -68,7 +68,7 @@ function HORDE:GetMapAchievements(map)
                         if stats.config >= 1 then
                             achievements[HORDE.MapAchievements.hardcore_horde] = true
                             count = count + 1
-                            if stats.players >= 4 then
+                            if stats.players_apocalypse and stats.players_apocalypse >= 4 then
                                 achievements[HORDE.MapAchievements.hardcore_coop_horde] = true
                                 count = count + 1
                             end
@@ -77,7 +77,7 @@ function HORDE:GetMapAchievements(map)
                     if stats.config >= 1 then
                         achievements[HORDE.MapAchievements.horde] = true
                         count = count + 1
-                        if stats.players >= 4 then
+                        if stats.players_nightmare and stats.players_nightmare >= 4 then
                             achievements[HORDE.MapAchievements.coop_horde] = true
                             count = count + 1
                         end
@@ -133,9 +133,18 @@ function HORDE:SaveMapAchievements()
         HORDE.achievements_map[map].config = HORDE.achievements_map[map].config or 0
         HORDE.achievements_map[map].wave = HORDE.achievements_map[map].wave or 0
         HORDE.achievements_map[map].extra = HORDE.achievements_map[map].extra or {}
+        HORDE.achievements_map[map].players_nightmare = HORDE.achievements_map[map].players_nightmare or 0
+        HORDE.achievements_map[map].players_apocalypse = HORDE.achievements_map[map].players_apocalypse or 0
+
 
         HORDE.achievements_map[map].diffculty = math.max(HORDE.achievements_map[map].diffculty, HORDE.difficulty)
         HORDE.achievements_map[map].players = math.max(HORDE.achievements_map[map].players, #player.GetHumans())
+        if HORDE.difficulty >= 4 then
+            HORDE.achievements_map[map].players_nightmare = math.max(HORDE.achievements_map[map].players_nightmare, #player.GetHumans())
+        end
+        if HORDE.difficulty >= 5 then
+            HORDE.achievements_map[map].players_apocalypse = math.max(HORDE.achievements_map[map].players_apocalypse, #player.GetHumans())
+        end
         if GetConVarNumber("horde_default_item_config") == 1
         and GetConVarNumber("horde_default_class_config") == 1
         and GetConVarNumber("horde_default_enemy_config") == 1

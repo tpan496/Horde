@@ -5,7 +5,7 @@ if CLIENT then
     SWEP.BounceWeaponIcon = false
     killicon.Add("arccw_horde_chainsaw", "vgui/hud/arccw_horde_chainsaw", Color(0, 0, 0, 255))
 end
-SWEP.Base = "arccw_base_melee"
+SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -35,8 +35,8 @@ SWEP.ViewModelFOV = 45
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
-SWEP.MeleeDamage = 200 
-SWEP.Melee2Damage = 35
+SWEP.MeleeDamage = 160
+SWEP.Melee2Damage = 28
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true

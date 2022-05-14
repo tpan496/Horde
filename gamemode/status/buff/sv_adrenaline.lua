@@ -38,7 +38,7 @@ function plymeta:Horde_GetAdrenalineStack()
 end
 
 function plymeta:Horde_SetMaxAdrenalineStack(stack)
-    self.Horde_MaxAdrenalineStack = stack
+    self.Horde_MaxAdrenalineStack = math.max(0, stack)
 end
 
 function plymeta:Horde_GetMaxAdrenalineStack()

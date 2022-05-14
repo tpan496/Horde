@@ -45,7 +45,7 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_AerialGuardDamageTaken", function (
         bonus.less = bonus.less * 0.75
     end
     if ply:Horde_GetAerialGuard() == 1 and HORDE:IsPhysicalDamage(dmginfo) then
-        bonus.less = bonus.less * 0.50
+        bonus.less = bonus.less * 0.35
         if not silent then
             sound.Play("horde/gadgets/guard" .. tostring(math.random(1,2)) ..".ogg", ply:GetPos(), 125, 100, 1, CHAN_AUTO)
         end

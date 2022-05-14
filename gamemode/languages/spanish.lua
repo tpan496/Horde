@@ -8,7 +8,7 @@ increase vs. more: these two descriptions are DIFFERENT!
 resistance vs. less damage taken: same as above.
 5. Translate AS IS.
 
-Translator: Archi, Bishy
+Translator: Archi, BishY
 --]]
 
 translate.AddLanguage("es-ES", "Spanish")
@@ -25,7 +25,7 @@ LANGUAGE["Game_Difficulty_NIGHTMARE"] = "PESADILLA"
 LANGUAGE["Game_Difficulty_APOCALYPSE"] = "APOCALIPSIS"
 LANGUAGE["Game_Enemies"] = "Enemigos"
 LANGUAGE["Game_HintBottomReady"] = "F2 - Info/Config, F3 - Tienda/Habilidad, F4 - Listo"
-LANGUAGE["Game_HintBottom"] = "F2 - Info/Config, F3 - Tienda/Habilidad, V - Soltar $"
+LANGUAGE["Game_HintBottom"] = "F3 - Tienda/Habilidad, V - Soltar $"
 LANGUAGE["Game_Result_VICTORY"] = "VICTORIA"
 LANGUAGE["Game_Result_DEFEAT"] = "DERROTA"
 LANGUAGE["Game_Result_Change Map"] = "Cambio de Mapa"
@@ -79,7 +79,7 @@ LANGUAGE["Shop_Gadget"] = "Artilugio"
 
 -- Attachments
 LANGUAGE["Shop_Optic"] = "Óptica"
-LANGUAGE["Shop_Underbarrel"] = "Debajo del cañón"
+LANGUAGE["Shop_Underbarrel"] = "Debajo del Cañón"
 LANGUAGE["Shop_Tactical"] = "Táctico"
 LANGUAGE["Shop_Barrel"] = "Cañón"
 LANGUAGE["Shop_Muzzle"] = "Bozal"
@@ -117,10 +117,10 @@ LANGUAGE["Class_Warden"] = "Guardián"
 LANGUAGE["Class_Cremator"] = "Quemador"
 
 -- Gadgets
-LANGUAGE["Gadget_Activation"] = "Presiona T para activa."
+LANGUAGE["Gadget_Activation"] = "Presiona T para activar."
 LANGUAGE["Gadget_Cooldown"] = "Enfriamiento"
 LANGUAGE["Gadget_Duration"] = "Duración"
-LANGUAGE["Gadget_Owned_Warning"] = "Solo 1 Artilugio puede ser ADQUIRIDO!"
+LANGUAGE["Gadget_Owned_Warning"] = "¡Solo 1 Artilugio puede ser ADQUIRIDO!"
 LANGUAGE["Gadget_Seconds"] = "segundos"
 
 -- Default Class Extra Descriptions
@@ -158,7 +158,490 @@ Tiene acceso a armamento a base de calor.]]
 
 
 -- Default Base Perks
+LANGUAGE["Perk_survivor_base"] = [[
+La clase Superviviente puede ser jugado como cualquier otra clase para rellenar los roles faltantes del equipo.
+Complejidad: FÁCIL
 
+Sin bonus.]]
+
+LANGUAGE["Perk_assault_base"] = [[
+La clase Asalto es un luchador de todo-tipo con gran movilidad y concentrado en cargas de Adrenalina.
+Complejidad: FÁCIL
+
+{1} velocidad de movimiento aumentada. ({2} por nivel, hasta {3}).
+
+Ganas Adrenalina cuando asesinas a un enemigo.
+Adrenalina aumenta el daño y velocidad un {4}.]]
+
+LANGUAGE["Perk_heavy_base"] = [[
+La clase Pesado es una clase de resistencia que provee una fuerte potencia de fuego.
+Complejidad: FÁCIL
+
+Regenera {1} de armadura por segundo.
+Regenera hasta {2} armadura. ({3} + {4} por nivel, hasta {5})]]
+
+LANGUAGE["Perk_medic_base"] = [[
+La clase Médico es una clase de soporte duradera que se basa en curar y mejorar aliados.
+Complejidad: MEDIA
+
+Amplifica la curación un {1}. ({2} por nivel, hasta {3}).
+
+Regenera {4} de vida por segundo.]]
+
+LANGUAGE["Perk_demolition_base"] = [[
+La clase Demolición es una clase de control de masas que también proporciona gran daño a un objetivo único.
+Complejidad: MEDIA
+
+{1} de daño Explosivo incrementado. ({2} + {3} por nivel, hasta {4}).
+
+Regenera {5} granada de fragmentación cada {6} segundos, si no tienes una.]]
+
+LANGUAGE["Perk_ghost_base"] = [[
+La clase Tirador está concentrado en acabar jefes enemigos usando Camuflaje.
+Complejidad: ALTA
+
+{1} mas de daño a la cabeza. ({2} por nivel, hasta {3}).
+
+Agácgate para activar Camuflaje, otorgando {4} de evasión.
+Atacar o Correr REMUEVE Camuflaje.]]
+
+LANGUAGE["Perk_engineer_base"] = [[
+La clase Ingeniero es una clase centrada en esbirros que realizan daño a través esbirros.
+Complejidad: MEDIA
+
+{1} daño de esbirro aumentado. ({2} por nivel, hasta {3}).
+
+Torretas tienen {4} vida base y realiza {5} daño base.]]
+
+LANGUAGE["Perk_berserker_base"] = [[
+La clase Berserker es una class centrado en cuerpo a cuerpo que puede ser utilizado tanto a la ofensiva como a la defensiva.
+Complejidad: ALTA
+
+{1} daño Cortante y Golpeante aumentado. ({2} por nivel, hasta {3}).
+{4} resistencia al daño Global aumentada. ({5} por nivel, hasta {6}).
+
+Desvío Aeréo: Salta para reducir daño Físico recibido un {7}.]]
+
+LANGUAGE["Perk_warden_base"] = [[
+El Guardián es una clase soporte que usa sus efectos de aura y estructuras para mejorar a los aliados.
+Complejidad: MEDIA
+
+{1} radio del Aura del Guardián aumentado. ({2} por nivel, hasta {3}).
+
+Los jugadores cercanos son afectados por el Aura del Guardián.
+Aura del Guardián bloquea {4} de daño.]]
+
+LANGUAGE["Perk_cremator_base"] = [[
+El Quemador construye su ofensiva y defensiva en torno al daño de Fuego.
+Complejidad: FÁCIL
+
+{1} resistencia al daño de Fuego aumentado. ({2} + {3} por nivel, hasta {4}).
+
+Ataques tienen {5} chance de Incendiar enemigos.
+La duración base de Incendiar es {6} e inflige daño a lo largo del tiempo en función del daño por golpe.
+El daño de Fuego tiene {7} chance de Incendiar.]]
+
+-- Default Perks: Survivor
+LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[Supervivencia]]
+LANGUAGE["Perk_Title_Survivor_Tier_2"] = [[Improvisar]]
+LANGUAGE["Perk_Title_Survivor_Tier_3"] = [[Defensa]]
+LANGUAGE["Perk_Title_Survivor_Tier_4"] = [[Aprendimiento Inspirado]]
+
+-- Default Perks: Assault
+LANGUAGE["Perk_Title_Assault_Tier_1"] = [[Maniobrabilidad]]
+LANGUAGE["Perk_Title_assault_ambush"] = [[Emboscada]]
+LANGUAGE["Perk_assault_ambush"] = [[
+{1} de daño a la cabeza incrementado.]]
+
+LANGUAGE["Perk_Title_assault_charge"] = [[Carga]]
+LANGUAGE["Perk_assault_charge"] = [[
+Agrega {1} acumulaciones máximas de Adrenalina.
+(Cada carga de Adrenalina incrementa el daño y velocidad un {2}.)]]
+
+LANGUAGE["Perk_Title_Assault_Tier_2"] = [[Adaptabilidad]]
+LANGUAGE["Perk_Title_assault_drain"] = [[Apuro]]
+LANGUAGE["Perk_assault_drain"] = [[
+{1} daño a la cabeza cuando se mantiene la vida al máximo.
+Recupera {2} de vida por cada enemigo asesinado.]]
+
+LANGUAGE["Perk_Title_assault_overclock"] = [[Overclocking]]
+LANGUAGE["Perk_assault_overclock"] = [[
+Agrega {1} acumulaciones máximas de Adrenalina.]]
+
+LANGUAGE["Perk_Title_Assault_Tier_3"] = [[Agresión]]
+
+LANGUAGE["Perk_Title_assault_cardiac_resonance"] = [[Resonancia Cardíaca]]
+LANGUAGE["Perk_assault_cardiac_resonance"] = [[
+Cada vez que asesines un enemigo,
+Jugadores cercanos también obtienen {1} Adrenalina, hasta {2}.
+Agrega {3} acumulaciones máximas de Adrenalina.]]
+
+LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[Sobrecarga Cardíaca]]
+LANGUAGE["Perk_assault_cardiac_overload"] = [[
+Duración de la Adrenalina aumentada a {1}.
+Agrega {2} acumulaciones máximas de Adrenalina.]]
+
+LANGUAGE["Perk_Title_Assault_Tier_4"] = [[Acondicionamiento]]
+LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[Reflejos de Punta]]
+LANGUAGE["Perk_assault_heightened_reflex"] = [[
+{1} de daño a la cabeza aumentado.
+{2} de resistencia al daño Global con vida completa aumentada.]]
+
+LANGUAGE["Perk_Title_assault_merciless_assault"] = [[Asalto Despiadado]]
+LANGUAGE["Perk_assault_merciless_assault"] = [[
+{1} chance to add 1 Adrenaline stack on headshot.
+Adds {2} maximum Adrenaline stacks.]]
+
+-- Default Perks: Heavy
+LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Supresión]]
+LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Compuesto Pegajoso]]
+LANGUAGE["Perk_heavy_sticky_compound"] = [[
+Enemigos dañados con daño Balístico son Ralentizados.
+Enemigos Ralentizados tienen {1} de velocidad de acción reducido.]]
+
+LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Carcasa Cruda]]
+LANGUAGE["Perk_heavy_crude_casing"] = [[
+Enemigos dañados con daño Balístico son Debilitados.
+Enemigos Debilitados realizan {1} de daño reducido.
+Enemigos Debilitados reciben {2} de daño incrementado.]]
+
+LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Respaldo]]
+LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[Catalizador de Reparación]]
+LANGUAGE["Perk_heavy_repair_catalyst"] = [[
+Agrega {1} a la regeneración de armadura máxima.]]
+
+LANGUAGE["Perk_Title_heavy_floating_carrier"] = [[Portador flotante]]
+LANGUAGE["Perk_heavy_floating_carrier"] = [[
+Agrega 5 al peso máximo.]]
+
+LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[Protección de Armadura]]
+LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[Armadura Líquida]]
+LANGUAGE["Perk_heavy_liquid_armor"] = [[
+Mientras tengas por lo menos {1} de armadura:
+  {2} menos de daño Físico recibido.]]
+
+LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[Armadura Reactiva]]
+LANGUAGE["Perk_heavy_reactive_armor"] = [[
+Mientras tengas al menos {1} de armadura:
+  Inmune al daño de Fuego y Explosivo.]]
+
+LANGUAGE["Perk_Title_Heavy_Tier_4"] = [[Tecnología]]
+LANGUAGE["Perk_Title_heavy_nanomachine"] = [[Nanomáquina]]
+LANGUAGE["Perk_heavy_nanomachine"] = [[
+{1} regeneración de armadura aumentada.]]
+
+LANGUAGE["Perk_Title_heavy_ballistic_shock"] = [[Choque Balístico]]
+LANGUAGE["Perk_heavy_ballistic_shock"] = [[
+Debuffs que apliques tendrán {1} de efecto incrementado.
+Debuffs que apliques tendrán {2} de duración incrementada.]]
+
+-- Default Perks: Medic
+LANGUAGE["Perk_Title_Medic_Tier_1"] = [[Medicina]]
+LANGUAGE["Perk_Title_medic_antibiotics"] = [[Antibióticos]]
+LANGUAGE["Perk_medic_antibiotics"] = [[
+Tu curación es amplificada un {1}.]]
+
+LANGUAGE["Perk_Title_medic_painkillers"] = [[Analgésicos]]
+LANGUAGE["Perk_medic_painkillers"] = [[
+Puedes sobrecurar la vida de un jugador un {1}.]]
+
+LANGUAGE["Perk_Title_Medic_Tier_2"] = [[Bioingeniería]]
+LANGUAGE["Perk_Title_medic_berserk"] = [[Berserk]]
+LANGUAGE["Perk_medic_berserk"] = [[
+Jugadores que cures tendrán Berserk por {1} segundos.
+{2} daño aumentado mientras tengas Berserk.]]
+
+LANGUAGE["Perk_Title_medic_fortify"] = [[Fortificar]]
+LANGUAGE["Perk_medic_fortify"] = [[
+Jugadores que cures tendran Fortificar por {1} segundos.
+{2} menos de daño recibido mientras tengas Fortificar.]]
+
+LANGUAGE["Perk_Title_Medic_Tier_3"] = [[Mejora]]
+LANGUAGE["Perk_Title_medic_purify"] = [[Purificar]]
+LANGUAGE["Perk_medic_purify"] = [[
+Tu curación directamente disminuye directamente la acumulación de Sangrado, Rotura y Aturdimiento.]]
+
+LANGUAGE["Perk_Title_medic_haste"] = [[Prisa]]
+LANGUAGE["Perk_medic_haste"] = [[
+Jugadores que cures tendrán Prisa por {1} segundos.
+{2} velocidad de movimiento aumentada mientras tengas Prisa.]]
+
+LANGUAGE["Perk_Title_Medic_Tier_4"] = [[Selección Natural]]
+LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[Implosión Celular]]
+LANGUAGE["Perk_medic_cellular_implosion"] = [[
+Enemigos que asesines tienen {1} de chance de generar un humo curativo.]]
+
+LANGUAGE["Perk_Title_medic_xcele"] = [[Factor de Curación Aceleradoa]
+LANGUAGE["Perk_medic_xcele"] = [[
+Mejoras que apliques son {1} mas efectivos.
+Mejoras que apliques tienen {2} de duración incrementada.]]
+
+-- Default Perks: Demolition
+LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Granada]]
+LANGUAGE["Perk_Title_demolition_frag_impact"] = [[Granada de Impacto]]
+LANGUAGE["Perk_demolition_frag_impact"] = [[
+{1} daño de la Granada en el impacto aumentado.
+Grenades explode on impact.
+Impact explosions increases Stun buildup.]]
+
+LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[Granada de Racimo]]
+LANGUAGE["Perk_demolition_frag_cluster"] = [[
+Granadas y SLAMs generan {1} mini-granadas al detonarse.
+Mini-granadas infligen {2} menos daño.]]
+
+LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[Arsenal]]
+LANGUAGE["Perk_Title_demolition_direct_hit"] = [[Golpe Directo]]
+LANGUAGE["Perk_demolition_direct_hit"] = [[
+{1} daño Explosivo contra enemigos contra enemigos cercanos a las explosiones aumentado.]]
+
+LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[Onda sísmica]]
+LANGUAGE["Perk_demolition_seismic_wave"] = [[
+Proyecties explosivos crean una explosión atrasada adicional.
+Explosión atrasada realiza {1} daño de explosión como daño Físico.]]
+
+LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Enfoque]
+LANGUAGE["Perk_Title_demolition_fragmentation"] = [[Fragmentación]]
+LANGUAGE["Perk_demolition_fragmentation"] = [[
+{1} daño Explosivo aumentado.]]
+
+LANGUAGE["Perk_Title_demolition_knockout"] = [[Knockear]]
+LANGUAGE["Perk_demolition_knockout"] = [[
+Daño Explosivo aumenta la acumulación de Aturdimiento.
+Enemigos afectados por Aturdimiento son paralizados por {1} segundos.
+Enfriamiento del Aturdimiento son {2} segundos.]]
+
+LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[Destrucción]]
+LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Ojiva Presurizada]]
+LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
+{1} de daño Explosivo incrementado contra élites.
+Explosiones infligen de {2} a {3} de la vida actual de los enemigos como daño adicional.]]
+
+LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Reacción en Cadena]]
+LANGUAGE["Perk_demolition_chain_reaction"] = [[
+Enemigos que asesines tienen {1} de chance de explotar,
+haciendo {2} de su vida maxima como daño Explosivo.]]
+
+-- Default Perks: Ghost
+LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[Tácticas]]
+LANGUAGE["Perk_Title_ghost_headhunter"] = [[Cazador de Cabezas]]
+LANGUAGE["Perk_ghost_headhunter"] = [[
+El Daño por tiro a la cabeza se acumula hasta 5 veces.
+Cada carga aumenta un 8% de daño por tiro a la cabeza.]]
+
+LANGUAGE["Perk_Title_ghost_sniper"] = [[Francotirador]]
+LANGUAGE["Perk_ghost_sniper"] = [[
+25% de daño Balistico aumentado mientras estés agachado.]]
+
+LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposión]]
+LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Caminata de Fase]]
+LANGUAGE["Perk_ghost_phase_walk"] = [[
+Correr ya no cancela Camuflaje.
+25% de velocidad de movimiento aumentada mientras tengas Camuflaje.]]
+
+LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Velo Fantasma]]
+LANGUAGE["Perk_ghost_ghost_veil"] = [[
+Atacar no cancela Camuflaje.
+100% de velocidad de activacion del Camuflaje aumentada.]]
+
+LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Trayectoria]]
+LANGUAGE["Perk_Title_ghost_brain_snap"] = [[Estallido Cerebral]]
+LANGUAGE["Perk_ghost_brain_snap"] = [[
+Los disparos a la cabeza aumentan la acumulación de Congelación según el daño del arma.
+Enemigos afectados por Congelación son reducidos drásticamente la velocidad de acción por {1} segundos.
+Enfriamiento de la Congelación son {2} segundos.]]
+
+LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[Impacto Cinético]]
+LANGUAGE["Perk_ghost_ghost_kinetic_impact"] = [[
+Aumenta el daño Balístico según la distancia.
+Aumenta {1} el daño por cada {2} unidades.
+Aumenta el límite a {3}.]]
+
+LANGUAGE["Perk_Title_Ghost_Tier_4"] = [[Disposición]]
+LANGUAGE["Perk_Title_ghost_coup"] = [[Coup De Grace]]
+LANGUAGE["Perk_ghost_coup"] = [[
+Asesina instantáneamente a enemigos con menos del 20% de su vida.]]
+
+LANGUAGE["Perk_Title_ghost_decapitate"] = [[Decapitar]]
+LANGUAGE["Perk_ghost_decapitate"] = [[
+Cuando tienes Camuflaje:
+  {1} daño Balístico aumentado.
+  {2} daño a la cabeza contra élites aumentado.]]
+
+-- Default Perks: Engineer
+LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[Artesanía]]
+LANGUAGE["Perk_Title_engineer_tinkerer"] = [[Chapucero]]
+LANGUAGE["Perk_engineer_tinkerer"] = [[
+{1} mas de vida de los esbirros.]]
+
+LANGUAGE["Perk_Title_engineer_pioneer"] = [[Pionero]]
+LANGUAGE["Perk_engineer_pioneer"] = [[
+{1} de daño de esbirro incrementado.]]
+
+LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[Núcleo]]
+LANGUAGE["Perk_Title_engineer_fusion"] = [[Fusión]]
+LANGUAGE["Perk_engineer_fusion"] = [[
+Esbirros regeneran {1} de vida por segundo.
+{2} daño de esbirros aumentado mientras tengan su vida completa.]]
+
+LANGUAGE["Perk_Title_engineer_metabolism"] = [[Metabolismo]]
+LANGUAGE["Perk_engineer_metabolism"] = [[
+Esbirros absorben {1} del daño hecho, hasta {2} vida por golpe.
+{3} daño de esbirros aumentado mientras absorben.]]
+
+LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Manipulación]]
+LANGUAGE["Perk_Title_engineer_antimatter_shield"] = [[Escudo Antimateria]]
+LANGUAGE["Perk_engineer_antimatter_shield"] = [[
+Presiona Shift+E para colocar un escudo en un esbirro apuntado.
+El escudo absorbe el daño hasta {1} de la vida del esbirro.
+El escudo explota al agotarse y tiene un enfriamiento de {2} segundos.]]
+
+LANGUAGE["Perk_Title_engineer_displacer"] = [[Desplazador]]
+LANGUAGE["Perk_engineer_displacer"] = [[
+Presiona SHIFT+E para teletransportar un esbirro apuntado a tu lado.
+Recupera {1} de la vida del esbirro teletransportado.
+Desplazador tiene un enfriamiento de {2} segundos.]]
+
+LANGUAGE["Perk_Title_Engineer_Tier_4"] = [[Experimental]]
+LANGUAGE["Perk_Title_engineer_symbiosis"] = [[Simbiosis]]
+LANGUAGE["Perk_engineer_symbiosis"] = [[
+{1} mas de vida del esbirro.
+{2} menos daño recibido por cada esbirro vivo.]]
+
+LANGUAGE["Perk_Title_engineer_kamikaze"] = [[Kamikaze]]
+LANGUAGE["Perk_engineer_kamikaze"] = [[
+Los esbirros realizan un {1} de su vida máxima como daño Explosivo al morir.]]
+
+-- Default Perks: Berserker
+LANGUAGE["Perk_Title_Berserker_Tier_1"] = [[Fundamentos]]
+LANGUAGE["Perk_Title_berserker_breathing_technique"] = [[Técnica de Respiración]]
+LANGUAGE["Perk_berserker_breathing_technique"] = [[
+Regeneras {1} de vida por segundo.
+Inmune al daño Venenoso.]]
+
+LANGUAGE["Perk_Title_berserker_bloodlust"] = [[Sed de Sangre]]
+LANGUAGE["Perk_berserker_bloodlust"] = [[
+Absorbes {1} del daño cuerpo a cuerpo hecho, hasta {2} de vida por golpe.
+Inmune al Sangrado.]]
+
+LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[Técnica]]
+LANGUAGE["Perk_Title_berserker_bushido"] = [[Bushido]]
+LANGUAGE["Perk_berserker_bushido"] = [[
+Aumenta un {1} el daño Cortante.
+Aumenta un {2} la velocidad de movimiento.]]
+
+LANGUAGE["Perk_Title_berserker_savagery"] = [[Salvajería]]
+LANGUAGE["Perk_berserker_savagery"] = [[
+Aumenta un {1} el daño Golpeante.
+Aumenta un {2} de la vida máxima.]]
+
+LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Desviar]]
+LANGUAGE["Perk_Title_berserker_graceful_guard"] = [[Guardia agraciado]]
+LANGUAGE["Perk_berserker_graceful_guard"] = [[
+En un Desvío Aéreo exitoso:
+  - Remueve todos los empeoramientos y acumulaciones de empeoramientos.
+  - Recupera {1} de vida.]]
+
+LANGUAGE["Perk_Title_berserker_unwavering_guard"] = [[Guardia Inquebrantable]]
+LANGUAGE["Perk_berserker_unwavering_guard"] = [[
+En un Desvío Aéreo exitoso:
+  - {1} daño Físico aumentado por {3} segundos.
+  - {2} menos daño recibido por {3} segundos.]]
+
+LANGUAGE["Perk_Title_Berserker_Tier_4"] = [[Artes de Combates]]
+LANGUAGE["Perk_Title_berserker_phalanx"] = [[Falange]]
+LANGUAGE["Perk_berserker_phalanx"] = [[
+Obtienes 1 acumuluación de Falange cada 2 segundos, hasta {1}.
+Cada acumulación aumenta {2} la resistencia al daño Físico y {3} el daño cuerpo a cuerpo.
+Pierdes las acumulaciones cuando atacas.]]
+
+LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[Rasgar y Desgarrar]]
+LANGUAGE["Perk_berserker_rip_and_tear"] = [[
+Aumenta un {1} el daño cuerpo a cuerpo.
+Tus golpes cuerpo a cuerpo pueden salpicar.
+El daño de salpicar es un {2} de tu daño cuerpo a cuerpo.]]
+
+-- Default Perks: Warden
+LANGUAGE["Perk_Title_Warden_Tier_1"] = [[Sustentar]]
+LANGUAGE["Perk_Title_warden_bulwark"] = [[Baluarte]]
+LANGUAGE["Perk_warden_bulwark"] = [[
+Watchtowers generan 1 batería de armadura cada {1} segundos.]]
+
+LANGUAGE["Perk_Title_warden_vitality"] = [[Vitalidad]]
+LANGUAGE["Perk_warden_vitality"] = [[
+El Aura proporciona {1} regeneración de vida por segundo.]]
+
+LANGUAGE["Perk_Title_Warden_Tier_2"] = [[Utilización de Recursos]]
+LANGUAGE["Perk_Title_warden_restock"] = [[Reabastecimiento Rápido]]
+LANGUAGE["Perk_warden_restock"] = [[
+El enfriamiento del reabastecimiento de los Watchtowers se disminuye un {1}.]]
+
+LANGUAGE["Perk_Title_warden_energize"] = [[Energizar]]
+LANGUAGE["Perk_warden_energize"] = [[
+El Aura agrega {1} de daño base a los ataques.]]
+
+LANGUAGE["Perk_Title_Warden_Tier_3"] = [[Escolta]]
+LANGUAGE["Perk_Title_warden_rejection_pulse"] = [[Pulso de Rechazo]]
+LANGUAGE["Perk_warden_rejection_pulse"] = [[
+Watchtowers generan una onda de choque cada {1} segundos.
+Las ondas de choque infligen {2} de daño Relámpago.]]
+
+LANGUAGE["Perk_Title_warden_inoculation"] = [[Inoculación]]
+LANGUAGE["Perk_warden_inoculation"] = [[
+Aura reduce {1} el acumulamiento recibido de Incendiar, Choque y Congelamiento.]]
+
+LANGUAGE["Perk_Title_Warden_Tier_4"] = [[Cobertura]]
+LANGUAGE["Perk_Title_warden_ex_machina"] = [[Deus Ex Machina]]
+LANGUAGE["Perk_warden_ex_machina"] = [[
+Watchtowers tienen el Aura del Guardián.]]
+
+LANGUAGE["Perk_Title_warden_resonance_cascade"] = [[Cascada de Resonancia]]
+LANGUAGE["Perk_warden_resonance_cascade"] = [[
+Efecto del Aura incrementado un {1}.
+Radio del Aura incrementado un {2}.]]
+
+-- Default Perks: Cremator
+LANGUAGE["Perk_Title_Cremator_Tier_1"] = [[Químicos]]
+LANGUAGE["Perk_Title_cremator_methane"] = [[Metano]]
+LANGUAGE["Perk_cremator_methane"] = [[
+{1} daño de Fuego aumentado contra enemigos Incinerados.]]
+
+LANGUAGE["Perk_Title_cremator_napalm"] = [[Napalm]]
+LANGUAGE["Perk_cremator_napalm"] = [[
+{1} duración de Incendiar aumentada.]]
+
+LANGUAGE["Perk_Title_Cremator_Tier_2"] = [[Absorción de Energía]]
+LANGUAGE["Perk_Title_cremator_positron_array"] = [[Formación de Positrones]]
+LANGUAGE["Perk_cremator_positron_array"] = [[
+Inmune al daño de Fuego.
+Absorbes {1} del daño de Fuego recibido como vida.]]
+
+LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[Escudo de Entropía]]
+LANGUAGE["Perk_cremator_entropy_shield"] = [[
+Obtienes un escudo que niega el daño recibido de enemigos.
+El escudo explota al ser golpeado y se recarga después de {1} segundos.
+Explosión inflige {2} de daño de Fuego.]]
+
+LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[Manipulación de Calor]]
+LANGUAGE["Perk_Title_cremator_hyperthermia"] = [[Hipertermia]]
+LANGUAGE["Perk_cremator_hyperthermia"] = [[
+Aumenta el daño de Fuego según en la proximidad del enemigo hacia tí.
+Aumenta las capas a {1}.]]
+
+LANGUAGE["Perk_Title_cremator_ionization"] = [[Ionización]]
+LANGUAGE["Perk_cremator_ionization"] = [[
+{1} daño de Incendiar aumentado.
+Daño de Fuego ignora la resistencia al Fuego de los enemigos.]]
+
+LANGUAGE["Perk_Title_Cremator_Tier_4"] = [[Descarga de Energía]]
+LANGUAGE["Perk_Title_cremator_firestorm"] = [[Tormenta de Fuego]]
+LANGUAGE["Perk_cremator_firestorm"] = [[
+El daño de Fuego aumenta la acumulación de Ráfaga en los enemigos.
+Crea una explosión cuando la acumulación de Ráfaga está llena.
+Explosión inflige {1} de daño Explosivo.]]
+
+LANGUAGE["Perk_Title_cremator_incineration"] = [[Incineración]]
+LANGUAGE["Perk_cremator_incineration"] = [[
+{1} daño de Incendiar aumentado.]]
 
 -- Default Config Shop Items
 -- Optional
@@ -344,7 +827,7 @@ KRISS Vector Gen I.
 Utiliza un sistema inconvencional de retroceso resultando una alta tasa de fuego.
 ]]
 
-LANGUAGE["Item_Pump-Action"] = [[Accion de bombeo]]
+LANGUAGE["Item_Pump-Action"] = [[Acción de bombeo]]
 LANGUAGE["Item_Desc_Pump-Action"] = [[
 Una escopeta estandar de calibre 12.
 RMB para disparar 2 balas a la vez.
@@ -455,7 +938,7 @@ Diseñado para maximizar la confiabilidad, durabilidad y simplicidad.
 
 LANGUAGE["Item_ACR"] = [[ACR]]
 LANGUAGE["Item_Desc_ACR"] = [[
-Rifle de combate adaptativo Remington.
+Adaptive Combat Rifle Remington.
 Un rifle semi-automático modular.
 ]]
 
@@ -480,7 +963,7 @@ Un rifle de batalla de fuego selecto 7.62×51mm OTAN, fabricado por H&K.
 LANGUAGE["Item_Barret AMR"] = [[Barret AMR]]
 LANGUAGE["Item_Desc_Barret AMR"] = [[
 Francotirador .50 Cal Anti-Material.
-Hace grandes cantidades de daño balístico.
+Realiza grandes cantidades de daño balístico.
 ]]
 
 LANGUAGE["Item_SSG08 Medic SR"] = [[FR Médico SSG08]]
@@ -513,8 +996,8 @@ Una granada de fragmentación estándar.
 Buena para control de multitudes.
 ]]
 
-LANGUAGE["Item_DamageResistance RPG"] = [[RPG de la Resistencia]]
-LANGUAGE["Item_Desc_DamageResistance RPG"] = [[
+LANGUAGE["Item_Resistance RPG"] = [[RPG de la Resistencia]]
+LANGUAGE["Item_Desc_Resistance RPG"] = [[
 Dispositivo de propulsión cohetes guiado por láser.
 ]]
 
@@ -572,7 +1055,7 @@ Dispara barras abrasadoras.
 LANGUAGE["Item_Turret"] = [[Torreta]]
 LANGUAGE["Item_Desc_Turret"] = [[
 Torreta Guardián Combine.
-Utilizado para proteger puntos y áreas vitales.
+Utilizada para proteger puntos y áreas vitales.
 ]]
 
 LANGUAGE["Item_Medic Grenade"] = [[Granada Médica]]
@@ -622,7 +1105,7 @@ Cada uno proporciona 15 de armadura. Solo uso personal.
 LANGUAGE["Item_Full Kevlar Armor"] = [[Armadura Kevlar Completa]]
 LANGUAGE["Item_Desc_Full Kevlar Armor"] = [[
 Set de armadura completa.
-LLena hasta 100% tu barra de armadura
+Llena hasta 100% tu barra de armadura
 ]]
 
 LANGUAGE["Item_Watchtower MKII"] = [[Watchtower MKII]]
@@ -636,7 +1119,7 @@ LANGUAGE["Item_Watchtower MKIII"] = [[Watchtower MKIII]]
 LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
 Un watchtower que disuade enemigos.
 Electrocuta 1 enemigo cercano cada 1 segundo.
-Realiza 100 de daño eléctrico.
+Realiza 80 de daño eléctrico.
 (Entity Class: horde_watchtower_mk3)
 ]]
 
@@ -669,17 +1152,17 @@ Brrrrrrrrrrrrrrrr.
 Mantén RMB para atravesar enemigos.
 ]]
 
-LANGUAGE["Item_Mjollnir"] = [[Mjolnir]]
-LANGUAGE["Item_Desc_Mjollnir"] = [[
+LANGUAGE["Item_Mjollner"] = [[Mjolnir]]
+LANGUAGE["Item_Desc_Mjollner"] = [[
 Un martillo de guerra impregnado de energía eléctrica.
 Presiona RMB para cargar el arma.
 El Mjolnir cargado crea una explosión eléctrica al impactar.
 ]]
 
-LANGUAGE["Item_Double Barrel"] = [[Double Barrel]]
+LANGUAGE["Item_Double Barrel"] = [[Doble Cañón]]
 LANGUAGE["Item_Desc_Double Barrel"] = [[
-Double Barrel Shotgun.
-Devastating power at close range.
+Escopeta Doble Cañón.
+Poder devastador a corto alcance.
 ]]
 
 LANGUAGE["Item_FN FAL"] = [[FN FAL]]
@@ -697,14 +1180,14 @@ Una ametralladora de apoyo ligero variante del rifle de asalto AUG.
 LANGUAGE["Item_Manhack"] = [[Manhack]]
 LANGUAGE["Item_Desc_Manhack"] = [[
 Manhack que se regenera al morir.
-Manhack hacen su vida como daño a enemigos.
+Manhack infligen su vida como daño a enemigos.
 Manhack muere al impacto.
 ]]
 
 LANGUAGE["Item_Vortigaunt"] = [[Vortigaunt]]
 LANGUAGE["Item_Desc_Vortigaunt"] = [[
 Vortigaunts Xen que puede conjurar explosiones concentrada de energía.
-Las explosiones de energía tienen alto rango y hacen daño por salpicadura.
+Las explosiones de energía tienen alto rango y infligen daño por salpicadura.
 ]]
 
 LANGUAGE["Item_Combat Bot"] = [[Robot de Combate]]
@@ -754,7 +1237,7 @@ Llena tu barra de armadura hasta 100%.
 Proporciona 5% más de evasión.
 ]]
 
-LANGUAGE["Item_Defense Matrix"] = [[Matriz defensa]]
+LANGUAGE["Item_Defense Matrix"] = [[Matriz de defensa]]
 LANGUAGE["Item_Desc_Defense Matrix"] = [[
 Armadura de Ingeniero distinguida.
 Llena tu barra de armadura hasta 100%.
@@ -763,7 +1246,7 @@ Proporciona 5% más de resistencia al daño.
 
 LANGUAGE["Item_Riot Armor"] = [[Armadura Antidisturbios]]
 LANGUAGE["Item_Desc_Riot Armor"] = [[
-Distinguished Warden armor.
+Armadura de Guardián distinguida.
 Llena tu barra de armadura hasta 100%.
 Proporciona 8% más de resistencia al daño de Choque y Sónico.
 ]]
@@ -799,18 +1282,18 @@ LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_detoxifier"] = [[Desintoxicante]]
-LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
+LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
 20% de resistencia al daño Venenoso aumentado.
 ]]
 
 LANGUAGE["Gadget_gadget_diamond_plating"] = [[Galjanoplastia de Diamante]]
-LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
-15% increased Physical damage resistance.
+LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
+15% de resistencia al daño Físico aumentado.
 ]]
 
 LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Mentalidad Corporativa]]
 LANGUAGE["Gadget_Desc_gadget_corporate_mindset"] = [[
-"Ponerte metas. Ten un plan de diez años. Invierte. Levantate temprano. Mentalidad de CEO."
+"Ponerte metas. Ten un plan de diez años. Invierte. Levántate temprano. Mentalidad de CEO."
 Aumenta enormemente la posibilidad de soltar fichas de calavera.
 ]]
 
@@ -872,7 +1355,7 @@ No puedes correr.
 Pasivamente proporciona un 20% de resistencia al daño Global.
 ]]
 
-LANGUAGE["Gadget_t_virus"] = [[Virus]]
+LANGUAGE["Gadget_t_virus"] = [[Virus-T]]
 LANGUAGE["Gadget_Desc_t_virus"] = [[
 Convierte tu armadura a vida.
 No puedes pasarte de 250% de vida.
@@ -895,7 +1378,7 @@ El proyectil cura 25 de vida a jugadores cercanos.
 LANGUAGE["Gadget_healing_beam"] = [[Rayo Curativo]]
 LANGUAGE["Gadget_Desc_gadget_healing_beam"] = [[
 Conecta un rayo curativo entre el usuario y el objetivo.
-Si el objetivo es un enemigo, roba vida del objetivo.
+Si el objetivo es un enemigo, absorbe vida del objetivo.
 Si el objetivo es un aliado, restaura vida al aliado.
 ]]
 
@@ -916,7 +1399,7 @@ Aturde enemigos al pegarlos.
 LANGUAGE["Gadget_death_mark"] = [[Marca de la Muerte]]
 LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
 Coloca una marca al enemigo apuntado.
-Enemigos apuntados reciben un 15% más de daño.
+Enemigos apuntados reciben un 15% mas de daño.
 Enemigos marcados explotan al morir, realizando daño basado en su vida.
 La marca dura 10 segundos.
 Puedes marcar 1 enemigo a la vez.
@@ -938,7 +1421,7 @@ LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[Lanzador de Proyectiles 
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
 Dispara un proyectil explosivo.
 El proecytil realiza 100 de daño Explosivo.
-Generates 3 extra explosions after a short delay.
+Genera 3 explosiones extra después de un corto periodo.
 ]]
 
 LANGUAGE["Gadget_nitrous_propellor"] = [[Propulsor Nitroso]]
@@ -948,7 +1431,7 @@ Te impulsa hacia adelante y arriba con una expolsión química.
 
 LANGUAGE["Gadget_ied"] = [[AEI]]
 LANGUAGE["Gadget_Desc_gadget_ied"] = [[
-Suelta un Artefaco Explosivo Improvisado al suelo.
+Suelta un Artefacto Explosivo Improvisado al suelo.
 AEI explota cuando un enemigo se acerca.
 Tienes 5 cargas de AEI.
 Los AEI se recargan después de la detonación.
@@ -957,7 +1440,7 @@ Los AEI se recargan después de la detonación.
 -- Engineer Gadgets
 LANGUAGE["Gadget_displacer"] = [[Desplazador]]
 LANGUAGE["Gadget_Desc_gadget_displacer"] = [[
-Mueve instantáneamente al esbirro apuntado a tu la.
+Mueve instantáneamente al esbirro apuntado a tu lado.
 ]]
 
 LANGUAGE["Gadget_gadget_turret_pack"] = [[Paquete de Torreta]]
@@ -967,13 +1450,13 @@ La torreta tiene 50% menos de vida.
 La torreta se destruye cuando su duración expira.
 ]]
 
-LANGUAGE["Gadget_gadget_e_parasite"] = [[Parásito E]]
+LANGUAGE["Gadget_gadget_e_parasite"] = [[Parásito-E]]
 LANGUAGE["Gadget_Desc_gadget_e_parasite"] = [[
-Lanza una cápsula de Parásito E que infecta enemigos al impactar.
-Parásito E cuenta como un esbirro.
-Parásito E realiza daño continuo a enemigos.
-Robas vida del daño hecho por el Parásito E.
-Enemigos asesinados mientras están infectados por el Parásito E exlpotan al morir.
+Lanza una cápsula de Parásito-E que infecta enemigos al impactar.
+Parásito-E cuenta como un esbirro.
+Parásito-E realiza daño continuo a enemigos.
+Absorbes vida del daño hecho por el Parásito-E.
+Enemigos asesinados mientras están infectados por el Parásito-E exlpotarán al morir.
 ]]
 
 -- Berserker Gadgets
@@ -1014,18 +1497,18 @@ LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[Lanzador de Proyectiles 
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
 Dispara un proyectil magnético que atraviesa enemigos.
 Genera una onda de choque cada vez que el proyectil atraviesa un enemigo.
-La onda de choque realiza 125 de daño de Relámpago.
+La onda de choque realiza 125 de daño Relámpago.
 ]]
 
 LANGUAGE["Gadget_watchtower_pack"] = [[Paquete de Watchtower]]
 LANGUAGE["Gadget_Desc_gadget_watchtower_pack"] = [[
-Despliega un watchtower extra.
+Despliega un watchtower adicional.
 ]]
 
 LANGUAGE["Gadget_shock_nova"] = [[Choque Nova]]
 LANGUAGE["Gadget_Desc_gadget_shock_nova"] = [[
-El Aura Guardián rápidamente genera una seria de ondas de choques.
-Cada onda de choque realiza 50 de daño de Relámpago.
+El Aura Guardián rápidamente genera una serie de ondas de choques.
+Cada onda de choque realiza 50 de daño Relámpago.
 ]]
 
 -- Cremator Gadgets
@@ -1045,6 +1528,6 @@ Realiza 20 de daño base de Incendiar.
 
 LANGUAGE["Gadget_barbeque"] = [[Barbacoa]]
 LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
-Enemigos incendiadios asesinados por ti suelta entrañas consumibles.
+Enemigos incendiadios asesinados por ti sueltan entrañas consumibles.
 Cada entraña restaura 5 de vida.
 ]]
