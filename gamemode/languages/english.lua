@@ -526,12 +526,12 @@ Immune to Bleeding.]]
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[Technique]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[Bushido]]
 LANGUAGE["Perk_berserker_bushido"] = [[
-{1} increased Slashing damage.
+Melee headshots increases Stun buildup.
 {2} increased movement speed.]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[Savagery]]
 LANGUAGE["Perk_berserker_savagery"] = [[
-{1} increased Blunt damage.
+{1} increased Melee damage.
 {2} increased maximum health.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Parry]]
@@ -1123,7 +1123,7 @@ LANGUAGE["Item_Watchtower MKIII"] = [[Watchtower MKIII]]
 LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
 A watchtower that deters enemies.
 Shocks 1 nearby enemy every 1 second.
-Does 100 Lightning damage.
+Does 80 Lightning damage.
 (Entity Class: horde_watchtower_mk3)
 ]]
 

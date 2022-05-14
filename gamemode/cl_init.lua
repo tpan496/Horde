@@ -3,12 +3,13 @@ include("sh_particles.lua")
 include("sh_translate.lua")
 include("sh_horde.lua")
 include("sh_gadget.lua")
+include("sh_status.lua")
 include("sh_damage.lua")
+include("sh_infusion.lua")
 include("sh_item.lua")
 include("sh_class.lua")
 include("sh_mutation.lua")
 include("sh_enemy.lua")
-include("sh_status.lua")
 include("sh_perk.lua")
 include("sh_maps.lua")
 include("sh_custom.lua")
@@ -23,6 +24,7 @@ include("gui/cl_status.lua")
 include("gui/cl_ready.lua")
 include("gui/cl_class.lua")
 include("gui/cl_description.lua")
+include("gui/cl_infusion.lua")
 include("gui/cl_item.lua")
 include("gui/cl_itemconfig.lua")
 include("gui/cl_classconfig.lua")
@@ -34,6 +36,7 @@ include("gui/cl_stats.lua")
 include("gui/cl_summary.lua")
 include("gui/cl_scoreboard.lua")
 include("gui/cl_3d2d.lua")
+include("gui/cl_subclassbutton.lua")
 include("gui/cl_perkbutton.lua")
 
 -- Some users report severe lag with halo
@@ -290,21 +293,6 @@ net.Receive("Horde_SyncEnemies", function ()
     local data = net.ReadData(len)
     local str = util.Decompress(data)
     HORDE.enemies = util.JSONToTable(str)
-end)
-
-net.Receive("Horde_SyncClasses", function ()
-    HORDE.classes = net.ReadTable()
-    for name, c in pairs(HORDE.classes) do
-        HORDE.order_to_class_name[c.order] = name
-    end
-    local class = LocalPlayer():Horde_GetClass() or HORDE.classes[HORDE.Class_Survivor]
-    HORDE:SendSavedPerkChoices(class.name)
-
-    local f = file.Read("horde/class_choices.txt", "DATA")
-
-    if f then
-        HORDE:SendSavedPerkChoices(f)
-    end
 end)
 
 net.Receive("Horde_SyncDifficulty", function ()

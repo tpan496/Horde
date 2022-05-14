@@ -11,9 +11,8 @@ GADGET.Params = {
 }
 GADGET.Hooks = {}
 
-GADGET.Hooks.OnNPCKilled = function(victim, killer, wpn)
-    if not killer:IsPlayer() or killer:Horde_GetGadget() ~= "gadget_barbeque"  then return end
-    if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() or not victim:IsOnFire() then return end
+GADGET.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
+    if killer:Horde_GetGadget() ~= "gadget_barbeque" then return end
     local health = victim:GetMaxHealth()
     local i = 1
     while health > 0 do

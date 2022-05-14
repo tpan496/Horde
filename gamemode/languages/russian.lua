@@ -586,7 +586,7 @@ LANGUAGE["Item_Desc_Watchtower MKII"] = [[
 LANGUAGE["Item_Watchtower MKIII"] = [[Сторожевая башня - Модель III]]
 LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
 Башня отпугивающая врагов. Бьёт током каждого противника вблизи каждую секунду.
-100 урона током.
+80 урона током.
 (Entity Class: horde_watchtower_mk3)
 ]]
 

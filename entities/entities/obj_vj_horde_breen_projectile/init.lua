@@ -124,7 +124,7 @@ function ENT:CustomOnPhysicsCollide(data, phys)
                 if rand.z < 0 then rand.z = -rand.z end
                 local pos = self_pos + rand * math.Rand(10, 50)
                 for _, e1 in pairs(ents.FindInSphere(pos, 150)) do
-                    if HORDE:IsPlayerOrMinion(e1) then
+                    if (HORDE:IsPlayerOrMinion(e1) == true) then
                         local dmginfo = DamageInfo()
                         dmginfo:SetDamage(math.max(10, 0.1 * e1:GetMaxHealth()))
                         dmginfo:SetAttacker(Entity(0))

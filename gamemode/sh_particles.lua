@@ -1,6 +1,6 @@
 game.AddParticles("particles/combineball.pcf")
 game.AddParticles("particles/vortigaunt_fx.pcf")
-game.AddParticles("particles/cold_fx.pcf")
+game.AddParticles("particles/cryo_fx.pcf")
 game.AddParticles("particles/medicgun_beam.pcf")
 game.AddParticles("particles/tbolt_fx_reborn.pcf")
 

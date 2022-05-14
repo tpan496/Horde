@@ -87,6 +87,7 @@ ENT.GeneralSoundPitch1 = 50
 ENT.GeneralSoundPitch2 = 50
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
+	if self.Horde_Stunned then return end
 	if self.Critical and self:IsOnGround() then
 		self:SetLocalVelocity(self:GetMoveVelocity() * 2)
 	end

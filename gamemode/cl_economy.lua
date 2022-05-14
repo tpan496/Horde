@@ -16,10 +16,6 @@ function plymeta:Horde_GetMaxWeight()
     return self.Horde_max_weight or 0
 end
 
-function plymeta:Horde_GetClass()
-    return self.Horde_class
-end
-
 function plymeta:Horde_GetDropEntities()
     return self.Horde_drop_entities
 end

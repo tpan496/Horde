@@ -65,6 +65,10 @@ function scoreboard:show()
             draw.DrawText(ply:Name():sub(1,20), "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
             if HORDE.classes and HORDE.classes[class] then
                 local mat = Material(HORDE.classes[class].icon, "mips smooth")
+                local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(HORDE.classes[class].name)]
+                if subclass and subclass.ParentClass then
+                    mat = Material(subclass.Icon, "mips smooth")
+                end
                 local rank = ply:Horde_GetRank(class)
                 local rank_level = ply:Horde_GetRankLevel(class)
                 surface.SetMaterial(mat) -- Use our cached material

@@ -122,7 +122,7 @@ end
 
 function ENT:CustomOnLeapAttack_AfterChecks(hitEnt, isProp)
     if isProp then return end
-    if hitEnt and IsValid(hitEnt) and HORDE:IsPlayerOrMinion(hitEnt) then
+    if hitEnt and IsValid(hitEnt) and (HORDE:IsPlayerOrMinion(hitEnt) == true) then
         self:UnRage()
         hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 60, self)
     end
@@ -131,6 +131,7 @@ end
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     self.DamageReceived = self.DamageReceived + dmginfo:GetDamage()
     if self.DamageReceived >= self:GetMaxHealth() * 0.25 then
+        if self.Horde_Stunned then return end
         self:Rage()
         self.DamageReceived = 0
     end

@@ -52,6 +52,12 @@ HORDE.DMG_COLOR = {
     [HORDE.DMG_BLAST] = Color(255,140,0),
 }
 
+HORDE.STATUS_COLOR = {
+    [HORDE.Status_Decay] = Color(50, 150, 50),
+    [HORDE.Status_Necrosis] = Color(204, 204, 255),
+    [HORDE.Status_Bleeding] = HORDE.color_crimson_violet
+}
+
 function HORDE:GetDamageType(dmginfo)
     if HORDE:IsPhysicalDamage(dmginfo) then
         if HORDE:IsBallisticDamage(dmginfo) then return HORDE.DMG_BALLISTIC end
@@ -78,6 +84,10 @@ end
 
 function HORDE:IsSlashDamage(dmginfo)
     return dmginfo:IsDamageType(DMG_SLASH)
+end
+
+function HORDE:IsMeleeDamage(dmginfo)
+    return dmginfo:IsDamageType(DMG_SLASH) or dmginfo:IsDamageType(DMG_CLUB)
 end
 
 function HORDE:IsPhysicalDamage(dmginfo)

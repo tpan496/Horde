@@ -19,7 +19,8 @@ local status_color = {
     [HORDE.Status_Shock] = HORDE.DMG_COLOR[HORDE.DMG_LIGHTNING],
     [HORDE.Status_Break] = HORDE.DMG_COLOR[HORDE.DMG_POISON],
     [HORDE.Status_Bleeding] = HORDE.color_crimson_violet,
-    [HORDE.Status_Decay] = Color(50, 150, 50)
+    [HORDE.Status_Decay] = HORDE.STATUS_COLOR[HORDE.Status_Decay],
+    [HORDE.Status_Necrosis] = HORDE.STATUS_COLOR[HORDE.Status_Necrosis]
 }
 
 -- Stack < 0 means disabled
@@ -29,7 +30,7 @@ local function DrawStatus(status, stack, displacement)
     if not HORDE.Status_Icon[status] then return end
     local mat
     if status < HORDE.Status_Armor_Survivor or status >= HORDE.Status_ExpDisabled then
-        if status == HORDE.Status_AntimatterShield or status == HORDE.Status_Displacer then
+        if HORDE:IsSkillStatus(status) then
             draw.RoundedBox(10, 0 + displacement, 0, 50, 50, Color(40,40,40,200))
     
             mat = Material(HORDE.Status_Icon[status], "mips smooth")
@@ -43,6 +44,11 @@ local function DrawStatus(status, stack, displacement)
                 draw.RoundedBox(10, displacement, 0, 50, 50, Color(40,40,40,200))
                 surface.SetDrawColor(color_white)
                 draw.SimpleText(cd, "Trebuchet24", displacement + 25, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            end
+
+            local charge = LocalPlayer():Horde_GetPerkCharges()
+            if HORDE:IsStackableSkillStatus(status) and charge >= 0 then
+                draw.SimpleText(charge, "Trebuchet24", displacement + 40, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
             return
         end
@@ -266,5 +272,9 @@ if CLIENT then
 
     net.Receive("Horde_GadgetChargesUpdate", function ()
         LocalPlayer():Horde_SetGadgetCharges(net.ReadInt(8))
+    end)
+
+    net.Receive("Horde_PerkChargesUpdate", function ()
+        LocalPlayer():Horde_SetPerkCharges(net.ReadInt(8))
     end)
 end

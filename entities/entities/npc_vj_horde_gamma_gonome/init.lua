@@ -201,7 +201,11 @@ function ENT:ColdAttack(delay)
 			end
 		end
 
-        ParticleEffect("cryo_explosion_large", pos, Angle(0,0,0), self)
+        local e = EffectData()
+			e:SetOrigin(pos)
+			e:SetNormal(Vector(0,0,1))
+			e:SetScale(1.2)
+		util.Effect("weeper_blast", e, true, true)
         sound.Play("horde/status/cold_explosion.ogg", pos, 80, math.random(70, 90))
 	end)
 end

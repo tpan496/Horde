@@ -10,6 +10,10 @@ end
 
 function PANEL:DoClick()
     self.description_panel:SetData(self.item)
+    self.infusion_panel:SetData(self.item)
+    self.description_panel:SetVisible(true)
+    self.infusion_panel:SetVisible(false)
+    self.infusion_btn:SetActive(false)
 end
 
 function PANEL:OnCursorEntered()
@@ -20,7 +24,7 @@ function PANEL:OnCursorExited()
     self.bg_color = Color(50,50,50, 200)
 end
 
-function PANEL:SetData(item, description_panel)
+function PANEL:SetData(item, description_panel, infusion_panel)
     self.item = item
     self.name = item.name
     if GetConVar("horde_default_item_config"):GetInt() == 1 then
@@ -42,6 +46,7 @@ function PANEL:SetData(item, description_panel)
     self.price = item.price
     self.skull_tokens = item.skull_tokens or 0
     self.description_panel = description_panel
+    self.infusion_panel = infusion_panel
     self.player_class = LocalPlayer():Horde_GetClass().name
 
     self.level_satisfy = true
@@ -91,6 +96,56 @@ function PANEL:SetData(item, description_panel)
     price_panel:SetFont("Item")
     price_panel:SetContentAlignment(6)
     self.price_panel = price_panel
+
+    local infusion_btn
+    infusion_btn = vgui.Create("DButton", self)
+    infusion_btn:SetPos(self:GetWide() - 256 - 96 - 150, 8)
+    infusion_btn:SetTall(48)
+    infusion_btn.PerformLayout = function(pnl)
+        pnl:SizeToContents() pnl:SetWide(pnl:GetWide() + 12) DLabel.PerformLayout(pnl)
+        pnl:SetContentAlignment(4)
+        pnl:SetTextInset(15, 0)
+    end
+
+    if LocalPlayer():Horde_GetInfusion(self.item.class) == HORDE.Infusion_None then
+        infusion_btn:SetText("Infusion: " .. "None")
+    else
+        infusion_btn:SetText("Infusion: " .. HORDE.Infusion_Names[LocalPlayer():Horde_GetInfusion(self.item.class)])
+    end
+    infusion_btn:SetFont("Category")
+
+    infusion_btn.Paint = function(pnl, w, h)
+        draw.RoundedBox(5, 0, 0, w, h, Color(40,40,40,230))
+    end
+
+    infusion_btn.UpdateColours = function(pnl)
+        if pnl:GetActive() then
+            pnl:SetTextColor(HORDE.color_crimson)
+            return
+        end
+        if pnl.Hovered then
+            pnl:SetTextColor(HORDE.color_crimson)
+        return end
+        pnl:SetTextColor(Color(255, 255, 255))
+    end
+
+    infusion_btn.GetActive = function(pnl) return pnl.Active or false end
+    infusion_btn.SetActive = function(pnl, state) pnl.Active = state end
+
+    local p = self
+    infusion_btn.DoClick = function(pnl)
+        --pnl:SetActive(true)
+        surface.PlaySound("UI/buttonclick.wav")
+        pnl:SetActive(true)
+        p.infusion_panel:SetVisible(true)
+        p.infusion_panel:SetData(p.item)
+        p.description_panel:SetVisible(false)
+    end
+
+    infusion_btn.OnCursorEntered = function ()
+        surface.PlaySound("UI/buttonrollover.wav")
+    end
+    self.infusion_btn = infusion_btn
 
     if self.item.shop_icon and self.item.shop_icon ~= "" then
         self.icon = self.item.shop_icon
@@ -150,7 +205,16 @@ function PANEL:Paint()
         if LocalPlayer():HasWeapon(self.item.class) or LocalPlayer():Horde_GetGadget() == self.item.class or (LocalPlayer().Horde_drop_entities and LocalPlayer().Horde_drop_entities[self.item.class]) then
             self.price_panel:SetTextColor(HORDE.color_crimson)
             self.price_panel:SetText("Owned")
+            self.infusion_btn:SetVisible(true)
+
+            local infusion = LocalPlayer():Horde_GetInfusion(self.item.class)
+            if infusion == HORDE.Infusion_None then
+                self.infusion_btn:SetText("Infusion: " .. "None")
+            else
+                self.infusion_btn:SetText("Infusion: " .. HORDE.Infusion_Names[infusion])
+            end
         else
+            self.infusion_btn:SetVisible(false)
             if is_rich then
                 surface.SetTextColor(self.text_color)
                 self.weight_panel:SetTextColor(self.text_color)
@@ -212,6 +276,7 @@ function PANEL:Paint()
             end
             
             if GetConVar("horde_enable_shop_icons"):GetInt() == 0 then return end
+            
             if self.item.shop_icon then
                 surface.SetMaterial(Material(self.item.shop_icon, "mips smooth"))
                 surface.SetDrawColor(255, 255, 255, 255)

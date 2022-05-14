@@ -8,7 +8,7 @@ function ENT:AcceptInput(name, activator, caller, args)
 	if string.sub(name, 1, 2) == "on" then
 		self:FireOutput(name, activator, caller, args)
 	elseif name == "activateachievement" then
-		local ent = ents.FindByName(args)[1]
+		local ent = ents.FindByName(args[1])
         if ent and ent:IsValid() and ent:IsPlayer() then
 			if not self.Achievement or self.Achievement == "" then return end
             net.Start("Horde_SaveExtraAchievements")
