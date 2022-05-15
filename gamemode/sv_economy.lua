@@ -108,7 +108,7 @@ function plymeta:Horde_AddDropEntity(class, entity)
     HORDE.player_drop_entities[self:SteamID()][entity:GetCreationID()] = entity
 end
 
-function plymeta:Horde_RemoveDropEntity(class, entity_creation_id)
+function plymeta:Horde_RemoveDropEntity(class, entity_creation_id, weightless)
     if not self:IsValid() then return end
     if self.Horde_drop_entities and self.Horde_drop_entities[class] then
         self.Horde_drop_entities[class] = self.Horde_drop_entities[class] - 1
@@ -120,7 +120,7 @@ function plymeta:Horde_RemoveDropEntity(class, entity_creation_id)
         HORDE.player_drop_entities[self:SteamID()][entity_creation_id] = nil
     end
     local item = HORDE.items[class]
-    if item then
+    if item and (not weightless) then
         self:Horde_AddWeight(item.weight)
     end
 end
@@ -199,7 +199,7 @@ function plymeta:Horde_SyncEconomy()
         net.WriteInt(self.Horde_money, 32)
         net.WriteInt(self.Horde_skull_tokens, 32)
         net.WriteInt(self.Horde_weight, 32)
-        net.WriteString(self.Horde_class.name)
+        net.WriteString(self:Horde_GetSubclass(self.Horde_class.name))
         net.WriteTable(self.Horde_drop_entities)
     net.Broadcast()
 end
@@ -284,6 +284,16 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
     if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
         wpn:Remove()
     end
+    if class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() == "Necromancer" then
+        -- Cannot drop as necro
+        wpn:Remove()
+        local c = wpn:GetClass()
+        timer.Simple(0, function()
+            if ply:Alive() then
+                ply:Give(c)
+            end
+        end)
+    end
 end)
 
 hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
@@ -292,6 +302,9 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
         if (ply:Horde_GetWeight() - item.weight < 0) or (item.whitelist and (not item.whitelist[ply:Horde_GetClass().name])) then
+            return false
+        end
+        if item.class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() ~= "Necromancer" then
             return false
         end
     end
@@ -595,7 +608,9 @@ net.Receive("Horde_SellItem", function (len, ply)
                                     ply.Horde_drop_entities[class] = nil
                                 end
                             end
-                            ply:Horde_AddWeight(item.weight)
+                            if not ent.Horde_Is_Mini_Sentry then
+                                ply:Horde_AddWeight(item.weight)
+                            end
                         end
                     end
                 end
@@ -611,10 +626,21 @@ net.Receive("Horde_SellItem", function (len, ply)
 end)
 
 net.Receive("Horde_InitClass", function (len, ply)
-    local name = net.ReadString()
-    local class = HORDE.classes[name]
+    HORDE:LoadSubclassUnlocks(ply)
+    local subclass_name = net.ReadString()
+    local subclass = HORDE.subclasses[subclass_name]
+    local class
+    if subclass.ParentClass then
+        class = HORDE.classes[subclass.ParentClass]
+    else
+        class = HORDE.classes[subclass.PrintName]
+    end
     if not class then return end
+    if ply:Horde_GetSubclassUnlocked(subclass_name) == false then
+        subclass_name = class.name
+    end
     ply:Horde_SetClass(class)
+    ply:Horde_SetSubclass(class.name, subclass_name)
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
@@ -641,6 +667,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
         end
     end
     local name = net.ReadString()
+    local subclass_name = net.ReadString()
     local class = HORDE.classes[name]
     if not class then return end
 
@@ -653,6 +680,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     for _, wpn in pairs(ply:GetWeapons()) do
         ply:DropWeapon(wpn)
     end
+    ply:Horde_SetSubclass(name, subclass_name)
 
     -- Remove all entities
     if HORDE.player_drop_entities[ply:SteamID()] then
@@ -761,7 +789,7 @@ function HORDE:CanSell(ply, class)
         return false, "You can't sell grenades as Demolition class!"
     end
 
-    if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "necromancer" and class == "horde_void_projector" then
+    if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "Necromancer" and class == "horde_void_projector" then
         return false, "You can't sell Void Projector as Necromancer subclass!"
     end
 

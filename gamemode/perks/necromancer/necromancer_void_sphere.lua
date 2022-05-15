@@ -2,7 +2,7 @@ PERK.PrintName = "Void Sphere"
 PERK.Description =
 [[Void Spear always deal splashing damage.
 Increases Void Spear splash damage.]]
-PERK.Icon = "materials/subclasses/necromancer.png"
+PERK.Icon = "materials/perks/necromancer/void_sphere.png"
 PERK.Params = {
 }
 PERK.Hooks = {}

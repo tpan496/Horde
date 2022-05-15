@@ -22,7 +22,7 @@ HORDE.Status_Foresight = 13
 HORDE.Status_AntimatterShield = 14
 HORDE.Status_Displacer = 15
 HORDE.Status_Void_Cascade = 16
-HORDE.Status_Recall = 17
+HORDE.Status_Devour = 17
 HORDE.Status_Quickstep = 18
 
 HORDE.Status_Unwavering_Guard = 30
@@ -65,10 +65,10 @@ HORDE.Status_Icon[HORDE.Status_WardenAura] = "materials/warden.png"
 HORDE.Status_Icon[HORDE.Status_EntropyShield] = "materials/perks/entropy_shield.png"
 HORDE.Status_Icon[HORDE.Status_AntimatterShield] = "materials/perks/antimatter_shield.png"
 HORDE.Status_Icon[HORDE.Status_Displacer] = "materials/perks/displacer.png"
-HORDE.Status_Icon[HORDE.Status_Void_Cascade] = "materials/abilities/void_cascade.png"
-HORDE.Status_Icon[HORDE.Status_Recall] = "materials/abilities/recall.png"
+HORDE.Status_Icon[HORDE.Status_Void_Cascade] = "materials/perks/necromancer/void_cascade.png"
+HORDE.Status_Icon[HORDE.Status_Devour] = "materials/perks/necromancer/necromastery.png"
 HORDE.Status_Icon[HORDE.Status_Quickstep] = "materials/abilities/quickstep.png"
-HORDE.Status_Icon[HORDE.Status_Foresight] = "materials/perks/foresight.png"
+HORDE.Status_Icon[HORDE.Status_Foresight] = "materials/perks/samurai/foresight.png"
 
 HORDE.Status_Icon[HORDE.Status_Unwavering_Guard] = "materials/perks/unwavering_guard.png"
 HORDE.Status_Icon[HORDE.Status_CanBuy] = "materials/status/canbuy.png"
@@ -98,14 +98,14 @@ HORDE.Status_Buildup_Sounds = {}
 HORDE.Status_Buildup_Sounds[HORDE.Status_Bleeding] = "horde/status/bleeding_buildup.ogg"
 --HORDE.Status_Buildup_Sounds[HORDE.Status_Ignite] = "player/general/flesh_burn.wav"
 HORDE.Status_Buildup_Sounds[HORDE.Status_Frostbite] = "horde/status/frostbite_buildup.ogg"
-HORDE.Status_Buildup_Sounds[HORDE.Status_Shock] = "eapons/stunstick/stunstick_fleshhit2.wav"
+HORDE.Status_Buildup_Sounds[HORDE.Status_Shock] = "weapons/stunstick/stunstick_fleshhit2.wav"
 HORDE.Status_Buildup_Sounds[HORDE.Status_Break] = "ambient/levels/canals/toxic_slime_sizzle1.wav"
 
 HORDE.Status_Trigger_Sounds = {}
 HORDE.Status_Trigger_Sounds[HORDE.Status_Bleeding] = "horde/status/bleeding_trigger.ogg"
 --HORDE.Status_Trigger_Sounds[HORDE.Status_Ignite] = "ambient/fire/fire_small1.wav"
 HORDE.Status_Trigger_Sounds[HORDE.Status_Frostbite] = "horde/status/frostbite_trigger.ogg"
-HORDE.Status_Trigger_Sounds[HORDE.Status_Shock] = "ambient/energy/zap1.wav"
+HORDE.Status_Trigger_Sounds[HORDE.Status_Shock] = "horde/status/shock_trigger.ogg"
 HORDE.Status_Trigger_Sounds[HORDE.Status_Break] = "horde/status/break_trigger.ogg"
 
 function HORDE:IsStatusStackable(status)

@@ -59,10 +59,24 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
     hook.Run("Horde_OnPlayerHeal", ply, healinfo)
     hook.Run("Horde_PostOnPlayerHeal", ply, healinfo)
     if (ply:GetMaxHealth() <= ply:Health()) and (healinfo:GetOverHealPercentage() <= 0) then return end
-    ply:SetHealth(math.min(ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), ply:Health() + healinfo:GetHealAmount()))
-
+    
     local healer = healinfo:GetHealer()
-    if not healer:IsPlayer() or not healer:IsValid() then return end
+    if healer:IsPlayer() and healer:IsValid() then
+        local heal_mult = 1
+        local curr_weapon = HORDE:GetCurrentWeapon(healer)
+        if curr_weapon and curr_weapon:IsValid() and ply.Horde_Infusions then
+            local infusion = ply.Horde_Infusions[curr_weapon:GetClass()]
+            
+            if infusion and infusion == HORDE.Infusion_Rejuvenating then
+                heal_mult = 1.25
+            end
+        end
+        ply:SetHealth(math.min(ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), ply:Health() + heal_mult * healinfo:GetHealAmount()))
+    else
+        ply:SetHealth(math.min(ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), ply:Health() + healinfo:GetHealAmount()))
+        return
+    end
+
     if not HORDE.player_heal[healer:SteamID()] then HORDE.player_heal[healer:SteamID()] = 0 end
     HORDE.player_heal[healer:SteamID()] = HORDE.player_heal[healer:SteamID()] + healinfo:GetHealAmount()
 

@@ -73,20 +73,20 @@ function SWEP:Initialize()
 end
 
 function SWEP:DrawHUD()
-if CLIENT then
+    if CLIENT then
     local x, y
-    if (self.Owner == LocalPlayer() and self.Owner:ShouldDrawLocalPlayer()) then
-        local tr = util.GetPlayerTrace( self.Owner )
-        local trace = util.TraceLine( tr )
-        local coords = trace.HitPos:ToScreen()
-        x, y = coords.x, coords.y
+    if ( self.Owner == LocalPlayer() and self.Owner:ShouldDrawLocalPlayer() ) then
+    local tr = util.GetPlayerTrace( self.Owner )
+    local trace = util.TraceLine( tr )
+    local coords = trace.HitPos:ToScreen()
+    x, y = coords.x, coords.y
     else
-        x, y = ScrW() / 2, ScrH() / 2
+    x, y = ScrW() / 2, ScrH() / 2
     end
-    surface.SetTexture( surface.GetTextureID( "sprites/crosshair_3" ) )
+    surface.SetTexture( surface.GetTextureID( "vgui/hud/gluon_crosshair" ) )
     surface.SetDrawColor( 255, 255, 255, 255 )
     surface.DrawTexturedRect( x - 16, y - 16, 32, 32 )
-end
+    end
 end
 
 function SWEP:Deploy()

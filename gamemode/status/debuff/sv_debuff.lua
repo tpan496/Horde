@@ -154,13 +154,8 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         elseif debuff == HORDE.Status_Break then
             timer.Simple(0, function() self:Horde_AddBreakEffect(duration, inflictor) end)
         elseif debuff == HORDE.Status_Necrosis then
-            timer.Simple(0.2, function ()
-                local dmginfo = DamageInfo()
-                dmginfo:SetAttacker(inflictor)
-                dmginfo:SetInflictor(inflictor)
-                dmginfo:SetDamageType(DMG_DIRECT)
-                dmginfo:SetDamage(self:GetMaxHealth() + 5)
-                if self:IsValid() then self:TakeDamageInfo(dmginfo) end
+            timer.Simple(0.5, function ()
+                self:Kill()
             end)
         elseif debuff == HORDE.Status_Freeze then
             self:Horde_AddFreezeEffect(duration)

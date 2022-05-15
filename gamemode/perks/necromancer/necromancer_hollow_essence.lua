@@ -2,7 +2,7 @@ PERK.PrintName = "Hollow Essence"
 PERK.Description =
 [[+{1} to maximum Spectres alive.
 {2} reduced Raise Spectre cost.]]
-PERK.Icon = "materials/subclasses/necromancer.png"
+PERK.Icon = "materials/perks/necromancer/hollow_essence.png"
 PERK.Params = {
     [1] = {value = 1},
     [2] = {value = 0.4, percent = true},

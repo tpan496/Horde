@@ -265,6 +265,9 @@ end
 if SERVER then
     util.AddNetworkString("Horde_SetClassData")
     util.AddNetworkString("Horde_SetSubclass")
+    util.AddNetworkString("Horde_UnlockSubclass")
+    util.AddNetworkString("Horde_SubclassUnlocked")
+    util.AddNetworkString("Horde_SyncSubclassUnlocks")
     HORDE:GetDefaultClassesData()
     if GetConVar("horde_default_class_config"):GetInt() == 1 then
         -- Do nothing
@@ -295,6 +298,32 @@ if SERVER then
         ply:Horde_ApplyPerksForClass()
         ply:Horde_SyncEconomy()
     end)
+    
+    net.Receive("Horde_UnlockSubclass", function (len, ply)
+        local subclass_name = net.ReadString()
+        local subclass = HORDE.subclasses[subclass_name]
+        if not subclass then return end
+        local cost = subclass.UnlockCost
+
+        if ply:Horde_GetSubclassUnlocked(subclass_name) == true then
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("Subclass " .. subclass.PrintName .. " is already unlocked!")
+            net.WriteInt(1,2)
+            net.Send(ply)
+            return
+        end
+
+        if ply:Horde_GetSkullTokens() >= cost then
+            ply:Horde_AddSkullTokens(-cost)
+            ply:Horde_SetSubclassUnlocked(subclass_name, true)
+            ply:Horde_SyncEconomy()
+
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("You unlocked " .. subclass.PrintName .. " subclass.")
+            net.WriteInt(0,2)
+            net.Send(ply)
+        end
+    end)
 end
 
 if CLIENT then
@@ -303,14 +332,22 @@ if CLIENT then
         for name, c in pairs(HORDE.classes) do
             HORDE.order_to_class_name[c.order] = name
         end
-        local class = LocalPlayer():Horde_GetClass() or HORDE.classes[HORDE.Class_Survivor]
-        HORDE:SendSavedPerkChoices(class.name)
+        local class = LocalPlayer():Horde_GetCurrentSubclass() or HORDE.Class_Survivor
+        HORDE:SendSavedPerkChoices(class)
 
         local f = file.Read("horde/class_choices.txt", "DATA")
+        if HORDE.subclasses_to_classes[f] then
+            f = HORDE.subclasses_to_classes[f]
+        end
 
         if f then
             HORDE:SendSavedPerkChoices(f)
         end
+    end)
+
+    net.Receive("Horde_SyncSubclassUnlocks", function ()
+        local table = net.ReadTable()
+        LocalPlayer().Horde_subclasses_unlocked = table
     end)
 end
 
@@ -327,6 +364,33 @@ HORDE.classes_to_subclasses = {
     [HORDE.Class_Berserker] = {HORDE.Class_Berserker},
     [HORDE.Class_Engineer] = {HORDE.Class_Engineer},
 }
+HORDE.classes_to_order = {
+    [HORDE.Class_Survivor] = 0,
+    [HORDE.Class_Assault] = 1,
+    [HORDE.Class_Heavy] = 2,
+    [HORDE.Class_Medic] = 3,
+    [HORDE.Class_Demolition] = 4,
+    [HORDE.Class_Ghost] = 5,
+    [HORDE.Class_Engineer] = 6,
+    [HORDE.Class_Berserker] = 7,
+    [HORDE.Class_Warden] = 8,
+    [HORDE.Class_Cremator] = 9,
+}
+HORDE.order_to_class_name = {
+    [0] = HORDE.Class_Survivor,
+    [1] = HORDE.Class_Assault,
+    [2] = HORDE.Class_Heavy,
+    [3] = HORDE.Class_Medic,
+    [4] = HORDE.Class_Demolition,
+    [5] = HORDE.Class_Ghost,
+    [6] = HORDE.Class_Engineer,
+    [7] = HORDE.Class_Berserker,
+    [8] = HORDE.Class_Warden,
+    [9] = HORDE.Class_Cremator,
+}
+HORDE.subclass_name_to_crc = {}
+HORDE.subclasses_to_classes = {}
+HORDE.order_to_subclass_name = {}
 local prefix = "horde/gamemode/subclasses/"
 local function Horde_LoadSubclasses()
     local dev = GetConVar("developer"):GetBool()
@@ -335,16 +399,20 @@ local function Horde_LoadSubclasses()
         AddCSLuaFile(prefix .. f)
         include(prefix .. f)
         if SUBCLASS.Ignore then goto cont end
-        SUBCLASS.ClassName = string.lower(SUBCLASS.ClassName or string.Explode(".", f)[1])
         SUBCLASS.SortOrder = SUBCLASS.SortOrder or 0
 
-        HORDE.subclasses[string.lower(SUBCLASS.ClassName)] = SUBCLASS
-        
+        HORDE.subclasses[SUBCLASS.PrintName] = SUBCLASS
+        local crc_val = util.CRC(SUBCLASS.PrintName)
+        HORDE.subclass_name_to_crc[SUBCLASS.PrintName] = crc_val
+        HORDE.order_to_subclass_name[crc_val] = SUBCLASS.PrintName
         if SUBCLASS.ParentClass then
-            table.insert(HORDE.classes_to_subclasses[SUBCLASS.ParentClass], SUBCLASS.ClassName)
-        end
+            table.insert(HORDE.classes_to_subclasses[SUBCLASS.ParentClass], SUBCLASS.PrintName)
+            HORDE.subclasses_to_classes[SUBCLASS.PrintName] = SUBCLASS.ParentClass
+        else
+            HORDE.subclasses_to_classes[SUBCLASS.PrintName] = SUBCLASS.PrintName
+    end
 
-        if dev then print("[Horde] Loaded subclass '" .. SUBCLASS.ClassName .. "'.") end
+        if dev then print("[Horde] Loaded subclass '" .. SUBCLASS.PrintName .. "'.") end
         ::cont::
     end
     PERK = nil
@@ -376,9 +444,72 @@ function plymeta:Horde_SetSubclass(class_name, subclass_name)
     end
 end
 
+function HORDE:LoadSubclassUnlocks(ply)
+    if not ply:IsValid() then return end
+    if not file.IsDir("horde/subclass_unlocks", "DATA") then
+		file.CreateDir("horde/subclass_unlocks", "DATA")
+	end
+
+    local path = "horde/subclass_unlocks/" .. HORDE:ScrubSteamID(ply) .. ".txt"
+
+    ply.Horde_subclasses_unlocked = {}
+    if not file.Exists(path, "DATA") then
+        print("Path", path, "does not exist!")
+        for subclass_name, subclass in pairs(HORDE.subclasses) do
+            ply.Horde_subclasses_unlocked[subclass_name] = false
+        end
+        HORDE:SaveSubclassUnlocks(ply)
+        return
+    end
+
+    local f = file.Open(path, "rb", "DATA")
+    while not f:EndOfFile() do
+        local subclass_order = f:ReadULong()
+        local status = f:ReadBool()
+        local subclass_name = HORDE.order_to_subclass_name[tostring(subclass_order)]
+        if not subclass_name then goto cont end
+        ply.Horde_subclasses_unlocked[subclass_name] = status
+        ::cont::
+    end
+    f:Close()
+
+    net.Start("Horde_SyncSubclassUnlocks")
+        net.WriteTable(ply.Horde_subclasses_unlocked)
+    net.Send(ply)
+end
+
+function HORDE:SaveSubclassUnlocks(ply)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 1 then return end
+    if not file.IsDir("horde/subclass_unlocks", "DATA") then
+        file.CreateDir("horde/subclass_unlocks", "DATA")
+    end
+
+    local path = "horde/subclass_unlocks/" .. HORDE:ScrubSteamID(ply) .. ".txt"
+    local f = file.Open(path, "wb", "DATA")
+    for subclass_name, status in pairs(ply.Horde_subclasses_unlocked) do
+        f:WriteULong(HORDE.subclass_name_to_crc[subclass_name])
+        f:WriteBool(status)
+    end
+    
+    f:Close()
+end
+
 function plymeta:Horde_SetSubclassUnlocked(subclass, unlocked)
-    if not self.Horde_subclasses_unlocked then self.Horde_subclasses_unlocked = {} end
+    if not self.Horde_subclasses_unlocked then return end
     self.Horde_subclasses_unlocked[subclass] = unlocked
+    if SERVER and unlocked == true then
+        net.Start("Horde_SubclassUnlocked")
+            net.WriteString(subclass)
+        net.Send(self)
+        HORDE:SaveSubclassUnlocks(self)
+    end
+end
+
+function plymeta:Horde_SetSubclassChoice(class_name, subclass_name)
+    LocalPlayer().Horde_subclass_choices[class_name] = subclass_name
+    if CLIENT then
+        HORDE:SaveSubclassChoices()
+    end
 end
 
 function plymeta:Horde_GetClass()
@@ -396,6 +527,74 @@ end
 
 function plymeta:Horde_GetSubclassUnlocked(subclass)
     if not self.Horde_subclasses_unlocked then self.Horde_subclasses_unlocked = {} end
-    return nil
+    if not HORDE.subclasses[subclass].ParentClass then return true end
+    return self.Horde_subclasses_unlocked[subclass] == true
     --return self.Horde_subclasses_unlocked[subclass] == true
+end
+
+function plymeta:Horde_GetCurrentSubclass()
+    if not self:Horde_GetClass() then return end
+    if self.Horde_subclasses and self.Horde_subclasses[self:Horde_GetClass().name] then
+        return self.Horde_subclasses[self:Horde_GetClass().name]
+    else
+        return self:Horde_GetClass().name
+    end
+end
+
+function HORDE:SaveSubclassChoices()
+    local f = file.Open("horde/subclass_choices.txt", "wb", "DATA")
+    for class, subclass in pairs(LocalPlayer().Horde_subclass_choices) do
+        f:WriteULong(HORDE.classes_to_order[class])
+        f:WriteULong(HORDE.subclass_name_to_crc[subclass])
+    end
+    f:Close()
+end
+
+function HORDE:LoadSubclassChoices()
+    LocalPlayer().Horde_subclass_choices = {}
+    if not file.Exists("horde/subclass_choices.txt", "DATA") then
+        for class_name, _ in pairs(HORDE.classes_to_subclasses) do
+            LocalPlayer().Horde_subclass_choices[class_name] = class_name
+        end
+        HORDE:SaveSubclassChoices()
+    else
+        local f = file.Open("horde/subclass_choices.txt", "rb", "DATA")
+        if not LocalPlayer().Horde_subclasses then LocalPlayer().Horde_subclasses = {} end
+        while not f:EndOfFile() do
+            local class_order = f:ReadULong()
+            local subclass_order = f:ReadULong()
+            LocalPlayer().Horde_subclass_choices[HORDE.order_to_class_name[class_order]] = HORDE.order_to_subclass_name[tostring(subclass_order)]
+            LocalPlayer().Horde_subclasses[HORDE.order_to_class_name[class_order]] = HORDE.order_to_subclass_name[tostring(subclass_order)]
+        end
+        f:Close()
+    end
+end
+
+if CLIENT then
+hook.Add("InitPostEntity", "Horde_PlayerInit", function()
+    timer.Simple(0, function ()
+        HORDE:LoadSubclassChoices()
+        local f = file.Read("horde/class_choices.txt", "DATA")
+        if f then
+            local class = f
+            net.Start("Horde_InitClass")
+            if not HORDE.subclasses[class] then
+                class = HORDE.Class_Survivor
+            end
+            net.WriteString(class)
+            net.SendToServer()
+        end
+        net.Start("Horde_PlayerInit")
+        net.SendToServer()
+    end)
+end)
+
+net.Receive("Horde_SubclassUnlocked", function ()
+    local subclass = net.ReadString()
+    LocalPlayer():Horde_SetSubclassUnlocked(subclass, true)
+end)
+end
+
+if SERVER then
+    
 end

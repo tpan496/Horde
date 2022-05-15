@@ -43,7 +43,13 @@ if CLIENT then
         net.Start("Horde_PerkChoice")
             net.WriteString(class)
             net.WriteUInt(0, 4)
-            for perk_level, choices in SortedPairs(HORDE.classes[class].perks) do
+            local perks
+            if HORDE.subclasses[class].ParentClass then
+                perks = HORDE.subclasses[class].Perks
+            else
+                perks = HORDE.classes[class].perks
+            end
+            for perk_level, choices in SortedPairs(perks) do
                 if not tbl or not tbl[class] then
                     net.WriteUInt(1, 4)
                 else
@@ -52,7 +58,7 @@ if CLIENT then
             end
         net.SendToServer()
     end
-    net.Receive("Horde_PerkChoice", function() HORDE:SendSavedPerkChoices(LocalPlayer():Horde_GetClass().name) end)
+    net.Receive("Horde_PerkChoice", function() HORDE:SendSavedPerkChoices(LocalPlayer():Horde_GetCurrentSubclass()) end)
 end
 
 function HORDE:Horde_GetWaveForPerk(perk_level)
@@ -170,12 +176,32 @@ if GetConVar("horde_enable_perk"):GetInt() == 1 then
     Horde_LoadPerks()
 end
 
-if CLIENT then
-hook.Add("PlayerButtonDown", "Horde_UseKeyAndShift", function(ply, key)
-    if (key == KEY_E) and input.IsButtonDown(KEY_LSHIFT) then
-        ply:ConCommand("horde_use_perk_skill")
+if game.SinglePlayer() then
+    hook.Add("PlayerButtonDown", "Horde_UseKeyAndShift", function(ply, key)
+        if (key == KEY_E) and (ply.Horde_In_LShift) then
+            ply:ConCommand("horde_use_perk_skill")
+        end
+    end)
+    
+    hook.Add("PlayerButtonDown", "Horde_UseKeyAndShift2", function(ply, key)
+        if (key == KEY_LSHIFT) then
+            ply.Horde_In_LShift = true
+        end
+    end)
+    
+    hook.Add("PlayerButtonUp", "Horde_UseKeyAndShift3", function(ply, key)
+        if (key == KEY_LSHIFT) then
+            ply.Horde_In_LShift = nil
+        end
+    end)
+else
+    if CLIENT then
+    hook.Add("PlayerButtonDown", "Horde_UseKeyAndShift", function(ply, key)
+        if (key == KEY_E) and input.IsButtonDown(KEY_LSHIFT) then
+            ply:ConCommand("horde_use_perk_skill")
+        end
+    end)
     end
-end)
 end
 
 function plymeta:Horde_GetPerkNextThink()
@@ -219,6 +245,14 @@ function plymeta:Horde_GetPerkCooldown()
     return self.Horde_PerkCooldown or 0
 end
 
+function plymeta:Horde_GetSpamPerkCooldown()
+    return self.Horde_SpamPerkCooldown or 0
+end
+
+function plymeta:Horde_SetSpamPerkCooldown(cd)
+    self.Horde_SpamPerkCooldown = cd
+end
+
 function plymeta:Horde_GetPerkCharges(charges)
     return self.Horde_PerkCharges or -1
 end
@@ -226,7 +260,7 @@ end
 
 if SERVER then
     function HORDE:UsePerkSkill(ply)
-        if ply:Horde_GetPerkInternalCooldown() <= 0 and ply:Alive() then
+        if ply:Horde_GetSpamPerkCooldown() <= CurTime() and ply:Horde_GetPerkInternalCooldown() <= 0 and ply:Alive() then
             local res = hook.Run("Horde_UseActivePerk", ply)
             if res then return end
             ply:Horde_SetPerkInternalCooldown(ply:Horde_GetPerkCooldown())
