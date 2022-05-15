@@ -3,7 +3,7 @@ PERK.Description =
 [[Reduces your total weight to 7.
 {1} more Melee damage.
 +3 damage block.]]
-PERK.Icon = "materials/subclasses/samurai.png"
+PERK.Icon = "materials/perks/samurai/resolution.png"
 PERK.Params = {
     [1] = {value = 0.5, percent = true},
 }

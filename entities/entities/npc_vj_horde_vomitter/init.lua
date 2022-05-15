@@ -48,7 +48,7 @@ ENT.GeneralSoundPitch2 = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(15, 15, 50), Vector(-15, -15, 0))
-	self:SetModelScale(1.5, 0)
+	--self:SetModelScale(1.5, 0)
 	self:SetColor(Color(255, 255, 0))
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")

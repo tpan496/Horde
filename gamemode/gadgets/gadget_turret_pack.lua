@@ -52,7 +52,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     ent:CallOnRemove("Horde_EntityRemoved", function()
         if ent:IsValid() and ply:IsValid() then
             timer.Remove("Horde_MinionCollision" .. ent:GetCreationID())
-            ent:GetNWEntity("HordeOwner"):Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID())
+            ent:GetNWEntity("HordeOwner"):Horde_RemoveDropEntity(ent:GetClass(), ent:GetCreationID(), true)
             ent:GetNWEntity("HordeOwner"):Horde_SyncEconomy()
             ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() - 1)
         end

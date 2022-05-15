@@ -25,7 +25,12 @@ net.Receive("Horde_SyncEconomy", function(length)
     ply.Horde_money = net.ReadInt(32)
     ply.Horde_skull_tokens = net.ReadInt(32)
     ply.Horde_weight = net.ReadInt(32)
-    ply.Horde_class = HORDE.classes[net.ReadString()]
+
+    local subclass = net.ReadString()
+    local class = HORDE.subclasses_to_classes[subclass]
+    ply.Horde_class = HORDE.classes[class]
+    if not ply.Horde_subclasses then ply.Horde_subclasses = {} end
+    ply.Horde_subclasses[class] = subclass
     ply.Horde_drop_entities = net.ReadTable()
 end)
 

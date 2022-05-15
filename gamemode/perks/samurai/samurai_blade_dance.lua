@@ -1,9 +1,9 @@
 PERK.PrintName = "Blade Dance"
 PERK.Description =
 [[Adds 1 charge to Quickstep.
-Killing enemies refreshes all Quickstep charges.
+Killing enemies adds 2 Quickstep charges.
 Extends effect duration of Quickstep.]]
-PERK.Icon = "materials/subclasses/samurai.png"
+PERK.Icon = "materials/perks/samurai/blade_dance.png"
 PERK.Params = {
     [1] = {value = 0.20, percent = true},
 }
@@ -25,7 +25,7 @@ PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
     if killer:Horde_GetPerk("samurai_foresight") then
         max_charges = max_charges + 1
     end
-    killer:Horde_SetPerkCharges(max_charges)
+    killer:Horde_SetPerkCharges(math.min(max_charges, killer:Horde_GetPerkCharges() + 2))
 end
 
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)

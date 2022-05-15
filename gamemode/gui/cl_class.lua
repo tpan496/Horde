@@ -25,10 +25,11 @@ end
 
 function PANEL:SetData(class, description_panel)
     self.class = class
+    self.subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(self.class.name)]
     self.name = class.name
     self.description = class.description
     self.description_panel = description_panel
-    mat = {self.class, Material(self.class.icon, "mips smooth")}
+    self.mat = Material(self.subclass.Icon, "mips smooth")
 
     local btn = vgui.Create("DButton", self)
     btn:Dock(FILL)
@@ -61,13 +62,16 @@ function PANEL:Paint()
 
         surface.SetTextColor(Color(255,255,255))
         surface.SetTextPos(10, self:GetTall() / 2 - 10)
-        surface.DrawText(translate.Get("Class_" .. self.name) or self.name)
+        surface.DrawText(translate.Get("Class_" .. self.subclass.PrintName) or self.subclass.PrintName)
 
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-        if mat[1] ~= self.class then mat = {self.class, Material(self.class.icon, "mips smooth")} end
-        if mat then surface.SetMaterial(mat[2]) end
-        local level = LocalPlayer():Horde_GetLevel(self.name)
+        local level = LocalPlayer():Horde_GetLevel(self.subclass.PrintName)
         local rank, rank_level = HORDE:LevelToRank(level)
+        
+        if self.mat then
+            surface.SetMaterial(self.mat)
+        end
+        
         surface.SetDrawColor(HORDE.Rank_Colors[rank])
         local star = Material("star.png", "mips smooth")
         if ScrW() <= 1280 then

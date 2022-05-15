@@ -62,6 +62,11 @@ function plymeta:Horde_SetPhalanxEnabled(enabled)
         end)
     else
         timer.Remove("Horde_PhalanxRegen" .. id)
+        self.Horde_PhalanxStack = 0
+        net.Start("Horde_SyncStatus")
+            net.WriteUInt(HORDE.Status_Phalanx, 8)
+            net.WriteUInt(self.Horde_PhalanxStack, 8)
+        net.Send(self)
     end
 end
 

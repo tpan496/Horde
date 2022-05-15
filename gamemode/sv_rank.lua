@@ -14,7 +14,7 @@ function HORDE:SaveSkullTokens(ply)
 
 	path = "horde/tokens/" .. HORDE:ScrubSteamID(ply) .. ".txt"
 
-	strm = file.Open(path, "wb", "DATA" )
+	strm = file.Open(path, "wb", "DATA")
 		strm:Write(EXPECTED_HEADER_TOKENS)
         strm:WriteLong(ply:Horde_GetSkullTokens())
 	strm:Close()
@@ -40,6 +40,15 @@ function HORDE:SaveRank(ply)
             strm:WriteLong(ply:Horde_GetExp(name))
 			strm:WriteShort(ply:Horde_GetLevel(name))
         end
+
+		-- Write subclass data
+		for subclass_name, subclass in pairs(HORDE.subclasses) do
+			if not subclass.ParentClass then goto cont end
+			strm:WriteULong(HORDE.subclass_name_to_crc[subclass.PrintName])
+			strm:WriteLong(ply:Horde_GetExp(subclass.PrintName))
+			strm:WriteShort(ply:Horde_GetLevel(subclass.PrintName))
+			::cont::
+		end
 	strm:Close()
 end
 
@@ -107,6 +116,20 @@ function HORDE:LoadRank(ply)
 					ply:Horde_SetExp(class_name, exp)
 				end
             end
+
+			-- Read subclass data
+			while not strm:EndOfFile() do
+				local order = strm:ReadULong()
+				local exp = strm:ReadLong()
+				local level = strm:ReadShort()
+				if order == nil then
+				else
+					local class_name = HORDE.order_to_subclass_name[tostring(order)]
+					ply:Horde_SetLevel(class_name, level)
+					ply:Horde_SetExp(class_name, exp)
+				end
+				::cont::
+			end
 		else
 			for _, class in pairs(HORDE.classes) do
 				ply:Horde_SetLevel(class.name, 0)
@@ -122,7 +145,7 @@ if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_r
 	hook.Add("Horde_OnEnemyKilled", "Horde_GiveExp", function(victim, killer, wpn)
 		if HORDE.current_wave <= 0 or GetConVar("sv_cheats"):GetInt() == 1 then return end
 		if killer:IsPlayer() and killer:IsValid() and killer:Horde_GetClass() then
-			local class_name = killer:Horde_GetClass().name
+			local class_name = killer:Horde_GetCurrentSubclass()
 			if killer:Horde_GetLevel(class_name) >= HORDE.max_level then return end
 			if victim:GetVar("is_elite") then
 				killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + 2)
@@ -140,6 +163,7 @@ if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_r
 				end
 			else
 				killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + 1)
+				HORDE:SaveRank(killer)
 			end
 		end
 	end)

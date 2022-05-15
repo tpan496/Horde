@@ -102,12 +102,12 @@ function plymeta:Horde_SetRank(class_name, rank)
 end
 
 function plymeta:Horde_SyncExp()
-    for name, class in pairs(HORDE.classes) do
+    for subclass_name, subclass in pairs(HORDE.subclasses) do
         net.Start("Horde_SyncExp")
             net.WriteEntity(self)
-            net.WriteUInt(class.order, 4)
-            net.WriteUInt(self:Horde_GetExp(name), 32)
-            net.WriteUInt(self:Horde_GetLevel(name), 8)
+            net.WriteString(subclass.PrintName)
+            net.WriteUInt(self:Horde_GetExp(subclass.PrintName), 32)
+            net.WriteUInt(self:Horde_GetLevel(subclass.PrintName), 8)
         net.Broadcast()
     end
 end
@@ -140,11 +140,11 @@ end
 if CLIENT then
 net.Receive("Horde_SyncExp", function(length)
     local ply = net.ReadEntity()
-    local class_order = net.ReadUInt(4)
+    local class_name = net.ReadString()
     local exp = net.ReadUInt(32)
     local level = net.ReadUInt(8)
     if not ply:IsValid() then return end
-    ply:Horde_SetLevel(HORDE.order_to_class_name[class_order], level)
-    ply:Horde_SetExp(HORDE.order_to_class_name[class_order], exp)
+    ply:Horde_SetLevel(class_name, level)
+    ply:Horde_SetExp(class_name, exp)
 end)
 end

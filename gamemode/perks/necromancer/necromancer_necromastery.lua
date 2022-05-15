@@ -3,7 +3,7 @@ PERK.Description =
 [[+{1} to maximum Spectres alive.
 Unlocks the Devour skill for Void Projector (R button).
 Instantly kills a targeted non-elite enemy and spawn a Spectre.]]
-PERK.Icon = "materials/subclasses/necromancer.png"
+PERK.Icon = "materials/perks/necromancer/necromastery.png"
 PERK.Params = {
     [1] = {value = 1},
     [2] = {value = 0.25, percent = true},
@@ -22,7 +22,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
 
         ply:Horde_SetPerkCooldown(10)
         net.Start("Horde_SyncActivePerk")
-            net.WriteUInt(HORDE.Status_Void_Cascade, 8)
+            net.WriteUInt(HORDE.Status_Devour, 8)
             net.WriteUInt(1, 3)
         net.Send(ply)
     end
@@ -31,7 +31,7 @@ end
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "necromancer_necromastery" then
         net.Start("Horde_SyncActivePerk")
-            net.WriteUInt(HORDE.Status_Void_Cascade, 8)
+            net.WriteUInt(HORDE.Status_Devour, 8)
             net.WriteUInt(0, 3)
         net.Send(ply)
 

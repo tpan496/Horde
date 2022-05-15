@@ -46,7 +46,6 @@ function PANEL:DoClick()
         net.WriteUInt(self.info.perk_level, 4)
         net.WriteUInt(self.info.choice, 4)
     net.SendToServer()
-    print(self.info.class, self.info.perk_level, self.info.choice)
 end
 
 function PANEL:OnCursorEntered()

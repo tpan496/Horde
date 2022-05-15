@@ -81,7 +81,7 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
         util.Effect("blight_mini_explosion", e, true, true)
         for _, ent in pairs(ents.FindInSphere(self:GetPos(), 250)) do
 			if ent:IsPlayer() then
-				ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 10, self)
+				ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 8, self)
 			end
 		end
     end

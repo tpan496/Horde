@@ -2,7 +2,7 @@ PERK.PrintName = "Abyssal Might"
 PERK.Description =
 [[+{1} to maximum Spectres alive.
 Spectres gain access to Abyssal Roar.]]
-PERK.Icon = "materials/subclasses/necromancer.png"
+PERK.Icon = "materials/perks/necromancer/abyssal_might.png"
 PERK.Params = {
     [1] = {value = 1},
     [2] = {value = 0.25, percent = true},

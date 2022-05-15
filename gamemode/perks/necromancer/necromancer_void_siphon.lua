@@ -2,7 +2,7 @@ PERK.PrintName = "Void Siphon"
 PERK.Description =
 [[Hitting enemies with Void Spear restores energy.
 Increases Void Spear damage according to remaining energy.]]
-PERK.Icon = "materials/subclasses/necromancer.png"
+PERK.Icon = "materials/perks/necromancer/void_siphon.png"
 PERK.Params = {
 }
 PERK.Hooks = {}
