@@ -136,6 +136,8 @@ function PANEL:Init()
                     description_panel:SetSize(self:GetWide() * 3 / 4, self:GetTall() - 100)
                     container:SetSize(self:GetWide() / 4, self:GetTall() - 100)
                 end
+                infusion_panel:SetVisible(false)
+                description_panel:SetVisible(true)
             else
                 description_panel:SetSize(self:GetWide() / 2, self:GetTall() - 100)
                 container:SetSize(self:GetWide() / 2, self:GetTall() - 100)
@@ -331,7 +333,7 @@ function PANEL:Paint(w, h)
     end
 
     -- Money
-    local display_name = LocalPlayer():Horde_GetClass().display_name
+    local display_name = LocalPlayer():Horde_GetCurrentSubclass()
     local loc_display_name = translate.Get("Class_" .. display_name) or display_name
     draw.SimpleText(translate.Get("Shop_Class") .. ": " .. loc_display_name, 'Heading', 170, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     

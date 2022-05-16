@@ -43,18 +43,18 @@ timer.Simple(5, function ()
             if not class then return end
             local name = class.name
             local display_name = class.display_name
+            local subclass
             if LocalPlayer():Horde_GetClass() then
-                display_name = LocalPlayer():Horde_GetClass().display_name
-                name = LocalPlayer():Horde_GetClass().name
+                subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(LocalPlayer():Horde_GetClass().name)]
+                display_name = subclass.PrintName
+                name = subclass.PrintName
+            else
+                subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(name)]
             end
             local loc_display_name = translate.Get("Class_" .. display_name) or display_name
             draw.SimpleText(loc_display_name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Info", 160, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-            local mat = Material(HORDE.classes[name].icon, "mips smooth")
-            local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(name)]
-            if subclass and subclass.ParentClass then
-                mat = Material(subclass.Icon, "mips smooth")
-            end
+            local mat = Material(subclass.Icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
             local pos = math.max(15, 140 - 40 - string.len(loc_display_name) * 7 - 25)
             local level = LocalPlayer():Horde_GetLevel(name)

@@ -314,18 +314,6 @@ hook.Add("HUDShouldDraw", "Horde_RemoveRetardRedScreen", function(name)
     end
 end)
 
-hook.Add("InitPostEntity", "Horde_PlayerInit", function()
-    local f = file.Read("horde/class_choices.txt", "DATA")
-    if f then
-        local class = f
-        net.Start("Horde_InitClass")
-        net.WriteString(class)
-        net.SendToServer()
-    end
-    net.Start("Horde_PlayerInit")
-    net.SendToServer()
-end)
-
 net.Receive("Horde_GameEnd", function ()
     local status = net.ReadString()
 

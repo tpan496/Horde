@@ -3,7 +3,7 @@ PERK.Description =
 [[Cold damage ignores enemy Cold damage resistance.
 Unlocks Void Cascade for Void Projector ({1} energy, R button).
 Perk bonuses to Void Spear also applies to Void Cascade.]]
-PERK.Icon = "materials/subclasses/necromancer.png"
+PERK.Icon = "materials/perks/necromancer/void_cascade.png"
 PERK.Params = {
     [1] = {value = 30},
 }

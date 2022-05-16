@@ -140,12 +140,14 @@ function PANEL:DoClick()
         Derma_Query("Changing class will remove all your items!", "Change Class",
             "Yes",
             function()
-                HORDE:SendSavedPerkChoices(self.item.name)
+                HORDE:SendSavedPerkChoices(LocalPlayer().Horde_subclass_choices[self.item.name])
+                LocalPlayer():Horde_SetSubclass(self.item.name, LocalPlayer().Horde_subclass_choices[self.item.name])
                 net.Start("Horde_SelectClass")
                 net.WriteString(self.item.name)
+                net.WriteString(LocalPlayer().Horde_subclass_choices[self.item.name])
                 net.SendToServer()
 
-                file.Write("horde/class_choices.txt", self.item.name)
+                file.Write("horde/class_choices.txt", self.item.subclass.PrintName)
             end,
             "No", function() end
         )
@@ -299,8 +301,13 @@ function PANEL:SetData(item)
     end
     if not self.item then return end
     if not self.item.class then
-        self.exp_diff = LocalPlayer():Horde_GetExp(self.item.name)
-        self.exp_total = HORDE:GetExpToNextLevel(LocalPlayer():Horde_GetLevel(self.item.name) + 1)
+        local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(self.item.name)]
+        self.item.subclass = subclass
+        if subclass.BasePerk and self.item.base_perk ~= subclass.BasePerk then
+            self.item.base_perk = subclass.BasePerk
+        end
+        self.exp_diff = LocalPlayer():Horde_GetExp(self.item.subclass.PrintName)
+        self.exp_total = HORDE:GetExpToNextLevel(LocalPlayer():Horde_GetLevel(self.item.subclass.PrintName) + 1)
         if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
         if not self.perk_scroll_panel then
             self.perk_scroll_panel = vgui.Create("DScrollPanel", self.perk_panel)
@@ -312,12 +319,10 @@ function PANEL:SetData(item)
             self.perk_layout:SetSpaceY(8)
             for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end
         end
-        local class = self.item
-        local name = class.name
-        local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(name)]
-        local perks = class.perks
+        local name = self.item.name
+        local perks = self.item.perks
         if subclass and subclass.ParentClass then
-            name = subclass.ClassName
+            name = subclass.PrintName
             perks = subclass.Perks
         end
         for perk_level, v in SortedPairs(perks) do
@@ -380,8 +385,8 @@ function PANEL:SetData(item)
         cur_panel:SetSize(self:GetWide() - 8, 82)
         cur_panel:Dock(TOP)
         cur_panel:DockMargin(0, 10, 0, 0)
-        for _, subclass_name in SortedPairs(HORDE.classes_to_subclasses[class.name]) do
-            subclass_name = string.lower(subclass_name)
+
+        for _, subclass_name in SortedPairs(HORDE.classes_to_subclasses[self.item.name]) do
 
             --[[local unlocked_level = HORDE:Horde_GetWaveForPerk(perk_level)
             local loc_title = translate.Get("Subclass_Title_" .. class.name) or (v.title or "")
@@ -399,9 +404,8 @@ function PANEL:SetData(item)
             --else
             --    subclassbutton:SetLocked(nil)
             --end
-
             subclassbutton:SetSize(cur_panel:GetWide() / 3, 82)
-            subclassbutton:SetData(class.name, subclass_name)
+            subclassbutton:SetData(self.item.name, subclass_name)
             ::cont::
         end
     end
@@ -489,10 +493,10 @@ function PANEL:Paint()
 
         elseif self.item.extra_description then
             self.class_progress:SetVisible(not self.perk_panel:IsVisible())
-            local loc_name = translate.Get("Class_" .. self.item.display_name) or self.item.display_name
-            draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.name) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            local loc_name = translate.Get("Class_" .. self.item.subclass.PrintName) or self.item.subclass.PrintName
+            draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.subclass.PrintName) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             
-            local loc_desc = translate.Get("Class_Description_" .. self.item.display_name) or self.item.extra_description
+            local loc_desc = translate.Get("Class_Description_" .. self.item.subclass.PrintName) or self.item.extra_description
             if GetConVar("horde_enable_perk"):GetInt() == 1 then
                 local perk = HORDE.perks[self.item.base_perk]
                 local loc_perk_desc = translate.Get("Perk_" .. self.item.base_perk) or perk.Description
@@ -516,12 +520,12 @@ function PANEL:Paint()
                 draw.DrawText(loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             end
             surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-            local mat = Material(self.item.icon, "mips smooth")
+            local mat = Material(self.item.subclass.Icon or self.item.icon, "mips smooth")
             surface.SetMaterial(mat) -- Use our cached material
             surface.DrawTexturedRect(self:GetWide() / 2 + string.len(loc_name) * 2 + 20, 28, 40, 40)
 
             self.class_progress.Paint = function()
-                draw.SimpleText(translate.Get("Rank_" .. LocalPlayer():Horde_GetRank(self.item.name)) .. " " .. LocalPlayer():Horde_GetRankLevel(self.item.name), "Content", 0, 5, color_white, TEXT_ALIGN_LEFT)
+                draw.SimpleText(translate.Get("Rank_" .. LocalPlayer():Horde_GetRank(self.item.subclass.PrintName)) .. " " .. LocalPlayer():Horde_GetRankLevel(self.item.subclass.PrintName), "Content", 0, 5, color_white, TEXT_ALIGN_LEFT)
                 draw.SimpleText(self.exp_diff .. " / "  .. self.exp_total, "Content", self:GetWide() - 10, 5, color_white, TEXT_ALIGN_RIGHT)
                 draw.RoundedBox(5, 5, 30, self:GetWide() - 20, 10, Color(80,80,80))
                 draw.RoundedBox(5, 5, 30, self:GetWide() * (self.exp_diff / self.exp_total), 10, Color(220,220,220))
@@ -599,9 +603,8 @@ function PANEL:Paint()
                 surface.DrawRect(0, 0, self:GetWide(), 200)
                 if not self.item then return end
                 local mat = Material(self.item.icon, "mips smooth")
-                local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(self.item.name)]
-                if subclass and subclass.ParentClass then
-                    mat = Material(subclass.Icon, "mips smooth")
+                if self.item.subclass and self.item.subclass.ParentClass then
+                    mat = Material(self.item.subclass.Icon, "mips smooth")
                 end
                 surface.SetDrawColor(color_white)
                 surface.SetMaterial(mat) -- Use our cached material

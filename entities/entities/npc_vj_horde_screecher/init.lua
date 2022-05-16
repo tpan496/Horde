@@ -44,7 +44,7 @@ ENT.Critical = nil
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(12, 12, 65), Vector(-12, -12, 0))
-	self:SetModelScale(1.25, 0)
+	--self:SetModelScale(1.25, 0)
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end

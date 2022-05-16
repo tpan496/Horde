@@ -23,28 +23,62 @@ function PANEL:Init()
     self.title:SetText("Subclass Name")
     self.title:SetColor(color_white)
 
-    self.locked_icon = vgui.Create("DImage", self)
-    self.locked_icon:SetSize(15,15)
-    self.locked_icon:SetMaterial(Material("locked.png", "mips smooth"))
-
     self.desc = vgui.Create("DLabel", self)
     self.desc:Dock(FILL)
     self.desc:DockMargin(5, 3, 5, 0)
     self.desc:SetText("Subclass Description")
     self.desc:SetColor(color_white)
+
+    local p = self
+
+    self.locked_panel = vgui.Create("DPanel", self)
+    self.locked_panel:SetMouseInputEnabled(false)
+    self.locked_panel.Paint = function ()
+        if self.locked then
+            draw.SimpleText(self.info.subclass.UnlockCost, "Info", p:GetWide() - 65, 28, color_white, TEXT_ALIGN_CENTER)
+            local mat = Material("skull.png", "mips smooth")
+            surface.SetDrawColor(color_white)
+            surface.SetMaterial(mat) -- Use our cached material
+            surface.DrawTexturedRect(p:GetWide() - 42, 22, 32, 32)
+        end
+    end
 end
 
 function PANEL:DoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.info then return end
-    Derma_Query("Change Subclass?", "Change",
+    if self.locked then
+        if LocalPlayer():Horde_GetSkullTokens() < self.info.subclass.UnlockCost then return end
+        Derma_Query("Unlock?", "Unlock Subclass",
                 "Yes",
                 function()
-                    LocalPlayer():Horde_SetSubclass(self.info.class, self.info.subclass.ClassName)
+                    net.Start("Horde_UnlockSubclass")
+                        net.WriteString(self.info.subclass.PrintName)
+                    net.SendToServer()
                     HORDE:ToggleShop()
                 end,
                 "No", function() end
             )
+    else
+        Derma_Query("Change Subclass?", "Change Subclass",
+                "Yes",
+                function()
+                    LocalPlayer():Horde_SetSubclass(self.info.class, self.info.subclass.PrintName)
+                    HORDE:ToggleShop()
+                    LocalPlayer().Horde_subclass_choices[self.info.class] = self.info.subclass.PrintName
+                    local subclass = HORDE.subclasses[self.info.subclass.PrintName]
+                    local current_subclass = HORDE.subclasses[LocalPlayer():Horde_GetCurrentSubclass()]
+                    local parent_class = subclass.ParnetClass or subclass
+                    local current_parent_class = current_subclass.ParnetClass or current_subclass
+                    if parent_class == current_parent_class then
+                        file.Write("horde/class_choices.txt", self.info.subclass.PrintName)
+                    end
+                    HORDE:SaveSubclassChoices()
+                end,
+                "No", function() end
+            )
+    end
+    
     --[[LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}
     LocalPlayer().Horde_PerkChoices[self.info.class] = LocalPlayer().Horde_PerkChoices[self.info.class] or {}
     LocalPlayer().Horde_PerkChoices[self.info.class][self.info.perk_level] = self.info.choice
@@ -74,42 +108,36 @@ function PANEL:OnCursorExited()
 end
 
 function PANEL:SetData(classname, subclass_name)
-    self.locked_icon:SetPos(self:GetWide() - 20, 5)
     local subclass = HORDE.subclasses[subclass_name]
     if not subclass then error("Could not find subclass! class: " .. classname .. ", subclass: " .. subclass.PrintName) return end
     self.info = {class = classname, subclass = subclass}
 
     local icon = subclass.Icon
-    if icon then
-        self.icon:SetMaterial(Material(icon, "mips smooth"))
-    else
-        self.icon:SetMaterial(Material(HORDE.classes[classname].icon, "mips smooth"))
-    end
+    self.icon:SetMaterial(Material(icon, "mips smooth"))
 
-    self.locked = LocalPlayer():Horde_GetSubclassUnlocked(subclass.ClassName)
-    if self.locked then
+    self.locked = LocalPlayer():Horde_GetSubclassUnlocked(subclass.PrintName) == false
+    if self.locked == true then
         self.icon:SetImageColor(Color(150,150,150,255))
-        self.title:SetColor(color_gray)
-        self.desc:SetColor(color_gray)
-        self.locked_icon:SetVisible(true)
+        self.title:SetColor(Color(150,150,150,255))
+        self.desc:SetColor(Color(150,150,150,255))
+        self.title:SetText("???")
+        self.desc:SetText("??????\n??????")
+        self.desc:SetFont("Horde_PerkButton_Text")
     else
         self.icon:SetImageColor(color_white)
         self.title:SetColor(color_white)
         self.desc:SetColor(color_white)
-        self.locked_icon:SetVisible(false)
+        local text = subclass.Description .. "\n"
+        local loc_desc = translate.Get("Subclass_" .. subclass.Description) or text
+        self.desc:SetText(loc_desc)
+        self.desc:SetFont("Horde_PerkButton_Text")
+        local title = subclass.PrintName or "Unnamed Subclass"
+        local loc_title = translate.Get("Subclass_Title_" .. title) or subclass.PrintName
+        self.title:SetText(loc_title)
     end
 
-    self.info.active = string.lower(LocalPlayer():Horde_GetSubclass(classname)) == subclass.ClassName
-
-    local title = subclass.PrintName or "Unnamed Subclass"
-    local loc_title = translate.Get("Subclass_Title_" .. title) or subclass.PrintName
-    self.title:SetText(loc_title)
-    
-    local text = subclass.Description .. "\n"
-    local loc_desc = translate.Get("Subclass_" .. subclass.Description) or text
-
-    self.desc:SetText(loc_desc)
-    self.desc:SetFont("Horde_PerkButton_Text")
+    self.info.active = LocalPlayer():Horde_GetSubclass(classname) == subclass.PrintName
+    self.locked_panel:SetSize(self:GetWide(), self:GetTall())
 end
 
 function PANEL:GetLocked()
@@ -122,13 +150,9 @@ end
 
 function PANEL:Think()
     if not self.info then return end
-    self.info.active = string.lower(LocalPlayer():Horde_GetSubclass(self.info.class)) == self.info.subclass.ClassName
+    self.info.active = LocalPlayer():Horde_GetSubclass(self.info.class) == self.info.subclass.PrintName
     if self.locked then
-        if self.info and self.info.active then
-            self.bg_color = Color(80, 00, 80, 150)
-        else
-            self.bg_color = Color(30, 30, 30)
-        end
+        self.bg_color = Color(50, 50, 50)
     else
         if self.info and self.info.active then
             self.bg_color = Color(150, 20, 150, 150)

@@ -22,7 +22,7 @@ function entmeta:Horde_AddBreakEffect(duration, inflictor)
             dmg:SetInflictor(self)
         end
         dmg:SetDamageType(DMG_NERVEGAS)
-        dmg:SetDamage(self:Health() * 0.1)
+        dmg:SetDamage(150 + self:Health() * 0.1)
         self:TakeDamageInfo(dmg)
     end
 end

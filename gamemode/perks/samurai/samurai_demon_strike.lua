@@ -3,7 +3,7 @@ PERK.Description =
 [[{1} increased Bleeding buildup.
 30% increased Melee damage against Bleeding enemies.
 Leech 100% Melee damage dealt during Quickstep.]]
-PERK.Icon = "materials/subclasses/samurai.png"
+PERK.Icon = "materials/perks/samurai/demon_strike.png"
 PERK.Params = {
     [1] = {value = 0.20, percent = true},
 }

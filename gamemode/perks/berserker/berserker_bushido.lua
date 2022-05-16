@@ -10,7 +10,7 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("berserker_bushido") then return end
     if hitgroup == HITGROUP_HEAD and HORDE:IsMeleeDamage(dmginfo) then
-        npc:Horde_AddStun(dmginfo:GetDamage() * 1.5)
+        npc:Horde_AddStun(dmginfo:GetDamage())
     end
 end
 

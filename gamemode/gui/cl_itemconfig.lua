@@ -66,6 +66,7 @@ function PANEL:Init()
     local entity_categories = HORDE.entity_categories
     local weight_editor
     local dmgtype_editors
+    local infusion_editors
     local function create_property_editor(name, height, cat_panel, categories)
         local panel = vgui.Create("DPanel", cat_panel)
         panel:DockPadding(10, 5, 10, 5)
@@ -470,6 +471,67 @@ function PANEL:Init()
             end
 
             return editors
+        elseif name == "infusions" then
+            local editors = {}
+            local start_pos = 70
+            local start_pos_2 = 70
+            local start_pos_3 = 70
+            local i = 1
+            local infusions =
+                {a=HORDE.Infusion_Hemo,
+                b=HORDE.Infusion_Concussive,
+                c=HORDE.Infusion_Septic,
+                d=HORDE.Infusion_Flaming,
+                e=HORDE.Infusion_Arctic,
+                f=HORDE.Infusion_Galvanizing,
+                g=HORDE.Infusion_Quality,
+                h=HORDE.Infusion_Impaling,
+                i=HORDE.Infusion_Rejuvenating,
+                j=HORDE.Infusion_Quicksilver,
+                k=HORDE.Infusion_Siphoning,
+                l=HORDE.Infusion_Titanium,
+                m=HORDE.Infusion_Chrono}
+            for _, infusion in SortedPairs(infusions) do
+                local editor = vgui.Create("DCheckBoxLabel", panel)
+                local lb = vgui.Create("DLabel", panel)
+                lb:SetWidth(100)
+                local icon = vgui.Create("DPanel", panel)
+                icon.Paint = function ()
+                    local icon2 = Material(HORDE.Infusion_Icons[infusion], "mips smooth")
+                    surface.SetMaterial(icon2)
+                    local color = HORDE.Infusion_Colors[infusion]
+                    if color == color_white then color = Color(100, 100, 100) end
+                    surface.SetDrawColor(color)
+                    surface.DrawTexturedRect(0, 0, 15, 15)
+                end
+                editor:SetSize(100, height / 2)
+                if i <= 4 then
+                    editor:SetPos(start_pos, 25)
+                    lb:SetPos(start_pos + 40, 25)
+                    icon:SetPos(start_pos + 20, 25)
+                    start_pos = start_pos + 90
+                elseif i <= 8 then
+                    editor:SetPos(start_pos_2, 45)
+                    lb:SetPos(start_pos_2 + 40, 45)
+                    icon:SetPos(start_pos_2 + 20, 45)
+                    start_pos_2 = start_pos_2 + 90
+                else
+                    editor:SetPos(start_pos_3, 65)
+                    lb:SetPos(start_pos_3 + 40, 65)
+                    icon:SetPos(start_pos_3 + 20, 65)
+                    start_pos_3 = start_pos_3 + 90
+                end
+                lb:SetText(HORDE.Infusion_Names[infusion])
+                lb:SetTextColor(Color(0,0,0))
+                editor:SetText("")
+                editor:SetTextColor(Color(0,0,0))
+                editor:SetChecked(true)
+                editor.infusion = infusion
+                table.insert(editors, editor)
+                i = i + 1
+            end
+
+            return editors
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(200, height)
@@ -492,6 +554,7 @@ function PANEL:Init()
     shop_icon_editor = create_property_editor("shop icon", 35, entity_properties_panel)
     level_editors = create_property_editor("levels", 150, entity_properties_panel)
     dmgtype_editors = create_property_editor("damage type", 100, entity_properties_panel)
+    infusion_editors = create_property_editor("infusions", 100, entity_properties_panel)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -590,6 +653,13 @@ function PANEL:Init()
             end
         end
 
+        local infusions = {}
+        for _, editor in pairs(infusion_editors) do
+            if editor:GetChecked() then
+                table.insert(infusions,editor.infusion)
+            end
+        end
+
         if not category_editor:GetValue() or not name_editor:GetValue() or class == "" then return end
 
         HORDE:CreateItem(
@@ -606,7 +676,8 @@ function PANEL:Init()
             shop_icon,
             levels,
             skull_tokens_editor:GetInt() or 0,
-            dmgtypes
+            dmgtypes,
+            infusions
         )
         -- Reload from disk
         local tab = util.TableToJSON(HORDE.items)
@@ -844,6 +915,18 @@ function PANEL:Init()
             for _, editor in pairs(dmgtype_editors) do
                 if item.dmgtype then
                     if table.HasValue(item.dmgtype, editor.dmgtype) then
+                        editor:SetChecked(true)
+                    else
+                        editor:SetChecked(false)
+                    end
+                else
+                    editor:SetChecked(false)
+                end
+            end
+
+            for _, editor in pairs(infusion_editors) do
+                if item.infusions then
+                    if table.HasValue(item.infusions, editor.infusion) then
                         editor:SetChecked(true)
                     else
                         editor:SetChecked(false)
