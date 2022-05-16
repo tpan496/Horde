@@ -16,7 +16,6 @@ if SERVER then
     self.Entity:SetCollisionGroup( COLLISION_GROUP_PROJECTILE )
     self.Entity:DrawShadow( false )
     local trail = ents.Create( "info_particle_system" )
-    trail:SetKeyValue( "effect_name", "stickybombtrail_red" )
     trail:SetParent( self.Entity )
     trail:SetOwner( self.Owner )
     trail:SetPos( self:GetPos() )

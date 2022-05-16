@@ -138,7 +138,11 @@ end
 
 function SWEP:Initialize()
 	self:SetHoldType("magic")
-	
+	timer.Simple(0, function()
+		if not self:IsValid() then return end
+		if self.Owner and not self.Owner:IsValid() then return end
+		self.Owner:SetAmmo(100, "Thumper")
+	end)
 
 	if CLIENT then
 		self.VElements = table.FullCopy( self.VElements )
@@ -166,6 +170,7 @@ end
 function SWEP:PrimaryAttack()
     if self:CanPrimaryAttack() and self.Weapon:Clip1() >= 5 then
         if IsValid(self.Owner) then
+			if not self.Owner:Horde_GetPerk("necromancer_base") then return end
             self.Weapon:SendWeaponAnim( ACT_VM_PULLBACK_HIGH )
 			self:SetNextPrimaryFire( CurTime() + self.Delay )
 			--self:SetNextSecondaryFire( CurTime() + self.Delay )
@@ -178,12 +183,13 @@ end
 function SWEP:SecondaryAttack()
 	if CLIENT then return end
 	if IsValid(self.Owner) then
+		if not self.Owner:Horde_GetPerk("necromancer_base") then return end
 		self.SecondaryCharging = 1
 		self.SecondaryChargingTimer = CurTime() + 1
 	end
 end
 
-function SWEP:CreateSpectre(ply, properties, pos)
+function SWEP:CreateSpectre(ply, properties, pos2)
 	local ent = ents.Create("npc_vj_horde_spectre")
 	ent.properties = properties
 	local pos = ply:GetPos()
@@ -191,8 +197,8 @@ function SWEP:CreateSpectre(ply, properties, pos)
 	dir:Normalize()
 	local drop_pos = pos + dir * 50
 	drop_pos.z = pos.z + 24
-	if pos then
-		drop_pos = pos
+	if pos2 then
+		drop_pos = pos2
 	end
 	ent:SetPos(drop_pos)
 	ent:SetAngles(Angle(0, ply:GetAngles().y, 0))
@@ -257,6 +263,7 @@ function SWEP:RaiseSpectre()
 	if self.Weapon:Clip1() >= cost then
 		--self:SetNextSecondaryFire( CurTime() + self.Delay / 2 )
 		local ply = self.Owner
+		if not ply:Horde_GetPerk("necromancer_base") then return end
 		if ply.Horde_drop_entities["npc_vj_horde_spectre"] and ply.Horde_drop_entities["npc_vj_horde_spectre"] >= (ply.Horde_Spectre_Max_Count) then
 			return
 		end
@@ -273,6 +280,7 @@ end
 
 function SWEP:Launch(charged)
     if CLIENT then return end
+	if not self.Owner:Horde_GetPerk("necromancer_base") then return end
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
 	if self.Weapon:Ammo1() < 5 then return end
@@ -351,6 +359,7 @@ end
 
 function SWEP:VoidCascade()
 	if CLIENT then return end
+	if not self.Owner:Horde_GetPerk("necromancer_base") then return end
 	if self.Weapon:Ammo1() < 30 then return true end
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self.Weapon:SendWeaponAnim(ACT_VM_THROW)

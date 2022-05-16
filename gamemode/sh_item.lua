@@ -216,7 +216,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_fiveseven"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_tec9"].infusions = ballistic_infusions_light
     HORDE.items["arccw_mw2_tmp"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_horde_flaregun"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Quality}
+    --HORDE.items["arccw_horde_flaregun"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Quality}
 
     -- SMGs
     HORDE.items["weapon_smg1"].infusions = ballistic_infusions_light
@@ -265,7 +265,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_fal"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_barret"].infusions = ballistic_infusions_sniper_rifles
 
-    HORDE.items["arccw_horde_medic_rifle"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
+    HORDE.items["arccw_horde_medic_rifle"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_m16m203"].infusions = ballistic_infusions_rifles
   
     local ballistic_infusions_mg_rifles = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium, HORDE.Infusion_Siphoning}
@@ -277,6 +277,23 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_mw2_m240"].infusions = ballistic_infusions_mg_rifles
     HORDE.items["arccw_horde_aug_hbar"].infusions = ballistic_infusions_mg_rifles
     HORDE.items["arccw_horde_gau"].infusions = ballistic_infusions_mg_rifles
+
+    local projectile_infusions = {}
+    HORDE.items["weapon_frag"].infusions = {}
+    HORDE.items["arccw_go_nade_frag"].infusions = {}
+    HORDE.items["arccw_horde_nade_stun"].infusions = {}
+    HORDE.items["weapon_rpg"].infusions = {}
+    HORDE.items["arccw_horde_m79"].infusions = {}
+    HORDE.items["horde_sticky_launcher"].infusions = {}
+    HORDE.items["arccw_horde_m32"].infusions = {}
+    HORDE.items["arccw_horde_rpg7"].infusions = {}
+    HORDE.items["arccw_horde_law"].infusions = {}
+    HORDE.items["weapon_slam"].infusions = {}
+    HORDE.items["arccw_horde_nade_incendiary"].infusions = {}
+    HORDE.items["arccw_horde_nade_molotov"].infusions = {}
+    HORDE.items["arccw_horde_incendiary_launcher"].infusions = {}
+
+    HORDE.items["weapon_horde_medkit"].infusions = {HORDE.Infusion_Rejuvenating}
 end
 
 function HORDE:GetDefaultItemsData()
@@ -349,9 +366,9 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("SMG",        "P90",            "arccw_go_p90",      2000, 6, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
     {Medic=true, Assault=true, Survivor=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "MP7A1 Medic PDW","arccw_horde_mp7m"  ,2500, 6, "A modified version of MP7A1 for medical purposes.\n\nPress B or ZOOM to fire healing darts.\nHealing dart recharges every 1 second.",
-    {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON}, {HORDE.Infusion_Quality, HORDE.Infusion_Impaling, HORDE.Infusion_Rejuvenating, HORDE.Infusion_Septic})
+    {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
     HORDE:CreateItem("SMG",        "Vector Medic PDW","arccw_horde_vector",3000, 6, "KRISS Vector Gen I equipped with a medical dart launcher.\nUses an unconventional blowback system that results in its high firerate.\n\nPress B or ZOOM to fire healing darts.\nHealing dart recharges every 1.5 seconds.",
-    {Medic=true}, 8, -1, nil, nil, {Medic=3}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON}, {HORDE.Infusion_Quality, HORDE.Infusion_Impaling, HORDE.Infusion_Rejuvenating, HORDE.Infusion_Septic})
+    {Medic=true}, 8, -1, nil, nil, {Medic=3}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
 
     HORDE:CreateItem("Shotgun",    "Pump-Action",    "weapon_shotgun",    550, 4, "A standard 12-gauge shotgun.\nRMB to fire 2 shots at once.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 6, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
@@ -392,7 +409,7 @@ function HORDE:GetDefaultItemsData()
     {Assault=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "Tavor",          "arccw_horde_tavor", 3000, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
     {Assault=true}, 10, -1, nil, nil, {Assault=3}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Rifle",      "SCAR-L",         "arccw_horde_scarl", 3500, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
+    HORDE:CreateItem("Rifle",      "SCAR-L",         "arccw_horde_scarl", 3500, 8, "FN SCAR-L.\nAn assault rifle developed by Belgian manufacturer FN Herstal.\nLight version, chambered in 5.56x45mm NATO.",
     {Assault=true}, 15, -1, nil, nil, {Assault=4}, nil, {HORDE.DMG_BALLISTIC})
 
     HORDE:CreateItem("Rifle",      "Winchester LAR",     "arccw_horde_winchester",1500, 5, "Winchester Lever Action Rifle.\nAn all-time classic.",
@@ -403,7 +420,7 @@ function HORDE:GetDefaultItemsData()
     {Ghost=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "AWP",            "arccw_horde_awp",     2500, 8, "Magnum Ghost Rifle.\nA series of sniper rifles manufactured by the United Kingdom.",
     {Ghost=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Rifle",      "SCAR-H",           "arccw_go_scar",       2500, 8, "FN SCAR.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
+    HORDE:CreateItem("Rifle",      "SCAR-H",           "arccw_go_scar",       2500, 8, "FN SCAR-H.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
     {Survivor=true,  Ghost=true}, 15, -1, nil, nil, {Ghost=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "G3",             "arccw_horde_g3",      3000, 8, "G3 Battle Rifle.\nA 7.62×51mm NATO, select-fire battle rifle developed by H&K.",
     {Ghost=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
@@ -476,7 +493,7 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Special",    "Hivehand",       "horde_hivehand",       2000,  6, "Organic weapon used by Xen soldiers.\nHas infinite ammo.\nPrimary fire generates homing ricocheting shots.\nSecondary fire rapidly unloads the entire weapon.",
     {Engineer=true}, 2, -1, nil, nil, {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Spore Launcher", "horde_spore_launcher",2500,  7, "Improvised biological weapon.\nShoots out acidic projectiles that explodes after a short delay.\nHeals players and damages enemies.",
-    {Medic=true, Survivor=true}, 40, -1, nil, nil, {Medic=2, Engineer=2}, nil, {HORDE.DMG_POISON})
+    {Medic=true, Survivor=true}, 40, -1, nil, nil, {Medic=2, Survivor=2}, nil, {HORDE.DMG_POISON})
     HORDE:CreateItem("Special",    "Medic Grenade",  "arccw_nade_medic",    800,  1, "A grenade that releases contiuous bursts of detoxication clouds.\nHeals players and damages enemies.",
     {Medic=true}, 100, -1, nil, "items/arccw_nade_medic.png", nil,  nil, {HORDE.DMG_POISON})
     HORDE:CreateItem("Special",    "Throwing Knives", "arccw_go_nade_knife",800,  2, "Ranged throwing knives.\nThrown blades are retrievable.",
@@ -498,15 +515,16 @@ function HORDE:GetDefaultItemsData()
     
     HORDE:CreateItem("Special",    "Void Projector",   "horde_void_projector",   0,  11,
     [[Void Projector. Only usable by the Necromancer subclass.
+    Manipulates dark energy to inflict hypothermia and conjure entities.
     
     LMB: Void Spear (5/10/20 Energy)
     Releases a projectile that deals Cold damage.
-    Hold for different effects.
+    HOLD LMB for different effects.
     
     RMB: Raise Spectre (40 Energy)
     Conjures a Spectre minion.
     The Spectre minion deals Physical damage and applies Frostbite buildup.
-    Hold to recover Spectres and recover energy.]],
+    HOLD RMB to recall Spectres to your side.]],
     {Engineer=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_COLD, HORDE.DMG_PHYSICAL})
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",

@@ -10,10 +10,14 @@ end
 
 function PANEL:DoClick()
     self.description_panel:SetData(self.item)
-    self.infusion_panel:SetData(self.item)
+    if self.infusion_panel then
+        self.infusion_panel:SetData(self.item)
+        self.infusion_panel:SetVisible(false)
+    end
     self.description_panel:SetVisible(true)
-    self.infusion_panel:SetVisible(false)
-    self.infusion_btn:SetActive(false)
+    if self.infusion_btn then
+        self.infusion_btn:SetActive(false)
+    end
 end
 
 function PANEL:OnCursorEntered()
@@ -205,7 +209,10 @@ function PANEL:Paint()
         if LocalPlayer():HasWeapon(self.item.class) or LocalPlayer():Horde_GetGadget() == self.item.class or (LocalPlayer().Horde_drop_entities and LocalPlayer().Horde_drop_entities[self.item.class]) then
             self.price_panel:SetTextColor(HORDE.color_crimson)
             self.price_panel:SetText("Owned")
-            self.infusion_btn:SetVisible(true)
+            if self.item.category == "Attachment" or self.item.category == "Gadget" or self.item.category == "Equipment" or self.item.category == "Explosive" or self.item.category == "Special" then
+            else
+                self.infusion_btn:SetVisible(true)
+            end
 
             local infusion = LocalPlayer():Horde_GetInfusion(self.item.class)
             if infusion == HORDE.Infusion_None then

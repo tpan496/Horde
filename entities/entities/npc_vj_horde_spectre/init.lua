@@ -118,10 +118,15 @@ function ENT:CustomOnInitialize()
 			self:Roar()
 		end)
     end
+	local e = EffectData()
+		e:SetOrigin(self:GetPos())
+		e:SetNormal(Vector(0,0,1))
+		e:SetScale(0.25)
+	util.Effect("abyssal_roar", e, true, true)
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     self:SetColor(Color(0, 0, 0, 200))
 	self.MeleeAttackDamage = self.MeleeAttackDamage + 3 * self.properties.level
-	self:SetHealth(100 + 20 * self.properties.level)
+	self:SetHealth(80 + 17 * self.properties.level)
     --self:EmitSound("horde/lesion/lesion_roar.ogg", 1500, 80, 1, CHAN_STATIC)
 end
 

@@ -2,7 +2,7 @@ PERK.PrintName = "Superfluidity"
 PERK.Description =
 [[20% increased Frostbite buildup.
 Void Projector recovers energy while inactive.]]
-PERK.Icon = "materials/subclasses/necromancer.png"
+PERK.Icon = "materials/perks/necromancer/superfluidity.png"
 PERK.Params = {
     [1] = {value = 0.20, percent = true},
 }
@@ -18,7 +18,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
   if SERVER and perk == "necromancer_superfluidity" then
     local id = ply:SteamID()
     timer.Create("Horde_Superfluidity" .. id, 1, 0, function ()
-        if not ply:IsValid() or not ply:Horde_GetPerk("necromancer_superfluidity") then timer.Remove("Horde_Superfluidity" .. id) return end
+        if not ply:IsValid() or not ply:Alive() or not ply:Horde_GetPerk("necromancer_superfluidity") then timer.Remove("Horde_Superfluidity" .. id) return end
         local wpn = ply:GetActiveWeapon()
         if wpn:GetClass() ~= "horde_void_projector" then
             local void_projector = ply:GetWeapon("horde_void_projector")

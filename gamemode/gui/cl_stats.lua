@@ -259,54 +259,41 @@ function PANEL:Init()
     update_text_panel:SetSize(self:GetParent():GetWide(), 1300)
     update_text_panel:SetVisible(true)
     local update_text = [[
-        Major Update 1.1.3
+        Major Update 1.1.5
+        -- Subclass system
+            - The new subclass system adds custom extensions to the current class system.
+            - Unlock and change your subclass in the class menu.
+
+        -- New Subclasses:
+            - Necromancer: Engineer subclass.
+            - Samurai: Berserker subclass.
+
+        -- Infusion system
+            - Added 13 different infusion effects.
+            - You can now change the properties of your weapons using the infusion system.
+            - You can configure which infusions are available for each weapon.
+            - *Infusions are disabled for Explosives, Special, Equipment, Gadget and Attachments.
 
         -- New Weapons:
-            - Inferno Blade (arccw_horde_inferno_blade, Cremator/Berserker)
-            - GAU-19 Minigun (arccw_horde_gau, Heavy)
-            - M72 LAW (arccw_horde_law, Demolition)
-            - Winchester LAR (arccw_horde_winchester, Ghost)
+            - Spore Launcher (horde_spore_launcher, Medic)
+            - Sticky Launcher (arccw_horde_sticky_launcher, Demolition)
+            - Bayonet (arccw_horde_knife, All Classes. Re-coded for headshots).
+            - Fireaxe (arccw_horde_axe, All Classes)
+            - Scar-L (arccw_horde_scarl, Assault)
+            - Void Projector (horde_void_projector, Necromancer)
+            - All built-in arccw melee weapons in Horde can now deal headshot damage.
 
         -- New Enemies:
-            - Boss: Father Grigori (npc_vj_horde_grigori)
-            - Boss: Wallace Breen (npc_vj_horde_breen)
-
-        -- New Mutation:
-            - Shadow: Enemies have decreased opacity and converts 100% of their damage to Cold damage.
-
-        -- Custom Config:
-            - Now support adding damage type label to weapons.
-            - Use horde_testing_display_damage 1 to see the damage type of your weapons.
-
-        -- Mapping Entity:
-            - Added info_horde_boss_spawn. If this is present, boss will only spawn on those points.
+            - Blight (Exploder variant)
 
         -- Perk Changes:
-            - Berserker: Mindeye removed, replaced with Berserker - Phalanx
-
-        -- New Console Command:
-            - horde_disable_f1: Disables F1 hotkey to open the stats menu. Server-side.
-
-        -- Balance Changes:
-            - Increased reload speed for Double Barrel.
-            - Increased hip fire accuracy for M200 Obrez.
-            - Added magazine for Tau Cannon.
-            - Greatly increased deploy speed for all non HL2 grenades.
-            - Reduced the price and requirement for Berserker Gadget: Aerial Guard.
-            
-            - Warden Aura block reduced from 3 to 2.
-            - Reduced Warden: Dues Ex Machina AOE shock damage from 100 to 80.
-            - Engineer: Spectre now has a leech cap of 20 hp per hit.
-            - Heavy: Sticky Compound does not affect action speed any more. Instead, reduces enemy damage.
-            - Heavy: Crude Casing does not reduce enemy damage any more.
-
-            - Nemesis post explosions now deal damage based on health percentage.
+            - Berserker: Bushido and Savagery effect changed
 
         -- Bug Fixes:
-            - Minions are now susceptible to Decay status.]]
+            - I forgot.]]
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Update 1.1.3", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Update 1.1.5", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
@@ -357,6 +344,8 @@ function PANEL:Init()
         draw.SimpleText("Buildup from Poison damage. When inflicted, removes 80/85/90/90/95% of player health that is recovered slowly.", 'Content', 100, 600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Decay:", 'Heading', 100, 650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Buildup from Decay mutation. When inflicted, prevents healing.", 'Content', 100, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Necrosis:", 'Heading', 100, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Buildup from Blight enemies. When inflicted, causes instant death.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
     local damage_text_panel = vgui.Create("DPanel", description_panel)
@@ -599,15 +588,22 @@ function PANEL:Init()
 
         draw.SimpleText("Perks", 'Heading', 50, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         local y = 50
-        local class = LocalPlayer():Horde_GetClass().name
-        mat = Material(HORDE.classes[LocalPlayer():Horde_GetClass().name].icon, "mips smooth")
+        local class = LocalPlayer():Horde_GetCurrentSubclass()
+        mat = Material(HORDE.subclasses[class].Icon, "mips smooth")
         surface.SetMaterial(mat)
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(50, 375 + y, 40, 40)
         draw.SimpleText(HORDE.perks[LocalPlayer():Horde_GetClass().base_perk].PrintName, 'Heading', 100, 400 + y, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         y = y + 50
 
-        for perk_level, v in pairs(HORDE.classes[class].perks) do
+        local perks
+        if HORDE.classes[class] then
+            perks = HORDE.classes[class].perks
+        else
+            perks = HORDE.subclasses[class].Perks
+        end
+
+        for perk_level, v in SortedPairs(perks) do
             if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then goto cont end
             if not LocalPlayer().Horde_PerkChoices then break end
             local choice = v.choices[LocalPlayer().Horde_PerkChoices[class][perk_level] or 1]
@@ -620,7 +616,7 @@ function PANEL:Init()
                 surface.SetDrawColor(color_white)
                 surface.DrawTexturedRect(50, 380 + y, 40, 40)
             else
-                mat = Material(HORDE.classes[LocalPlayer():Horde_GetClass().name].icon, "mips smooth")
+                mat = Material(HORDE.subclasses[class].Icon, "mips smooth")
                 surface.SetMaterial(mat)
                 surface.SetDrawColor(color_white)
                 surface.DrawTexturedRect(50, 375 + y, 40, 40)

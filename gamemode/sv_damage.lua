@@ -33,6 +33,17 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
 
     -- Apply bonus
     local bonus = {increase=increase, more=more, base_add=base_add, post_add=post_add}
+    local res = hook.Run("Horde_OnPlayerDamagePre", ply, npc, bonus, hitgroup, dmginfo)
+    if res then
+        dmginfo:AddDamage(bonus.base_add)
+        dmginfo:ScaleDamage(bonus.more * (1 + bonus.increase))
+        dmginfo:AddDamage(bonus.post_add)
+        dmginfo:SetDamageCustom(HORDE.DMG_CALCULATED)
+        if hitgroup == HITGROUP_HEAD then
+            sound.Play("horde/player/headshot.ogg", npc:GetPos())
+        end
+        return
+    end
     hook.Run("Horde_OnPlayerDamage", ply, npc, bonus, hitgroup, dmginfo)
     if dmginfo:GetInflictor():GetNWEntity("HordeOwner"):IsPlayer() then
         hook.Run("Horde_OnPlayerMinionDamage", ply, npc, bonus, dmginfo)
@@ -135,7 +146,6 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     -- Apply bonus
     local bonus = {resistance=0, less=1, evasion=0, block=0}
     hook.Run("Horde_OnPlayerDamageTaken", ply, dmg, bonus)
-
     if bonus.evasion > 0 then
         local evade = math.random()
         if evade <= bonus.evasion then

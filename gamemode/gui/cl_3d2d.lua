@@ -9,9 +9,6 @@ local function Render(bdepth, bskybox)
             goto cont
         end
 
-        local class = HORDE.Class_Survivor
-        if ply:Horde_GetClass() then class = ply:Horde_GetClass().name end
-
         local attachment_id = ply:LookupAttachment("anim_attachment_head") or 0 -- Can't take any chances with nils here
         local attachment = ply:GetAttachment(attachment_id)
 
@@ -43,12 +40,15 @@ local function Render(bdepth, bskybox)
         render_ang:RotateAroundAxis(render_ang:Right(),90)
         render_ang:RotateAroundAxis(-render_ang:Up(),90)
 
-        if (not HORDE.classes) or (not HORDE.classes[class]) then return end
-        local mat = Material(HORDE.classes[class].icon, "mips smooth")
-        local loc_class = translate.Get("Class_" .. class)
+        local subclass_name = ply:Horde_GetCurrentSubclass()
+        if not subclass_name then return end
+        local subclass = HORDE.subclasses[subclass_name]
+        if not subclass then subclass = HORDE.subclasses["Survivor"] end
+        local mat = Material(subclass.Icon, "mips smooth")
+        local loc_class = translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName
         local len = string.len(loc_class) * 6
-        local rank = ply:Horde_GetRank(class) or HORDE.Rank_Novice
-        local rank_level = ply:Horde_GetRankLevel(class)
+        local rank = ply:Horde_GetRank(subclass.PrintName) or HORDE.Rank_Novice
+        local rank_level = ply:Horde_GetRankLevel(subclass.PrintName)
         local loc_rank = "[" .. translate.Get("Rank_" .. rank) .. "]"
 
         cam.Start3D2D(render_pos, render_ang, 0.1)

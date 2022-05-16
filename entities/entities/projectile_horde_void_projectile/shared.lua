@@ -18,6 +18,7 @@ ENT.StartPos = nil
 ENT.PlaySoundTimer = 0
 ENT.StartTime = 0
 ENT.BaseDamage = 25
+ENT.BaseSplashDamage = 10
 
 function ENT:Draw()
 self.Entity:DrawModel()
@@ -60,6 +61,7 @@ function ENT:Initialize()
     self.StartTime = CurTime()
 
     self.BaseDamage = self.BaseDamage + 3 * self.properties.level
+    self.BaseSplashDamage = self.BaseSplashDamage + 4 * self.properties.level
     end
 
     ParticleEffectAttach("snowcore_small", PATTACH_ABSORIGIN_FOLLOW, self, 0)
@@ -171,7 +173,7 @@ function ENT:Detonate(hitpos, ent)
                     dmg_splash:SetAttacker(self.Owner)
                     dmg_splash:SetInflictor(tr.Entity)
                     dmg_splash:SetDamageType(DMG_REMOVENORAGDOLL)
-                    dmg_splash:SetDamage(self.BaseDamage * dmg_mult)
+                    dmg_splash:SetDamage(self.BaseSplashDamage * dmg_mult)
                     dmg_splash:SetDamageCustom(HORDE.DMG_SPLASH)
                     util.BlastDamageInfo(dmg_splash, self:GetPos(), 150 * radius_mult)
                 end
@@ -203,7 +205,7 @@ function ENT:Detonate(hitpos, ent)
                 dmg_splash:SetAttacker(self.Owner)
                 dmg_splash:SetInflictor(tr.Entity)
                 dmg_splash:SetDamageType(DMG_REMOVENORAGDOLL)
-                dmg_splash:SetDamage(self.BaseDamage * dmg_mult)
+                dmg_splash:SetDamage(self.BaseSplashDamage * dmg_mult)
                 dmg_splash:SetDamageCustom(HORDE.DMG_SPLASH)
                 util.BlastDamageInfo(dmg_splash, self:GetPos(), 150 * 1.25 * radius_mult)
             end

@@ -1,6 +1,7 @@
 PERK.PrintName = "Beacon of Reckoning"
 PERK.Description =
-[[Lightning damage ignores enemy Lightning damage resistance.
+[[20% increased Shock buildup.
+Lightning damage ignores enemy Lightning damage resistance.
 Convert 100% of your damage into Lightning damage.]]
 PERK.Icon = "materials/subclasses/artificer.png"
 PERK.Params = {

@@ -525,12 +525,12 @@ Inmune al Sangrado.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[Técnica]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[Bushido]]
-LANGUAGE["Perk_berserker_bushido"] = [[
+--[[LANGUAGE["Perk_berserker_bushido"] = [[
 Aumenta un {1} el daño Cortante.
 Aumenta un {2} la velocidad de movimiento.]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[Salvajería]]
-LANGUAGE["Perk_berserker_savagery"] = [[
+--[[LANGUAGE["Perk_berserker_savagery"] = [[
 Aumenta un {1} el daño Golpeante.
 Aumenta un {2} de la vida máxima.]]
 
