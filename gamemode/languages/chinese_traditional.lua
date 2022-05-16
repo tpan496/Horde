@@ -529,12 +529,12 @@ LANGUAGE["Perk_berserker_bloodlust"] = [[
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[技巧]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[劍舞]]
 LANGUAGE["Perk_berserker_bushido"] = [[
-提升 {1} 利器傷害。
+近戰爆頭傷害提升敵人眩暈值。
 提升 {2} 移動速度。]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[殘暴]]
 LANGUAGE["Perk_berserker_savagery"] = [[
-提升 {1} 鈍器傷害。
+提升 {1} 近戰傷害。
 提升 {2} 最大生命值。]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[格擋]]
