@@ -24,8 +24,8 @@ LANGUAGE["Game_Difficulty_REALISM"] = "寫實"
 LANGUAGE["Game_Difficulty_NIGHTMARE"] = "夢魘"
 LANGUAGE["Game_Difficulty_APOCALYPSE"] = "天啟"
 LANGUAGE["Game_Enemies"] = "敵人數"
-LANGUAGE["Game_HintBottomReady"] = "F2 - 訊息/設置, F3 - 商店/技能, F4 - 準備"
-LANGUAGE["Game_HintBottom"] = "F2 - 訊息/設置, F3 - 商店/技能, V - 扔出金錢"
+LANGUAGE["Game_HintBottomReady"] = "F2 - 訊息/設定, F3 - 商店/技能, F4 - 準備"
+LANGUAGE["Game_HintBottom"] = "F2 - 訊息/設定, F3 - 商店/技能, V - 扔出金錢"
 LANGUAGE["Game_Result_VICTORY"] = "勝利"
 LANGUAGE["Game_Result_DEFEAT"] = "失敗"
 LANGUAGE["Game_Result_Change Map"] = "地圖變更中"
@@ -458,7 +458,7 @@ LANGUAGE["Perk_ghost_kinetic_impact"] = [[
 每 {2} 距離，提升 {1} 子彈傷害。
 最多提升 {3} 子彈傷害。]]
 
-LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[殲滅]]
+LANGUAGE["Perk_Title_Ghost_Tier_4"] = [[殲滅]]
 LANGUAGE["Perk_Title_ghost_coup"] = [[恩賜解脫]]
 LANGUAGE["Perk_ghost_coup"] = [[
 直接擊殺生命值小於 {1} 最大生命值的敵人。]]
