@@ -1344,7 +1344,7 @@ Elite enemies grant 2 stacks.
 
 LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[精神統一]]
 LANGUAGE["Gadget_Desc_neuro_amplifier"] = [[
-Adrenaline also increases 6% evasion.
+「腎上腺素」提升 6% 閃避機率。
 ]]
 
 LANGUAGE["Gadget_ouroboros"] = [[咬尾蛇]]
@@ -1387,8 +1387,8 @@ Cannot convert pass 250% health.
 -- Medic Gadgets
 LANGUAGE["Gadget_gadget_life_diffuser"] = [[活體擴散器]]
 LANGUAGE["Gadget_Desc_gadget_life_diffuser"] = [[
-Triggers a pulse that heals nearby players.
-Heals 20 health.
+釋放脈衝治療自身周圍的玩家。
+治療 20 生命。
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[發射器（治癒彈）]]
@@ -1421,11 +1421,11 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
 
 LANGUAGE["Gadget_death_mark"] = [[死亡標記]]
 LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
-Places a mark on the targeted enemy.
-Marked enemy takes 15% more damage.
-Marked enemy explodes on death, dealing damage based on its health.
-The mark lasts for 10 seconds.
-You can only mark 1 enemy at a time.
+標記指向的敵人。
+被標記的敵人遭受 15% 更多傷害。
+被標記的敵人死亡時會爆炸造成傷害基於目標生命值。
+標記持續 10 秒。
+一次只能標記 1 個敵人。
 ]]
 
 LANGUAGE["Gadget_gunslinger"] = [[神槍手]]
@@ -1496,12 +1496,12 @@ LANGUAGE["Gadget_Desc_flash"] = [[
 提供短暫的無敵時間。
 ]]
 
-LANGUAGE["Gadget_aerial_guard"] = [[空中制御]]
+LANGUAGE["Gadget_gadget_aerial_guard"] = [[空中制御]]
 LANGUAGE["Gadget_Desc_aerial_guard"] = [[
 While in air, take 65% less Physical damage.
 ]]
 
-LANGUAGE["Gadget_hemocannon"] = [[血能炮]]
+LANGUAGE["Gadget_gadget_hemocannon"] = [[血能炮]]
 LANGUAGE["Gadget_Desc_hemocannon"] = [[
 Shoots a projectile at the cost of 10 health.
 The projectile travels for a short distance and explodes.
