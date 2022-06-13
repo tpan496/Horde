@@ -44,7 +44,7 @@ LANGUAGE["Game_Elite_Killer"] = "Seckin Oldurucu"
 LANGUAGE["Game_Elite_Kills"] = "Seckin Oldurmeler"
 LANGUAGE["Game_SharpShooter"] = "KeskinNisanci"
 LANGUAGE["Game_Headshots"] = "Kafadan vurus"
-LANGUAGE["Game_Most_Heal"] = "En cok iyilestirme"
+LANGUAGE["Game_Most_Heal"] = "Takım şifacı"
 LANGUAGE["Game_Healed"] = "Iyilestin"
 LANGUAGE["Game_Healed_You"] = "seni iyilestirdi"
 

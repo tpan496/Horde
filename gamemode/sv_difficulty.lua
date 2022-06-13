@@ -47,19 +47,6 @@ HORDE.difficulty_elite_mutation_probability = {0, 0.05, 0.10, 0.30, 0.40}
 -- Turrets should not be one-shot
 function VJ_DestroyCombineTurret() end
 
-hook.Add("EntityTakeDamage", "Horde_mjollnirDamage", function (target, dmginfo)
-    -- mjollnir laser damage
-    local attacker = dmginfo:GetAttacker()
-    if attacker:GetClass() == "env_laser" then
-        if dmginfo:GetInflictor():GetOwner():IsValid() then
-            dmginfo:SetInflictor(dmginfo:GetInflictor():GetOwner())
-            if dmginfo:GetInflictor():GetOwner():IsValid() then
-                dmginfo:SetAttacker(dmginfo:GetInflictor():GetOwner())
-            end
-        end
-    end
-end)
-
 hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
     if not target:IsValid() then return end
     if target:IsPlayer() then

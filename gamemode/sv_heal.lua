@@ -78,7 +78,9 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
     end
 
     if not HORDE.player_heal[healer:SteamID()] then HORDE.player_heal[healer:SteamID()] = 0 end
-    HORDE.player_heal[healer:SteamID()] = HORDE.player_heal[healer:SteamID()] + healinfo:GetHealAmount()
+    if healer:SteamID() ~= ply:SteamID() then
+        HORDE.player_heal[healer:SteamID()] = HORDE.player_heal[healer:SteamID()] + healinfo:GetHealAmount()
+    end
 
     if silent then
         healer:Horde_AddHealAmount(healinfo:GetHealAmount())

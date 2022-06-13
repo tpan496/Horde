@@ -318,6 +318,22 @@ concommand.Add("horde_stats", function (ply, cmd, args)
     StatsMenu(ply)
 end)
 
+concommand.Add("horde_testing_gorlami", function (ply, cmd, args)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
+        net.Start("Horde_LegacyNotification")
+            net.WriteString("Command only available in sandbox mode.")
+            net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
+    if ply:IsAdmin() then
+        RunConsoleCommand("horde_testing_free_perks", 0)
+        local amount = 500
+        ply:Horde_AddSkullTokens(amount)
+        ply:Horde_SyncEconomy()
+    end
+end)
+
 concommand.Add("horde_testing_free_perks", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")

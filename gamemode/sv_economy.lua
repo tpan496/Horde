@@ -294,6 +294,17 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
             end
         end)
     end
+
+    if class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() == "Artificer" then
+        -- Cannot drop as arti
+        wpn:Remove()
+        local c = wpn:GetClass()
+        timer.Simple(0, function()
+            if ply:Alive() then
+                ply:Give(c)
+            end
+        end)
+    end
 end)
 
 hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
@@ -414,6 +425,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         if HORDE.items["npc_manhack"] then
                             ent:AddRelationship("npc_manhack D_LI 99")
                         end
+                        ent:AddRelationship("npc_vj_horde_spectre D_LI 99")
     
                         --ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
                     end)
@@ -668,6 +680,14 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
     local name = net.ReadString()
     local subclass_name = net.ReadString()
+
+    if ply:Horde_GetSubclassUnlocked(subclass_name) == false then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("Subclass " .. subclass_name " is not unlocked on this server.")
+        net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
     local class = HORDE.classes[name]
     if not class then return end
 
@@ -791,6 +811,10 @@ function HORDE:CanSell(ply, class)
 
     if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "Necromancer" and class == "horde_void_projector" then
         return false, "You can't sell Void Projector as Necromancer subclass!"
+    end
+
+    if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "Artificer" and class == "horde_solar_seal" then
+        return false, "You can't sell Solar Seal as Artificer subclass!"
     end
 
     return true

@@ -67,7 +67,8 @@ function ENT:Initialize()
     ParticleEffectAttach("snowcore_small", PATTACH_ABSORIGIN_FOLLOW, self, 0)
     if CLIENT then
     timer.Simple(0.1, function ()
-        local charged = self:GetNWInt("charged")
+        if not self:IsValid() then return end
+        local charged = self:GetCharged()
 
         if charged >= 1 then
             ParticleEffectAttach("snowcore_small", PATTACH_ABSORIGIN_FOLLOW, self, 0)
@@ -117,6 +118,10 @@ function ENT:Think()
     if SERVER and self.ExplodeTimer <= CurTime() then
         self:Remove()
     end
+end
+
+function ENT:SetupDataTables()
+	self:NetworkVar( "Int", 0, "Charged" )
 end
 
 function ENT:Detonate(hitpos, ent)

@@ -38,6 +38,8 @@ include("gui/cl_scoreboard.lua")
 include("gui/cl_3d2d.lua")
 include("gui/cl_subclassbutton.lua")
 include("gui/cl_perkbutton.lua")
+include("gui/npcinfo/sh_npcinfo.lua")
+include("gui/npcinfo/cl_npcinfo.lua")
 
 -- Some users report severe lag with halo
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
@@ -215,8 +217,21 @@ net.Receive("Horde_DeathMarkHighlight", function(len,ply)
     end)
 end)
 
+net.Receive("Horde_HunterMarkHighlight", function(len,ply)
+    local entity = net.ReadEntity()
+    local idx = entity:EntIndex()
+    hook.Add("PreDrawHalos", "Horde_HunterMarkHalo" .. idx, function()
+        if !entity:IsValid() then hook.Remove("PreDrawHalos", "Horde_HunterMarkHalo" .. idx) end
+        halo.Add({entity}, Color(0, 255, 255), 5, 5, 1, true, true)
+    end)
+end)
+
 net.Receive("Horde_RemoveDeathMarkHighlight", function(len,ply)
     hook.Remove("PreDrawHalos", "Horde_DeathMarkHalo" .. net.ReadEntity():EntIndex())
+end)
+
+net.Receive("Horde_RemoveHunterMarkHighlight", function(len,ply)
+    hook.Remove("PreDrawHalos", "Horde_HunterMarkHalo" .. net.ReadEntity():EntIndex())
 end)
 
 net.Receive("Horde_ToggleShop", function ()

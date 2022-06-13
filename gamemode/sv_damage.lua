@@ -1,7 +1,9 @@
 local plymeta = FindMetaTable("Player")
+local entmeta = FindMetaTable("Entity")
 
 HORDE.DMG_CALCULATED = 1
-HORDE.DMG_SPLASH = -4
+HORDE.DMG_OVER_TIME = 3
+HORDE.DMG_SPLASH = 2
 HORDE.DMG_PLAYER_FRIENDLY = -3
 HORDE.DMG_PARASITE = 4
 
@@ -96,6 +98,40 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     hook.Run("Horde_OnPlayerDamagePost", ply, npc, bonus, hitgroup, dmginfo)
 end
 
+function entmeta:TakeDamageOverTime(attacker, dmg, dmgtype, interval, duration)
+    local dmginfo = DamageInfo()
+    dmginfo:SetAttacker(attacker)
+    dmginfo:SetInflictor(self)
+    dmginfo:SetDamageType(dmgtype)
+    dmginfo:SetDamage(dmg)
+    dmginfo:SetDamageCustom(HORDE.DMG_OVER_TIME)
+
+    self:TakeDamageInfo(dmginfo)
+    for i = 1, duration / interval do
+        timer.Simple(interval * i, function()
+            if self:IsValid() then
+                local dmginfo2 = DamageInfo()
+                dmginfo2:SetAttacker(attacker)
+                dmginfo2:SetInflictor(Entity(0))
+                dmginfo2:SetDamageType(dmgtype)
+                dmginfo2:SetDamage(dmg)
+                dmginfo2:SetDamageCustom(HORDE.DMG_OVER_TIME)
+                self:TakeDamageInfo(dmginfo2)
+            end
+        end)
+    end
+end
+
+function HORDE:ApplyDamageInRadius(pos, radius, dmginfo, callback)
+    for _, ent in pairs(ents.FindInSphere(pos, radius)) do
+        if ent:IsNPC() and HORDE:IsPlayerOrMinion(ent) ~= true then
+            ent:TakeDamageInfo(dmginfo)
+            dmginfo:SetDamagePosition(ent:GetPos())
+            callback(ent)
+        end
+    end
+end
+
 hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginfo)
     local attacker = dmginfo:GetAttacker()
     if not target:IsNPC() then return end
@@ -130,7 +166,7 @@ end)
 -- Player damage taken
 hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if not target:IsValid() or not target:IsPlayer() then return end
-    if dmg:GetDamageCustom() <= HORDE.DMG_PLAYER_FRIENDLY then return true end
+    if dmg:GetDamageCustom() ~= 0 then return true end
     local ply = target
 
     if dmg:GetAttacker():IsPlayer() and (dmg:GetInflictor() == dmg:GetAttacker()) then return true end

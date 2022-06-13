@@ -43,7 +43,7 @@ LANGUAGE["Game_Elite_Killer"] = "Elite Killer"
 LANGUAGE["Game_Elite_Kills"] = "Elite Kills"
 LANGUAGE["Game_SharpShooter"] = "SharpShooter"
 LANGUAGE["Game_Headshots"] = "Headshots"
-LANGUAGE["Game_Most_Heal"] = "Most Heal"
+LANGUAGE["Game_Most_Heal"] = "Team Healer"
 LANGUAGE["Game_Healed"] = "Healed"
 LANGUAGE["Game_Healed_You"] = "healed you"
 

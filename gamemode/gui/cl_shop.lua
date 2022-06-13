@@ -40,6 +40,8 @@ function PANEL:Init()
     infusion_panel:SetSize(self:GetWide() / 2, self:GetTall() - 100)
     infusion_panel:SetVisible(false)
 
+    local player_subclass = LocalPlayer():Horde_GetCurrentSubclass()
+
     local btns = {}
     local firstBtn = true
     local attachments = {}

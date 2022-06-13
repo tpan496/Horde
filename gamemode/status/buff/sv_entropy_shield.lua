@@ -34,7 +34,7 @@ end
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_EntropyShieldDamage", function (ply, dmginfo, bonus, silent)
     if silent then return end
-    if ply:Horde_GetEntropyShieldEnabled() and ply:Horde_GetEntropyShield() == 1 and dmginfo:GetAttacker() ~= ply then
+    if ply:IsValid() and ply:Horde_GetEntropyShieldEnabled() and ply:Horde_GetEntropyShield() == 1 and dmginfo:GetAttacker() ~= ply then
         bonus.resistance = 1
         local dmg = DamageInfo()
         dmg:SetAttacker(ply)
