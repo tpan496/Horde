@@ -256,49 +256,29 @@ function PANEL:Init()
     description_panel:SetSize(self:GetParent():GetWide() - 266, self:GetParent():GetTall())
 
     local update_text_panel = vgui.Create("DPanel", description_panel)
-    update_text_panel:SetSize(self:GetParent():GetWide(), 1300)
+    update_text_panel:SetSize(self:GetParent():GetWide(), 800)
     update_text_panel:SetVisible(true)
     local update_text = [[
-        Major Update 1.1.5
-        -- Subclass system
-            - The new subclass system adds custom extensions to the current class system.
-            - Unlock and change your subclass in the class menu.
+        Major Update 1.1.6
 
         -- New Subclasses:
-            - Necromancer: Engineer subclass.
-            - Samurai: Berserker subclass.
-
-        -- Infusion system
-            - Added 13 different infusion effects.
-            - You can now change the properties of your weapons using the infusion system.
-            - You can configure which infusions are available for each weapon.
-            - *Infusions are disabled for Explosives, Special, Equipment, Gadget and Attachments.
+            - Artificer: Cremator subclass.
+            - Gunslinger: Ghost subclass.
+            - Specops: Assault subclass.
 
         -- New Weapons:
-            - Spore Launcher (horde_spore_launcher, Medic)
-            - Sticky Launcher (arccw_horde_sticky_launcher, Demolition)
-            - Bayonet (arccw_horde_knife, All Classes. Re-coded for headshots).
-            - Fireaxe (arccw_horde_axe, All Classes)
-            - Scar-L (arccw_horde_scarl, Assault)
-            - Void Projector (horde_void_projector, Necromancer)
-            - All built-in arccw melee weapons in Horde can now deal headshot damage.
-
-        -- New Enemies:
-            - Blight (Exploder variant)
-
-        -- Perk Changes:
-            - Berserker: Bushido and Savagery effect changed
-
-        -- Bug Fixes:
-            - I forgot.]]
+            - Solar Seal (horde_solar_seal, artificer)
+            - Akimbo Glock17 (arccw_horde_akimbo_glock17, Ghost)
+            - Akimbo M9 (arccw_horde_akimbo_m9, Ghost).
+            - Akimbo Deagle (arccw_horde_akimbo_deagle, Ghost).]]
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Update 1.1.5", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Update 1.1.6", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
     local debuff_text_panel = vgui.Create("DPanel", description_panel)
-    debuff_text_panel:SetSize(self:GetParent():GetWide(), 800)
+    debuff_text_panel:SetSize(self:GetParent():GetWide(), 900)
     debuff_text_panel:SetVisible(false)
     debuff_text_panel.Paint = function ()
         local mat = Material("materials/status/bleeding.png", "mips smooth")

@@ -8,7 +8,7 @@ ENT.AdminSpawnable = false
 
 ENT.Model = "models/Items/AR2_Grenade.mdl"
 
-ENT.FireTime = 10
+ENT.FireTime = 5
 
 ENT.Armed = false
 
@@ -30,7 +30,7 @@ function entmeta:Horde_AddEffect_Molotov(ent)
     timer.Create("Horde_MolotovEffect" .. id, 0.5, 0, function ()
         if not self:IsValid() then timer.Remove("Horde_MolotovEffect" .. id) return end
         local d = DamageInfo()
-        d:SetDamage(35)
+        d:SetDamage(25)
         d:SetAttacker(ent.Owner)
         d:SetInflictor(ent)
         d:SetDamageType(DMG_BURN)
@@ -84,7 +84,7 @@ function ENT:Initialize()
         self.SpawnTime = CurTime()
         self:Detonate()
 
-        self.FireTime = math.Rand(14.5, 15.5)
+        self.FireTime = math.Rand(4.5, 5.5)
 
         timer.Simple(0.1, function()
             if !IsValid(self) then return end

@@ -6,54 +6,71 @@ util.AddNetworkString("Horde_SyncActivePerk")
 end
 
 HORDE.Status_CanBuy = 0
-HORDE.Status_Minion = 1
-HORDE.Status_Camoflague = 2
-HORDE.Status_Adrenaline = 3
-HORDE.Status_Headhunter = 4
-HORDE.Status_Fortify = 5
-HORDE.Status_Berserk = 6
-HORDE.Status_Haste = 7
-HORDE.Status_ArmorRegen = 8
-HORDE.Status_HealthRegen = 9
-HORDE.Status_Phalanx = 10
-HORDE.Status_WardenAura = 11
-HORDE.Status_EntropyShield = 12
-HORDE.Status_Foresight = 13
-HORDE.Status_AntimatterShield = 14
-HORDE.Status_Displacer = 15
-HORDE.Status_Void_Cascade = 16
-HORDE.Status_Devour = 17
-HORDE.Status_Quickstep = 18
 
-HORDE.Status_Unwavering_Guard = 30
+HORDE.Status_AntimatterShield = 1
+HORDE.Status_Displacer = 2
+HORDE.Status_Void_Cascade = 3
+HORDE.Status_Devour = 4
+HORDE.Status_Quickstep = 5
+HORDE.Status_Hunter_Mark = 6
+HORDE.Status_Hallowed_Bolt = 7
+HORDE.Status_Floating_Chaos = 8
+HORDE.Status_Smokescreen = 9
+HORDE.Status_Flare = 10
 
-HORDE.Status_Armor_Survivor = 31
-HORDE.Status_Armor_Assault = 32
-HORDE.Status_Armor_Heavy = 33
-HORDE.Status_Armor_Demolition = 34
-HORDE.Status_Armor_Ghost = 35
-HORDE.Status_Armor_Medic = 36
-HORDE.Status_Armor_Engineer = 37
-HORDE.Status_Armor_Warden = 38
-HORDE.Status_Armor_Cremator = 39
-HORDE.Status_Armor_Berserker = 40
+HORDE.Status_Tactical_Mode = 14
+HORDE.Status_Camoflague = 15
 
-HORDE.Status_ExpDisabled = 41
-HORDE.Status_Bleeding = 42
-HORDE.Status_Ignite = 43
-HORDE.Status_Frostbite = 44
-HORDE.Status_Shock = 45
-HORDE.Status_Break = 46
-HORDE.Status_Decay = 47
-HORDE.Status_Necrosis = 48
-HORDE.Status_Psychosis = 49
-HORDE.Status_Stun = 50
-HORDE.Status_Freeze = 51
+HORDE.Status_Minion = 16
+HORDE.Status_Adrenaline = 17
+HORDE.Status_Headhunter = 18
+HORDE.Status_Deadeye = 19
+HORDE.Status_Intensity = 20
+HORDE.Status_Neuron_Stabilizer = 21
+HORDE.Status_Phalanx = 22
+
+HORDE.Status_Fortify = 23
+HORDE.Status_Berserk = 24
+HORDE.Status_Haste = 25
+HORDE.Status_ArmorRegen = 26
+HORDE.Status_HealthRegen = 27
+HORDE.Status_Quickdraw = 28
+HORDE.Status_WardenAura = 29
+HORDE.Status_EntropyShield = 30
+HORDE.Status_Foresight = 31
+HORDE.Status_Nine_Lives = 32
+HORDE.Status_Smokescreen_Effect = 33
+HORDE.Status_Unwavering_Guard = 34
+
+HORDE.Status_Armor_Survivor = 51
+HORDE.Status_Armor_Assault = 52
+HORDE.Status_Armor_Heavy = 53
+HORDE.Status_Armor_Demolition = 54
+HORDE.Status_Armor_Ghost = 55
+HORDE.Status_Armor_Medic = 56
+HORDE.Status_Armor_Engineer = 57
+HORDE.Status_Armor_Warden = 58
+HORDE.Status_Armor_Cremator = 59
+HORDE.Status_Armor_Berserker = 60
+
+HORDE.Status_ExpDisabled = 61
+HORDE.Status_Bleeding = 62
+HORDE.Status_Ignite = 63
+HORDE.Status_Frostbite = 64
+HORDE.Status_Shock = 65
+HORDE.Status_Break = 66
+HORDE.Status_Decay = 67
+HORDE.Status_Necrosis = 68
+HORDE.Status_Psychosis = 69
+HORDE.Status_Stun = 70
+HORDE.Status_Freeze = 71
 
 HORDE.Status_Icon = {}
 HORDE.Status_Icon[HORDE.Status_Camoflague] = "materials/status/camoflague.png"
 HORDE.Status_Icon[HORDE.Status_Adrenaline] = "materials/status/adrenaline.png"
 HORDE.Status_Icon[HORDE.Status_Headhunter] = "materials/perks/headhunter.png"
+HORDE.Status_Icon[HORDE.Status_Deadeye] = "materials/perks/gunslinger/deadeye.png"
+HORDE.Status_Icon[HORDE.Status_Intensity] = "materials/perks/artificer/intensity.png"
 HORDE.Status_Icon[HORDE.Status_Fortify] = "materials/perks/fortify.png"
 HORDE.Status_Icon[HORDE.Status_Berserk] = "materials/perks/berserk.png"
 HORDE.Status_Icon[HORDE.Status_Haste] = "materials/perks/haste.png"
@@ -61,6 +78,7 @@ HORDE.Status_Icon[HORDE.Status_ArmorRegen] = "materials/status/armorregen.png"
 HORDE.Status_Icon[HORDE.Status_HealthRegen] = "materials/status/healthregen.png"
 HORDE.Status_Icon[HORDE.Status_Minion] = "materials/status/minion.png"
 HORDE.Status_Icon[HORDE.Status_Phalanx] = "materials/perks/phalanx.png"
+HORDE.Status_Icon[HORDE.Status_Quickdraw] = "materials/perks/gunslinger/quickdraw.png"
 HORDE.Status_Icon[HORDE.Status_WardenAura] = "materials/warden.png"
 HORDE.Status_Icon[HORDE.Status_EntropyShield] = "materials/perks/entropy_shield.png"
 HORDE.Status_Icon[HORDE.Status_AntimatterShield] = "materials/perks/antimatter_shield.png"
@@ -69,6 +87,15 @@ HORDE.Status_Icon[HORDE.Status_Void_Cascade] = "materials/perks/necromancer/void
 HORDE.Status_Icon[HORDE.Status_Devour] = "materials/perks/necromancer/necromastery.png"
 HORDE.Status_Icon[HORDE.Status_Quickstep] = "materials/abilities/quickstep.png"
 HORDE.Status_Icon[HORDE.Status_Foresight] = "materials/perks/samurai/foresight.png"
+HORDE.Status_Icon[HORDE.Status_Hunter_Mark] = "materials/status/hunter_mark.png"
+HORDE.Status_Icon[HORDE.Status_Nine_Lives] = "materials/perks/gunslinger/nine_lives.png"
+HORDE.Status_Icon[HORDE.Status_Tactical_Mode] = "materials/status/tactical_mode.png"
+HORDE.Status_Icon[HORDE.Status_Neuron_Stabilizer] = "materials/perks/specops/neuron_stabilizer.png"
+HORDE.Status_Icon[HORDE.Status_Hallowed_Bolt] = "materials/perks/artificer/hallowed_bolt.png"
+HORDE.Status_Icon[HORDE.Status_Floating_Chaos] = "materials/perks/artificer/floating_chaos.png"
+HORDE.Status_Icon[HORDE.Status_Smokescreen] = "materials/perks/specops/smokescreen.png"
+HORDE.Status_Icon[HORDE.Status_Flare] = "materials/perks/specops/flare.png"
+HORDE.Status_Icon[HORDE.Status_Smokescreen_Effect] = "materials/status/evasion.png"
 
 HORDE.Status_Icon[HORDE.Status_Unwavering_Guard] = "materials/perks/unwavering_guard.png"
 HORDE.Status_Icon[HORDE.Status_CanBuy] = "materials/status/canbuy.png"
@@ -109,7 +136,7 @@ HORDE.Status_Trigger_Sounds[HORDE.Status_Shock] = "horde/status/shock_trigger.og
 HORDE.Status_Trigger_Sounds[HORDE.Status_Break] = "horde/status/break_trigger.ogg"
 
 function HORDE:IsStatusStackable(status)
-    if status == HORDE.Status_Adrenaline or status == HORDE.Status_Headhunter or status == HORDE.Status_Minion or status == HORDE.Status_Phalanx then return true end
+    if status >= HORDE.Status_Minion and status <= HORDE.Status_Phalanx then return true end
     return false
 end
 
@@ -118,7 +145,7 @@ function HORDE:IsDebuff(status)
 end
 
 function HORDE:IsSkillStatus(status)
-    return status >= HORDE.Status_AntimatterShield and status < HORDE.Status_Unwavering_Guard
+    return status >= HORDE.Status_AntimatterShield and status <= HORDE.Status_Flare
 end
 
 function HORDE:IsStackableSkillStatus(status)

@@ -20,16 +20,6 @@ function HORDE:ApplyDebuffInRadius(debuff, pos, radius, buildup, inflictor, call
     end
 end
 
-function HORDE:ApplyDamageInRadius(pos, radius, dmginfo, callback)
-    for _, ent in pairs(ents.FindInSphere(pos, radius)) do
-        if ent:IsNPC() and HORDE:IsPlayerOrMinion(ent) ~= true then
-            ent:TakeDamageInfo(dmginfo)
-            dmginfo:SetDamagePosition(ent:GetPos())
-            callback(ent)
-        end
-    end
-end
-
 function plymeta:Horde_SetApplyDebuffDuration(duration)
     self.Horde_ApplyDebuffDuration = duration
 end
@@ -73,10 +63,10 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
     if self.Horde_Debuff_Buildup[debuff] >= 100 then return end
 
     if self:IsPlayer() then
-        local bonus = {apply = 1, more = 1}
+        local bonus = {apply = 1, less = 1}
         hook.Run("Horde_OnPlayerDebuffApply", self, debuff, bonus, inflictor)
         if bonus.apply == 0 then return end
-        buildup = buildup * bonus.more
+        buildup = buildup * bonus.less
         if buildup < 1  then return end
 
         if HORDE.Status_Buildup_Sounds[debuff] then
@@ -176,7 +166,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         elseif debuff == HORDE.Status_Ignite then
             self:Horde_AddIgniteEffect(duration, inflictor)
         elseif debuff == HORDE.Status_Break then
-            timer.Simple(0, function() self:Horde_AddBreakEffect(duration, inflictor) end)
+            self:Horde_AddBreakEffect(duration, inflictor)
         --elseif debuff == HORDE.Status_Psychosis then
         --    self:TakeDamage(50, self, self)
         end

@@ -73,9 +73,9 @@ end
 hook.Add("Horde_OnPlayerDamage", "Horde_PhalanxDamage", function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPhalanxEnabled() then return end
     if not HORDE:IsPhysicalDamage(dmginfo) then return end
-    ply:Horde_RemovePhalanxStack()
     if ply:Horde_GetPhalanxStack() > 0 then
         bonus.increase = bonus.increase + ply:Horde_GetPhalanxStack() * 0.06
+        ply:Horde_RemovePhalanxStack()
     end
 end)
 

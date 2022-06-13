@@ -219,16 +219,17 @@ function HORDE:GetDefaultItemInfusions()
     --HORDE.items["arccw_horde_flaregun"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Quality}
 
     -- SMGs
+    local ballistic_infusions_smgs = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Septic}
     HORDE.items["weapon_smg1"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_mac10"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_mp9"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_mw2_mp5k"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_mp5"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_ump"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_bizon"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_p90"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_horde_mp7m"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Septic, HORDE.Infusion_Rejuvenating}
-    HORDE.items["arccw_horde_vector"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Septic, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_go_mac10"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_go_mp9"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_mw2_mp5k"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_go_mp5"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_go_ump"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_go_bizon"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_go_p90"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_horde_mp7m"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_vector"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Rejuvenating}
 
     -- Shotguns
     HORDE.items["weapon_shotgun"].infusions = ballistic_infusions_light
@@ -330,10 +331,10 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "R8",             "arccw_go_r8",       750,  2, "R8 Revolver.\nDelivers a highly accurate and powerful round,\nbut at the expense of a lengthy trigger-pull.",
     {Survivor=true, Ghost=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "Deagle",         "arccw_go_deagle",   750,  2, "Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
-    {Survivor=true, Ghost=true}, 5, -1, nil, nil, {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "M1911",          "arccw_mw2_m1911",   750,  2, "Colt 1911.\nStandard-issue sidearm for the United States Armed Forces.",
     {Ghost=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "Deagle",         "arccw_go_deagle",   750,  2, "Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
+    {Survivor=true, Ghost=true}, 5, -1, nil, nil, {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "Anaconda",       "arccw_horde_anaconda",1000,  3, "Colt Anaconda.\nChambered for the powerful .44 Magnum.",
     {Ghost=true}, 10, -1, nil, nil, {Ghost=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "CZ75",           "arccw_go_cz75",     750,  2, "CZ 75.\nA semi-automatic pistol manufactured in Czech Republic.",
@@ -348,6 +349,13 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true,}, 8, -1, nil, nil, {Survivor=3}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "Flare Gun",      "arccw_horde_flaregun",  1000,  4, "Orion Safety Flare Gun.\nIgnites enemies and deals Fire damage.",
     {Cremator=true}, 3, -1, nil, nil, {Cremator=2}, nil, {HORDE.DMG_FIRE})
+
+    HORDE:CreateItem("Pistol",     "Dual Glock17",   "arccw_horde_akimbo_glock17",  1750,  5, "Dual Glock 17.\nWidely used by law enforcements.",
+    {Ghost=true}, 5, -1, nil, nil, {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "Dual M9",        "arccw_horde_akimbo_m9",       1750,  5, "Dual Beretta M9.\nSidearm used by the United States Armed Forces.",
+    {Ghost=true}, 5, -1, nil, nil, {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "Dual Deagle",    "arccw_horde_akimbo_deagle",   1900,  5, "Dual Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
+    {Ghost=true}, 5, -1, nil, nil, {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
 
     HORDE:CreateItem("SMG",        "SMG1",           "weapon_smg1",       500, 3, "A compact, fully automatic firearm.\nArmed with an M203 launcher.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Cremator=true}, 5, 100, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_BLAST})
@@ -512,7 +520,7 @@ function HORDE:GetDefaultItemsData()
     {Cremator=true}, 40, -1, nil, nil, {Cremator=4}, nil, {HORDE.DMG_FIRE})
     --[[HORDE:CreateItem("Special",    "Taser",           "arccw_go_taser",      1000,  1, "Taser.",
     {Engineer=true}, 50, -1)]]--
-    
+
     HORDE:CreateItem("Special",    "Void Projector",   "horde_void_projector",   0,  11,
     [[Void Projector. Only usable by the Necromancer subclass.
     Manipulates dark energy to inflict hypothermia and conjure entities.
@@ -526,6 +534,20 @@ function HORDE:GetDefaultItemsData()
     The Spectre minion deals Physical damage and applies Frostbite buildup.
     HOLD RMB to recall Spectres to your side.]],
     {Engineer=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_COLD, HORDE.DMG_PHYSICAL})
+
+    HORDE:CreateItem("Special",    "Solar Seal",   "horde_solar_seal",   0,  11,
+    [[Solar Seal. Only usable by the Artificer subclass.
+    Manipulates solar energy to wreak destruction.
+    
+    Equipped with Solar Seal. Upgradable through shop.
+    LMB: Solar Orb (5/10/20 Energy)
+    Releases a projectile that deals Fire damage.
+    HOLD LMB for different effects.
+
+    RMB: Solar Storm (5/10/20 Energy)
+    Releases a powerful lightning strike at the target.
+    HOLD RMB for different effects.]],
+    {Cremator=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE, HORDE.DMG_LIGHTNING})
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
     nil, 10, -1, nil, "items/weapon_medkit.png")
@@ -873,15 +895,15 @@ HORDE.GetArcCWAttachments = function ()
     HORDE:CreateItem("Attachment", "Muzzle Brake",  "go_muzz_brake",  100,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "SSQ Suppressor",  "go_supp_ssq",  100,  0, "",
-    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Assault=true, Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "Rotor43 Suppressor",  "go_supp_rotor43",  100,  0, "",
-    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Assault=true, Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "PBS-4 Suppressor",  "go_supp_pbs4",  100,  0, "",
-    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Assault=true, Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "QDSS Suppressor",  "go_supp_qdss",  100,  0, "",
-    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Assault=true, Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
     HORDE:CreateItem("Attachment", "TGP-A Suppressor",  "go_supp_tgpa",  100,  0, "",
-    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
+    {Assault=true, Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Muzzle"})
 
     -- Ammo Type
     HORDE:CreateItem("Attachment", "Tracer Rounds",  "go_ammo_tr",  50,  0, "",

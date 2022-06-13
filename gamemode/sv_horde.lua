@@ -1,6 +1,8 @@
 util.AddNetworkString("Horde_HighlightEntities")
 util.AddNetworkString("Horde_DeathMarkHighlight")
+util.AddNetworkString("Horde_HunterMarkHighlight")
 util.AddNetworkString("Horde_RemoveDeathMarkHighlight")
+util.AddNetworkString("Horde_RemoveHunterMarkHighlight")
 util.AddNetworkString("Horde_GameEnd")
 
 local horde_players_count = 0

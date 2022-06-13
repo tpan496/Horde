@@ -45,7 +45,7 @@ LANGUAGE["Game_Elite_Killer"] = "Asesino de Élites"
 LANGUAGE["Game_Elite_Kills"] = "Asesinatos de Élite"
 LANGUAGE["Game_SharpShooter"] = "Mejor Tirador"
 LANGUAGE["Game_Headshots"] = "Tiros a la Cabeeza"
-LANGUAGE["Game_Most_Heal"] = "Mayor Curación"
+LANGUAGE["Game_Most_Heal"] = "Sanador del Equipo"
 LANGUAGE["Game_Healed"] = "Curado"
 LANGUAGE["Game_Healed_You"] = "te ha curado"
 

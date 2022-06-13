@@ -9,7 +9,6 @@ PERK.Params = {
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("berserker_rip_and_tear") then return end
-    local dmgtype = dmginfo:GetDamageType()
     if HORDE:IsSlashDamage(dmginfo) or HORDE:IsBluntDamage(dmginfo) then
         bonus.more = bonus.more * 1.25
     end

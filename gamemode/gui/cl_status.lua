@@ -86,7 +86,7 @@ local function DrawStatus(status, stack, displacement)
     end
 end
 
-local function DrawBuildup(status, buildup, displacement)
+local function DrawBuildup(status, buildup, x, y)
     if buildup <= 0 or not HORDE:IsDebuff(status) then return end
     local mat
     local color = color_white
@@ -94,19 +94,19 @@ local function DrawBuildup(status, buildup, displacement)
         color = status_color[status]
     end
 
-    draw.RoundedBox(5, displacement, 55, 50, 10, Color(40,40,40,200))
+    draw.RoundedBox(5, x + 50, y + 10, 200, 15, Color(40,40,40,200))
     if buildup < 100 then
-        draw.RoundedBox(5, displacement, 55, 50 * buildup / 100, 10, HORDE.color_crimson_violet)
+        draw.RoundedBox(5, x + 50, y + 10, 200 * buildup / 100, 15, HORDE.color_crimson_dark)
     else
-        draw.RoundedBox(5, displacement, 55, 50 * buildup / 100, 10, HORDE.color_crimson)
+        draw.RoundedBox(5, x + 50, y + 10, 200 * buildup / 100, 15, HORDE.color_crimson)
     end
-    draw.RoundedBox(10, displacement, 0, 50, 50, Color(40,40,40,200))
+    draw.RoundedBox(10, x, y, 40, 40, Color(40,40,40,200))
 
     mat = Material(HORDE.Status_Icon[status], "mips smooth")
 
     surface.SetMaterial(mat)
     surface.SetDrawColor(color)
-    surface.DrawTexturedRect(5 + displacement, 5, 40, 40)
+    surface.DrawTexturedRect(5 + x, 5 + y, 30, 30)
 end
 
 local function DrawGadget(gadget, cd, charge)
@@ -172,19 +172,20 @@ end
 
 local total_buildup = 0
 local buildup_panel = vgui.Create("DPanel")
-buildup_panel:SetSize(500, 100)
-buildup_panel:SetPos(ScrW() / 2 - 250, ScrH() - 200)
+buildup_panel:SetSize(500, 400)
+buildup_panel:SetPos(ScrW() / 2 - 250, ScrH() - 400)
 buildup_panel.Paint = function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
 
     if LocalPlayer():IsValid() and LocalPlayer():Alive() and LocalPlayer():GetStatusTable() then
-        local pos = 250
-        pos = pos - (total_buildup) * 55 / 2
+        local posx = 125
+        local posy = 200
+        posy = posy - (total_buildup) * 55 / 2
         for status, stack in pairs(LocalPlayer():GetStatusTable()) do
             if HORDE:IsDebuff(status) then
                 if stack <= 0 then goto cont end
-                DrawBuildup(status, stack, pos)
-                pos = pos + 55
+                DrawBuildup(status, stack, posx, posy)
+                posy = posy + 45
                 ::cont::
             end
         end

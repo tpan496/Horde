@@ -31,7 +31,6 @@ ENT.FindEnemy_CanSeeThroughWalls = true -- Should it be able to see through wall
 -- Damage/Injured
 ENT.BloodColor = "Red"
 ENT.Immune_Dissolve = true
-ENT.Immune_AcidPoisonRadiation = true -- Makes the SNPC not get damage from Acid, posion, radiation
 ENT.Immune_Physics = true
 
 -- Flinch
@@ -185,5 +184,12 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
         self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     end
 end
+
+function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
+	if HORDE:IsPoisonDamage(dmginfo) then
+		dmginfo:SetDamage(dmginfo * 0.25)
+	end
+end
+
 
 VJ.AddNPC("Alpha Gonome","npc_vj_alpha_gonome", "Zombies")

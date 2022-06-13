@@ -30,7 +30,6 @@ ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachme
 ENT.RangeUseAttachmentForPosID = "Head" -- The attachment used on the range attack if RangeUseAttachmentForPos is set to true
 ENT.TimeUntilRangeAttackProjectileRelease = 1.0 -- How much time until the projectile code is ran?
 ENT.NextRangeAttackTime = 10 -- How much time until it can use a range attack?
-ENT.Immune_AcidPoisonRadiation = true
 
 	-- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
@@ -53,6 +52,13 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
+
+function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
+	if HORDE:IsPoisonDamage(dmginfo) then
+		dmginfo:SetDamage(dmginfo * 0.25)
+	end
+end
+
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2018 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,

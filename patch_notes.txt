@@ -14,14 +14,4 @@ scar-l (assault)
 
 rpk (heavy)
 
-fireaxe (all)
-
-melee headshots
-
-medshots from mp7/vector changes to hitscan
-
-fix medic healing not amplifying correctly based on level
-
-necromancer weight ???
-
-infusions (explosives, special, gadget, attachments, equipment cannot have infusions)
+add nine lives sound effect

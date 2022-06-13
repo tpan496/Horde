@@ -9,7 +9,13 @@ function ENT:Initialize()
     self:SetSolid(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetCollisionGroup(COLLISION_GROUP_WORLD)
-    self:PhysWake()
+
+    local phys = self:GetPhysicsObject()
+    if phys:IsValid() then
+        phys:Wake()
+        phys:EnableGravity(true)
+        phys:SetMass(10)
+    end
 
     self.Horde_Ammobox = nil
     self.Horde_NextThink = CurTime()
