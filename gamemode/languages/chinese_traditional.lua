@@ -45,7 +45,7 @@ LANGUAGE["Game_Elite_Killer"] = "精英殺手"
 LANGUAGE["Game_Elite_Kills"] = "精英怪擊殺"
 LANGUAGE["Game_SharpShooter"] = "神射手"
 LANGUAGE["Game_Headshots"] = "爆頭數"
-LANGUAGE["Game_Most_Heal"] = "最高治療量"
+LANGUAGE["Game_Most_Heal"] = "最高隊友治療量"
 LANGUAGE["Game_Healed"] = "治療量"
 LANGUAGE["Game_Healed_You"] = "治療了你"
 
