@@ -47,7 +47,7 @@ LANGUAGE["Game_SharpShooter"] = "Mejor Tirador"
 LANGUAGE["Game_Headshots"] = "Tiros a la Cabeeza"
 LANGUAGE["Game_Most_Heal"] = "Sanador del Equipo"
 LANGUAGE["Game_Healed"] = "Curado"
-LANGUAGE["Game_Healed_You"] = "te ha curado"
+LANGUAGE["Game_Healed_You"] = "%s te ha curado."
 
 
 -- Ranks
@@ -94,9 +94,8 @@ LANGUAGE["Shop_Select_Class"] = "Seleccionar Clase (Tus Objetos Serán Removidos
 LANGUAGE["Shop_Show_Perks"] = "Mostrar Habilidades de Clase"
 LANGUAGE["Shop_Hide_Perks"] = "Ocultar Habilidades de Clase"
 LANGUAGE["Shop_Unlocks_After_Wave"] = "Desbloqueado Después de la Oleada %d"
-LANGUAGE["Shop_Buy_Ammo_Clip"] = "Comprar Munición"
-LANGUAGE["Shop_Sell_For"] = "Vender Por"
-LANGUAGE["Shop_Sell_All_For"] = "Vender Todo Por"
+LANGUAGE["Shop_Sell_For"] = "Vender Por %s$"
+LANGUAGE["Shop_Sell_All_For"] = "Vender Todo Por %s$"
 LANGUAGE["Shop_Buy_Item"] = "Comprar Objeto"
 LANGUAGE["Shop_OWNED"] = "ADQUIRIDO"
 LANGUAGE["Shop_Buy_Secondary_Ammo"] = "Comprar Munición Secundaria"

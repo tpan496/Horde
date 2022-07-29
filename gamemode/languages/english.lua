@@ -45,7 +45,10 @@ LANGUAGE["Game_SharpShooter"] = "SharpShooter"
 LANGUAGE["Game_Headshots"] = "Headshots"
 LANGUAGE["Game_Most_Heal"] = "Team Healer"
 LANGUAGE["Game_Healed"] = "Healed"
-LANGUAGE["Game_Healed_You"] = "healed you"
+LANGUAGE["Game_X_Healed_You"] = "%s healed you."
+LANGUAGE["Game_Most_Valuable_Player"] = "MVP"
+LANGUAGE["Game_Tip_X"] = "Tip: %s"
+LANGUAGE["Game_Spectating"] = "Spectating"
 
 
 -- Ranks
@@ -57,6 +60,16 @@ LANGUAGE["Rank_Expert"] = "Expert"
 LANGUAGE["Rank_Champion"] = "Champion"
 LANGUAGE["Rank_Master"] = "Master"
 LANGUAGE["Rank_Not_Met"] = "Rank Requirement(s) Not Met"
+
+
+-- Scoreboard
+LANGUAGE["Scoreboard Info Name"] = "Name"
+LANGUAGE["Scoreboard Info Class"] = "Class"
+LANGUAGE["Scoreboard Info Gadget"] = "Gadget"
+LANGUAGE["Scoreboard Info Money"] = "Money"
+LANGUAGE["Scoreboard Info Kill"] = "Kill"
+LANGUAGE["Scoreboard Info Death"] = "Death"
+LANGUAGE["Scoreboard Info Ping"] = "Ping"
 
 
 -- Shop
@@ -93,14 +106,103 @@ LANGUAGE["Shop_Select_Class"] = "Select Class (Your Items Will Be Removed)"
 LANGUAGE["Shop_Show_Perks"] = "Show Class Perks"
 LANGUAGE["Shop_Hide_Perks"] = "Hide Class Perks"
 LANGUAGE["Shop_Unlocks_After_Wave"] = "Unlocks After Wave %d"
-LANGUAGE["Shop_Buy_Ammo_Clip"] = "Buy Ammo Clip"
-LANGUAGE["Shop_Sell_For"] = "Sell For"
-LANGUAGE["Shop_Sell_All_For"] = "Sell All For"
+LANGUAGE["Shop_Buy_Ammo_Clip_One"] = "Buy Ammo Clip x 1 (%s$)"
+LANGUAGE["Shop_Buy_Ammo_Clip_Ten"] = "Buy Ammo Clip x 10 (%s$)"
+LANGUAGE["Shop_Sell_For"] = "Sell For %s$"
+LANGUAGE["Shop_Sell_All_For"] = "Sell All For %s$"
 LANGUAGE["Shop_Buy_Item"] = "Buy Item"
+LANGUAGE["Shop_Buy_Item_Limit"] = "Buy Item %s/%s"
 LANGUAGE["Shop_OWNED"] = "OWNED"
+LANGUAGE["Shop_Ownedd"] = "Owned"
 LANGUAGE["Shop_Buy_Secondary_Ammo"] = "Buy Secondary Ammo"
 LANGUAGE["Shop_Primary_Ammo"] = "Primary Ammo"
 LANGUAGE["Shop_Secondary_Ammo"] = "Secondary Ammo"
+LANGUAGE["Shop_Client_Dead"] = "You are dead."
+LANGUAGE["Shop_Not_Enough_Cash_Or_Carrying_Many"] = "Not Enough Money or Carrying Capacity!"
+LANGUAGE["Shop_Weapon_Damage_Type"] = "Damage Type: "
+LANGUAGE["Shop_No_Infusion_Selected"] = "No infusion selected."
+LANGUAGE["Shop_Weapon_Infusion_None"] = "Infusion: None"
+LANGUAGE["Shop_Weapon_Infusion_X"] = "Infusion: %s"
+LANGUAGE["Shop_Apply_Weapon_X_Infusion_To_Weapon"] = "Apply %s infusion to %s (%d$)"
+LANGUAGE["Shop_Weapon_INFUSED"] = "INFUSED"
+LANGUAGE["Shop_Weapon_Infusedd"] = "Infused"
+LANGUAGE["Shop_Weapon_Remove_Infusion"] = "Remove Infusion"
+LANGUAGE["Shop_Not_Enough_Money_For_Infusion"] = "Not enough money (Need %s$)"
+LANGUAGE["Shop_Change_Subclass"] = "Change Subclass"
+LANGUAGE["Shop_Change_Subclass_Confirmation_Dialogue"] = "Change Subclass?"
+LANGUAGE["Shop_Change_Subclass_Confirmation_Dialogue_Title"] = "Change Subclass"
+LANGUAGE["Shop_Confirmation_Dialogue_Yes"] = "Yes"
+LANGUAGE["Shop_Confirmation_Dialogue_No"] = "No"
+LANGUAGE["Shop_Unlock_Subclass_Confirmation_Dialogue"] = "Unlock?"
+LANGUAGE["Shop_Unlock_Subclass_Confirmation_Dialogue_Title"] = "Unlock Subclass"
+LANGUAGE["Shop_Change_Class_Confirmation_Dialogue"] = "Changing class will remove all your items!"
+LANGUAGE["Shop_Change_Class_Confirmation_Dialogue_Title"] = "Change Class"
+LANGUAGE["Shop_Perk_No_Name"] = "Unnamed Perk"
+LANGUAGE["Shop_Subclass_No_Name"] = "Unnamed Subclass"
+LANGUAGE["Shop_Sell_Item_Confirmation_Dialogue"] = "Sell Item?!"
+LANGUAGE["Shop_Sell_Item_Confirmation_Dialogue_Title"] = "Sell"
+
+-- Main Menu
+LANGUAGE["Main_Menu_Category_Stats"] = "Stats"
+LANGUAGE["Main_Menu_Category_Achievements"] = "Achievements"
+LANGUAGE["Main_Menu_Category_Mechanics"] = "Mechanics"
+
+
+-- Notifications/Hints
+LANGUAGE["Notification_Changed_Class_To_X"] = "You changed class to %s"
+LANGUAGE["Notification_X_Subclass_Changed_To_X"] = "%s subclass changed to %s"
+LANGUAGE["Notification_Subclass_X_Already_Unlocked"] = "Subclass %s is already unlocked!"
+LANGUAGE["Notification_You_Unlocked_X_Subclass"] = "You unlocked %s subclass."
+LANGUAGE["Notification_Enemy_Config_Validation_Failed"] = "Enemy config file validation failed! Please update your file or delete it."
+LANGUAGE["Notification_Item_Config_Validation_Failed"] = "Item config file validation failed! Please update your file or delete it."
+LANGUAGE["Notification_You_Do_Not_Have_Access_To_This_Command"] = "You do not have access to this command."
+LANGUAGE["Notification_You_Cant_Get_Ready_When_You_Are_Dead"] = "You can't get ready when you are dead!"
+LANGUAGE["Notification_Shop_Has_Been_Disabled"] = "Shop has been disabled."
+LANGUAGE["Notification_You_Cannot_Shop_After_A_Wave_Has_Started"] = "You cannot shop after a wave has started."
+LANGUAGE["Notification_You_Cannot_Open_Config_After_A_Game_Has_Started"] = "You cannot open config after a game has started."
+LANGUAGE["Notification_Command_Only_Availaable_In_Sandbox_Mode"] = "Command only available in sandbox mode."
+LANGUAGE["Notification_You_Bought_X"] = "You bought %s."
+LANGUAGE["Notification_You_Cant_Sell_This"] = "You can't sell this."
+LANGUAGE["Notification_You_Cannot_Change_Class_After_A_Wave_Has_Started"] = "You cannot change class after a wave has started."
+LANGUAGE["Notification_You_Cannot_Change_Class_More_Than_Once_Per_Wave"] = "You cannot change class more than once per wave."
+LANGUAGE["Notification_Subclass_X_Is_Not_Unlocked_On_This_Server"] = "Subclass %s is not unlocked on this server."
+LANGUAGE["Notification_You_Dont_Have_This_Weapon"] = "You don't have this weapon!"
+LANGUAGE["Notification_You_Dealth_X_Damage_To_X"] = "You dealt %d damage to %s"
+LANGUAGE["Notification_You_Dealth_X_X_Damage_To_X"] = "You dealt %d %s damage to %s"
+LANGUAGE["Notification_You_Received_X_Damage_From_X"] = "You received %d damage from %s"
+LANGUAGE["Notification_You_Received_X_X_Damage_From_X"] = "You received %d %s damage from %s"
+LANGUAGE["Notification_Current_Enemy_List_Is_Empty"] = "Current enemy list is empty!"
+LANGUAGE["Notification_Enemies_List_Is_Empty_Error"] = "Enemies list is empty. Config the enemy list or no enemies will spawn."
+LANGUAGE["Notification_No_Enemy_Config_Set_For_Wave_Error"] = "No enemy config set for this wave. Falling back to previous wave settings."
+LANGUAGE["Notification_Wave_Completed"] = "Wave Completed!"
+LANGUAGE["Notification_Tier_X_Perks_Have_Been_Unlocked"] = "Tier %s perks have been unlocked!"
+LANGUAGE["Notification_Map_Has_No_Navmesh"] = "Map has no info nodes! NPCs will not spawn."
+LANGUAGE["Notification_All_Players_Are_Dead"] = "All players are dead!"
+LANGUAGE["Notification_All_Players_Wants_To_Change_Map"] = "All players want to change map! Initiating map vote..."
+LANGUAGE["Notification_X_Wants_To_Change_Map_X_Players"] = "%s wants to change the map. (%s/%s)"
+LANGUAGE["Notification_You_Will_Respawn_Next_Wave"] = "You will respawn next wave."
+LANGUAGE["Notification_You_Are_Dead_You_Will_Respawn_Next_Wave"] = "You are dead. You will respawn next wave."
+
+-- Damage Types
+LANGUAGE["Damage_Type_Other Physical"] = "Other Physical"
+LANGUAGE["Damage_Type_Ballistic"] = "Ballistic"
+LANGUAGE["Damage_Type_Blunt"] = "Blunt"
+LANGUAGE["Damage_Type_Slashing"] = "Slashing"
+LANGUAGE["Damage_Type_Fire"] = "Fire"
+LANGUAGE["Damage_Type_Cold"] = "Cold"
+LANGUAGE["Damage_Type_Lightning"] = "Lightning"
+LANGUAGE["Damage_Type_Poison"] = "Poison"
+LANGUAGE["Damage_Type_Blast"] = "Blast"
+
+-- Chat Messages
+LANGUAGE["Chat_Message_Help_Notice"] = "Use '!help' to see special commands!" -- Translations is not working for this string.
+LANGUAGE["Chat_Message_Help_Ready"] = "'!ready' - Get ready"
+LANGUAGE["Chat_Message_Help_Shop"] = "'!shop' - Open shop"
+LANGUAGE["Chat_Message_Help_Drop"] = "'!drop' - Drop weapon"
+LANGUAGE["Chat_Message_Help_Throw_Money"] = "'!throwmoney' - Drop 50$"
+LANGUAGE["Chat_Message_Help_Change_Map"] = "'!rtv' -Initiate a map change vote"
+LANGUAGE["Chat_Message_Game_Started"] = "Game has already started!"
+LANGUAGE["Chat_Message_Stopping_Game"] = "Stopping game..."
 
 
 -- Classes
@@ -114,6 +216,31 @@ LANGUAGE["Class_Engineer"] = "Engineer"
 LANGUAGE["Class_Berserker"] = "Berserker"
 LANGUAGE["Class_Warden"] = "Warden"
 LANGUAGE["Class_Cremator"] = "Cremator"
+
+-- Subclasses
+LANGUAGE["Subclass_Title_Survivor"] = LANGUAGE["Class_Survivor"]
+LANGUAGE["Subclass_Title_Assault"] = LANGUAGE["Class_Assault"]
+LANGUAGE["Subclass_Title_Heavy"] = LANGUAGE["Class_Heavy"]
+LANGUAGE["Subclass_Title_Medic"] = LANGUAGE["Class_Medic"]
+LANGUAGE["Subclass_Title_Demolition"] = LANGUAGE["Class_Demolition"]
+LANGUAGE["Subclass_Title_Ghost"] = LANGUAGE["Class_Ghost"]
+LANGUAGE["Subclass_Title_Engineer"] = LANGUAGE["Class_Engineer"]
+LANGUAGE["Subclass_Title_Berserker"] = LANGUAGE["Class_Berserker"]
+LANGUAGE["Subclass_Title_Warden"] = LANGUAGE["Class_Warden"]
+LANGUAGE["Subclass_Title_Cremator"] = LANGUAGE["Class_Cremator"]
+
+-- Subclasses Extra
+LANGUAGE["Subclass_Title_Psycho"] = "Psycho"
+LANGUAGE["Subclass_Title_SpecOps"] = "SpecOps"
+LANGUAGE["Subclass_Title_Warlock"] = "Warlock"
+LANGUAGE["Subclass_Title_Gunslinger"] = "Gunslinger"
+LANGUAGE["Subclass_Title_Necromancer"] = "Necromancer"
+LANGUAGE["Subclass_Title_Samurai"] = "Samurai"
+LANGUAGE["Subclass_Title_Artificer"] = "Artificer"
+
+-- Disabled Subclasses Extra
+LANGUAGE["Subclass_Title_Chemist"] = "Chemist"
+LANGUAGE["Subclass_Title_Golem"] = "Golem"
 
 -- Gadgets
 LANGUAGE["Gadget_Activation"] = "Press T to activate."
@@ -155,6 +282,79 @@ Has full access to shotguns and watchtowers (horde_watchtower).]]
 LANGUAGE["Class_Description_Cremator"] = [[
 Has access to heat-based weaponry.]]
 
+-- Default Subclass Descriptions
+LANGUAGE["Subclass_Description_Survivor"] = [[
+Survivor main class.]]
+
+LANGUAGE["Subclass_Description_Assault"] = [[
+Assault main class.]]
+
+LANGUAGE["Subclass_Description_Heavy"] = [[
+Heavy main class.]]
+
+LANGUAGE["Subclass_Description_Medic"] = [[
+Medic main class.]]
+
+LANGUAGE["Subclass_Description_Demolition"] = [[
+Demolition main class.]]
+
+LANGUAGE["Subclass_Description_Ghost"] =  [[
+Ghost main class.]]
+
+LANGUAGE["Subclass_Description_Engineer"] = [[
+Default.
+Specializes in minions.]]
+
+LANGUAGE["Subclass_Description_Berserker"] = [[
+Berserker main class.]]
+
+LANGUAGE["Subclass_Description_Warden"] = [[
+Warden main class.]]
+
+LANGUAGE["Subclass_Description_Cremator"] = [[
+Cremator main class.]]
+
+-- Default Subclass Extra Descriptions
+LANGUAGE["Subclass_Description_Psycho"] = [[
+Survivor subclass.
+Hybrid fighter focused on critical hits.]]
+
+LANGUAGE["Subclass_Description_SpecOps"] = [[
+Assault subclass.
+Plays around a unique mode switch mechanic.]]
+
+LANGUAGE["Subclass_Description_Warlock"] = [[
+Demolition subclass.
+Physical damage caster that focuses on area control.]]
+
+LANGUAGE["Subclass_Description_Gunslinger"] = [[
+Ghost subclass.
+Specializes in pistols and marks.]]
+
+LANGUAGE["Subclass_Description_Necromancer"] = [[
+Engineer subclass.
+Specializes in cold damage and spectre minions.]]
+
+LANGUAGE["Subclass_Description_Necromancer"] = [[
+Engineer subclass.
+Specializes in cold damage and spectre minions.]]
+
+LANGUAGE["Subclass_Description_Samurai"] = [[
+Berserker subclass.
+Specializes in timed strikes and Bleeding damage.]]
+
+LANGUAGE["Subclass_Description_Artificer"] = [[
+Cremator subclass.
+Fire/lightning damage caster.]]
+
+-- Default Disabled Subclasses Extra Descriptions
+LANGUAGE["Subclass_Description_Chemist"] = [[
+Medic subclass.
+Focuses on dealing Poison damage.]]
+
+LANGUAGE["Subclass_Description_Golem"] = [[
+Heavy subclass.
+A fucking meatball that punches people.]]
 
 -- Default Base Perks
 LANGUAGE["Perk_survivor_base"] = [[
@@ -239,6 +439,135 @@ Complexity: EASY
 Attacks have {5} chance to Ignite enemies.
 Ignite base duration is {6} and deals damage over time based on hit damage.
 Fire damage has {7} Ignite chance.]]
+
+-- Subclass Default Base Perks
+LANGUAGE["Perk_psycho_base"] = [[
+{1} chance to deal a Critical Hit. ({2} + {3} per level, up to {4}).
+You deal 50% more damage on Critical Hit.
+
+Press F to enter Frenzy Mode, replacing your flashlight.
+Lose 1 health every 0.2 seconds in Frenzy Mode, down to 1.
+{5} increased Critical Strike chance in Frenzy Mode.
+{6} increased health recovery in Frenzy Mode.]]
+
+LANGUAGE["Perk_specops_base"] = [[
+Press F to enter Tactical Mode, replacing your flashlight.
+You have Nightvision during Tactical Mode.
+Cannot run during Tactical Mode.
+50% reduced movement speed during Tactical Mode.
+
+{1} increased movement speed during Tactical Mode. ({2} per level, up to {3})
+{1} increased headshot damage during Tactical Mode. ({2} per level, up to {3})]]
+
+LANGUAGE["Perk_warlock_base"] = [[
+COMPLEXITY: HIGH
+
+{1} increased maximum energy. ({2} per level, up to {3}).
+
+Equipped with Astral Relic. Upgradable through shop.
+LMB: Astral Pulsar (10 Energy)
+Releases a homing object that attaches to enemies and deals Physical damage over time.
+You can have at most 2 active Astral Pulsars.
+HOLD LMB to detonate all active Astral Pulsars.
+
+RMB: Astral Remnant (5 Energy)
+Plants energy bodies that explode when enemies are nearby, dealing Physical damage.
+You can plant at most 5 active Astral Remnants.
+HOLD RMB to charge and refresh duration of all active Astral Remnants.]]
+
+LANGUAGE["Perk_gunslinger_base"] = [[
+{1} increased Pistol damage. ({2} per level, up to {3}).
+
+Press SHIFT+E to apply Hunter's Mark on an enemy.
+Hunter's Mark lasts for 5 seconds.
+You can apply 1 Hunter's Mark at a time.
+
+Gains access to all Pistols.]]
+
+LANGUAGE["Perk_gunslinger_base"] = [[
+{1} increased Pistol damage. ({2} per level, up to {3}).
+
+Press SHIFT+E to apply Hunter's Mark on an enemy.
+Hunter's Mark lasts for 5 seconds.
+You can apply 1 Hunter's Mark at a time.
+
+Gains access to all Pistols.]]
+
+LANGUAGE["Perk_necromancer_base"] = [[
+COMPLEXITY: MEDIUM
+
+Inflicts Frostbite buildup by {1} of base Cold damage. ({2} + {3} per level, up to {4}).
+{5} increased Cold damage resistance. ({6} per level, up to {7}).
+
+Equipped with Void Projector. Upgradable through shop.
+
+LMB: Void Spear (5/10/20 Energy)
+Releases a projectile that deals Cold damage and applies Frostbite buildup.
+HOLD LMB for different effects.
+
+RMB: Raise Spectre (40 Energy)
+Conjures a Spectre minion.
+The Spectre minion deals Physical damage and applies Frostbite buildup.
+HOLD RMB to recall Spectres to your side.]]
+
+LANGUAGE["Perk_samurai_base"] =
+[[COMPLEXITY: HIGH
+    
+Inflicts Bleeding buildup by {1} of base Melee damage. ({2} + {3} per level, up to {4}).
+{5} increased Global damage resistance. ({6} per level, up to {7}).
+
+SHIFT+E to activate Quickstep.
+Dashes torwards the input direction.
+100% increased evasion during Quickstep.]]
+
+LANGUAGE["Perk_artificer_base"] = [[
+COMPLEXITY: MEDIUM
+
+Inflicts Shock buildup by {1} of base Lightning damage. ({2} per level, up to {3}).
+{1} increased Fire and Lightning damage. ({2} per level, up to {3}).
+
+Equipped with Solar Seal. Upgradable through shop.
+LMB: Solar Orb (5/10/20 Energy)
+Releases a projectile that deals splashing Fire damage.
+HOLD LMB for different effects.
+
+RMB: Solar Storm (5/10/20 Energy)
+Strikes at the target, dealing Lightning damage and applies Shock buildup.
+HOLD RMB for different effects.]]
+
+-- Disabled Subclass Default Base Perks
+LANGUAGE["Perk_chemist_base"] = [[
+Complexity: MEDIUM
+
+Convert 100% of your Ballistic damage into Poison damage.
+Inflicts Break buildup by {1} of base Poison damage. ({2} + {3} per level, up to {4}).
+{4} increased Poison damage resistance. ({5} + {6} per level, up to {7}).]]
+
+LANGUAGE["Perk_golem_base"] = [[
+{1} increased maximum health. ({2} per level, up to {3}).
+
+Gain Hypertrophy when you kill an enemy.
+Hypertrophy reduces Physical damage taken by {4}.
+Hypertrophy provdes 1 health regen per second.
+
+Equipped with Fists.
+
+LMB: Punch (0/10 Energy)
+Hold for a charged punch.
+
+RMB: Force Shield (1 Energy per tick)
+Hold to activate a force shield that negates damage taken.
+Damage taken is depleted as energy instead.]]
+
+LANGUAGE["Perk_striker_base"] = [[
+The Striker class manipulates space to its advantage.
+Complexity: HIGH
+
+{1} increased Blink distance.
+
+SHIFT+E to activate Blink.
+Teleports to the target location.
+The blink range extends greatly if the target is a Watchtower.]]
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[Survival]]
@@ -643,6 +972,420 @@ LANGUAGE["Perk_Title_cremator_incineration"] = [[Incineration]]
 LANGUAGE["Perk_cremator_incineration"] = [[
 {1} increased Ignite damage.]]
 
+-- Default Subclass Perks: Psycho
+LANGUAGE["Perk_Title_Psycho_Tier_1"] = [[Violence]]
+LANGUAGE["Perk_Title_psycho_ferocity"] = [[Ferocity]]
+LANGUAGE["Perk_psycho_ferocity"] = [[
+Adds {1} Critical Hit chance.
+Adds {2} Melee Critical Hit chance.]]
+LANGUAGE["Perk_Title_psycho_savor"] = [[Savor]]
+LANGUAGE["Perk_psycho_savor"] = [[
+{1} increased Critical Hit damage.
+Leech {2} of damage dealt when you land a Melee Critical Hit.
+Leech caps at 10 health per hit.]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_2"] = [[Sadism]]
+LANGUAGE["Perk_Title_psycho_bloodbath"] = [[Bloodbath]]
+LANGUAGE["Perk_psycho_bloodbath"] = [[
+Adds {1} Critical Hit chance.
+Leech 1 health on Critical Hit.]]
+LANGUAGE["Perk_Title_psycho_disembowel"] = [[Disembowel]]
+LANGUAGE["Perk_psycho_disembowel"] = [[
+{1} increased Critical Hit damage.
+Melee attacks remove Nemesis mutation from enemies.]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_3"] = [[Fatality]]
+LANGUAGE["Perk_Title_psycho_skewering"] = [[Skewering]]
+LANGUAGE["Perk_psycho_skewering"] = [[
+Enemies you hit with headshots are Skewered.
+Players have +{1} Critical Hit chance when they hit Skewered enemies.]]
+LANGUAGE["Perk_Title_psycho_brutality"] = [[Brutality]]
+LANGUAGE["Perk_psycho_brutality"] = [[
+Gain Brutality by hitting enemy with Melee attacks, up to 5 stacks.
+Each Brutality stack adds {1} Critical Hit chance.
+Each Brutality stack increases {2} Critical Hit damage.]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_4"] = [[Pyschosis]]
+LANGUAGE["Perk_Title_psycho_grudge"] = [[Grudge]]
+LANGUAGE["Perk_psycho_grudge"] = [[
+{1} increased Critical Hit chance per {2} health missing.
+{3} increased movement speed per {4} health missing, up to {5}.]]
+LANGUAGE["Perk_Title_psycho_grudge"] = [[Bestial Wrath]]
+LANGUAGE["Perk_psycho_grudge"] = [[
+{1} increased Critical Hit damage.
+Deals splashing melee damage in Frenzy Mode.
+Recover 1 health for each enemy killed in Frenzy Mode.]]
+
+-- Default Subclass Perks: SpecOps
+LANGUAGE["Perk_Title_SpecOps_Tier_1"] = [[Utility]]
+LANGUAGE["Perk_Title_specops_smokescreen"] = [[Smokescreen]]
+LANGUAGE["Perk_specops_smokescreen"] = [[
+Press Shift+E to deploy a smokescreen.
+{1} increased evasion for players affected smokescreen.
+Effect lasts for {2} seconds.]]
+LANGUAGE["Perk_Title_specops_flare"] = [[Flare]]
+LANGUAGE["Perk_specops_flare"] = [[
+Press Shift+E to deploy a flare.
+Flare provides lighting and attracts enemies.
+Flare lasts for 3 seconds.]]
+
+LANGUAGE["Perk_Title_SpecOps_Tier_2"] = [[Engage]]
+LANGUAGE["Perk_Title_specops_tactical_visor"] = [[Tactical Visor]]
+LANGUAGE["Perk_specops_tactical_visor"] = [[
+While in Tactical Mode:
+  {1} increased Ballistic damage.
+  {2} increased damage to limbs.]]
+LANGUAGE["Perk_Title_specops_neuron_stabilizer"] = [[SpecOps Base]]
+LANGUAGE["Perk_specops_neuron_stabilizer"] = [[
+Press F to enter Tactical Mode, replacing your flashlight.
+You have Nightvision during Tactical Mode.
+Cannot run during Tactical Mode.
+50% reduced movement speed during Tactical Mode.
+
+{1} increased movement speed during Tactical Mode. ({2} per level, up to {3})
+{1} increased headshot damage during Tactical Mode. ({2} per level, up to {3})]]
+
+LANGUAGE["Perk_Title_SpecOps_Tier_3"] = [[Protection]]
+LANGUAGE["Perk_Title_specops_biotic_mask"] = [[Biotic Mask]]
+LANGUAGE["Perk_specops_biotic_mask"] = [[
+While in Tactical Mode:
+  Recover 2% health per second.
+  {1} reduced Bleeding, Break and Necrosis buildups.]]
+LANGUAGE["Perk_Title_specops_adaptive_coating"] = [[Adaptive Coating]]
+LANGUAGE["Perk_specops_adaptive_coating"] = [[
+While in Tactical Mode:
+  {1} increased Global damage resistance.
+  {2} reduced Fire, Cold and Lightning damage taken.]]
+
+LANGUAGE["Perk_Title_SpecOps_Tier_4"] = [[Sunset]]
+LANGUAGE["Perk_Title_specops_night_stalker"] = [[Night Stalker]]
+LANGUAGE["Perk_specops_night_stalker"] = [[
+While in Tactical Mode:
+  {1} increased movement speed.
+  {2} increased headshot damage.]]
+LANGUAGE["Perk_Title_specops_peace_walker"] = [[Peace Walker]]
+LANGUAGE["Perk_specops_peace_walker"] = [[
+{1} reduced Smokescreen/Flare cooldown.
+While in Tactical Mode:
+  {2} increased Ballistic damage.]]
+  
+-- Default Subclass Perks: Warlock
+LANGUAGE["Perk_Title_Warlock_Tier_1"] = [[Transfigure]]
+LANGUAGE["Perk_Title_warlock_celestial_bond"] = [[Celestial Bond]]
+LANGUAGE["Perk_warlock_celestial_bond"] = 
+[[+{1} to maximum active Astral Pulsars.
+Allows you to attach Astral Pulsar on targeted players.
+Astral Pulsar deals area of effect damage while attached to a player.]]
+LANGUAGE["Perk_Title_warlock_coalesce"] = [[Coalesce]]
+LANGUAGE["Perk_warlock_coalesce"] =
+[[+{1} to maximum active Astral Remnants.
+Allows you to target Astral Pulsar on Astral Remnants.
+Targeted Astral Remnant attaches to Astral Pulsar on contact.]]
+
+LANGUAGE["Perk_Title_Warlock_Tier_2"] = [[Channelling]]
+LANGUAGE["Perk_Title_warlock_magnetar"] = [[Magnetar]]
+LANGUAGE["Perk_warlock_magnetar"] =
+[[+{1} to maximum active Astral Pulsars.
+Extends Astral Pulsar lifetime when it attaches to an enemy.]]
+LANGUAGE["Perk_Title_warlock_nucleosynthesis"] = [[Nucleosynthesis]]
+LANGUAGE["Perk_warlock_nucleosynthesis"] =
+[[{1} increased maximum energy.
+Recover {2} energy you used as health.]]
+
+LANGUAGE["Perk_Title_Warlock_Tier_3"] = [[Vectorize]]
+LANGUAGE["Perk_Title_warlock_gravity_vacuum"] = [[Gravity Vacuum]]
+LANGUAGE["Perk_warlock_gravity_vacuum"] =
+[[Unlocks Gravity Vacuum for Nether Relic ({1} energy, R button).
+Attracts all active Astral Pulsars to the target.
+Attracts nearby Astral Remnants to the target.]]
+LANGUAGE["Perk_Title_warlock_negative_burst"] = [[Negative Burst]]
+LANGUAGE["Perk_warlock_negative_burst"] =
+[[Unlocks Negative Burst for Nether Relic ({1} energy, R button).
+Deals Physical damage and knockback around you based on missing energy.
+Recover {2} energy for each enemy killed by Negative Burst.]]
+
+LANGUAGE["Perk_Title_Warlock_Tier_4"] = [[Annihilation]]
+LANGUAGE["Perk_Title_warlock_starscourge"] = [[Starscourge]]
+LANGUAGE["Perk_warlock_starscourge"] =
+[[+{1} to maximum active Astral Pulsars.
+Causes your first Astral Pulsar to have infinite duration.
+{2} more Astral Pulsar damage while attached to elite enemies.]]
+LANGUAGE["Perk_Title_warlock_dirac_sea"] = [[Dirac Sea]]
+LANGUAGE["Perk_warlock_dirac_sea"] =
+[[{1} increased maximum energy.
+Removes explosion damage falloff for Astral Pulsar and Astral Remnants.
+Charged Astral Remnants leave behind uncharged Astral Remnants on explosion.]]
+
+-- Default Subclass Perks: Gunslinger
+LANGUAGE["Perk_Title_Gunslinger_Tier_1"] = [[Precision]]
+LANGUAGE["Perk_Title_gunslinger_deadeye"] = [[Deadeye]]
+LANGUAGE["Perk_gunslinger_deadeye"] = [[Headshot increases Deadeye stacks up to {1} times.
+Each stack increases {2} damage with Pistols.]]
+LANGUAGE["Perk_Title_gunslinger_bounty_hunter"] = [[Bounty Hunter]]
+LANGUAGE["Perk_gunslinger_bounty_hunter"] = [[
+Enemies killed under Hunter's Mark drop extra cash.]]
+
+LANGUAGE["Perk_Title_Gunslinger_Tier_2"] = [[Gunfight]]
+LANGUAGE["Perk_Title_gunslinger_quickdraw"] = [[Quickdraw]]
+LANGUAGE["Perk_gunslinger_quickdraw"] = [[
+Gain the Quickdraw status while switching weapon.
+{1} increased Pistol damage and evasion during Quickdraw status.
+Quickdraw effect lasts for {2} seconds.]]
+LANGUAGE["Perk_Title_gunslinger_puncture"] = [[Puncture]]
+LANGUAGE["Perk_gunslinger_puncture"] = [[
+{1} increased Hunter's Mark range.
+Enemies under Hunter's Mark take {2} increased damage.]]
+
+LANGUAGE["Perk_Title_Gunslinger_Tier_3"] = [[Outlaw]]
+LANGUAGE["Perk_Title_gunslinger_maverick"] = [[Maverick]]
+LANGUAGE["Perk_gunslinger_maverick"] = [[
+While holding a Pistol weapon:
+  {1} increased movement speed.
+  {2} increased evasion.]]
+LANGUAGE["Perk_Title_gunslinger_poach"] = [[Poach]]
+LANGUAGE["Perk_gunslinger_poach"] = [[
+Enemies killed under Hunter's Mark restore health to nearby players.]]
+
+LANGUAGE["Perk_Title_Gunslinger_Tier_4"] = [[Ultimatum]]
+LANGUAGE["Perk_Title_gunslinger_nine_lives"] = [[Nine Lives]]
+LANGUAGE["Perk_gunslinger_nine_lives"] = [[
+Once per turn, gain Nine Lives for {1} seconds when your health depletes.
+Nine Lives refills your health and provides invulnerability.
+Nine Lives provides {2} increased damage.]]
+LANGUAGE["Perk_Title_gunslinger_bladerunner"] = [[Bladerunner]]
+LANGUAGE["Perk_gunslinger_bladerunner"] = [[
+{1} increased Hunter's Mark duration.
+Enemies under Hunter's Mark take {2} more headshot damage.
+{3} reduced damage taken from enemies with Hunter's Mark.]]
+
+-- Default Subclass Perks: Necromancer
+LANGUAGE["Perk_Title_Necromancer_Tier_1"] = [[Initialization]]
+LANGUAGE["Perk_Title_necromancer_void_sphere"] = [[Void Sphere]]
+LANGUAGE["Perk_necromancer_void_sphere"] =
+[[Void Spear always deal splashing damage.
+Increases Void Spear splash damage.]]
+LANGUAGE["Perk_Title_necromancer_hollow_essence"] = [[Hollow Essence]]
+LANGUAGE["Perk_necromancer_hollow_essence"] =
+[[+{1} to maximum Spectres alive.
+{2} reduced Raise Spectre cost.]]
+
+LANGUAGE["Perk_Title_Necromancer_Tier_2"] = [[Recovery]]
+LANGUAGE["Perk_Title_necromancer_void_siphon"] = [[Void Siphon]]
+LANGUAGE["Perk_necromancer_void_siphon"] =
+[[Hitting enemies with Void Spear restores energy.
+Increases Void Spear damage according to remaining energy, up to {1}.]]
+LANGUAGE["Perk_Title_necromancer_superfluidity"] = [[Superfluidity]]
+LANGUAGE["Perk_necromancer_superfluidity"] =
+[[20% increased Frostbite buildup.
+Void Projector recovers energy while inactive.]]
+
+LANGUAGE["Perk_Title_Necromancer_Tier_3"] = [[Annihilation]]
+LANGUAGE["Perk_Title_necromancer_void_field"] = [[Void Field]]
+LANGUAGE["Perk_necromancer_void_field"] =
+[[Void Spear applies extra Frostbite buildup.
+Increases Void Spear damage by its travelling distance.]]
+LANGUAGE["Perk_Title_necromancer_abyssal_might"] = [[Abyssal Might]]
+LANGUAGE["Perk_necromancer_abyssal_might"] =
+[[+{1} to maximum Spectres alive.
+Spectres gain access to Abyssal Roar.]]
+
+LANGUAGE["Perk_Title_Necromancer_Tier_4"] = [[Mastery]]
+LANGUAGE["Perk_Title_necromancer_beacon_of_void"] = [[Beacon of Void]]
+LANGUAGE["Perk_necromancer_beacon_of_void"] =
+[[Cold damage ignores enemy Cold damage resistance.
+Unlocks Void Cascade for Void Projector ({1} energy, R button).
+Perk bonuses to Void Spear also apply to Void Cascade.]]
+LANGUAGE["Perk_Title_necromancer_necromastery"] = [[Necromastery]]
+LANGUAGE["Perk_necromancer_necromastery"] =
+[[+{1} to maximum Spectres alive.
+Unlocks the Devour skill for Void Projector (R button).
+Instantly kills a targeted non-elite enemy and spawn a Spectre.]]
+
+-- Default Subclass Perks: Samurai
+LANGUAGE["Perk_Title_Samurai_Tier_1"] = [[Technique]]
+LANGUAGE["Perk_Title_samurai_focus_slash"] = [[Focus Slash]]
+LANGUAGE["Perk_samurai_focus_slash"] =
+[[Adds 1 charge to Quickstep.
+{1} increased Melee damage during Quickstep.]]
+LANGUAGE["Perk_Title_samurai_flesh_bloom"] = [[Flesh Bloom]]
+LANGUAGE["Perk_samurai_flesh_bloom"] =
+[[Melee damage applies Bleeding buildup in an area.]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_2"] = [[Overwhelm]]
+LANGUAGE["Perk_Title_samurai_demon_stomp"] = [[Demon Stomp]]
+LANGUAGE["Perk_samurai_demon_stomp"] =
+[[Adds 1 charge to Quickstep.
+Activating Quickstep releases a shockwave that deals {1} Physical damage.
+Recover {2} health for each enemy hit by the shockwave.]]
+LANGUAGE["Perk_Title_samurai_exsanguinate"] = [[Exsanguinate]]
+LANGUAGE["Perk_samurai_exsanguinate"] =
+[[20% increased Bleeding buildup.
+Recover health neary Bleeding enemies.
+Immune to Bleeding.]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_3"] = [[Mind]]
+LANGUAGE["Perk_Title_samurai_foresight"] = [[Foresight]]
+LANGUAGE["Perk_samurai_foresight"] =
+[[Adds {1} charge to Quickstep.
+Gain Foresight, negating Physical damage taken on hit.
+Foresight expires on hit and reflects damage taken.]]
+LANGUAGE["Perk_Title_samurai_resolution"] = [[Resolution]]
+LANGUAGE["Perk_samurai_resolution"] =
+[[Reduces your total weight to 7.
+{1} more Melee damage.
++3 damage block.]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_4"] = [[Art of War]]
+LANGUAGE["Perk_Title_samurai_blade_dance"] = [[Blade Dance]]
+LANGUAGE["Perk_samurai_blade_dance"] =
+[[Adds 1 charge to Quickstep.
+Killing enemies adds 2 Quickstep charges.
+Extends effect duration of Quickstep.]]
+LANGUAGE["Perk_Title_samurai_demon_strike"] = [[Demon Strike]]
+LANGUAGE["Perk_samurai_demon_strike"] =
+[[{1} increased Bleeding buildup.
+{2} increased Melee damage against Bleeding enemies.
+Leech {3} Melee damage dealt during Quickstep.]]
+
+-- Default Subclass Perks: Artificer
+LANGUAGE["Perk_Title_Artificer_Tier_1"] = [[Inner Strength]]
+LANGUAGE["Perk_Title_artificer_warmth"] = [[Warmth]]
+LANGUAGE["Perk_artificer_warmth"] =
+[[Charged Solar Orbs heal players.]]
+LANGUAGE["Perk_Title_artificer_purge"] = [[Purge]]
+LANGUAGE["Perk_artificer_purge"] =
+[[{1} increased Shock buildup.
+{2} increased headshot damage.]]
+
+LANGUAGE["Perk_Title_Artificer_Tier_2"] = [[Recuperate]]
+LANGUAGE["Perk_Title_artificer_solar_guard"] = [[Solar Guard]]
+LANGUAGE["Perk_artificer_solar_guard"] =
+[[{1} increased Solar Seal energy regeneration.
+Uses energy to reduce damage taken, up to {2}.
+Damage reduction is based on remaining energy.]]
+LANGUAGE["Perk_Title_artificer_intensity"] = [[Intensity]]
+LANGUAGE["Perk_artificer_intensity"] =
+[[Gain Intensity for each enemy you kill, up to {1} stacks.
+Each stack increases energy regeneration by {2}
+Each stack reduces skill cooldown by {3}.]]
+
+LANGUAGE["Perk_Title_Artificer_Tier_3"] = [[Codex]]
+LANGUAGE["Perk_Title_artificer_floating_chaos"] = [[Floating Chaos]]
+LANGUAGE["Perk_artificer_floating_chaos"] =
+[[Unlocks Floating Chaos for Solar Seal ({1} energy, R button).
+Spawns a floating orb that echoes your spells.]]
+LANGUAGE["Perk_Title_artificer_hallowed_bolt"] = [[Hallowed Bolt]]
+LANGUAGE["Perk_artificer_hallowed_bolt"] =
+[[Unlocks Hallowed Bolt for Solar Seal ({1} energy, R button).
+Strikes the ground from above, dealing heavy Lightning damage in an area.
+Recover health after killing an enemy with Hallowed Bolt.]]
+
+LANGUAGE["Perk_Title_Artificer_Tier_4"] = [[Ascension]]
+LANGUAGE["Perk_Title_artificer_godslayer"] = [[Godslayer]]
+LANGUAGE["Perk_artificer_godslayer"] =
+[[Fire damage ignores enemy Fire damage resistance.
+Solar Orb has {1} increased damage and gains an extra charge stage.
+Solar Storm can leave behind ground flames.]]
+LANGUAGE["Perk_Title_artificer_draconic_reckoning"] = [[Draconic Reckoning]]
+LANGUAGE["Perk_artificer_draconic_reckoning"] =
+[[Lightning damage ignores enemy Lightning damage resistance.
+Solar Orb has Lightning damage area of effect.
+Solar Storm has {1} increased damage and gains an extra charge stage.]]
+
+-- Default Disabled Subclass Perks: Chemist
+LANGUAGE["Perk_Title_Chemist_Tier_1"] = [[Inner Strength]]
+LANGUAGE["Perk_Title_chemist_erosion"] = [[Erosion]]
+LANGUAGE["Perk_chemist_erosion"] =
+[[Increase Break buildup over time on enemies you hit with Poison damage.
+The increase stops when Break triggers.]]
+LANGUAGE["Perk_Title_chemist_contagion"] = [[Contagion]]
+LANGUAGE["Perk_chemist_contagion"] = [[Generates an explosion when Break triggers.
+The explosion deals Poison damage over time.]]
+
+LANGUAGE["Perk_Title_Chemist_Tier_2"] = [[Recuperate]]
+LANGUAGE["Perk_Title_chemist_cleansing"] = [[Cleansing]]
+LANGUAGE["Perk_chemist_cleansing"] = [[Players you heal have Cleansing for {1} seconds.
+{2} increased Poison damage resistance while you have Cleansing.
+{3} reduced Break buildup taken while you have Cleansing.]]
+LANGUAGE["Perk_Title_chemist_poison_weapon"] = [[Poison Weapon]]
+LANGUAGE["Perk_chemist_poison_weapon"] = [[Players you heal have Poison Weapon for {1} seconds.
+Adds extra Poison damage to Physical damage while you have Poison Weapon.
+Only applies to direct Physical attacks.]]
+
+LANGUAGE["Perk_Title_Chemist_Tier_3"] = [[Inner Strength]]
+LANGUAGE["Perk_Title_chemist_mustard_gas"] = [[Mustard Gas]]
+LANGUAGE["Perk_chemist_mustard_gas"] = [[Press SHIFT+E to release Mustard Gas.
+Mustard Gas deals Poison damage over time.]]
+LANGUAGE["Perk_Title_chemist_sarin_mist"] = [[Sarin Mist]]
+LANGUAGE["Perk_chemist_sarin_mist"] = [[Press SHIFT+E to release a sarin mist.
+Sarin Mist increases Break buildup over time.]]
+
+LANGUAGE["Perk_Title_Chemist_Tier_4"] = [[Ascension]]
+LANGUAGE["Perk_Title_chemist_beacon_of_agony"] = [[Beacon of Agnoy]]
+LANGUAGE["Perk_chemist_beacon_of_agony"] = [[{1} increased Poison damage.
+Poison damage ignores enemy Poison damage resistance.]]
+LANGUAGE["Perk_Title_chemist_disintegrate"] = [[Disintegrate]]
+LANGUAGE["Perk_chemist_disintegrate"] = [[{1} increased Poison damage.
+Poison damage ignores enemy Poison damage resistance.]]
+
+-- Default Disabled Subclass Perks: Golem
+LANGUAGE["Perk_Title_Golem_Tier_1"] = [[Synthesis]]
+LANGUAGE["Perk_Title_golem_biojet"] = [[Bio-Jet]]
+LANGUAGE["Perk_golem_biojet"] =
+[[25% increased maximum health.
+Charged punch on surfaces can launch you in air.]]
+LANGUAGE["Perk_Title_golem_photosynthesis"] = [[Photosynthesis]]
+LANGUAGE["Perk_golem_photosynthesis"] =
+[[Adds {1} maximum Hypertrophy stacks.
+Holding Force Shield recovers health.
+Recovers 2 health every 1 second held.]]
+
+LANGUAGE["Perk_Title_Golem_Tier_2"] = [[Mesocycle]]
+LANGUAGE["Perk_Title_golem_biofusion"] = [[Biofusion]]
+LANGUAGE["Perk_golem_biofusion"] =
+[[25% increased maximum health.
+25% chance to drio a gib from enemy on Melee hit.
+Each gib restores 5% health.]]
+LANGUAGE["Perk_Title_golem_amalgam"] = [[Amalgam]]
+LANGUAGE["Perk_golem_amalgam"] =
+[[Adds {1} maximum Hypertrophy stacks.
+{1} chance to add 1 Hypertrophy stack on Melee headshot.]]
+
+LANGUAGE["Perk_Title_Golem_Tier_3"] = [[Proliferation]]
+LANGUAGE["Perk_Title_golem_meatshield"] = [[Meatshield]]
+LANGUAGE["Perk_golem_meatshield"] =
+[[25% increased maximum health. 
+Drops gibs around you when you are hit.]]
+LANGUAGE["Perk_Title_golem_cell_graft"] = [[Cell Graft]]
+LANGUAGE["Perk_golem_cell_graft"] =
+[[Adds {1} maximum Hypertrophy stacks.
+Every time you kill an enemy, Players near you also gain {1} Hypertrophy, up to {2}.\n]]
+
+LANGUAGE["Perk_Title_Golem_Tier_4"] = [[Multiply]]
+LANGUAGE["Perk_Title_golem_bioimmortality"] = [[Bio-Immortality]]
+LANGUAGE["Perk_golem_bioimmortality"] =
+[[25% increased maximum health.
+75% less debuff buildups taken.]]
+LANGUAGE["Perk_Title_golem_trauma_loop"] = [[Trauma Loop]]
+LANGUAGE["Perk_golem_trauma_loop"] =
+[[Adds {1} maximum Hypertrophy stacks.
+Melee attacks has a chance to spawn gibs around the target.
+Each gib restores 5 health.]]
+
+-- Default Disabled Subclass Perks: Striker
+LANGUAGE["Perk_Title_striker_frostblink"] = [[Frostblink]]
+LANGUAGE["Perk_striker_frostblink"] =
+[[Releases an ice explosion after Blink.
+The ice explosion deals {1} Cold damage in an area.]]
+LANGUAGE["Perk_Title_striker_stormcharge"] = [[Stormcharge]]
+LANGUAGE["Perk_striker_stormcharge"] =
+[[Gain Stormcharge effect for {1} second after Blink.
+{2} increased damage while you have Stormcharge.
+Convert {3} of your damage to Lightning damage while you have Stormcharge.]]
+
+-- Default Hidden Class Perks: Survivor
+LANGUAGE["Perk_Title_survivor_power_up"] = [[Power Up]]
+LANGUAGE["Perk_striker_frostblink"] = [[Allows you to upgrade Half-life 2 weapons.]]
 
 -- Default Config Shop Items
 -- Optional
@@ -1550,4 +2293,119 @@ LANGUAGE["Gadget_barbeque"] = [[Barbeque]]
 LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
 Ignited enemies killed by you drop edible gibs.
 Each gib restores 5 health.
+]]
+
+-- Infusion
+LANGUAGE["Infusion_None"] = "None"
+LANGUAGE["Infusion_Desc_None"] = "No effect."
+
+LANGUAGE["Infusion_Hemo"] = "Hemo"
+LANGUAGE["Infusion_Desc_Hemo"] = [[
+Convert 75% weapon damage into Slashing damage.
+
+Weapon deals only Slashing damage.
+
+Weapon damage increases Bleeding buildup. 
+]]
+
+LANGUAGE["Infusion_Concussive"] = "Concussive"
+LANGUAGE["Infusion_Desc_Concussive"] = [[
+Convert 75% weapon damage into Blunt damage.
+
+Weapon deals only Blunt damage.
+
+Weapon damage increases Stun buildup. 
+]]
+
+LANGUAGE["Infusion_Septic"] = "Septic"
+LANGUAGE["Infusion_Desc_Septic"] = [[
+Convert 75% weapon damage into Poison damage.
+
+Weapon deals only Poison damage.
+
+Weapon damage increases Break buildup. 
+]]
+
+LANGUAGE["Infusion_Flaming"] = "Flaming"
+LANGUAGE["Infusion_Desc_Flaming"] = [[
+Convert 75% weapon damage into Fire damage.
+
+Weapon deals only Fire damage.
+
+Weapon ignites enemies on hit.
+]]
+
+LANGUAGE["Infusion_Arctic"] = "Arctic"
+LANGUAGE["Infusion_Desc_Arctic"] = [[
+Convert 75% weapon damage into Cold damage.
+
+Weapon deals only Cold damage.
+
+Weapon damage increases Frostbite buildup. 
+]]
+
+LANGUAGE["Infusion_Galvanizing"] = "Galvanizing"
+LANGUAGE["Infusion_Desc_Galvanizing"] = [[
+Convert 75% weapon damage into Lightning damage.
+
+Weapon deals only Lightning damage.
+
+Weapon damage increases Shock buildup. 
+]]
+
+LANGUAGE["Infusion_Quality"] = "Quality"
+LANGUAGE["Infusion_Desc_Quality"] = [[
+20% increased weapon damage.
+
+Weapon damage is unaffected by perks or gadgets.
+]]
+
+LANGUAGE["Infusion_Impaling"] = "Impaling"
+LANGUAGE["Infusion_Desc_Impaling"] = [[
+25% increased weapon headshot damage.
+
+25% less weapon non-headshot damage.
+]]
+
+LANGUAGE["Infusion_Rejuvenating"] = "Rejuvenating"
+LANGUAGE["Infusion_Desc_Rejuvenating"] = [[
+Amplifies weapon healing/leeching by 25%.
+
+25% less weapon damage.
+]]
+
+LANGUAGE["Infusion_Quicksilver"] = "Quicksilver"
+LANGUAGE["Infusion_Desc_Quicksilver"] = [[
+Increases/decreases weapon damage based on player's available weight.
+
+<= 15% weight -> 30% damage increase
+<= 30% weight -> 25% damage increase 
+<= 40% weight -> 15% damage increase 
+>40% weight -> 25% damage decrease
+]]
+
+LANGUAGE["Infusion_Siphoning"] = "Siphoning"
+LANGUAGE["Infusion_Desc_Siphoning"] = [[
++1 health when you kill enemy.
+
+25% less weapon damage.
+]]
+
+LANGUAGE["Infusion_Titanium"] = "Titanium"
+LANGUAGE["Infusion_Desc_Titanium"] = [[
+Reduces player damage taken based on weapon weight.
+
+Decrease 1% damage taken for every 1 weight on the weapon.
+
+25% less weapon damage.
+]]
+
+LANGUAGE["Infusion_Chrono"] = "Chrono"
+LANGUAGE["Infusion_Desc_Chrono"] = [[
+Increases weapon damage the longer the weapon is being held by the user.
+
+6% damage increase per wave held by the user.
+Increase caps at 50%.
+
+20% decreased weapon damage.
 ]]

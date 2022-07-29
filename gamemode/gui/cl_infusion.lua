@@ -52,7 +52,7 @@ function PANEL:add_infusion(infusion, price)
         surface.SetTextColor(Color(255,255,255))
         surface.SetFont("Item")
         surface.SetTextPos(50, 10)
-        surface.DrawText(HORDE.Infusion_Names[infusion])
+        surface.DrawText(translate.Get("Infusion_" .. HORDE.Infusion_Names[infusion]))
 
         local has_infusion = LocalPlayer():Horde_HasInfusion(self.item.class, infusion)
         --if has_infusion then
@@ -61,7 +61,7 @@ function PANEL:add_infusion(infusion, price)
         --end
 
         if has_infusion then
-            draw.SimpleText("INFUSED", "Item", (self.infusion_scroll:GetWide() - 20) / 2 - 50, 10, HORDE.color_crimson, TEXT_ALIGN_CENTER, TEXT_ALIGN_RIGHT)
+            draw.SimpleText(translate.Get("Shop_Weapon_INFUSED"), "Item", (self.infusion_scroll:GetWide() - 20) / 2 - 50, 10, HORDE.color_crimson, TEXT_ALIGN_CENTER, TEXT_ALIGN_RIGHT)
         else
             draw.SimpleText(tostring(price) .. "$", "Item", (self.infusion_scroll:GetWide() - 20) / 2 - 30, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_RIGHT) 
         end
@@ -136,7 +136,7 @@ function PANEL:Init()
     self.remove_infuse_btn:DockMargin(5,2.5,5,2.5)
     self.remove_infuse_btn:SetFont("Content")
     self.remove_infuse_btn:SetTextColor(Color(255,255,255))
-    self.remove_infuse_btn:SetText("Remove Infusion")
+    self.remove_infuse_btn:SetText(translate.Get("Shop_Weapon_Remove_Infusion"))
     self.remove_infuse_btn:SetTall(50)
     self.remove_infuse_btn.Paint = function () end
     self.remove_infuse_btn:SetZPos(100)
@@ -242,25 +242,25 @@ function PANEL:Paint()
     if self.item then
         local infusion = self.infusion
         if LocalPlayer():Horde_HasInfusion(self.item.class, infusion) == true then
-            self.infuse_btn:SetText("Infused")
+            self.infuse_btn:SetText(translate.Get("Shop_Weapon_Infusedd"))
             self.infuse_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
         elseif LocalPlayer():Horde_GetMoney() < price  then
-            self.infuse_btn:SetText("Not enough money (Need " .. tostring(price) .. "$)")
+            self.infuse_btn:SetText(translate.Format("Shop_Not_Enough_Money_For_Infusion",tostring(price)))
             self.infuse_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
         elseif infusion == HORDE.Infusion_None then
-            self.infuse_btn:SetText("No infusion selected.")
+            self.infuse_btn:SetText(translate.Get("Shop_No_Infusion_Selected"))
             self.infuse_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
         else
-            self.infuse_btn:SetText("Apply " .. HORDE.Infusion_Names[infusion] .. " infusion to " .. self.item.name .. " (" .. tostring(price) .. "$)")
+            self.infuse_btn:SetText(translate.Format("Shop_Apply_Weapon_X_Infusion_To_Weapon", translate.Get("Infusion_" .. HORDE.Infusion_Names[infusion]), translate.Get("Item_" .. self.item.name), tostring(price)))
             self.infuse_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -278,7 +278,7 @@ function PANEL:Paint()
         end
 
         self.infusion_description.Paint = function ()
-            draw.DrawText(HORDE.Infusion_Description[infusion], "Content", 50, 0, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            draw.DrawText(translate.Get("Infusion_Desc_" .. HORDE.Infusion_Names[infusion]) or HORDE.Infusion_Description[infusion], "Content", 50, 0, Color(200, 200, 200), TEXT_ALIGN_LEFT)
         end
     end
 end

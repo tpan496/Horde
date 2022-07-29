@@ -555,7 +555,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
         end
 
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You bought " .. item.name .. ".")
+        net.WriteString(translate.Format("Notification_You_Bought_X", translate.Get("Item_" .. item.name)))
         net.WriteInt(0,2)
         net.Send(ply)
         ply:Horde_SyncEconomy()
@@ -615,7 +615,7 @@ net.Receive("Horde_SellItem", function (len, ply)
     local canSell, why = hook.Call("CanSell", HORDE, ply, class)
     if canSell == false then
         net.Start("Horde_LegacyNotification")
-        net.WriteString(why or "You can't sell this.")
+        net.WriteString(why or translate.Get("Notification_You_Cant_Sell_This"))
         net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -689,14 +689,14 @@ net.Receive("Horde_SelectClass", function (len, ply)
     if ply:Alive() then
         if HORDE.start_game and HORDE.current_break_time <= 0 then
             net.Start("Horde_LegacyNotification")
-            net.WriteString("You cannot change class after a wave has started.")
+            net.WriteString(translate.Get("Notification_You_Cannot_Change_Class_After_A_Wave_Has_Started"))
             net.WriteInt(1,2)
             net.Send(ply)
             return
         end
         if GetConVar("horde_testing_unlimited_class_change"):GetInt() == 0 and HORDE.player_class_changed[ply:SteamID()] then
             net.Start("Horde_LegacyNotification")
-            net.WriteString("You cannot change class more than once per wave.")
+            net.WriteString(translate.Get("Notification_You_Cannot_Change_Class_More_Than_Once_Per_Wave"))
             net.WriteInt(1,2)
             net.Send(ply)
             return
@@ -707,7 +707,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
 
     if ply:Horde_GetSubclassUnlocked(subclass_name) == false then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("Subclass " .. subclass_name " is not unlocked on this server.")
+        net.WriteString(translate.Format("Notification_Subclass_X_Is_Not_Unlocked_On_This_Server", translate.Get("Subclass_Title_" .. subclass_name)))
         net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -753,7 +753,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     net.Send(ply)
 
     net.Start("Horde_LegacyNotification")
-    net.WriteString("You changed class to " .. class.name)
+    net.WriteString(translate.Format("Notification_Changed_Class_To_X", translate.Get("Class_" .. class.name)))
     net.WriteInt(0,2)
     net.Send(ply)
     if GetConVar("horde_testing_unlimited_class_change"):GetInt() == 0 then
@@ -769,7 +769,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
     local count = net.ReadUInt(4)
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You don't have this weapon!")
+        net.WriteString(translate.Get("Notification_You_Dont_Have_This_Weapon"))
         net.WriteInt(0,2)
         net.Send(ply)
         return
@@ -789,7 +789,7 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
     local class = net.ReadString()
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You don't have this weapon!")
+        net.WriteString(translate.Get("Notification_You_Dont_Have_This_Weapon"))
         net.WriteInt(0,2)
         net.Send(ply)
         return
@@ -812,7 +812,7 @@ net.Receive("Horde_BuyItemUpgrade", function (len, ply)
     local class = net.ReadString()
     if not ply:HasWeapon(class) then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You don't have this weapon!")
+        net.WriteString(translate.Get("Notification_You_Dont_Have_This_Weapon"))
         net.WriteInt(0,2)
         net.Send(ply)
         return

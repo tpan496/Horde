@@ -64,7 +64,7 @@ function HORDE:GameEnd(status)
 
     if status == "DEFEAT" then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("All players are dead!")
+        net.WriteString(translate.Get("Notification_All_Players_Are_Dead"))
         net.WriteInt(1,2)
         net.Broadcast()
     end
@@ -427,7 +427,7 @@ function HORDE:PlayerInit(ply)
     ply:Horde_SyncEconomy()
 
     ply.Horde_Status = {}
-    ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
+    ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Help_Notice") -- Todo: Figure out how to make it show translated message.
 
     HORDE:GiveStarterWeapons(ply)
 
@@ -551,7 +551,7 @@ HORDE.VoteChangeMap = function (ply)
     HORDE.player_vote_map_change[ply] = 1
     if table.Count(HORDE.player_vote_map_change) == table.Count(player.GetAll()) then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("All players want to change map! Initiating map vote...")
+        net.WriteString(translate.Get("Notification_All_Players_Wants_To_Change_Map"))
         net.WriteInt(0,2)
         net.Broadcast()
         timer.Simple(1, function ()
@@ -559,7 +559,7 @@ HORDE.VoteChangeMap = function (ply)
         end)
     else
         net.Start("Horde_LegacyNotification")
-    net.WriteString(ply:GetName() .. " wants to change the map. (" .. tostring(table.Count(HORDE.player_vote_map_change)) .. "/" .. tostring(table.Count(player.GetAll())) .. ")")
+    net.WriteString(translate.Format("Notification_X_Wants_To_Change_Map_X_Players", ply:GetName(), tostring(table.Count(HORDE.player_vote_map_change)), tostring(table.Count(player.GetAll()))))
         net.WriteInt(0,2)
         net.Broadcast()
     end
@@ -724,7 +724,7 @@ hook.Add("PlayerSpawn", "Horde_PlayerSpawnMidWave", function (ply)
         if ply:IsValid() then
             ply:KillSilent()
             net.Start("Horde_LegacyNotification")
-            net.WriteString("You will respawn next wave.")
+            net.WriteString(translate.Get("Notification_You_Will_Respawn_Next_Wave"))
             net.Send(ply)
         end
     end
@@ -750,7 +750,7 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
         return
     end
     net.Start("Horde_LegacyNotification")
-    net.WriteString("You are dead. You will respawn next wave.")
+    net.WriteString(translate.Get("Notification_You_Are_Dead_You_Will_Respawn_Next_Wave"))
     net.Send(victim)
     HORDE:CheckAlivePlayers()
 

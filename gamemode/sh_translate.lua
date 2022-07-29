@@ -97,7 +97,7 @@ for i, filename in pairs(file.Find(GM.FolderName.."/gamemode/languages/*.lua", "
 	LANGUAGE = nil
 end
 
-local meta = FindMetaTable("Player")
+local meta = debug.getregistry().Player
 if not meta then return end
 
 function meta:PrintTranslatedMessage(hudprinttype, translateid, ...)

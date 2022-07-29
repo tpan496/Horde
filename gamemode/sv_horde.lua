@@ -243,10 +243,10 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                     local dmgtype = HORDE:GetDamageType(dmg)
                     net.Start("Horde_LegacyNotification")
                         if dmgtype == HORDE.DMG_PURE then
-                            net.WriteString("You dealt " .. dmg:GetDamage() .. " damage to " .. ent:GetClass())
+                            net.WriteString(translate.Format("Notification_You_Dealth_X_Damage_To_X", dmg:GetDamage(), ent:GetClass()))
                             net.WriteInt(0,2)
                         else
-                            net.WriteString("You dealt " .. dmg:GetDamage() .. " " .. HORDE.DMG_TYPE_STRING[dmgtype] .. " damage to " .. ent:GetClass())
+                            net.WriteString(translate.Format("Notification_You_Dealth_X_X_Damage_To_X", dmg:GetDamage(), translate.Get("Damage_Type_" .. HORDE.DMG_TYPE_STRING[dmgtype]), ent:GetClass()))
                             net.WriteInt(0,2)
                         end
                     net.Send(dmg:GetAttacker())
@@ -284,10 +284,10 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                 local dmgtype = HORDE:GetDamageType(dmg)
                 net.Start("Horde_LegacyNotification")
                     if dmgtype == HORDE.DMG_PURE then
-                        net.WriteString("You received " .. dmg:GetDamage() .. " damage from " .. dmg:GetAttacker():GetClass())
+                        net.WriteString(translate.Format("Notification_You_Received_X_Damage_From_X", dmg:GetDamage(), translate.Get("Enemy_Name_" .. dmg:GetAttacker():GetClass())))
                         net.WriteInt(0,2)
                     else
-                        net.WriteString("You received " .. dmg:GetDamage() .. " " .. HORDE.DMG_TYPE_STRING[dmgtype] ..  " damage from " .. dmg:GetAttacker():GetClass())
+                        net.WriteString(translate.Format("Notification_You_Received_X_X_Damage_From_X", dmg:GetDamage(), translate.Get("Damage_Type_" .. HORDE.DMG_TYPE_STRING[dmgtype]), dmg:GetAttacker():GetClass()))
                         net.WriteInt(0,2)
                     end
                 net.Send(ent)
@@ -662,7 +662,7 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
                 -- This in fact should not happen
                 if table.IsEmpty(horde_current_enemies_list) then
                     net.Start("Horde_LegacyNotification")
-                        net.WriteString("Current enemy list is empty!")
+                        net.WriteString(translate.Get("Notification_Current_Enemy_List_Is_Empty"))
                         net.WriteInt(1,2)
                     net.Broadcast()
                     return
@@ -886,7 +886,7 @@ function HORDE:WaveStart()
     if (HORDE.enemies_normalized == nil) or table.IsEmpty(HORDE.enemies_normalized) then
         HORDE:HardResetDirector()
         net.Start("Horde_LegacyNotification")
-        net.WriteString("Enemies list is empty. Config the enemy list or no enemies wil spawn.")
+        net.WriteString(translate.Get("Notification_Enemies_List_Is_Empty_Error"))
         net.WriteInt(1,2)
         net.Broadcast()
         HORDE.start_game = false
@@ -895,7 +895,7 @@ function HORDE:WaveStart()
 
     if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("No enemy config set for this wave. Falling back to previous wave settings.")
+        net.WriteString(translate.Get("Notification_No_Enemy_Config_Set_For_Wave_Error"))
         net.WriteInt(1,2)
         net.Broadcast()
     end
@@ -1044,7 +1044,7 @@ function HORDE:WaveEnd()
     else
         HORDE:BroadcastBreakCountDownMessage(0, true)
         net.Start("Horde_LegacyNotification")
-            net.WriteString("Wave Completed!")
+            net.WriteString(translate.Get("Notification_Wave_Completed"))
             net.WriteInt(0,2)
         net.Broadcast()
 
@@ -1084,7 +1084,7 @@ function HORDE:WaveEnd()
     if horde_perk_progress <= 4 and HORDE:Horde_GetWaveForPerk(horde_perk_progress) and HORDE.current_wave >= HORDE:Horde_GetWaveForPerk(horde_perk_progress) then
         timer.Simple(1, function()
             net.Start("Horde_LegacyNotification")
-                net.WriteString("Tier " .. horde_perk_progress .. " perks have been unlocked!")
+                net.WriteString(translate.Format("Notification_Tier_X_Perks_Have_Been_Unlocked", horde_perk_progress))
                 net.WriteInt(0,2)
             net.Broadcast()
             horde_perk_progress = horde_perk_progress + 1
@@ -1171,7 +1171,7 @@ function HORDE:Direct()
     if not HORDE.ai_nodes or table.IsEmpty(HORDE.ai_nodes) then
         print("[HORDE] No info_node(s) in map! NPCs will not spawn.")
         net.Start("Horde_LegacyNotification")
-            net.WriteString("Map has no info nodes! NPCs will not spawn.")
+            net.WriteString(translate.Get("Notification_Map_Has_No_Navmesh"))
             net.WriteInt(1,2)
         net.Broadcast()
         return

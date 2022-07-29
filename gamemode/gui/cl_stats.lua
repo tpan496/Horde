@@ -464,7 +464,7 @@ function PANEL:Init()
     end
 
     local donate_text_panel = vgui.Create("DPanel", description_panel)
-    donate_text_panel:SetSize(self:GetParent():GetWide(), 800)
+    donate_text_panel:SetSize(self:GetParent():GetWide(), 400)
     donate_text_panel:SetVisible(false)
     donate_text_panel.Paint = function () end
 
@@ -768,7 +768,7 @@ function PANEL:Init()
     local stats_btn = vgui.Create("DButton", self)
     local stats_activated = true
     local stats_hovered = false
-    stats_btn:SetText("Stats")
+    stats_btn:SetText(translate.Get("Main_Menu_Category_Stats"))
     stats_btn:SetTextColor(Color(255,255,255))
     stats_btn:SetFont("Title")
     stats_btn:SetSize(250, 50)
@@ -785,7 +785,7 @@ function PANEL:Init()
     local achievements_btn = vgui.Create("DButton", self)
     local achievements_activated = false
     local achievements_hovered = false
-    achievements_btn:SetText("Achievements")
+    achievements_btn:SetText(translate.Get("Main_Menu_Category_Achievements"))
     achievements_btn:SetTextColor(Color(255,255,255))
     achievements_btn:SetFont("Title")
     achievements_btn:SetSize(250, 50)
@@ -802,7 +802,7 @@ function PANEL:Init()
     local learn_btn = vgui.Create("DButton", self)
     local learn_activated = false
     local learn_hovered = false
-    learn_btn:SetText("Mechanics")
+    learn_btn:SetText(translate.Get("Main_Menu_Category_Mechanics"))
     learn_btn:SetTextColor(Color(255,255,255))
     learn_btn:SetFont("Title")
     learn_btn:SetSize(250, 50)

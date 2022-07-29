@@ -169,7 +169,7 @@ local function GetEnemiesData()
             for _, enemy in pairs(t) do
                 if enemy.name == nil or enemy.name == "" or enemy.class == nil or enemy.class == "" or enemy.weight == nil or enemy.wave == nil then
                     net.Start("Horde_LegacyNotification")
-                        net.WriteString("Enemy config file validation failed! Please update your file or delete it.")
+                        net.WriteString(translate.Get("Notification_Enemy_Config_Validation_Failed"))
                     net.WriteInt(1,2)
                     return
                 else

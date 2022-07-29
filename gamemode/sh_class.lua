@@ -307,7 +307,7 @@ if SERVER then
 
         if ply:Horde_GetSubclassUnlocked(subclass_name) == true then
             net.Start("Horde_LegacyNotification")
-            net.WriteString("Subclass " .. subclass.PrintName .. " is already unlocked!")
+            net.WriteString(translate.Format("Notification_Subclass_X_Already_Unlocked", translate.Get(subclass.PrintName)))
             net.WriteInt(1,2)
             net.Send(ply)
             return
@@ -319,7 +319,7 @@ if SERVER then
             ply:Horde_SyncEconomy()
 
             net.Start("Horde_LegacyNotification")
-            net.WriteString("You unlocked " .. subclass.PrintName .. " subclass.")
+            net.WriteString(translate.Format("Notification_You_Unlocked_X_Subclass", translate.Get(subclass.PrintName)))
             net.WriteInt(0,2)
             net.Send(ply)
         end
@@ -432,7 +432,7 @@ function plymeta:Horde_SetSubclass(class_name, subclass_name)
     self.Horde_subclasses[class_name] = subclass_name
     if SERVER then
         net.Start("Horde_LegacyNotification")
-            net.WriteString(class_name .. " subclass changed to " .. HORDE.subclasses[subclass_name].PrintName)
+            net.WriteString(translate.Format("Notification_X_Subclass_Changed_To_X", translate.Get("Subclass_Title_" .. class_name), translate.Get("Subclass_Title_" .. HORDE.subclasses[subclass_name].PrintName)))
             net.WriteInt(0,2)
         net.Send(self)
     end

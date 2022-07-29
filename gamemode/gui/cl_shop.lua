@@ -282,7 +282,7 @@ end
 function PANEL:ReloadAttachments(attachments, container, description_panel)
     self.AttachmentTabLayout:Clear()
     for _, attachment_category in pairs(HORDE.arccw_attachment_categories) do
-        local cat = self.AttachmentTabLayout:Add(attachment_category)
+        local cat = self.AttachmentTabLayout:Add(translate.Get("Shop_" .. attachment_category))
         cat:SetHeaderHeight(40)
         cat:SetPaintBackground(false)
         cat:SetExpanded(false)

@@ -504,7 +504,7 @@ function PANEL:Init()
     load_btn:SetTall(30)
     load_btn.DoClick = function ()
         Derma_Query("Overwrite?", "Overwrite with Default",
-            "Yes",
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE.enemies = {}
                 HORDE:GetDefaultEnemiesData()
@@ -517,7 +517,7 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
     end
 
@@ -528,7 +528,7 @@ function PANEL:Init()
     load_defaut_btn:SetText("Add Default Enemies")
     load_defaut_btn.DoClick = function ()
         Derma_Query("Add Default Enemies?", "Default Enemies",
-            "Yes",
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE:GetDefaultEnemiesData()
 
@@ -540,7 +540,7 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
     end
 
@@ -551,7 +551,7 @@ function PANEL:Init()
     del_btn:SetTall(30)
     del_btn.DoClick = function ()
         Derma_Query("Delete Everything?", "Delete Everything",
-            "Yes",
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE.enemies = {}
 
@@ -563,7 +563,7 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
     end
 

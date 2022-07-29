@@ -15,7 +15,7 @@ translate.AddLanguage("ru", "Russian")
 LANGUAGE["Game_Ready"] = "Готов"
 LANGUAGE["Game_Not Ready"] = "Не готов"
 LANGUAGE["Game_Players_Ready"] = "Готовые игроки"
-LANGUAGE["Game_Next_Wave_Starts_In"] = "Следующая волна начнется через %d"
+LANGUAGE["Game_Next_Wave_Starts_In"] = "Следующая волна начнётся через %d"
 LANGUAGE["Game_Difficulty_NORMAL"] = "СРЕДНИЙ"
 LANGUAGE["Game_Difficulty_HARD"] = "СЛОЖНЫЙ"
 LANGUAGE["Game_Difficulty_REALISM"] = "РЕАЛИСТИЧНЫЙ"
@@ -45,7 +45,7 @@ LANGUAGE["Game_SharpShooter"] = "Снайпер"
 LANGUAGE["Game_Headshots"] = "Выстрелы в голову"
 LANGUAGE["Game_Most_Heal"] = "Командный целитель"
 LANGUAGE["Game_Healed"] = "Вылечил"
-LANGUAGE["Game_Healed_You"] = "Вылечил вас"
+LANGUAGE["Game_X_Healed_You"] = "%s вылечил вас."
 
 
 -- Ranks
@@ -93,15 +93,13 @@ LANGUAGE["Shop_Select_Class"] = "Выбрать класс (Ваши вещи б
 LANGUAGE["Shop_Show_Perks"] = "Показать умения класса"
 LANGUAGE["Shop_Hide_Perks"] = "Скрыть умения класса"
 LANGUAGE["Shop_Unlocks_After_Wave"] = "Открывается после %d волны"
-LANGUAGE["Shop_Buy_Ammo_Clip"] = "Купить обойму"
-LANGUAGE["Shop_Sell_For"] = "Продать за"
-LANGUAGE["Shop_Sell_All_For"] = "Продать все за"
+LANGUAGE["Shop_Sell_For"] = "Продать за %s$"
+LANGUAGE["Shop_Sell_All_For"] = "Продать все за %s$"
 LANGUAGE["Shop_Buy_Item"] = "Купить"
 LANGUAGE["Shop_OWNED"] = "КУПЛЕНО"
 LANGUAGE["Shop_Buy_Secondary_Ammo"] = "Купить доп. боезапас"
 LANGUAGE["Shop_Primary_Ammo"] = "Основные боеприпасы"
 LANGUAGE["Shop_Secondary_Ammo"] = "Доп. боеприпасы"
-
 
 -- Classes
 LANGUAGE["Class_Survivor"] = "Выживший"
@@ -115,12 +113,24 @@ LANGUAGE["Class_Berserker"] = "Берсерк"
 LANGUAGE["Class_Warden"] = "Надзиратель"
 LANGUAGE["Class_Cremator"] = "Крематор"
 
+-- Subclasses
+LANGUAGE["Subclass_Title_Survivor"] = LANGUAGE["Class_Survivor"]
+LANGUAGE["Subclass_Title_Assault"] = LANGUAGE["Class_Assault"]
+LANGUAGE["Subclass_Title_Heavy"] = LANGUAGE["Class_Heavy"]
+LANGUAGE["Subclass_Title_Medic"] = LANGUAGE["Class_Medic"]
+LANGUAGE["Subclass_Title_Demolition"] = LANGUAGE["Class_Demolition"]
+LANGUAGE["Subclass_Title_Ghost"] = LANGUAGE["Class_Ghost"]
+LANGUAGE["Subclass_Title_Engineer"] = LANGUAGE["Class_Engineer"]
+LANGUAGE["Subclass_Title_Berserker"] = LANGUAGE["Class_Berserker"]
+LANGUAGE["Subclass_Title_Warden"] = LANGUAGE["Class_Warden"]
+LANGUAGE["Subclass_Title_Cremator"] = LANGUAGE["Class_Cremator"]
+
 -- Gadgets
 LANGUAGE["Gadget_Activation"] = "Нажмите T для активации."
 LANGUAGE["Gadget_Cooldown"] = "Перезарядка"
 LANGUAGE["Gadget_Duration"] = "Длительность"
 LANGUAGE["Gadget_Owned_Warning"] = "Только 1 гаджет может быть ПРИОБРЕТЁН!"
-LANGUAGE["Gadget_Seconds"] = "сек."
+LANGUAGE["Gadget_Seconds"] = "сек"
 
 -- Default Class Extra Descriptions
 LANGUAGE["Class_Description_Survivor"] = [[
@@ -210,7 +220,7 @@ LANGUAGE["Perk_engineer_base"] = [[
 
 {1} увеличенный урон построек. ({2} за уровень, до {3}).
 
-Турели имеют {4} базового здоровья и наносят {5} базового урона.]]
+Турели имеют {4} ед. базового здоровья и наносят {5} ед. базового урона.]]
 
 LANGUAGE["Perk_berserker_base"] = [[
 Берсерк - это класс, ориентированный на рукопашный бой, который может играть как в атаке, так и в обороне.
@@ -702,7 +712,7 @@ LANGUAGE["Item_Desc_Kevlar Armor Battery"] = [[
 Каждый дает 15 брони. Только для личного пользования.
 ]]
 
-LANGUAGE["Item_Full Kevlar Armor"] = [[Полный комплект кевл. брони]]
+LANGUAGE["Item_Full Kevlar Armor"] = [[Полный комплект кевларовой брони]]
 LANGUAGE["Item_Desc_Full Kevlar Armor"] = [[
 Полный комплект кевларовой брони.
 Пополняет 100% вашей брони.
@@ -907,7 +917,8 @@ LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
 
 LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Корпоративное мышление]]
 LANGUAGE["Gadget_Desc_gadget_corporate_mindset"] = [[
-«Установить цели. Есть десятилетний план. Вложить. Просыпайся рано. Мышление генерального директора».
+«Установить цели. Есть десятилетний план. Вложить. Просыпайся рано.
+Мышление генерального директора».
 
 Значительно увеличивает шанс выпадения жетонов черепа.
 ]]

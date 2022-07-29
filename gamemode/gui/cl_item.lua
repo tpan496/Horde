@@ -112,9 +112,9 @@ function PANEL:SetData(item, description_panel, infusion_panel)
     end
 
     if LocalPlayer():Horde_GetInfusion(self.item.class) == HORDE.Infusion_None then
-        infusion_btn:SetText("Infusion: " .. "None")
+        infusion_btn:SetText(translate.Get("Shop_Weapon_Infusion_None"))
     else
-        infusion_btn:SetText("Infusion: " .. HORDE.Infusion_Names[LocalPlayer():Horde_GetInfusion(self.item.class)])
+        infusion_btn:SetText(translate.Format("Shop_Weapon_Infusion_X", translate.Get("Infusion_" .. HORDE.Infusion_Names[LocalPlayer():Horde_GetInfusion(self.item.class)])))
     end
     infusion_btn:SetFont("Category")
 
@@ -208,7 +208,7 @@ function PANEL:Paint()
 
         if LocalPlayer():HasWeapon(self.item.class) or LocalPlayer():Horde_GetGadget() == self.item.class or (LocalPlayer().Horde_drop_entities and LocalPlayer().Horde_drop_entities[self.item.class]) then
             self.price_panel:SetTextColor(HORDE.color_crimson)
-            self.price_panel:SetText("Owned")
+            self.price_panel:SetText(translate.Get("Shop_Ownedd"))
             if self.item.category == "Attachment" or self.item.category == "Gadget" or self.item.category == "Equipment" or self.item.category == "Explosive" or self.item.category == "Special" then
             else
                 self.infusion_btn:SetVisible(true)
@@ -216,9 +216,9 @@ function PANEL:Paint()
 
             local infusion = LocalPlayer():Horde_GetInfusion(self.item.class)
             if infusion == HORDE.Infusion_None then
-                self.infusion_btn:SetText("Infusion: " .. "None")
+                self.infusion_btn:SetText(translate.Get("Shop_Weapon_Infusion_None"))
             else
-                self.infusion_btn:SetText("Infusion: " .. HORDE.Infusion_Names[infusion])
+                self.infusion_btn:SetText(translate.Format("Shop_Weapon_Infusion_X", translate.Get("Infusion_" .. HORDE.Infusion_Names[infusion])))
             end
         else
             self.infusion_btn:SetVisible(false)

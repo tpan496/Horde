@@ -86,7 +86,7 @@ function PANEL:Init()
     whitelist_del_btn:SetText("Delete Whitelist")
     whitelist_del_btn.DoClick = function ()
         Derma_Query("Delete Everything?", "Delete Whitelist",
-            "Yes",
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE.map_whitelist = {}
 
@@ -95,7 +95,7 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
     end
 
@@ -181,7 +181,7 @@ function PANEL:Init()
     blacklist_del_btn:SetText("Delete Blacklist")
     blacklist_del_btn.DoClick = function ()
         Derma_Query("Delete Everything?", "Delete Blacklist",
-            "Yes",
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE.map_blacklist = {}
 
@@ -190,7 +190,7 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
     end
 

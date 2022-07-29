@@ -36,7 +36,7 @@ function PANEL:Init()
     self.subclass_btn:DockMargin(2.5,0,0,0)
     self.subclass_btn:SetFont("Content")
     self.subclass_btn:SetTall(50)
-    self.subclass_btn:SetText("Change Subclass")
+    self.subclass_btn:SetText(translate.Get("Shop_Change_Subclass"))
     self.subclass_btn.OnCursorEntered = function ()
         surface.PlaySound("UI/buttonrollover.wav")
     end
@@ -137,8 +137,8 @@ function PANEL:DoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
     if not self.item.class then
-        Derma_Query("Changing class will remove all your items!", "Change Class",
-            "Yes",
+        Derma_Query(translate.Get("Shop_Change_Class_Confirmation_Dialogue"), translate.Get("Shop_Change_Class_Confirmation_Dialogue_Title"),
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE:SendSavedPerkChoices(LocalPlayer().Horde_subclass_choices[self.item.name])
                 LocalPlayer():Horde_SetSubclass(self.item.name, LocalPlayer().Horde_subclass_choices[self.item.name])
@@ -149,7 +149,7 @@ function PANEL:DoClick()
 
                 file.Write("horde/class_choices.txt", self.item.subclass.PrintName)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
         --warning_panel:SetFont("Title")
         return
@@ -206,15 +206,15 @@ function PANEL:SellDoClick()
     end
     if not LocalPlayer():Alive() then return end
     if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties and (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP or self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET)) then
-        Derma_Query("Sell Item?!", "Sell",
-                "Yes",
+        Derma_Query(translate.Get("Shop_Sell_Item_Confirmation_Dialogue"), translate.Get("Shop_Sell_Item_Confirmation_Dialogue_Title"),
+                translate.Get("Shop_Confirmation_Dialogue_Yes"),
                 function()
                     -- Sell the item
                     net.Start("Horde_SellItem")
                     net.WriteString(self.item.class)
                     net.SendToServer()
                 end,
-                "No", function() end
+                translate.Get("Shop_Confirmation_Dialogue_No"), function() end
             )
     end
 end
@@ -539,7 +539,7 @@ function PANEL:Paint()
                 w, h = surface.GetTextSize(self.loc_desc .. "\n\n")
             end
             if self.item.dmgtype then
-                draw.DrawText("Damage Type: ", "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                draw.DrawText(translate.Get("Shop_Weapon_Damage_Type"), "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
                 local px = 0
                 for _, dmgtype in SortedPairs(self.item.dmgtype) do
                     local icon2 = Material(HORDE.DMG_TYPE_ICON[dmgtype], "mips smooth")
@@ -565,7 +565,7 @@ function PANEL:Paint()
                 w, h = surface.GetTextSize(self.loc_desc .. "\n")
             end
             if self.item.dmgtype then
-                draw.DrawText("Damage Type: ", "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                draw.DrawText(translate.Get("Shop_Weapon_Damage_Type"), "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
                 local px = 0
                 for _, dmgtype in SortedPairs(self.item.dmgtype) do
                     local icon = Material(HORDE.DMG_TYPE_ICON[dmgtype], "mips smooth")
@@ -639,7 +639,7 @@ function PANEL:Paint()
 
         if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET and LocalPlayer():Horde_GetGadget() == self.item.class) then
             self.buy_btn:SetTextColor(Color(255,255,255))
-            self.buy_btn:SetText("OWNED")
+            self.buy_btn:SetText(translate.Get("Shop_OWNED"))
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(Color(40,40,40))
                 surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -647,7 +647,7 @@ function PANEL:Paint()
 
             self.sell_btn:SetVisible(true)
             self.sell_btn:SetTextColor(Color(255,255,255))
-            self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.25)) .. "$")
+            self.sell_btn:SetText(translate.Format("Shop_Sell_For", tostring(math.floor(self.item.price * 0.25))))
             self.sell_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -659,7 +659,7 @@ function PANEL:Paint()
                 if self.item.ammo_price and self.item.ammo_price >= 0 then
                     self.ammo_one_btn:SetTextColor(Color(255,255,255))
                     local price = self.item.ammo_price and self.item.ammo_price or HORDE.default_ammo_price
-                    self.ammo_one_btn:SetText(translate.Get("Shop_Buy_Ammo_Clip") .. " x 1 (" .. tostring(price) .. "$)")
+                    self.ammo_one_btn:SetText(translate.Format("Shop_Buy_Ammo_Clip_One", tostring(price)))
                     self.ammo_one_btn:SetWide(self:GetWide() / 2)
                     self.ammo_one_btn.Paint = function ()
                         surface.SetDrawColor(HORDE.color_crimson)
@@ -668,7 +668,7 @@ function PANEL:Paint()
 
 
                     self.ammo_ten_btn:SetTextColor(Color(255,255,255))
-                    self.ammo_ten_btn:SetText(translate.Get("Shop_Buy_Ammo_Clip") .. " x 10 (" .. tostring(price * 10) .. "$)")
+                    self.ammo_ten_btn:SetText(translate.Format("Shop_Buy_Ammo_Clip_Ten", tostring(price * 10)))
                     self.ammo_ten_btn:SetWide(self:GetWide() / 2)
                     self.ammo_ten_btn.Paint = function ()
                         surface.SetDrawColor(HORDE.color_crimson)
@@ -765,9 +765,9 @@ function PANEL:Paint()
         elseif LocalPlayer():Horde_GetMoney() < self.item.price or LocalPlayer():Horde_GetWeight() < self.item.weight or (not LocalPlayer():Alive()) then
             self.buy_btn:SetTextColor(Color(200,200,200))
             if not LocalPlayer():Alive() then
-                self.buy_btn:SetText("You are dead.")
+                self.buy_btn:SetText(translate.Get("Shop_Client_Dead"))
             else
-                self.buy_btn:SetText("Not Enough Money or Carrying Capacity!")
+                self.buy_btn:SetText(translate.Get("Shop_Not_Enough_Cash_Or_Carrying_Many"))
             end
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
@@ -782,7 +782,7 @@ function PANEL:Paint()
                 if drop_entities[self.item.class] then
                     self.sell_btn:SetVisible(true)
                     self.sell_btn:SetTextColor(Color(255,255,255))
-                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class])) .. "$")
+                    self.sell_btn:SetText(translate.Format("Shop_Sell_All_For", tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class]))))
                     self.sell_btn.Paint = function ()
                         surface.SetDrawColor(HORDE.color_crimson)
                         surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -798,10 +798,10 @@ function PANEL:Paint()
             if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
                 local drop_entities = LocalPlayer():Horde_GetDropEntities()
                 if drop_entities[self.item.class] then
-                    self.buy_btn:SetText(translate.Get("Shop_Buy_Item") .. " " .. drop_entities[self.item.class] .. "/" .. self.item.entity_properties.limit)
+                    self.buy_btn:SetText(translate.Format("Shop_Buy_Item_Limit", drop_entities[self.item.class], self.item.entity_properties.limit))
                     self.sell_btn:SetVisible(true)
                     self.sell_btn:SetTextColor(Color(255,255,255))
-                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class])) .. "$")
+                    self.sell_btn:SetText(translate.Format("Shop_Sell_All_For", tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class]))))
                     self.sell_btn.Paint = function ()
                         surface.SetDrawColor(HORDE.color_crimson)
                         surface.DrawRect(0, 0, self:GetWide(), 200)

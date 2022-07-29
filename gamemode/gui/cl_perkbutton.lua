@@ -104,7 +104,7 @@ function PANEL:SetData(classname, perk_level, choice, subclass)
 
     self.info.active = (tbl_choices[perk_level] or 1) == choice
 
-    local title = perk.PrintName or "Unnamed Perk"
+    local title = perk.PrintName or translate.Get("Shop_Perk_No_Name")
     local loc_title = translate.Get("Perk_Title_" .. perk_choice) or title
     self.title:SetText(loc_title)
     

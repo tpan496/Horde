@@ -315,7 +315,7 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     if total_damage > 0 then
         percentage = HORDE:Round2(mvp_damage / total_damage, 2) * 100
     end
-    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              "MVP", tostring(mvp_kills) .. " " .. translate.Get("Game_Kills") .. ", " .. tostring(mvp_damage) .. " " .. translate.Get("Game_Damage") .. " (" .. tostring(percentage) .. "%)")
+    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              translate.Get("Game_Most_Valuable_Player"), tostring(mvp_kills) .. " " .. translate.Get("Game_Kills") .. ", " .. tostring(mvp_damage) .. " " .. translate.Get("Game_Damage") .. " (" .. tostring(percentage) .. "%)")
     self.create_player_panel({x=512 - 480 - 5,y=280}, damage_player,       translate.Get("Game_Most_Damage_Dealt"), tostring(most_damage) .. " " .. translate.Get("Game_Damage"))
     self.create_player_panel({x=512 + 5, y=280}, kills_player,             translate.Get("Game_Most_Kills"), tostring(most_kills) .. " " .. translate.Get("Game_Kills"))
     self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, translate.Get("Game_Most_Damage_Taken"), tostring(most_damage_taken) .. " " .. translate.Get("Game_Damage_Taken"))

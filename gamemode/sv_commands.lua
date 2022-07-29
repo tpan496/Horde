@@ -47,11 +47,11 @@ function Start(ply)
         if not HORDE.start_game then
             HORDE.start_game = true
         else
-            ply:PrintMessage(HUD_PRINTTALK, "Game has already started!")
+            ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Game_Started")
         end
     else
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You do not have access to this command.")
+        net.WriteString(translate.Get("Notification_You_Do_Not_Have_Access_To_This_Command"))
         net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -62,7 +62,7 @@ function Ready(ply)
     if HORDE.current_wave > 0 then return end
     if not ply:Alive() then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You can't get ready when you are dead!")
+        net.WriteString(translate.Get("Notification_You_Cant_Get_Ready_When_You_Are_Dead"))
         net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -97,20 +97,20 @@ end
 function End(ply)
     if not ply:IsAdmin() then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You do not have access to this command.")
+        net.WriteString(translate.Get("Notification_You_Do_Not_Have_Access_To_This_Command"))
         net.WriteInt(1,2)
         net.Send(ply)
         return
     end
     HORDE.start_game = false
     HORDE.player_ready = {}
-    ply:PrintMessage(HUD_PRINTTALK, "Stopping game...")
+    ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Stopping_Game")
 end
 
 function Shop(ply)
     if GetConVar("horde_enable_shop"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("Shop has been disabled.")
+        net.WriteString(translate.Get("Notification_Shop_Has_Been_Disabled"))
         net.WriteInt(1,2)
         net.Send(ply)
     end
@@ -123,7 +123,7 @@ function Shop(ply)
     end
     if HORDE.current_break_time <= 0 then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You cannot shop after a wave has started.")
+        net.WriteString(translate.Get("Notification_You_Cannot_Shop_After_A_Wave_Has_Started"))
         net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -136,7 +136,7 @@ function Shop(ply)
 
         if HORDE.current_break_time <= 0 then
             net.Start("Horde_LegacyNotification")
-            net.WriteString("You cannot shop after a wave has started.")
+            net.WriteString(translate.Get("Notification_You_Cannot_Shop_After_A_Wave_Has_Started"))
             net.WriteInt(1,2)
             net.Send(ply)
             return
@@ -150,7 +150,7 @@ end
 function ItemConfig(ply)
     if HORDE.start_game then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You cannot open config after a game has started.")
+        net.WriteString(translate.Get("Notification_You_Cannot_Open_Config_After_A_Game_Has_Started"))
         net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -160,7 +160,7 @@ function ItemConfig(ply)
         net.Send(ply)
     else
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You do not have access to this command.")
+        net.WriteString(translate.Get("Notification_You_Do_Not_Have_Access_To_This_Command"))
         net.WriteInt(1,2)
         net.Send(ply)
     end
@@ -169,7 +169,7 @@ end
 function EnemyConfig(ply)
     if HORDE.start_game then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You cannot open config after a game has started.")
+        net.WriteString(translate.Get("Notification_You_Cannot_Shop_After_A_Wave_Has_Started"))
         net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -181,7 +181,7 @@ function EnemyConfig(ply)
         net.Send(ply)
     else
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You do not have access to this command.")
+        net.WriteString(translate.Get("Notification_You_Do_Not_Have_Access_To_This_Command"))
         net.WriteInt(1,2)
         net.Send(ply)
     end
@@ -190,7 +190,7 @@ end
 function ClassConfig(ply)
     if HORDE.start_game then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You cannot open config after a game has started.")
+        net.WriteString(translate.Get("Notification_You_Cannot_Shop_After_A_Wave_Has_Started"))
         net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -200,7 +200,7 @@ function ClassConfig(ply)
         net.Send(ply)
     else
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You do not have access to this command.")
+        net.WriteString(translate.Get("Notification_You_Do_Not_Have_Access_To_This_Command"))
         net.WriteInt(1,2)
         net.Send(ply)
     end
@@ -209,7 +209,7 @@ end
 function MapConfig(ply)
     if HORDE.start_game then
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You cannot open config after a game has started.")
+        net.WriteString(translate.Get("Notification_You_Cannot_Shop_After_A_Wave_Has_Started"))
         net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -220,7 +220,7 @@ function MapConfig(ply)
         net.Send(ply)
     else
         net.Start("Horde_LegacyNotification")
-        net.WriteString("You do not have access to this command.")
+        net.WriteString(translate.Get("Notification_You_Do_Not_Have_Access_To_This_Command"))
         net.WriteInt(1,2)
         net.Send(ply)
     end
@@ -245,11 +245,11 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     if not ply:IsValid() then return end
     local text = string.lower(input) -- Make the chat message entirely lowercase
     if text == "!help" then
-        ply:PrintMessage(HUD_PRINTTALK, "'!ready' - Get ready")
-        ply:PrintMessage(HUD_PRINTTALK, "'!shop' - Open shop")
-        ply:PrintMessage(HUD_PRINTTALK, "'!drop' - Drop weapon")
-        ply:PrintMessage(HUD_PRINTTALK, "'!throwmoney' - Drop 50$")
-        ply:PrintMessage(HUD_PRINTTALK, "'!rtv' -Initiate a map change vote")
+        ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Help_Ready")
+        ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Help_Shop")
+        ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Help_Drop")
+        ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Help_Throw_Money")
+        ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Help_Change_Map")
     elseif text == "!start" then
         Start(ply)
     elseif text == "!ready" then
@@ -321,7 +321,7 @@ end)
 concommand.Add("horde_testing_gorlami", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
-            net.WriteString("Command only available in sandbox mode.")
+            net.WriteString(translate.Get("Notification_Command_Only_Availaable_In_Sandbox_Mode"))
             net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -337,7 +337,7 @@ end)
 concommand.Add("horde_testing_free_perks", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
-            net.WriteString("Command only available in sandbox mode.")
+            net.WriteString(translate.Get("Notification_Command_Only_Availaable_In_Sandbox_Mode"))
             net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -351,7 +351,7 @@ end)
 concommand.Add("horde_testing_wave_goto", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
-            net.WriteString("Command only available in sandbox mode.")
+            net.WriteString(translate.Get("Notification_Command_Only_Availaable_In_Sandbox_Mode"))
             net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -366,7 +366,7 @@ end)
 concommand.Add("horde_testing_disable_level_restrictions", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
-            net.WriteString("Command only available in sandbox mode.")
+            net.WriteString(translate.Get("Notification_Command_Only_Availaable_In_Sandbox_Mode"))
             net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -379,7 +379,7 @@ end)
 concommand.Add("horde_testing_give_skull_tokens", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
-            net.WriteString("Command only available in sandbox mode.")
+            net.WriteString(translate.Get("Notification_Command_Only_Availaable_In_Sandbox_Mode"))
             net.WriteInt(1,2)
         net.Send(ply)
         return
@@ -400,7 +400,7 @@ end)
 concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
-            net.WriteString("Command only available in sandbox mode.")
+            net.WriteString(translate.Get("Notification_Command_Only_Availaable_In_Sandbox_Mode"))
             net.WriteInt(1,2)
         net.Send(ply)
         return

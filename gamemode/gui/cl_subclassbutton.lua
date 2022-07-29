@@ -49,19 +49,19 @@ function PANEL:DoClick()
     if not self.info then return end
     if self.locked then
         if LocalPlayer():Horde_GetSkullTokens() < self.info.subclass.UnlockCost then return end
-        Derma_Query("Unlock?", "Unlock Subclass",
-                "Yes",
+        Derma_Query(translate.Get("Shop_Unlock_Subclass_Confirmation_Dialogue"), translate.Get("Shop_Unlock_Subclass_Confirmation_Dialogue_Title"),
+                translate.Get("Shop_Confirmation_Dialogue_Yes"),
                 function()
                     net.Start("Horde_UnlockSubclass")
                         net.WriteString(self.info.subclass.PrintName)
                     net.SendToServer()
                     HORDE:ToggleShop()
                 end,
-                "No", function() end
+                translate.Get("Shop_Confirmation_Dialogue_No"), function() end
             )
     else
-        Derma_Query("Change Subclass?", "Change Subclass",
-                "Yes",
+        Derma_Query(translate.Get("Shop_Change_Subclass_Confirmation_Dialogue"), translate.Get("Shop_Change_Subclass_Confirmation_Dialogue_Title"),
+                translate.Get("Shop_Confirmation_Dialogue_Yes"),
                 function()
                     LocalPlayer():Horde_SetSubclass(self.info.class, self.info.subclass.PrintName)
                     HORDE:ToggleShop()
@@ -75,7 +75,7 @@ function PANEL:DoClick()
                     end
                     HORDE:SaveSubclassChoices()
                 end,
-                "No", function() end
+                translate.Get("Shop_Confirmation_Dialogue_No"), function() end
             )
     end
     
@@ -128,10 +128,10 @@ function PANEL:SetData(classname, subclass_name)
         self.title:SetColor(color_white)
         self.desc:SetColor(color_white)
         local text = subclass.Description .. "\n"
-        local loc_desc = translate.Get("Subclass_" .. subclass.Description) or text
+        local loc_desc = translate.Get("Subclass_Description_" .. subclass.PrintName) or text
         self.desc:SetText(loc_desc)
         self.desc:SetFont("Horde_PerkButton_Text")
-        local title = subclass.PrintName or "Unnamed Subclass"
+        local title = subclass.PrintName or translate.Get("Shop_Subclass_No_Name")
         local loc_title = translate.Get("Subclass_Title_" .. title) or subclass.PrintName
         self.title:SetText(loc_title)
     end

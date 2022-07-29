@@ -526,7 +526,7 @@ function PANEL:Init()
                     icon:SetPos(start_pos_3 + 20, 65)
                     start_pos_3 = start_pos_3 + 90
                 end
-                lb:SetText(HORDE.Infusion_Names[infusion])
+                lb:SetText(translate.Get("Infusion_" .. HORDE.Infusion_Names[infusion]))
                 lb:SetTextColor(Color(0,0,0))
                 editor:SetText("")
                 editor:SetTextColor(Color(0,0,0))
@@ -730,7 +730,7 @@ function PANEL:Init()
     load_btn:SetText("OVERWRITE with Default")
     load_btn.DoClick = function ()
         Derma_Query("Overwrite?", "Overwrite with Default",
-            "Yes",
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE.items = {}
                 HORDE:GetDefaultItemsData()
@@ -743,7 +743,7 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
     end
 
@@ -754,7 +754,7 @@ function PANEL:Init()
     load_defaut_btn:SetText("Add Default Items")
     load_defaut_btn.DoClick = function ()
         Derma_Query("Add Default Items?", "Default Items",
-            "Yes",
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE:GetDefaultItemsData()
 
@@ -766,7 +766,7 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
     end
 
@@ -777,7 +777,7 @@ function PANEL:Init()
     gadget_btn:SetText("Add Default Gadgets")
     gadget_btn.DoClick = function ()
         Derma_Query("Add Default Gadgets?", "Default Gadgets",
-            "Yes",
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE:GetDefaultGadgets()
 
@@ -789,7 +789,7 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
     end
 
@@ -800,7 +800,7 @@ function PANEL:Init()
     del_btn:SetText("Delete Everything")
     del_btn.DoClick = function ()
         Derma_Query("Delete Everything?", "Delete Everything",
-            "Yes",
+            translate.Get("Shop_Confirmation_Dialogue_Yes"),
             function()
                 HORDE.items = {}
 
@@ -812,7 +812,7 @@ function PANEL:Init()
                 net.SendToServer()
                 notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
             end,
-            "No", function() end
+            translate.Get("Shop_Confirmation_Dialogue_No"), function() end
         )
     end
 

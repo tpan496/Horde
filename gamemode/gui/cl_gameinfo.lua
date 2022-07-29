@@ -76,7 +76,7 @@ timer.Simple(5, function ()
                 end
             end
         else
-            draw.SimpleText("Spectating", "Info", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(translate.Get("Game_Spectating"), "Info", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
         draw.RoundedBox(10, 285, 0, 50, 50, Color(40,40,40,200))
         if ammobox_refresh_count > 5 then
@@ -197,7 +197,7 @@ end)
 net.Receive("Horde_RenderHealer", function()
     local healer = net.ReadString()
     if heal_msg_cd <= 0 then
-        notification.AddLegacy(string.sub(healer, 0, 10) .. " " .. translate.Get("Game_Healed_You") .. ".", NOTIFY_GENERIC, 5)
+        notification.AddLegacy(translate.Format("Game_X_Healed_You", string.sub(healer, 0, 10)), NOTIFY_GENERIC, 5)
         heal_msg_cd = 5
     end
 end)
