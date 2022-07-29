@@ -4,7 +4,7 @@ name = "Weapon_HLOF_Spore_Launcher.Single",
 channel = CHAN_WEAPON,
 volume = VOL_NORM,
 soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/spore_launcher/splauncher_fire.wav"
+sound = "horde/weapons/spore_launcher/splauncher_fire.ogg"
 } )
 sound.Add(
 {
@@ -12,7 +12,7 @@ name = "Weapon_HLOF_Spore_Launcher.Double",
 channel = CHAN_WEAPON,
 volume = VOL_NORM,
 soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/spore_launcher/splauncher_altfire.wav"
+sound = "horde/weapons/spore_launcher/splauncher_altfire.ogg"
 } )
 sound.Add(
 {
@@ -20,7 +20,7 @@ name = "Weapon_HLOF_Spore_Launcher.Reload",
 channel = CHAN_ITEM,
 volume = VOL_NORM,
 soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/spore_launcher/splauncher_reload.wav"
+sound = "horde/weapons/spore_launcher/splauncher_reload.ogg"
 } )
 sound.Add(
 {
@@ -28,7 +28,7 @@ name = "Weapon_HLOF_Spore_Launcher.Pet",
 channel = CHAN_ITEM,
 volume = VOL_NORM,
 soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/spore_launcher/splauncher_pet.wav"
+sound = "horde/weapons/spore_launcher/splauncher_pet.ogg"
 } )
 sound.Add(
 {
@@ -36,7 +36,7 @@ name = "Weapon_HLOF_Spore_Launcher.Impact",
 channel = CHAN_ITEM,
 volume = VOL_NORM,
 soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/spore_launcher/splauncher_impact.wav"
+sound = "horde/weapons/spore_launcher/splauncher_impact.ogg"
 } )
 sound.Add(
 {
@@ -44,7 +44,7 @@ name = "Weapon_HLOF_Spore_Launcher.Bounce",
 channel = CHAN_ITEM,
 volume = VOL_NORM,
 soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/spore_launcher/splauncher_bounce.wav"
+sound = "horde/weapons/spore_launcher/splauncher_bounce.ogg"
 } )
 
 if CLIENT then

@@ -96,7 +96,7 @@ SWEP.HoldtypeHolstered = "normal"
 SWEP.HoldtypeActive = "pistol"
 SWEP.HoldtypeSights = "pistol"
 
-SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
+SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_SMG1
 
 SWEP.ActivePos = Vector(0, 0, 1)
 SWEP.ActiveAng = Angle(0, 0, 0)
@@ -132,6 +132,11 @@ SWEP.Attachments = {
 SWEP.Animations = {
     ["fire"] = {
         Source = {"fire1", "fire2", "fire3"},
+        Time = 12/30,
+        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_SMG1,
+    },
+    ["fire_iron"] = {
+        Source = "fire",
         Time = 12/30,
     },
     ["reload"] = {

@@ -11,7 +11,7 @@ name = "Weapon_HL_Gluon_Gun.Single",
 channel = CHAN_WEAPON,
 volume = VOL_NORM,
 soundlevel = SNDLVL_GUNFIRE,
-sound = "horde/weapons/gluon/egon_windup2.wav"
+sound = "horde/weapons/gluon/egon_windup2.ogg"
 } )
 sound.Add(
 {
@@ -19,7 +19,7 @@ name = "Weapon_HL_Gluon_Gun.Double",
 channel = CHAN_WEAPON,
 volume = VOL_NORM,
 soundlevel = SNDLVL_GUNFIRE,
-sound = "horde/weapons/gluon/egon_off1.wav"
+sound = "horde/weapons/gluon/egon_off1.ogg"
 } )
 sound.Add(
 {
@@ -27,7 +27,7 @@ name = "Weapon_HL_Gluon_Gun.Run",
 channel = CHAN_WEAPON,
 volume = VOL_NORM,
 soundlevel = SNDLVL_GUNFIRE,
-sound = "horde/weapons/gluon/egon_run3.wav"
+sound = "horde/weapons/gluon/egon_run3.ogg"
 })
 
 SWEP.PrintName = "Gluon Gun"

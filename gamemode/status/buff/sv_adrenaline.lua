@@ -7,8 +7,8 @@ function plymeta:Horde_AddAdrenalineStack(override_max)
         self.Horde_AdrenalineStack = math.min(2, self.Horde_AdrenalineStack + 1)
     end
     self.Horde_AdrenalineStackAdded = true
-    --timer.Remove("Horde_AdrenalineTracker" .. self:SteamID())
-    timer.Adjust("Horde_AdrenalineTracker" .. self:SteamID(), self:Horde_GetAdrenalineStackDuration(), 1, function()
+    timer.Remove("Horde_AdrenalineTracker" .. self:SteamID())
+    timer.Create("Horde_AdrenalineTracker" .. self:SteamID(), self:Horde_GetAdrenalineStackDuration(), 1, function()
         if not self:IsValid() then return end
         self.Horde_AdrenalineStackAdded = nil
         self:Horde_RemoveAdrenalineStack()

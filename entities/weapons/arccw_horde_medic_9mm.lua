@@ -163,44 +163,12 @@ SWEP.Attachments = {
 }
 
 SWEP.Animations = {
-    ["idle"] = {
-        Source = "idle",
-        Time = 2/30,
-        TPAnim = ACT_HL2MP_IDLE_PISTOL,
-    },
-    ["enter_sprint"] = {
-        Source = "sprint_in",
-        Time = 10/30
-    },
-    ["idle_sprint"] = {
-        Source = "sprint_loop",
-        Time = 30/40
-    },
-    ["exit_sprint"] = {
-        Source = "sprint_out",
-        Time = 10/30
-    },
-    ["draw"] = {
-        Source = "pullout",
-        Time = 29/30 /4,
-        SoundTable = {{s = "MW2Common.Deploy", 		t = 0}},
-        LHIK = true,
-        LHIKIn = 0,
-        LHIKOut = 0.35,
-    },
-    ["holster"] = {
-        Source = "putaway",
-        Time = 33/30 /4,
-        LHIK = true,
-        LHIKIn = 0,
-        LHIKOut = 0.35,
-    },
     ["fire"] = {
         Source = "fire",
         Time = 12/30,
     },
     ["fire_iron"] = {
-        Source = "fire_ads",
+        Source = "fire",
         Time = 12/30,
     },
     ["reload"] = {

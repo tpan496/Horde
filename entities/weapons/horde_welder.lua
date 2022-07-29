@@ -713,7 +713,7 @@ function SWEP:ShouldDrawViewModel()
 end
 
 function SWEP:Equip()
-	self.Owner:EmitSound(Sound("horde/weapons/welder/gunpickup2.wav"))
+	self.Owner:EmitSound(Sound("horde/weapons/welder/gunpickup2.ogg"))
 end
 
 function SWEP:Deploy()
@@ -721,7 +721,7 @@ function SWEP:Deploy()
 	self:SetNextPrimaryFire( CurTime() + self:SequenceDuration())
 	self:SetNextSecondaryFire( CurTime() + self:SequenceDuration())
 	self:NextThink( CurTime() + self:SequenceDuration() )
-	self:EmitSound(Sound("horde/weapons/welder/blowtorch-1.wav"))
+	self:EmitSound(Sound("horde/weapons/welder/blowtorch-1.ogg"))
    return true
 end
 
@@ -767,7 +767,7 @@ function SWEP:PrimaryAttack()
 			spark:Fire( "kill", "", 0.1 )
 			self:DeleteOnRemove(spark)
 
-			sound.Play("horde/weapons/welder/spark"..math.random(1,6)..".wav", Trace.HitPos, 75, 100, 1)
+			sound.Play("horde/weapons/welder/spark"..math.random(1,4)..".ogg", Trace.HitPos, 75, 100, 1)
 		end
 
 		if IsValid(ply) and IsValid(Trace.Entity) then
@@ -777,7 +777,6 @@ function SWEP:PrimaryAttack()
 			else
 				if StuffToFixTable[Trace.Entity:GetClass()] or exceptionContinue(Trace.Entity) != false then
 					if ply:GetPos():Distance(Trace.Entity:GetPos()) > 300 then
-						ply:EmitSound("horde/weapons/welder/medshotno1.wav",75,100,0.5)
 					else
 						local success = false
 						if exceptionContinue(Trace.Entity) == false then
@@ -804,11 +803,9 @@ function SWEP:PrimaryAttack()
 								util.Effect("Sparks", effectData)
 							end
 						else
-							ply:EmitSound("horde/weapons/welder/medshotno1.wav",75,100,0.5)
 						end
 					end
 				else
-					ply:EmitSound("horde/weapons/welder/medshotno1.wav",75,100,0.5)
 				end
 			end
 			end
@@ -827,7 +824,6 @@ end
 function SWEP:Holster()
 	if SERVER then
 		if !IsValid(self.Owner) then return end
-		self.Owner:EmitSound("horde/weapons/welder/wpn_moveselect.wav",75,100,0.8)
 	end
 	
 	if CLIENT and IsValid(self.Owner) then

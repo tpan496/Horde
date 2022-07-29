@@ -242,6 +242,13 @@ function ENT:CustomOnThink()
 						dmg:SetAttacker(self)
 						dmg:SetInflictor(self)
 						k:TakeDamageInfo(dmg)
+					elseif k:IsNPC() and k:GetClass() ~= "npc_vj_horde_xen_destroyer_unit" then
+						local dmg = DamageInfo()
+						dmg:SetDamage(100)
+						dmg:SetDamageType(DMG_SONIC)
+						dmg:SetAttacker(self)
+						dmg:SetInflictor(self)
+						k:TakeDamageInfo(dmg)
 					end
 				end
 				self:VJ_ACT_PLAYACTIVITY("run")

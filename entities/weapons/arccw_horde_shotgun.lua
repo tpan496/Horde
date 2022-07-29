@@ -23,7 +23,7 @@ SWEP.UseHands = false
 
 SWEP.ViewModel = "models/weapons/v_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
-SWEP.ViewModelFOV = 65
+SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "000000000000"
 
@@ -138,6 +138,19 @@ SWEP.Attachments = {
 }
 
 SWEP.Animations = {
+    ["idle"] = {
+        Source = "idle01",
+        Time = 0.8,
+    },
+    ["fire"] = {
+        Source = "fire",
+        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN,
+        Time = 1,
+    },
+    ["cycle"] = {
+        Source = "pump",
+        Time = 0.5,
+    },
     ["sgreload_start"] = {
         Source = "reload1",
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,

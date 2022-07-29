@@ -2,6 +2,7 @@ AddCSLuaFile("shared.lua")
 include('shared.lua')
 
 ENT.Model = {"models/horde/gonarch/headcrab_baby.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.TurningSpeed = 60 -- How fast it can turn
 ENT.EntitiesToNoCollide = {"npc_vj_horde_xen_host_unit"} -- Entities to not collide with when HasEntitiesToNoCollide is set to true
 ENT.StartHealth = 1
