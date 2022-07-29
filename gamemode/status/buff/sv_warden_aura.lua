@@ -119,9 +119,9 @@ hook.Add("Horde_OnPlayerDebuffApply", "Horde_WardenAuraInoculation", function (p
     if ply.Horde_WardenAuraInoculation then
         if debuff == HORDE.Status_Ignite or debuff == HORDE.Status_Frostbite or debuff == HORDE.Status_Shock then
             if ply.Horde_WardenAuraProvider.Horde_EnableWardenAuraBuffBonus then
-                bonus.more = bonus.more * 0.7
+                bonus.less = bonus.less * 0.7
             else
-                bonus.more = bonus.more * 0.85
+                bonus.less = bonus.less * 0.85
             end
         end
     end

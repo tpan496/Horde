@@ -763,7 +763,6 @@ Chambered for the powerful .44 Magnum.
 LANGUAGE["Item_SMG1"] = [[SMG1]]
 LANGUAGE["Item_Desc_SMG1"] = [[
 A compact, fully automatic firearm.
-Armed with an M203 launcher.
 ]]
 
 LANGUAGE["Item_Mac10"] = [[Mac10]]

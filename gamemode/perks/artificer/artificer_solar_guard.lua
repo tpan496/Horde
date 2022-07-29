@@ -5,7 +5,7 @@ Uses energy to reduce damage taken, up to {2}.
 Damage reduction is based on remaining energy.]]
 PERK.Icon = "materials/perks/artificer/solar_guard.png"
 PERK.Params = {
-    [1] = {value = 0.35, percent = true},
+    [1] = {value = 0.30, percent = true},
     [2] = {value = 0.35, percent = true},
 }
 PERK.Hooks = {}
@@ -15,7 +15,7 @@ PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     local wpn = ply:GetWeapon("horde_solar_seal")
     if (not wpn) or (not wpn:IsValid()) then return end
     local energy = wpn:Ammo1()
-    bonus.less = bonus.less * (0.35 * energy / 100)
+    bonus.less = bonus.less * (0.30 * energy / 100)
     wpn:SetClip1(math.max(0, wpn:Clip1() - 5))
 end
 

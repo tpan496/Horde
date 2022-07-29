@@ -53,6 +53,10 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
                 ply:PickupObject(ent)
                 ent:GetPhysicsObject():EnableMotion(true)
             end
+            if ent:GetClass() == "npc_vj_horde_rocket_turret" then
+                ent:SetAngles(Angle(0,0,0))
+                HORDE:DropTurret(ent)
+            end
             ent:SetHealth(math.min(ent:GetMaxHealth(), ent:GetMaxHealth() * 0.05 + ent:Health()))
         else
             return true

@@ -237,6 +237,7 @@ function ENT:PhysicsCollide(colData, collider)
         end
     end
     ParticleEffect("ice_impact_heavy", pos, Angle(0,0,0), self.Owner)
+    sound.Play("horde/weapons/void_projector/void_spear_hit.ogg", pos, 100, math.random(70, 90))
 
     if self.properties.charged == 1 then
         local e = EffectData()
@@ -244,15 +245,16 @@ function ENT:PhysicsCollide(colData, collider)
             e:SetNormal(Vector(0,0,1))
             e:SetScale(0.4)
         util.Effect("cold_explosion", e, true, true)
+        sound.Play("horde/weapons/void_projector/void_spear_blast.ogg", pos, 100, math.random(70, 90))
     elseif self.properties.charged == 2 then
         local e = EffectData()
             e:SetOrigin(pos)
             e:SetNormal(Vector(0,0,1))
             e:SetScale(0.8)
         util.Effect("cold_explosion", e, true, true)
+        sound.Play("horde/weapons/void_projector/void_spear_blast.ogg", pos, 100, math.random(70, 90))
     end
     --ParticleEffect("ice_impact_swave", pos, Angle(0,0,0), self.Owner)
-    sound.Play("horde/weapons/void_projector/void_spear_blast.ogg", pos, 80, math.random(70, 90))
     self:Detonate(pos, colData.HitEntity)
 end
 

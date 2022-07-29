@@ -120,7 +120,7 @@ local function nv_ents()
         end
 	end
 	for k, v in pairs(player.GetAll()) do
-		if v != LocalPlayer() then
+		if v != LocalPlayer() and v:Alive() then
 			table.insert(entities, v)
 		end
 	end
@@ -177,23 +177,5 @@ PERK.Hooks.HUDPaint = function()
 
 		draw.DrawText("N i g h t V i s i o n", "ChatFont",
 		ScrW() / 2, ScrH() - 50, nv_color(), TEXT_ALIGN_CENTER)
-
-        --[[cam.Start3D(EyePos(),EyeAngles())
-            local viewmdl = LocalPlayer():GetViewModel()
-            local boneindex = viewmdl:LookupAttachment("muzzle")
-            if boneindex == 0 then 
-                boneindex = viewmdl:LookupAttachment("1")
-            end
-            if boneindex != 0 then
-                local attach = viewmdl:GetAttachment(boneindex)
-                local pos = LocalPlayer():GetEyeTraceNoCursor().HitPos
-                local sizedif = math.Rand(1,1.5)
-                
-                render.SetMaterial(Material("dylan_nv/nv_laser"))
-                render.DrawBeam(attach.Pos, pos, 2, 0, 12.5, nv_color())
-                render.SetMaterial(Material("sprites/light_glow02_add"))
-                render.DrawSprite(pos, 16 * sizedif, 16 * sizedif, nv_color())
-            end
-        cam.End3D()]]--
 	end
 end

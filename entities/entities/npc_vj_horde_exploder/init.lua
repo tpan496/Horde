@@ -43,12 +43,6 @@ function ENT:CustomOnInitialize()
     self:ManipulateBoneScale(9, Vector(2,2,4))
 end
 
-function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
-	if HORDE:IsPoisonDamage(dmginfo) then
-		dmginfo:SetDamage(dmginfo * 0.25)
-	end
-end
-
 function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
     if hitgroup == HITGROUP_HEAD then
         self.HasDeathRagdoll = true
@@ -80,6 +74,8 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
         dmginfo:ScaleDamage(2)
     elseif HORDE:IsBlastDamage(dmginfo) or HORDE:IsFireDamage(dmginfo) then
         dmginfo:ScaleDamage(1.5)
+    elseif HORDE:IsPoisonDamage(dmginfo) then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
     end
 end
 

@@ -5,7 +5,7 @@ Nine Lives refills your health and provides invulnerability.
 Nine Lives provides {2} increased damage.]]
 PERK.Icon = "materials/perks/gunslinger/nine_lives.png"
 PERK.Params = {
-    [1] = {value = 5, percent = true},
+    [1] = {value = 5},
     [2] = {value = 0.50, percent = true},
 }
 PERK.Hooks = {}

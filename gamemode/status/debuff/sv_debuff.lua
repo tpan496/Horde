@@ -167,6 +167,10 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
             self:Horde_AddIgniteEffect(duration, inflictor)
         elseif debuff == HORDE.Status_Break then
             self:Horde_AddBreakEffect(duration, inflictor)
+        elseif debuff == HORDE.Status_Necrosis then
+            timer.Simple(0.5, function ()
+                self:SetHealth(1)
+            end)
         --elseif debuff == HORDE.Status_Psychosis then
         --    self:TakeDamage(50, self, self)
         end

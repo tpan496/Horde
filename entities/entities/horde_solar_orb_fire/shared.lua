@@ -53,8 +53,6 @@ function ENT:Initialize()
         end)
     end
 
-    print(self:GetRadiusScale())
-
     local owner = self:GetOwner()
     self.has_burner = nil
     if owner and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then

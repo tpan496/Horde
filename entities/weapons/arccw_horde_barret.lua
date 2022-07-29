@@ -139,7 +139,7 @@ SWEP.Attachments = {
         Offset = {
             vpos = Vector(3, 0, 4.3),
             vang = Angle(0, 0, 0),
-        },      
+        },
     },
     {
         PrintName = "Muzzle",

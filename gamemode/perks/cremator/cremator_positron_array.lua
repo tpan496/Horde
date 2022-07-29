@@ -10,7 +10,7 @@ PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("cremator_positron_array")  then return end
     if dmginfo:GetDamageType() == DMG_BURN or dmginfo:GetDamageType() == DMG_SLOWBURN then
         bonus.resistance = bonus.resistance + 1.00
-        if dmginfo:GetDamage() > 0 then
+        if dmginfo:GetDamage() > 0 and dmginfo:GetDamage() * 0.06 then
             HORDE:OnPlayerHeal(ply, HealInfo:New({amount=math.max(1,dmginfo:GetDamage() * 0.06), healer=ply}))
         end
     end
