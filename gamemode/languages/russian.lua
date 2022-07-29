@@ -372,7 +372,6 @@ Colt Anaconda.
 LANGUAGE["Item_SMG1"] = [[SMG1]]
 LANGUAGE["Item_Desc_SMG1"] = [[
 Компактное, полностью автоматическое огнестрельное оружие.
-Вооружено пусковой установкой M203.
 ]]
 
 LANGUAGE["Item_Mac10"] = [[Mac10]]
