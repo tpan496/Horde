@@ -10,8 +10,7 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
     if ply:Horde_GetPerk("berserker_bloodlust") and (HORDE:IsSlashDamage(dmginfo) or HORDE:IsBluntDamage(dmginfo)) then
         local leech = math.min(10, dmginfo:GetDamage() * 0.10)
-        local healinfo = HealInfo:New({amount=leech, healer=ply})
-        HORDE:OnPlayerHeal(ply, healinfo)
+        HORDE:SelfHeal(ply, leech)
     end
 end
 

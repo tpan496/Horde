@@ -1,17 +1,28 @@
-weapon infusion
+new classes: warlock, psycho
 
-music after boss wave 
+early game overhaul (1000 -> 900) & starter weapons
 
-watchtower physics
-
-chinese
-
-spore launcher (medic)
+nemesis mutation fixes
 
 sticky launcher (demo)
 
-scar-l (assault)
-
-rpk (heavy)
-
 add nine lives sound effect
+
+compress textures
+
+new models for katana / bat
+
+New Items:
+- Half life weapons rework
+    - 9mm / medic 9mm, 357, smg1, shotgun, heat crossbow
+- Rocket Turret (Engineer)
+- Welder (Engineer)
+
+New Bosses:
+- Xen Destroyer Unit
+- Xen Psychic Unit
+- Xen Host Unit
+
+Ouroboros bug
+
+fix third person animations for  

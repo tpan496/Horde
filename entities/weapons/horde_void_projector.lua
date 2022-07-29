@@ -65,7 +65,7 @@ SWEP.MuzzleAttachment	= "muzzle"
 
 SWEP.Weight = 2
 
-SWEP.DrawCrosshair = true 
+SWEP.DrawCrosshair = false
 
 SWEP.Category = "ArcCW - Horde"
 
@@ -129,18 +129,23 @@ SWEP.SpectreMaxCount = 1
 
 function SWEP:DrawHUD()
     if CLIENT then
-    local x, y
-    if ( self.Owner == LocalPlayer() and self.Owner:ShouldDrawLocalPlayer() ) then
-    local tr = util.GetPlayerTrace( self.Owner )
-    local trace = util.TraceLine( tr )
-    local coords = trace.HitPos:ToScreen()
-    x, y = coords.x, coords.y
-    else
-    x, y = ScrW() / 2, ScrH() / 2
-    end
-    surface.SetTexture( surface.GetTextureID( "vgui/hud/gluon_crosshair" ) )
-    surface.SetDrawColor( 255, 255, 255, 255 )
-    surface.DrawTexturedRect( x - 16, y - 16, 32, 32 )
+	local x, y
+	local tr = self.Owner:GetEyeTrace()
+	if ( self.Owner == LocalPlayer() and self.Owner:ShouldDrawLocalPlayer() ) then
+		local coords = tr.HitPos:ToScreen()
+		x, y = coords.x, coords.y
+	else
+		x, y = ScrW() / 2, ScrH() / 2
+	end
+	surface.SetTexture( surface.GetTextureID( "vgui/hud/special_crosshair" ) )
+	surface.SetDrawColor( 255, 255, 255, 255 )
+	surface.DrawTexturedRect( x - 16, y - 16, 32, 32 )
+
+	cam.Start3D(self.Owner:EyePos(), self.Owner:EyeAngles())
+	local size = 5
+	render.SetMaterial(Material("Sprites/light_glow02_add_noz"))
+	render.DrawQuadEasy(tr.HitPos, (self.Owner:EyePos() - tr.HitPos):GetNormal(), size, size, Color(100,150,200,255), 0)
+	cam.End3D()
     end
 end
 
@@ -298,7 +303,7 @@ function SWEP:Launch(charged)
 	else
 		if self.Weapon:Clip1() < 5 then return end
 	end
-	self.Owner:EmitSound("weapons/airboat/airboat_gun_lastshot1.wav", 150, 40)
+	self.Owner:EmitSound("horde/weapons/void_projector/void_spear_launch.ogg", 100, math.random(70, 90))
 	local properties = {sphere = false, battery = false, energy = self.Weapon:Clip1(), field = false, charged = charged, beacon_of_void = false, level = self.Owner:Horde_GetUpgrade("horde_void_projector")}
 	hook.Run("Horde_OnVoidProjectorLaunch", self.Owner, properties)
 	local ent = ents.Create("projectile_horde_void_projectile")

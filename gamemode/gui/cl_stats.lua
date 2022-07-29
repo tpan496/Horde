@@ -256,24 +256,50 @@ function PANEL:Init()
     description_panel:SetSize(self:GetParent():GetWide() - 266, self:GetParent():GetTall())
 
     local update_text_panel = vgui.Create("DPanel", description_panel)
-    update_text_panel:SetSize(self:GetParent():GetWide(), 800)
+    update_text_panel:SetSize(self:GetParent():GetWide(), 1000)
     update_text_panel:SetVisible(true)
     local update_text = [[
-        Major Update 1.1.6
+        Major Update 1.1.7
+        -- Starter Weapons Customization
+            - You can now set starter weapons in item config.
+            - Starter weapons follow rules in Killing Floor.
+
+        -- Added two new buttons for custom configs:
+            - Add Default Items (Item Config)
+                - It adds default items but does not reset the config.
+            - Add Default Enemies (Enemy Config)
+                - It adds default enemies but does not reset the config.
 
         -- New Subclasses:
-            - Artificer: Cremator subclass.
-            - Gunslinger: Ghost subclass.
-            - Specops: Assault subclass.
+            - Warlock (Demolition subclass)
+            - Psycho (Survivor subclass)
 
-        -- New Weapons:
-            - Solar Seal (horde_solar_seal, artificer)
-            - Akimbo Glock17 (arccw_horde_akimbo_glock17, Ghost)
-            - Akimbo M9 (arccw_horde_akimbo_m9, Ghost).
-            - Akimbo Deagle (arccw_horde_akimbo_deagle, Ghost).]]
+        -- New Items:
+            - Half life weapons rework.
+              - arccw_horde_9mm
+              - arccw_horde_medic_9mm
+              - arccw_horde_smg1
+              - arccw_horde_heat_crossbow (greatly buffed, has 2 fire modes)
+              - arccw_horde_shotgun
+              - arccw_horde_357
+            - Welder: horde_welder (Engineer)
+            - Rocket Turret: npc_vj_horde_rocket_turret (Engineer)
+            - Machete: arccw_horde_machete (All)
+            - Katana/Bat rework
+            - TMP rework: arccw_horde_tmp
+        
+        -- New Enemies:
+            - Xen Destroyer Unit: npc_vj_horde_xen_destroyer_unit (Boss)
+            - Xen Psychic Unit: npc_vj_horde_xen_psychic_unit (Boss)
+            - Xen Host Unit: npc_vj_horde_xen_host_unit (Boss)
+            - Vomitter/Scorcher models reworked
+            
+        -- Bug Fixes:
+            - Nemesis mutation display should be more consistent.
+            - Gadget fixes.]]
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Update 1.1.6", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Update 1.1.7", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 

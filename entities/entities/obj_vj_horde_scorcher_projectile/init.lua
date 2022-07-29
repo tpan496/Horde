@@ -26,6 +26,10 @@ function ENT:CustomPhysicsObjectOnInitialize(phys)
 	phys:Wake()
 	phys:SetBuoyancyRatio(0)
 	phys:EnableDrag(false)
+	phys:EnableGravity(false)
+	timer.Simple(1.5, function ()
+		if self:IsValid() then self:Remove() end
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()

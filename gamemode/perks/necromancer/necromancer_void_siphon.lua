@@ -1,11 +1,13 @@
 PERK.PrintName = "Void Siphon"
 PERK.Description =
 [[Hitting enemies with Void Spear restores energy.
-Increases Void Spear damage according to remaining energy.]]
+Increases Void Spear damage according to remaining energy, up to {1}.]]
 PERK.Icon = "materials/perks/necromancer/void_siphon.png"
 PERK.Params = {
+    [1] = {value = 0.25, percent = true},
 }
-PERK.Hooks = {}
+PERK.Hooks = {
+}
 
 PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
     if ply:Horde_GetPerk("necromancer_void_siphon") and dmginfo:GetInflictor() and dmginfo:GetInflictor():GetClass() == "projectile_horde_void_projectile" then

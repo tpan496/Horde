@@ -150,7 +150,7 @@ if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_r
 			if victim:GetVar("is_elite") then
 				killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + 2)
 				local p = math.random()
-				if p < 0.01 or (p < 0.05 and killer:Horde_GetGadget() == "gadget_corporate_mindset") then
+				if p < 0.01 or (p < 0.1 and killer:Horde_GetGadget() == "gadget_corporate_mindset") then
 					-- Drop a skull token
 					local ent = ents.Create("horde_skull_token")
 					local pos = victim:GetPos()

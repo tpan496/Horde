@@ -99,6 +99,7 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
 end
 
 function HORDE:SelfHeal(ply, amount)
+    if amount <= 0 then return end
     local healinfo = HealInfo:New({amount=amount, healer=ply})
     HORDE:OnPlayerHeal(ply, healinfo)
 end

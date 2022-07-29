@@ -113,7 +113,7 @@ SWEP.MuzzleAttachment	= "muzzle"
 
 SWEP.Weight = 2
 
-SWEP.DrawCrosshair = true 
+SWEP.DrawCrosshair = false 
 
 SWEP.Category = "ArcCW - Horde"
 
@@ -186,18 +186,23 @@ end
 
 function SWEP:DrawHUD()
     if CLIENT then
-    local x, y
-    if ( self.Owner == LocalPlayer() and self.Owner:ShouldDrawLocalPlayer() ) then
-    local tr = util.GetPlayerTrace( self.Owner )
-    local trace = util.TraceLine( tr )
-    local coords = trace.HitPos:ToScreen()
-    x, y = coords.x, coords.y
-    else
-    x, y = ScrW() / 2, ScrH() / 2
-    end
-    surface.SetTexture( surface.GetTextureID( "vgui/hud/gluon_crosshair" ) )
-    surface.SetDrawColor( 255, 255, 255, 255 )
-    surface.DrawTexturedRect( x - 16, y - 16, 32, 32 )
+	local x, y
+	local tr = self.Owner:GetEyeTrace()
+	if ( self.Owner == LocalPlayer() and self.Owner:ShouldDrawLocalPlayer() ) then
+		local coords = tr.HitPos:ToScreen()
+		x, y = coords.x, coords.y
+	else
+		x, y = ScrW() / 2, ScrH() / 2
+	end
+	surface.SetTexture( surface.GetTextureID( "vgui/hud/special_crosshair" ) )
+	surface.SetDrawColor( 255, 255, 255, 255 )
+	surface.DrawTexturedRect( x - 16, y - 16, 32, 32 )
+
+	local tr = self.Owner:GetEyeTrace()
+	cam.Start3D(self.Owner:EyePos(), self.Owner:EyeAngles())
+	render.SetMaterial(Material("Sprites/light_glow02_add_noz"))
+	render.DrawQuadEasy(tr.HitPos, (self.Owner:EyePos() - tr.HitPos):GetNormal(), 5, 5, Color(255,100,0,255), 0)
+	cam.End3D()
     end
 end
 
@@ -321,7 +326,7 @@ function SWEP:Launch(charged)
 		local pos = self.Owner.Horde_Floating_Chaos:GetPos()
 
 		local fired
-		local max_targets = 10
+		local max_targets = 5
 		if charged > 0 then
 			max_targets = 1
 		end
@@ -782,7 +787,7 @@ function SWEP:Strike(charged)
 		local chaos = self.Owner.Horde_Floating_Chaos
 
 		local fired
-		local max_targets = 10
+		local max_targets = 5
 		for _, target in pairs(ents.FindInSphere(self.Owner.Horde_Floating_Chaos:GetPos(), 1000)) do
 			if HORDE:IsEnemy(target) and max_targets > 0 then
 				local target_pos = target:GetPos() + target:OBBCenter()
@@ -891,6 +896,10 @@ function SWEP:Think()
 		self.ChargePlayed3 = nil
 		self.ChargePlayed4 = nil
     end
+
+	if self.Charging == 1 and self.SecondaryCharging == 1 then
+		self.SecondaryCharging = 0
+	end
 
 	if SERVER and (self.Charging == 1 and self.SecondaryCharging == 0) and self.ChargeSoundTimer <= CurTime() then
 		if self.ChargingTimer <= CurTime() - 0.5 and (not self.ChargePlayed4) and self.Owner:Horde_GetPerk("artificer_godslayer") then

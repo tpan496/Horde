@@ -1,3 +1,7 @@
+if not ArcCWInstalled then return end
+if CLIENT then
+    killicon.AddAlias("arccw_horde_akimbo_glock17", "arccw_go_glock")
+end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - MW2 - Unofficial"

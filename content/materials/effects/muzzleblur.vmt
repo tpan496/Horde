@@ -1,0 +1,21 @@
+"Refract"
+{
+ 	"$normalmap" 				"effects/muzzleblur_fx/muzzleblur_bumpmap"
+ 	"$dudvmap" 				"effects/muzzleblur_fx/muzzleblur_fx"
+
+	"$translucent" 				"1"
+	"$additive"				"1"
+//	"$vertexalpha"				"1"
+//	"$vertexcolormodulate"			"1"
+
+	"$spriteorientation" 				"vp_parallel"
+	"$spriteorigin" 				"[ 0.50 0.50 ]"
+
+	"$forcerefract" 				"1"
+	"$bluramount" 				"1.3"
+	"$refractamount"				".1"
+	"$nofog" 					"1"
+//	"$modulate" 				"1"
+
+	// "// $nocull"					"1"
+}

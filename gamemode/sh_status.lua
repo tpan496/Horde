@@ -17,9 +17,12 @@ HORDE.Status_Hallowed_Bolt = 7
 HORDE.Status_Floating_Chaos = 8
 HORDE.Status_Smokescreen = 9
 HORDE.Status_Flare = 10
+HORDE.Status_Negative_Burst = 11
+HORDE.Status_Gravity_Vacuum = 12
 
-HORDE.Status_Tactical_Mode = 14
-HORDE.Status_Camoflague = 15
+HORDE.Status_Tactical_Mode = 13
+HORDE.Status_Camoflague = 14
+HORDE.Status_Frenzy_Mode = 15
 
 HORDE.Status_Minion = 16
 HORDE.Status_Adrenaline = 17
@@ -28,19 +31,22 @@ HORDE.Status_Deadeye = 19
 HORDE.Status_Intensity = 20
 HORDE.Status_Neuron_Stabilizer = 21
 HORDE.Status_Phalanx = 22
+HORDE.Status_Brutality = 23
+HORDE.Status_Nether_Star = 24
+HORDE.Status_Nether_Mine = 25
 
-HORDE.Status_Fortify = 23
-HORDE.Status_Berserk = 24
-HORDE.Status_Haste = 25
-HORDE.Status_ArmorRegen = 26
-HORDE.Status_HealthRegen = 27
-HORDE.Status_Quickdraw = 28
-HORDE.Status_WardenAura = 29
-HORDE.Status_EntropyShield = 30
-HORDE.Status_Foresight = 31
-HORDE.Status_Nine_Lives = 32
-HORDE.Status_Smokescreen_Effect = 33
-HORDE.Status_Unwavering_Guard = 34
+HORDE.Status_Fortify = 26
+HORDE.Status_Berserk = 27
+HORDE.Status_Haste = 28
+HORDE.Status_ArmorRegen = 29
+HORDE.Status_HealthRegen = 30
+HORDE.Status_Quickdraw = 31
+HORDE.Status_WardenAura = 32
+HORDE.Status_EntropyShield = 33
+HORDE.Status_Foresight = 34
+HORDE.Status_Nine_Lives = 35
+HORDE.Status_Smokescreen_Effect = 36
+HORDE.Status_Unwavering_Guard = 37
 
 HORDE.Status_Armor_Survivor = 51
 HORDE.Status_Armor_Assault = 52
@@ -78,6 +84,10 @@ HORDE.Status_Icon[HORDE.Status_ArmorRegen] = "materials/status/armorregen.png"
 HORDE.Status_Icon[HORDE.Status_HealthRegen] = "materials/status/healthregen.png"
 HORDE.Status_Icon[HORDE.Status_Minion] = "materials/status/minion.png"
 HORDE.Status_Icon[HORDE.Status_Phalanx] = "materials/perks/phalanx.png"
+HORDE.Status_Icon[HORDE.Status_Brutality] = "materials/perks/psycho/brutality.png"
+HORDE.Status_Icon[HORDE.Status_Nether_Star] = "materials/perks/warlock/nether_star.png"
+HORDE.Status_Icon[HORDE.Status_Nether_Mine] = "materials/perks/warlock/nether_mine.png"
+
 HORDE.Status_Icon[HORDE.Status_Quickdraw] = "materials/perks/gunslinger/quickdraw.png"
 HORDE.Status_Icon[HORDE.Status_WardenAura] = "materials/warden.png"
 HORDE.Status_Icon[HORDE.Status_EntropyShield] = "materials/perks/entropy_shield.png"
@@ -95,6 +105,8 @@ HORDE.Status_Icon[HORDE.Status_Hallowed_Bolt] = "materials/perks/artificer/hallo
 HORDE.Status_Icon[HORDE.Status_Floating_Chaos] = "materials/perks/artificer/floating_chaos.png"
 HORDE.Status_Icon[HORDE.Status_Smokescreen] = "materials/perks/specops/smokescreen.png"
 HORDE.Status_Icon[HORDE.Status_Flare] = "materials/perks/specops/flare.png"
+HORDE.Status_Icon[HORDE.Status_Negative_Burst] = "materials/perks/warlock/negative_burst.png"
+HORDE.Status_Icon[HORDE.Status_Gravity_Vacuum] = "materials/perks/warlock/gravity_vacuum.png"
 HORDE.Status_Icon[HORDE.Status_Smokescreen_Effect] = "materials/status/evasion.png"
 
 HORDE.Status_Icon[HORDE.Status_Unwavering_Guard] = "materials/perks/unwavering_guard.png"
@@ -136,7 +148,7 @@ HORDE.Status_Trigger_Sounds[HORDE.Status_Shock] = "horde/status/shock_trigger.og
 HORDE.Status_Trigger_Sounds[HORDE.Status_Break] = "horde/status/break_trigger.ogg"
 
 function HORDE:IsStatusStackable(status)
-    if status >= HORDE.Status_Minion and status <= HORDE.Status_Phalanx then return true end
+    if status >= HORDE.Status_Minion and status <= HORDE.Status_Nether_Mine then return true end
     return false
 end
 
@@ -145,7 +157,7 @@ function HORDE:IsDebuff(status)
 end
 
 function HORDE:IsSkillStatus(status)
-    return status >= HORDE.Status_AntimatterShield and status <= HORDE.Status_Flare
+    return status >= HORDE.Status_AntimatterShield and status <= HORDE.Status_Gravity_Vacuum
 end
 
 function HORDE:IsStackableSkillStatus(status)

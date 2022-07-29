@@ -434,12 +434,12 @@ LANGUAGE["Perk_ghost_sniper"] = [[
 
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposión]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Caminata de Fase]]
-LANGUAGE["Perk_ghost_phase_walk"] = [[
+--[[LANGUAGE["Perk_ghost_phase_walk"] = [[
 Correr ya no cancela Camuflaje.
 25% de velocidad de movimiento aumentada mientras tengas Camuflaje.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Velo Fantasma]]
-LANGUAGE["Perk_ghost_ghost_veil"] = [[
+--[[LANGUAGE["Perk_ghost_ghost_veil"] = [[
 Atacar no cancela Camuflaje.
 100% de velocidad de activacion del Camuflaje aumentada.]]
 

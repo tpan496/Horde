@@ -55,6 +55,10 @@ function PANEL:Init()
     local entity_properties_panel = vgui.Create("DPanel", modify_tab)
     entity_properties_cat:SetContents(entity_properties_panel)
     entity_properties_panel:SetBackgroundColor(HORDE.color_none)
+    local starter_properties_cat = modify_tab:Add("Starter Class")
+    local starter_properties_panel = vgui.Create("DPanel", modify_tab)
+    starter_properties_cat:SetContents(starter_properties_panel)
+    starter_properties_panel:SetBackgroundColor(HORDE.color_none)
 
     local ammo_price_editor
     local secondary_ammo_price_editor
@@ -67,6 +71,7 @@ function PANEL:Init()
     local weight_editor
     local dmgtype_editors
     local infusion_editors
+    local starter_editors
     local function create_property_editor(name, height, cat_panel, categories)
         local panel = vgui.Create("DPanel", cat_panel)
         panel:DockPadding(10, 5, 10, 5)
@@ -532,6 +537,26 @@ function PANEL:Init()
             end
 
             return editors
+        elseif name == "starter class" then
+            local label = vgui.Create("DLabel", panel)
+            label:SetText("Separate by comma and use official names.")
+            label:SetTextColor(Color(0,0,0))
+            label:SetPos(90,50)
+            label:SetTall(50)
+            label:SetWide(250)
+
+            local label2 = vgui.Create("DLabel", panel)
+            label2:SetText("e.g. Assault,Survivor,SpecOps")
+            label2:SetTextColor(Color(0,0,0))
+            label2:SetPos(90,65)
+            label2:SetTall(50)
+            label2:SetWide(200)
+
+            local editor = vgui.Create("DTextEntry", panel)
+            editor:SetSize(200, 50)
+            editor:SetPos(90, 5)
+            editor:SetMultiline(true)
+            return editor
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(200, height)
@@ -555,6 +580,7 @@ function PANEL:Init()
     level_editors = create_property_editor("levels", 150, entity_properties_panel)
     dmgtype_editors = create_property_editor("damage type", 100, entity_properties_panel)
     infusion_editors = create_property_editor("infusions", 100, entity_properties_panel)
+    starter_editors = create_property_editor("starter class", 100, starter_properties_panel)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
@@ -660,6 +686,13 @@ function PANEL:Init()
             end
         end
 
+        local starter_classes = {}
+        for _, starter_class in pairs(string.Explode(",", starter_editors:GetText())) do
+            if HORDE.subclass_name_to_crc[starter_class] then
+                table.insert(starter_classes, starter_class)
+            end
+        end
+
         if not category_editor:GetValue() or not name_editor:GetValue() or class == "" then return end
 
         HORDE:CreateItem(
@@ -677,7 +710,8 @@ function PANEL:Init()
             levels,
             skull_tokens_editor:GetInt() or 0,
             dmgtypes,
-            infusions
+            infusions,
+            starter_classes
         )
         -- Reload from disk
         local tab = util.TableToJSON(HORDE.items)
@@ -699,6 +733,29 @@ function PANEL:Init()
             "Yes",
             function()
                 HORDE.items = {}
+                HORDE:GetDefaultItemsData()
+
+                local tab = util.TableToJSON(HORDE.items)
+                local str = util.Compress(tab)
+                net.Start("Horde_SetItemsData")
+                    net.WriteUInt(string.len(str), 32)
+                    net.WriteData(str, string.len(str))
+                net.SendToServer()
+                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+            end,
+            "No", function() end
+        )
+    end
+
+    local load_defaut_btn = vgui.Create("DButton", btn_panel)
+    load_defaut_btn:Dock(BOTTOM)
+    load_defaut_btn:DockMargin(10,5,10,5)
+    load_defaut_btn:SetTall(30)
+    load_defaut_btn:SetText("Add Default Items")
+    load_defaut_btn.DoClick = function ()
+        Derma_Query("Add Default Items?", "Default Items",
+            "Yes",
+            function()
                 HORDE:GetDefaultItemsData()
 
                 local tab = util.TableToJSON(HORDE.items)
@@ -934,6 +991,11 @@ function PANEL:Init()
                 else
                     editor:SetChecked(false)
                 end
+            end
+
+            if item.starter_classes then
+                local s = string.Implode(",", item.starter_classes)
+                starter_editors:SetValue(s)
             end
         end)
 

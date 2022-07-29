@@ -127,7 +127,9 @@ function HORDE:ApplyDamageInRadius(pos, radius, dmginfo, callback)
         if ent:IsNPC() and HORDE:IsPlayerOrMinion(ent) ~= true then
             ent:TakeDamageInfo(dmginfo)
             dmginfo:SetDamagePosition(ent:GetPos())
-            callback(ent)
+            if callback then
+                callback(ent)
+            end
         end
     end
 end
@@ -233,6 +235,8 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     dmg:SubtractDamage(bonus.block)
 
     if dmg:GetDamage() <= 0.5 then return true end
+
+    hook.Run("Horde_OnPlayerDamageTakenPost", ply, dmg, bonus)
 
     local more = 1
     local debuff = nil

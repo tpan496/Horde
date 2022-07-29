@@ -12,6 +12,12 @@ function ENT:Initialize()
     self:UseTriggerBounds(true, 4)
     self:PhysWake()
     self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+
+    timer.Simple(5, function ()
+        if self:IsValid() then
+            self:Remove()
+        end
+    end)
 end
 
 function ENT:StartTouch(ent)

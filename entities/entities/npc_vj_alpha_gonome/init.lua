@@ -59,7 +59,7 @@ ENT.MeleeAttackWorldShakeOnMissAmplitude = 8
 -- Ranged
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.AnimTbl_RangeAttack = {ACT_RANGE_ATTACK1} -- Range Attack Animations
-ENT.RangeAttackEntityToSpawn = "obj_gonome_acid" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_horde_gonome_acid" -- The entity that is spawned when range attacking
 ENT.RangeDistance = 2000 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 150 -- How close does it have to be until it uses melee?
 ENT.RangeUseAttachmentForPos = false -- Should the projectile spawn on a attachment?
@@ -185,11 +185,12 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     end
 end
 
-function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if HORDE:IsPoisonDamage(dmginfo) then
-		dmginfo:SetDamage(dmginfo * 0.25)
-	end
+		dmginfo:ScaleDamage(0.25)
+    elseif HORDE:IsLightningDamage(dmginfo) then
+        dmginfo:ScaleDamage(1.25)
+    end
 end
-
 
 VJ.AddNPC("Alpha Gonome","npc_vj_alpha_gonome", "Zombies")

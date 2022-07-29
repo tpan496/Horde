@@ -435,7 +435,7 @@ LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Phase Walk]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
 Running does not cancel Camoflague.
 {1} increased movement speed when you have Camoflague.
-{2} increased evasion when you have Camoflague.]]
+Adds {2} evasion when you have Camoflague.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Ghost Veil]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
@@ -775,7 +775,6 @@ Chambered for the powerful .44 Magnum.
 LANGUAGE["Item_SMG1"] = [[SMG1]]
 LANGUAGE["Item_Desc_SMG1"] = [[
 A compact, fully automatic firearm.
-Armed with an M203 launcher.
 ]]
 
 LANGUAGE["Item_Mac10"] = [[Mac10]]

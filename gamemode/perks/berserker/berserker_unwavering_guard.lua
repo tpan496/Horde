@@ -21,3 +21,9 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
         ply:Horde_SetUnwaveringGuardEnabled(nil)
     end
 end
+
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
+    if ply.HasUnwaveringGuardBuff then
+        bonus.increase = bonus.increase + 0.25
+    end
+end
