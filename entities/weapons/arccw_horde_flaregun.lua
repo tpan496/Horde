@@ -35,7 +35,7 @@ SWEP.DamageMin = 0 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 0
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "obj_vj_flare" -- entity to fire, if any
+SWEP.ShootEntity = "obj_vj_horde_flare" -- entity to fire, if any
 SWEP.MuzzleVelocity = 3000 -- projectile or phys bullet muzzle velocity
 
 SWEP.CanFireUnderwater = false
@@ -95,8 +95,8 @@ SWEP.ProceduralIronFire = false
 SWEP.CaseBones = {}
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.6, 0, 2.7),
-    Ang = Angle(0, 0, 0),
+    Pos = Vector(-5.6, -10, 2.7),
+    Ang = Angle(0, 0, 2),
     Magnification = 1.3,
 }
 
@@ -146,7 +146,7 @@ SWEP.Animations = {
     },
     ["fire"] = {
         Source = "shoot",
-        Time = 0.5,
+        Time = 0.25,
         ShellEjectAt = 0,
         RestoreAmmo = 1,
     },
@@ -157,7 +157,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload",
-        Time = 1.5,
+        Time = 1,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
         FrameRate = 30,
         LHIK = true,

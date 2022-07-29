@@ -1,0 +1,5 @@
+"Vertexlitgeneric"
+{
+	"$baseTexture" "models/horde/bloodsquid/bullchicken2"
+	"$bumpmap" "models/horde/bloodsquid/bullchicken2_normal"
+}

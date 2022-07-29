@@ -34,7 +34,7 @@ GADGET.Hooks.Horde_OnUnsetGadget = function (ply, gadget)
     if CLIENT then return end
     if gadget ~= "gadget_ouroboros" then return end
     local id = ply:SteamID()
-    timer.Remove("Horde_Ouroborosn_Effect" .. id)
+    timer.Remove("Horde_Ouroboros_Effect" .. id)
 end
 
 GADGET.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)

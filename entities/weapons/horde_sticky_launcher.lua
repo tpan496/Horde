@@ -83,7 +83,7 @@ function SWEP:DrawHUD()
     else
     x, y = ScrW() / 2, ScrH() / 2
     end
-    surface.SetTexture( surface.GetTextureID( "vgui/hud/gluon_crosshair" ) )
+    surface.SetTexture( surface.GetTextureID( "vgui/hud/special_crosshair" ) )
     surface.SetDrawColor( 255, 255, 255, 255 )
     surface.DrawTexturedRect( x - 16, y - 16, 32, 32 )
     end
@@ -195,6 +195,7 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Reload()
+    if CLIENT then return end
     if self.Reloading == 0 and self.Weapon:Clip1() < self.Primary.ClipSize and self.Weapon:Ammo1() > 0 then
         self.Weapon:SendWeaponAnim( ACT_RELOAD_START )
         self.Owner:SetAnimation( PLAYER_RELOAD )
@@ -207,6 +208,7 @@ function SWEP:Reload()
 end
 
 function SWEP:Think()
+    if CLIENT then return end
     if self.Recoil == 1 and self.RecoilTimer <= CurTime() then
         self.Recoil = 0
     end

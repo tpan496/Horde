@@ -69,6 +69,14 @@ function ENT:Rage()
     end)
 end
 
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	if HORDE:IsCold(dmginfo) then
+		dmginfo:ScaleDamage(1.25)
+    elseif HORDE:IsFireDamage(dmginfo) then
+        dmginfo:ScaleDamage(0.75)
+    end
+end
+
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(13, 13, 50), Vector(-13, -13, 0))
     self:SetModelScale(1.75)

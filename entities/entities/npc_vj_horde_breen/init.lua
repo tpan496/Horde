@@ -36,9 +36,7 @@ ENT.TimeUntilMeleeAttackDamage = 0.6 -- This counted in seconds | This calculate
 ENT.MeleeAttackDamage = 40
 ENT.FootStepTimeRun = 0.4 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.4 -- Next foot step sound when it is walking
-ENT.Immune_AcidPoisonRadiation = true -- Makes the SNPC not get damage from Acid, posion, radiation
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
-ENT.Immune_AcidPoisonRadiation = true -- Makes the SNPC not get damage from Acid, posion, radiation
 ENT.SlowPlayerOnMeleeAttack = true -- If true, then the player will slow down
 ENT.SlowPlayerOnMeleeAttack_WalkSpeed = 100 -- Walking Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttack_RunSpeed = 100 -- Running Speed when Slow Player is on
@@ -286,6 +284,14 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
 		self.AnimationPlaybackRate = 1.5
     end
 	self.DamageReceived = self.DamageReceived + dmginfo:GetDamage()
+end
+
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	if HORDE:IsPhysicalDamage(dmginfo) then
+		dmginfo:ScaleDamage(0.75)
+    elseif HORDE:IsPoisonDamage(dmginfo) then
+        dmginfo:ScaleDamage(1.25)
+    end
 end
 
 VJ.AddNPC("Wallace Breen","npc_vj_horde_breen", "Zombies")

@@ -495,7 +495,7 @@ function PANEL:Paint()
             self.class_progress:SetVisible(not self.perk_panel:IsVisible())
             local loc_name = translate.Get("Class_" .. self.item.subclass.PrintName) or self.item.subclass.PrintName
             draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.subclass.PrintName) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
-            
+
             local loc_desc = translate.Get("Class_Description_" .. self.item.subclass.PrintName) or self.item.extra_description
             if GetConVar("horde_enable_perk"):GetInt() == 1 then
                 local perk = HORDE.perks[self.item.base_perk]
@@ -575,7 +575,7 @@ function PANEL:Paint()
                     px = px + 30
                 end
             end
-            if self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" then
+            if self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic" then
                 draw.DrawText(self.loc_name .. " +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class)), "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             else
                 draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
@@ -685,7 +685,7 @@ function PANEL:Paint()
                         surface.DrawRect(0, 0, self:GetWide(), 200)
                     end
                 else
-                    if (self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal") and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 then
+                    if (self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic") and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 then
                         self.ammo_one_btn:SetTextColor(Color(255,255,255))
                         local price = 800 + 25 * LocalPlayer():Horde_GetUpgrade(self.item.class)
                         self.ammo_one_btn:SetText("Upgrade to +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")

@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "dylan_nv/nv_overlay"
-	"$nolod" 1
-	"$translucent" 1
-}

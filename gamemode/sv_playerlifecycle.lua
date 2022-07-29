@@ -31,8 +31,19 @@ end
 function HORDE:GiveStarterWeapons(ply)
     if GetConVar("horde_enable_starter"):GetInt() == 0 then return end
     if ply:Alive() and (not ply:Horde_GetGivenStarterWeapons()) then
-        ply:Give("weapon_pistol")
-        ply:Give("weapon_crowbar")
+        print(ply:Horde_GetCurrentSubclass())
+        if HORDE.starter_weapons[ply:Horde_GetCurrentSubclass()] then
+            for _, wpn_class in pairs(HORDE.starter_weapons[ply:Horde_GetCurrentSubclass()]) do
+                ply:Give(wpn_class)
+            end
+        end
+
+        if HORDE.starter_weapons["All"] then
+            for _, wpn_class in pairs(HORDE.starter_weapons["All"]) do
+                ply:Give(wpn_class)
+            end
+        end
+
         ply:GiveAmmo(200, 3)
         ply:Horde_SetGivenStarterWeapons(true)
     end
@@ -63,8 +74,12 @@ function HORDE:GameEnd(status)
         net.Broadcast()
     end
 
+    local tokens = math.floor(HORDE.current_wave / 2)
+    if status == "VICTORY" then
+        tokens = tokens + math.max(0, HORDE.difficulty - 1)
+    end
     for _, ply in pairs(player.GetHumans()) do
-        ply:Horde_AddSkullTokens(math.floor(HORDE.current_wave / 2))
+        ply:Horde_AddSkullTokens(tokens)
     end
 
     HORDE.game_end = true

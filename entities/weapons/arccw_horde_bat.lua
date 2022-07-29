@@ -26,7 +26,7 @@ SWEP.NotForNPCs = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/horde/weapons/v_bat.mdl"
+SWEP.ViewModel = "models/horde/weapons/c_bat.mdl"
 SWEP.WorldModel = "models/horde/weapons/w_bat.mdl"
 SWEP.ViewModelFOV = 60
 
@@ -34,7 +34,7 @@ SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
 SWEP.MeleeDamage = 120
-SWEP.Melee2Damage = 64
+SWEP.Melee2Damage = 160
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
@@ -46,8 +46,8 @@ SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 
 SWEP.Melee2 = true
 SWEP.Melee2Range = 80
-SWEP.Melee2AttackTime = 0.1
-SWEP.Melee2Time = 0.5
+SWEP.Melee2AttackTime = 0.6
+SWEP.Melee2Time = 1.35
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.MeleeSwingSound = {
@@ -97,12 +97,12 @@ SWEP.Animations = {
         Time = 0.8,
     },
     ["bash"] = {
-        Source = {"swing_e_w_03"},
+        Source = {"swinghard_n", "swing_w_e_02", "swing_ne2sw_02"},
         Time = 0.75,
     },
     ["bash2"] = {
-        Source = "secondary_swing",
-        Time = 0.8,
+        Source = {"swing_e_w_03"},
+        Time = 1.5,
     },
 }
 
@@ -119,3 +119,8 @@ SWEP.BashAng = Angle(35, -30, 0)
 
 SWEP.HolsterPos = Vector(0, -3, -2)
 SWEP.HolsterAng = Angle(-10, 0, 0)
+
+SWEP.WorldModelOffset = {
+    pos = Vector(4, 3, -5),
+    ang = Angle(-10, 0, 180),
+}

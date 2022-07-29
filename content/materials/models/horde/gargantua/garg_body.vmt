@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/horde/gargantua/garg_body"
+
+	"$bumpmap" "models/horde/gargantua/garg_body_normal"
+
+	"$detail" "detail/detail_noise1"
+
+	"$detailscale" 2.5
+
+	"$surfaceprop" "alienflesh"
+
+	"$model" 1
+}

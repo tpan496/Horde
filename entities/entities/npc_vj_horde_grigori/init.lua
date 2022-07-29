@@ -108,7 +108,6 @@ end
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     if not self.Critical and self:Health() <= self:GetMaxHealth() * 0.25 then
         self.Critical = true
-        --self.AnimationPlaybackRate = 1.25
     end
 end
 

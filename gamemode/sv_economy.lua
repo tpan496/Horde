@@ -280,30 +280,41 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
         local item = HORDE.items[class]
         ply:Horde_AddWeight(item.weight)
         ply:Horde_SyncEconomy()
+
+        if item.starter_classes then
+            if class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() == "Necromancer" then
+                -- Cannot drop as necro
+                wpn:Remove()
+                local c = wpn:GetClass()
+                timer.Simple(0, function()
+                    if ply:Alive() then
+                        ply:Give(c)
+                    end
+                end)
+            elseif class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() == "Artificer" then
+                -- Cannot drop as arti
+                wpn:Remove()
+                local c = wpn:GetClass()
+                timer.Simple(0, function()
+                    if ply:Alive() then
+                        ply:Give(c)
+                    end
+                end)
+            elseif class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() == "Warlock" then
+                -- Cannot drop as arti
+                wpn:Remove()
+                local c = wpn:GetClass()
+                timer.Simple(0, function()
+                    if ply:Alive() then
+                        ply:Give(c)
+                    end
+                end)
+            end
+        end
+
     end
     if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
         wpn:Remove()
-    end
-    if class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() == "Necromancer" then
-        -- Cannot drop as necro
-        wpn:Remove()
-        local c = wpn:GetClass()
-        timer.Simple(0, function()
-            if ply:Alive() then
-                ply:Give(c)
-            end
-        end)
-    end
-
-    if class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() == "Artificer" then
-        -- Cannot drop as arti
-        wpn:Remove()
-        local c = wpn:GetClass()
-        timer.Simple(0, function()
-            if ply:Alive() then
-                ply:Give(c)
-            end
-        end)
     end
 end)
 
@@ -315,8 +326,16 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
         if (ply:Horde_GetWeight() - item.weight < 0) or (item.whitelist and (not item.whitelist[ply:Horde_GetClass().name])) then
             return false
         end
-        if item.class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() ~= "Necromancer" then
-            return false
+        if item.starter_classes then
+            if item.class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() ~= "Necromancer" then
+                return false
+            end
+            if item.class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() ~= "Artificer" then
+                return false
+            end
+            if item.class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() ~= "Warlock" then
+                return false
+            end
         end
     end
 
@@ -427,7 +446,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         end
                         ent:AddRelationship("npc_vj_horde_spectre D_LI 99")
     
-                        --ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
+                        ent.VJFriendly = false
                     end)
                     local npc_info = list.Get("NPC")[ent:GetClass()]
                     if not npc_info then
@@ -577,11 +596,16 @@ function HORDE:DropTurret(ent)
 end
 
 hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
-    if ent:GetNWEntity("HordeOwner") and (ent:GetClass() == "npc_turret_floor") then
+    if ent:GetNWEntity("HordeOwner") and (ent:GetClass() == "npc_turret_floor" or (ent:GetClass() == "npc_vj_horde_rocket_turret" and (not ent.Horde_Pickedup))) then
         -- Turrets should always stay straight.
         local a = ent:GetAngles()
         ent:SetAngles(Angle(0, a.y, 0))
         HORDE:DropTurret(ent)
+
+        if ent:GetClass() == "npc_vj_horde_rocket_turret" then
+            ent:SetAngles(Angle(0,0,0))
+            ent:PhysicsInit(SOLID_OBB)
+        end
     end
 end)
 

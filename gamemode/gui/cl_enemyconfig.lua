@@ -521,6 +521,29 @@ function PANEL:Init()
         )
     end
 
+    local load_defaut_btn = vgui.Create("DButton", btn_panel)
+    load_defaut_btn:Dock(BOTTOM)
+    load_defaut_btn:DockMargin(10,5,10,5)
+    load_defaut_btn:SetTall(30)
+    load_defaut_btn:SetText("Add Default Enemies")
+    load_defaut_btn.DoClick = function ()
+        Derma_Query("Add Default Enemies?", "Default Enemies",
+            "Yes",
+            function()
+                HORDE:GetDefaultEnemiesData()
+
+                local tab = util.TableToJSON(HORDE.enemies)
+                local str = util.Compress(tab)
+                net.Start("Horde_SetEnemiesData")
+                    net.WriteUInt(string.len(str), 32)
+                    net.WriteData(str, string.len(str))
+                net.SendToServer()
+                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+            end,
+            "No", function() end
+        )
+    end
+
     local del_btn = vgui.Create("DButton", btn_panel)
     del_btn:Dock(BOTTOM)
     del_btn:DockMargin(10, 5, 10, 5)

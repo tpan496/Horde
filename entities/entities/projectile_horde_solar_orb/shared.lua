@@ -182,7 +182,7 @@ function ENT:Detonate(hitpos, ent)
 
             if self.properties.charged == 3 then
                 for _, e in pairs(ents.FindInSphere(hitpos, 150 * 1.25 * radius_mult)) do
-                    e:TakeDamageOverTime(self.Owner, 5 + e:Health() * 0.02, DMG_CRUSH, 0.2, 1)
+                    e:TakeDamageOverTime(self.Owner, 5 + e:Health() * 0.02, DMG_GENERIC, 0.2, 1)
                 end
             end
 

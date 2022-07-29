@@ -1,5 +1,5 @@
 PERK.PrintName = "Phase Walk"
-PERK.Description = "Running does not cancel Camoflague.\n{1} increased movement speed when you have Camoflague.\n{2} increased evasion when you have Camoflague."
+PERK.Description = "Running does not cancel Camoflague.\n{1} increased movement speed when you have Camoflague.\nAdds {2} evasion when you have Camoflague."
 PERK.Icon = "materials/perks/phase_walk.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},
