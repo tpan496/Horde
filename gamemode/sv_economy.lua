@@ -224,7 +224,7 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     net.Send(ply)
     ply:SetCustomCollisionCheck(true)
     HORDE.refresh_living_players = true
-    if not ply:IsValid() then return end
+    if not ply:IsValid() or not ply.Horde_Init_Complete then return end
     if not ply:Horde_GetClass() then return end
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
@@ -251,8 +251,10 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
             end
         end
     end
+    
     ply:Horde_SyncEconomy()
     HORDE:GiveStarterWeapons(ply)
+    
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
         net.Start("Horde_SyncStatus")
             net.WriteUInt(HORDE.Status_ExpDisabled, 8)

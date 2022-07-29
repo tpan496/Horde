@@ -818,7 +818,7 @@ function HORDE:CheckBossStuck()
     })
     if tr.Hit then
         local ent = tr.Entity
-        if ent:IsValid() and (ent:GetClass() == "npc_turret_floor" or ent:IsNPC() or ent:IsPlayer()) then return end
+        if ent:IsValid() and (ent:IsWorld()) then return end
         horde_boss_reposition = true
         print("[HORDE] Boss is stuck. Attempting to reposition...")
     end

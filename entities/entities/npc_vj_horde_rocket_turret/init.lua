@@ -61,17 +61,17 @@ ENT.SoundTbl_Death = {
 }
 
 ENT.SoundTbl_Alert = {
-	"horde/rocket_turret/turret_autosearch_1.wav",
-	"horde/rocket_turret/turret_autosearch_2.wav",
-	"horde/rocket_turret/turret_autosearch_3.wav",
+	"horde/rocket_turret/turret_autosearch_1.ogg",
+	"horde/rocket_turret/turret_autosearch_2.ogg",
+	"horde/rocket_turret/turret_autosearch_3.ogg",
 }
 ENT.SoundTbl_RangeAttack = {
-	"horde/rocket_turret/rocket_fire1.wav"
+	"horde/rocket_turret/rocket_fire1.ogg"
 }
 ENT.SoundTbl_OnPlayerSight = {
-	"horde/rocket_turret/turret_active_1.wav",
-	"horde/rocket_turret/turret_deploy_1.wav",
-	"horde/rocket_turret/turret_deploy_6.wav"
+	"horde/rocket_turret/turret_active_1.ogg",
+	"horde/rocket_turret/turret_deploy_1.ogg",
+	"horde/rocket_turret/turret_deploy_6.ogg"
 }
 
 ENT.Immune_AcidPoisonRadiation = true -- Makes the SNPC not get damage from Acid, posion, radiation
