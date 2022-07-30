@@ -78,7 +78,7 @@ HORDE.TipPanel:SetPos(ScrW() / 2 - ScrW() * 2 / 5 / 2, 25)
 HORDE.TipPanel.Paint = function (w,h)
     if tip == nil or tip == "" then return end
     draw.RoundedBox(10, 0, 0, ScrW() * 2 / 5, 50,  Color(40,40,40,200))
-    draw.DrawText(translate.Format("Game_Tip_X", tip), "Info", ScrW() * 2 / 5 / 2, 13, HORDE.color_white, TEXT_ALIGN_CENTER)
+    draw.DrawText(translate.Format("Game_Tip_X", translate.Get("Tip_" .. tip) or tip), "Info", ScrW() * 2 / 5 / 2, 13, HORDE.color_white, TEXT_ALIGN_CENTER)
 end
 
 net.Receive("Horde_SyncTip", function()

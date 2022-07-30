@@ -495,52 +495,52 @@ function PANEL:Init()
         draw.SimpleText(translate.Get("Mechanics_Elite_Enemy_Lesion"), 'Heading', 50, 1550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText(translate.Get("Mechanics_Elite_Enemy_Lesion_Description"), 'Content', 100, 1600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("Bosses", 'LargeTitle', 50, 1700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Mechanics_Bosses"), 'LargeTitle', 50, 1700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("Alpha Gonome", 'Heading', 50, 1750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Mechanics_Boss_Alpha_Gonome"), 'Heading', 50, 1750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         local next_pos = write_paragraph({
-            "An aged gonome that gained increased endurance and power.",
-            "Corruption Aura: Inflicts Bleeding to players nearby.",
-            "Claw Attack: Deals Slashing damage. Inflicts Bleeding.",
-            "Acid Throw: Ranged attack that deals Poison damage.",
-            "Frenzy (Phase 2): Passively increases movement speed and action speed.",
+            translate.Get("Mechanics_Boss_Alpha_Gonome_Description1"),
+            translate.Get("Mechanics_Boss_Alpha_Gonome_Description2"),
+            translate.Get("Mechanics_Boss_Alpha_Gonome_Description3"),
+            translate.Get("Mechanics_Boss_Alpha_Gonome_Description4"),
+            translate.Get("Mechanics_Boss_Alpha_Gonome_Description5"),
         }, 1800)
 
-        draw.SimpleText("Gamma Gonome", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Mechanics_Boss_Gamma_Gonome"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "A gonome infused with cryo-engine that provides minor camouflage.",
-            "Claw Attack: Deals Slashing damage. Inflicts Frostbite.",
-            "Icicle Throw: Ranged attack that deals Cold damage.",
-            "Icestorm (Phase 2): Creates a large icestorm near itself, dealing massive Cold damage to nearby units.",
+            translate.Get("Mechanics_Boss_Gamma_Gonome_Description1"),
+            translate.Get("Mechanics_Boss_Gamma_Gonome_Description2"),
+            translate.Get("Mechanics_Boss_Gamma_Gonome_Description3"),
+            translate.Get("Mechanics_Boss_Gamma_Gonome_Description4"),
         }, next_pos + 100)
 
-        draw.SimpleText("Subject: Wallace Breen", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Mechanics_Boss_Wallace_Breen"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "A gonome infused with a human subject to increase brain capabilities for accuracy.",
-            "Claw Attack: Deals Slashing damage.",
-            "Particle Cannon: An accurate ranged cannon that deals massive Physical and Blast damage. Inflicts Decay.",
-            "Particle Cannon (Phase 2): Generates continuous explosions post detonation.",
-            "Shockwave: Generates a shockwave when it received certain amount of damage. Inflicts Bleeding, Shock and Decay.",
+            translate.Get("Mechanics_Boss_Wallace_Breen_Description1"),
+            translate.Get("Mechanics_Boss_Wallace_Breen_Description2"),
+            translate.Get("Mechanics_Boss_Wallace_Breen_Description3"),
+            translate.Get("Mechanics_Boss_Wallace_Breen_Description4"),
+            translate.Get("Mechanics_Boss_Wallace_Breen_Description5"),
         }, next_pos + 100)
 
-        draw.SimpleText("Xen Destroyer Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Mechanics_Boss_Xen_Destroyer"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "Experimental unit made from Xen Gargantua. Dropping heavy armor and focuses on offense capabilities.",
-            "Slam Attack: Deals Blunt damage.",
-            "Fumethrower: Creates streams of dark flame that deals Fire damage and inflicts Necrosis.",
-            "Earthshatter: Stomps the ground and generates a huge tracing shockwave torwards the target. Deals Physical damage.",
-            "Energy Blast (Phase 2): Accumulates energy over time, indicated by its red light. When full, blinds players and blasts the area with Physical damage.",
+            translate.Get("Mechanics_Boss_Xen_Destroyer_Description1"),
+            translate.Get("Mechanics_Boss_Xen_Destroyer_Description2"),
+            translate.Get("Mechanics_Boss_Xen_Destroyer_Description3"),
+            translate.Get("Mechanics_Boss_Xen_Destroyer_Description4"),
+            translate.Get("Mechanics_Boss_Xen_Destroyer_Description5"),
         }, next_pos + 100)
 
-        draw.SimpleText("Xen Psychic Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Mechanics_Boss_Xen_Psychic"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "Experimental unit made from Xen Kingpin. Has enhanced psychic and physical capabilities.",
-            "Claw Attack: Deals Slashing damage.",
-            "Lightning Beam: Projects a lightning beam, dealing heavy Lightning damage in an area.",
-            "Lightning Beam (Phase 2): The lightning explosion leaves behind ground flames that last for a long time.",
-            "Lightning Orb: Creates homing lightning orbs that follow players. Explodes after delay on contact, dealing Lightning damage.",
-            "Melee Mode (Phase 2): Greatly increases speed and focuses on Melee attacks.",
-            "Psionic Shield (Phase 2): Active in Melee Mode only. When the shield is active, reduces damage taken by 50%.",
+            translate.Get("Mechanics_Boss_Xen_Psychic_Description1"),
+            translate.Get("Mechanics_Boss_Xen_Psychic_Description2"),
+            translate.Get("Mechanics_Boss_Xen_Psychic_Description3"),
+            translate.Get("Mechanics_Boss_Xen_Psychic_Description4"),
+            translate.Get("Mechanics_Boss_Xen_Psychic_Description5"),
+            translate.Get("Mechanics_Boss_Xen_Psychic_Description6"),
+            translate.Get("Mechanics_Boss_Xen_Psychic_Description7"),
         }, next_pos + 100)
     end
 
@@ -837,7 +837,7 @@ function PANEL:Init()
         draw.SimpleText(translate.Get("Stats_Menu_Frost_Immunity"), 'Heading', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText(translate.Get("Stats_Menu_Shock_Immunity"), 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText(translate.Get("Stats_Menu_Armor_Break_Immunity"), 'Heading', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        --draw.SimpleText("Psychosis Immunity:", 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        --draw.SimpleText(translate.Get("Stats_Menu_Sanity_Immunity"), 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         
         draw.SimpleText(GetImmune(HORDE.Status_Bleeding), 'Heading', self:GetWide() / 3 - 50, 100, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(GetImmune(HORDE.Status_Ignite), 'Heading', self:GetWide() / 3 - 50, 150, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)

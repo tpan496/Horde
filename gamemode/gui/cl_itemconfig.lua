@@ -888,7 +888,7 @@ function PANEL:Init()
                 category_editor:Clear()
                 for _, category in pairs(weapon_categories) do
                     if category == "Gadget" then goto cont end
-                    category_editor:AddChoice(category)
+                    category_editor:AddChoice(translate.Get("Shop_" .. category))
                     ::cont::
                 end
                 ammo_price_editor:SetVisible(true)
@@ -908,7 +908,7 @@ function PANEL:Init()
                     class_editor.entity_editor:SetVisible(true)
                     category_editor:Clear()
                     for _, category in pairs(entity_categories) do
-                        category_editor:AddChoice(category)
+                        category_editor:AddChoice(translate.Get("Shop_" .. category))
                     end
                 elseif class_type == HORDE.ENTITY_PROPERTY_GIVE then
                     if item.entity_properties.is_arccw_attachment and item.entity_properties.is_arccw_attachment == true then
@@ -921,14 +921,14 @@ function PANEL:Init()
                     class_editor.entity_editor:SetVisible(true)
                     category_editor:Clear()
                     for _, category in pairs(entity_categories) do
-                        category_editor:AddChoice(category)
+                        category_editor:AddChoice(translate.Get("Shop_" .. category))
                     end
                 elseif class_type == HORDE.ENTITY_PROPERTY_GADGET then
                     class_editor.gadget_editor:SetVisible(true)
                     class_editor.entity_editor:SetVisible(false)
                     class_editor.gadget_editor:SetValue(item.class)
                     category_editor:Clear()
-                    category_editor:AddChoice("Gadget")
+                    category_editor:AddChoice(translate.Get("Shop_" .. "Gadget"))
                     description_editor:SetVisible(false)
                     shop_icon_editor:SetVisible(false)
                 end
@@ -936,7 +936,7 @@ function PANEL:Init()
                 class_editor.entity_editor:SetValue(item.class)
             end
 
-            category_editor:SetValue(item.category)
+            category_editor:SetValue(translate.Get("Shop_" .. item.category))
             name_editor:SetValue(item.name)
             price_editor:SetValue(item.price)
             skull_tokens_editor:SetValue(item.skull_tokens or 0)
@@ -971,7 +971,7 @@ function PANEL:Init()
 
             for _, editor in pairs(dmgtype_editors) do
                 if item.dmgtype then
-                    if table.HasValue(item.dmgtype, editor.dmgtype) then
+                    if table.HasValue(item.dmgtype, editor.dmgtype)) then
                         editor:SetChecked(true)
                     else
                         editor:SetChecked(false)
@@ -1039,7 +1039,7 @@ function PANEL:Think()
             local item = line.item
 
             line:SetValue(1, item.class)
-            line:SetValue(2, translate.Get("Shop_" .. item.category) or item.category)
+            line:SetValue(2, translate.Get("Shop_" .. item.category))
             line:SetValue(3, item.name)
             line:SetValue(4, item.price)
             line:SetValue(5, item.weight)
@@ -1056,7 +1056,7 @@ function PANEL:Paint(w, h)
     -- Background
     draw.RoundedBox(10, 0, 0, w, 40, HORDE.color_config_bar)
 
-    draw.SimpleText("Horde Item Configuration", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText(translate.Get("Item_Configuration_Title"), "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("HordeItemConfig", PANEL, "EditablePanel")

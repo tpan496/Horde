@@ -129,7 +129,7 @@ end)
 
 net.Receive("Horde_RenderPlayersReady", function()
     local str = net.ReadString()
-    center_panel_str = translate.Get("Game_Players_Ready") .. ": "  ..str
+    center_panel_str = translate.Format("Game_Players_Ready_X", str)
 end)
 
 net.Receive("Horde_RenderBreakCountDown", function()
@@ -137,7 +137,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
     local is_end_message = net.ReadBool()
     if is_end_message then
         surface.PlaySound("HL1/fvox/blip.wav")
-        center_panel_str = translate.Get("Game_Wave_Completed") .. "!"
+        center_panel_str = translate.Get("Game_Wave_Completed")
         return
     end
     if num then
@@ -164,7 +164,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
         end
     end
     if num == 0 then
-        center_panel_str = translate.Format("Game_Wave_Has_Started", tostring(HORDE.current_wave)) .. "!"
+        center_panel_str = translate.Format("Game_Wave_Has_Started", tostring(HORDE.current_wave))
     else
         center_panel_str = translate.Format("Game_Next_Wave_Starts_In", num)
     end
@@ -175,16 +175,16 @@ net.Receive("Horde_RenderEnemiesCount", function()
     local wave_str = net.ReadString()
     local count = net.ReadInt(32)
     if is_boss then
-        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|:" .. wave_str .. "  " .. "BOSS"
+        center_panel_str = translate.Format("Game_Wave_Status_Boss", translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), wave_str)
     else
-        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|: " .. wave_str .. "  " .. translate.Get("Game_Enemies") .. ": " .. tostring(count)
+        center_panel_str = translate.Format("Game_Wave_Status_Regular", translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), wave_str, tostring(count))
     end
 end)
 
 net.Receive("Horde_RenderGameResult", function()
     local status = net.ReadString()
     local wave = net.ReadUInt(32)
-    center_panel_str = translate.Get("Game_Result_" .. status) .. "! " .. translate.Get("Game_Wave") .. ": " .. tostring(wave)
+    center_panel_str = translate.Format("Game_Result_Wave", translate.Get("Game_Result_" .. status), tostring(wave))
 end)
 
 local heal_msg_cd = 0

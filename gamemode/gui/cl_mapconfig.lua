@@ -285,7 +285,7 @@ function PANEL:Paint(w, h)
     -- Background
     draw.RoundedBox(10, 0, 0, w, 40, HORDE.color_config_bar)
 
-    draw.SimpleText("Horde Map Configuration", "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    draw.SimpleText(translate.Get("Map_Configuration_Title"), "Trebuchet24", 10, 22, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 end
 
 vgui.Register("HordeMapConfig", PANEL, "EditablePanel")

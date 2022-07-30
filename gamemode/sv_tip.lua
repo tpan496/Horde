@@ -58,7 +58,7 @@ local function GetTipsData()
             AddTip("RPG-7 has a large blast radius.")
             AddTip("LAW has higher damage than RPG, but a smaller blast radius.")
             AddTip("Turrets can be used to distract enemies.")
-            AddTip("SSG08 Medic Rifle can heal temmates from afar.")
+            AddTip("SSG08 Medic Rifle can heal teammates from afar.")
             AddTip("Stun Grenade can paralyze enemies for a short time.")
         end
 

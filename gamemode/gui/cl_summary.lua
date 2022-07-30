@@ -284,7 +284,7 @@ function PANEL:Init()
     counter_label:SetSize(1024, 50)
     counter_label:SetTextColor(Color(255,255,255))
     counter_label.Paint = function ()
-        draw.SimpleText(translate.Get("Game_Remaining_Time") .. ": " .. tostring(remaining_time), "Title", self:GetWide() - 240, 12.5, Color(255,255,255))
+        draw.SimpleText(translate.Format("Game_Remaining_Time_X", tostring(remaining_time)), "Title", self:GetWide() - 240, 12.5, Color(255,255,255))
     end
 end
 
@@ -333,7 +333,7 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     summary_label:SetText("")
     summary_label:SetTextColor(Color(255,255,255))
     summary_label.Paint = function ()
-        draw.SimpleText(translate.Get("Game_Result_" .. status) .. "! " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Format("Game_Result_Summary_Panel", translate.Get("Game_Result_" .. status), game.GetMap(), translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty])), "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
     end
 
     self.create_diff_panel("NORMAL")
