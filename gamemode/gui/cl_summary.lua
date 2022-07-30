@@ -315,13 +315,13 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     if total_damage > 0 then
         percentage = HORDE:Round2(mvp_damage / total_damage, 2) * 100
     end
-    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              translate.Get("Game_Most_Valuable_Player"), tostring(mvp_kills) .. " " .. translate.Get("Game_Kills") .. ", " .. tostring(mvp_damage) .. " " .. translate.Get("Game_Damage") .. " (" .. tostring(percentage) .. "%)")
-    self.create_player_panel({x=512 - 480 - 5,y=280}, damage_player,       translate.Get("Game_Most_Damage_Dealt"), tostring(most_damage) .. " " .. translate.Get("Game_Damage"))
-    self.create_player_panel({x=512 + 5, y=280}, kills_player,             translate.Get("Game_Most_Kills"), tostring(most_kills) .. " " .. translate.Get("Game_Kills"))
-    self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, translate.Get("Game_Most_Damage_Taken"), tostring(most_damage_taken) .. " " .. translate.Get("Game_Damage_Taken"))
-    self.create_player_panel({x=512 + 5,y=390}, elite_kill_player,         translate.Get("Game_Elite_Killer"), tostring(most_elite_kills) .. " " .. translate.Get("Game_Elite_Kills"))
-    self.create_player_panel({x=512 + 5,y=500}, most_heal_player,          translate.Get("Game_Most_Heal"), tostring(most_heal) .. " " .. translate.Get("Game_Healed"))
-    self.create_player_panel({x=512 - 480 - 5,y=500}, headshot_player,     translate.Get("Game_SharpShooter"), tostring(most_headshots) .. " " .. translate.Get("Game_Headshots"))
+    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              translate.Get("Game_Most_Valuable_Player"), translate.Format("Game_X_MVP_Kills_X_MVP_Damage", tostring(mvp_kills), tostring(mvp_damage), tostring(percentage)))
+    self.create_player_panel({x=512 - 480 - 5,y=280}, damage_player,       translate.Get("Game_Most_Damage_Dealt"), translate.Format("Game_X_Damage", tostring(most_damage)))
+    self.create_player_panel({x=512 + 5, y=280}, kills_player,             translate.Get("Game_Most_Kills"), translate.Format("Game_X_Kills", tostring(most_kills)))
+    self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, translate.Get("Game_Most_Damage_Taken"), translate.Format("Game_X_Damage_Taken", tostring(most_damage_taken)))
+    self.create_player_panel({x=512 + 5,y=390}, elite_kill_player,         translate.Get("Game_Elite_Killer"), translate.Format("Game_X_Elite_Kills", tostring(most_elite_kills)))
+    self.create_player_panel({x=512 + 5,y=500}, most_heal_player,          translate.Get("Game_Most_Heal"), translate.Format("Game_X_Healed", tostring(most_heal)))
+    self.create_player_panel({x=512 - 480 - 5,y=500}, headshot_player,     translate.Get("Game_SharpShooter"), translate.Format("Game_X_Headshots", tostring(most_headshots)))
 
     for _, map in pairs(maps) do
         self.create_map_panel(map)

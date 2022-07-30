@@ -34,21 +34,23 @@ LANGUAGE["Game_Remaining_Time"] = "Remaining Time"
 LANGUAGE["Game_Vote_Map"] = "Vote Map"
 LANGUAGE["Game_Game_Summary"] = "Game Summary"
 LANGUAGE["Game_Most_Damage_Dealt"] = "Most Damage Dealt"
-LANGUAGE["Game_Damage"] = "Damage"
+LANGUAGE["Game_X_Damage"] = "%s Damage"
 LANGUAGE["Game_Most_Damage_Taken"] = "Most Damage Taken"
-LANGUAGE["Game_Damage_Taken"] = "Damage Taken"
+LANGUAGE["Game_X_Damage_Taken"] = "%s Damage Taken"
 LANGUAGE["Game_Most_Kills"] = "Most Kills"
-LANGUAGE["Game_Kills"] = "Kills"
+LANGUAGE["Game_X_Kills"] = "%s Kills"
 LANGUAGE["Game_Elite_Killer"] = "Elite Killer"
-LANGUAGE["Game_Elite_Kills"] = "Elite Kills"
+LANGUAGE["Game_X_Elite_Kills"] = "%s Elite Kills"
 LANGUAGE["Game_SharpShooter"] = "SharpShooter"
-LANGUAGE["Game_Headshots"] = "Headshots"
+LANGUAGE["Game_X_Headshots"] = "%s Headshots"
 LANGUAGE["Game_Most_Heal"] = "Team Healer"
-LANGUAGE["Game_Healed"] = "Healed"
+LANGUAGE["Game_X_Healed"] = "%s Healed"
 LANGUAGE["Game_X_Healed_You"] = "%s healed you."
 LANGUAGE["Game_Most_Valuable_Player"] = "MVP"
+LANGUAGE["Game_X_MVP_Kills_X_MVP_Damage"] = "%s Kills, %s Damage (%s%)"
 LANGUAGE["Game_Tip_X"] = "Tip: %s"
 LANGUAGE["Game_Spectating"] = "Spectating"
+
 
 
 -- Ranks
@@ -147,6 +149,135 @@ LANGUAGE["Main_Menu_Category_Stats"] = "Stats"
 LANGUAGE["Main_Menu_Category_Achievements"] = "Achievements"
 LANGUAGE["Main_Menu_Category_Mechanics"] = "Mechanics"
 
+LANGUAGE["Stats_Menu_Basic"] = "Basic"
+LANGUAGE["Stats_Menu_Speed"] = "Speed:"
+LANGUAGE["Stats_Menu_Health"] = "Health:"
+LANGUAGE["Stats_Menu_Armor"] = "Armor:"
+LANGUAGE["Stats_Menu_Evasion"] = "Evasion:"
+LANGUAGE["Stats_Menu_Block"] = "Block:"
+LANGUAGE["Stats_Menu_Perks"] = "Perks"
+LANGUAGE["Stats_Menu_Physical_Resistances"] = "Physical Resistances"
+LANGUAGE["Stats_Menu_Bullet_Resistance"] = "Ballistic Resistance:"
+LANGUAGE["Stats_Menu_Knife_Resistance"] = "Slash Resistance:"
+LANGUAGE["Stats_Menu_Crowbar_Resistance"] = "Blunt Resistance:"
+LANGUAGE["Stats_Menu_Environment_Resistance"] = "Other:"
+LANGUAGE["Stats_Menu_Special_Resistances"] = "Special Resistances"
+LANGUAGE["Stats_Menu_Fire_Resistance"] = "Fire Resistance:"
+LANGUAGE["Stats_Menu_Cold_Resistance"] = "Cold Resistance:"
+LANGUAGE["Stats_Menu_Lightning_Resistance"] = "Lightning Resistance:"
+LANGUAGE["Stats_Menu_Poison_Resistance"] = "Poison Resistance:"
+LANGUAGE["Stats_Menu_Explode_Resistance"] = "Blast Resistance:"
+LANGUAGE["Stats_Menu_Status_Effects"] = "Status Effects"
+LANGUAGE["Stats_Menu_Bleeding_Immunity"] = "Bleeding Immunity:"
+LANGUAGE["Stats_Menu_Fire_Immunity"] = "Ignite Immunity:"
+LANGUAGE["Stats_Menu_Frost_Immunity"] = "Frostbite Immunity:"
+LANGUAGE["Stats_Menu_Shock_Immunity"] = "Shock Immunity:"
+LANGUAGE["Stats_Menu_Armor_Break_Immunity"] = "Break Immunity:"
+LANGUAGE["Stats_Menu_Status_Effect_Immunity_NO"] = "NO"
+LANGUAGE["Stats_Menu_Status_Effect_Immunity_YES"] = "YES"
+
+LANGUAGE["Achievements_Menu_Info"] = 'Complete maps on 10 waves to earn achievements!'
+LANGUAGE["Achievements_Menu_Info_Text"] = [[
+        *Notes: Achievements are disabled in sandbox mode.
+        
+        To achieve the special Horde Completion achievement, you need:
+          - Default Config Enabled
+          - Default Settings:
+            - Base Start Money <= 1000
+            - Base Round bonus <= 500
+            - Base Walk Speed <= 180
+            - Base Run Speed <= 220]]
+LANGUAGE["Achievement_X_Map_X_Completion_Title"] = "%s: %s"
+LANGUAGE["Achievement_Completion_Title_Normal Completion"] = "Normal Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves on NORMAL difficulty."] = "Complete 10 waves on NORMAL difficulty."
+LANGUAGE["Achievement_Completion_Title_Hard Completion"] = "Hard Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves on HARD difficulty."] = "Complete 10 waves on HARD difficulty."
+LANGUAGE["Achievement_Completion_Title_Realism Completion"] = "Realism Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves on REALISM difficulty."] = "Complete 10 waves on REALISM difficulty."
+LANGUAGE["Achievement_Completion_Title_Nightmare Completion"] = "Nightmare Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves on NIGHTMARE difficulty."] = "Complete 10 waves on NIGHTMARE difficulty."
+LANGUAGE["Achievement_Completion_Title_Apocalypse Completion"] = "Apocalypse Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves on APOCALYPSE difficulty."] = "Complete 10 waves on APOCALYPSE difficulty."
+LANGUAGE["Achievement_Completion_Title_Coop Completion"] = "Coop Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves with at least 4 players."] = "Complete 10 waves with at least 4 players."
+LANGUAGE["Achievement_Completion_Title_Horde Completion"] = "Horde Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves on NIGHTMARE difficulty with default config and settings."] = "Complete 10 waves on NIGHTMARE difficulty with default config and settings."
+LANGUAGE["Achievement_Completion_Title_Hardcore Completion"] = "Hardcore Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves on APOCALYPSE difficulty with default config and settings."] = "Complete 10 waves on APOCALYPSE difficulty with default config and settings."
+LANGUAGE["Achievement_Completion_Title_Coop Horde Completion"] = "Coop Horde Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves on NIGHTMARE difficulty with at least 4 players, default config and settings."] = "Complete 10 waves on NIGHTMARE difficulty with at least 4 players, default config and settings."
+LANGUAGE["Achievement_Completion_Title_Hardcore Coop Completion"] = "Hardcore Coop Completion"
+LANGUAGE["Achievement_Completion_Complete 10 waves on APOCALYPSE difficulty with at least 4 players, default config and settings."] = "Complete 10 waves on APOCALYPSE difficulty with at least 4 players, default config and settings."
+LANGUAGE["Achievement_Completion_Title_Endless Wave 20"] = "Endless Wave 20"
+LANGUAGE["Achievement_Completion_Complete 20 waves on Endless mode."] = "Complete 20 waves on Endless mode."
+LANGUAGE["Achievement_Completion_Title_Endless Wave 30"] = "Endless Wave 30"
+LANGUAGE["Achievement_Completion_Complete 30 waves on Endless mode."] = "Complete 30 waves on Endless mode."
+
+LANGUAGE["Mechanics_Subcategory_Latest_Update"] = "Latest Update"
+LANGUAGE["Mechanics_Subcategory_Damage_Types"] = "Damage Types"
+LANGUAGE["Mechanics_Subcategory_Debuff_Status_Effects"] = "Debuff Status Effects"
+LANGUAGE["Mechanics_Subcategory_Enemies"] = "Enemies"
+LANGUAGE["Mechanics_Subcategory_Donate_Money"] = "Donate $"
+LANGUAGE["Mechanics_Latest_X_Update"] = "Update %s"
+LANGUAGE["Mechanics_Damage_Types"] = "Damage Types"
+LANGUAGE["Mechanics_Damage_Type_Bullet"] = "Ballistic:"
+LANGUAGE["Mechanics_Damage_Type_Knife"] = "Slash:"
+LANGUAGE["Mechanics_Damage_Type_Crowbar"] = "Blunt:"
+LANGUAGE["Mechanics_Damage_Type_Environment"] = "Other Physical Damage:"
+LANGUAGE["Mechanics_Damage_Type_Fire"] = "Fire:"
+LANGUAGE["Mechanics_Damage_Type_Fire_Description"] = "Increases Ignite buildup. DMG_BURN, DMG_SLOWBURN, DMG_PLASMA."
+LANGUAGE["Mechanics_Damage_Type_Cold"] = "Cold:"
+LANGUAGE["Mechanics_Damage_Type_Cold_Description"] = "Increases Frostbite buildup. DMG_REMOVENORAGDOLL."
+LANGUAGE["Mechanics_Damage_Type_Lightning"] = "Lightning:"
+LANGUAGE["Mechanics_Damage_Type_Lightning_Description"] = "Increases Shock buildup. DMG_SHOCK, DMG_ENERGYBEAM."
+LANGUAGE["Mechanics_Damage_Type_Poison"] = "Poison:"
+LANGUAGE["Mechanics_Damage_Type_Poison_Description"] = "Increases Break buildup. DMG_NERVEGAS, DMG_ACID, DMG_POISON, DMG_PARALYZE."
+LANGUAGE["Mechanics_Damage_Type_Blast"] = "Blast:"
+LANGUAGE["Mechanics_Debuff_Status"] = "Debuff Status"
+LANGUAGE["Mechanics_Debuff_Status_Bleed"] = "Bleed:"
+LANGUAGE["Mechanics_Debuff_Status_Bleed_Description"] = "Buildup from certain enemies and mutations. When inflicted, removes health over time."
+LANGUAGE["Mechanics_Debuff_Status_Fire"] = "Ignite:"
+LANGUAGE["Mechanics_Debuff_Status_Fire_Description"] = "Buildup from Fire damage. When inflicted, deals Fire damage over time."
+LANGUAGE["Mechanics_Debuff_Status_Frost"] = "Frostbite:"
+LANGUAGE["Mechanics_Debuff_Status_Frost_Description"] = "Buildup from Cold damage. When inflicted, reduces movement speed by 40/45/50/50/55%."
+LANGUAGE["Mechanics_Debuff_Status_Shock"] = "Shock:"
+LANGUAGE["Mechanics_Debuff_Status_Shock_Description"] = "Buildup from Lightning damage. When inflicted, causes player to receive 15/20/25/25/30% more damage."
+LANGUAGE["Mechanics_Debuff_Status_Armor_Break"] = "Break:"
+LANGUAGE["Mechanics_Debuff_Status_Armor_Break_Description"] = "Buildup from Poison damage. When inflicted, removes 80/85/90/90/95% of player health that is recovered slowly."
+LANGUAGE["Mechanics_Debuff_Status_Decay"] = "Decay:"
+LANGUAGE["Mechanics_Debuff_Status_Decay_Description"] = "Buildup from Decay mutation. When inflicted, prevents healing."
+LANGUAGE["Mechanics_Debuff_Status_Necrosis"] = "Necrosis:"
+LANGUAGE["Mechanics_Debuff_Status_Necrosis_Description"] = "Buildup from Blight enemies. When inflicted, causes instant death."
+LANGUAGE["Mechanics_Regular_Enemies"] = "Regular Enemies"
+LANGUAGE["Mechanics_Regular_Enemy_Walker"] = "Walker"
+LANGUAGE["Mechanics_Regular_Enemy_Walker_Description"] = "Slow moving zombies that come in hordes."
+LANGUAGE["Mechanics_Regular_Enemy_Sprinter"] = "Sprinter"
+LANGUAGE["Mechanics_Regular_Enemy_Sprinter_Description"] = "Zombies with moderate speed that come in hordes."
+LANGUAGE["Mechanics_Regular_Enemy_Clawler"] = "Crawler"
+LANGUAGE["Mechanics_Regular_Enemy_Clawler_Description"] = "Zombies with fast speed that come in hordes that are easy to dispose of."
+LANGUAGE["Mechanics_Regular_Enemy_Fast_Poison_Zombie_Zombine"] = "Fast Zombie/Poison Zombie/Zombine"
+LANGUAGE["Mechanics_Regular_Enemy_Fast_Poison_Zombie_Zombine_Description"] = "Zombies that roam around City-17."
+LANGUAGE["Mechanics_Regular_Enemy_Charred_Zombine"] = "Charred Zombine"
+LANGUAGE["Mechanics_Regular_Enemy_Charred_Zombine_Description"] = "Zombine convered in flames that are more suicidal."
+LANGUAGE["Mechanics_Elite_Enemies"] = "Elite Enemies"
+LANGUAGE["Mechanics_Elite_Enemy_Exploder"] = "Exploder"
+LANGUAGE["Mechanics_Elite_Enemy_Exploder_Description"] = "Explodes on death, dealing Poison damage. Does not explode when decapitated. Weak to headshots."
+LANGUAGE["Mechanics_Elite_Enemy_Vomitter"] = "Vomitter"
+LANGUAGE["Mechanics_Elite_Enemy_Vomitter_Description"] = "Ranged attackers that spits flesh at enemies. Inflicts Bleeding."
+LANGUAGE["Mechanics_Elite_Enemy_Scorcher"] = "Scorcher"
+LANGUAGE["Mechanics_Elite_Enemy_Scorcher_Description"] = "Vomitters covered in flames. Spits burning flesh that deal Fire damage."
+LANGUAGE["Mechanics_Elite_Enemy_Screecher"] = "Screecher"
+LANGUAGE["Mechanics_Elite_Enemy_Screecher_Description"] = "Emits screaming shockwaves when approached. Deals Lightning damage."
+LANGUAGE["Mechanics_Elite_Enemy_Blight"] = "Blight"
+LANGUAGE["Mechanics_Elite_Enemy_Blight_Description"] = "Explodes on death or when shot in the torso, inflicting Necrosis status. Weak to headshots."
+LANGUAGE["Mechanics_Elite_Enemy_Weeper"] = "Weeper"
+LANGUAGE["Mechanics_Elite_Enemy_Weeper_Description"] = "Emits growling shockwaves when approached. Deals Cold damage."
+LANGUAGE["Mechanics_Elite_Enemy_Hulk"] = "Hulk"
+LANGUAGE["Mechanics_Elite_Enemy_Hulk_Description"] = "Extremely dangerous enemy with high health. Rages when health drops below 50%."
+LANGUAGE["Mechanics_Elite_Enemy_Yeti"] = "Yeti"
+LANGUAGE["Mechanics_Elite_Enemy_Yeti_Description"] = "Hulks that are experimented with dangerous mutations."
+LANGUAGE["Mechanics_Elite_Enemy_Lesion"] = "Lesion"
+LANGUAGE["Mechanics_Elite_Enemy_Lesion_Description"] = "Extremely dangerous enemy with high health and agility. Rages periodically or when provoked."
 
 -- Notifications/Hints
 LANGUAGE["Notification_Changed_Class_To_X"] = "You changed class to %s"
@@ -195,7 +326,7 @@ LANGUAGE["Damage_Type_Poison"] = "Poison"
 LANGUAGE["Damage_Type_Blast"] = "Blast"
 
 -- Chat Messages
-LANGUAGE["Chat_Message_Help_Notice"] = "Use '!help' to see special commands!" -- Translations is not working for this string.
+--LANGUAGE["Chat_Message_Help_Notice"] = "Use '!help' to see special commands!" -- Translations is not working for this string.
 LANGUAGE["Chat_Message_Help_Ready"] = "'!ready' - Get ready"
 LANGUAGE["Chat_Message_Help_Shop"] = "'!shop' - Open shop"
 LANGUAGE["Chat_Message_Help_Drop"] = "'!drop' - Drop weapon"
@@ -357,12 +488,14 @@ Heavy subclass.
 A fucking meatball that punches people.]]
 
 -- Default Base Perks
+LANGUAGE["Perk_Title_Survivor Base"] = [[Survivor Base]]
 LANGUAGE["Perk_survivor_base"] = [[
 The Survivor class can be played into any class to fill in missing roles for the team.
 Complexity: EASY
 
 No bonus.]]
 
+LANGUAGE["Perk_Title_Assault Base"] = [[Assault Base]]
 LANGUAGE["Perk_assault_base"] = [[
 The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
 Complexity: EASY
@@ -372,6 +505,7 @@ Complexity: EASY
 Gain Adrenaline when you kill an enemy.
 Adrenaline increases damage and speed by {4}.]]
 
+LANGUAGE["Perk_Title_Heavy Base"] = [[Heavy Base]]
 LANGUAGE["Perk_heavy_base"] = [[
 The Heavy class is a tank class that provides strong suppression firepower.
 Complexity: EASY
@@ -379,6 +513,7 @@ Complexity: EASY
 Regenerate {1} armor per second.
 Regenerate up to {2} armor. ({3} + {4} per level, up to {5})]]
 
+LANGUAGE["Perk_Title_Medic Base"] = [[Medic Base]]
 LANGUAGE["Perk_medic_base"] = [[
 The Medic class is a durable support class that focuses on healing and buffing teammates.
 Complexity: MEDIUM
@@ -387,6 +522,7 @@ Amplifies healing by {1}. ({2} per level, up to {3}).
 
 Regenerate {4} health per second.]]
 
+LANGUAGE["Perk_Title_Demolition Base"] = [[Demolition Base]]
 LANGUAGE["Perk_demolition_base"] = [[
 The Demolition class is a crowd-control class that can also provide high single target damage.
 Complexity: MEDIUM
@@ -395,6 +531,7 @@ Complexity: MEDIUM
 
 Regenerate {5} frag grenade every {6} seconds, if you do not have one.]]
 
+LANGUAGE["Perk_Title_Ghost Base"] = [[Ghost Base]]
 LANGUAGE["Perk_ghost_base"] = [[
 The Ghost class is focused on taking down boss enemies using Camoflague.
 Complexity: HIGH
@@ -404,6 +541,7 @@ Complexity: HIGH
 Crouch to activate Camoflague, granting {4} evasion.
 Attacking or Running REMOVES Camoflague.]]
 
+LANGUAGE["Perk_Title_Engineer Base"] = [[Engineer Base]]
 LANGUAGE["Perk_engineer_base"] = [[
 The Engineer class is a minion-centered class that deals damage through minions.
 Complexity: MEDIUM
@@ -412,6 +550,7 @@ Complexity: MEDIUM
 
 Turrets have {4} base health and deals {5} base damage.]]
 
+LANGUAGE["Perk_Title_Berserker Base"] = [[Berserker Base]]
 LANGUAGE["Perk_berserker_base"] = [[
 The Berserker class is a melee-centered class that can be played both offensively and defensively.
 Complexity: HIGH
@@ -421,6 +560,7 @@ Complexity: HIGH
 
 Aerial Parry: Jump to reduce Physical damage taken by {7}.]]
 
+LANGUAGE["Perk_Title_Warden Base"] = [[Warden Base]]
 LANGUAGE["Perk_warden_base"] = [[
 The Warden is a support class that uses aura effects and structures to buff teammates.
 Complexity: MEDIUM
@@ -430,6 +570,7 @@ Complexity: MEDIUM
 Players near you are affected by Warden Aura.
 Warden Aura blocks {4} damage.]]
 
+LANGUAGE["Perk_Title_Cremator Base"] = [[Cremator Base]]
 LANGUAGE["Perk_cremator_base"] = [[
 The Cremator builds its offense and defense around Fire damage.
 Complexity: EASY
@@ -441,6 +582,7 @@ Ignite base duration is {6} and deals damage over time based on hit damage.
 Fire damage has {7} Ignite chance.]]
 
 -- Subclass Default Base Perks
+LANGUAGE["Perk_Title_Psycho Base"] = [[Psycho Base]]
 LANGUAGE["Perk_psycho_base"] = [[
 {1} chance to deal a Critical Hit. ({2} + {3} per level, up to {4}).
 You deal 50% more damage on Critical Hit.
@@ -450,6 +592,7 @@ Lose 1 health every 0.2 seconds in Frenzy Mode, down to 1.
 {5} increased Critical Strike chance in Frenzy Mode.
 {6} increased health recovery in Frenzy Mode.]]
 
+LANGUAGE["Perk_Title_SpecOps Base"] = [[SpecOps Base]]
 LANGUAGE["Perk_specops_base"] = [[
 Press F to enter Tactical Mode, replacing your flashlight.
 You have Nightvision during Tactical Mode.
@@ -459,6 +602,7 @@ Cannot run during Tactical Mode.
 {1} increased movement speed during Tactical Mode. ({2} per level, up to {3})
 {1} increased headshot damage during Tactical Mode. ({2} per level, up to {3})]]
 
+LANGUAGE["Perk_Title_Warlock Base"] = [[Warlock Base]]
 LANGUAGE["Perk_warlock_base"] = [[
 COMPLEXITY: HIGH
 
@@ -475,6 +619,7 @@ Plants energy bodies that explode when enemies are nearby, dealing Physical dama
 You can plant at most 5 active Astral Remnants.
 HOLD RMB to charge and refresh duration of all active Astral Remnants.]]
 
+LANGUAGE["Perk_Title_Gunslinger Base"] = [[Gunslinger Base]]
 LANGUAGE["Perk_gunslinger_base"] = [[
 {1} increased Pistol damage. ({2} per level, up to {3}).
 
@@ -484,15 +629,7 @@ You can apply 1 Hunter's Mark at a time.
 
 Gains access to all Pistols.]]
 
-LANGUAGE["Perk_gunslinger_base"] = [[
-{1} increased Pistol damage. ({2} per level, up to {3}).
-
-Press SHIFT+E to apply Hunter's Mark on an enemy.
-Hunter's Mark lasts for 5 seconds.
-You can apply 1 Hunter's Mark at a time.
-
-Gains access to all Pistols.]]
-
+LANGUAGE["Perk_Title_Necromancer Base"] = [[Necromancer Base]]
 LANGUAGE["Perk_necromancer_base"] = [[
 COMPLEXITY: MEDIUM
 
@@ -510,6 +647,7 @@ Conjures a Spectre minion.
 The Spectre minion deals Physical damage and applies Frostbite buildup.
 HOLD RMB to recall Spectres to your side.]]
 
+LANGUAGE["Perk_Title_Samurai Base"] = [[Samurai Base]]
 LANGUAGE["Perk_samurai_base"] =
 [[COMPLEXITY: HIGH
     
@@ -520,6 +658,7 @@ SHIFT+E to activate Quickstep.
 Dashes torwards the input direction.
 100% increased evasion during Quickstep.]]
 
+LANGUAGE["Perk_Title_Artificer Base"] = [[Artificer Base]]
 LANGUAGE["Perk_artificer_base"] = [[
 COMPLEXITY: MEDIUM
 
@@ -536,6 +675,7 @@ Strikes at the target, dealing Lightning damage and applies Shock buildup.
 HOLD RMB for different effects.]]
 
 -- Disabled Subclass Default Base Perks
+LANGUAGE["Perk_Title_Chemist Base"] = [[Chemist Base]]
 LANGUAGE["Perk_chemist_base"] = [[
 Complexity: MEDIUM
 
@@ -543,6 +683,7 @@ Convert 100% of your Ballistic damage into Poison damage.
 Inflicts Break buildup by {1} of base Poison damage. ({2} + {3} per level, up to {4}).
 {4} increased Poison damage resistance. ({5} + {6} per level, up to {7}).]]
 
+LANGUAGE["Perk_Title_Golem Base"] = [[Golem Base]]
 LANGUAGE["Perk_golem_base"] = [[
 {1} increased maximum health. ({2} per level, up to {3}).
 
@@ -559,6 +700,7 @@ RMB: Force Shield (1 Energy per tick)
 Hold to activate a force shield that negates damage taken.
 Damage taken is depleted as energy instead.]]
 
+LANGUAGE["Perk_Title_Striker Base"] = [[Striker Base]]
 LANGUAGE["Perk_striker_base"] = [[
 The Striker class manipulates space to its advantage.
 Complexity: HIGH
@@ -1005,7 +1147,7 @@ Gain Brutality by hitting enemy with Melee attacks, up to 5 stacks.
 Each Brutality stack adds {1} Critical Hit chance.
 Each Brutality stack increases {2} Critical Hit damage.]]
 
-LANGUAGE["Perk_Title_Psycho_Tier_4"] = [[Pyschosis]]
+LANGUAGE["Perk_Title_Psycho_Tier_4"] = [[Psychosis]]
 LANGUAGE["Perk_Title_psycho_grudge"] = [[Grudge]]
 LANGUAGE["Perk_psycho_grudge"] = [[
 {1} increased Critical Hit chance per {2} health missing.

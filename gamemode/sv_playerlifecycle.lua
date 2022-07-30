@@ -426,7 +426,8 @@ function HORDE:PlayerInit(ply)
     ply:Horde_SyncEconomy()
 
     ply.Horde_Status = {}
-    ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Help_Notice") -- Todo: Figure out how to make it show translated message.
+    --ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Help_Notice") -- Todo: Figure out how to make it show translated message.
+	ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
 
     HORDE:GiveStarterWeapons(ply)
 
