@@ -12,6 +12,6 @@ GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDamageTakenPost = function (ply, dmginfo, bonus)
     if ply:Horde_GetGadget() ~= "gadget_transcendance"  then return end
-    ply:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, dmginfo:GetDamage(), dmginfo:GetAttacker())
+    ply:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, dmginfo:GetDamage() * 1.25, dmginfo:GetAttacker())
     dmginfo:SetDamage(0)
 end

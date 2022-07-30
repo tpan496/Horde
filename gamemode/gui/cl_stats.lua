@@ -337,6 +337,11 @@ function PANEL:Init()
         surface.SetDrawColor(Color(50, 150, 50))
         surface.DrawTexturedRect(50, 630, 40, 40)
 
+        mat = Material("materials/status/necrosis.png", "mips smooth")
+        surface.SetMaterial(mat)
+        surface.SetDrawColor(Color(50, 150, 50))
+        surface.DrawTexturedRect(50, 730, 40, 40)
+
         draw.SimpleText("Debuff Status", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Bleed:", 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Buildup from certain enemies and mutations. When inflicted, removes health over time.", 'Content', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -424,8 +429,33 @@ function PANEL:Init()
         draw.SimpleText("DMG_BLAST, DMG_MISSILEDEFENSE.", 'Content', 100, 1000, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
+    local function draw_resistances(pos, res)
+        local start_pos = 250
+        for type, value in SortedPairs(res) do
+            local mat = Material(HORDE.DMG_TYPE_ICON[type], "mips smooth")
+            surface.SetMaterial(mat)
+            surface.SetDrawColor(HORDE.DMG_COLOR[type])
+            surface.DrawTexturedRect(start_pos, pos - 15, 30, 30)
+
+            surface.SetDrawColor(color_white)
+            if value < 1 then
+                draw.SimpleText("x" .. tostring(value), 'Content', start_pos + 40, pos, Color(255,0,0), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+            elseif value > 1 then
+                draw.SimpleText("x" .. tostring(value), 'Content', start_pos + 40, pos, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+            end
+            
+            start_pos = start_pos + 90
+        end
+    end
+    local function write_paragraph(strs, start_pos)
+        for _, str in pairs(strs) do
+            draw.SimpleText(str, 'Content', 100, start_pos, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+            start_pos = start_pos + 50
+        end
+        return start_pos
+    end
     local enemies_text_panel = vgui.Create("DPanel", description_panel)
-    enemies_text_panel:SetSize(self:GetParent():GetWide(), 1600)
+    enemies_text_panel:SetSize(self:GetParent():GetWide(), 4000)
     enemies_text_panel:SetVisible(false)
     enemies_text_panel.Paint = function ()
         draw.SimpleText("Regular Enemies", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -438,29 +468,88 @@ function PANEL:Init()
         draw.SimpleText("Fast Zombie/Poison Zombie/Zombine", 'Heading', 50, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Zombies that roam around City-17.", 'Content', 100, 450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Charred Zombine", 'Heading', 50, 500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Zombine convered in flames that are more suicidal. Immune to Fire damage.", 'Content', 100, 550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        
-
+        draw.SimpleText("Zombine convered in flames that are more suicidal.", 'Content', 100, 550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw_resistances(500, {[HORDE.DMG_FIRE] = 0.5, [HORDE.DMG_COLD] = 1.25})
 
         draw.SimpleText("Elite Enemies", 'LargeTitle', 50, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Exploder", 'Heading', 50, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Explodes on death, dealing Poison damage. Does not explode when decapitated. Weak to headshots. Immune to Poison damage.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Explodes on death, dealing Poison damage. Does not explode when decapitated. Weak to headshots.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw_resistances(750, {[HORDE.DMG_POISON] = 0.5, [HORDE.DMG_FIRE] = 1.5, [HORDE.DMG_BLAST] = 1.5})
+        
         draw.SimpleText("Vomitter", 'Heading', 50, 850, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Ranged attackers that throw flesh at enemies. Inflicts Bleeding.", 'Content', 100, 900, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Ranged attackers that spits flesh at enemies. Inflicts Bleeding.", 'Content', 100, 900, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Scorcher", 'Heading', 50, 950, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Vomitters covered in flames. Throws burning flesh that deal Fire damage. Immune to Fire damage.", 'Content', 100, 1000, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Vomitters covered in flames. Spits burning flesh that deal Fire damage.", 'Content', 100, 1000, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw_resistances(950, {[HORDE.DMG_FIRE] = 0.5, [HORDE.DMG_COLD] = 1.25})
+
         draw.SimpleText("Screecher", 'Heading', 50, 1050, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Emits screaming shockwaves when approached. Deals Lightning damage. Immune to Lightning damage.", 'Content', 100, 1100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Emits screaming shockwaves when approached. Deals Lightning damage.", 'Content', 100, 1100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw_resistances(1050, {[HORDE.DMG_LIGHTNING] = 0.5, [HORDE.DMG_BLAST] = 1.25})
+        
         draw.SimpleText("Blight", 'Heading', 50, 1150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Explodes on death or when shot in the torso, inflicting Necrosis status. Weak to headshots.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Weeper", 'Heading', 50, 1258, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Emits growling shockwaves when approached. Deals Cold damage. Immune to Lightning and Cold damage.", 'Content', 100, 1200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Explodes on death or when shot in the torso, inflicting Necrosis status. Weak to headshots.", 'Content', 100, 1200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw_resistances(1150, {[HORDE.DMG_LIGHTNING] = 1.5})
+        
+        draw.SimpleText("Weeper", 'Heading', 50, 1250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Emits growling shockwaves when approached. Deals Cold damage.", 'Content', 100, 1300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw_resistances(1250, {[HORDE.DMG_FIRE] = 1.25, [HORDE.DMG_COLD] = 0.5, [HORDE.DMG_LIGHTNING] = 0.75, [HORDE.DMG_BLAST] = 1.25})
+        
         draw.SimpleText("Hulk", 'Heading', 50, 1350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Extremely dangerous enemy with high health. Rages when health drops below 50%.", 'Content', 100, 1300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Extremely dangerous enemy with high health. Rages when health drops below 50%.", 'Content', 100, 1400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Yeti", 'Heading', 50, 1450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Hulks that are experimented with dangerous mutations. Immune to Cold damage.", 'Content', 100, 1400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Hulks that are experimented with dangerous mutations.", 'Content', 100, 1500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw_resistances(1450, {[HORDE.DMG_FIRE] = 1.25, [HORDE.DMG_COLD] = 0.5})
+
         draw.SimpleText("Lesion", 'Heading', 50, 1550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Extremely dangerous enemy with high health and agility. Rages periodically or when provoked.", 'Content', 100, 1500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Extremely dangerous enemy with high health and agility. Rages periodically or when provoked.", 'Content', 100, 1600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+        draw.SimpleText("Bosses", 'LargeTitle', 50, 1700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+        draw.SimpleText("Alpha Gonome", 'Heading', 50, 1750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        local next_pos = write_paragraph({
+            "An aged gonome that gained increased endurance and power.",
+            "Corruption Aura: Inflicts Bleeding to players nearby.",
+            "Claw Attack: Deals Slashing damage. Inflicts Bleeding.",
+            "Acid Throw: Ranged attack that deals Poison damage.",
+            "Frenzy (Phase 2): Passively increases movement speed and action speed.",
+        }, 1800)
+
+        draw.SimpleText("Gamma Gonome", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        next_pos = write_paragraph({
+            "A gonome infused with cryo-engine that provides minor camouflage.",
+            "Claw Attack: Deals Slashing damage. Inflicts Frostbite.",
+            "Icicle Throw: Ranged attack that deals Cold damage.",
+            "Icestorm (Phase 2): Creates a large icestorm near itself, dealing massive Cold damage to nearby units.",
+        }, next_pos + 100)
+
+        draw.SimpleText("Subject: Wallace Breen", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        next_pos = write_paragraph({
+            "A gonome infused with a human subject to increase brain capabilities for accuracy.",
+            "Claw Attack: Deals Slashing damage.",
+            "Particle Cannon: An accurate ranged cannon that deals massive Physical and Blast damage. Inflicts Decay.",
+            "Particle Cannon (Phase 2): Generates continuous explosions post detonation.",
+            "Shockwave: Generates a shockwave when it received certain amount of damage. Inflicts Bleeding, Shock and Decay.",
+        }, next_pos + 100)
+
+        draw.SimpleText("Xen Destroyer Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        next_pos = write_paragraph({
+            "Experimental unit made from Xen Gargantua. Dropping heavy armor and focuses on offense capabilities.",
+            "Slam Attack: Deals Blunt damage.",
+            "Fumethrower: Creates streams of dark flame that deals Fire damage and inflicts Necrosis.",
+            "Earthshatter: Stomps the ground and generates a huge tracing shockwave torwards the target. Deals Physical damage.",
+            "Energy Blast (Phase 2): Accumulates energy over time, indicated by its red light. When full, blinds players and blasts the area with Physical damage.",
+        }, next_pos + 100)
+
+        draw.SimpleText("Xen Psychic Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        next_pos = write_paragraph({
+            "Experimental unit made from Xen Kingpin. Has enhanced psychic and physical capabilities.",
+            "Claw Attack: Deals Slashing damage.",
+            "Lightning Beam: Projects a lightning beam, dealing heavy Lightning damage in an area.",
+            "Lightning Beam (Phase 2): The lightning explosion leaves behind ground flames that last for a long time.",
+            "Lightning Orb: Creates homing lightning orbs that follow players. Explodes after delay on contact, dealing Lightning damage.",
+            "Melee Mode (Phase 2): Greatly increases speed and focuses on Melee attacks.",
+            "Psionic Shield (Phase 2): Active in Melee Mode only. When the shield is active, reduces damage taken by 50%.",
+        }, next_pos + 100)
     end
 
     local donate_text_panel = vgui.Create("DPanel", description_panel)

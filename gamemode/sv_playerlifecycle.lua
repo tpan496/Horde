@@ -31,7 +31,6 @@ end
 function HORDE:GiveStarterWeapons(ply)
     if GetConVar("horde_enable_starter"):GetInt() == 0 then return end
     if ply:Alive() and (not ply:Horde_GetGivenStarterWeapons()) then
-        print(ply:Horde_GetCurrentSubclass())
         if HORDE.starter_weapons[ply:Horde_GetCurrentSubclass()] then
             for _, wpn_class in pairs(HORDE.starter_weapons[ply:Horde_GetCurrentSubclass()]) do
                 ply:Give(wpn_class)
@@ -453,6 +452,8 @@ function HORDE:PlayerInit(ply)
             net.WriteUInt(1, 8)
         net.Send(ply)
     end
+
+    ply.Horde_Init_Complete = true
 
     if not HORDE.has_buy_zone then
         net.Start("Horde_SyncStatus")

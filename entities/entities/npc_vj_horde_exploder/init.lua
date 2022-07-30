@@ -41,6 +41,9 @@ function ENT:CustomOnInitialize()
     self:SetModelScale(1.25, 0)
     self:ManipulateBoneScale(0, Vector(2,2,2))
     self:ManipulateBoneScale(9, Vector(2,2,4))
+
+    self:AddRelationship("npc_headcrab_poison D_LI 99")
+	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 
 function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
@@ -58,9 +61,6 @@ function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
     dmg:SetDamageType(DMG_ACID)
     dmg:SetDamage(50)
     util.BlastDamageInfo(dmg, self:GetPos(), 250)
-
-    self:AddRelationship("npc_headcrab_poison D_LI 99")
-	self:AddRelationship("npc_headcrab_fast D_LI 99")
 
     sound.Play("vj_acid/acid_splat.wav", self:GetPos())
 end

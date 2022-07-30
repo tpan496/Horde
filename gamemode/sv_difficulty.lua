@@ -104,7 +104,7 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
         end
     elseif target:IsNPC() then
         if not dmg:GetAttacker():IsNPC() then return end
-        if dmg:GetAttacker() == dmg:GetInflictor() then return true end
+        if target:GetClass() == dmg:GetAttacker() and dmg:GetAttacker() == dmg:GetInflictor() then return true end
         if dmg:IsDamageType(DMG_POISON) and dmg:GetAttacker():GetClass() == "npc_headcrab_poison" then
             dmg:SetDamage(0)
         elseif dmg:IsDamageType(DMG_SHOCK) or dmg:IsDamageType(DMG_REMOVENORAGDOLL) then

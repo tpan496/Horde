@@ -414,7 +414,7 @@ function SWEP:LSS(pos, base_damage, e, properties)
 
 	sound.Play("horde/weapons/solar_seal/hallowed_bolt_hit.ogg", pos, 100, math.random(90, 110), 1)
 
-	for i = 1,10 do
+	for i = 1,7 do
 		local LT = ents.Create("info_target")
 		LT:SetKeyValue("targetname","bolt_target_" .. self.Owner:Name().. "_" .. tostring(i))
 		local f = math.random(-25,25)

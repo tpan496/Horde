@@ -9,7 +9,7 @@ ENT.Model = {"models/zombie/fast.mdl"} -- The game will pick a random model from
 ENT.StartHealth = 100
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
 ENT.FriendsWithAllPlayerAllies = true
 ENT.PlayerFriendly = true
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
@@ -132,6 +132,7 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_vj_horde_combat_bot D_LI 99")
 	self:AddRelationship("npc_manhack D_LI 99")
 	self:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
+	self:AddRelationship("npc_vj_horde_rocket_turret D_LI 99")
     --self:EmitSound("horde/lesion/lesion_roar.ogg", 1500, 80, 1, CHAN_STATIC)
 end
 

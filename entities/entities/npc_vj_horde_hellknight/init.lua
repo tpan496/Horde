@@ -70,7 +70,7 @@ function ENT:Rage()
 end
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	if HORDE:IsCold(dmginfo) then
+	if HORDE:IsColdDamage(dmginfo) then
 		dmginfo:ScaleDamage(1.25)
     elseif HORDE:IsFireDamage(dmginfo) then
         dmginfo:ScaleDamage(0.75)
