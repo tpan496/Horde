@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+"$basetexture" "models/weapons/m32/aimpoint_sight__d"
+$translucent 1
+$selfillum 1
+	$nocull 1
+	$model 1
+}

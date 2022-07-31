@@ -1,0 +1,19 @@
+"refract" //"UnlitGeneric"
+{
+//	"$basetexture" "particle/phaz_ring"
+	"$normalmap" "effects/muzzleblur_fx/muzzleblur_bumpmap"
+	"$refracttinttexture" "particle/phaz_ring"
+	"$refracttint" "[.0 .9 .7]"
+	"$refractamount" "0.4"
+	"$forcerefract" 1
+	"$bluramount" "0.1"
+	"$nofog" "0"	
+	"$selfillum" "0"
+	"$modulate" "1"
+	"$additive" "1"
+	"$vertexalpha" "1"
+	"$vertexcolor" 1
+	"$translucent" "1"
+	"360?$gammaColorRead" "1"
+	"360?$linearWrite" "1"
+}

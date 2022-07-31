@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+"$spriteorientation" "vp_parallel"
+"$spriteorigin" "[ 0.50 0.50 ]"
+"$basetexture" "vgui\hud\horde_spore_launcher"
+"$translucent" "1"
+"$ignorez" "1"
+"$additive" "1"
+}

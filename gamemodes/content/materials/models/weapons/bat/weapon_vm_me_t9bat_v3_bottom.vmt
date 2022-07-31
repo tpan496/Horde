@@ -1,0 +1,21 @@
+"VertexLitGeneric"
+{
+	$basetexture	"models\weapons\bat\weapon_vm_me_t9bat_bottom_d"
+	$bumpmap	"models\weapons\bat\weapon_vm_me_t9bat_bottom_n"
+	$phongexponenttexture	"models\weapons\bat\weapon_vm_me_t9bat_bottom_s"
+
+	$phong	"1"
+	$phongboost	"3"
+	$phongfresnelranges	"[.78 .9 1]"
+
+	$envmap	"env_cubemap"
+	$envmaptint	"[.125 .125 .125]"
+	$normalmapalphaenvmapmask	"1"
+	$envmapfresnel	"1"
+
+	$rimlight	"1"
+	$rimmask	"1"
+	$rimlightboost	"1"
+	$rimlightexponent	"2"
+
+}
