@@ -6,6 +6,7 @@ Inflicts Frostbite buildup by {1} of base Cold damage. ({2} + {3} per level, up 
 {5} increased Cold damage resistance. ({6} per level, up to {7}).
 
 Equipped with Void Projector. Upgradable through shop.
+Upgrading Void Projector increases its damage.
 
 LMB: Void Spear (5/10/20 Energy)
 Releases a projectile that deals Cold damage and applies Frostbite buildup.

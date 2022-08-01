@@ -41,7 +41,7 @@ function ENT:Initialize()
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
     
-    self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+    self:SetCollisionGroup(COLLISION_GROUP_NPC)
     self.ExplodeTimer = CurTime() + 60
 
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
@@ -60,8 +60,6 @@ function ENT:Initialize()
         if phys:IsValid() then
             phys:SetVelocity(Vector(0,0,0))
         end
-
-        self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
     end)
     end
 end
@@ -177,6 +175,7 @@ function ENT:PhysicsCollide(colData, collider)
     if not self.Active then return end
     local pos = colData.HitPos
     if !colData.HitEntity:IsValid() then return end
+    if HORDE:IsPlayerOrMinion(colData.HitEntity) then return end
     if colData.HitEntity:GetClass() == "projectile_horde_nether_star" then return end
     if colData.HitEntity:GetClass() == "projectile_horde_nether_mine" then return end
     self:Detonate(pos, colData.HitEntity)

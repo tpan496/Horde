@@ -1,10 +1,8 @@
-PERK.PrintName = "Erosion"
-PERK.Description =
-[[Increase Break buildup over time on enemies you hit with Poison damage.
-The increase stops when Break triggers.]]
+PERK.PrintName = "Outburst"
+PERK.Description = [[{1} increased area of effect of Infection.]]
 PERK.Icon = "materials/perks/positron_array.png"
 PERK.Params = {
-    [1] = {value = 0.06, percent = true},
+    [1] = {value = 0.25, percent = true},
 }
 
 PERK.Hooks = {}

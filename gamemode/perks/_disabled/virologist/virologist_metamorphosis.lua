@@ -1,6 +1,5 @@
-PERK.PrintName = "Disintegrate"
-PERK.Description = [[{1} increased Poison damage.
-Poison damage ignores enemy Poison damage resistance.]]
+PERK.PrintName = "Metamorphosis"
+PERK.Description = [[+{1} viurs stacking.]]
 PERK.Icon = "materials/perks/positron_array.png"
 PERK.Params = {
     [1] = {value = 0.06, percent = true},

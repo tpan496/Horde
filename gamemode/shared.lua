@@ -29,7 +29,7 @@ function GM:Initialize()
     })
 end
 
-function GM:PlayerLoadout(ply) ply:StripWeapons() end
+function GM:PlayerLoadout(ply) return true end
 
 local function CheckAllowHook(hook_name)
     if GetConVar("horde_enable_sandbox"):GetBool() then

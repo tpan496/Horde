@@ -224,8 +224,26 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     net.Send(ply)
     ply:SetCustomCollisionCheck(true)
     HORDE.refresh_living_players = true
+
+    --[[if not ply.killed then
+        ply:KillSilent()
+        timer.Simple(10, function ()
+            ply.killed = true
+            ply:Spawn()
+        end)
+    end]]--
+
+    if HORDE.start_game and HORDE.current_break_time <= 0 then
+        if ply:IsValid() then
+            ply:KillSilent()
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("You will respawn next wave.")
+            net.Send(ply)
+        end
+    end
+
     if not ply:IsValid() or not ply.Horde_Init_Complete then return end
-    if not ply:Horde_GetClass() then return end
+    if not ply:Horde_GetCurrentSubclass() then return end
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
@@ -251,9 +269,11 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
             end
         end
     end
-    
+
     ply:Horde_SyncEconomy()
-    HORDE:GiveStarterWeapons(ply)
+    if ply:Alive() and not (HORDE.start_game and HORDE.current_break_time <= 0) then
+        HORDE:GiveStarterWeapons(ply)
+    end
     
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
         net.Start("Horde_SyncStatus")
