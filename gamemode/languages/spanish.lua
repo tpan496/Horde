@@ -359,7 +359,7 @@ Jugadores que cures tendran Fortificar por {1} segundos.
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[Mejora]]
 LANGUAGE["Perk_Title_medic_purify"] = [[Purificar]]
 LANGUAGE["Perk_medic_purify"] = [[
-Tu curación directamente disminuye directamente la acumulación de Sangrado, Rotura y Aturdimiento.]]
+Tu curación directamente disminuye directamente la acumulación de Sangrado, Rotura y Necrosis.]]
 
 LANGUAGE["Perk_Title_medic_haste"] = [[Prisa]]
 LANGUAGE["Perk_medic_haste"] = [[

@@ -16,6 +16,7 @@ PERK.Hooks.EntityRemoved = function(ent)
         local pos = ent:GetPos()
         local attacker = owner
         timer.Simple(0.5, function()
+            if !IsValid(attacker) then return end
             local bpos = pos + VectorRand()
             local d = DamageInfo()
             d:SetAttacker(attacker)

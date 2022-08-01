@@ -357,7 +357,7 @@ Players you heal have Fortify for {1} seconds.
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[Enhancement]]
 LANGUAGE["Perk_Title_medic_purify"] = [[Purify]]
 LANGUAGE["Perk_medic_purify"] = [[
-Your healing directly decreases buildup for Bleeding, Break and Stun.]]
+Your healing directly decreases buildup for Bleeding, Break and Necrosis.]]
 
 LANGUAGE["Perk_Title_medic_haste"] = [[Haste]]
 LANGUAGE["Perk_medic_haste"] = [[
@@ -446,9 +446,9 @@ Attacking does not cancel Camoflague.
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Trajectory]]
 LANGUAGE["Perk_Title_ghost_brain_snap"] = [[Brain Snap]]
 LANGUAGE["Perk_ghost_brain_snap"] = [[
-Headshots increases Frostbite buildup based on weapon damage.
-Enemies affected by Frostbite has drastically reduced action speed for {1} seconds.
-Frostbite cooldown is {2} seconds.]]
+Headshots increases Freeze buildup based on weapon damage.
+Enemies affected by Freeze has drastically reduced action speed for {1} seconds.
+Freeze cooldown is {2} seconds.]]
 
 LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[Kinetic Impact]]
 LANGUAGE["Perk_ghost_ghost_kinetic_impact"] = [[

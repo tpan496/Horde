@@ -173,7 +173,7 @@ function ENT:Think()
                 dmg_splash:SetDamage(self.BaseDamage)
             end
             if self.HumanTarget then
-                util.BlastDamageInfo(dmg_splash, self:GetPos(), 100)
+                util.BlastDamageInfo(dmg_splash, self:GetPos(), 150)
             else
                 self.Target:TakeDamageInfo(dmg_splash)
             end

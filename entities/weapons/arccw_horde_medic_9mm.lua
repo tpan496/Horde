@@ -168,7 +168,7 @@ SWEP.Animations = {
         Time = 12/30,
     },
     ["fire_iron"] = {
-        Source = "fire",
+        Source = "idle",
         Time = 12/30,
     },
     ["reload"] = {
@@ -209,7 +209,7 @@ function SWEP:ChangeFiremode(pred)
 
         for _, ent in pairs(ents.FindInSphere(tr.HitPos, 80)) do
             if ent:IsPlayer() then
-                local healinfo = HealInfo:New({amount=5, healer=ply})
+                local healinfo = HealInfo:New({amount=10, healer=ply})
                 HORDE:OnPlayerHeal(ent, healinfo)
             elseif ent:IsNPC() then
                 local dmg = DamageInfo()

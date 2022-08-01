@@ -1,6 +1,6 @@
-PERK.PrintName = "Sarin Mist"
-PERK.Description = [[Press SHIFT+E to release a sarin mist.
-Sarin Mist increases Break buildup over time.]]
+PERK.PrintName = "Ingrain"
+PERK.Description = [[+{1} virus stack on enemies.
+For each stack, increases virus effect by 25%.]]
 PERK.Icon = "materials/perks/positron_array.png"
 PERK.Params = {
     [1] = {value = 0.06, percent = true},

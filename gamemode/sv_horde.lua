@@ -818,9 +818,10 @@ function HORDE:CheckBossStuck()
     })
     if tr.Hit then
         local ent = tr.Entity
-        if ent:IsValid() and (ent:IsWorld()) then return end
-        horde_boss_reposition = true
-        print("[HORDE] Boss is stuck. Attempting to reposition...")
+        if ent:IsValid() and ent:IsWorld() then
+            horde_boss_reposition = true
+            print("[HORDE] Boss is stuck. Attempting to reposition...")
+        end
     end
 end
 
