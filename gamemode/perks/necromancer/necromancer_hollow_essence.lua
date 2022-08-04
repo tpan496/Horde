@@ -18,6 +18,7 @@ end
 PERK.Hooks.Horde_OnSetPerk = function (ply, perk)
     if CLIENT then return end
     if perk == "necromancer_hollow_essence" then
+        if not ply.Horde_Spectre_Max_Count then ply.Horde_Spectre_Max_Count = 0 end
         ply.Horde_Spectre_Max_Count = ply.Horde_Spectre_Max_Count + 1
     end
 end

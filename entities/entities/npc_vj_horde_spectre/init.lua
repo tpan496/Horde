@@ -9,7 +9,7 @@ ENT.Model = {"models/zombie/fast.mdl"} -- The game will pick a random model from
 ENT.StartHealth = 100
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_COMBINE", "CLASS_PLAYER"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
 ENT.FriendsWithAllPlayerAllies = true
 ENT.PlayerFriendly = true
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
@@ -50,6 +50,7 @@ ENT.SoundTbl_Death = {"npc/fast_zombie/wake1.wav"}
 
 ENT.GeneralSoundPitch1 = 75
 ENT.GeneralSoundPitch2 = 75
+ENT.HasAllies = true
 
 ENT.HasSoundTrack = false
 
@@ -127,6 +128,11 @@ function ENT:CustomOnInitialize()
     self:SetColor(Color(0, 0, 0, 200))
 	self.MeleeAttackDamage = self.MeleeAttackDamage + 3 * self.properties.level
 	self:SetHealth(80 + 17 * self.properties.level)
+	self:AddRelationship("npc_turret_floor D_LI 99")
+	self:AddRelationship("npc_vj_horde_combat_bot D_LI 99")
+	self:AddRelationship("npc_manhack D_LI 99")
+	self:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
+	self:AddRelationship("npc_vj_horde_rocket_turret D_LI 99")
     --self:EmitSound("horde/lesion/lesion_roar.ogg", 1500, 80, 1, CHAN_STATIC)
 end
 
@@ -167,44 +173,43 @@ function ENT:DoEntityRelationshipCheck()
 			local vClass = v:GetClass()
 			local vNPC = v:IsNPC()
 			local vPlayer = v:IsPlayer()
-			if vClass != self:GetClass() && (vPlayer or (vNPC && v.Behavior != VJ_BEHAVIOR_PASSIVE_NATURE)) /*&& MyVisibleTov && self:Disposition(v) != D_LI*/ then
-				local inEneTbl = VJ_HasValue(self.VJ_AddCertainEntityAsEnemy, v)
-				if self.HasAllies == true && inEneTbl == false then
-					for _,friClass in ipairs(self.VJ_NPC_Class) do
-						if friClass == varCPly && self.PlayerFriendly == false then self.PlayerFriendly = true end -- If player ally then set the PlayerFriendly to true
-						if (friClass == varCCom && NPCTbl_Combine[vClass]) or (friClass == varCZom && NPCTbl_Zombies[vClass]) or (friClass == varCAnt && NPCTbl_Antlions[vClass]) or (friClass == varCXen && NPCTbl_Xen[vClass]) then
-							v:AddEntityRelationship(self, D_LI, 99)
-							self:AddEntityRelationship(v, D_LI, 99)
-							entFri = true
-						end
-						if (v.VJ_NPC_Class && VJ_HasValue(v.VJ_NPC_Class, friClass)) or (entFri == true) then
-							if friClass == varCPly then -- If we have the player ally class then check if we both of us are supposed to be friends
-								if self.FriendsWithAllPlayerAllies == true && v.FriendsWithAllPlayerAllies == true then
-									entFri = true
-									if vNPC then v:AddEntityRelationship(self, D_LI, 99) end
-									self:AddEntityRelationship(v, D_LI, 99)
-								end
-							else
+			if vClass != self:GetClass() then
+				for _,friClass in ipairs(self.VJ_NPC_Class) do
+					if friClass == varCPly && self.PlayerFriendly == false then self.PlayerFriendly = true end -- If player ally then set the PlayerFriendly to true
+					if (friClass == varCCom && NPCTbl_Combine[vClass]) or (friClass == varCZom && NPCTbl_Zombies[vClass]) or (friClass == varCAnt && NPCTbl_Antlions[vClass]) or (friClass == varCXen && NPCTbl_Xen[vClass]) then
+						v:AddEntityRelationship(self, D_LI, 99)
+						self:AddEntityRelationship(v, D_LI, 99)
+						entFri = true
+					end
+					if (v.VJ_NPC_Class && VJ_HasValue(v.VJ_NPC_Class, friClass)) or (entFri == true) then
+						if friClass == varCPly then -- If we have the player ally class then check if we both of us are supposed to be friends
+							if self.FriendsWithAllPlayerAllies == true && v.FriendsWithAllPlayerAllies == true then
 								entFri = true
-								-- If I am enemy to it, then reset it!
-								if IsValid(self:GetEnemy()) && self:GetEnemy() == v then
-									self.EnemyReset = true
-									self:ResetEnemy(false)
-								end
 								if vNPC then v:AddEntityRelationship(self, D_LI, 99) end
 								self:AddEntityRelationship(v, D_LI, 99)
 							end
+						else
+							entFri = true
+							-- If I am enemy to it, then reset it!
+							if IsValid(self:GetEnemy()) && self:GetEnemy() == v then
+								self.EnemyReset = true
+								self:ResetEnemy(false)
+							end
+							if vNPC then v:AddEntityRelationship(self, D_LI, 99) end
+							self:AddEntityRelationship(v, D_LI, 99)
 						end
 					end
 				end
-				if !entFri && vNPC /*&& MyVisibleTov*/ && !self.DisableMakingSelfEnemyToNPCs && (v.VJ_IsBeingControlled != true) then v:AddEntityRelationship(self, D_HT, 99) end
-				if vPlayer && (self.PlayerFriendly == true or entFri == true) then
-					if inEneTbl == false then
-						entFri = true
-						self:AddEntityRelationship(v, D_LI, 99)
-					else
-						entFri = false
-					end
+				
+				if vPlayer then
+					entFri = true
+					self:AddEntityRelationship(v, D_LI, 99)
+				end
+				if vClass == "npc_turret_floor" or vClass == "npc_vj_horde_combat_bot" or vClass == "npc_vj_horde_vortigaunt" or vClass == "npc_manhack" then
+					entFri = true
+					self:AddEntityRelationship(v, D_LI, 99)
+				else
+					if !entFri && vNPC then v:AddEntityRelationship(self, D_HT, 99) end
 				end
 				-- Investigation detection systems, including sound, movement and flashlight
 				if (!self.IsVJBaseSNPC_Tank) && !IsValid(self:GetEnemy()) && entFri == false then
@@ -246,11 +251,6 @@ function ENT:DoEntityRelationshipCheck()
 				end
 			end
 
-			-- We have to do this here so we make sure non-VJ NPCs can still target this NPC, even if it's being controlled!
-			if plyControlled && self.VJ_TheControllerBullseye != v then
-				v = self.VJ_TheControllerBullseye
-				vPlayer = false
-			end
 			-- Check in order: Can find enemy + Neutral or not + Is visible + In sight
 			if self.DisableFindEnemy == false && (self.Behavior != VJ_BEHAVIOR_NEUTRAL or self.Alerted) && (self.FindEnemy_CanSeeThroughWalls or self:Visible(v)) && (self.FindEnemy_UseSphere or (mySDir:Dot((vPos - myPos):GetNormalized()) > mySAng)) then
 				local check = self:DoRelationshipCheck(v)

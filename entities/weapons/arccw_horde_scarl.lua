@@ -1,4 +1,10 @@
 if not ArcCWInstalled then return end
+if CLIENT then
+    SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/arccw_horde_scarl")
+    SWEP.DrawWeaponInfoBox	= false
+    SWEP.BounceWeaponIcon = false
+    killicon.Add("arccw_horde_scarl", "vgui/hud/arccw_horde_scarl", Color(0, 0, 0, 255))
+end
 
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true

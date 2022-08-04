@@ -65,7 +65,7 @@ SWEP.MuzzleAttachment	= "muzzle"
 
 SWEP.Weight = 2
 
-SWEP.DrawCrosshair = true 
+SWEP.DrawCrosshair = false
 
 SWEP.Category = "ArcCW - Horde"
 
@@ -127,13 +127,26 @@ SWEP.SecondaryChargeSoundTimer = 0
 SWEP.EnergyRegenTimer = 0
 SWEP.SpectreMaxCount = 1
 
-if SERVER then
-	--[[hook.Add("Horde_OnPlayerDamagePost", "Horde_VoidProjectorDamage", function (ply, npc, bonus, hitgroup, dmginfo)
-		if dmginfo:GetInflictor() and dmginfo:GetInflictor():GetClass() == "projectile_horde_void_projectile" then
-			local wpn = ply:GetWeapon("horde_void_projector")
-			wpn:SetClip2(math.min(100, wpn:Clip1() + dmginfo:GetDamage() / 2))
-		end
-	end)]]--
+function SWEP:DrawHUD()
+    if CLIENT then
+	local x, y
+	local tr = self.Owner:GetEyeTrace()
+	if ( self.Owner == LocalPlayer() and self.Owner:ShouldDrawLocalPlayer() ) then
+		local coords = tr.HitPos:ToScreen()
+		x, y = coords.x, coords.y
+	else
+		x, y = ScrW() / 2, ScrH() / 2
+	end
+	surface.SetTexture( surface.GetTextureID( "vgui/hud/special_crosshair" ) )
+	surface.SetDrawColor( 255, 255, 255, 255 )
+	surface.DrawTexturedRect( x - 16, y - 16, 32, 32 )
+
+	cam.Start3D(self.Owner:EyePos(), self.Owner:EyeAngles())
+	local size = 5
+	render.SetMaterial(Material("Sprites/light_glow02_add_noz"))
+	render.DrawQuadEasy(tr.HitPos, (self.Owner:EyePos() - tr.HitPos):GetNormal(), size, size, Color(100,150,200,255), 0)
+	cam.End3D()
+    end
 end
 
 function SWEP:Initialize()
@@ -283,15 +296,21 @@ function SWEP:Launch(charged)
 	if not self.Owner:Horde_GetPerk("necromancer_base") then return end
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
-	if self.Weapon:Ammo1() < 5 then return end
-	self.Owner:EmitSound("weapons/airboat/airboat_gun_lastshot1.wav", 150, 40)
-	local properties = {sphere = false, battery = false, energy = self.Weapon:Ammo1(), field = false, charged = charged, beacon_of_void = false, level = self.Owner:Horde_GetUpgrade("horde_void_projector")}
+	if charged == 2 then
+		if self.Weapon:Clip1() < 20 then return end
+	elseif charged == 1 then
+		if self.Weapon:Clip1() < 10 then return end
+	else
+		if self.Weapon:Clip1() < 5 then return end
+	end
+	self.Owner:EmitSound("horde/weapons/void_projector/void_spear_launch.ogg", 100, math.random(70, 90))
+	local properties = {sphere = false, battery = false, energy = self.Weapon:Clip1(), field = false, charged = charged, beacon_of_void = false, level = self.Owner:Horde_GetUpgrade("horde_void_projector")}
 	hook.Run("Horde_OnVoidProjectorLaunch", self.Owner, properties)
 	local ent = ents.Create("projectile_horde_void_projectile")
     ent:SetOwner(self.Owner)
     ent.Owner = self.Owner
 	ent.properties = properties
-	ent:SetNWInt("charged", charged)
+	ent:SetCharged(charged)
     if (!IsValid(ent)) then return end
 	if charged == 2 and self.Weapon:Clip1() >= 20 then
 		self:TakePrimaryAmmo(20)
@@ -360,13 +379,13 @@ end
 function SWEP:VoidCascade()
 	if CLIENT then return end
 	if not self.Owner:Horde_GetPerk("necromancer_base") then return end
-	if self.Weapon:Ammo1() < 30 then return true end
+	if self.Weapon:Clip1() < 30 then return true end
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
 	local ent = ents.Create("projectile_horde_void_projectile")
     ent:SetOwner(self.Owner)
     ent.Owner = self.Owner
-	local properties = {sphere = false, battery = false, energy = self.Weapon:Ammo1(), field = false, charged = 2, beacon_of_void = false, level = self.Owner:Horde_GetUpgrade("horde_void_projector"), cascade=true}
+	local properties = {sphere = false, battery = false, energy = self.Weapon:Clip1(), field = false, charged = 2, beacon_of_void = false, level = self.Owner:Horde_GetUpgrade("horde_void_projector"), cascade=true}
 	hook.Run("Horde_OnVoidProjectorLaunch", self.Owner, properties)
 	ent.properties = properties
 	ent:SetNWInt("charged", 1)

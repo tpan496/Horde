@@ -8,7 +8,7 @@ Fire/lightning damage caster.]] -- Required
 SUBCLASS.BasePerk = "artificer_base"
 SUBCLASS.Perks = {
     [1] = {title = "Inner Strength", choices = {"artificer_warmth", "artificer_purge"}},
-    [2] = {title = "Recuperate", choices = {"artificer_solar_thrust", "artificer_static_field"}},
-    [3] = {title = "Power", choices = {"artificer_icarus_charge", "artificer_hallowed_bolt"}},
-    [4] = {title = "Ascension", choices = {"artificer_beacon_of_immolation", "artificer_beacon_of_reckoning"}},
+    [2] = {title = "Recuperate", choices = {"artificer_solar_guard", "artificer_intensity"}},
+    [3] = {title = "Codex", choices = {"artificer_floating_chaos", "artificer_hallowed_bolt"}},
+    [4] = {title = "Ascension", choices = {"artificer_godslayer", "artificer_draconic_reckoning"}},
 } -- Required

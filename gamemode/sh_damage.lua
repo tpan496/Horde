@@ -114,6 +114,17 @@ function HORDE:IsBlastDamage(dmginfo)
     return dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsDamageType(DMG_MISSILEDEFENSE)
 end
 
+-- Weapon types
+function HORDE:IsCurrentWeapon(dmginfo, category)
+    local class = HORDE:GetCurrentWeapon(dmginfo:GetInflictor()):GetClass()
+    local item = HORDE.items[class]
+    if item then
+        return item.category == category
+    else
+        return false
+    end
+end
+
 function HORDE:GetStats()
 if CLIENT and LocalPlayer():Alive() then
     net.Start("Horde_GetStats")
@@ -131,7 +142,7 @@ function HORDE:CalcResistance(ply, stats, dmgtype, horde_dmgtype)
 end
 
 function HORDE:CalcImmunity(ply, stats, debuff)
-    local bonus = {apply = 1, more = 1}
+    local bonus = {apply = 1, less = 1}
     hook.Run("Horde_OnPlayerDebuffApply", ply, debuff, bonus)
     stats[debuff] = 1 - bonus.apply
 end

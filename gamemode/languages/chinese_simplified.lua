@@ -46,7 +46,7 @@ LANGUAGE["Game_Elite_Killer"] = "精英杀手"
 LANGUAGE["Game_Elite_Kills"] = "精英怪击杀"
 LANGUAGE["Game_SharpShooter"] = "神射手"
 LANGUAGE["Game_Headshots"] = "爆头数"
-LANGUAGE["Game_Most_Heal"] = "最高治疗量"
+LANGUAGE["Game_Most_Heal"] = "最高队友治疗量"
 LANGUAGE["Game_Healed"] = "治疗量"
 LANGUAGE["Game_Healed_You"] = "治疗了你"
 
@@ -349,7 +349,7 @@ LANGUAGE["Perk_medic_fortify"] = [[
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[增强]]
 LANGUAGE["Perk_Title_medic_purify"] = [[净化]]
 LANGUAGE["Perk_medic_purify"] = [[
-直接减少治疗对象的流血，破坏，眩晕累计值。]]
+直接减少治疗对象的流血，破坏，坏死累计值。]]
 
 LANGUAGE["Perk_Title_medic_haste"] = [[加速]]
 LANGUAGE["Perk_medic_haste"] = [[
@@ -763,7 +763,6 @@ Chambered for the powerful .44 Magnum.
 LANGUAGE["Item_SMG1"] = [[SMG1]]
 LANGUAGE["Item_Desc_SMG1"] = [[
 A compact, fully automatic firearm.
-Armed with an M203 launcher.
 ]]
 
 LANGUAGE["Item_Mac10"] = [[Mac10]]

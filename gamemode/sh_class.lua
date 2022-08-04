@@ -567,6 +567,13 @@ function HORDE:LoadSubclassChoices()
             LocalPlayer().Horde_subclasses[HORDE.order_to_class_name[class_order]] = HORDE.order_to_subclass_name[tostring(subclass_order)]
         end
         f:Close()
+
+        -- Double check that we have all the subclasses we need
+        for class_name, _ in pairs(HORDE.classes_to_subclasses) do
+            if not LocalPlayer().Horde_subclass_choices[class_name] then
+                LocalPlayer().Horde_subclass_choices[class_name] = class_name
+            end
+        end
     end
 end
 

@@ -1,12 +1,15 @@
 PERK.PrintName = "Necromancer Base"
 PERK.Description = [[
-Increases Frostbite buildup by {1} of base Cold damage. ({2} + {3} per level, up to {4}).
+COMPLEXITY: MEDIUM
+
+Inflicts Frostbite buildup by {1} of base Cold damage. ({2} + {3} per level, up to {4}).
 {5} increased Cold damage resistance. ({6} per level, up to {7}).
 
 Equipped with Void Projector. Upgradable through shop.
+Upgrading Void Projector increases its damage.
 
 LMB: Void Spear (5/10/20 Energy)
-Releases a projectile that deals Cold damage.
+Releases a projectile that deals Cold damage and applies Frostbite buildup.
 HOLD LMB for different effects.
 
 RMB: Raise Spectre (40 Energy)

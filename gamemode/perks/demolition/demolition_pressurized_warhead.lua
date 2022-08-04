@@ -14,6 +14,6 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
         if npc:GetVar("is_elite") then
             bonus.increase = bonus.increase + 0.15
         end
-        bonus.post_add = npc:Health() * math.min(0.08, dmginfo:GetDamage() / 800)
+        bonus.post_add = npc:Health() * math.min(0.08, dmginfo:GetDamage() / 2000)
     end
 end

@@ -1,6 +1,8 @@
 util.AddNetworkString("Horde_HighlightEntities")
 util.AddNetworkString("Horde_DeathMarkHighlight")
+util.AddNetworkString("Horde_HunterMarkHighlight")
 util.AddNetworkString("Horde_RemoveDeathMarkHighlight")
+util.AddNetworkString("Horde_RemoveHunterMarkHighlight")
 util.AddNetworkString("Horde_GameEnd")
 
 local horde_players_count = 0
@@ -816,9 +818,10 @@ function HORDE:CheckBossStuck()
     })
     if tr.Hit then
         local ent = tr.Entity
-        if ent:IsValid() and (ent:GetClass() == "npc_turret_floor" or ent:IsNPC() or ent:IsPlayer()) then return end
-        horde_boss_reposition = true
-        print("[HORDE] Boss is stuck. Attempting to reposition...")
+        if ent:IsValid() and ent:IsWorld() then
+            horde_boss_reposition = true
+            print("[HORDE] Boss is stuck. Attempting to reposition...")
+        end
     end
 end
 

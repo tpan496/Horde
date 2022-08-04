@@ -26,46 +26,46 @@ SWEP.NotForNPCs = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/horde/weapons/v_katana.mdl"
+SWEP.ViewModel = "models/horde/weapons/c_katana.mdl"
 SWEP.WorldModel = "models/horde/weapons/w_katana.mdl"
 SWEP.ViewModelFOV = 60
 
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
-SWEP.MeleeDamage = 108
-SWEP.Melee2Damage = 64
+SWEP.MeleeDamage = 100
+SWEP.Melee2Damage = 150
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
 SWEP.MeleeDamageType = DMG_SLASH
 SWEP.MeleeRange = 60
-SWEP.MeleeAttackTime = 0.1
+SWEP.MeleeAttackTime = 0.2
 SWEP.MeleeTime = 0.65
 SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 
 SWEP.Melee2 = true
 SWEP.Melee2Range = 80
-SWEP.Melee2AttackTime = 0.1
-SWEP.Melee2Time = 0.5
+SWEP.Melee2AttackTime = 0.5
+SWEP.Melee2Time = 1.25
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.MeleeSwingSound = {
-    "horde/weapons/katana/katana_swing_miss1.mp3",
-    "horde/weapons/katana/katana_swing_miss2.mp3"
+    "horde/weapons/katana/katana_swing_miss1.ogg",
+    "horde/weapons/katana/katana_swing_miss2.ogg"
 }
 SWEP.MeleeMissSound = {
-    "horde/weapons/katana/katana_swing_miss1.mp3",
-    "horde/weapons/katana/katana_swing_miss2.mp3"
+    "horde/weapons/katana/katana_swing_miss1.ogg",
+    "horde/weapons/katana/katana_swing_miss2.ogg"
 }
 SWEP.MeleeHitSound = {
-    "horde/weapons/katana/katana_impact_world1.mp3",
-    "horde/weapons/katana/katana_impact_world2.mp3"
+    "horde/weapons/katana/katana_impact_world1.ogg",
+    "horde/weapons/katana/katana_impact_world2.ogg"
 }
 SWEP.MeleeHitNPCSound = {
-    "horde/weapons/katana/melee_katana_01.mp3",
-    "horde/weapons/katana/melee_katana_02.mp3",
-    "horde/weapons/katana/melee_katana_03.mp3"
+    "horde/weapons/katana/melee_katana_01.ogg",
+    "horde/weapons/katana/melee_katana_02.ogg",
+    "horde/weapons/katana/melee_katana_03.ogg"
 }
 
 SWEP.NotForNPCs = true
@@ -89,18 +89,17 @@ SWEP.Attachments = {
 }
 
 SWEP.Animations = {
-    ["idle"] = false,
     ["draw"] = {
         Source = "deploy",
         Time = 0.8,
     },
     ["bash"] = {
-        Source = {"swing_e_w", "swing_e_w_02"},
+        Source = {"swing_l", "swing_r2"},
         Time = 0.75,
     },
     ["bash2"] = {
-        Source = "secondary_swing",
-        Time = 0.8,
+        Source = {"swing_l2", "swing_r"},
+        Time = 1.5,
     },
 }
 

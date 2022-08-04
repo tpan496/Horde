@@ -13,6 +13,10 @@ function entmeta:Horde_AddBreakEffect(duration, inflictor)
         end)
     else
         if not self:IsValid() then return end
+        if inflictor and inflictor:IsPlayer() then
+            hook.Run("Horde_OnNPCTriggerBreak", duration, self, inflictor)
+        end
+        
         local dmg = DamageInfo()
         if inflictor and inflictor:IsValid() then
             dmg:SetAttacker(inflictor)
@@ -23,6 +27,7 @@ function entmeta:Horde_AddBreakEffect(duration, inflictor)
         end
         dmg:SetDamageType(DMG_NERVEGAS)
         dmg:SetDamage(150 + self:Health() * 0.1)
+        dmg:SetDamageCustom(HORDE.DMG_CALCULATED)
         self:TakeDamageInfo(dmg)
     end
 end

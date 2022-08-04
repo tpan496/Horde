@@ -20,6 +20,11 @@ function ENT:CustomPhysicsObjectOnInitialize(phys)
 	phys:Wake()
 	phys:SetBuoyancyRatio(0)
 	phys:EnableDrag(false)
+	phys:SetMass(1)
+	phys:EnableGravity(false)
+	timer.Simple(1, function ()
+		if self:IsValid() then self:Remove() end
+	end)
 	self:SetColor(Color(153,0,0))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,27 +1,28 @@
-weapon infusion
+new classes: warlock, psycho
 
-music after boss wave 
+early game overhaul (1000 -> 900) & starter weapons
 
-watchtower physics
-
-chinese
-
-spore launcher (medic)
+nemesis mutation fixes
 
 sticky launcher (demo)
 
-scar-l (assault)
+add nine lives sound effect
 
-rpk (heavy)
+compress textures
 
-fireaxe (all)
+new models for katana / bat
 
-melee headshots
+New Items:
+- Half life weapons rework
+    - 9mm / medic 9mm, 357, smg1, shotgun, heat crossbow
+- Rocket Turret (Engineer)
+- Welder (Engineer)
 
-medshots from mp7/vector changes to hitscan
+New Bosses:
+- Xen Destroyer Unit
+- Xen Psychic Unit
+- Xen Host Unit
 
-fix medic healing not amplifying correctly based on level
+Ouroboros bug
 
-necromancer weight ???
-
-infusions (explosives, special, gadget, attachments, equipment cannot have infusions)
+fix third person animations for  

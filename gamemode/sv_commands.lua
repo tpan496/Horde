@@ -318,6 +318,22 @@ concommand.Add("horde_stats", function (ply, cmd, args)
     StatsMenu(ply)
 end)
 
+concommand.Add("horde_testing_gorlami", function (ply, cmd, args)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
+        net.Start("Horde_LegacyNotification")
+            net.WriteString("Command only available in sandbox mode.")
+            net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
+    if ply:IsAdmin() then
+        RunConsoleCommand("horde_testing_free_perks", 0)
+        local amount = 500
+        ply:Horde_AddSkullTokens(amount)
+        ply:Horde_SyncEconomy()
+    end
+end)
+
 concommand.Add("horde_testing_free_perks", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
@@ -392,6 +408,7 @@ concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
     local name = args[1]
     local wave = args[2]
     local mutation = args[3]
+    local player_count = args[4]
     local enemy = HORDE.enemies[name .. tostring(wave)]
     local npc_info = list.Get("NPC")[enemy.class]
     if not npc_info then
@@ -441,7 +458,7 @@ concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
     end
 
     -- Health settings
-    local horde_players_count = table.Count(player.GetAll())
+    local horde_players_count = player_count or table.Count(player.GetAll())
     if enemy.is_elite and enemy.is_elite == true then
         spawned_enemy:SetVar("is_elite", true)
         local scale

@@ -1,6 +1,8 @@
 PERK.PrintName = "Samurai Base"
 PERK.Description =
-[[Increases Bleeding buildup by {1} of base Melee damage. ({2} + {3} per level, up to {4}).
+[[COMPLEXITY: HIGH
+    
+Inflicts Bleeding buildup by {1} of base Melee damage. ({2} + {3} per level, up to {4}).
 {5} increased Global damage resistance. ({6} per level, up to {7}).
 
 SHIFT+E to activate Quickstep.

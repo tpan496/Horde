@@ -224,8 +224,26 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     net.Send(ply)
     ply:SetCustomCollisionCheck(true)
     HORDE.refresh_living_players = true
-    if not ply:IsValid() then return end
-    if not ply:Horde_GetClass() then return end
+
+    --[[if not ply.killed then
+        ply:KillSilent()
+        timer.Simple(10, function ()
+            ply.killed = true
+            ply:Spawn()
+        end)
+    end]]--
+
+    if HORDE.start_game and HORDE.current_break_time <= 0 then
+        if ply:IsValid() then
+            ply:KillSilent()
+            net.Start("Horde_LegacyNotification")
+            net.WriteString("You will respawn next wave.")
+            net.Send(ply)
+        end
+    end
+
+    if not ply:IsValid() or not ply.Horde_Init_Complete then return end
+    if not ply:Horde_GetCurrentSubclass() then return end
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
@@ -251,8 +269,12 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
             end
         end
     end
+
     ply:Horde_SyncEconomy()
-    HORDE:GiveStarterWeapons(ply)
+    if ply:Alive() and not (HORDE.start_game and HORDE.current_break_time <= 0) then
+        HORDE:GiveStarterWeapons(ply)
+    end
+    
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
         net.Start("Horde_SyncStatus")
             net.WriteUInt(HORDE.Status_ExpDisabled, 8)
@@ -280,19 +302,41 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
         local item = HORDE.items[class]
         ply:Horde_AddWeight(item.weight)
         ply:Horde_SyncEconomy()
+
+        if item.starter_classes then
+            if class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() == "Necromancer" then
+                -- Cannot drop as necro
+                wpn:Remove()
+                local c = wpn:GetClass()
+                timer.Simple(0, function()
+                    if ply:Alive() then
+                        ply:Give(c)
+                    end
+                end)
+            elseif class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() == "Artificer" then
+                -- Cannot drop as arti
+                wpn:Remove()
+                local c = wpn:GetClass()
+                timer.Simple(0, function()
+                    if ply:Alive() then
+                        ply:Give(c)
+                    end
+                end)
+            elseif class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() == "Warlock" then
+                -- Cannot drop as arti
+                wpn:Remove()
+                local c = wpn:GetClass()
+                timer.Simple(0, function()
+                    if ply:Alive() then
+                        ply:Give(c)
+                    end
+                end)
+            end
+        end
+
     end
     if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
         wpn:Remove()
-    end
-    if class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() == "Necromancer" then
-        -- Cannot drop as necro
-        wpn:Remove()
-        local c = wpn:GetClass()
-        timer.Simple(0, function()
-            if ply:Alive() then
-                ply:Give(c)
-            end
-        end)
     end
 end)
 
@@ -304,8 +348,16 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
         if (ply:Horde_GetWeight() - item.weight < 0) or (item.whitelist and (not item.whitelist[ply:Horde_GetClass().name])) then
             return false
         end
-        if item.class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() ~= "Necromancer" then
-            return false
+        if item.starter_classes then
+            if item.class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() ~= "Necromancer" then
+                return false
+            end
+            if item.class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() ~= "Artificer" then
+                return false
+            end
+            if item.class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() ~= "Warlock" then
+                return false
+            end
         end
     end
 
@@ -414,8 +466,9 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         if HORDE.items["npc_manhack"] then
                             ent:AddRelationship("npc_manhack D_LI 99")
                         end
+                        ent:AddRelationship("npc_vj_horde_spectre D_LI 99")
     
-                        --ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
+                        ent.VJFriendly = false
                     end)
                     local npc_info = list.Get("NPC")[ent:GetClass()]
                     if not npc_info then
@@ -565,11 +618,16 @@ function HORDE:DropTurret(ent)
 end
 
 hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
-    if ent:GetNWEntity("HordeOwner") and (ent:GetClass() == "npc_turret_floor") then
+    if ent:GetNWEntity("HordeOwner") and (ent:GetClass() == "npc_turret_floor" or (ent:GetClass() == "npc_vj_horde_rocket_turret" and (not ent.Horde_Pickedup))) then
         -- Turrets should always stay straight.
         local a = ent:GetAngles()
         ent:SetAngles(Angle(0, a.y, 0))
         HORDE:DropTurret(ent)
+
+        if ent:GetClass() == "npc_vj_horde_rocket_turret" then
+            ent:SetAngles(Angle(0,0,0))
+            ent:PhysicsInit(SOLID_OBB)
+        end
     end
 end)
 
@@ -668,6 +726,14 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
     local name = net.ReadString()
     local subclass_name = net.ReadString()
+
+    if ply:Horde_GetSubclassUnlocked(subclass_name) == false then
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("Subclass " .. subclass_name " is not unlocked on this server.")
+        net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
     local class = HORDE.classes[name]
     if not class then return end
 
@@ -791,6 +857,10 @@ function HORDE:CanSell(ply, class)
 
     if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "Necromancer" and class == "horde_void_projector" then
         return false, "You can't sell Void Projector as Necromancer subclass!"
+    end
+
+    if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "Artificer" and class == "horde_solar_seal" then
+        return false, "You can't sell Solar Seal as Artificer subclass!"
     end
 
     return true

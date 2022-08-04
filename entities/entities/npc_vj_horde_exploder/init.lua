@@ -33,7 +33,6 @@ ENT.GeneralSoundPitch1 = 100
 ENT.GeneralSoundPitch2 = 100
 ENT.HasDeathRagdoll = false
 ENT.HasGibOnDeath = true
-ENT.Immune_AcidPoisonRadiation = true
 
 function ENT:CustomOnInitialize()
     self:SetBodygroup(1,1)
@@ -42,6 +41,9 @@ function ENT:CustomOnInitialize()
     self:SetModelScale(1.25, 0)
     self:ManipulateBoneScale(0, Vector(2,2,2))
     self:ManipulateBoneScale(9, Vector(2,2,4))
+
+    self:AddRelationship("npc_headcrab_poison D_LI 99")
+	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 
 function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
@@ -60,9 +62,6 @@ function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
     dmg:SetDamage(50)
     util.BlastDamageInfo(dmg, self:GetPos(), 250)
 
-    self:AddRelationship("npc_headcrab_poison D_LI 99")
-	self:AddRelationship("npc_headcrab_fast D_LI 99")
-
     sound.Play("vj_acid/acid_splat.wav", self:GetPos())
 end
 
@@ -75,6 +74,8 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
         dmginfo:ScaleDamage(2)
     elseif HORDE:IsBlastDamage(dmginfo) or HORDE:IsFireDamage(dmginfo) then
         dmginfo:ScaleDamage(1.5)
+    elseif HORDE:IsPoisonDamage(dmginfo) then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
     end
 end
 

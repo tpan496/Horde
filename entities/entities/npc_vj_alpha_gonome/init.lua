@@ -31,7 +31,6 @@ ENT.FindEnemy_CanSeeThroughWalls = true -- Should it be able to see through wall
 -- Damage/Injured
 ENT.BloodColor = "Red"
 ENT.Immune_Dissolve = true
-ENT.Immune_AcidPoisonRadiation = true -- Makes the SNPC not get damage from Acid, posion, radiation
 ENT.Immune_Physics = true
 
 -- Flinch
@@ -60,7 +59,7 @@ ENT.MeleeAttackWorldShakeOnMissAmplitude = 8
 -- Ranged
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.AnimTbl_RangeAttack = {ACT_RANGE_ATTACK1} -- Range Attack Animations
-ENT.RangeAttackEntityToSpawn = "obj_gonome_acid" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_horde_gonome_acid" -- The entity that is spawned when range attacking
 ENT.RangeDistance = 2000 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 150 -- How close does it have to be until it uses melee?
 ENT.RangeUseAttachmentForPos = false -- Should the projectile spawn on a attachment?
@@ -183,6 +182,14 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
         self.AnimationPlaybackRate = 1.75
         self:SetColor(Color(255,0,0))
         self:SetRenderMode(RENDERMODE_TRANSCOLOR)
+    end
+end
+
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	if HORDE:IsPoisonDamage(dmginfo) then
+		dmginfo:ScaleDamage(0.25)
+    elseif HORDE:IsLightningDamage(dmginfo) then
+        dmginfo:ScaleDamage(1.25)
     end
 end
 

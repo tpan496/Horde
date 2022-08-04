@@ -45,7 +45,7 @@ LANGUAGE["Game_Elite_Killer"] = "Asesino de Élites"
 LANGUAGE["Game_Elite_Kills"] = "Asesinatos de Élite"
 LANGUAGE["Game_SharpShooter"] = "Mejor Tirador"
 LANGUAGE["Game_Headshots"] = "Tiros a la Cabeeza"
-LANGUAGE["Game_Most_Heal"] = "Mayor Curación"
+LANGUAGE["Game_Most_Heal"] = "Sanador del Equipo"
 LANGUAGE["Game_Healed"] = "Curado"
 LANGUAGE["Game_Healed_You"] = "te ha curado"
 
@@ -359,7 +359,7 @@ Jugadores que cures tendran Fortificar por {1} segundos.
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[Mejora]]
 LANGUAGE["Perk_Title_medic_purify"] = [[Purificar]]
 LANGUAGE["Perk_medic_purify"] = [[
-Tu curación directamente disminuye directamente la acumulación de Sangrado, Rotura y Aturdimiento.]]
+Tu curación directamente disminuye directamente la acumulación de Sangrado, Rotura y Necrosis.]]
 
 LANGUAGE["Perk_Title_medic_haste"] = [[Prisa]]
 LANGUAGE["Perk_medic_haste"] = [[
@@ -434,12 +434,12 @@ LANGUAGE["Perk_ghost_sniper"] = [[
 
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposión]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Caminata de Fase]]
-LANGUAGE["Perk_ghost_phase_walk"] = [[
+--[[LANGUAGE["Perk_ghost_phase_walk"] = [[
 Correr ya no cancela Camuflaje.
 25% de velocidad de movimiento aumentada mientras tengas Camuflaje.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Velo Fantasma]]
-LANGUAGE["Perk_ghost_ghost_veil"] = [[
+--[[LANGUAGE["Perk_ghost_ghost_veil"] = [[
 Atacar no cancela Camuflaje.
 100% de velocidad de activacion del Camuflaje aumentada.]]
 
