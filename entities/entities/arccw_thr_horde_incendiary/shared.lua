@@ -10,7 +10,7 @@ ENT.AdminSpawnable = false
 ENT.Model = "models/weapons/arccw_go/w_eq_incendiarygrenade_thrown.mdl"
 ENT.FuseTime = 2
 ENT.ArmTime = 0
-ENT.FireTime = 10
+ENT.FireTime = 5.5
 ENT.ImpactFuse = false
 
 ENT.Armed = false
@@ -31,7 +31,7 @@ function entmeta:Horde_AddEffect_FireGrenade(ent)
     timer.Create("Horde_FireGrenadeEffect" .. id, 0.5, 0, function ()
         if not self:IsValid() then timer.Remove("Horde_FireGrenadeEffect" .. id) return end
         local d = DamageInfo()
-        d:SetDamage(35)
+        d:SetDamage(30)
         d:SetAttacker(ent.Owner)
         d:SetInflictor(ent)
         d:SetDamageType(DMG_BURN)

@@ -3,9 +3,10 @@ local entmeta = FindMetaTable("Entity")
 function entmeta:Horde_AddBleedingEffect(inflictor)
     if self:IsPlayer() then
         local id = "Horde_BleedingEffect" .. self:SteamID()
+        local d = self:GetMaxHealth() * 0.02
         timer.Create(id, 0.5, 0, function ()
             if not self:IsValid() or not self.Horde_Debuff_Active[HORDE.Status_Bleeding] then timer.Remove(id) return end
-            self:SetHealth(self:Health() - 2)
+            self:SetHealth(self:Health() - d)
             if self:Health() <= 0 then
                 local dmg = DamageInfo()
                 if inflictor and inflictor:IsValid() then

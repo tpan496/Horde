@@ -50,20 +50,20 @@ SWEP.Melee2Time = 1.5
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.MeleeSwingSound = {
-    "horde/weapons/fireaxe/fireaxe_fire01.wav",
-    "horde/weapons/fireaxe/fireaxe_fire02.wav"
+    "horde/weapons/fireaxe/fireaxe_fire01.ogg",
+    "horde/weapons/fireaxe/fireaxe_fire02.ogg"
 }
 SWEP.MeleeMissSound = {
-    "horde/weapons/fireaxe/fireaxe_fire01.wav",
-    "horde/weapons/fireaxe/fireaxe_fire02.wav"
+    "horde/weapons/fireaxe/fireaxe_fire01.ogg",
+    "horde/weapons/fireaxe/fireaxe_fire02.ogg"
 }
 SWEP.MeleeHitSound = {
-    "horde/weapons/fireaxe/fireaxe_hitwall01.wav",
-    "horde/weapons/fireaxe/fireaxe_hitwall02.wav"
+    "horde/weapons/fireaxe/fireaxe_hitwall01.ogg",
+    "horde/weapons/fireaxe/fireaxe_hitwall02.ogg"
 }
 SWEP.MeleeHitNPCSound = {
-    "horde/weapons/fireaxe/fireaxe_hitflesh01.wav",
-    "horde/weapons/fireaxe/fireaxe_hitflesh02.wav"
+    "horde/weapons/fireaxe/fireaxe_hitflesh01.ogg",
+    "horde/weapons/fireaxe/fireaxe_hitflesh02.ogg"
 }
 
 SWEP.NotForNPCs = true

@@ -40,7 +40,6 @@ ENT.GeneralSoundPitch2 = 30
 ENT.FootStepSoundLevel = 55
 ENT.NextBlastTime = CurTime()
 ENT.NextBlastCooldown = 5
-ENT.Immune_Electricity = true
 ENT.AnimTbl_MeleeAttack = {}
 ENT.Critical = nil
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -53,8 +52,10 @@ function ENT:CustomOnInitialize()
 end
 
 function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
-	if dmginfo:IsDamageType(DMG_REMOVENORAGDOLL) then
-		dmginfo:SetDamage(0)
+	if HORDE:IsColdDamage(dmginfo) then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
+	elseif HORDE:IsLightningDamage(dmginfo) then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
 	end
 end
 

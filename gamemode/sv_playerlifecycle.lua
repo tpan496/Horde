@@ -31,8 +31,18 @@ end
 function HORDE:GiveStarterWeapons(ply)
     if GetConVar("horde_enable_starter"):GetInt() == 0 then return end
     if ply:Alive() and (not ply:Horde_GetGivenStarterWeapons()) then
-        ply:Give("weapon_pistol")
-        ply:Give("weapon_crowbar")
+        if HORDE.starter_weapons[ply:Horde_GetCurrentSubclass()] then
+            for _, wpn_class in pairs(HORDE.starter_weapons[ply:Horde_GetCurrentSubclass()]) do
+                ply:Give(wpn_class)
+            end
+        end
+
+        if HORDE.starter_weapons["All"] then
+            for _, wpn_class in pairs(HORDE.starter_weapons["All"]) do
+                ply:Give(wpn_class)
+            end
+        end
+
         ply:GiveAmmo(200, 3)
         ply:Horde_SetGivenStarterWeapons(true)
     end
@@ -63,8 +73,12 @@ function HORDE:GameEnd(status)
         net.Broadcast()
     end
 
+    local tokens = math.floor(HORDE.current_wave / 2)
+    if status == "VICTORY" then
+        tokens = tokens + math.max(0, HORDE.difficulty - 1)
+    end
     for _, ply in pairs(player.GetHumans()) do
-        ply:Horde_AddSkullTokens(math.floor(HORDE.current_wave / 2))
+        ply:Horde_AddSkullTokens(tokens)
     end
 
     HORDE.game_end = true
@@ -410,11 +424,12 @@ function HORDE:PlayerInit(ply)
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:Horde_SyncEconomy()
+    if ply:Alive() and not (HORDE.start_game and HORDE.current_break_time <= 0) then
+        HORDE:GiveStarterWeapons(ply)
+    end
 
     ply.Horde_Status = {}
     ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
-
-    HORDE:GiveStarterWeapons(ply)
 
     ply:Horde_SyncExp()
     for _, other_ply in pairs(player.GetAll()) do
@@ -438,6 +453,8 @@ function HORDE:PlayerInit(ply)
             net.WriteUInt(1, 8)
         net.Send(ply)
     end
+
+    ply.Horde_Init_Complete = true
 
     if not HORDE.has_buy_zone then
         net.Start("Horde_SyncStatus")
@@ -703,17 +720,6 @@ function HORDE:CheckAlivePlayers()
         HORDE:GameEnd("DEFEAT")
     end
 end
-
-hook.Add("PlayerSpawn", "Horde_PlayerSpawnMidWave", function (ply)
-    if HORDE.start_game and HORDE.current_break_time <= 0 then
-        if ply:IsValid() then
-            ply:KillSilent()
-            net.Start("Horde_LegacyNotification")
-            net.WriteString("You will respawn next wave.")
-            net.Send(ply)
-        end
-    end
-end)
 
 hook.Add("PlayerDeathThink", "Horde_PlayerDeathThink", function (ply)
     --if GetConVarNumber("horde_enable_respawn") == 1 then return true end

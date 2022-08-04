@@ -205,26 +205,28 @@ end
 
 function SWEP:LSS(pos)
     if CLIENT then return end
-    local v1 = pos + VectorRand() * 25
     local LT = ents.Create("info_target")
-    LT:SetKeyValue("targetname","mjolner_target_" .. self.Owner:Name())
-    LT:SetPos(v1)
+    local idx = LT:EntIndex()
+    LT:SetKeyValue("targetname","mjolner_target_" .. idx)
+    LT:SetPos(pos)
     LT:Fire("kill","",0.5)
     LT:Spawn()
 
-    for i = 1,50 do
-        local LA = ents.Create("env_laser")
-        LA:SetKeyValue("lasertarget", "mjolner_target_" .. self.Owner:Name())
-        LA:SetKeyValue("rendercolor", "0 100 255")
-        LA:SetKeyValue("texture", "sprites/laserbeam.spr")
-        LA:SetKeyValue("dissolvetype", "1")
-        LA:SetKeyValue("width", "2")
-        LA:SetKeyValue("damage", "0")
-        LA:SetKeyValue("spawnflags", "32")
-        LA:SetKeyValue("noiseamplitude", "10")
-        LA:SetOwner(self)
-        LA:Spawn()
-        LA:Fire("Kill","",0.5)
-        LA:SetPos(pos + VectorRand() * 100)
-    end
+    timer.Simple(0.1, function ()
+        for i = 1,50 do
+            local LA = ents.Create("env_laser")
+            LA:SetKeyValue("lasertarget", "mjolner_target_" .. idx)
+            LA:SetKeyValue("rendercolor", "0 100 255")
+            LA:SetKeyValue("texture", "sprites/laserbeam.spr")
+            LA:SetKeyValue("dissolvetype", "1")
+            LA:SetKeyValue("width", "2")
+            LA:SetKeyValue("damage", "0")
+            LA:SetKeyValue("spawnflags", "32")
+            LA:SetKeyValue("noiseamplitude", "10")
+            LA:SetOwner(self)
+            LA:Spawn()
+            LA:Fire("Kill","",0.5)
+            LA:SetPos(pos + VectorRand() * 100)
+        end
+    end)
 end

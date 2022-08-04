@@ -43,7 +43,7 @@ LANGUAGE["Game_Elite_Killer"] = "Elite Killer"
 LANGUAGE["Game_Elite_Kills"] = "Elite Kills"
 LANGUAGE["Game_SharpShooter"] = "SharpShooter"
 LANGUAGE["Game_Headshots"] = "Headshots"
-LANGUAGE["Game_Most_Heal"] = "Most Heal"
+LANGUAGE["Game_Most_Heal"] = "Team Healer"
 LANGUAGE["Game_Healed"] = "Healed"
 LANGUAGE["Game_Healed_You"] = "healed you"
 
@@ -357,7 +357,7 @@ Players you heal have Fortify for {1} seconds.
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[Enhancement]]
 LANGUAGE["Perk_Title_medic_purify"] = [[Purify]]
 LANGUAGE["Perk_medic_purify"] = [[
-Your healing directly decreases buildup for Bleeding, Break and Stun.]]
+Your healing directly decreases buildup for Bleeding, Break and Necrosis.]]
 
 LANGUAGE["Perk_Title_medic_haste"] = [[Haste]]
 LANGUAGE["Perk_medic_haste"] = [[
@@ -435,7 +435,7 @@ LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Phase Walk]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
 Running does not cancel Camoflague.
 {1} increased movement speed when you have Camoflague.
-{2} increased evasion when you have Camoflague.]]
+Adds {2} evasion when you have Camoflague.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Ghost Veil]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
@@ -446,9 +446,9 @@ Attacking does not cancel Camoflague.
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Trajectory]]
 LANGUAGE["Perk_Title_ghost_brain_snap"] = [[Brain Snap]]
 LANGUAGE["Perk_ghost_brain_snap"] = [[
-Headshots increases Frostbite buildup based on weapon damage.
-Enemies affected by Frostbite has drastically reduced action speed for {1} seconds.
-Frostbite cooldown is {2} seconds.]]
+Headshots increases Freeze buildup based on weapon damage.
+Enemies affected by Freeze has drastically reduced action speed for {1} seconds.
+Freeze cooldown is {2} seconds.]]
 
 LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[Kinetic Impact]]
 LANGUAGE["Perk_ghost_ghost_kinetic_impact"] = [[
@@ -775,7 +775,6 @@ Chambered for the powerful .44 Magnum.
 LANGUAGE["Item_SMG1"] = [[SMG1]]
 LANGUAGE["Item_Desc_SMG1"] = [[
 A compact, fully automatic firearm.
-Armed with an M203 launcher.
 ]]
 
 LANGUAGE["Item_Mac10"] = [[Mac10]]

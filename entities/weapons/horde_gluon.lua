@@ -11,7 +11,7 @@ name = "Weapon_HL_Gluon_Gun.Single",
 channel = CHAN_WEAPON,
 volume = VOL_NORM,
 soundlevel = SNDLVL_GUNFIRE,
-sound = "horde/weapons/gluon/egon_windup2.wav"
+sound = "horde/weapons/gluon/egon_windup2.ogg"
 } )
 sound.Add(
 {
@@ -19,7 +19,7 @@ name = "Weapon_HL_Gluon_Gun.Double",
 channel = CHAN_WEAPON,
 volume = VOL_NORM,
 soundlevel = SNDLVL_GUNFIRE,
-sound = "horde/weapons/gluon/egon_off1.wav"
+sound = "horde/weapons/gluon/egon_off1.ogg"
 } )
 sound.Add(
 {
@@ -27,7 +27,7 @@ name = "Weapon_HL_Gluon_Gun.Run",
 channel = CHAN_WEAPON,
 volume = VOL_NORM,
 soundlevel = SNDLVL_GUNFIRE,
-sound = "horde/weapons/gluon/egon_run3.wav"
+sound = "horde/weapons/gluon/egon_run3.ogg"
 })
 
 SWEP.PrintName = "Gluon Gun"
@@ -105,7 +105,7 @@ x, y = coords.x, coords.y
 else
 x, y = ScrW() / 2, ScrH() / 2
 end
-surface.SetTexture( surface.GetTextureID( "vgui/hud/gluon_crosshair" ) )
+surface.SetTexture( surface.GetTextureID( "vgui/hud/special_crosshair" ) )
 surface.SetDrawColor( 255, 255, 255, 255 )
 surface.DrawTexturedRect( x - 16, y - 16, 32, 32 )
 end

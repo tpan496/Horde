@@ -59,8 +59,10 @@ function ENT:CustomOnInitialize()
 end
 
 function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
-	if dmginfo:IsDamageType(DMG_REMOVENORAGDOLL) then
-		dmginfo:SetDamage(0)
+	if HORDE:IsColdDamage(dmginfo) then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
+	elseif HORDE:IsFireDamage(dmginfo) then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 1.25)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

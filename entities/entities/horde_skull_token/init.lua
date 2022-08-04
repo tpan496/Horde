@@ -4,7 +4,7 @@ include("shared.lua")
 ENT.CleanupPriority = 2
 
 function ENT:Initialize()
-    self:SetModel("models/props_tumb/halloween/skull_2015.mdl")
+    self:SetModel("models/horde/token/skull_2015.mdl")
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetTrigger(true)

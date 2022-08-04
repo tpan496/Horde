@@ -42,7 +42,7 @@ LANGUAGE["Game_Elite_Killer"] = "Убийца элитных"
 LANGUAGE["Game_Elite_Kills"] = "Убийства элитных"
 LANGUAGE["Game_SharpShooter"] = "Снайпер"
 LANGUAGE["Game_Headshots"] = "Выстрелы в голову"
-LANGUAGE["Game_Most_Heal"] = "Наибольшие лечение"
+LANGUAGE["Game_Most_Heal"] = "Командный целитель"
 LANGUAGE["Game_Healed"] = "Вылечил"
 LANGUAGE["Game_Healed_You"] = "Вылечил вас"
 

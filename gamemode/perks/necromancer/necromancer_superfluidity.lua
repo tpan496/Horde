@@ -23,7 +23,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         if wpn:GetClass() ~= "horde_void_projector" then
             local void_projector = ply:GetWeapon("horde_void_projector")
             if void_projector:IsValid() then
-                void_projector:RecoverEnergy(4)
+                void_projector:RecoverEnergy(6)
             end
         end
     end)
