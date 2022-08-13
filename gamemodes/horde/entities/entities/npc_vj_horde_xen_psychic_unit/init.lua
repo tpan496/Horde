@@ -140,7 +140,7 @@ end
 function ENT:MultipleRangeAttacks()
 	local p = math.random()
 	if self.Combat_Mode == 0 and self:GetEnemy():IsValid() then
-		if p <= 0.5 then
+		if p <= 0.5 or self.Horde_Blasting then
 			self.RangeDistance = 2000
 			self.RangeAttackEntityToSpawn = "obj_vj_horde_homing_lightning"
 			self.TimeUntilRangeAttackProjectileRelease = 0.5
@@ -152,10 +152,11 @@ function ENT:MultipleRangeAttacks()
 			self.RangeDistance = 2000
 			self.TimeUntilRangeAttackProjectileRelease = false
 			self.DisableRangeAttackAnimation = false
-			self.DisableDefaultRangeAttackCode = false
+			self.DisableDefaultRangeAttackCode = true
 			--self.ChargeSound = VJ_CreateSound(self, "npc/strider/charging.wav")
 			self:VJ_ACT_PLAYACTIVITY("attack_beam_start1", true, 1, false)
 			local pos = self:GetEnemy():GetPos()
+			self.Horde_Blasting = true
 			timer.Simple(0.5, function ()
 				if !IsValid(self) or !IsValid(self:GetEnemy()) then return end
 				local tr = util.TraceLine({
@@ -191,11 +192,11 @@ function ENT:MultipleRangeAttacks()
 					sound.Play("ambient/explosions/explode_5.ogg", pos, 100, math.random(90, 110))
 					
 					self:VJ_ACT_PLAYACTIVITY("run")
+					self.Horde_Blasting = nil
+					self:RangeAttackCode_DoFinishTimers()
+					self.AlreadyDoneRangeAttackFirstProjectile = true
 				end)
 			end)
-
-			self:RangeAttackCode_DoFinishTimers()
-			self.AlreadyDoneRangeAttackFirstProjectile = true
 		end
 	end
 end

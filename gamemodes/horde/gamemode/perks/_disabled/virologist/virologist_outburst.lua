@@ -1,9 +1,8 @@
-PERK.PrintName = "Sarin Mist"
-PERK.Description = [[Press SHIFT+E to release a sarin mist.
-Sarin Mist increases Break buildup over time.]]
+PERK.PrintName = "Outburst"
+PERK.Description = [[{1} increased area of effect of Infection.]]
 PERK.Icon = "materials/perks/positron_array.png"
 PERK.Params = {
-    [1] = {value = 0.06, percent = true},
+    [1] = {value = 0.25, percent = true},
 }
 
 PERK.Hooks = {}

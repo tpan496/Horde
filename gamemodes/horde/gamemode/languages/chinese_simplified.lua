@@ -347,7 +347,7 @@ LANGUAGE["Perk_medic_fortify"] = [[
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[增强]]
 LANGUAGE["Perk_Title_medic_purify"] = [[净化]]
 LANGUAGE["Perk_medic_purify"] = [[
-直接减少治疗对象的流血，破坏，眩晕累计值。]]
+直接减少治疗对象的流血，破坏，坏死累计值。]]
 
 LANGUAGE["Perk_Title_medic_haste"] = [[加速]]
 LANGUAGE["Perk_medic_haste"] = [[

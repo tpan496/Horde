@@ -297,6 +297,7 @@ end
 
 local function chrono_damage(ply, npc, bonus, hitgroup, dmginfo)
     local curr_weapon = HORDE:GetCurrentWeapon(dmginfo:GetInflictor())
+	if !IsValid(curr_weapon) then return end
     bonus.increase = math.min(0.30, bonus.increase - 0.20 + (HORDE.current_wave - ply.Horde_Infusion_Chrono_Wave[curr_weapon:GetClass()]) * 0.06)
 end
 
@@ -339,6 +340,7 @@ end)
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_ApplyFusionDamageTaken", function (ply, dmg, bonus)
     if not ply.Horde_Infusions then return end
     local curr_weapon = HORDE:GetCurrentWeapon(ply)
+	if !curr_weapon:IsValid() then return end
     local infusion = ply.Horde_Infusions[curr_weapon:GetClass()]
     if not infusion then return end
     if infusion == HORDE.Infusion_Titanium then

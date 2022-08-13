@@ -1,9 +1,9 @@
 PERK.PrintName = "Brain Snap"
-PERK.Description = "Headshots increases Freeze buildup based on weapon damage.\nEnemies affected by Freeze becomes immobile for {1} seconds.\nFrostbite cooldown is {2} seconds."
+PERK.Description = "Headshots increases Freeze buildup based on weapon damage.\nEnemies affected by Freeze becomes immobile for {1} seconds.\nFreeze cooldown is {2} seconds."
 PERK.Icon = "materials/perks/brain_snap.png"
 PERK.Params = {
-    [1] = {value = 3},
-    [2] = {value = 10},
+    [1] = {value = 5},
+    [2] = {value = 8},
 }
 
 PERK.Hooks = {}

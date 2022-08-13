@@ -412,7 +412,6 @@ LANGUAGE["Enemy_Name_Weeper"] = "Weeper"
 LANGUAGE["Enemy_Name_Yeti"] = "Yeti"
 LANGUAGE["Enemy_Name_Zombie"] = "Zombie"
 LANGUAGE["Enemy_Name_Alpha Gonome"] = "Alpha Gonome"
-LANGUAGE["Enemy_Name_Behemoth"] = "Behemoth"
 LANGUAGE["Enemy_Name_Gamma Gonome"] = "Gamma Gonome"
 LANGUAGE["Enemy_Name_Subject: Wallace Breen"] = "Subject: Wallace Breen"
 LANGUAGE["Enemy_Name_Xen Destroyer Unit"] = "Xen Destroyer Unit"
@@ -630,8 +629,9 @@ LANGUAGE["Subclass_Title_Samurai"] = "Samurai"
 LANGUAGE["Subclass_Title_Artificer"] = "Artificer"
 
 -- Disabled Subclasses Extra
-LANGUAGE["Subclass_Title_Chemist"] = "Chemist"
 LANGUAGE["Subclass_Title_Golem"] = "Golem"
+LANGUAGE["Subclass_Title_Striker"] = "Striker"
+LANGUAGE["Subclass_Title_Virologist"] = "Virologist"
 
 -- Gadgets
 LANGUAGE["Gadget_Activation"] = "Press T to activate."
@@ -739,13 +739,17 @@ Cremator subclass.
 Fire/lightning damage caster.]]
 
 -- Default Disabled Subclasses Extra Descriptions
-LANGUAGE["Subclass_Description_Chemist"] = [[
-Medic subclass.
-Focuses on dealing Poison damage.]]
-
 LANGUAGE["Subclass_Description_Golem"] = [[
 Heavy subclass.
 A fucking meatball that punches people.]]
+
+LANGUAGE["Subclass_Description_Striker"] = [[
+Warden subclass.
+Hybrid physical and elemental attacker.]]
+
+LANGUAGE["Subclass_Description_Virologist"] = [[
+Medic subclass.
+Support class that focuses on weakening enemies.]]
 
 -- Default Base Perks
 LANGUAGE["Perk_Title_Survivor Base"] = [[Survivor Base]]
@@ -897,6 +901,7 @@ Inflicts Frostbite buildup by {1} of base Cold damage. ({2} + {3} per level, up 
 {5} increased Cold damage resistance. ({6} per level, up to {7}).
 
 Equipped with Void Projector. Upgradable through shop.
+Upgrading Void Projector increases its damage.
 
 LMB: Void Spear (5/10/20 Energy)
 Releases a projectile that deals Cold damage and applies Frostbite buildup.
@@ -935,14 +940,6 @@ Strikes at the target, dealing Lightning damage and applies Shock buildup.
 HOLD RMB for different effects.]]
 
 -- Disabled Subclass Default Base Perks
-LANGUAGE["Perk_Title_Chemist Base"] = [[Chemist Base]]
-LANGUAGE["Perk_chemist_base"] = [[
-Complexity: MEDIUM
-
-Convert 100% of your Ballistic damage into Poison damage.
-Inflicts Break buildup by {1} of base Poison damage. ({2} + {3} per level, up to {4}).
-{4} increased Poison damage resistance. ({5} + {6} per level, up to {7}).]]
-
 LANGUAGE["Perk_Title_Golem Base"] = [[Golem Base]]
 LANGUAGE["Perk_golem_base"] = [[
 {1} increased maximum health. ({2} per level, up to {3}).
@@ -969,7 +966,30 @@ Complexity: HIGH
 
 SHIFT+E to activate Blink.
 Teleports to the target location.
-The blink range extends greatly if the target is a Watchtower.]]
+The blink range extends greatly if the target is a Watchtower.
+Blink has a cooldown of 5 seconds.]]
+
+LANGUAGE["Perk_Title_Virologist Base"] = [[Virologist Base]]
+LANGUAGE["Perk_virologist_base"] = [[
+Complexity: HIGH
+
+Equipped with Anti-Bio Capsule. Upgradable through shop.
+Upgrading Anti-Bio Capsule increases its Break buildup and area of effect.
+
+LMB: Infection
+Infects enemies with the selected virus in the targeted area.
+Infected enemies receive Break buildup over time.
+Virus lasts for 5 seconds.
+Increase area of effect by charging.
+
+RMB: Virus Switch
+Changes the current virus in the capsule.
+Enemies can be affected by multiple viruses at the same time.
+- Type-α: Affected enemies take 20% increased Physical damage.
+- Type-β: Affected enemies take 20% increased Elemental damage.
+
+{1} increased virus effects. ({2} per level, up to {3}).
+{1} increased Break buildup. ({2} per level, up to {3}).]]
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[Survival]]
@@ -1088,7 +1108,7 @@ Players you heal have Fortify for {1} seconds.
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[Enhancement]]
 LANGUAGE["Perk_Title_medic_purify"] = [[Purify]]
 LANGUAGE["Perk_medic_purify"] = [[
-Your healing directly decreases buildup for Bleeding, Break and Stun.]]
+Your healing directly decreases buildup for Bleeding, Break and Necrosis.]]
 
 LANGUAGE["Perk_Title_medic_haste"] = [[Haste]]
 LANGUAGE["Perk_medic_haste"] = [[
@@ -1177,9 +1197,9 @@ Attacking does not cancel Camoflague.
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Trajectory]]
 LANGUAGE["Perk_Title_ghost_brain_snap"] = [[Brain Snap]]
 LANGUAGE["Perk_ghost_brain_snap"] = [[
-Headshots increases Frostbite buildup based on weapon damage.
-Enemies affected by Frostbite has drastically reduced action speed for {1} seconds.
-Frostbite cooldown is {2} seconds.]]
+Headshots increases Freeze buildup based on weapon damage.
+Enemies affected by Freeze has drastically reduced action speed for {1} seconds.
+Freeze cooldown is {2} seconds.]]
 
 LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[Kinetic Impact]]
 LANGUAGE["Perk_ghost_ghost_kinetic_impact"] = [[
@@ -1694,42 +1714,6 @@ LANGUAGE["Perk_artificer_draconic_reckoning"] =
 Solar Orb has Lightning damage area of effect.
 Solar Storm has {1} increased damage and gains an extra charge stage.]]
 
--- Default Disabled Subclass Perks: Chemist
-LANGUAGE["Perk_Title_Chemist_Tier_1"] = [[Inner Strength]]
-LANGUAGE["Perk_Title_chemist_erosion"] = [[Erosion]]
-LANGUAGE["Perk_chemist_erosion"] =
-[[Increase Break buildup over time on enemies you hit with Poison damage.
-The increase stops when Break triggers.]]
-LANGUAGE["Perk_Title_chemist_contagion"] = [[Contagion]]
-LANGUAGE["Perk_chemist_contagion"] = [[Generates an explosion when Break triggers.
-The explosion deals Poison damage over time.]]
-
-LANGUAGE["Perk_Title_Chemist_Tier_2"] = [[Recuperate]]
-LANGUAGE["Perk_Title_chemist_cleansing"] = [[Cleansing]]
-LANGUAGE["Perk_chemist_cleansing"] = [[Players you heal have Cleansing for {1} seconds.
-{2} increased Poison damage resistance while you have Cleansing.
-{3} reduced Break buildup taken while you have Cleansing.]]
-LANGUAGE["Perk_Title_chemist_poison_weapon"] = [[Poison Weapon]]
-LANGUAGE["Perk_chemist_poison_weapon"] = [[Players you heal have Poison Weapon for {1} seconds.
-Adds extra Poison damage to Physical damage while you have Poison Weapon.
-Only applies to direct Physical attacks.]]
-
-LANGUAGE["Perk_Title_Chemist_Tier_3"] = [[Inner Strength]]
-LANGUAGE["Perk_Title_chemist_mustard_gas"] = [[Mustard Gas]]
-LANGUAGE["Perk_chemist_mustard_gas"] = [[Press SHIFT+E to release Mustard Gas.
-Mustard Gas deals Poison damage over time.]]
-LANGUAGE["Perk_Title_chemist_sarin_mist"] = [[Sarin Mist]]
-LANGUAGE["Perk_chemist_sarin_mist"] = [[Press SHIFT+E to release a sarin mist.
-Sarin Mist increases Break buildup over time.]]
-
-LANGUAGE["Perk_Title_Chemist_Tier_4"] = [[Ascension]]
-LANGUAGE["Perk_Title_chemist_beacon_of_agony"] = [[Beacon of Agnoy]]
-LANGUAGE["Perk_chemist_beacon_of_agony"] = [[{1} increased Poison damage.
-Poison damage ignores enemy Poison damage resistance.]]
-LANGUAGE["Perk_Title_chemist_disintegrate"] = [[Disintegrate]]
-LANGUAGE["Perk_chemist_disintegrate"] = [[{1} increased Poison damage.
-Poison damage ignores enemy Poison damage resistance.]]
-
 -- Default Disabled Subclass Perks: Golem
 LANGUAGE["Perk_Title_Golem_Tier_1"] = [[Synthesis]]
 LANGUAGE["Perk_Title_golem_biojet"] = [[Bio-Jet]]
@@ -1779,11 +1763,61 @@ LANGUAGE["Perk_Title_striker_frostblink"] = [[Frostblink]]
 LANGUAGE["Perk_striker_frostblink"] =
 [[Releases an ice explosion after Blink.
 The ice explosion deals {1} Cold damage in an area.]]
+LANGUAGE["Perk_Title_striker_momentum"] = [[Momentum]]
+LANGUAGE["Perk_striker_momentum"] =
+[[+1 charge to Blink.
+{1} increased Blink range.]]
 LANGUAGE["Perk_Title_striker_stormcharge"] = [[Stormcharge]]
 LANGUAGE["Perk_striker_stormcharge"] =
 [[Gain Stormcharge effect for {1} second after Blink.
 {2} increased damage while you have Stormcharge.
 Convert {3} of your damage to Lightning damage while you have Stormcharge.]]
+LANGUAGE["Perk_Title_striker_upheaval"] = [[Upheaval]]
+LANGUAGE["Perk_striker_upheaval"] =
+[[{1} increased Cold and Lightning damage.]]
+
+-- Default Disabled Subclass Perks: Virologist
+LANGUAGE["Perk_Title_Virologist_Tier_1"] = [[Stage I]]
+LANGUAGE["Perk_Title_virologist_assembly"] = [[Assembly]]
+LANGUAGE["Perk_virologist_assembly"] =
+[[{1} increased Infection duration.]]
+LANGUAGE["Perk_Title_virologist_outburst"] = [[Outburst]]
+LANGUAGE["Perk_virologist_outburst"] = [[{1} increased area of effect of Infection.]]
+
+LANGUAGE["Perk_Title_Virologist_Tier_2"] = [[Stage II]]
+LANGUAGE["Perk_Title_virologist_corrosion"] = [[Corrosion]]
+LANGUAGE["Perk_virologist_corrosion"] =
+[[{1} increased Break buildup.]]
+LANGUAGE["Perk_Title_virologist_ingrain"] = [[Ingrain]]
+LANGUAGE["Perk_virologist_ingrain"] = [[+{1} virus stack on enemies.
+For each stack, increases virus effect by 25%.]]
+
+LANGUAGE["Perk_Title_Virologist_Tier_3"] = [[Stage III]]
+LANGUAGE["Perk_Title_virologist_type_delta"] = [[Type-δ]]
+LANGUAGE["Perk_virologist_type_delta"] = [[Adds a new virus type.
+Enemies affected by the virus deals {1} reduced Physical damage.
+Enemies affected by the virus inflicts {2} reduced Bleeding buildup.]]
+LANGUAGE["Perk_Title_virologist_type_omega"] = [[Type-ω]]
+LANGUAGE["Perk_virologist_type_omega"] = [[Adds a new virus type.
+Affected enemies deals {1} reduced Elemental damage.
+Affected enemies inflicts {2} reduced Elemental status buildup.]]
+
+LANGUAGE["Perk_Title_Virologist_Tier_4"] = [[Stage IV]]
+LANGUAGE["Perk_Title_virologist_metamorphosis"] = [[Metamorphosis]]
+LANGUAGE["Perk_virologist_metamorphosis"] = [[+{1} virus stacking.]]
+
+LANGUAGE["Perk_Title_virologist_beacon_of_agony"] = [[Beacon of Agony]]
+LANGUAGE["Perk_virologist_beacon_of_agony"] = [[{1} increased Poison damage.
+Poison damage ignores enemy Poison damage resistance.]]
+
+LANGUAGE["Perk_Title_virologist_mustard_gas"] = [[Mustard Gas]
+LANGUAGE["Perk_virologist_mustard_gas"] = [[Press SHIFT+E to release Mustard Gas.
+Mustard Gas deals Poison damage over time.]]
+
+LANGUAGE["Perk_Title_virologist_poison_weapon"] = [[Poison Weapon]
+LANGUAGE["Perk_virologist_poison_weapon"] = [[Players you heal have Poison Weapon for {1} seconds.
+Adds extra Poison damage to Physical damage while you have Poison Weapon.
+Only applies to direct Physical attacks.]]
 
 -- Default Hidden Class Perks: Survivor
 LANGUAGE["Perk_Title_survivor_power_up"] = [[Power Up]]

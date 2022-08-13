@@ -1,4 +1,4 @@
-PERK.PrintName = "Beacon of Agnoy"
+PERK.PrintName = "Beacon of Agony"
 PERK.Description = [[{1} increased Poison damage.
 Poison damage ignores enemy Poison damage resistance.]]
 PERK.Icon = "materials/perks/positron_array.png"

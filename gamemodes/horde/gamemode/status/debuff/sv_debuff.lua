@@ -147,8 +147,6 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
             timer.Simple(0.5, function ()
                 self:Kill()
             end)
-        elseif debuff == HORDE.Status_Freeze then
-            self:Horde_AddFreezeEffect(duration)
         end
     else
         local duration = 5
@@ -171,8 +169,8 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
             timer.Simple(0.5, function ()
                 self:SetHealth(1)
             end)
-        --elseif debuff == HORDE.Status_Psychosis then
-        --    self:TakeDamage(50, self, self)
+        elseif debuff == HORDE.Status_Freeze then
+            self:Horde_AddFreezeEffect(duration)
         end
     end
 
@@ -197,10 +195,17 @@ function entmeta:Horde_RemoveDebuff(debuff)
         net.Send(self)
     else
         self.Horde_Debuff_Cooldown[debuff] = true
-        timer.Simple(3, function ()
-            if not self:IsValid() then return end
-            self.Horde_Debuff_Cooldown[debuff] = nil
-        end)
+        if debuff == HORDE.Status_Frostbite then
+            timer.Simple(8, function ()
+                if not self:IsValid() then return end
+                self.Horde_Debuff_Cooldown[debuff] = nil
+            end)
+        else
+            timer.Simple(3, function ()
+                if not self:IsValid() then return end
+                self.Horde_Debuff_Cooldown[debuff] = nil
+            end)
+        end
     end
 end
 

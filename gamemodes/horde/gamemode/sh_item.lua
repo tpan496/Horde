@@ -547,7 +547,8 @@ function HORDE:GetDefaultItemsData()
     {Engineer=true}, 50, -1)]]--
 
     HORDE:CreateItem("Special",    "Void Projector",   "horde_void_projector",   0,  11,
-    [[Manipulates dark energy to inflict hypothermia and conjure entities.
+    [[Only usable by Necromancer subclass!
+    Manipulates dark energy to inflict hypothermia and conjure entities.
     
     LMB: Void Spear (5/10/20 Energy)
     Releases a projectile that deals Cold damage.
@@ -560,7 +561,8 @@ function HORDE:GetDefaultItemsData()
     {Engineer=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_COLD, HORDE.DMG_PHYSICAL}, nil, {"Necromancer"})
 
     HORDE:CreateItem("Special",    "Solar Seal",   "horde_solar_seal",   0,  11,
-    [[Manipulates solar energy to wreak destruction.
+    [[Only usable by Artificer subclass!
+    Manipulates solar energy to wreak destruction.
     
     LMB: Solar Orb (5/10/20 Energy)
     Releases a projectile that deals Fire damage.
@@ -572,7 +574,8 @@ function HORDE:GetDefaultItemsData()
     {Cremator=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE, HORDE.DMG_LIGHTNING}, nil, {"Artificer"})
 
     HORDE:CreateItem("Special",    "Astral Relic",   "horde_astral_relic",   0,  11,
-    [[Manipulates negative energy fields.
+    [[Only usable by Warlock subclass!
+    Manipulates negative energy fields.
     
     LMB: Astral Pulsar (10 Energy)
     Releases a homing object that attaches to enemies and deals Physical damage over time.

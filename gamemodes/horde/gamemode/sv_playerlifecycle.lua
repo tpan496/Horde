@@ -424,12 +424,13 @@ function HORDE:PlayerInit(ply)
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
     HORDE.player_class_changed[ply:SteamID()] = false
     ply:Horde_SyncEconomy()
+	if ply:Alive() and not (HORDE.start_game and HORDE.current_break_time <= 0) then
+        HORDE:GiveStarterWeapons(ply)
+    end
 
     ply.Horde_Status = {}
     --ply:PrintTranslatedMessage(HUD_PRINTTALK, "Chat_Message_Help_Notice") -- Todo: Figure out how to make it show translated message.
 	ply:PrintMessage(HUD_PRINTTALK, "Use '!help' to see special commands!")
-
-    HORDE:GiveStarterWeapons(ply)
 
     ply:Horde_SyncExp()
     for _, other_ply in pairs(player.GetAll()) do
@@ -720,17 +721,6 @@ function HORDE:CheckAlivePlayers()
         HORDE:GameEnd("DEFEAT")
     end
 end
-
-hook.Add("PlayerSpawn", "Horde_PlayerSpawnMidWave", function (ply)
-    if HORDE.start_game and HORDE.current_break_time <= 0 then
-        if ply:IsValid() then
-            ply:KillSilent()
-            net.Start("Horde_LegacyNotification")
-            net.WriteString(translate.ClientGet(ply, "Notification_You_Will_Respawn_Next_Wave"))
-            net.Send(ply)
-        end
-    end
-end)
 
 hook.Add("PlayerDeathThink", "Horde_PlayerDeathThink", function (ply)
     --if GetConVarNumber("horde_enable_respawn") == 1 then return true end

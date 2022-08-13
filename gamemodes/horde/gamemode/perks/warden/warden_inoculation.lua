@@ -2,7 +2,7 @@ PERK.PrintName = "Inoculation"
 PERK.Description = "Aura reduces {1} buildups from Ignite, Frostbite, and Shock."
 PERK.Icon = "materials/perks/inoculation.png"
 PERK.Params = {
-    [1] = {value = 0.15, percent = true},
+    [1] = {value = 0.25, percent = true},
 }
 
 PERK.Hooks = {}

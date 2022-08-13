@@ -1,3 +1,10 @@
+if not ArcCWInstalled then return end
+if CLIENT then
+    SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/arccw_horde_machete")
+    SWEP.DrawWeaponInfoBox	= false
+    SWEP.BounceWeaponIcon = false
+    killicon.Add("arccw_horde_machete", "vgui/hud/arccw_horde_machete", Color(0, 0, 0, 255))
+end
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like

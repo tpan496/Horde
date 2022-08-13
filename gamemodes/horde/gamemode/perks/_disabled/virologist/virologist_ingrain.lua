@@ -1,7 +1,6 @@
-PERK.PrintName = "Cleansing"
-PERK.Description = [[Players you heal have Cleansing for {1} seconds.
-{2} increased Poison damage resistance while you have Cleansing.
-{3} reduced Break buildup taken while you have Cleansing.]]
+PERK.PrintName = "Ingrain"
+PERK.Description = [[+{1} virus stack on enemies.
+For each stack, increases virus effect by 25%.]]
 PERK.Icon = "materials/perks/positron_array.png"
 PERK.Params = {
     [1] = {value = 0.06, percent = true},

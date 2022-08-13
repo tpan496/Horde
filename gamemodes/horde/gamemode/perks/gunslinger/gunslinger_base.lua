@@ -64,10 +64,10 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
     local ent = util.TraceLine(util.GetPlayerTrace(ply)).Entity
 
     if ent:IsValid() and ent:IsNPC() and (not ent:GetNWEntity("HordeOwner"):IsValid()) then
-        local range = 250000
+        local range = 640000
         local delay = 5
         if ply:Horde_GetPerk("gunslinger_puncture") then
-            range = 1000000
+            range = 2560000
         end
         if ply:Horde_GetPerk("gunslinger_bladerunner") then
             delay = 10
