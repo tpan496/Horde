@@ -4,6 +4,7 @@ GADGET.Icon = "items/gadgets/projectile_launcher_ballistic.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
 GADGET.Active = true
+GADGET.Droppable = true
 GADGET.Params = {
     [1] = {value = 150},
 }

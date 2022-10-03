@@ -3,7 +3,7 @@ PERK.Description = [[
 The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
 Complexity: EASY
 
-{1} increased movement speed. ({2} per level, up to {3}).
+{1} more movement speed. ({2} per level, up to {3}).
 
 Gain Adrenaline when you kill an enemy.
 Adrenaline increases damage and speed by {4}.]]
@@ -27,10 +27,10 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus)
+PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
     if not ply:Horde_GetPerk("assault_base") then return end
-    bonus.walkspd = bonus.walkspd * ply:Horde_GetPerkLevelBonus("assault_base")
-    bonus.sprintspd = bonus.sprintspd * ply:Horde_GetPerkLevelBonus("assault_base")
+    bonus_walk.more = bonus_walk.more * ply:Horde_GetPerkLevelBonus("assault_base")
+    bonus_run.more = bonus_run.more * ply:Horde_GetPerkLevelBonus("assault_base")
 end
 
 PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)

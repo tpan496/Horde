@@ -123,7 +123,6 @@ function ENT:Detonate()
 
     local vel = Vector(math.Rand(-1, 1), math.Rand(-1, 1), math.Rand(-1, 1)) * 1500
 
-    cloud.Order = i
     cloud:SetPos(self:GetPos() - (self:GetVelocity() * FrameTime()))
     cloud:SetAbsVelocity(vel + self:GetVelocity())
     cloud:SetOwner(self:GetOwner())

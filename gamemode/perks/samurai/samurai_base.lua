@@ -108,7 +108,7 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
             e:SetNormal(Vector(0,0,1))
             e:SetOrigin(ply:GetPos())
             e:SetRadius(175)
-        util.Effect("demon_stomp", e, true, true)
+        util.Effect("horde_demon_stomp", e, true, true)
     end
 
     local t = 0.5

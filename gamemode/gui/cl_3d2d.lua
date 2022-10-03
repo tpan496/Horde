@@ -1,6 +1,18 @@
 surface.CreateFont("Icon", { font = "arial", size = 64 })
 surface.CreateFont("Rank", { font = "arial", size = 32 })
 
+net.Receive("Horde_PostEnemyDebuffApply", function ()
+    local ent = net.ReadEntity()
+    local debuffs = net.ReadTable()
+    ent.Horde_Debuffs = debuffs
+end)
+
+net.Receive("Horde_OnEnemyDebuffRemove", function ()
+    local ent = net.ReadEntity()
+    local debuffs = net.ReadTable()
+    ent.Horde_Debuffs = debuffs
+end)
+
 local function Render(bdepth, bskybox)
     if bskybox then return end
 
@@ -109,6 +121,50 @@ local function Render(bdepth, bskybox)
     end
 end
 
+local Visible = function (ent)
+    local tr = util.TraceLine( {
+        start = LocalPlayer():EyePos(),
+        endpos = ent:GetPos(),
+        filter = {ent, LocalPlayer()}
+    })
+    if tr.Hit then return false end
+    return true
+end
+
+local RenderDebuffs = function ()
+    for _, ent in pairs(ents.FindInCone(LocalPlayer():GetPos(), LocalPlayer():GetAimVector(), 750, 0)) do
+        if !IsValid(ent) or (!ent:IsNPC()) or (ent:Health() <= 0) then goto cont end
+        local debuffs = ent.Horde_Debuffs
+        if not debuffs then goto cont end
+        local count = table.Count(debuffs)
+        if count <= 0 then goto cont end
+        if !Visible(ent) then goto cont end
+
+        local base_pos = (ent:LocalToWorld(ent:OBBCenter())):ToScreen()
+        local dist = (ent:OBBCenter() - LocalPlayer():GetPos()):Length()
+
+        --local render_ang = EyeAngles()
+        --render_ang:RotateAroundAxis(render_ang:Right(),90)
+        --render_ang:RotateAroundAxis(-render_ang:Up(),90)
+
+        --cam.Start3D2D(render_pos, render_ang, 0.1)
+        local size = 40
+        local start_pos = base_pos.x - size / 2 - size / 2 * (count - 1)
+        for debuff, _ in SortedPairs(debuffs) do
+            local mat = Material(HORDE.Status_Icon[debuff], "mips smooth")
+            surface.SetMaterial(mat)
+            surface.SetDrawColor(HORDE.STATUS_COLOR[debuff] or color_white)
+            surface.DrawTexturedRect(start_pos, base_pos.y, size, size)
+            start_pos = start_pos + size
+        end
+        --cam.End3D2D()
+        
+        ::cont::
+    end
+end
+
 if GetConVar("horde_enable_3d2d_icon"):GetInt() == 1 then
     hook.Add("PostDrawTranslucentRenderables", "Horde_RenderClassIcon", Render)
+
+    --hook.Add("HUDPaint", "Horde_RenderDebuffs", RenderDebuffs)
 end

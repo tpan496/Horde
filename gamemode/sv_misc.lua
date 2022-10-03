@@ -166,3 +166,19 @@ function HORDE:CheckDemonStompCharges(ply)
         ply:Horde_SetPerkCharges(max_charges)
     end)
 end
+
+hook.Add("PlayerTick", "Horde_Ruination", function(ply, mv)
+    local tr = util.TraceHull({
+        start = ply:GetPos(),
+        endpos = ply:GetPos() + Vector(0,0,-1) * 50,
+        filter = ply,
+        mins = Vector(-16, -16, -8),
+        maxs = Vector(16, 16, 8),
+    })
+    if tr.Entity and tr.Entity:IsNPC() then
+        local vrand = VectorRand()
+        vrand.z = 0
+        vrand = vrand * 200
+        ply:SetVelocity(vrand)
+    end
+end)

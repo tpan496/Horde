@@ -256,6 +256,10 @@ function PANEL:SetData(item)
                 if HORDE.gadgets[self.item.class].Active then
                     local activate_loc = translate.Get("Gadget_Activation") or "Press T to activate."
                     self.loc_desc = activate_loc .. "\n\n" .. self.loc_desc
+                    if HORDE.gadgets[self.item.class].Once then
+                        local once = "This gadget is CONSUMED after activation."
+                        self.loc_desc = once .. "\n" .. self.loc_desc
+                    end
                     self.loc_desc = self.loc_desc .. "\n\n"
                     local seconds_loc = translate.Get("Gadget_Seconds") or "seconds"
                     if HORDE.gadgets[self.item.class].Duration and HORDE.gadgets[self.item.class].Duration > 0 then
@@ -551,7 +555,11 @@ function PANEL:Paint()
             end
             surface.SetMaterial(icon) -- Use our cached material
             if HORDE.gadgets[self.item.class].Active then
-                surface.SetDrawColor(HORDE.color_gadget_active)
+                if HORDE.gadgets[self.item.class].Once then
+                    surface.SetDrawColor(HORDE.color_gadget_once)
+                else
+                    surface.SetDrawColor(HORDE.color_gadget_active)
+                end
             else
                 surface.SetDrawColor(255, 255, 255, 255)
             end
@@ -575,7 +583,7 @@ function PANEL:Paint()
                     px = px + 30
                 end
             end
-            if self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic" then
+            if self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic" or self.item.class == "horde_carcass" then
                 draw.DrawText(self.loc_name .. " +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class)), "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             else
                 draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
@@ -685,7 +693,7 @@ function PANEL:Paint()
                         surface.DrawRect(0, 0, self:GetWide(), 200)
                     end
                 else
-                    if (self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic") and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 then
+                    if (self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic" or self.item.class == "horde_carcass") and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 then
                         self.ammo_one_btn:SetTextColor(Color(255,255,255))
                         local price = 800 + 25 * LocalPlayer():Horde_GetUpgrade(self.item.class)
                         self.ammo_one_btn:SetText("Upgrade to +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")

@@ -8,14 +8,8 @@ GADGET.Params = {
 }
 GADGET.Hooks = {}
 
-GADGET.Hooks.Horde_OnSetGadget = function (ply, gadget)
+GADGET.Hooks.Horde_OnSetMaxHealth = function (ply, bonus)
     if CLIENT then return end
-    if gadget ~= "gadget_vitality_booster" then return end
-    ply:SetMaxHealth(ply:GetMaxHealth() + 25)
-end
-
-GADGET.Hooks.Horde_OnUnsetGadget = function (ply, gadget)
-    if CLIENT then return end
-    if gadget ~= "gadget_vitality_booster" then return end
-    ply:SetMaxHealth(ply:GetMaxHealth() - 25)
+    if ply:Horde_GetGadget() ~= "gadget_vitality_booster" then return end
+    bonus.add = bonus.add + 25
 end

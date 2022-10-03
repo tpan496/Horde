@@ -1,6 +1,9 @@
 local plymeta = FindMetaTable("Player")
 local entmeta = FindMetaTable("Entity")
 
+util.AddNetworkString("Horde_PostEnemyDebuffApply")
+util.AddNetworkString("Horde_OnEnemyDebuffRemove")
+
 HORDE.Debuff_Notifications = {
     [HORDE.Status_Bleeding] = "You are inflicted by Bleeding.\nYour health is removed over time.",
     [HORDE.Status_Ignite] = "You are inflicted by Ignite.\nYou take Fire damage over time.",
@@ -9,7 +12,7 @@ HORDE.Debuff_Notifications = {
     [HORDE.Status_Break] = "You are inflicted by Break.\nYour health is reduced drastically and will recover slowly.",
     [HORDE.Status_Decay] = "You are inflicted by Decay.\nYou cannot heal.",
     [HORDE.Status_Psychosis] = "Y'ai 'ng'ngah, Yog-Sothoth h'ee - l'geb f'ai throdog uaaah.",
-    [HORDE.Status_Necrosis] = "You are killed by Necrosis."
+    [HORDE.Status_Necrosis] = "You are dying from Necrosis."
 }
 
 function HORDE:ApplyDebuffInRadius(debuff, pos, radius, buildup, inflictor, callback)
@@ -51,6 +54,14 @@ function entmeta:Horde_HasDebuff(debuff)
     end
     return nil
 end
+
+function entmeta:Horde_GetDebuffBuildup(debuff)
+    if self.Horde_Debuff_Buildup[debuff] then
+        return self.Horde_Debuff_Buildup[debuff]
+    end
+    return 0
+end
+
 function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
     if not IsValid(self) or (self:IsPlayer() and not self:Alive()) then return end
     if inflictor and (HORDE:IsPlayerOrMinion(inflictor) == true) and (HORDE:IsPlayerOrMinion(self) == true) and inflictor ~= self then return end
@@ -61,7 +72,6 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
     if self.Horde_Debuff_Active[debuff] then return end
     if not self.Horde_Debuff_Buildup[debuff] then self.Horde_Debuff_Buildup[debuff] = 0 end
     if self.Horde_Debuff_Buildup[debuff] >= 100 then return end
-
     if self:IsPlayer() then
         local bonus = {apply = 1, less = 1}
         hook.Run("Horde_OnPlayerDebuffApply", self, debuff, bonus, inflictor)
@@ -76,8 +86,11 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
 
         local str = "Horde_RemoveBuildup_" .. tostring(debuff) .. "_" .. self:SteamID()
         timer.Create(str, 1, 0, function ()
-            if not self:IsValid() then return end
-            if not self.Horde_Debuff_Buildup[debuff] or self.Horde_Debuff_Buildup[debuff] <= 0 or self.Horde_Debuff_Active[debuff] then timer.Remove(str) return end
+            if not self:IsValid() or not self:Alive() or self.Horde_Debuff_Active[debuff] then
+                if not self:IsValid() then timer.Remove(str) end
+                return
+            end
+            if not self.Horde_Debuff_Buildup[debuff] then return end
             self.Horde_Debuff_Buildup[debuff] = math.max(0, self.Horde_Debuff_Buildup[debuff] - 5)
             net.Start("Horde_SyncStatus")
                 net.WriteUInt(debuff, 8)
@@ -118,7 +131,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
             local data = EffectData()
             data:SetOrigin(pos)
             data:SetRadius(50)
-            util.Effect("hemo_mist", data, true, true)
+            util.Effect("horde_hemo_mist", data, true, true)
         end
     end
     if self.Horde_Debuff_Buildup[debuff] < 100 then return end
@@ -127,6 +140,15 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
     end
 
     if self:IsPlayer() then
+        local apply = hook.Run("Horde_PrePlayerDebuffApply", self, debuff)
+        if apply ~= nil then
+            for d, b in pairs(self.Horde_Debuff_Buildup) do
+                self:Horde_RemoveDebuff(d)
+                self:Horde_ReduceDebuffBuildup(d, b)
+            end
+            return
+        end
+        
         local duration = 5 + HORDE.difficulty_status_duration_bonus[HORDE.difficulty]
         local str = "Horde_Remove_" .. tostring(debuff) .. "_" .. self:SteamID()
         timer.Remove(str)
@@ -144,10 +166,38 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         elseif debuff == HORDE.Status_Break then
             timer.Simple(0, function() self:Horde_AddBreakEffect(duration, inflictor) end)
         elseif debuff == HORDE.Status_Necrosis then
-            timer.Simple(0.5, function ()
-                self:Kill()
+            self:ScreenFade(SCREENFADE.OUT, Color(0,0,0,255), 1, 2.5)
+            timer.Simple(2.5, function ()
+                if self:IsValid() then
+                    self:Kill()
+                end
+            end)
+        elseif debuff == HORDE.Status_Shock then
+            local id = self:EntIndex()
+            local bones = self:GetBoneCount()
+            timer.Create("ShockEffect" .. id, 0.5, 0, function ()
+                if !self:IsValid() then timer.Remove("ShockEffect" .. id) return end
+                if not self.Horde_Debuff_Active or not self.Horde_Debuff_Active[HORDE.Status_Shock] then
+                    timer.Remove("ShockEffect" .. id)
+                    return
+                end
+                for bone = 1, bones-1 do
+                    local p, angle = self:GetBonePosition(bone)
+                    local e = EffectData()
+                    e:SetOrigin(p)
+                    util.Effect( "horde_status_shock", e, true, true )
+                end
             end)
         end
+
+        if not self.Horde_Debuff_Active[debuff] then
+            net.Start("Horde_LegacyNotification")
+                net.WriteString(HORDE.Debuff_Notifications[debuff])
+                net.WriteInt(0,2)
+            net.Send(self)
+        end
+
+        self.Horde_Debuff_Active[debuff] = true
     else
         local duration = 5
         local str = "Horde_Remove_" .. tostring(debuff) .. "_" .. self:GetCreationID()
@@ -171,17 +221,28 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
             end)
         elseif debuff == HORDE.Status_Freeze then
             self:Horde_AddFreezeEffect(duration)
+        elseif debuff == HORDE.Status_Shock then
+            local id = self:EntIndex()
+            local bones = self:GetBoneCount()
+            timer.Create("ShockEffect" .. id, 0.5, 0, function ()
+                if !self:IsValid() then timer.Remove("ShockEffect" .. id) return end
+                if not self.Horde_Debuff_Active or not self.Horde_Debuff_Active[HORDE.Status_Shock] then
+                    timer.Remove("ShockEffect" .. id)
+                    return
+                end
+                for bone = 1, bones-1 do
+                    local p, angle = self:GetBonePosition(bone)
+                    local e = EffectData()
+                    e:SetOrigin(p)
+                    util.Effect( "horde_status_shock", e, true, true )
+                end
+            end)
         end
-    end
 
-    if self:IsPlayer() and not self.Horde_Debuff_Active[debuff] then
-        net.Start("Horde_LegacyNotification")
-            net.WriteString(HORDE.Debuff_Notifications[debuff])
-            net.WriteInt(0,2)
-        net.Send(self)
-    end
+        self.Horde_Debuff_Active[debuff] = true
 
-    self.Horde_Debuff_Active[debuff] = true
+        hook.Run("Horde_PostEnemyDebuffApply", self, self.Horde_Debuff_Active)
+    end 
 end
 
 function entmeta:Horde_RemoveDebuff(debuff)
@@ -206,10 +267,26 @@ function entmeta:Horde_RemoveDebuff(debuff)
                 self.Horde_Debuff_Cooldown[debuff] = nil
             end)
         end
+
+        hook.Run("Horde_OnEnemyDebuffRemove", self, self.Horde_Debuff_Active)
     end
 end
 
 hook.Add("Horde_ResetStatus", "Horde_PlayerStatusReset", function(ply)
     ply.Horde_Debuff_Active = {}
     ply.Horde_Debuff_Buildup = {}
+end)
+
+hook.Add("Horde_PostEnemyDebuffApply", "Horde_AddSync", function (ent, debuffs)
+    net.Start("Horde_PostEnemyDebuffApply")
+        net.WriteEntity(ent)
+        net.WriteTable(debuffs)
+    net.Broadcast()
+end)
+
+hook.Add("Horde_OnEnemyDebuffRemove", "Horde_RemoveSync", function (ent, debuffs)
+    net.Start("Horde_OnEnemyDebuffRemove")
+        net.WriteEntity(ent)
+        net.WriteTable(debuffs)
+    net.Broadcast()
 end)

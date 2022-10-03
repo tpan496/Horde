@@ -1,5 +1,5 @@
 GADGET.PrintName = "Hardening Injection"
-GADGET.Description = "Movespeed reduced by 50%.\n25% increased Global damage resistance.\n25% increased Physical damage resistance."
+GADGET.Description = "50% reduced movement speed.\n25% increased Global damage resistance.\n25% increased Physical damage resistance."
 GADGET.Icon = "items/gadgets/hardening_injection.png"
 GADGET.Duration = 5
 GADGET.Cooldown = 25
@@ -29,9 +29,9 @@ GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     end
 end
 
-GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus)
+GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
     if ply:Horde_GetGadget() ~= "gadget_hardening_injection" then return end
     if not ply.Horde_In_Hardening_Injection then return end
-    bonus.walkspd = bonus.walkspd * 0.5
-    bonus.sprintspd = bonus.sprintspd * 0.5
+    bonus_walk.more = bonus_walk.more * 0.5
+    bonus_run.more = bonus_run.more * 0.5
 end

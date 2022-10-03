@@ -26,28 +26,20 @@ function plymeta:Horde_GetHealthRegen()
 end
 
 function plymeta:Horde_SetHealthRegenPercentage(percentage)
-    self.Horde_HealthRegenPercentage = percentage
-end
-
-function plymeta:Horde_GetHealthRegenPercentage()
-    return self.Horde_HealthRegenPercentage or 0.02
-end
-
-function plymeta:Horde_GetHealthRegenEnabled()
-    return self.Horde_HealthRegenEnabled
-end
-
-function plymeta:Horde_SetHealthRegenEnabled(enabled)
-    self.Horde_HealthRegenEnabled = enabled
-    if enabled then
-        self:Horde_AddHealthRegen()
-    else
+    self.Horde_HealthRegenPercentage = math.max(0, percentage)
+    if percentage == 0 then
         self:Horde_RemoveHealthRegen()
+    else
+        self:Horde_AddHealthRegen()
     end
 end
 
+function plymeta:Horde_GetHealthRegenPercentage()
+    return self.Horde_HealthRegenPercentage or 0
+end
+
 hook.Add("PlayerTick", "Horde_HealthRegen", function(ply, mv)
-    if not ply:Horde_GetHealthRegenEnabled() or (ply.Horde_Debuff_Active and ply.Horde_Debuff_Active[HORDE.Status_Decay]) then return end
+    if ply.Horde_HealthRegenPercentage <= 0 or (ply.Horde_Debuff_Active and ply.Horde_Debuff_Active[HORDE.Status_Decay]) then return end
     if not ply:Alive() then return end
     if ply:Health() >= ply:GetMaxHealth() then
         ply:Horde_RemoveHealthRegen()
@@ -64,6 +56,6 @@ end)
 
 hook.Add("Horde_ResetStatus", "Horde_HealthRegenReset", function(ply)
     ply.Horde_HealthRegen = 0
-    ply.Horde_HealthRegenPercentage = 0.02
+    ply.Horde_HealthRegenPercentage = 0
     ply.Horde_HealthRegenCurTime = CurTime()
 end)

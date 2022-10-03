@@ -13,6 +13,7 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply.Horde_In_Quickstep then return end
     if HORDE:IsMeleeDamage(dmginfo) then
         bonus.increase = bonus.increase + 1.00
+        sound.Play("horde/player/focus_slash.ogg", ply:GetPos())
     end
 end
 

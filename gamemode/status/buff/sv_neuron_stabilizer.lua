@@ -80,7 +80,7 @@ end)
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_NeuronStabilizerDamageTaken", function (ply, dmginfo, bonus)
     if not ply:Horde_GetNeuronStabilizerEnabled() then return end
-    if ply:Horde_GetNeuronStabilizerStack() > 0 and HORDE:IsPhysicalDamage(dmginfo) then
+    if ply:Horde_GetNeuronStabilizerStack() > 0 then
         bonus.block = bonus.block + ply:Horde_GetNeuronStabilizerStack() * 2
     end
 end)

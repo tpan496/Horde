@@ -134,6 +134,55 @@ function HORDE:ApplyDamageInRadius(pos, radius, dmginfo, callback)
     end
 end
 
+function HORDE:DamageInfo(damage, dmgtype, attacker, inflictor, damage_custom)
+    local dmginfo = DamageInfo()
+    dmginfo:SetAttacker(attacker)
+
+    if inflictor then
+        dmginfo:SetInflictor(inflictor)
+    else
+        dmginfo:SetInflictor(attacker)
+    end
+
+    if dmgtype then
+        dmginfo:SetDamageType(dmgtype)
+    else
+        dmginfo:SetDamageType(DMG_GENERIC)
+    end
+    dmginfo:SetDamage(damage)
+    if damage_custom then
+        dmginfo:SetDamageCustom(damage_custom)
+    end
+    return dmginfo
+end
+
+function HORDE:TakeDamage(victim, damage, dmgtype, attacker, inflictor, damage_custom)
+    local dmginfo = DamageInfo()
+    if attacker then
+        dmginfo:SetInflictor(attacker)
+    else
+        dmginfo:SetInflictor(Entity(0))
+    end
+
+    if inflictor then
+        dmginfo:SetInflictor(inflictor)
+    else
+        dmginfo:SetInflictor(Entity(0))
+    end
+    
+    
+    if dmgtype then
+        dmginfo:SetDamageType(dmgtype)
+    else
+        dmginfo:SetDamageType(DMG_GENERIC)
+    end
+    dmginfo:SetDamage(damage)
+    if damage_custom then
+        dmginfo:SetDamageCustom(damage_custom)
+    end
+    victim:TakeDamageInfo(dmginfo)
+end
+
 hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginfo)
     local attacker = dmginfo:GetAttacker()
     if not target:IsNPC() then return end

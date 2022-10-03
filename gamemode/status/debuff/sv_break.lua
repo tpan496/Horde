@@ -16,6 +16,14 @@ function entmeta:Horde_AddBreakEffect(duration, inflictor)
         if inflictor and inflictor:IsPlayer() then
             hook.Run("Horde_OnNPCTriggerBreak", duration, self, inflictor)
         end
+
+        local bones = self:GetBoneCount()
+        for bone = 1, bones-1 do
+            local p, angle = self:GetBonePosition(bone)
+            local e = EffectData()
+            e:SetOrigin(p)
+            util.Effect( "horde_status_break", e, true, true )
+        end
         
         local dmg = DamageInfo()
         if inflictor and inflictor:IsValid() then

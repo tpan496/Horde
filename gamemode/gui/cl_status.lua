@@ -115,7 +115,11 @@ local function DrawGadget(gadget, cd, charge)
     local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
     surface.SetMaterial(mat) -- Use our cached material
     if HORDE.gadgets[gadget].Active then
-        surface.SetDrawColor(HORDE.color_gadget_active)
+        if HORDE.gadgets[gadget].Once then
+            surface.SetDrawColor(HORDE.color_gadget_once)
+        else
+            surface.SetDrawColor(HORDE.color_gadget_active)
+        end
     else
         surface.SetDrawColor(color_white)
     end
