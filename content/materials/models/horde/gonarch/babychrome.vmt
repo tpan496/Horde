@@ -2,6 +2,6 @@
 {
 	"$detail" "detail/detail_noise1"
 	"$detailscale" 2.5
-	"$basetexture" "models/half-life/big_mom/babychrome"
+	"$basetexture" "models/horde/gonarch/babychrome"
 }
 

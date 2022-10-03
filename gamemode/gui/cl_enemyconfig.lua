@@ -66,6 +66,11 @@ function PANEL:Init()
     mut_modifier_cat:SetContents(mut_modifier_panel)
     mut_modifier_cat:SetExpanded(false)
     mut_modifier_panel:SetBackgroundColor(HORDE.color_none)
+    local gadget_modifier_cat = modify_tab:Add("Gadget Drop")
+    local gadget_modifier_panel = vgui.Create("DPanel", modify_tab)
+    gadget_modifier_cat:SetContents(gadget_modifier_panel)
+    gadget_modifier_cat:SetExpanded(false)
+    gadget_modifier_panel:SetBackgroundColor(HORDE.color_none)
 
     local function create_property_editor(name, height, cat_panel)
         local panel = vgui.Create("DPanel", cat_panel)
@@ -289,6 +294,40 @@ function PANEL:Init()
             warning_label:SetPos(275, 8)
             warning_label:SetWide(100)
             return editor
+        elseif name == "gadget" then
+            local editor = vgui.Create("DComboBox", panel)
+            editor:SetSize(150, height)
+            editor:DockPadding(10, 10, 10, 10)
+            editor:Dock(LEFT)
+            for class, item in pairs(HORDE.items) do
+                if item.category == "Gadget" and HORDE.gadgets[class].Droppable then
+                    editor:AddChoice(class)
+                end
+            end
+
+            local editor_manual = vgui.Create("DTextEntry", panel)
+            editor_manual:SetSize(150, height-10)
+            editor_manual:SetPos(110, 5)
+            editor_manual:SetVisible(false)
+            function editor_manual:OnChange()
+                editor:SetValue(editor_manual:GetValue())
+            end
+
+            local manual_toggle = vgui.Create("DCheckBoxLabel", panel)
+            manual_toggle:SetText("Manual Input")
+            manual_toggle:SetPos(150 + 100 + 20, 10)
+            manual_toggle:SetTextColor(Color(0,0,0))
+
+            function manual_toggle:OnChange(bVal)
+                if bVal then
+                    editor_manual:SetVisible(true)
+                    editor:SetVisible(false)
+                else
+                    editor_manual:SetVisible(false)
+                    editor:SetVisible(true)
+                end
+            end
+            return editor
         else
             local editor = vgui.Create("DTextEntry", panel)
             editor:SetSize(150, height)
@@ -318,6 +357,9 @@ function PANEL:Init()
 
     local mut_editor = create_property_editor("mutation", 70, mut_modifier_panel)
 
+    local gadget_editor = create_property_editor("gadget", 35, gadget_modifier_panel)
+    local gadget_drop_editor = create_property_editor("drop rate", 35, gadget_modifier_panel)
+
     if GetConVarNumber("horde_default_enemy_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then
         local warning_label = vgui.Create("DLabel", modify_tab)
         warning_label:DockPadding(10, 10, 10, 10)
@@ -339,6 +381,8 @@ function PANEL:Init()
     spawn_limit_editor:SetValue("0")
     weapon_editor:SetValue("_gmod_default")
     mut_editor:SetValue("")
+    gadget_editor:SetValue("")
+    gadget_drop_editor:SetValue("")
 
     local btn_panel = vgui.Create("DPanel", self)
     btn_panel:SetPos(self:GetWide() - 150, 50)
@@ -376,6 +420,14 @@ function PANEL:Init()
             skin = tonumber(skin_editor:GetText())
         end
 
+        local gadget_drop = {}
+        gadget_drop.gadget = gadget_editor:GetText()
+        gadget_drop.drop_rate = math.max(0, tonumber(gadget_drop_editor:GetText()))
+        if gadget_drop.gadget and gadget_drop.gadget ~= "" and gadget_drop.drop_rate > 0 then
+        else
+            gadget_drop = nil
+        end
+
         HORDE:CreateEnemy(
             name_editor:GetText(),
             class_editor:GetText(),
@@ -392,7 +444,9 @@ function PANEL:Init()
             boss_properties,
             mut_editor:GetText(),
             skin,
-            model_editor:GetText()
+            model_editor:GetText(),
+            nil,
+            gadget_drop
         )
 
         -- Reload from disk
@@ -463,29 +517,39 @@ function PANEL:Init()
             skin = tonumber(skin_editor:GetText())
         end
 
+        local gadget_drop = {}
+        gadget_drop.gadget = gadget_editor:GetText()
+        gadget_drop.drop_rate = math.max(0, tonumber(gadget_drop_editor:GetText()))
+        if gadget_drop.gadget and gadget_drop.gadget ~= "" and gadget_drop.drop_rate > 0 then
+        else
+            gadget_drop = nil
+        end
+
         local start_wave = tonumber(wave_start_box:GetText())
         local end_wave = tonumber(wave_end_box:GetText())
         if start_wave > end_wave then return end
         
         for i = start_wave, end_wave do
             HORDE:CreateEnemy(
-            name_editor:GetText(),
-            class_editor:GetText(),
-            weight_editor:GetFloat(),
-            i,
-            elite_editor:GetChecked(),
-            health_editor:GetFloat(),
-            damage_editor:GetFloat(),
-            reward_editor:GetFloat(),
-            model_scale_editor:GetFloat(),
-            color,
-            weapon,
-            spawn_limit_editor:GetInt(),
-            boss_properties,
-            mut_editor:GetText(),
-            skin,
-            model_editor:GetText()
-        )
+                name_editor:GetText(),
+                class_editor:GetText(),
+                weight_editor:GetFloat(),
+                i,
+                elite_editor:GetChecked(),
+                health_editor:GetFloat(),
+                damage_editor:GetFloat(),
+                reward_editor:GetFloat(),
+                model_scale_editor:GetFloat(),
+                color,
+                weapon,
+                spawn_limit_editor:GetInt(),
+                boss_properties,
+                mut_editor:GetText(),
+                skin,
+                model_editor:GetText(),
+                nil,
+                gadget_drop
+            )
         end
 
         local tab = util.TableToJSON(HORDE.enemies)
@@ -627,6 +691,10 @@ function PANEL:Init()
             mut_editor:ChooseOption(enemy.mutation or "")
             skin_editor:SetValue(enemy.skin or "")
             model_editor:SetValue(enemy.model or "")
+            if enemy.gadget_drop and enemy.gadget_drop.drop_rate and enemy.gadget_drop.drop_rate > 0 then
+                gadget_editor:SetValue(enemy.gadget_drop.gadget)
+                gadget_drop_editor:SetValue(enemy.gadget_drop.drop_rate)
+            end
         end)
 
         menu:AddOption("Delete", function()

@@ -11,6 +11,10 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("ghost_brain_snap") then return end
 
     if hitgroup == HITGROUP_HEAD then
-        npc:Horde_AddDebuffBuildup(HORDE.Status_Freeze, dmginfo:GetDamage() / 1.5, ply, dmginfo:GetDamagePosition())
+        if npc:GetVar("is_boss") then
+            npc:Horde_AddDebuffBuildup(HORDE.Status_Freeze, dmginfo:GetDamage() / 10, ply, dmginfo:GetDamagePosition())
+        else
+            npc:Horde_AddDebuffBuildup(HORDE.Status_Freeze, dmginfo:GetDamage() / 1.5, ply, dmginfo:GetDamagePosition())
+        end
     end
 end

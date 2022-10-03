@@ -8,7 +8,7 @@ Support class that focuses on weakening enemies.]] -- Required
 SUBCLASS.BasePerk = "virologist_base"
 SUBCLASS.Perks = {
     [1] = {title = "Stage I", choices = {"virologist_assembly", "virologist_outburst"}},
-    [2] = {title = "Stage II", choices = {"virologist_corrosion", "virologist_ingrain"}},
+    [2] = {title = "Stage II", choices = {"virologist_ingrain", "virologist_corrosion"}},
     [3] = {title = "Stage III", choices = {"virologist_type_delta", "virologist_type_omega"}},
-    [4] = {title = "Stage IV", choices = {"virologist_metamorphosis", "virologist_disintegrate"}},
+    [4] = {title = "Stage IV", choices = {"virologist_metamorphosis", "virologist_septic_shock"}},
 } -- Required

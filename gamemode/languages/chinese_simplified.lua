@@ -159,7 +159,7 @@ LANGUAGE["Perk_assault_base"] = [[
 突击兵拥有出色的移动力和稳定的输出，从而能应对任何场景。
 复杂度: 简单
 
-提升 {1} 移速。（每级提升 {2}，最多至 {3}）。
+{1} 更多移速。（每级提升 {2}，最多至 {3}）。
 
 杀死敌人后获得“肾上腺素”状态。通过技能的选择，“肾上腺素”可以进行堆叠。
 “肾上腺素”提升 {4} 移速和输出。]]
@@ -286,12 +286,12 @@ LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[压制]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[粘性化合物]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
 子弹伤害击中的敌人受到“抑制”异常状态。
-“抑制”状态下，造成 {1} 更少伤害。]]
+“抑制”状态下，造成 {1} 更少物理伤害。]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[粗糙弹壳]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 子弹伤害击中的敌人受到“虚弱”异常状态。
-“虚弱”状态下，受到 {1} 更多伤害。]]
+“虚弱”状态下，受到 {1} 更多物理伤害。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[备用]]
 LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[修复催化剂]]
