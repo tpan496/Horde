@@ -146,7 +146,7 @@ function SWEP:DealDamage()
 		self:EmitSound( HitSound )
 	end
 
-	if tr.Hit and tr.Entity:IsWorld() and self.Charged == 1 then
+	if tr.Hit and tr.Entity:IsWorld() and self.Charged == 1 and self:Horde_GetPerk("carcass_reinforced_arms") then
 		local hitnormal = tr.HitNormal
 		self.Owner:SetVelocity(self.Owner:GetVelocity() + hitnormal * 250)
 	end
