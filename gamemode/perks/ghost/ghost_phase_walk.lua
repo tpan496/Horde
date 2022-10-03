@@ -19,11 +19,11 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus)
+PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
     if not ply:Horde_GetPerk("ghost_phase_walk") or not ply:Horde_GetCamoflagueEnabled() then return end
     if ply:Horde_GetCamoflague() == 1 then
-        bonus.walkspd = bonus.walkspd * 1.25
-        bonus.sprintspd = bonus.sprintspd * 1.25
+        bonus_walk.increase = bonus_walk.increase + 0.25
+        bonus_run.increase = bonus_run.increase + 0.25
     end
 end
 

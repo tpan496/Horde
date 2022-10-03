@@ -118,14 +118,19 @@ end)
 
 -- Fall damage handling
 hook.Add("GetFallDamage", "RealisticDamage", function(ply, speed)
+    local bonus = {less = 1}
+    local dmg = 0
     if HORDE.difficulty == difficulty_normal then
-        return 10
+        dmg = 10
     elseif HORDE.difficulty == difficulty_hard then
-        return math.max(0, math.ceil(0.2418 * speed - 141.75)) / 2
+        dmg = math.max(0, math.ceil(0.2418 * speed - 141.75)) / 2
     else
         -- css fall damage
-        return math.max(0, math.ceil(0.2418 * speed - 141.75))
+        dmg = math.max(0, math.ceil(0.2418 * speed - 141.75))
     end
+
+    hook.Run("Horde_GetFallDamage", ply, speed, bonus)
+    return dmg * bonus.less
 end)
 
 -- Non-hook settings

@@ -55,7 +55,11 @@ HORDE.DMG_COLOR = {
 HORDE.STATUS_COLOR = {
     [HORDE.Status_Decay] = Color(50, 150, 50),
     [HORDE.Status_Necrosis] = Color(204, 204, 255),
-    [HORDE.Status_Bleeding] = HORDE.color_crimson_violet
+    [HORDE.Status_Bleeding] = HORDE.color_crimson_violet,
+    [HORDE.Status_Freeze] = HORDE.DMG_COLOR[HORDE.DMG_COLD],
+    [HORDE.Status_Frostbite] = HORDE.DMG_COLOR[HORDE.DMG_COLD],
+    [HORDE.Status_Shock] = HORDE.DMG_COLOR[HORDE.DMG_LIGHTNING],
+    [HORDE.Status_Stun] = Color(255, 255, 0),
 }
 
 function HORDE:GetDamageType(dmginfo)
@@ -166,9 +170,10 @@ net.Receive("Horde_GetStats", function (len, ply)
     HORDE:CalcResistance(ply, stats, DMG_SLASH, HORDE.DMG_SLASH)
     HORDE:CalcResistance(ply, stats, DMG_BULLET, HORDE.DMG_BALLISTIC)
 
-    local bonus_run = {walkspd = 1, sprintspd = 1}
-    hook.Run("Horde_PlayerMoveBonus", ply, bonus_run)
-    stats["speed"] = math.max(bonus_run.walkspd, bonus_run.sprintspd)
+    local bonus_walk = {increase = 0, more = 1}
+    local bonus_run = {increase = 0, more = 1}
+    hook.Run("Horde_PlayerMoveBonus", ply, bonus_walk, bonus_run)
+    stats["speed"] = math.max(bonus_walk.more + bonus_walk.increase, bonus_run.more + bonus_walk.increase)
 
     HORDE:CalcImmunity(ply, stats, HORDE.Status_Bleeding)
     HORDE:CalcImmunity(ply, stats, HORDE.Status_Ignite)

@@ -16,7 +16,7 @@ HORDE.max_weight = 15
 HORDE.default_ammo_price = 10
 
 -- Creates a Horde item. The item will appear in the shop.
-function HORDE:CreateItem(category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price, entity_properties, shop_icon, levels, skull_tokens, dmgtype, infusions, starter_classes)
+function HORDE:CreateItem(category, name, class, price, weight, description, whitelist, ammo_price, secondary_ammo_price, entity_properties, shop_icon, levels, skull_tokens, dmgtype, infusions, starter_classes, hidden)
     if category == nil or name == nil or class == nil or price == nil or weight == nil or description == nil then return end
     if name == "" or class == "" then return end
     if not table.HasValue(HORDE.categories, category) then return end
@@ -56,13 +56,14 @@ function HORDE:CreateItem(category, name, class, price, weight, description, whi
     item.dmgtype = dmgtype or nil
     item.infusions = infusions or nil
     item.starter_classes = starter_classes or nil
+    item.hidden = hidden or nil
     HORDE.items[item.class] = item
     HORDE:SetItemsData()
 end
 
-function HORDE:CreateGadgetItem(class, price, weight, whitelist, levels, dmgtype)
+function HORDE:CreateGadgetItem(class, price, weight, whitelist, levels, dmgtype, hidden)
     local gadget = HORDE.gadgets[class]
-    HORDE:CreateItem("Gadget", gadget.PrintName, class, price, weight, "", whitelist, 10, -1, {type=HORDE.ENTITY_PROPERTY_GADGET}, nil, levels, nil, dmgtype)
+    HORDE:CreateItem("Gadget", gadget.PrintName, class, price, weight, "", whitelist, 10, -1, {type=HORDE.ENTITY_PROPERTY_GADGET}, nil, levels, nil, dmgtype, nil, nil, hidden)
 end
 
 HORDE.InvalidateHordeItemCache = 1
@@ -153,7 +154,8 @@ function HORDE:GetDefaultGadgets()
 
     HORDE:CreateGadgetItem("gadget_vitality_booster", 2500, 1, {Survivor=true}, {Survivor=5})
     HORDE:CreateGadgetItem("gadget_damage_booster", 2500, 1, {Survivor=true}, {Survivor=10})
-    HORDE:CreateGadgetItem("gadget_transcendance", 2000, 0, {Survivor=true}, {Survivor=15})
+    HORDE:CreateGadgetItem("gadget_agility_booster", 2500, 1, {Survivor=true}, {Survivor=15})
+    HORDE:CreateGadgetItem("gadget_transcendance", 3000, 1, {Survivor=true}, {Survivor=20})
 
     HORDE:CreateGadgetItem("gadget_iv_injection", 2000, 1, {Assault=true}, {Assault=5})
     HORDE:CreateGadgetItem("gadget_cortex", 2500, 1, {Assault=true}, {Assault=10})
@@ -168,7 +170,7 @@ function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_energy_shield", 2000, 1, {Heavy=true}, {Heavy=5})
     HORDE:CreateGadgetItem("gadget_hardening_injection", 2500, 1, {Heavy=true}, {Heavy=10})
     HORDE:CreateGadgetItem("gadget_exoskeleton", 2750, 3, {Heavy=true}, {Heavy=15})
-    HORDE:CreateGadgetItem("gadget_t_virus", 3000, 2, {Heavy=true}, {Heavy=20})
+    HORDE:CreateGadgetItem("gadget_ulpa_filter", 3000, 2, {Heavy=true}, {Heavy=20})
 
     HORDE:CreateGadgetItem("gadget_proximity_defense", 2000, 1, {Demolition=true}, {Demolition=5})
     HORDE:CreateGadgetItem("gadget_projectile_launcher_blast", 2500, 2, {Demolition=true}, {Demolition=10}, {HORDE.DMG_BLAST})
@@ -178,7 +180,7 @@ function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_optical_camouflage", 2500, 1, {Ghost=true}, {Ghost=5})
     HORDE:CreateGadgetItem("gadget_projectile_launcher_ballistic", 2500, 2, {Ghost=true}, {Ghost=10}, {HORDE.DMG_BALLISTIC})
     HORDE:CreateGadgetItem("gadget_death_mark", 2500, 2, {Ghost=true}, {Ghost=15}, {HORDE.DMG_BLUNT})
-    HORDE:CreateGadgetItem("gadget_gunslinger", 3000, 2, {Ghost=true}, {Ghost=20})
+    HORDE:CreateGadgetItem("gadget_assassin_optics", 3000, 2, {Ghost=true}, {Ghost=20})
 
     HORDE:CreateGadgetItem("gadget_quantum_tunnel", 2000, 1, {Engineer=true}, {Engineer=5})
     HORDE:CreateGadgetItem("gadget_voidout", 2250, 1, {Engineer=true}, {Engineer=10})
@@ -199,11 +201,19 @@ function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_projectile_launcher_fire", 2500, 2, {Cremator=true}, {Cremator=10}, {HORDE.DMG_FIRE})
     HORDE:CreateGadgetItem("gadget_barbeque", 2750, 2, {Cremator=true}, {Cremator=15})
     HORDE:CreateGadgetItem("gadget_hydrogen_burner", 3000, 3, {Cremator=true}, {Cremator=20})
+
+    -- Droppable Gadgets
+    HORDE:CreateGadgetItem("gadget_vitality_shard", 500, 0)
+    HORDE:CreateGadgetItem("gadget_damage_shard", 500, 0)
+    HORDE:CreateGadgetItem("gadget_agility_shard", 500, 0)
+    HORDE:CreateGadgetItem("gadget_matriarch_womb", 50, 0, nil, nil, nil, true)
+    HORDE:CreateGadgetItem("gadget_unstable_injection", 50, 0, nil, nil, nil, true)
+    HORDE:CreateGadgetItem("gadget_hellfire_tincture", 50, 0, nil, nil, nil, true)
 end
 
 function HORDE:GetDefaultItemInfusions()
-    local melee_blunt_infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Concussive, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
-    local melee_slash_infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    local melee_blunt_infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Concussive, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    local melee_slash_infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
     HORDE.items["weapon_stunstick"].infusions = melee_blunt_infusions
     HORDE.items["weapon_crowbar"].infusions = melee_blunt_infusions
     HORDE.items["arccw_horde_knife"].infusions = melee_slash_infusions
@@ -214,8 +224,8 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_inferno_blade"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
     HORDE.items["arccw_horde_mjollnir"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Galvanizing, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
 
-    local ballistic_infusions_light = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver}
-    local ballistic_infusions_heavy = {HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium}
+    local ballistic_infusions_light = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver}
+    local ballistic_infusions_heavy = {HORDE.Infusion_Ruination, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium}
     -- Pistols
     HORDE.items["arccw_horde_9mm"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_medic_9mm"].infusions = ballistic_infusions_light
@@ -236,7 +246,7 @@ function HORDE:GetDefaultItemInfusions()
     --HORDE.items["arccw_horde_flaregun"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Quality}
 
     -- SMGs
-    local ballistic_infusions_smgs = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Septic}
+    local ballistic_infusions_smgs = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Septic}
     HORDE.items["arccw_horde_smg1"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_mac10"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_go_mp9"].infusions = ballistic_infusions_smgs
@@ -245,8 +255,8 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_ump"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_go_bizon"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_go_p90"].infusions = ballistic_infusions_smgs
-    HORDE.items["arccw_horde_mp7m"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Rejuvenating}
-    HORDE.items["arccw_horde_vector"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_mp7m"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Rejuvenating}
+    HORDE.items["arccw_horde_vector"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Rejuvenating}
 
     -- Shotguns
     HORDE.items["arccw_horde_shotgun"].infusions = ballistic_infusions_light
@@ -254,13 +264,13 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_870"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_mag7"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_m1014"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_horde_doublebarrel"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Concussive}
-    HORDE.items["arccw_horde_trenchgun"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Flaming}
-    HORDE.items["arccw_mw2_spas12"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
-    HORDE.items["arccw_horde_striker"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
-    HORDE.items["arccw_horde_aa12"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
+    HORDE.items["arccw_horde_doublebarrel"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Concussive}
+    HORDE.items["arccw_horde_trenchgun"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_mw2_spas12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
+    HORDE.items["arccw_horde_striker"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
+    HORDE.items["arccw_horde_aa12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Galvanizing}
 
-    local ballistic_infusions_rifles = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Hemo, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
+    local ballistic_infusions_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Hemo, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
     -- Rifles
     HORDE.items["arccw_go_ar15"].infusions = ballistic_infusions_rifles
     HORDE.items["arccw_go_famas"].infusions = ballistic_infusions_rifles
@@ -273,7 +283,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_tavor"].infusions = ballistic_infusions_rifles
     HORDE.items["arccw_horde_scarl"].infusions = ballistic_infusions_rifles
     
-    local ballistic_infusions_sniper_rifles = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Arctic, HORDE.Infusion_Siphoning}
+    local ballistic_infusions_sniper_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Arctic, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_winchester"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_mw2_acr"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_m200"].infusions = ballistic_infusions_sniper_rifles
@@ -283,10 +293,10 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_fal"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_barret"].infusions = ballistic_infusions_sniper_rifles
 
-    HORDE.items["arccw_horde_medic_rifle"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
+    HORDE.items["arccw_horde_medic_rifle"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_m16m203"].infusions = ballistic_infusions_rifles
   
-    local ballistic_infusions_mg_rifles = {HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium, HORDE.Infusion_Siphoning}
+    local ballistic_infusions_mg_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium, HORDE.Infusion_Siphoning}
     -- MG
     HORDE.items["arccw_go_negev"].infusions = ballistic_infusions_mg_rifles
     HORDE.items["arccw_go_m249para"].infusions = ballistic_infusions_mg_rifles
@@ -322,6 +332,8 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_horde_knife",    100,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH}, nil, {"Berserker", "Samurai"})
     HORDE:CreateItem("Melee",      "Machete",        "arccw_horde_machete", 1000,  3, "Machete.",
+    nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
+    HORDE:CreateItem("Melee",      "Parrying Dagger","arccw_horde_parrying_dagger", 1000,  3, "A small dagger used for parrying.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Melee",      "Fireaxe",        "arccw_horde_axe",     1500,  4, "Fireaxe.\nChops enemies in half.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
@@ -558,7 +570,7 @@ function HORDE:GetDefaultItemsData()
     Conjures a Spectre minion.
     The Spectre minion deals Physical damage and applies Frostbite buildup.
     HOLD RMB to recall Spectres to your side.]],
-    {Engineer=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_COLD, HORDE.DMG_PHYSICAL}, nil, {"Necromancer"})
+    {Engineer=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_COLD, HORDE.DMG_PHYSICAL}, nil, {"Necromancer"}, true)
 
     HORDE:CreateItem("Special",    "Solar Seal",   "horde_solar_seal",   0,  11,
     [[Only usable by Artificer subclass!
@@ -571,7 +583,7 @@ function HORDE:GetDefaultItemsData()
     RMB: Solar Storm (5/10/20 Energy)
     Releases a powerful lightning strike at the target.
     HOLD RMB for different effects.]],
-    {Cremator=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE, HORDE.DMG_LIGHTNING}, nil, {"Artificer"})
+    {Cremator=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE, HORDE.DMG_LIGHTNING}, nil, {"Artificer"}, true)
 
     HORDE:CreateItem("Special",    "Astral Relic",   "horde_astral_relic",   0,  11,
     [[Only usable by Warlock subclass!
@@ -586,7 +598,11 @@ function HORDE:GetDefaultItemsData()
     Plants energy bodies that explode when enemies are nearby, dealing Physical damage.
     You can plant at most 5 active Astral Remnants.
     HOLD RMB to charge and refresh duration of all active Astral Remnants.]],
-    {Demolition=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_PHYSICAL}, nil, {"Warlock"})
+    {Demolition=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_PHYSICAL}, nil, {"Warlock"}, true)
+
+    HORDE:CreateItem("Special",    "Carcass Biosystem",   "horde_carcass",   0,  13,
+    [[LMB: Fist]],
+    {Heavy=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_PHYSICAL}, nil, {"Carcass"}, true)
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
     nil, 10, -1, nil, "items/weapon_medkit.png", nil, nil, nil, nil, {"Medic"})

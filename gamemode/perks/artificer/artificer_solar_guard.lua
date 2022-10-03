@@ -16,7 +16,7 @@ PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if (not wpn) or (not wpn:IsValid()) then return end
     local energy = wpn:Ammo1()
     bonus.less = bonus.less * (0.30 * energy / 100)
-    wpn:SetClip1(math.min(0, wpn:Clip1() - dmginfo:GetDamage() / 2.5))
+    wpn:SetClip1(math.max(0, wpn:Clip1() - dmginfo:GetDamage() / 2.5))
 end
 
 PERK.Hooks.Horde_OnSolarSealRegen = function(ply, regen_delay)

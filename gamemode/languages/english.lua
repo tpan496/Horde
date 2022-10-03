@@ -167,7 +167,7 @@ LANGUAGE["Perk_assault_base"] = [[
 The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
 Complexity: EASY
 
-{1} increased movement speed. ({2} per level, up to {3}).
+{1} more movement speed. ({2} per level, up to {3}).
 
 Gain Adrenaline when you kill an enemy.
 Adrenaline increases damage and speed by {4}.]]
@@ -296,12 +296,12 @@ LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Suppression]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Sticky Compound]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
 Enemies you hit with Ballistic damage are Hindered.
-Hindered enemies deal {1} reduced damage.]]
+Hindered enemies deal {1} reduced Physical damage.]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Crude Casing]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 Enemies you hit with Ballistic damage are Weakened.
-Weakened enemies receive {1} increased damage.]]
+Weakened enemies receive {1} increased Physical damage.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Backup]]
 LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[Repair Catalyst]]
@@ -1333,7 +1333,7 @@ LANGUAGE["Gadget_Desc_iv_injection"] = [[
 Recover 25 health.
 ]]
 
-LANGUAGE["Gadget_gadget_cortex"] = [[Cortex]]
+LANGUAGE["Gadget_gadget_cortex"] = [[Cortex Stimulator]]
 LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
 For each enemy near you, gain 1 Adrenaline stack.
 Elite enemies grant 2 stacks.

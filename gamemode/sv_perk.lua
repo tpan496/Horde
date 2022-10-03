@@ -37,6 +37,8 @@ function plymeta:Horde_ApplyPerksForClass()
         self:Horde_SetPerk(choice)
         ::cont::
     end
+
+    self:Horde_SetMaxHealth()
 end
 
 net.Receive("Horde_PerkChoice", function(len, ply)
@@ -63,6 +65,8 @@ net.Receive("Horde_PerkChoice", function(len, ply)
         ply.Horde_PerkChoices[subclass_name] = ply.Horde_PerkChoices[subclass_name] or {}
         ply.Horde_PerkChoices[subclass_name][level] = net.ReadUInt(4)
     end
+
+    ply:Horde_SetMaxHealth()
 
     if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(level) then return end
 

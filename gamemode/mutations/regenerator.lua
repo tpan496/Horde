@@ -1,5 +1,5 @@
 MUTATION.PrintName = "Regenerator"
-MUTATION.Description = "Regenerate 2% health per second."
+MUTATION.Description = "Regenerate 2% health per second. Effect halves on bosses."
 
 MUTATION.Hooks = {}
 
@@ -15,9 +15,14 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
                 e:SetRadius(radius)
             util.Effect("regenerator", e, true, true)
 
+            local mult = 1
+            if ent:GetVar("is_boss") == true then
+                mult = 0.5
+            end
+
             local id = ent:GetCreationID()
             local players_count = table.Count(player.GetAll())
-            local regen_amount = math.min(math.min(100, 25 * players_count), ent:GetMaxHealth() * 0.02)
+            local regen_amount = math.min(math.min(100, 20 * players_count), ent:GetMaxHealth() * 0.02) * mult
             timer.Create("Horde_Mutation_Regenerator" .. id, 1, 0, function()
                 if not ent:IsValid() or not ent.Horde_Mutation_Regenerator then timer.Remove("Horde_Mutation_Regenerator" .. id) return end
                 ent:SetHealth(math.min(ent:GetMaxHealth(), regen_amount + ent:Health()))

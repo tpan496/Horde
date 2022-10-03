@@ -496,10 +496,7 @@ function SWEP:NetherStar(charged)
 
 	table.insert(ply.Horde_Nether_Stars, ent)
 
-	net.Start("Horde_SyncStatus")
-        net.WriteUInt(HORDE.Status_Nether_Star, 8)
-        net.WriteUInt(table.Count(ply.Horde_Nether_Stars), 8)
-    net.Send(ply)
+	ply:Horde_SyncStatus(HORDE.Status_Nether_Star, table.Count(ply.Horde_Nether_Stars))
 
 	hook.Run("Horde_OnNetherRelicPostCast", self.Owner, self, 10)
 end
@@ -614,10 +611,7 @@ function SWEP:NetherMine(charged)
 		self:TakePrimaryAmmo(5)
 	end
 
-	net.Start("Horde_SyncStatus")
-        net.WriteUInt(HORDE.Status_Nether_Mine, 8)
-        net.WriteUInt(table.Count(ply.Horde_Nether_Mines), 8)
-    net.Send(ply)
+	ply:Horde_SyncStatus(HORDE.Status_Nether_Mine, table.Count(ply.Horde_Nether_Mines))
 
 	hook.Run("Horde_OnNetherRelicPostCast", self.Owner, self, 5)
 	

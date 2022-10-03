@@ -7,6 +7,9 @@ function entmeta:Horde_AddWeaken(duration, more)
     end)
 
     self.Horde_Weaken = math.max(1, 1 * more)
+    if not self.Horde_Debuff_Active then self.Horde_Debuff_Active = {} end
+    self.Horde_Debuff_Active[HORDE.Status_Weakened] = true
+    hook.Run("Horde_PostEnemyDebuffApply", self, self.Horde_Debuff_Active)
 end
 
 function entmeta:Horde_GetWeaken()
@@ -16,12 +19,12 @@ end
 function entmeta:Horde_RemoveWeaken()
     if not self:IsValid() then return end
     self.Horde_Weaken = 0
+    self.Horde_Debuff_Active[HORDE.Status_Weakened] = nil
+    hook.Run("Horde_PostEnemyDebuffApply", self, self.Horde_Debuff_Active)
 end
 
 hook.Add("EntityTakeDamage", "Horde_WeakenDamageTaken", function(target, dmg)
-    if target:Horde_GetWeaken() == 0 then return end
-    local attacker = dmg:GetAttacker()
-    if attacker:IsPlayer() and target:IsNPC() then
+    if target:Horde_GetWeaken() > 0 and HORDE:IsPhysicalDamage(dmg) then
         dmg:ScaleDamage(1 + 0.15 * target.Horde_Weaken)
     end
 end)

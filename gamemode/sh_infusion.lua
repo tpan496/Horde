@@ -21,6 +21,7 @@ HORDE.Infusion_Quicksilver = 10
 HORDE.Infusion_Siphoning = 11
 HORDE.Infusion_Titanium = 12
 HORDE.Infusion_Chrono = 13
+HORDE.Infusion_Ruination = 14
 
 
 HORDE.Infusion_Names = {
@@ -38,6 +39,7 @@ HORDE.Infusion_Names = {
     [HORDE.Infusion_Siphoning] = "Siphoning",
     [HORDE.Infusion_Titanium] = "Titanium",
     [HORDE.Infusion_Chrono] = "Chrono",
+    [HORDE.Infusion_Ruination] = "Ruination",
 }
 
 HORDE.Infusion_Icons = {
@@ -55,6 +57,8 @@ HORDE.Infusion_Icons = {
     [HORDE.Infusion_Siphoning] = "infusion/siphoning.png",
     [HORDE.Infusion_Titanium] = "infusion/titanium.png",
     [HORDE.Infusion_Chrono] = "infusion/chrono.png",
+    [HORDE.Infusion_Ruination] = "infusion/ruination.png",
+    [HORDE.Infusion_Ruination] = "status/necrosis.png",
 }
 
 HORDE.Infusion_Colors = {
@@ -72,6 +76,7 @@ HORDE.Infusion_Colors = {
     [HORDE.Infusion_Siphoning] = Color(255, 74, 95),
     [HORDE.Infusion_Titanium] = Color(192, 192, 192),
     [HORDE.Infusion_Chrono] = Color(0,139,139),
+    [HORDE.Infusion_Ruination] = Color(0,0,0),
 }
 
 HORDE.Infusion_Description = {
@@ -160,6 +165,12 @@ Increases weapon damage the longer the weapon is being held by the user.
 Increase caps at 50%.
 
 20% decreased weapon damage.
+]],
+[HORDE.Infusion_Ruination] = [[
+Increases weapon damage based on your current Necrosis buildup.
+5% damage increase per 10 Necrosis buildup, up to 25%.
+
+Gain 10 Necrosis buildup per second while holding this weapon.
 ]]
 }
 
@@ -301,6 +312,12 @@ local function chrono_damage(ply, npc, bonus, hitgroup, dmginfo)
     bonus.increase = math.min(0.30, bonus.increase - 0.20 + (HORDE.current_wave - ply.Horde_Infusion_Chrono_Wave[curr_weapon:GetClass()]) * 0.06)
 end
 
+local function ruination_damage(ply, npc, bonus, hitgroup, dmginfo)
+    local curr_weapon = HORDE:GetCurrentWeapon(dmginfo:GetInflictor())
+    if !IsValid(curr_weapon) then return end
+    bonus.increase = math.min(0.25, bonus.increase + ply:Horde_GetDebuffBuildup(HORDE.Status_Necrosis) / 200)
+end
+
 local infusion_fns = {
     [HORDE.Infusion_None] = function () end,
     [HORDE.Infusion_Hemo] = hemo_damage,
@@ -316,6 +333,7 @@ local infusion_fns = {
     [HORDE.Infusion_Quicksilver] = quicksilver_damage,
     [HORDE.Infusion_Titanium] = siphoning_damage,
     [HORDE.Infusion_Chrono] = chrono_damage,
+    [HORDE.Infusion_Ruination] = ruination_damage,
 }
 
 function HORDE:GetCurrentWeapon(inflictor)
@@ -373,6 +391,10 @@ net.Receive("Horde_BuyInfusion", function (len, ply)
         net.Send(ply)
         ply:Horde_SyncEconomy()
     end
+
+    if infusion == HORDE.Infusion_Ruination then
+        ply.Horde_Last_Ruination_Check = CurTime()
+    end
 end)
 
 net.Receive("Horde_SellInfusion", function (len, ply)
@@ -386,4 +408,44 @@ net.Receive("Horde_SellInfusion", function (len, ply)
     net.Send(ply)
     ply:Horde_SyncEconomy()
 end)
+
+hook.Add("PlayerTick", "Horde_Ruination", function(ply, mv)
+    if !ply.Horde_Last_Ruination_Check then return end
+    if ply.Horde_Last_Ruination_Check >= CurTime() then return end
+    ply.Horde_Last_Ruination_Check = CurTime() + 1
+    if not ply.Horde_Infusions then return end
+    local curr_weapon = HORDE:GetCurrentWeapon(ply)
+    if not curr_weapon:IsValid() then return end
+    local infusion = ply.Horde_Infusions[curr_weapon:GetClass()]
+    if infusion == HORDE.Infusion_Ruination then
+        ply:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 10)
+    end
+end)
+
+--[[
+hook.Add("WeaponEquip", "Horde_Ruination_Equip", function (wpn, ply)
+    if wpn:IsValid() then
+        local id = ply:SteamID()
+        if not ply.Horde_Infusions then return end
+        local infusion = ply.Horde_Infusions[wpn:GetClass()]
+        if infusion == HORDE.Infusion_Ruination then
+            timer.Create("Horde_Ruination_Check" .. id, 1, 0, function ()
+                ply:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 10)
+            end)
+        else
+            timer.Remove("Horde_Ruination_Check" .. id)
+        end
+    end
+end)
+
+hook.Add("PlayerDroppedWeapon", "Horde_Ruination_Equip", function (ply, wpn)
+    if wpn:IsValid() then
+        local id = ply:SteamID()
+        if not ply.Horde_Infusions then return end
+        local infusion = ply.Horde_Infusions[wpn:GetClass()]
+        if infusion == HORDE.Infusion_Ruination then
+            timer.Remove("Horde_Ruination_Check" .. id)
+        end
+    end
+end)]]--
 end

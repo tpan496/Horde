@@ -74,8 +74,8 @@ end
 function plymeta:Horde_SetGadget(gadget)
     if not HORDE.gadgets[gadget] then error("Tried to use nonexistent gadget '" .. gadget .. "' in Horde_SetGadget!") return end
     self.Horde_Gadget = gadget
-    self:Horde_SetGadgetDuration(HORDE.gadgets[gadget].Duration)
-    self:Horde_SetGadgetCooldown(HORDE.gadgets[gadget].Cooldown)
+    self:Horde_SetGadgetDuration(HORDE.gadgets[gadget].Duration or 0)
+    self:Horde_SetGadgetCooldown(HORDE.gadgets[gadget].Cooldown or 0)
     self:Horde_SetGadgetCharges(HORDE.gadgets[gadget].Charges or -1)
     self:Horde_SetGadgetInternalCooldown(0)
     if SERVER then
@@ -86,8 +86,10 @@ function plymeta:Horde_SetGadget(gadget)
     end
 
     hook.Run("Horde_OnSetGadget", self, gadget)
+    sound.Play("items/suitchargeok1.wav", self:GetPos())
 
     if SERVER then
+        self:Horde_SetMaxHealth()
         net.Start("Horde_Gadget")
             net.WriteUInt(HORDE.NET_PERK_SET, HORDE.NET_PERK_BITS)
             net.WriteEntity(self)
@@ -150,12 +152,17 @@ end)
 
 if SERVER then
     function HORDE:UseGadget(ply)
-        if ply:Horde_GetGadgetInternalCooldown() <= 0 and ply:Alive() then
+        if ply:Horde_GetGadget() and HORDE.gadgets[ply:Horde_GetGadget()] and HORDE.gadgets[ply:Horde_GetGadget()].Active and ply:Horde_GetGadgetInternalCooldown() <= 0 and ply:Alive() then
             hook.Run("Horde_UseActiveGadget", ply)
             ply:Horde_SetGadgetInternalCooldown(ply:Horde_GetGadgetCooldown())
             net.Start("Horde_GadgetStartCooldown")
                 net.WriteUInt(ply:Horde_GetGadgetCooldown(), 8)
             net.Send(ply)
+
+            if HORDE.gadgets[ply:Horde_GetGadget()].Once then
+                ply:Horde_UnsetGadget()
+                ply:Horde_SyncEconomy()
+            end
         end
     end
 

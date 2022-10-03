@@ -33,8 +33,8 @@ GADGET.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup)
     bonus.increase = bonus.increase + 0.25
 end
 
-GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus)
+GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
     if ply:Horde_GetGadget() ~= "gadget_berserk_armor" or not ply.Horde_HasGuts then return end
-    bonus.walkspd = bonus.walkspd * 1.25
-    bonus.sprintspd = bonus.sprintspd * 1.25
+    bonus_walk.increase = bonus_walk.increase + 0.25
+    bonus_run.increase = bonus_run.increase + 0.25
 end

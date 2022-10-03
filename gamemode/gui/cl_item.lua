@@ -264,7 +264,8 @@ function PANEL:Paint()
             if icon then
                 surface.SetDrawColor(255, 255, 255, 255)
                 surface.SetMaterial(icon)
-                surface.DrawTexturedRect(self:GetWide() - 64, -10, 60, 60)
+                surface.DrawTexturedRect(self:GetWide() - 128, -10, 60, 60)
+                self.price_panel:SetText(tostring(self.price) .. "$   ")
             end
             self.weight_panel:SetVisible(false)
         else
@@ -272,7 +273,11 @@ function PANEL:Paint()
             if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 if HORDE.gadgets[self.item.class].Active then
                     surface.SetMaterial(Material(HORDE.gadgets[self.item.class].Icon, "mips smooth"))
-                    surface.SetDrawColor(HORDE.color_gadget_active)
+                    if HORDE.gadgets[self.item.class].Once then
+                        surface.SetDrawColor(HORDE.color_gadget_once)
+                    else
+                        surface.SetDrawColor(HORDE.color_gadget_active)
+                    end
                     surface.DrawTexturedRect(self:GetWide() - 256, -5, 96, 48)
                 else
                     surface.SetMaterial(Material(HORDE.gadgets[self.item.class].Icon, "mips smooth"))

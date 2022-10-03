@@ -10,7 +10,7 @@ AddCSLuaFile()
 
 ENT.Model = "models/weapons/arccw_go/w_eq_smokegrenade_thrown.mdl"
 ENT.Ticks = 0
-ENT.FuseTime = 1.5
+ENT.FuseTime = 0.5
 ENT.ArmTime = 0
 ENT.Armed = false
 ENT.ImpactFuse = false

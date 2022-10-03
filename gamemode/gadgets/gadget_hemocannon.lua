@@ -59,7 +59,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         if (SERVER) then
             local firefx = EffectData()
             firefx:SetOrigin(trace.HitPos)
-            util.Effect("hemo_explosion",firefx,true,true)
+            util.Effect("horde_hemo_explosion",firefx,true,true)
         end
     end
     timer.Simple(math.min(500, Distance)/2000, Ignite)
@@ -67,7 +67,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     local flamefx = EffectData()
     flamefx:SetOrigin(trace.HitPos)
     flamefx:SetStart(ply:GetShootPos())
-    util.Effect("hemo_effect",flamefx,true,true)
+    util.Effect("horde_hemo_effect",flamefx,true,true)
 
     sound.Play("physics/body/body_medium_impact_soft" .. tonumber(math.random(2)) ..".wav", ply:GetPos())
 end
