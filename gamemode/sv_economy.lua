@@ -20,6 +20,17 @@ util.AddNetworkString("Horde_SyncMaxWeight")
 
 local plymeta = FindMetaTable("Player")
 
+function plymeta:Horde_SetMaxHealth(base)
+    timer.Simple(0, function ()
+        if not self:IsValid() then return end
+        if not base then base = 100 end
+        local bonus = {increase = 0, more = 1, add = 0}
+        hook.Run("Horde_OnSetMaxHealth", self, bonus)
+        self:SetMaxHealth(bonus.add + base * bonus.more * (1 + bonus.increase))
+        self:SetHealth(self:GetMaxHealth())
+    end)
+end
+
 function plymeta:Horde_SetWeight(weight)
     self.Horde_weight = math.max(weight, self:Horde_GetMaxWeight())
 end
@@ -304,26 +315,10 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
         ply:Horde_SyncEconomy()
 
         if item.starter_classes then
-            if class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() == "Necromancer" then
-                -- Cannot drop as necro
-                wpn:Remove()
-                local c = wpn:GetClass()
-                timer.Simple(0, function()
-                    if ply:Alive() then
-                        ply:Give(c)
-                    end
-                end)
-            elseif class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() == "Artificer" then
-                -- Cannot drop as arti
-                wpn:Remove()
-                local c = wpn:GetClass()
-                timer.Simple(0, function()
-                    if ply:Alive() then
-                        ply:Give(c)
-                    end
-                end)
-            elseif class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() == "Warlock" then
-                -- Cannot drop as arti
+            if (class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() == "Necromancer") or
+               (class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() == "Artificer") or
+               (class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() == "Warlock") or
+               (class == "horde_carcass" and ply:Horde_GetCurrentSubclass() == "Carcass") then
                 wpn:Remove()
                 local c = wpn:GetClass()
                 timer.Simple(0, function()
@@ -349,13 +344,10 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
             return false
         end
         if item.starter_classes then
-            if item.class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() ~= "Necromancer" then
-                return false
-            end
-            if item.class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() ~= "Artificer" then
-                return false
-            end
-            if item.class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() ~= "Warlock" then
+            if (item.class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() ~= "Necromancer") or
+               (item.class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() ~= "Artificer") or
+               (item.class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() ~= "Warlock") or
+               (item.class == "horde_carcass" and ply:Horde_GetCurrentSubclass() ~= "Carcass") then
                 return false
             end
         end
@@ -467,6 +459,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                             ent:AddRelationship("npc_manhack D_LI 99")
                         end
                         ent:AddRelationship("npc_vj_horde_spectre D_LI 99")
+                        ent:AddRelationship("npc_vj_horde_headcrab D_LI 99")
     
                         ent.VJFriendly = false
                     end)
@@ -702,7 +695,6 @@ net.Receive("Horde_InitClass", function (len, ply)
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
-    ply:SetMaxHealth(class.max_hp)
     ply:Horde_SyncEconomy()
 end)
 
@@ -770,7 +762,6 @@ net.Receive("Horde_SelectClass", function (len, ply)
         ply.Horde_Special_Armor = nil
     end
     ply:Horde_UnsetGadget()
-    ply:SetMaxHealth(class.max_hp)
     net.Start("Horde_ToggleShop")
     net.Send(ply)
 

@@ -1,5 +1,5 @@
 PERK.PrintName = "Outburst"
-PERK.Description = [[{1} increased area of effect of Infection.]]
+PERK.Description = [[{1} increased Infection area of effect.]]
 PERK.Icon = "materials/perks/positron_array.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},

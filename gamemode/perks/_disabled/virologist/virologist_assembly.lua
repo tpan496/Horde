@@ -1,6 +1,6 @@
 PERK.PrintName = "Assembly"
 PERK.Description =
-[[{1} increased Infection duration.]]
+[[{1} increased Virus duration.]]
 PERK.Icon = "materials/subclasses/virologist.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},

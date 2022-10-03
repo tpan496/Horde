@@ -1,5 +1,6 @@
-PERK.PrintName = "Metamorphosis"
-PERK.Description = [[+{1} viurs stacking.]]
+PERK.PrintName = "Feast"
+PERK.Description = [[+{1} Virus stack on enemies.
+]]
 PERK.Icon = "materials/perks/positron_array.png"
 PERK.Params = {
     [1] = {value = 0.06, percent = true},

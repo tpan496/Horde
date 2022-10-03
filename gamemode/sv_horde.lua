@@ -132,6 +132,12 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
     if victim:IsNPC() and not victim:GetVar("horde_killed") then
         victim:SetVar("horde_killed", true)
         hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
+        if victim.Horde_Gadget_On_Death then
+            local gadget_box = ents.Create("horde_gadgetbox")
+            gadget_box.Horde_Gadget = victim.Horde_Gadget_On_Death
+            gadget_box:SetPos(victim:GetPos())
+            gadget_box:Spawn()
+        end
     end
     if HORDE.spawned_enemies[victim:EntIndex()] then
         HORDE.spawned_enemies[victim:EntIndex()] = nil
@@ -142,7 +148,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
             net.Start("Horde_HighlightEntities")
-            net.WriteInt(HORDE.render_highlight_enemies, 3)
+            net.WriteUInt(HORDE.render_highlight_enemies, 3)
             net.Broadcast()
         end
         
@@ -478,6 +484,17 @@ function HORDE:SpawnEnemy(enemy, pos)
         spawned_enemy:SetModel(enemy.model)
     end
 
+    if enemy.gadget_drop then
+        local gadget = enemy.gadget_drop.gadget
+        local drop_rate = enemy.gadget_drop.drop_rate
+        if drop_rate and gadget and drop_rate > 0 and HORDE.items[gadget] then
+            local p = math.random()
+            if p <= drop_rate then
+                spawned_enemy.Horde_Gadget_On_Death = gadget
+            end
+        end
+    end
+
     spawned_enemy:SetLagCompensated(true)
 
     -- Mutation
@@ -597,19 +614,28 @@ function HORDE:GetValidNodes(enemies)
     for _, node in pairs(HORDE.ai_nodes) do
         local valid = false
         local z_dist
+        local within_z = false
 
         for _, ply in pairs(player.GetAll()) do
             if ply:Alive() then
                 local dist = node["pos"]:Distance(ply:GetPos())
                 z_dist = math.abs(node["pos"].z - ply:GetPos().z)
 
-                if (dist <= HORDE.min_spawn_distance) or (z_dist >= GetConVarNumber("horde_max_spawn_z_distance")) then
+                if dist <= HORDE.min_spawn_distance then
                     valid = false
                     break
                 elseif dist < HORDE.max_spawn_distance then
                     valid = true
                 end
+
+                if z_dist < GetConVarNumber("horde_max_spawn_z_distance") then
+                    within_z = true
+                end
             end
+        end
+
+        if within_z == false then
+            valid = false
         end
 
         if not valid then
@@ -763,6 +789,7 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         local enemy = HORDE.bosses[HORDE.horde_boss_name .. tostring(enemy_wave)]
         enemy.is_elite = true
         spawned_enemy = HORDE:SpawnEnemy(enemy, pos + Vector(0,0,HORDE.enemy_spawn_z))
+        spawned_enemy:SetVar("is_boss", true)
         HORDE.horde_boss = spawned_enemy
         horde_boss_reposition = false
         table.insert(enemies, spawned_enemy)
@@ -785,12 +812,12 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         net.Broadcast()
 
         net.Start("Horde_HighlightEntities")
-        net.WriteInt(HORDE.render_highlight_enemies, 3)
+        net.WriteUInt(HORDE.render_highlight_enemies, 3)
         net.Broadcast()
 
         timer.Simple(5, function()
             net.Start("Horde_HighlightEntities")
-            net.WriteInt(HORDE.render_highlight_disable, 3)
+            net.WriteUInt(HORDE.render_highlight_disable, 3)
             net.Broadcast()
         end)
 
@@ -841,7 +868,7 @@ function HORDE:SpawnAmmoboxes(valid_nodes)
 
     if table.Count(horde_spawned_ammoboxes) > 0 then
         net.Start("Horde_HighlightEntities")
-        net.WriteInt(HORDE.render_highlight_ammoboxes, 3)
+        net.WriteUInt(HORDE.render_highlight_ammoboxes, 3)
         net.Broadcast()
     end
 
@@ -1059,7 +1086,7 @@ function HORDE:WaveEnd()
     end
 
     net.Start("Horde_HighlightEntities")
-    net.WriteInt(HORDE.render_highlight_disable, 3)
+    net.WriteUInt(HORDE.render_highlight_disable, 3)
     net.Broadcast()
 
     for _, ply in pairs(player.GetAll()) do

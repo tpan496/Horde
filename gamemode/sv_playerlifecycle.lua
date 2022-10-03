@@ -580,10 +580,11 @@ end)
 hook.Add("Move", "Horde_PlayerMove", function (ply, mv)
     if ply:Horde_GetClass() then
         ply:SetJumpPower(150)
-        local bonus = { walkspd = 1, sprintspd = 1}
-        hook.Run("Horde_PlayerMoveBonus", ply, bonus)
-        ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus.walkspd)
-        ply:SetRunSpeed(ply:Horde_GetClass().sprintspd * bonus.sprintspd)
+        local bonus_walk = {more = 1, increase = 0}
+        local bonus_run = {more = 1, increase = 0}
+        hook.Run("Horde_PlayerMoveBonus", ply, bonus_walk, bonus_run)
+        ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus_walk.more * (1 + bonus_walk.increase))
+        ply:SetRunSpeed(ply:Horde_GetClass().sprintspd * bonus_run.more * (1 + bonus_run.increase))
     end
 end)
 

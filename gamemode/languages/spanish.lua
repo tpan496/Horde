@@ -168,7 +168,7 @@ LANGUAGE["Perk_assault_base"] = [[
 La clase Asalto es un luchador de todo-tipo con gran movilidad y concentrado en cargas de Adrenalina.
 Complejidad: FÁCIL
 
-{1} velocidad de movimiento aumentada. ({2} por nivel, hasta {3}).
+{1} mas velocidad de movimiento. ({2} por nivel, hasta {3}).
 
 Ganas Adrenalina cuando asesinas a un enemigo.
 Adrenalina aumenta el daño y velocidad un {4}.]]
@@ -297,13 +297,13 @@ LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Supresión]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Compuesto Pegajoso]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
 Enemigos dañados con daño Balístico son Ralentizados.
-Enemigos Ralentizados tienen {1} de velocidad de acción reducido.]]
+Enemigos Ralentizados inflige un {1} menos de daño físico.]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Carcasa Cruda]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 Enemigos dañados con daño Balístico son Debilitados.
 Enemigos Debilitados realizan {1} de daño reducido.
-Enemigos Debilitados reciben {2} de daño incrementado.]]
+Enemigos Debilitados reciben {2} de daño físico incrementado.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Respaldo]]
 LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[Catalizador de Reparación]]

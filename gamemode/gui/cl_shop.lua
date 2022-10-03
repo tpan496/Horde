@@ -170,14 +170,16 @@ function PANEL:Init()
 
         for _, item in pairs(HORDE.items) do
             if item.category == category and ((item.whitelist == nil) or (item.whitelist and item.whitelist[class.name])) then
-                if LocalPlayer():HasWeapon(item.class) then
+                if (item.category == "Gadget" and LocalPlayer():Horde_GetGadget() == item.class) or LocalPlayer():HasWeapon(item.class) then
                     item.cmp = -1
                 else
+                    if item.hidden == true then goto cont end
                     item.cmp = item.price
                 end
                 if not item.skull_tokens then item.skull_tokens = 0 end
                 if not item.total_levels then item.total_levels = 0 end
                 table.insert(items, item)
+                ::cont::
             end
         end
 

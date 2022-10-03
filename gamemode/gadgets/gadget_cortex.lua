@@ -1,5 +1,5 @@
-GADGET.PrintName = "Cortex"
-GADGET.Description = "For each enemy near you, gain 1 Adrenaline stack.\nElite enemies grant 2 stacks.\nRemoves all debuffs on you."
+GADGET.PrintName = "Cortex Stimulator"
+GADGET.Description = "For each enemy near you, gain 1 Adrenaline stack.\nElite enemies grant 2 stacks."
 GADGET.Icon = "items/gadgets/cortex.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 20

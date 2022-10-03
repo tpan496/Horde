@@ -1,9 +1,9 @@
 PERK.PrintName = "Ingrain"
-PERK.Description = [[+{1} virus stack on enemies.
-For each stack, increases virus effect by 25%.]]
+PERK.Description = [[+{1} Virus stack on enemies.
+Each stack increases Virus effect by {1}.]]
 PERK.Icon = "materials/perks/positron_array.png"
 PERK.Params = {
-    [1] = {value = 0.06, percent = true},
+    [1] = {value = 0.5, percent = true},
 }
 
 PERK.Hooks = {}

@@ -7,6 +7,9 @@ function entmeta:Horde_AddHinder(duration, more)
     end)
 
     self.Horde_Hinder = math.max(1, 1 * more)
+    if not self.Horde_Debuff_Active then self.Horde_Debuff_Active = {} end
+    self.Horde_Debuff_Active[HORDE.Status_Hindered] = true
+    hook.Run("Horde_PostEnemyDebuffApply", self, self.Horde_Debuff_Active)
 end
 
 function entmeta:Horde_GetHinder()
@@ -16,15 +19,17 @@ end
 function entmeta:Horde_RemoveHinder()
     if not self:IsValid() then return end
     self.Horde_Hinder = 0
+    self.Horde_Debuff_Active[HORDE.Status_Hindered] = nil
+    hook.Run("Horde_PostEnemyDebuffApply", self, self.Horde_Debuff_Active)
 end
 
 hook.Add("EntityTakeDamage", "Horde_HinderDamageTaken", function(target, dmg)
-    if target:Horde_GetHinder() == 0 then return end
     local attacker = dmg:GetAttacker()
-    if attacker:IsNPC() and attacker:Horde_GetHinder() == 1 then
-        dmg:ScaleDamage(1 - 0.15 * target.Horde_Hinder)
+    if attacker:IsValid() and attacker:Horde_GetWeaken() > 0 and HORDE:IsPhysicalDamage(dmg) then
+        dmg:ScaleDamage(1 - 0.15 * target.Horde_Weaken)
     end
 end)
+
 
 hook.Add("Horde_ResetStatus", "Horde_HinderReset", function(ply)
     ply.Horde_Hinder = 0

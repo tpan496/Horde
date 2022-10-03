@@ -5,7 +5,7 @@ You have Nightvision during Tactical Mode.
 Cannot run during Tactical Mode.
 50% reduced movement speed during Tactical Mode.
 
-{1} increased movement speed during Tactical Mode. ({2} per level, up to {3})
+{1} more movement speed during Tactical Mode. ({2} per level, up to {3})
 {1} increased headshot damage during Tactical Mode. ({2} per level, up to {3})]]
 PERK.Icon = "materials/subclasses/specops.png"
 PERK.Params = {
@@ -32,7 +32,6 @@ PERK.Hooks.PlayerSwitchFlashlight = function (ply, switchOn)
         net.Send(ply)
         ply.Horde_In_Tactical_Mode = true
         if ply:Horde_GetPerk("specops_biotic_mask") then
-            ply:Horde_SetHealthRegenEnabled(true)
             ply:Horde_SetHealthRegenPercentage(0.02)
         end
 
@@ -46,7 +45,7 @@ PERK.Hooks.PlayerSwitchFlashlight = function (ply, switchOn)
             net.WriteUInt(0, 8)
         net.Send(ply)
         ply.Horde_In_Tactical_Mode = nil
-        ply:Horde_SetHealthRegenEnabled(nil)
+        ply:Horde_SetHealthRegenPercentage(0)
 
         if ply:Horde_GetPerk("specops_neuron_stabilizer") then
             ply:Horde_SetNeuronStabilizerEnabled(nil)
@@ -61,16 +60,16 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     end
 end
 
-PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus)
+PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
     if not ply:Horde_GetPerk("specops_base") then return end
     if ply.Horde_In_Tactical_Mode then
         local b = ply:Horde_GetPerkLevelBonus("specops_base")
         if ply:Horde_GetPerk("specops_night_stalker") then
-            bonus.walkspd = 1.2 * bonus.walkspd * (0.5 + b)
-            bonus.sprintspd = 1.2 * 0.8 * (0.5 + b)
+            bonus_walk.more = 1.2 * bonus_walk.more * (0.5 + b)
+            bonus_run.more = 1.2 * 0.8 * (0.5 + b) * bonus_run.more
         else
-            bonus.walkspd = bonus.walkspd * (0.5 + b)
-            bonus.sprintspd = 0.8 * (0.5 + b)
+            bonus_walk.more = bonus_walk.more * (0.5 + b)
+            bonus_run.more = 0.8 * (0.5 + b) * bonus_run.more
         end
     end
 end
@@ -113,27 +112,13 @@ end
 
 local function nv_ents()
 	local entities = {}
-	
-	for k, v in pairs(ents.FindByClass("npc_*")) do
-        if v:Health() > 0 then
+
+	for k, v in pairs(ents.FindInSphere(LocalPlayer():GetPos(), 1000)) do
+        if v:Health() > 0 and (v:IsPlayer() or v:IsNPC()) then
 		    table.insert(entities, v)
         end
 	end
-	for k, v in pairs(player.GetAll()) do
-		if v != LocalPlayer() and v:Alive() then
-			table.insert(entities, v)
-		end
-	end
-	for k, v in pairs(entities) do
-		if not nv_cansee(v) then
-			table.remove(entities, k)
-		else
-			if nv_center(v):Distance(LocalPlayer():GetPos()) > 3000 then
-				table.remove(entities, k)
-			end
-		end
-	end
-	
+
 	return entities
 end
 
@@ -162,7 +147,7 @@ PERK.Hooks.HUDPaint = function()
 		surface.SetDrawColor(Color(nv_color().r,nv_color().g,nv_color().b,math.random(255)))
 		
 		for k, v in pairs(nv_ents()) do
-			if nv_cansee(v) then
+			--if nv_cansee(v) then
 				local pos = nv_center(v):ToScreen()
 				
 				if nv_posvisible(pos) then
@@ -172,7 +157,7 @@ PERK.Hooks.HUDPaint = function()
 					draw.DrawText(v:Health(), "Trebuchet24",
 					pos.x - 15, pos.y - 15, nv_color(), TEXT_ALIGN_LEFT)
 				end
-			end
+			--end
 		end
 
 		draw.DrawText("N i g h t V i s i o n", "ChatFont",

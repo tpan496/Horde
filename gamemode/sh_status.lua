@@ -5,133 +5,107 @@ if SERVER then
 util.AddNetworkString("Horde_SyncActivePerk")
 end
 
-HORDE.Status_CanBuy = 0
-
-HORDE.Status_AntimatterShield = 1
-HORDE.Status_Displacer = 2
-HORDE.Status_Void_Cascade = 3
-HORDE.Status_Devour = 4
-HORDE.Status_Quickstep = 5
-HORDE.Status_Hunter_Mark = 6
-HORDE.Status_Hallowed_Bolt = 7
-HORDE.Status_Floating_Chaos = 8
-HORDE.Status_Smokescreen = 9
-HORDE.Status_Flare = 10
-HORDE.Status_Negative_Burst = 11
-HORDE.Status_Gravity_Vacuum = 12
-
-HORDE.Status_Tactical_Mode = 13
-HORDE.Status_Camoflague = 14
-HORDE.Status_Frenzy_Mode = 15
-
-HORDE.Status_Minion = 16
-HORDE.Status_Adrenaline = 17
-HORDE.Status_Headhunter = 18
-HORDE.Status_Deadeye = 19
-HORDE.Status_Intensity = 20
-HORDE.Status_Neuron_Stabilizer = 21
-HORDE.Status_Phalanx = 22
-HORDE.Status_Brutality = 23
-HORDE.Status_Nether_Star = 24
-HORDE.Status_Nether_Mine = 25
-
-HORDE.Status_Fortify = 26
-HORDE.Status_Berserk = 27
-HORDE.Status_Haste = 28
-HORDE.Status_ArmorRegen = 29
-HORDE.Status_HealthRegen = 30
-HORDE.Status_Quickdraw = 31
-HORDE.Status_WardenAura = 32
-HORDE.Status_EntropyShield = 33
-HORDE.Status_Foresight = 34
-HORDE.Status_Nine_Lives = 35
-HORDE.Status_Smokescreen_Effect = 36
-HORDE.Status_Unwavering_Guard = 37
-
-HORDE.Status_Armor_Survivor = 51
-HORDE.Status_Armor_Assault = 52
-HORDE.Status_Armor_Heavy = 53
-HORDE.Status_Armor_Demolition = 54
-HORDE.Status_Armor_Ghost = 55
-HORDE.Status_Armor_Medic = 56
-HORDE.Status_Armor_Engineer = 57
-HORDE.Status_Armor_Warden = 58
-HORDE.Status_Armor_Cremator = 59
-HORDE.Status_Armor_Berserker = 60
-
-HORDE.Status_ExpDisabled = 61
-HORDE.Status_Bleeding = 62
-HORDE.Status_Ignite = 63
-HORDE.Status_Frostbite = 64
-HORDE.Status_Shock = 65
-HORDE.Status_Break = 66
-HORDE.Status_Decay = 67
-HORDE.Status_Necrosis = 68
-HORDE.Status_Psychosis = 69
-HORDE.Status_Stun = 70
-HORDE.Status_Freeze = 71
-
 HORDE.Status_Icon = {}
-HORDE.Status_Icon[HORDE.Status_Camoflague] = "materials/status/camoflague.png"
-HORDE.Status_Icon[HORDE.Status_Adrenaline] = "materials/status/adrenaline.png"
-HORDE.Status_Icon[HORDE.Status_Headhunter] = "materials/perks/headhunter.png"
-HORDE.Status_Icon[HORDE.Status_Deadeye] = "materials/perks/gunslinger/deadeye.png"
-HORDE.Status_Icon[HORDE.Status_Intensity] = "materials/perks/artificer/intensity.png"
-HORDE.Status_Icon[HORDE.Status_Fortify] = "materials/perks/fortify.png"
-HORDE.Status_Icon[HORDE.Status_Berserk] = "materials/perks/berserk.png"
-HORDE.Status_Icon[HORDE.Status_Haste] = "materials/perks/haste.png"
-HORDE.Status_Icon[HORDE.Status_ArmorRegen] = "materials/status/armorregen.png"
-HORDE.Status_Icon[HORDE.Status_HealthRegen] = "materials/status/healthregen.png"
-HORDE.Status_Icon[HORDE.Status_Minion] = "materials/status/minion.png"
-HORDE.Status_Icon[HORDE.Status_Phalanx] = "materials/perks/phalanx.png"
-HORDE.Status_Icon[HORDE.Status_Brutality] = "materials/perks/psycho/brutality.png"
-HORDE.Status_Icon[HORDE.Status_Nether_Star] = "materials/perks/warlock/nether_star.png"
-HORDE.Status_Icon[HORDE.Status_Nether_Mine] = "materials/perks/warlock/nether_mine.png"
+HORDE.Status_Id = 0
+HORDE.Is_Status_Stackable = {}
+HORDE.Is_Status_Debuff = {}
+HORDE.Is_Status_Skill = {}
 
-HORDE.Status_Icon[HORDE.Status_Quickdraw] = "materials/perks/gunslinger/quickdraw.png"
-HORDE.Status_Icon[HORDE.Status_WardenAura] = "materials/warden.png"
-HORDE.Status_Icon[HORDE.Status_EntropyShield] = "materials/perks/entropy_shield.png"
-HORDE.Status_Icon[HORDE.Status_AntimatterShield] = "materials/perks/antimatter_shield.png"
-HORDE.Status_Icon[HORDE.Status_Displacer] = "materials/perks/displacer.png"
-HORDE.Status_Icon[HORDE.Status_Void_Cascade] = "materials/perks/necromancer/void_cascade.png"
-HORDE.Status_Icon[HORDE.Status_Devour] = "materials/perks/necromancer/necromastery.png"
-HORDE.Status_Icon[HORDE.Status_Quickstep] = "materials/abilities/quickstep.png"
-HORDE.Status_Icon[HORDE.Status_Foresight] = "materials/perks/samurai/foresight.png"
-HORDE.Status_Icon[HORDE.Status_Hunter_Mark] = "materials/status/hunter_mark.png"
-HORDE.Status_Icon[HORDE.Status_Nine_Lives] = "materials/perks/gunslinger/nine_lives.png"
-HORDE.Status_Icon[HORDE.Status_Tactical_Mode] = "materials/status/tactical_mode.png"
-HORDE.Status_Icon[HORDE.Status_Neuron_Stabilizer] = "materials/perks/specops/neuron_stabilizer.png"
-HORDE.Status_Icon[HORDE.Status_Hallowed_Bolt] = "materials/perks/artificer/hallowed_bolt.png"
-HORDE.Status_Icon[HORDE.Status_Floating_Chaos] = "materials/perks/artificer/floating_chaos.png"
-HORDE.Status_Icon[HORDE.Status_Smokescreen] = "materials/perks/specops/smokescreen.png"
-HORDE.Status_Icon[HORDE.Status_Flare] = "materials/perks/specops/flare.png"
-HORDE.Status_Icon[HORDE.Status_Negative_Burst] = "materials/perks/warlock/negative_burst.png"
-HORDE.Status_Icon[HORDE.Status_Gravity_Vacuum] = "materials/perks/warlock/gravity_vacuum.png"
-HORDE.Status_Icon[HORDE.Status_Smokescreen_Effect] = "materials/status/evasion.png"
+function HORDE:RegisterStatus(name, icon, stackable, is_debuff, is_skill)
+    if HORDE.Status_Id >= 128 then
+        Error("[HORDE] Ran out of status ids!")
+        return
+    end
+    local s = "Status_" .. name
+    HORDE[s] = HORDE.Status_Id
+    HORDE.Status_Icon[ HORDE.Status_Id] = icon
+    if stackable and stackable == true then
+        HORDE.Is_Status_Stackable[HORDE.Status_Id] = true
+    end
+    if is_debuff and is_debuff == true then
+        HORDE.Is_Status_Debuff[HORDE.Status_Id] = true
+    end
+    if is_skill and is_skill == true then
+        HORDE.Is_Status_Skill[HORDE.Status_Id] = true
+    end
+    HORDE.Status_Id = HORDE.Status_Id + 1
+end
 
-HORDE.Status_Icon[HORDE.Status_Unwavering_Guard] = "materials/perks/unwavering_guard.png"
-HORDE.Status_Icon[HORDE.Status_CanBuy] = "materials/status/canbuy.png"
-HORDE.Status_Icon[HORDE.Status_ExpDisabled] = "materials/status/exp_disabled.png"
+HORDE:RegisterStatus("CanBuy", "materials/status/canbuy.png", nil, nil, true)
+HORDE:RegisterStatus("AntimatterShield", "materials/perks/antimatter_shield.png", nil, nil, true)
+HORDE:RegisterStatus("Displacer", "materials/perks/displacer.png", nil, nil, true)
+HORDE:RegisterStatus("Void_Cascade", "materials/perks/necromancer/void_cascade.png", nil, nil, true)
+HORDE:RegisterStatus("Devour", "materials/perks/necromancer/necromastery.png", nil, nil, true)
+HORDE:RegisterStatus("Quickstep", "materials/abilities/quickstep.png", nil, nil, true)
+HORDE:RegisterStatus("Hunter_Mark", "materials/status/hunter_mark.png", nil, nil, true)
+HORDE:RegisterStatus("Hallowed_Bolt", "materials/perks/artificer/hallowed_bolt.png", nil, nil, true)
+HORDE:RegisterStatus("Floating_Chaos", "materials/perks/artificer/floating_chaos.png", nil, nil, true)
+HORDE:RegisterStatus("Smokescreen", "materials/perks/specops/smokescreen.png", nil, nil, true)
+HORDE:RegisterStatus("Flare", "materials/perks/specops/flare.png", nil, nil, true)
+HORDE:RegisterStatus("Negative_Burst", "materials/perks/warlock/negative_burst.png", nil, nil, true)
+HORDE:RegisterStatus("Gravity_Vacuum", "materials/perks/warlock/gravity_vacuum.png", nil, nil, true)
+HORDE:RegisterStatus("AAS_Perfume", "materials/perks/carcass/AAS_Perfume.png", nil, nil, true)
 
-HORDE.Status_Icon[HORDE.Status_Armor_Survivor] = "items/armor_survivor.png"
-HORDE.Status_Icon[HORDE.Status_Armor_Assault] = "items/armor_assault.png"
-HORDE.Status_Icon[HORDE.Status_Armor_Heavy] = "items/armor_heavy.png"
-HORDE.Status_Icon[HORDE.Status_Armor_Demolition] = "items/armor_demolition.png"
-HORDE.Status_Icon[HORDE.Status_Armor_Ghost] = "items/armor_ghost.png"
-HORDE.Status_Icon[HORDE.Status_Armor_Medic] = "items/armor_medic.png"
-HORDE.Status_Icon[HORDE.Status_Armor_Engineer] = "items/armor_engineer.png"
-HORDE.Status_Icon[HORDE.Status_Armor_Warden] = "items/armor_warden.png"
-HORDE.Status_Icon[HORDE.Status_Armor_Cremator] = "items/armor_cremator.png"
-HORDE.Status_Icon[HORDE.Status_Armor_Berserker] = "items/armor_berserker.png"
+HORDE:RegisterStatus("Tactical_Mode", "materials/status/tactical_mode.png")
+HORDE:RegisterStatus("Camoflague", "materials/status/camoflague.png")
+HORDE:RegisterStatus("Frenzy_Mode", "")
 
-HORDE.Status_Icon[HORDE.Status_Bleeding] = "materials/status/bleeding.png"
-HORDE.Status_Icon[HORDE.Status_Ignite] = "materials/status/ignite.png"
-HORDE.Status_Icon[HORDE.Status_Frostbite] = "materials/status/frostbite.png"
-HORDE.Status_Icon[HORDE.Status_Shock] = "materials/status/shock.png"
-HORDE.Status_Icon[HORDE.Status_Break] = "materials/status/break.png"
-HORDE.Status_Icon[HORDE.Status_Decay] = "materials/status/decay.png"
-HORDE.Status_Icon[HORDE.Status_Necrosis] = "materials/status/necrosis.png"
-HORDE.Status_Icon[HORDE.Status_Psychosis] = "materials/status/psychosis.png"
+HORDE:RegisterStatus("Minion", "materials/status/minion.png", true)
+HORDE:RegisterStatus("Adrenaline", "materials/status/adrenaline.png", true)
+HORDE:RegisterStatus("Headhunter", "materials/perks/headhunter.png", true)
+HORDE:RegisterStatus("Deadeye", "materials/perks/gunslinger/deadeye.png", true)
+HORDE:RegisterStatus("Intensity", "materials/perks/artificer/intensity.png", true)
+HORDE:RegisterStatus("Neuron_Stabilizer", "materials/perks/specops/neuron_stabilizer.png", true)
+HORDE:RegisterStatus("Phalanx", "materials/perks/phalanx.png", true)
+HORDE:RegisterStatus("Brutality", "materials/perks/psycho/brutality.png", true)
+HORDE:RegisterStatus("Hypertrophy", "materials/status/hypertrophy.png", true)
+HORDE:RegisterStatus("Nether_Star", "materials/perks/warlock/nether_star.png", true)
+HORDE:RegisterStatus("Nether_Mine", "materials/perks/warlock/nether_mine.png", true)
+HORDE:RegisterStatus("Bio_Thruster", "materials/perks/carcass/bio_thruster.png", true)
+HORDE:RegisterStatus("Twin_Heart", "materials/perks/carcass/twin_heart.png", true)
+
+HORDE:RegisterStatus("Fortify", "materials/perks/fortify.png")
+HORDE:RegisterStatus("Berserk", "materials/perks/berserk.png")
+HORDE:RegisterStatus("Haste", "materials/perks/haste.png")
+HORDE:RegisterStatus("ArmorRegen", "materials/status/armorregen.png")
+HORDE:RegisterStatus("HealthRegen", "materials/status/healthregen.png")
+HORDE:RegisterStatus("Quickdraw", "materials/perks/gunslinger/quickdraw.png")
+HORDE:RegisterStatus("WardenAura", "materials/warden.png")
+HORDE:RegisterStatus("EntropyShield", "materials/perks/entropy_shield.png")
+HORDE:RegisterStatus("Tactical_Spleen", "materials/perks/carcass/tactical_spleen.png")
+HORDE:RegisterStatus("Foresight", "materials/perks/samurai/foresight.png")
+HORDE:RegisterStatus("Nine_Lives", "materials/perks/gunslinger/nine_lives.png")
+HORDE:RegisterStatus("Smokescreen_Effect", "materials/perks/specops/smokescreen.png")
+HORDE:RegisterStatus("Unwavering_Guard", "materials/perks/unwavering_guard.png")
+HORDE:RegisterStatus("Damage_Shard", "materials/status/damage.png")
+HORDE:RegisterStatus("Agility_Shard", "materials/status/speed.png")
+HORDE:RegisterStatus("Assassin_Optics", "materials/status/assassin_optics.png")
+
+-- 51?
+HORDE:RegisterStatus("Armor_Survivor", "items/armor_survivor.png")
+HORDE:RegisterStatus("Armor_Assault", "items/armor_assault.png")
+HORDE:RegisterStatus("Armor_Heavy", "items/armor_heavy.png")
+HORDE:RegisterStatus("Armor_Demolition", "items/armor_demolition.png")
+HORDE:RegisterStatus("Armor_Ghost", "items/armor_ghost.png")
+HORDE:RegisterStatus("Armor_Medic", "items/armor_medic.png")
+HORDE:RegisterStatus("Armor_Engineer", "items/armor_engineer.png")
+HORDE:RegisterStatus("Armor_Warden", "items/armor_warden.png")
+HORDE:RegisterStatus("Armor_Cremator", "items/armor_cremator.png")
+HORDE:RegisterStatus("Armor_Berserker", "items/armor_berserker.png")
+
+HORDE:RegisterStatus("ExpDisabled", "materials/status/exp_disabled.png")
+HORDE:RegisterStatus("Bleeding", "materials/status/bleeding.png", nil, true)
+HORDE:RegisterStatus("Ignite", "materials/status/ignite.png", nil, true)
+HORDE:RegisterStatus("Frostbite", "materials/status/frostbite.png", nil, true)
+HORDE:RegisterStatus("Shock", "materials/status/shock.png", nil, true)
+HORDE:RegisterStatus("Break", "materials/status/break.png", nil, true)
+HORDE:RegisterStatus("Decay", "materials/status/decay.png", nil, true)
+HORDE:RegisterStatus("Necrosis", "materials/status/necrosis.png", nil, true)
+HORDE:RegisterStatus("Psychosis", "materials/status/psychosis.png", nil, true)
+HORDE:RegisterStatus("Stun", "materials/perks/knockout.png", nil, true)
+HORDE:RegisterStatus("Freeze", "materials/status/frostbite.png", nil, true)
+HORDE:RegisterStatus("Weakened", "materials/perks/crude_casing.png", nil, true)
+HORDE:RegisterStatus("Hindered", "materials/perks/sticky_compound.png", nil, true)
 
 HORDE.Status_Buildup_Sounds = {}
 HORDE.Status_Buildup_Sounds[HORDE.Status_Bleeding] = "horde/status/bleeding_buildup.ogg"
@@ -139,6 +113,7 @@ HORDE.Status_Buildup_Sounds[HORDE.Status_Bleeding] = "horde/status/bleeding_buil
 HORDE.Status_Buildup_Sounds[HORDE.Status_Frostbite] = "horde/status/frostbite_buildup.ogg"
 HORDE.Status_Buildup_Sounds[HORDE.Status_Shock] = "weapons/stunstick/stunstick_fleshhit2.wav"
 HORDE.Status_Buildup_Sounds[HORDE.Status_Break] = "ambient/levels/canals/toxic_slime_sizzle1.wav"
+HORDE.Status_Buildup_Sounds[HORDE.Status_Necrosis] = "horde/status/necrosis_buildup.ogg"
 
 HORDE.Status_Trigger_Sounds = {}
 HORDE.Status_Trigger_Sounds[HORDE.Status_Bleeding] = "horde/status/bleeding_trigger.ogg"
@@ -146,9 +121,35 @@ HORDE.Status_Trigger_Sounds[HORDE.Status_Bleeding] = "horde/status/bleeding_trig
 HORDE.Status_Trigger_Sounds[HORDE.Status_Frostbite] = "horde/status/frostbite_trigger.ogg"
 HORDE.Status_Trigger_Sounds[HORDE.Status_Shock] = "horde/status/shock_trigger.ogg"
 HORDE.Status_Trigger_Sounds[HORDE.Status_Break] = "horde/status/break_trigger.ogg"
+HORDE.Status_Trigger_Sounds[HORDE.Status_Necrosis] = "horde/status/necrosis_trigger.ogg"
+
+local plymeta = FindMetaTable("Player")
+function plymeta:Horde_SyncStatus(status, stack)
+    net.Start("Horde_SyncStatus")
+        net.WriteUInt(status, 8)
+        net.WriteUInt(stack, 8)
+    net.Send(self)
+end
 
 function HORDE:IsStatusStackable(status)
-    if status >= HORDE.Status_Minion and status <= HORDE.Status_Nether_Mine then return true end
+    return HORDE.Is_Status_Stackable[status]
+end
+
+function HORDE:IsDebuff(status)
+    return HORDE.Is_Status_Debuff[status]
+end
+
+function HORDE:IsSkillStatus(status)
+    return HORDE.Is_Status_Skill[status]
+end
+
+function HORDE:IsStackableSkillStatus(status)
+    if status == HORDE.Status_Quickstep then return true end
+end
+
+--[[ Dead code
+function HORDE:IsStatusStackable(status)
+    if status >= HORDE.Status_Minion and status <= HORDE.Status_Twin_Heart then return true end
     return false
 end
 
@@ -158,8 +159,4 @@ end
 
 function HORDE:IsSkillStatus(status)
     return status >= HORDE.Status_AntimatterShield and status <= HORDE.Status_Gravity_Vacuum
-end
-
-function HORDE:IsStackableSkillStatus(status)
-    if status == HORDE.Status_Quickstep then return true end
-end
+end]]--

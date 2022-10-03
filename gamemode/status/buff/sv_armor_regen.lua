@@ -27,6 +27,11 @@ end
 
 function plymeta:Horde_SetArmorRegenAmount(amount)
     self.Horde_ArmorRegenAmount = amount
+    if amount <= 0 then
+        self:Horde_SetArmorRegenEnabled(nil)
+    else
+        self:Horde_SetArmorRegenEnabled(true)
+    end
 end
 
 function plymeta:Horde_GetArmorRegenAmount(amount)

@@ -8,14 +8,12 @@ PERK.Params = {
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "heavy_nanomachine" then
-        ply:Horde_SetArmorRegenEnabled(true)
         ply:Horde_SetArmorRegenAmount(2)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "heavy_nanomachine" then
-        ply:Horde_SetArmorRegenEnabled(nil)
         ply:Horde_SetArmorRegenAmount(1)
         ply:SetArmor(0)
     end

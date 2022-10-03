@@ -259,44 +259,28 @@ function PANEL:Init()
     update_text_panel:SetSize(self:GetParent():GetWide(), 1000)
     update_text_panel:SetVisible(true)
     local update_text = [[
-        Major Update 1.1.7
-        -- Starter Weapons Customization
-            - You can now set starter weapons in item config.
-            - Starter weapons follow rules in Killing Floor.
+        Major Update 1.1.8
+        --New subclass: Carcass
 
-        -- Added two new buttons for custom configs:
-            - Add Default Items (Item Config)
-                - It adds default items but does not reset the config.
-            - Add Default Enemies (Enemy Config)
-                - It adds default enemies but does not reset the config.
+        --Added droppable gadgets and one-use gadgets.
+            - Droppable gadgets can be configured in enemy config.
+        -- New Gadgets: Damage/Agility/Vitality Shard, Agility Booster, Precision Optics, ULPA Filter
+            - Removed Gadget: Gunslinger.
+            - Removed Gadget: T-Virus.
 
-        -- New Subclasses:
-            - Warlock (Demolition subclass)
-            - Psycho (Survivor subclass)
+        -- Added visual effects to entities affected by Frostbite, Shock, Break and Bleeding
 
-        -- New Items:
-            - Half life weapons rework.
-              - arccw_horde_9mm
-              - arccw_horde_medic_9mm
-              - arccw_horde_smg1
-              - arccw_horde_heat_crossbow (greatly buffed, has 2 fire modes)
-              - arccw_horde_shotgun
-              - arccw_horde_357
-            - Welder: horde_welder (Engineer)
-            - Rocket Turret: npc_vj_horde_rocket_turret (Engineer)
-            - Machete: arccw_horde_machete (All)
-            - Katana/Bat rework
-            - TMP rework: arccw_horde_tmp
-        
-        -- New Enemies:
-            - Xen Destroyer Unit: npc_vj_horde_xen_destroyer_unit (Boss)
-            - Xen Psychic Unit: npc_vj_horde_xen_psychic_unit (Boss)
-            - Xen Host Unit: npc_vj_horde_xen_host_unit (Boss)
-            - Vomitter/Scorcher models reworked
-            
+        -- New Infusion: Ruination
+
         -- Bug Fixes:
-            - Nemesis mutation display should be more consistent.
-            - Gadget fixes.]]
+            - Fix perk bugs for Heavy.
+            - Fix attachments shop text.
+            - Fix players able to stand on enemies.
+
+        Coding Changes:
+        -- New function:
+            - HORDE:RegisterStatus(...): Registers a new status, check sh_status for more.
+            - Hook Horde_OnSetMaxHealth(...): Called when Horde sets player max health.]]
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
         draw.SimpleText("Update 1.1.7", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -536,8 +520,8 @@ function PANEL:Init()
             "Experimental unit made from Xen Gargantua. Dropping heavy armor and focuses on offense capabilities.",
             "Slam Attack: Deals Blunt damage.",
             "Fumethrower: Creates streams of dark flame that deals Fire damage and inflicts Necrosis.",
-            "Earthshatter: Stomps the ground and generates a huge tracing shockwave torwards the target. Deals Physical damage.",
-            "Energy Blast (Phase 2): Accumulates energy over time, indicated by its red light. When full, blinds players and blasts the area with Physical damage.",
+            "Earthshatter: Stomps the ground and generates a tracing shockwave torwards the target. Deals Physical damage.",
+            "Sonic Blast (Phase 2): Accumulates energy over time, indicated by its red light. When full, blinds players and blasts the area with Physical damage.",
         }, next_pos + 100)
 
         draw.SimpleText("Xen Psychic Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -545,10 +529,10 @@ function PANEL:Init()
             "Experimental unit made from Xen Kingpin. Has enhanced psychic and physical capabilities.",
             "Claw Attack: Deals Slashing damage.",
             "Lightning Beam: Projects a lightning beam, dealing heavy Lightning damage in an area.",
-            "Lightning Beam (Phase 2): The lightning explosion leaves behind ground flames that last for a long time.",
+            "Lightning Beam (Phase 2): Lightning Beam leaves behind ground flames that last for a long time.",
             "Lightning Orb: Creates homing lightning orbs that follow players. Explodes after delay on contact, dealing Lightning damage.",
             "Melee Mode (Phase 2): Greatly increases speed and focuses on Melee attacks.",
-            "Psionic Shield (Phase 2): Active in Melee Mode only. When the shield is active, reduces damage taken by 50%.",
+            "Psionic Shield (Phase 2): Melee Mode only. When the shield is active, reduces damage taken by 50%.",
         }, next_pos + 100)
     end
 
