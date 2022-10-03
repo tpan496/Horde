@@ -296,12 +296,12 @@ LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[壓制]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[黏性化合物]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
 子彈傷害擊中的敵人受到「抑制」異常狀態。
-「抑制」狀態下，造成 {1} 更少傷害。]]
+「抑制」狀態下，造成 {1} 更少物理傷害。]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[粗糙彈殼]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 子彈傷害擊中的敵人受到「虛弱」異常狀態。
-「虛弱」狀態下，受到 {1} 更多傷害。]]
+「虛弱」狀態下，受到 {1} 更多物理傷害。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[備用]]
 LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[修復催化劑]]
@@ -359,7 +359,7 @@ LANGUAGE["Perk_medic_fortify"] = [[
 LANGUAGE["Perk_Title_Medic_Tier_3"] = [[增強]]
 LANGUAGE["Perk_Title_medic_purify"] = [[凈化]]
 LANGUAGE["Perk_medic_purify"] = [[
-直接減少治療對象的流血，破壞，眩暈累計值。]]
+直接減少治療對象的流血，破壞，壞死累計值。]]
 
 LANGUAGE["Perk_Title_medic_haste"] = [[加速]]
 LANGUAGE["Perk_medic_haste"] = [[
@@ -779,7 +779,6 @@ Chambered for the powerful .44 Magnum.
 LANGUAGE["Item_SMG1"] = [[SMG1]]
 LANGUAGE["Item_Desc_SMG1"] = [[
 A compact, fully automatic firearm.
-Armed with an M203 launcher.
 ]]
 
 LANGUAGE["Item_Mac10"] = [[Mac10]]
