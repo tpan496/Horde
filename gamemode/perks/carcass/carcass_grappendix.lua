@@ -5,7 +5,7 @@ Press RMB to use your appendix as a grapple hook.
 Drains your health when in use.]]
 PERK.Icon = "materials/perks/carcass/grappendix.png"
 PERK.Params = {
-    [1] = {value = 1},
+    [1] = {value = 0.15, percent = true},
 }
 PERK.Hooks = {}
 

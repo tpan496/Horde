@@ -146,7 +146,7 @@ function SWEP:DealDamage()
 		self:EmitSound( HitSound )
 	end
 
-	if tr.Hit and tr.Entity:IsWorld() and self.Charged == 1 and self:Horde_GetPerk("carcass_reinforced_arms") then
+	if tr.Hit and tr.Entity:IsWorld() and self.Charged == 1 and self.Owner:Horde_GetPerk("carcass_reinforced_arms") then
 		local hitnormal = tr.HitNormal
 		self.Owner:SetVelocity(self.Owner:GetVelocity() + hitnormal * 250)
 	end
@@ -381,6 +381,11 @@ function SWEP:StartAttack()
 		ply:EmitSound("horde/player/carcass/pain.ogg")
 		return
 	end
+
+	if SERVER and ply:Horde_GetPerk("carcass_grappendix") then
+	else
+		return
+	end
 	-- Get begining and end poins of trace.
 	local gunPos = self.Owner:GetShootPos() -- Start of distance trace.
 	local disTrace = self.Owner:GetEyeTrace() -- Store all results of a trace in disTrace.
@@ -441,7 +446,9 @@ function SWEP:StartAttack()
 end
 
 function SWEP:UpdateAttack()
+	if !self.Owner then return end
 	if self.Owner:Horde_GetPerk("carcass_bio_thruster") then return end
+	if !(self.Owner:Horde_GetPerk("carcass_grappendix")) then return end
 	
 	if self.LastDrain <= CurTime() then
 		self.Owner:SetHealth(self.Owner:Health() - self.Owner:GetMaxHealth() * 0.01)

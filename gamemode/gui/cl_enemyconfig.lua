@@ -422,8 +422,11 @@ function PANEL:Init()
 
         local gadget_drop = {}
         gadget_drop.gadget = gadget_editor:GetText()
-        gadget_drop.drop_rate = math.max(0, tonumber(gadget_drop_editor:GetText()))
-        if gadget_drop.gadget and gadget_drop.gadget ~= "" and gadget_drop.drop_rate > 0 then
+        if gadget_drop_editor:GetText() and gadget_drop_editor:GetText() ~= "" then
+            gadget_drop.drop_rate = math.max(0, tonumber(gadget_drop_editor:GetText()) or 0)
+        end
+        
+        if gadget_drop.gadget and gadget_drop.gadget ~= "" and gadget_drop.drop_rate and gadget_drop.drop_rate > 0 then
         else
             gadget_drop = nil
         end
@@ -519,8 +522,11 @@ function PANEL:Init()
 
         local gadget_drop = {}
         gadget_drop.gadget = gadget_editor:GetText()
-        gadget_drop.drop_rate = math.max(0, tonumber(gadget_drop_editor:GetText()))
-        if gadget_drop.gadget and gadget_drop.gadget ~= "" and gadget_drop.drop_rate > 0 then
+        if gadget_drop_editor:GetText() and gadget_drop_editor:GetText() ~= "" then
+            gadget_drop.drop_rate = math.max(0, tonumber(gadget_drop_editor:GetText()) or 0)
+        end
+        
+        if gadget_drop.gadget and gadget_drop.gadget ~= "" and gadget_drop.drop_rate and gadget_drop.drop_rate > 0 then
         else
             gadget_drop = nil
         end
