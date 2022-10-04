@@ -6,9 +6,9 @@ Each Bio Thruster stack increases {3} Melee damage, but also adds {4} health cos
 PERK.Icon = "materials/perks/carcass/bio_thruster.png"
 PERK.Params = {
     [1] = {value = 1},
-    [2] = {value = 5},
-    [2] = {value = 0.25, percent = true},
-    [4] = {value = 5},
+    [2] = {value = 0.05, percent = true},
+    [3] = {value = 0.10, percent = true},
+    [4] = {value = 0.05, percent = true},
 }
 PERK.Hooks = {}
 
