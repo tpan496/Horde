@@ -179,10 +179,9 @@ function SWEP:DealDamage()
 				if ply:Horde_GetPerk("carcass_reinforced_arms") then
 					bonus.more = bonus.more * math.max(1, ply:GetVelocity():Length() / 180)
 				end
-				if ply:Horde_GetPerk("carcass_bio_thruster") and !ply:IsOnGround() and ply.Horde_Bio_Thruster_Ready then
-					bonus.increase = bonus.increase + 1
+				if ply.Horde_Bio_Thruster_Stack and ply.Horde_Bio_Thruster_Stack > 0 then
+					bonus.increase = bonus.increase + ply.Horde_Bio_Thruster_Stack * 0.1
 				end
-
 				
 
 				dmginfo:ScaleDamage((1 + bonus.increase) * bonus.more)
