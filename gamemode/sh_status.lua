@@ -48,7 +48,7 @@ HORDE:RegisterStatus("AAS_Perfume", "materials/perks/carcass/AAS_Perfume.png", n
 
 HORDE:RegisterStatus("Tactical_Mode", "materials/status/tactical_mode.png")
 HORDE:RegisterStatus("Camoflague", "materials/status/camoflague.png")
-HORDE:RegisterStatus("Frenzy_Mode", "")
+HORDE:RegisterStatus("Frenzy_Mode", "materials/subclasses/psycho.png")
 
 HORDE:RegisterStatus("Minion", "materials/status/minion.png", true)
 HORDE:RegisterStatus("Adrenaline", "materials/status/adrenaline.png", true)

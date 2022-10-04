@@ -1,6 +1,6 @@
 GADGET.PrintName = "ULPA Filter"
 GADGET.Description =
-[[{1} reduced buildups from all sources while you have armor.
+[[50% reduced buildups from all sources while you have armor.
 Buildups also drain your armor.]]
 GADGET.Icon = "items/gadgets/ulpa_filter.png"
 GADGET.Duration = 0

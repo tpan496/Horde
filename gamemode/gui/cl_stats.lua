@@ -819,23 +819,24 @@ function PANEL:Init()
         surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_POISON])
         surface.DrawTexturedRect(50, 280, 40, 40)
 
-        --[[mat = Material("materials/status/psychosis.png", "mips smooth")
+        mat = Material("materials/status/necrosis.png", "mips smooth")
         surface.SetMaterial(mat)
-        surface.SetDrawColor(Color(255,192,203))
-        surface.DrawTexturedRect(50, 330, 40, 40)]]--
+        surface.SetDrawColor(HORDE.STATUS_COLOR[HORDE.Status_Necrosis])
+        surface.DrawTexturedRect(50, 330, 40, 40)
 
         draw.SimpleText("Bleeding Immunity:", 'Heading', 100, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Ignite Immunity:", 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Frostbite Immunity:", 'Heading', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Shock Immunity:", 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Break Immunity:", 'Heading', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        --draw.SimpleText("Psychosis Immunity:", 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Necrosis Immunity:", 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         
         draw.SimpleText(GetImmune(HORDE.Status_Bleeding), 'Heading', self:GetWide() / 3 - 50, 100, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(GetImmune(HORDE.Status_Ignite), 'Heading', self:GetWide() / 3 - 50, 150, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(GetImmune(HORDE.Status_Frostbite), 'Heading', self:GetWide() / 3 - 50, 200, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(GetImmune(HORDE.Status_Shock), 'Heading', self:GetWide() / 3 - 50, 250, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(GetImmune(HORDE.Status_Break), 'Heading', self:GetWide() / 3 - 50, 300, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(GetImmune(HORDE.Status_Necrosis), 'Heading', self:GetWide() / 3 - 50, 350, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
     end
 
     local stats_btn = vgui.Create("DButton", self)

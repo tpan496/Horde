@@ -31,7 +31,7 @@ function entmeta:Horde_AddFrostbiteEffect(duration)
     local id = self:EntIndex()
     local bones = self:GetBoneCount()
     timer.Create("FrostbiteEffect" .. id, 0.5, 0, function ()
-        if !self:IsValid() or !self:Alive() then timer.Remove("FrostbiteEffect" .. id) return end
+        if !self:IsValid() or !self:Alive() or not self.Horde_Debuff_Active or not self.Horde_Debuff_Active[HORDE.Status_Frostbite] then timer.Remove("FrostbiteEffect" .. id) return end
         for bone = 1, bones-1 do
             local pos, angle = self:GetBonePosition(bone)
             local effectdata = EffectData()
