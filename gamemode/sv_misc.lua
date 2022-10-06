@@ -167,7 +167,7 @@ function HORDE:CheckDemonStompCharges(ply)
     end)
 end
 
-hook.Add("PlayerTick", "Horde_Ruination", function(ply, mv)
+hook.Add("PlayerTick", "Horde_Misc", function(ply, mv)
     local tr = util.TraceHull({
         start = ply:GetPos(),
         endpos = ply:GetPos() + Vector(0,0,-1) * 50,

@@ -52,7 +52,7 @@ function PANEL:add_infusion(infusion, price)
         surface.SetTextColor(Color(255,255,255))
         surface.SetFont("Item")
         surface.SetTextPos(50, 10)
-        surface.DrawText(HORDE.Infusion_Names[infusion])
+        surface.DrawText(translate.Get("Infusion_" .. HORDE.Infusion_Names[infusion]) or HORDE.Infusion_Names[infusion])
 
         local has_infusion = LocalPlayer():Horde_HasInfusion(self.item.class, infusion)
         --if has_infusion then
