@@ -1,6 +1,6 @@
 GADGET.PrintName = "Assassin Optics"
 GADGET.Description =
-[[Increases your next Ballistic damage by {1}.
+[[Increases your next Ballistic damage by 25%.
 The effect expires after damaging the enemy.]]
 GADGET.Icon = "items/gadgets/assassin_optics.png"
 GADGET.Duration = 0

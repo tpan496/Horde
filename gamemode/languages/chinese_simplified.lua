@@ -104,6 +104,23 @@ LANGUAGE["Shop_Buy_Secondary_Ammo"] = "购买副弹药"
 LANGUAGE["Shop_Primary_Ammo"] = "主弹药"
 LANGUAGE["Shop_Secondary_Ammo"] = "副弹药"
 
+-- Infusions
+LANGUAGE["Infusion"] = "变质"
+LANGUAGE["Infusion_Hemo"] = "出血"
+LANGUAGE["Infusion_Concussive"] = "笨重"
+LANGUAGE["Infusion_Septic"] = "剧毒"
+LANGUAGE["Infusion_Flaming"] = "火焰"
+LANGUAGE["Infusion_Arctic"] = "冰霜"
+LANGUAGE["Infusion_Galvanizing"] = "雷电"
+LANGUAGE["Infusion_Quality"] = "质量"
+LANGUAGE["Infusion_Impaling"] = "穿刺"
+LANGUAGE["Infusion_Rejuvenating"] = "生命"
+LANGUAGE["Infusion_Quicksilver"] = "水银"
+LANGUAGE["Infusion_Siphoning"] = "汲取"
+LANGUAGE["Infusion_Titanium"] = "白金"
+LANGUAGE["Infusion_Chrono"] = "时间"
+LANGUAGE["Infusion_Ruination"] = "毁灭"
+
 -- Classes
 LANGUAGE["Class_Survivor"] = "生存者"
 LANGUAGE["Class_Assault"] = "突击兵"
