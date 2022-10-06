@@ -481,6 +481,7 @@ function PANEL:Init()
             local start_pos = 70
             local start_pos_2 = 70
             local start_pos_3 = 70
+            local start_pos_4 = 70
             local i = 1
             local infusions =
                 {a=HORDE.Infusion_Hemo,
@@ -495,7 +496,8 @@ function PANEL:Init()
                 j=HORDE.Infusion_Quicksilver,
                 k=HORDE.Infusion_Siphoning,
                 l=HORDE.Infusion_Titanium,
-                m=HORDE.Infusion_Chrono}
+                m=HORDE.Infusion_Chrono,
+                n=HORDE.Infusion_Ruination}
             for _, infusion in SortedPairs(infusions) do
                 local editor = vgui.Create("DCheckBoxLabel", panel)
                 local lb = vgui.Create("DLabel", panel)
@@ -520,11 +522,16 @@ function PANEL:Init()
                     lb:SetPos(start_pos_2 + 40, 45)
                     icon:SetPos(start_pos_2 + 20, 45)
                     start_pos_2 = start_pos_2 + 90
-                else
+                elseif i <= 12 then
                     editor:SetPos(start_pos_3, 65)
                     lb:SetPos(start_pos_3 + 40, 65)
                     icon:SetPos(start_pos_3 + 20, 65)
                     start_pos_3 = start_pos_3 + 90
+                elseif i <= 16 then
+                    editor:SetPos(start_pos_4, 85)
+                    lb:SetPos(start_pos_4 + 40, 85)
+                    icon:SetPos(start_pos_4 + 20, 85)
+                    start_pos_4 = start_pos_4 + 90
                 end
                 lb:SetText(HORDE.Infusion_Names[infusion])
                 lb:SetTextColor(Color(0,0,0))

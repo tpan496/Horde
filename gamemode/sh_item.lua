@@ -333,8 +333,8 @@ function HORDE:GetDefaultItemsData()
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH}, nil, {"Berserker", "Samurai"})
     HORDE:CreateItem("Melee",      "Machete",        "arccw_horde_machete", 1000,  3, "Machete.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
-    HORDE:CreateItem("Melee",      "Parrying Dagger","arccw_horde_parrying_dagger", 1000,  3, "A small dagger used for parrying.",
-    nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
+    --HORDE:CreateItem("Melee",      "Parrying Dagger","arccw_horde_parrying_dagger", 1000,  3, "A small dagger used for parrying.",
+    --nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Melee",      "Fireaxe",        "arccw_horde_axe",     1500,  4, "Fireaxe.\nChops enemies in half.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Melee",      "Katana",         "arccw_horde_katana",  2000,  5, "Ninja sword.\nLong attack range and fast attack speed.",
@@ -601,7 +601,12 @@ function HORDE:GetDefaultItemsData()
     {Demolition=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_PHYSICAL}, nil, {"Warlock"}, true)
 
     HORDE:CreateItem("Special",    "Carcass Biosystem",   "horde_carcass",   0,  13,
-    [[LMB: Fist]],
+    [[Only usable by Carcass subclass!
+    Advanced combat biosystem that completely screws up the appearance of its user.
+    Leaves behind an unpleasant stench.
+    
+    LMB: Punch.
+    Hold for a charged punch that deals increased damage in an area.]],
     {Heavy=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_PHYSICAL}, nil, {"Carcass"}, true)
 
     HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
