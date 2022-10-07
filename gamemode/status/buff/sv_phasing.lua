@@ -51,5 +51,5 @@ hook.Add("Horde_ShoudCollide", "Horde_Phasing_Collide", function (ent1, ent2)
 end)
 
 hook.Add("Horde_ResetStatus", "Horde_PhasingReset", function(ply)
-    ply.Horde_Phasing = 0
+    ply.Horde_Phasing = nil
 end)
