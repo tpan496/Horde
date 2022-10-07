@@ -5,7 +5,7 @@ Complexity: HIGH
 
 {1} increased maximum health. ({2} per level, up to {3}).
 
-{4} chance to gain Hypertrophy when you hit an enemy (+{5} chance on headshot).
+{4} chance to gain Hypertrophy when you hit an enemy ({5} chance on headshot).
 100% chance to gain Hypertrophy when you are hit.
 Hypertrophy reduces Physical damage taken by {6}.
 Hypertrophy provides 1% health regen per second.
@@ -19,8 +19,8 @@ PERK.Params = {
     [1] = {percent = true, base = 0, level = 0.01, max = 0.25, classname = "Carcass"},
     [2] = {value = 0.01, percent = true},
     [3] = {value = 0.25, percent = true},
-    [4] = {value = 0.25, percent = true},
-    [5] = {value = 0.25, percent = true},
+    [4] = {value = 0.5, percent = true},
+    [5] = {value = 0.75, percent = true},
     [6] = {value = 0.05, percent = true},
 }
 PERK.Hooks = {}
@@ -63,21 +63,19 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
         local p = math.random()
         if ply:Horde_GetPerk("carcass_anabolic_gland") then
             if hitgroup == HITGROUP_HEAD then
-                if p <= 0.75 then
-                    ply:Horde_AddHypertrophyStack()
-                end
+                ply:Horde_AddHypertrophyStack()
             else
-                if p <= 0.5 then
+                if p <= 0.75 then
                     ply:Horde_AddHypertrophyStack()
                 end
             end
         else
             if hitgroup == HITGROUP_HEAD then
-                if p <= 0.5 then
+                if p <= 0.75 then
                     ply:Horde_AddHypertrophyStack()
                 end
             else
-                if p <= 0.25 then
+                if p <= 0.5 then
                     ply:Horde_AddHypertrophyStack()
                 end
             end
