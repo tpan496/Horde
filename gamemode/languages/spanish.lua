@@ -7,7 +7,6 @@ HORDE Translation Guideline
 increase vs. more: these two descriptions are DIFFERENT!
 resistance vs. less damage taken: same as above.
 5. Translate AS IS.
-
 Translator: Archi, BishY
 --]]
 
@@ -161,82 +160,64 @@ Tiene acceso a armamento a base de calor.]]
 LANGUAGE["Perk_survivor_base"] = [[
 La clase Superviviente puede ser jugado como cualquier otra clase para rellenar los roles faltantes del equipo.
 Complejidad: FÁCIL
-
 Sin bonus.]]
 
 LANGUAGE["Perk_assault_base"] = [[
 La clase Asalto es un luchador de todo-tipo con gran movilidad y concentrado en cargas de Adrenalina.
 Complejidad: FÁCIL
-
 {1} mas velocidad de movimiento. ({2} por nivel, hasta {3}).
-
 Ganas Adrenalina cuando asesinas a un enemigo.
 Adrenalina aumenta el daño y velocidad un {4}.]]
 
 LANGUAGE["Perk_heavy_base"] = [[
 La clase Pesado es una clase de resistencia que provee una fuerte potencia de fuego.
 Complejidad: FÁCIL
-
 Regenera {1} de armadura por segundo.
 Regenera hasta {2} armadura. ({3} + {4} por nivel, hasta {5})]]
 
 LANGUAGE["Perk_medic_base"] = [[
 La clase Médico es una clase de soporte duradera que se basa en curar y mejorar aliados.
 Complejidad: MEDIA
-
 Amplifica la curación un {1}. ({2} por nivel, hasta {3}).
-
 Regenera {4} de vida por segundo.]]
 
 LANGUAGE["Perk_demolition_base"] = [[
 La clase Demolición es una clase de control de masas que también proporciona gran daño a un objetivo único.
 Complejidad: MEDIA
-
 {1} de daño Explosivo incrementado. ({2} + {3} por nivel, hasta {4}).
-
 Regenera {5} granada de fragmentación cada {6} segundos, si no tienes una.]]
 
 LANGUAGE["Perk_ghost_base"] = [[
 La clase Tirador está concentrado en acabar jefes enemigos usando Camuflaje.
 Complejidad: ALTA
-
 {1} mas de daño a la cabeza. ({2} por nivel, hasta {3}).
-
 Agácgate para activar Camuflaje, otorgando {4} de evasión.
 Atacar o Correr REMUEVE Camuflaje.]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 La clase Ingeniero es una clase centrada en esbirros que realizan daño a través esbirros.
 Complejidad: MEDIA
-
 {1} daño de esbirro aumentado. ({2} por nivel, hasta {3}).
-
 Torretas tienen {4} vida base y realiza {5} daño base.]]
 
 LANGUAGE["Perk_berserker_base"] = [[
 La clase Berserker es una class centrado en cuerpo a cuerpo que puede ser utilizado tanto a la ofensiva como a la defensiva.
 Complejidad: ALTA
-
 {1} daño Cortante y Golpeante aumentado. ({2} por nivel, hasta {3}).
 {4} resistencia al daño Global aumentada. ({5} por nivel, hasta {6}).
-
 Desvío Aeréo: Salta para reducir daño Físico recibido un {7}.]]
 
 LANGUAGE["Perk_warden_base"] = [[
 El Guardián es una clase soporte que usa sus efectos de aura y estructuras para mejorar a los aliados.
 Complejidad: MEDIA
-
 {1} radio del Aura del Guardián aumentado. ({2} por nivel, hasta {3}).
-
 Los jugadores cercanos son afectados por el Aura del Guardián.
 Aura del Guardián bloquea {4} de daño.]]
 
 LANGUAGE["Perk_cremator_base"] = [[
 El Quemador construye su ofensiva y defensiva en torno al daño de Fuego.
 Complejidad: FÁCIL
-
 {1} resistencia al daño de Fuego aumentado. ({2} + {3} por nivel, hasta {4}).
-
 Ataques tienen {5} chance de Incendiar enemigos.
 La duración base de Incendiar es {6} e inflige daño a lo largo del tiempo en función del daño por golpe.
 El daño de Fuego tiene {7} chance de Incendiar.]]
@@ -296,14 +277,13 @@ Adds {2} maximum Adrenaline stacks.]]
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Supresión]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Compuesto Pegajoso]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
-Enemigos dañados con daño Balístico son Ralentizados.
-Enemigos Ralentizados inflige un {1} menos de daño físico.]]
+Enemigos dañados con daño Balístico son Obstaculizados.
+Enemigos Obstaculizados inflige un {1} menos de daño Físico.]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Carcasa Cruda]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
-Enemigos dañados con daño Balístico son Debilitados.
-Enemigos Debilitados realizan {1} de daño reducido.
-Enemigos Debilitados reciben {2} de daño físico incrementado.]]
+Los enemigos que dañes con daño Balístico son Debilitados.
+Los enemigos Debilitados reciben un {1} de daño Físico aumentado.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Respaldo]]
 LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[Catalizador de Reparación]]
@@ -371,10 +351,10 @@ LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[Implosión Celular]]
 LANGUAGE["Perk_medic_cellular_implosion"] = [[
 Enemigos que asesines tienen {1} de chance de generar un humo curativo.]]
 
-LANGUAGE["Perk_Title_medic_xcele"] = [[Factor de Curación Aceleradoa]
+LANGUAGE["Perk_Title_medic_xcele"] = [[Factor de Curación Acelerado]]
 LANGUAGE["Perk_medic_xcele"] = [[
-Mejoras que apliques son {1} mas efectivos.
-Mejoras que apliques tienen {2} de duración incrementada.]]
+Las mejoras que apliques son {1} más efectivos.
+Las mejoras que apliques tienen {2} de duración incrementada.]]
 
 -- Default Perks: Demolition
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Granada]]
@@ -432,16 +412,18 @@ LANGUAGE["Perk_Title_ghost_sniper"] = [[Francotirador]]
 LANGUAGE["Perk_ghost_sniper"] = [[
 25% de daño Balistico aumentado mientras estés agachado.]]
 
-LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposión]]
+LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposición]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Caminata de Fase]]
---[[LANGUAGE["Perk_ghost_phase_walk"] = [[
+LANGUAGE["Perk_ghost_phase_walk"] = [[
 Correr ya no cancela Camuflaje.
-25% de velocidad de movimiento aumentada mientras tengas Camuflaje.]]
+Velocidad de movimiento aumentada un {1} cuando tienes Camuflaje.
+Agrega {2} de evasión cuando tienes Camuflaje.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Velo Fantasma]]
---[[LANGUAGE["Perk_ghost_ghost_veil"] = [[
+LANGUAGE["Perk_ghost_ghost_veil"] = [[
 Atacar no cancela Camuflaje.
-100% de velocidad de activacion del Camuflaje aumentada.]]
+Velocidad al caminar aumentada un {1} cuando tienes Camuflaje.
+Daño Balístico aumentado un {2} cuando tienes Camuflaje.]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Trayectoria]]
 LANGUAGE["Perk_Title_ghost_brain_snap"] = [[Estallido Cerebral]]
@@ -525,12 +507,12 @@ Inmune al Sangrado.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[Técnica]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[Bushido]]
---[[LANGUAGE["Perk_berserker_bushido"] = [[
+LANGUAGE["Perk_berserker_bushido"] = [[
 Aumenta un {1} el daño Cortante.
 Aumenta un {2} la velocidad de movimiento.]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[Salvajería]]
---[[LANGUAGE["Perk_berserker_savagery"] = [[
+LANGUAGE["Perk_berserker_savagery"] = [[
 Aumenta un {1} el daño Golpeante.
 Aumenta un {2} de la vida máxima.]]
 
@@ -1315,7 +1297,7 @@ LANGUAGE["Gadget_Desc_iv_injection"] = [[
 Recupera 25 de vida.
 ]]
 
-LANGUAGE["Gadget_gadget_cortex"] = [[Corteza]]
+LANGUAGE["Gadget_gadget_cortex"] = [[Estimulador de Corteza]]
 LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
 Por cada enemigo cerca tuyo, ganas 1 carga de Adrenalina.
 Enemigos élites dan 2 cargas.

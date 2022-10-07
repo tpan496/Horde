@@ -19,6 +19,6 @@ end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "specops_biotic_mask" then
-        ply:Horde_SetHealthRegenEnabled(nil)
+        ply:Horde_SetHealthRegenPercentage(0)
     end
 end
