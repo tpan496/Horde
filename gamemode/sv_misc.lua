@@ -168,12 +168,13 @@ function HORDE:CheckDemonStompCharges(ply)
 end
 
 hook.Add("PlayerTick", "Horde_Misc", function(ply, mv)
+    if !ply:IsOnGround() then return end
     local tr = util.TraceHull({
         start = ply:GetPos(),
         endpos = ply:GetPos() + Vector(0,0,-1) * 50,
         filter = ply,
-        mins = Vector(-16, -16, -8),
-        maxs = Vector(16, 16, 8),
+        mins = Vector(-8, -8, -8),
+        maxs = Vector(8, 8, 8),
     })
     if tr.Entity and tr.Entity:IsNPC() then
         local vrand = VectorRand()

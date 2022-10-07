@@ -4,7 +4,7 @@ Provides a short invincibility frame.
 Provides Phasing.]]
 GADGET.Icon = "items/gadgets/flash.png"
 GADGET.Duration = 0
-GADGET.Cooldown = 1
+GADGET.Cooldown = 10
 GADGET.Active = true
 GADGET.Params = {
     [1] = {value = 100},
