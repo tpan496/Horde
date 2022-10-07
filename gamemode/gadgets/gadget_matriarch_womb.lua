@@ -34,7 +34,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         end
     end)
 
-    timer.Create(10, function ()
+    timer.Simple(10, function ()
         if ent:IsValid() then ent:Remove() end
     end)
 end
