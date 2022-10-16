@@ -1,21 +1,8 @@
---New subclass: Carcass
-
---Added droppable gadgets and one-use gadgets.
-    - Droppable gadgets can be configured in enemy config.
--- New Gadgets: Damage/Agility/Vitality Shard, Agility Booster, Precision Optics, ULPA Filter
-    - Removed Gadget: Gunslinger.
-    - Removed Gadget: T-Virus.
-
--- Added visual effects to entities affected by Frostbite, Shock, Break and Bleeding
-
--- New Infusion: Ruination
-
--- Bug Fixes:
-    - Fix perk bugs for Heavy.
-    - Fix attachments shop text.
-    - Fix players able to stand on enemies.
-
-Coding Changes:
--- New function:
-    - HORDE:RegisterStatus(...): Registers a new status, check sh_status for more.
-    - Hook Horde_OnSetMaxHealth(...): Called when Horde sets player max health.
+-- New Master Tier Gadgets:
+    - Survivor: Ultimate Booster
+    - Assault: 
+    - Heavy: 
+    - Berserker: Blade Blast
+    - Medic: Defibrillator
+    - Demolition: Nuke
+    - Engineer: 

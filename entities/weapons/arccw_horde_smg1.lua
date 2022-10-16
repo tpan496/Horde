@@ -19,10 +19,10 @@ SWEP.Trivia_Year = 2007
 
 SWEP.Slot = 2
 
-SWEP.UseHands = false
+SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/v_smg1.mdl"
-SWEP.WorldModel = "models/weapons/w_smg1.mdl"
+SWEP.ViewModel = "models/weapons/c_smg1.mdl"
+SWEP.WorldModel = "models/weapons/w_smg_mp5.mdl"
 SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "000000000000"

@@ -28,6 +28,11 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/horde/weapons/c_machete.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_machete.mdl"
 SWEP.ViewModelFOV = 45
+SWEP.WorldModelOffset = {
+    pos        =    Vector(-15, 6, -7),
+    ang        =    Angle(-10, 0, 190),
+    bone    =    "ValveBiped.Bip01_R_Hand",
+}
 
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
