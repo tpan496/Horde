@@ -29,6 +29,11 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/horde/weapons/c_inferno_blade.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_inferno_blade.mdl"
 SWEP.ViewModelFOV = 60
+SWEP.WorldModelOffset = {
+    pos        =    Vector(-10, 8, -5),
+    ang        =    Angle(0, 0, 190),
+    bone    =    "ValveBiped.Bip01_R_Hand",
+}
 
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0

@@ -19,9 +19,9 @@ SWEP.Trivia_Year = 2007
 
 SWEP.Slot = 2
 
-SWEP.UseHands = false
+SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/v_shotgun.mdl"
+SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.ViewModelFOV = 60
 

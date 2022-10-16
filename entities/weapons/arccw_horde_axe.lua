@@ -28,6 +28,11 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/horde/weapons/c_fireaxe.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_fireaxe.mdl"
 SWEP.ViewModelFOV = 45
+SWEP.WorldModelOffset = {
+    pos        =    Vector(-20, 6, -15),
+    ang        =    Angle(-60, 50, 110),
+    bone    =    "ValveBiped.Bip01_R_Hand",
+}
 
 SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0

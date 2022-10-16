@@ -29,7 +29,7 @@ SWEP.SpeedMult = 0.85
 SWEP.Primary.ClipSize = -1
 
 SWEP.ViewModel = "models/horde/weapons/c_chainsaw.mdl"
-SWEP.WorldModel = "models/horde/weapons/c_chainsaw.mdl"
+SWEP.WorldModel = "models/horde/weapons/w_kf_chainsaw.mdl"
 SWEP.ViewModelFOV = 45
 
 SWEP.DefaultSkin = 0

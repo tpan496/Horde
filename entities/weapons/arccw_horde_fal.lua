@@ -18,13 +18,13 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_fal.mdl"
-SWEP.MirrorVMWM = true
+SWEP.WorldModel = "models/weapons/w_rif_galil.mdl"
+SWEP.MirrorVMWM = false
 SWEP.WorldModelOffset = {
-    pos = Vector(-5, 3, -5),
+    pos = Vector(15, 1, 3.5),
     ang = Angle(-10, 0, 180),
-    scale = 1.25
+    scale = 1
 }
-SWEP.WorldModel = "models/weapons/w_rif_m4a1.mdl"
 SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 90

@@ -21,13 +21,18 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_m1887_1.mdl"
-SWEP.MirrorVMWM = true
+SWEP.WorldModel = "models/weapons/w_annabelle.mdl"
+SWEP.MirrorVMWM = false
 SWEP.WorldModelOffset = {
-    pos = Vector(-4, 3, -6),
-    ang = Angle(-10, 0, 180),
-    scale = 1.125
+    pos = Vector(16, 0, -3.3),
+    ang = Angle(-12, 180, 180),
+    scale = 1
 }
-SWEP.WorldModel = "models/weapons/arccw/fesiugmw2_2/c_m1887_1.mdl"
+--SWEP.WorldModelOffset = {
+--    pos = Vector(-4, 3, -6),
+--    ang = Angle(-10, 0, 180),
+--    scale = 1.125
+--}
 SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 100
