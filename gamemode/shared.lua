@@ -120,32 +120,7 @@ function GM:ShouldCollide(ent1, ent2)
         if GetConVar("horde_enable_player_collision"):GetInt() == 0 and ent1:IsPlayer() and ent2:IsPlayer() then return false end
         -- No combine balls
         if ent1:GetClass() == "prop_combine_ball" or ent2:GetClass() == "prop_combine_ball" then return false end
-
-        if ent1.Horde_In_Flash or ent2.Horde_In_Flash then
-            local dmg = DamageInfo()
-            dmg:SetDamage(100)
-            dmg:SetDamageType(DMG_SLASH)
-            if ent1.Horde_In_Flash and not ent2.Horde_Taken_Flash_DMG then
-                dmg:SetInflictor(ent1)
-                dmg:SetAttacker(ent1)
-                dmg:SetDamagePosition(ent1:GetPos())
-                ent2:TakeDamageInfo(dmg)
-                ent2.Horde_Taken_Flash_DMG = true
-                timer.Simple(0.25, function()
-                    if ent2:IsValid() then ent2.Horde_Taken_Flash_DMG = nil end
-                end)
-            elseif not ent1.Horde_Taken_Flash_DMG then
-                dmg:SetInflictor(ent2)
-                dmg:SetAttacker(ent2)
-                dmg:SetDamagePosition(ent2:GetPos())
-                ent1:TakeDamageInfo(dmg)
-                ent1.Horde_Taken_Flash_DMG = true
-                timer.Simple(0.25, function()
-                    if ent1:IsValid() then ent1.Horde_Taken_Flash_DMG = nil end
-                end)
-            end
-            return false
-        end
+        return hook.Run("Horde_ShoudCollide", ent1, ent2)
     end
 
     return true

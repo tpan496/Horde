@@ -449,14 +449,6 @@ function SWEP:UpdateAttack()
 	if self.Owner:Horde_GetPerk("carcass_bio_thruster") then return end
 	if !(self.Owner:Horde_GetPerk("carcass_grappendix")) then return end
 	
-	if self.LastDrain <= CurTime() then
-		self.Owner:SetHealth(self.Owner:Health() - self.Owner:GetMaxHealth() * 0.01)
-		if self.Owner:Health() <= 0 then
-			self.Owner:Kill()
-			return
-		end
-		self.LastDrain = CurTime() + self.DrainInterval
-	end
 	self.Owner:LagCompensation( true )
 	
 	if (!intestine_endpos) then
@@ -526,6 +518,15 @@ function SWEP:UpdateAttack()
 	end
 	
 	intestine_endpos = nil
+
+	if self.LastDrain <= CurTime() then
+		self.Owner:SetHealth(self.Owner:Health() - self.Owner:GetMaxHealth() * 0.01)
+		if self.Owner:Health() <= 0 then
+			self.Owner:Kill()
+			return
+		end
+		self.LastDrain = CurTime() + self.DrainInterval
+	end
 	
 	self.Owner:LagCompensation( false )
 	
