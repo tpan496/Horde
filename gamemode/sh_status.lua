@@ -12,7 +12,7 @@ HORDE.Is_Status_Debuff = {}
 HORDE.Is_Status_Skill = {}
 
 function HORDE:RegisterStatus(name, icon, stackable, is_debuff, is_skill)
-    if HORDE.Status_Id >= 128 then
+    if HORDE.Status_Id >= 256 then
         Error("[HORDE] Ran out of status ids!")
         return
     end
@@ -146,17 +146,3 @@ end
 function HORDE:IsStackableSkillStatus(status)
     if status == HORDE.Status_Quickstep then return true end
 end
-
---[[ Dead code
-function HORDE:IsStatusStackable(status)
-    if status >= HORDE.Status_Minion and status <= HORDE.Status_Twin_Heart then return true end
-    return false
-end
-
-function HORDE:IsDebuff(status)
-    return status > HORDE.Status_ExpDisabled
-end
-
-function HORDE:IsSkillStatus(status)
-    return status >= HORDE.Status_AntimatterShield and status <= HORDE.Status_Gravity_Vacuum
-end]]--

@@ -1,5 +1,8 @@
 PERK.PrintName = "SpecOps Base"
 PERK.Description = [[
+The SpecOps class focuses on the effects of its unique Tactical Mode.
+COMPLEXITY: MEDIUM
+
 Press F to enter Tactical Mode, replacing your flashlight.
 You have Nightvision during Tactical Mode.
 Cannot run during Tactical Mode.

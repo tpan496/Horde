@@ -25,7 +25,7 @@ SWEP.Spawnable = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/v_crossbow.mdl"
+SWEP.ViewModel = "models/weapons/c_crossbow.mdl"
 SWEP.WorldModel = "models/weapons/w_crossbow.mdl"
 SWEP.MirrorVMWM = true
 SWEP.ViewModelFOV = 65

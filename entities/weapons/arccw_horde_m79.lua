@@ -22,10 +22,15 @@ SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/v_m79.mdl"
 SWEP.WorldModel = "models/horde/weapons/w_m79.mdl"
-SWEP.MirrorVMWM = true
+SWEP.MirrorVMWM = false
+--SWEP.WorldModelOffset = {
+--    pos        =    Vector(-8, 5, -8),
+--    ang        =    Angle(-6, 0, 180),
+--    bone    =    "ValveBiped.Bip01_R_Hand",
+--}
 SWEP.WorldModelOffset = {
-    pos        =    Vector(-15, 5, -8),
-    ang        =    Angle(-6, -2.5, 180),
+    pos        =    Vector(12.5, 1, 2),
+    ang        =    Angle(-10, 2.5, 180),
     bone    =    "ValveBiped.Bip01_R_Hand",
 }
 SWEP.ViewModelFOV = 50
