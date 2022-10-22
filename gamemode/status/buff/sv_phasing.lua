@@ -33,7 +33,7 @@ function plymeta:Horde_GetPhasing()
     return self.Horde_Phasing
 end
 
-hook.Add("Horde_ShoudCollide", "Horde_Phasing_Collide", function (ent1, ent2)
+hook.Add("Horde_ShouldCollide", "Horde_Phasing_Collide", function (ent1, ent2)
     local ply, npc
     if ent1:IsPlayer() then
         ply = ent1
@@ -43,7 +43,7 @@ hook.Add("Horde_ShoudCollide", "Horde_Phasing_Collide", function (ent1, ent2)
         npc = ent1
     end
 
-    if ply:Horde_GetPhasing() then
+    if ply:Horde_GetPhasing() and npc:IsNPC() then
         hook.Run("Horde_OnPhasingCollide", ply, npc)
         return false
     end
