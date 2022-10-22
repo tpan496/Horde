@@ -120,7 +120,7 @@ function GM:ShouldCollide(ent1, ent2)
         if GetConVar("horde_enable_player_collision"):GetInt() == 0 and ent1:IsPlayer() and ent2:IsPlayer() then return false end
         -- No combine balls
         if ent1:GetClass() == "prop_combine_ball" or ent2:GetClass() == "prop_combine_ball" then return false end
-        return hook.Run("Horde_ShoudCollide", ent1, ent2)
+        return hook.Run("Horde_ShouldCollide", ent1, ent2)
     end
 
     return true
