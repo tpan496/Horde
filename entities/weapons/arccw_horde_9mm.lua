@@ -130,10 +130,18 @@ SWEP.Attachments = {
 }
 
 SWEP.Animations = {
+    ["idle"] = {
+        Source = "idle01",
+        TPAnim = ACT_HL2MP_IDLE_PISTOL,
+    },
+    ["draw"] = {
+        Source = "draw",
+        FrameRate = 30,
+    },
     ["fire"] = {
         Source = {"fire1", "fire2", "fire3"},
         Time = 12/30,
-        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_SMG1,
+        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL,
     },
     ["fire_iron"] = {
         Source = "idle",

@@ -590,7 +590,7 @@ hook.Add("InitPostEntity", "Horde_PlayerInit", function()
             net.Start("Horde_InitClass")
             net.WriteString(class)
             net.SendToServer()
-            HORDE:SendSavedPerkChoices(class)
+            --HORDE:SendSavedPerkChoices(class)
         end
         net.Start("Horde_PlayerInit")
         net.SendToServer()

@@ -154,6 +154,14 @@ SWEP.Attachments = {
 }
 
 SWEP.Animations = {
+    ["idle"] = {
+        Source = "idle01",
+        TPAnim = ACT_HL2MP_IDLE_SMG1,
+    },
+    ["draw"] = {
+        Source = "draw",
+        FrameRate = 30,
+    },
     ["reload"] = {
         Source = "reload",
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SMG1,
