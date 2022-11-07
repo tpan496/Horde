@@ -16,12 +16,15 @@ net.Receive("Horde_RemainingTime", function (len)
 end)
 
 function PANEL:Init()
-    self:SetSize(1024, 600)
+    local w = math.max(1024, math.min(1440, ScrW() * 0.75))
+    --local h = math.max(600, ScrH() * 0.75)
+    local h = 600
+    self:SetSize(w, h)
     self:SetPos(ScrW()/2 - (self:GetWide() / 2), ScrH()/2 - (self:GetTall() / 2))
     self:SetBackgroundColor(Color(0,0,0,0))
 
     local summary_panel = vgui.Create("DPanel", self)
-    summary_panel:SetSize(1024, 600)
+    summary_panel:SetSize(w, h)
     summary_panel:SetBackgroundColor(Color(0,0,0,0))
     self.summary_panel = summary_panel
 
@@ -44,9 +47,9 @@ function PANEL:Init()
 
     local votemap_panel = vgui.Create("DScrollPanel", self)
     if GetConVar("horde_disable_difficulty_voting"):GetInt() ~= 1 then
-        votemap_panel:SetSize(768, 550)
+        votemap_panel:SetSize(w - 256, h - 50)
     else
-        votemap_panel:SetSize(1024, 550)
+        votemap_panel:SetSize(w, h - 50)
     end
     votemap_panel:SetPos(256,50)
     votemap_panel:SetBackgroundColor(Color(0,0,0,0))
@@ -173,11 +176,13 @@ function PANEL:Init()
         votemap_hovered = false
     end
 
+    local r = (h / 600)
+
     self.create_player_panel = function (pos, ply, award, reason)
         local panel = vgui.Create("DPanel", summary_panel)
         -- panel:Dock(TOP)
         panel:DockPadding(10, 10, 10, 10)
-        panel:SetSize(480, 80)
+        panel:SetSize(w/2 - 30, 80)
         panel:SetPos(pos.x, pos.y)
         panel:SetBackgroundColor(HORDE.color_hollow)
         local avatar = vgui.Create("AvatarImage", panel)
@@ -207,7 +212,7 @@ function PANEL:Init()
         reason_label:SetFont("Title")
 
         local class_icon = vgui.Create("DPanel", panel)
-        class_icon:SetPos(430, 22)
+        class_icon:SetPos(w/2 - 80, 22)
         class_icon:SetSize(40, 40)
         local subclass = HORDE.subclasses[ply:Horde_GetCurrentSubclass()]
         local mat = Material(subclass.Icon, "mips smooth")
@@ -311,17 +316,20 @@ function PANEL:Votediff(vote_btn, diff)
 end
 
 function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, most_heal_player, most_heal, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
+    local w = math.max(1024, ScrW() * 0.75)
+    local h = math.max(600, ScrH() * 0.75)
+    local w2 = (w/2 - 30)
     local percentage = 0
     if total_damage > 0 then
         percentage = HORDE:Round2(mvp_damage / total_damage, 2) * 100
     end
-    self.create_player_panel({x=512 - 240,y=170}, mvp_player,              "MVP", tostring(mvp_kills) .. " " .. translate.Get("Game_Kills") .. ", " .. tostring(mvp_damage) .. " " .. translate.Get("Game_Damage") .. " (" .. tostring(percentage) .. "%)")
-    self.create_player_panel({x=512 - 480 - 5,y=280}, damage_player,       translate.Get("Game_Most_Damage_Dealt"), tostring(most_damage) .. " " .. translate.Get("Game_Damage"))
-    self.create_player_panel({x=512 + 5, y=280}, kills_player,             translate.Get("Game_Most_Kills"), tostring(most_kills) .. " " .. translate.Get("Game_Kills"))
-    self.create_player_panel({x=512 - 480 - 5,y=390}, damage_taken_player, translate.Get("Game_Most_Damage_Taken"), tostring(most_damage_taken) .. " " .. translate.Get("Game_Damage_Taken"))
-    self.create_player_panel({x=512 + 5,y=390}, elite_kill_player,         translate.Get("Game_Elite_Killer"), tostring(most_elite_kills) .. " " .. translate.Get("Game_Elite_Kills"))
-    self.create_player_panel({x=512 + 5,y=500}, most_heal_player,          translate.Get("Game_Most_Heal"), tostring(most_heal) .. " " .. translate.Get("Game_Healed"))
-    self.create_player_panel({x=512 - 480 - 5,y=500}, headshot_player,     translate.Get("Game_SharpShooter"), tostring(most_headshots) .. " " .. translate.Get("Game_Headshots"))
+    self.create_player_panel({x=w/2 - w2/2,y=170}, mvp_player,              "MVP", tostring(mvp_kills) .. " " .. translate.Get("Game_Kills") .. ", " .. tostring(mvp_damage) .. " " .. translate.Get("Game_Damage") .. " (" .. tostring(percentage) .. "%)")
+    self.create_player_panel({x=w/2 - w2 - 5,y=280}, damage_player,       translate.Get("Game_Most_Damage_Dealt"), tostring(most_damage) .. " " .. translate.Get("Game_Damage"))
+    self.create_player_panel({x=w/2 + 5, y=280}, kills_player,             translate.Get("Game_Most_Kills"), tostring(most_kills) .. " " .. translate.Get("Game_Kills"))
+    self.create_player_panel({x=w/2 - w2 - 5,y=390}, damage_taken_player, translate.Get("Game_Most_Damage_Taken"), tostring(most_damage_taken) .. " " .. translate.Get("Game_Damage_Taken"))
+    self.create_player_panel({x=w/2 + 5,y=390}, elite_kill_player,         translate.Get("Game_Elite_Killer"), tostring(most_elite_kills) .. " " .. translate.Get("Game_Elite_Kills"))
+    self.create_player_panel({x=w/2 + 5,y=500}, most_heal_player,          translate.Get("Game_Most_Heal"), tostring(most_heal) .. " " .. translate.Get("Game_Healed"))
+    self.create_player_panel({x=w/2 - w2 - 5,y=500}, headshot_player,     translate.Get("Game_SharpShooter"), tostring(most_headshots) .. " " .. translate.Get("Game_Headshots"))
 
     for _, map in pairs(maps) do
         self.create_map_panel(map)
@@ -329,7 +337,7 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
 
     local summary_label = vgui.Create("DLabel", self.summary_panel)
     summary_label:SetSize(900,100)
-    summary_label:SetPos(512 - 450,100)
+    summary_label:SetPos(w/2 - 450,100)
     summary_label:SetText("")
     summary_label:SetTextColor(Color(255,255,255))
     summary_label.Paint = function ()

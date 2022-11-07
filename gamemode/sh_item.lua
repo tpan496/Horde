@@ -349,7 +349,7 @@ function HORDE:GetDefaultItemsData()
     {Berserker=true}, 10, -1, nil, nil, {Berserker=3}, nil, {HORDE.DMG_BLUNT, HORDE.DMG_LIGHTNING})
 
     HORDE:CreateItem("Pistol",     "9mm",            "arccw_horde_9mm",   50,  1, "Combine standard sidearm.",
-    nil, 2, -1, nil, "items/hl2/weapon_pistol.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Engineer", "Demolition", "Survivor"})
+    nil, 2, -1, nil, "items/hl2/weapon_pistol.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Engineer", "Demolition", "Survivor", "Psycho"})
     HORDE:CreateItem("Pistol",     "Medic 9mm",       "arccw_horde_medic_9mm", 75,  1, "Modified 9mm that provides ranged healing.\n\nPress B or ZOOM to fire healing darts.\nHealing dart recharges every 1 second.",
     {Medic=true}, 2, -1, nil, "items/weapon_medic_9mm.png", nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON}, nil, {"Medic"})
     HORDE:CreateItem("Pistol",     "357",            "arccw_horde_357",        100,  2, "Colt python magnum pistol.\nUsed by Black Mesa security guards.",

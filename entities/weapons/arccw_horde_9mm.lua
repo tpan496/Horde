@@ -86,7 +86,7 @@ SWEP.SightedSpeedMult = 0.8
 SWEP.SightTime = 0.125
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.5, -10, 4.1),
+    Pos = Vector(-5.5, -11, 3.2),
     Ang = Angle(0, 0, 2),
     ViewModelFOV = 65,
     Magnification = 1,
@@ -130,10 +130,18 @@ SWEP.Attachments = {
 }
 
 SWEP.Animations = {
+    ["idle"] = {
+        Source = "idle01",
+        TPAnim = ACT_HL2MP_IDLE_PISTOL,
+    },
+    ["draw"] = {
+        Source = "draw",
+        FrameRate = 30,
+    },
     ["fire"] = {
         Source = {"fire1", "fire2", "fire3"},
         Time = 12/30,
-        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_SMG1,
+        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL,
     },
     ["fire_iron"] = {
         Source = "idle",

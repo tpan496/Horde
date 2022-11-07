@@ -176,7 +176,7 @@ hook.Add("PlayerTick", "Horde_Misc", function(ply, mv)
         mins = Vector(-8, -8, -8),
         maxs = Vector(8, 8, 8),
     })
-    if tr.Entity and tr.Entity:IsNPC() then
+    if tr.Entity and tr.Entity:IsNPC() and tr.Entity:Health() > 0 then
         local vrand = VectorRand()
         vrand.z = 0
         vrand = vrand * 200

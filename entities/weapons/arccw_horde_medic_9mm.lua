@@ -23,7 +23,7 @@ SWEP.Slot = 1
 
 SWEP.UseHands = false
 
-SWEP.ViewModel = "models/weapons/v_pistol.mdl"
+SWEP.ViewModel = "models/weapons/c_pistol.mdl"
 SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 SWEP.ViewModelFOV = 65
@@ -86,7 +86,7 @@ SWEP.SightedSpeedMult = 0.8
 SWEP.SightTime = 0.125
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.5, -10, 4.4),
+    Pos = Vector(-5.5, -11, 3.2),
     Ang = Angle(0, 0, 2),
     ViewModelFOV = 65,
     Magnification = 1,
@@ -163,6 +163,14 @@ SWEP.Attachments = {
 }
 
 SWEP.Animations = {
+    ["idle"] = {
+        Source = "idle01",
+        TPAnim = ACT_HL2MP_IDLE_PISTOL,
+    },
+    ["draw"] = {
+        Source = "draw",
+        FrameRate = 30,
+    },
     ["fire"] = {
         Source = "fire",
         Time = 12/30,
