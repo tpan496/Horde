@@ -1,7 +1,6 @@
-PERK.PrintName = "Antibody"
+PERK.PrintName = "Horde Pact"
 PERK.Description =
-[[Immune to Poison damage.
-Absorb {1} of Poison damage taken as health.]]
+[[Allows you to summon an additional Antlion.]]
 PERK.Icon = "materials/perks/berserk.png"
 PERK.Params = {
     [1] = {value = 5},

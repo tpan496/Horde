@@ -199,28 +199,28 @@ function HORDE:GameEnd(status)
     net.WriteString(status)
 
     net.WriteEntity(mvp_player)
-    net.WriteInt(mvp_damage, 32)
-    net.WriteInt(mvp_kills, 32)
+    net.WriteUInt(mvp_damage, 32)
+    net.WriteUInt(mvp_kills, 32)
 
     net.WriteEntity(damage_player)
-    net.WriteInt(most_damage, 32)
+    net.WriteUInt(most_damage, 32)
 
     net.WriteEntity(kills_player)
-    net.WriteInt(most_kills, 32)
+    net.WriteUInt(most_kills, 32)
 
     net.WriteEntity(most_heal_player)
-    net.WriteInt(most_heal, 32)
+    net.WriteUInt(most_heal, 32)
 
     net.WriteEntity(headshot_player)
-    net.WriteInt(most_headshots, 32)
+    net.WriteUInt(most_headshots, 32)
 
     net.WriteEntity(elite_kill_player)
-    net.WriteInt(most_elite_kills, 32)
+    net.WriteUInt(most_elite_kills, 32)
 
     net.WriteEntity(damage_taken_player)
-    net.WriteInt(most_damage_taken, 32)
+    net.WriteUInt(most_damage_taken, 32)
 
-    net.WriteInt(total_damage, 32)
+    net.WriteUInt(total_damage, 32)
 
     map_list = HORDE:GetNextMaps()
 

@@ -584,12 +584,13 @@ hook.Add("InitPostEntity", "Horde_PlayerInit", function()
         local f = file.Read("horde/class_choices.txt", "DATA")
         if f then
             local class = f
-            net.Start("Horde_InitClass")
             if not HORDE.subclasses[class] then
                 class = HORDE.Class_Survivor
             end
+            net.Start("Horde_InitClass")
             net.WriteString(class)
             net.SendToServer()
+            --HORDE:SendSavedPerkChoices(class)
         end
         net.Start("Horde_PlayerInit")
         net.SendToServer()

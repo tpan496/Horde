@@ -6,3 +6,10 @@
     - Medic: Defibrillator
     - Demolition: Nuke
     - Engineer: 
+    - Cremator: Ion Cannon
+    - Warden:
+    - Ghost:
+
+-- Perk balances:
+    - Ghost - Brain Snap: Increased freeze cooldown
+    - Gunslinger - Poach: Changed healing to base on enemy health percentage and increase effect radius.

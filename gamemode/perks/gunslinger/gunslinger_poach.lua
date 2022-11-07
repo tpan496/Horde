@@ -13,7 +13,7 @@ PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
 
     for _, ent in pairs(ents.FindInSphere(victim:GetPos(), 250)) do
         if ent:IsPlayer() then
-            local healinfo = HealInfo:New({amount=10, healer=victim.Horde_Has_Hunter_Mark})
+            local healinfo = HealInfo:New({amount=math.max(10, victim:GetMaxHealth() * 0.1), healer=victim.Horde_Has_Hunter_Mark})
             HORDE:OnPlayerHeal(ent, healinfo)
         end
     end

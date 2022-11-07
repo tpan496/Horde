@@ -84,7 +84,7 @@ SWEP.SightedSpeedMult = 0.8
 SWEP.SightTime = 0.125
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.7, -10, 2.6),
+    Pos = Vector(-4.7, -10, 0.5),
     Ang = Angle(0, 0, 2),
     ViewModelFOV = 65,
     Magnification = 1,
