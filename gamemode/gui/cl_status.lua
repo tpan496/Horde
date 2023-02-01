@@ -296,7 +296,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
     local class_icon_y = ScrH() - airgap - ScreenScale(28)
     surface.DrawTexturedRect(class_icon_x, class_icon_y, class_icon_s, class_icon_s)
     if rank == HORDE.Rank_Master then
-        draw.SimpleText(rank_level, "Trebuchet18", pos - 5, 15, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(rank_level, "Trebuchet18", class_icon_x, class_icon_y, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     else
         if rank_level > 0 then
             local star = Material("star.png", "mips smooth")
@@ -342,7 +342,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
     local col_ammo2 = color_white
     
     if LocalPlayer():Horde_GetInfusion(wpn:GetClass()) ~= HORDE.Infusion_None then
-        local infusion = LocalPlayer():Horde_GetInfusion(wpn:GetClass())
+        local infusion = LocalPlayer():Horde_GetInfusio_n(wpn:GetClass())
         local infusion_mat = Material(HORDE.Infusion_Icons[infusion], "mips smooth")
         surface.SetMaterial(infusion_mat)
         surface.SetDrawColor(HORDE.Infusion_Colors[infusion])

@@ -3,11 +3,13 @@ PERK.Description = [[
 The Striker class relies on Barrier and manipulates space to its advantage.
 Complexity: HIGH
 
+You only have 1 health.
+
 {1} increased Blink distance.
 {2} increased maximum Barrier.
 
 SHIFT+E to activate Blink.
-Teleports to the target location.
+Teleports to the target location and gain 20 Barrier.
 The blink range extends greatly if the target is a Watchtower.
 Blink has a cooldown of 5 seconds.]]
 PERK.Params = {

@@ -370,6 +370,10 @@ function ENT:CustomOnMeleeAttack_BeforeChecks()
 end
 function ENT:CustomOnThink()
 	if self.LastPulse <= CurTime() then
+		local d = self:GetPos():DistToSqr(self.Owner)
+		if d >= 640000 then
+			self:SetPos(self.Owner:GetPos() + VectorRand() * 20)
+		end
 		self:BugPulse()
 		local t = 5
 		if self.Evolve_Stage == 2 then
