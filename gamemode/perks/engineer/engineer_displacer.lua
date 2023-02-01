@@ -35,7 +35,7 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
     local ent = util.TraceLine(util.GetPlayerTrace(ply)).Entity
 
     if ent:IsValid() and not ent:IsWorld() then
-        if ent:GetPos():DistToSqr(ply:GetPos()) > 250000 and ply:Horde_GetGadget() ~= "gadget_quantum_tunnel" then
+        if ent:GetPos():DistToSqr(ply:GetPos()) > 250000 then
             return true
         end
         local owner = ent:GetNWEntity("HordeOwner")
@@ -61,32 +61,6 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
         else
             return true
         end
-    else
-        if ply:Horde_GetGadget() == "gadget_quantum_tunnel" then
-            if not HORDE.player_drop_entities[ply:SteamID()] then return end
-            for id, e in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-                if e:IsNPC() then
-                    local item = HORDE.items[e:GetClass()]
-                    if not item then goto cont end
-                    local pos = ply:GetPos()
-                    local dir = (ply:GetEyeTrace().HitPos - pos)
-                    dir:Normalize()
-                    local drop_pos = pos + dir * item.entity_properties.x
-                    drop_pos.z = pos.z + item.entity_properties.z
-                    e:SetPos(drop_pos)
-                    e:SetAngles(Angle(0, ply:GetAngles().y + item.entity_properties.yaw, 0))
-                    if e:GetClass() == "npc_turret_floor" then
-                        ply:PickupObject(e)
-                        e:GetPhysicsObject():EnableMotion(true)
-                    end
-                    e:SetHealth(math.min(e:GetMaxHealth(), e:GetMaxHealth() * 0.05 + e:Health()))
-                    sound.Play("weapons/physcannon/physcannon_pickup.wav", ply:GetPos())
-                    return
-                end
-                ::cont::
-            end
-        end
-        return true
     end
 
     sound.Play("weapons/physcannon/physcannon_pickup.wav", ply:GetPos())

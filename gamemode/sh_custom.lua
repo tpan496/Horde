@@ -50,8 +50,8 @@ HORDE.LoadTempData = function ()
         for _, item in pairs(t1) do
             if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
                 if CLIENT then
-                    notification.AddLegacy("Item config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
-                    notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                    HORDE:PlayNotification("Item config file validation failed! Please update your file or delete it.", 1)
+                    HORDE:PlayNotification("Falling back to default config.", 1)
                 end
                 return
             end
@@ -63,8 +63,8 @@ HORDE.LoadTempData = function ()
             for _, enemy in pairs(t2) do
                 if enemy.name == nil or enemy.name == "" or enemy.class == nil or enemy.class == "" or enemy.weight == nil or enemy.wave == nil then
                     if CLIENT then
-                        notification.AddLegacy("Enemy config file validation failed! Please update your file or delete it.", NOTIFY_ERROR, 5)
-                        notification.AddLegacy("Falling back to default config.", NOTIFY_ERROR, 5)
+                        HORDE:PlayNotification("Enemy config file validation failed! Please update your file or delete it.", 1)
+                        HORDE:PlayNotification("Falling back to default config.", 1)
                     end
                     return
                 else
@@ -95,14 +95,14 @@ if GetConVar("horde_external_lua_config"):GetString() and GetConVar("horde_exter
     if not found then
         local str = "Custom config " .. GetConVar("horde_external_lua_config"):GetString() .. " failed to load!"
         if CLIENT then
-            timer.Simple(1,function () notification.AddLegacy(str, NOTIFY_ERROR, 5) end)
+            timer.Simple(1,function () HORDE:PlayNotification(str, 1) end)
         end
         print("[HORDE] " .. str)
         return
     end
     local str = "Custom config " .. GetConVar("horde_external_lua_config"):GetString() .. " is loaded!"
     if CLIENT then
-        timer.Simple(1, function() notification.AddLegacy(str, NOTIFY_GENERIC, 5) end)
+        timer.Simple(1, function() HORDE:PlayNotification(str, 0) end)
     end
     print("[HORDE] " .. str)
 

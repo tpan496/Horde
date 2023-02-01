@@ -1,4 +1,4 @@
-PERK.PrintName = "AAS Perfume"
+PERK.PrintName = "Tren Perfume"
 PERK.Description =
 [[Adds {1} maximum Hypertrophy stacks.
 Press R to shoot a spore that provides Hypertrophy to players in an area.

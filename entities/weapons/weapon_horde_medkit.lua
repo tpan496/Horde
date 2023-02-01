@@ -66,12 +66,16 @@ function SWEP:PrimaryAttack()
 	local need = self.HealAmount
 	if ( IsValid( ent ) ) then need = self.HealAmount end
 
-	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() ) ) then
+	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() or ent:GetClass() == "npc_vj_horde_antlion") ) then
 
 		self:TakePrimaryAmmo( need )
 
         local healinfo = HealInfo:New({amount=need, healer=self.Owner})
-        HORDE:OnPlayerHeal(ent, healinfo)
+		if ent:IsPlayer() then
+			HORDE:OnPlayerHeal(ent, healinfo)
+		else
+            HORDE:OnAntlionHeal(ent, healinfo)
+		end
 		ent:EmitSound( HealSound )
 
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
@@ -105,7 +109,12 @@ function SWEP:SecondaryAttack()
 		self:TakePrimaryAmmo( need )
 
         local healinfo = HealInfo:New({amount=need, healer=self.Owner})
-        HORDE:OnPlayerHeal(ent, healinfo)
+		if ent:IsPlayer() then
+			HORDE:OnPlayerHeal(ent, healinfo)
+		elseif ent:GetClass() == "npc_vj_horde_antlion" then
+			HORDE:OnAntlionHeal(ent, healinfo)
+		end
+        
 		ent:EmitSound( HealSound )
 
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )

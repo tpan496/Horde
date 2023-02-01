@@ -2,8 +2,8 @@ GADGET.PrintName = "Steroid"
 GADGET.Description =
 [[Amplifies your healing by 25%.]]
 GADGET.Icon = "items/gadgets/steroid.png"
-GADGET.Duration = 5
-GADGET.Cooldown = 10
+GADGET.Duration = 0
+GADGET.Cooldown = 0
 GADGET.Active = false
 GADGET.Params = {
     [1] = {value = 0.25, percent = true},

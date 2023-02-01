@@ -431,6 +431,23 @@ function plymeta:Horde_SetSubclass(class_name, subclass_name)
     if not self.Horde_subclasses then self.Horde_subclasses = {} end
     self.Horde_subclasses[class_name] = subclass_name
     if SERVER then
+        -- Check items
+        if self:GetWeapons() then
+            for _, wpn in pairs(self:GetWeapons()) do
+                if HORDE.items[wpn:GetClass()] then
+                    local item = HORDE.items[wpn:GetClass()]
+                    if self:Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol" then
+                        continue
+                    end
+                    if (item.whitelist and (not item.whitelist[self:Horde_GetClass().name])) then
+                        timer.Simple(0, function ()
+                            self:DropWeapon(wpn)
+                        end)
+                        continue
+                    end
+                end
+            end
+        end
         net.Start("Horde_LegacyNotification")
             net.WriteString(class_name .. " subclass changed to " .. HORDE.subclasses[subclass_name].PrintName)
             net.WriteInt(0,2)

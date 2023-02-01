@@ -35,6 +35,9 @@ function entmeta:Horde_AddEffect_MedicGrenade(ent)
         if self:IsPlayer() then
             local healinfo = HealInfo:New({amount=5, healer=ent.Owner})
             HORDE:OnPlayerHeal(self, healinfo)
+        elseif ent:GetClass() == "npc_vj_horde_antlion" then
+            local healinfo = HealInfo:New({amount=5, healer=self.Owner})
+            HORDE:OnAntlionHeal(ent, healinfo)
         elseif ent:IsValid() and ent.Owner:IsValid() and ent.Inflictor:IsValid() and self:IsNPC() and (not self:GetNWEntity("HordeOwner"):IsValid()) then
             local d = DamageInfo()
             d:SetDamage(25)

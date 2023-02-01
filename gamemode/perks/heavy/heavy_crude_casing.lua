@@ -9,6 +9,6 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDamage = function(ply, npc, bonus, hitgroup, dmg)
     if not ply:Horde_GetPerk("heavy_crude_casing") then return end
     if HORDE:IsBallisticDamage(dmg) then
-        npc:Horde_AddWeaken(ply:Horde_GetApplyDebuffDuration(), ply:Horde_GetApplyDebuffMore())
+        npc:Horde_AddWeaken(ply, ply:Horde_GetApplyDebuffDuration(), ply:Horde_GetApplyDebuffMore())
     end
 end

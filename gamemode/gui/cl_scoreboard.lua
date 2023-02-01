@@ -33,8 +33,9 @@ function scoreboard:show()
         draw.RoundedBox(5, 0, 0, w, 40, Color(40,40,40,200), true, true, false, false )
         draw.DrawText("Name", "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
         draw.DrawText("Class", "Content", 225, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText("Gadget", "Content", 375, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText("Money", "Content", 771, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+        draw.DrawText("Perks", "Content", 375, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
+        draw.DrawText("Gadget", "Content", 721, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
+        draw.DrawText("Money", "Content", 821, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
         draw.DrawText("Kill", "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
         draw.DrawText("Death", "Content", 921, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
         draw.DrawText("Ping", "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
@@ -49,7 +50,12 @@ function scoreboard:show()
         if not ply:IsValid() then goto cont end
         local subclass_name = HORDE.Class_Survivor
         if ply:Horde_GetCurrentSubclass() then subclass_name = ply:Horde_GetCurrentSubclass() end
-
+        local perks
+        if HORDE.classes[subclass_name] then
+            perks = HORDE.classes[subclass_name].perks
+        else
+            perks = HORDE.subclasses[subclass_name].Perks
+        end
         local gadget = ply:Horde_GetGadget()
 
         local list = lists:Add("DPanel")
@@ -87,6 +93,29 @@ function scoreboard:show()
                     draw.DrawText(translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName, "Content", 250, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
                 end
             end
+
+            local x = 375
+            for perk_level, v in SortedPairs(perks) do
+                local color = color_white
+                if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then color = Color(150,150,150) end
+                if not ply.Horde_PerkChoices then break end
+                local choice = v.choices[ply.Horde_PerkChoices[subclass_name][perk_level] or 1]
+                local perk = HORDE.perks[choice]
+                local icon = perk.Icon
+                if icon then
+                    local mat = Material(icon, "mips smooth")
+                    surface.SetMaterial(mat)
+                    surface.SetDrawColor(color)
+                    surface.DrawTexturedRect(x, 2, 35, 35)
+                else
+                    local mat = Material(HORDE.subclasses[subclass_name].Icon, "mips smooth")
+                    surface.SetMaterial(mat)
+                    surface.SetDrawColor(color)
+                    surface.DrawTexturedRect(x, 2, 35, 35)
+                end
+                x = x + 40
+                ::cont::
+            end
             
             if gadget then
                 local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
@@ -100,10 +129,10 @@ function scoreboard:show()
                 else
                     surface.SetDrawColor(color_white)
                 end
-                surface.DrawTexturedRect(350, -2, 90, 45)
+                surface.DrawTexturedRect(721-20, -2, 90, 45)
             end
             surface.SetDrawColor(255, 255, 255, 255)
-            draw.DrawText(tostring(ply:Horde_GetMoney()) .. "$", "Content", 771, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+            draw.DrawText(tostring(ply:Horde_GetMoney()) .. "$", "Content", 821, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
             draw.DrawText(tostring(ply:Frags()), "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
             draw.DrawText(tostring(ply:Deaths()), "Content", 921, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
             draw.DrawText(tostring(ply:Ping()), "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)

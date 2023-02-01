@@ -35,6 +35,21 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
 
     -- Apply bonus
     local bonus = {increase=increase, more=more, base_add=base_add, post_add=post_add}
+    if ply:Horde_GetCurrentSubclass() == "Gunslinger" then
+        local wpn = HORDE:GetCurrentWeapon(dmginfo:GetInflictor())
+        if IsValid(wpn) then
+            -- Currently only applies to Gunslinger
+            local level = ply:Horde_GetUpgrade(wpn:GetClass())
+            if level and level > 0 then
+                if HORDE.items[wpn:GetClass()].starter_classes then
+                    -- Bonus damage to starter weapons
+                    bonus.more = bonus.more * (1 + 0.1 * level)
+                else
+                    bonus.more = bonus.more * (1 + 0.03 * level)
+                end
+            end
+        end
+    end
     local res = hook.Run("Horde_OnPlayerDamagePre", ply, npc, bonus, hitgroup, dmginfo)
     if res then
         dmginfo:AddDamage(bonus.base_add)

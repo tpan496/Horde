@@ -18,7 +18,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
 
     for _, ent in pairs(ents.FindInSphere(ply:GetPos(), 225)) do
         if ent:IsNPC() then
-            ent:Horde_AddStun(350)
+            ent:Horde_AddDebuffBuildup(HORDE.Status_Stun, 100, ply, ent:GetPos())
         end
     end
 end

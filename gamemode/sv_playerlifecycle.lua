@@ -373,7 +373,6 @@ function HORDE:PlayerInit(ply)
         net.Start("Horde_Disable_Levels")
         net.Send(ply)
     end
-
     if not HORDE.start_game then
         HORDE.player_ready[ply] = 0
         net.Start("Horde_PlayerReadySync")

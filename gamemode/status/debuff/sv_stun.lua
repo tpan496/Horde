@@ -1,39 +1,13 @@
 local entmeta = FindMetaTable("Entity")
 
-function entmeta:Horde_AddStun(damage)
+function entmeta:Horde_AddStun(duration)
     if self.Horde_Stunned then return end
-    if self:Horde_IsOnStunCooldown() then return end
-    if not self.Horde_StunPower then self.Horde_StunPower = 0 end
-    self.Horde_StunPower = self.Horde_StunPower + damage
-    if self.Horde_StunPower >= 300 then
-        if not self.Horde_Debuff_Active then self.Horde_Debuff_Active = {} end
-        self.Horde_Debuff_Active[HORDE.Status_Stun] = true
-        hook.Run("Horde_PostEnemyDebuffApply", self, self.Horde_Debuff_Active)
-        self:SetSchedule(SCHED_NPC_FREEZE)
-        timer.Simple(0.2, function() if not self:IsValid() then return end self:SetSchedule(SCHED_NPC_FREEZE) end)
-        self.Horde_Stunned = true
-        timer.Create("Horde_RemoveStun" .. self:GetCreationID(), 5, 1, function()
-            if not self:IsValid() then return end
-            self:SetCondition(68)
-            self.Horde_StunPower = 0
-            self.Horde_OnStunCooldown = true
-            self.Horde_Stunned = nil
-
-            self.Horde_Debuff_Active[HORDE.Status_Stun] = nil
-            hook.Run("Horde_PostEnemyDebuffApply", self, self.Horde_Debuff_Active)
-            timer.Simple(5, function()
-                if self:IsValid() then
-                    self.Horde_OnStunCooldown = nil
-                end
-            end)
-        end)
-    end
+    self:SetSchedule(SCHED_NPC_FREEZE)
+    timer.Simple(0.2, function() if not self:IsValid() then return end self:SetSchedule(SCHED_NPC_FREEZE) end)
+    self.Horde_Stunned = true
+    timer.Create("Horde_RemoveStun" .. self:GetCreationID(), 5, 1, function()
+        if not self:IsValid() then return end
+        self:SetCondition(68)
+        self.Horde_Stunned = nil
+    end)
 end
-
-function entmeta:Horde_IsOnStunCooldown()
-    return self.Horde_OnStunCooldown or nil
-end
-
-hook.Add("Horde_ResetStatus", "Horde_StunReset", function(ply)
-    ply.Horde_Stun = 0
-end)

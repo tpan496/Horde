@@ -11,18 +11,19 @@ surface.CreateFont("LargeTitle", { font = font, size = 35 * font_scale, extended
 surface.CreateFont("Heading", { font = font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Category", { font = font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Item", { font = font, size = 20 * font_scale, extended = true })
-surface.CreateFont("Info", { font = font, size = 23 * font_scale, extended = true})
+surface.CreateFont("Info", { font = "arial", size = ScreenScale(6) * font_scale, extended = true})
 surface.CreateFont("SmallInfo", { font = font, size = 20 * font_scale, extended = true})
+surface.CreateFont("Horde_Ready", { font = font, size = ScreenScale(5) * font_scale, extended = true })
 
 local center_panel = vgui.Create("DPanel")
 local center_panel_str = ""
-center_panel:SetSize(350, 50)
-center_panel:SetPos(25, 80)
+center_panel:SetSize(ScreenScale(350/4), ScreenScale(50/4))
+center_panel:SetPos(ScreenScale(6), ScreenScale(20))
 center_panel.Paint = function (w, h)
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     if center_panel_str == "" then return end
-    draw.RoundedBox(10, 0, 0, 280 + 5 + 50, 50, Color(40,40,40,200))
-    draw.SimpleText(center_panel_str, "Info", (280 + 5 + 50) / 2, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.RoundedBox(10, 0, 0, ScreenScale(335 / 4), ScreenScale(50/4), Color(40,40,40,200))
+    draw.SimpleText(center_panel_str, "Info", ScreenScale(43), ScreenScale(6), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end
 
 local ammobox_refresh_count = 0
@@ -30,62 +31,32 @@ net.Receive("Horde_AmmoboxCountdown", function ()
     ammobox_refresh_count = 60 - net.ReadInt(8)
 end)
 
+local wave_str
 local corner_panel = vgui.Create("DPanel")
-corner_panel:SetSize(350, 50)
-corner_panel:SetPos(25, 25)
+corner_panel:SetSize(ScreenScale(350/4), ScreenScale(50/4))
+corner_panel:SetPos(ScreenScale(6), ScreenScale(25/4))
 corner_panel.Paint = function () end
 timer.Simple(5, function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     corner_panel.Paint = function ()
-        draw.RoundedBox(10, 0, 0, 280, 50, Color(40,40,40,200))
+        draw.RoundedBox(10, 0, 0, ScreenScale(280/4), ScreenScale(50/4), Color(40,40,40,200))
         if LocalPlayer():Alive() then
-            local class = HORDE.classes[HORDE.Class_Survivor]
-            if not class then return end
-            local name = class.name
-            local display_name = class.display_name
-            local subclass
-            if LocalPlayer():Horde_GetClass() then
-                subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(LocalPlayer():Horde_GetClass().name)]
-                display_name = subclass.PrintName
-                name = subclass.PrintName
+            if (HORDE.current_wave <= 0) or (wave_str == nil) then
+                draw.SimpleText("Preparing...", "Info", ScreenScale(35), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
-                subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(name)]
-            end
-            local loc_display_name = translate.Get("Class_" .. display_name) or display_name
-            draw.SimpleText(loc_display_name .. " | " .. math.min(99999,LocalPlayer():Horde_GetMoney()) .. "$", "Info", 160, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-            local mat = Material(subclass.Icon, "mips smooth")
-            surface.SetMaterial(mat) -- Use our cached material
-            local pos = math.max(15, 140 - 40 - string.len(loc_display_name) * 7 - 25)
-            local level = LocalPlayer():Horde_GetLevel(name)
-            local rank, rank_level = HORDE:LevelToRank(level)
-            surface.SetDrawColor(HORDE.Rank_Colors[rank])
-            surface.DrawTexturedRect(pos, 5, 40, 40)
-
-            if rank == HORDE.Rank_Master then
-                draw.SimpleText(rank_level, "Trebuchet18", pos - 5, 15, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            else
-                if rank_level > 0 then
-                    local star = Material("star.png", "mips smooth")
-                    surface.SetMaterial(star)
-                    local y_pos = 33
-                    for i = 0, rank_level - 1 do
-                        surface.DrawTexturedRect(pos - 10, y_pos, 10, 10)
-                        y_pos = y_pos - 7
-                    end
-                end
+                draw.SimpleText("WAVE " .. wave_str, "Info", ScreenScale(35), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
         else
-            draw.SimpleText("Spectating", "Info", 150, 25, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Spectating", "Info", ScreenScale(150/4), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
-        draw.RoundedBox(10, 285, 0, 50, 50, Color(40,40,40,200))
+        draw.RoundedBox(10, ScreenScale(285/4), 0, ScreenScale(50/4), ScreenScale(50/4), Color(40,40,40,200))
         if ammobox_refresh_count > 5 then
-            draw.RoundedBox(10, 285, 50 - ammobox_refresh_count / HORDE.ammobox_refresh_interval * 50, 50, ammobox_refresh_count / HORDE.ammobox_refresh_interval * 50, HORDE.color_crimson_dark)
+            draw.RoundedBox(10, ScreenScale(285/4), ScreenScale((50 - ammobox_refresh_count / HORDE.ammobox_refresh_interval * 50)/4), 50, ammobox_refresh_count / HORDE.ammobox_refresh_interval * 50, HORDE.color_crimson_dark)
         end
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
         local mat = Material("materials/ammo.png", "mips smooth")
         surface.SetMaterial(mat) -- Use our cached material
-        surface.DrawTexturedRect(290, 5, 40, 40)
+        surface.DrawTexturedRect(ScreenScale(290/4), ScreenScale(5/4), ScreenScale(10), ScreenScale(10))
     end
 end)
 
@@ -138,6 +109,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
     if is_end_message then
         surface.PlaySound("HL1/fvox/blip.wav")
         center_panel_str = translate.Get("Game_Wave_Completed") .. "!"
+        wave_str = nil
         return
     end
     if num then
@@ -172,12 +144,12 @@ end)
 
 net.Receive("Horde_RenderEnemiesCount", function()
     local is_boss = net.ReadBool()
-    local wave_str = net.ReadString()
+    wave_str = net.ReadString()
     local count = net.ReadInt(32)
     if is_boss then
-        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|:" .. wave_str .. "  " .. "BOSS"
+        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) "|  " .. "BOSS"
     else
-        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|: " .. wave_str .. "  " .. translate.Get("Game_Enemies") .. ": " .. tostring(count)
+        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|  " .. translate.Get("Game_Enemies") .. ": " .. tostring(count)
     end
 end)
 
@@ -197,7 +169,7 @@ end)
 net.Receive("Horde_RenderHealer", function()
     local healer = net.ReadString()
     if heal_msg_cd <= 0 then
-        notification.AddLegacy(string.sub(healer, 0, 10) .. " " .. translate.Get("Game_Healed_You") .. ".", NOTIFY_GENERIC, 5)
+        HORDE:PlayNotification(string.sub(healer, 0, 10) .. " " .. translate.Get("Game_Healed_You") .. ".", "status/hp.png", Color(50,205,50))
         heal_msg_cd = 5
     end
 end)

@@ -259,31 +259,29 @@ function PANEL:Init()
     update_text_panel:SetSize(self:GetParent():GetWide(), 1000)
     update_text_panel:SetVisible(true)
     local update_text = [[
-        Major Update 1.1.8
-        --New subclass: Carcass
+        -- UI Overhaul
 
-        --Added droppable gadgets and one-use gadgets.
-            - Droppable gadgets can be configured in enemy config.
-        -- New Gadgets: Damage/Agility/Vitality Shard, Agility Booster, Precision Optics, ULPA Filter
-            - Removed Gadget: Gunslinger.
-            - Removed Gadget: T-Virus.
+        -- Damage Display System
+            - horde_display_damage 0/1
 
-        -- Added visual effects to entities affected by Frostbite, Shock, Break and Bleeding
+        -- New Subclass: Hatcher
+        -- Gunslinger reworked.
 
-        -- New Infusion: Ruination
+        -- New Gadgets:
+            - Survivor: Ultimate Booster
+            - Demolition: Nuke
+            - Engineer: Quantum Tunnel / Voidout effects changed. 
+            - ???
 
-        -- Bug Fixes:
-            - Fix perk bugs for Heavy.
-            - Fix attachments shop text.
-            - Fix players able to stand on enemies.
-
-        Coding Changes:
-        -- New function:
-            - HORDE:RegisterStatus(...): Registers a new status, check sh_status for more.
-            - Hook Horde_OnSetMaxHealth(...): Called when Horde sets player max health.]]
+        -- Perk balances:
+            - Ghost - Brain Snap: Increased freeze cooldown
+            - Demolition - Pressurized Warhead: Reduced percentage-base damage
+            - Artificer - Reduced Solar Orb base burn damage. Increased Floating Chaos energy usage. 
+            - Necromancer - Increased Spectre base health, reduced Spectre incremental health (so at max level health remains the same.)
+        ]]
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Update 1.1.7", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Major Update 1.1.9", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
@@ -323,7 +321,7 @@ function PANEL:Init()
 
         mat = Material("materials/status/necrosis.png", "mips smooth")
         surface.SetMaterial(mat)
-        surface.SetDrawColor(Color(50, 150, 50))
+        surface.SetDrawColor(Color(50, 50, 50))
         surface.DrawTexturedRect(50, 730, 40, 40)
 
         draw.SimpleText("Debuff Status", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -471,7 +469,7 @@ function PANEL:Init()
         draw_resistances(1050, {[HORDE.DMG_LIGHTNING] = 0.5, [HORDE.DMG_BLAST] = 1.25})
         
         draw.SimpleText("Blight", 'Heading', 50, 1150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Explodes on death or when shot in the torso, inflicting Necrosis status. Weak to headshots.", 'Content', 100, 1200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Increases Necrosis buildup to nearby players when shot in the torso. Weak to headshots.", 'Content', 100, 1200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(1150, {[HORDE.DMG_LIGHTNING] = 1.5})
         
         draw.SimpleText("Weeper", 'Heading', 50, 1250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -508,7 +506,7 @@ function PANEL:Init()
 
         draw.SimpleText("Subject: Wallace Breen", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "A gonome infused with a human subject to increase brain capabilities for accuracy.",
+            "A gonome infused with a human subject to increase cognitive capabilities.",
             "Claw Attack: Deals Slashing damage.",
             "Particle Cannon: An accurate ranged cannon that deals massive Physical and Blast damage. Inflicts Decay.",
             "Particle Cannon (Phase 2): Generates continuous explosions post detonation.",

@@ -154,15 +154,15 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         
         if HORDE.endless == 1 then
             if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
-                HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. "/∞", 0)
+                HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. " / ∞", 0)
             else
-                HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/∞", HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+                HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. " / ∞", HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
             end
         else
             if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
-                HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), 0)
+                HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. " / " .. tostring(HORDE.max_waves), 0)
             else
-                HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+                HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. " / " .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
             end
         end
         
@@ -177,6 +177,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             end
             
             reward = HORDE.kill_reward_base * scale
+            hook.Run("Horde_OnGivePlayerReward", killer, reward)
             if boss_properties and boss_properties.is_boss then
                 -- Boss reward is global. Defer reward.
                 defer_reward = true
@@ -998,15 +999,15 @@ function HORDE:WaveStart()
     horde_ammobox_refresh_timer = HORDE.ammobox_refresh_interval
     if HORDE.endless == 1 then
         if horde_boss_properties then
-            HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. "/∞", 0)
+            HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. " / ∞", 0)
         else
-            HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/∞", HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. " / ∞", HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         end
     else
         if horde_boss_properties then
-            HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), 0)
+            HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. " / " .. tostring(HORDE.max_waves), 0)
         else
-            HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. "/" .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+            HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. " / " .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
         end
     end
 

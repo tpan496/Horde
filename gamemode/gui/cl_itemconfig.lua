@@ -727,7 +727,7 @@ function PANEL:Init()
             net.WriteUInt(string.len(str), 32)
             net.WriteData(str, string.len(str))
         net.SendToServer()
-        notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+        HORDE:PlayNotification("Your changes have been saved.")
     end
 
     local load_btn = vgui.Create("DButton", btn_panel)
@@ -748,7 +748,7 @@ function PANEL:Init()
                     net.WriteUInt(string.len(str), 32)
                     net.WriteData(str, string.len(str))
                 net.SendToServer()
-                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+                HORDE:PlayNotification("Your changes have been saved.")
             end,
             "No", function() end
         )
@@ -771,7 +771,7 @@ function PANEL:Init()
                     net.WriteUInt(string.len(str), 32)
                     net.WriteData(str, string.len(str))
                 net.SendToServer()
-                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+                HORDE:PlayNotification("Your changes have been saved.")
             end,
             "No", function() end
         )
@@ -794,7 +794,7 @@ function PANEL:Init()
                     net.WriteUInt(string.len(str), 32)
                     net.WriteData(str, string.len(str))
                 net.SendToServer()
-                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+                HORDE:PlayNotification("Your changes have been saved.")
             end,
             "No", function() end
         )
@@ -817,7 +817,7 @@ function PANEL:Init()
                     net.WriteUInt(string.len(str), 32)
                     net.WriteData(str, string.len(str))
                 net.SendToServer()
-                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+                HORDE:PlayNotification("Your changes have been saved.")
             end,
             "No", function() end
         )
@@ -1015,7 +1015,7 @@ function PANEL:Init()
                 net.WriteUInt(string.len(str), 32)
                 net.WriteData(str, string.len(str))
             net.SendToServer()
-            notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+            HORDE:PlayNotification("Your changes have been saved.")
         end)
 
         menu:AddSpacer()

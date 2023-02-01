@@ -55,19 +55,16 @@ function ENT:Detonate()
     local effectdata = EffectData()
     effectdata:SetOrigin(self:GetPos())
     effectdata:SetRadius(225)
-    util.Effect("heal_mist", effectdata)
-    self:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 90, 100, 1, CHAN_AUTO)
-
-    local attacker = self
-
-    if self.Owner:IsValid() then
-        attacker = self.Owner
-    end
+    util.Effect("horde_heal_mist", effectdata)
+    self:EmitSound("horde/player/life_diffuser.ogg", 90, 100, 1, CHAN_AUTO)
 
     for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
         if ent:IsPlayer() then
             local healinfo = HealInfo:New({amount=25, healer=self.Owner})
             HORDE:OnPlayerHeal(ent, healinfo)
+        elseif ent:GetClass() == "npc_vj_horde_antlion" then
+            local healinfo = HealInfo:New({amount=25, healer=self.Owner})
+            HORDE:OnAntlionHeal(ent, healinfo)
         elseif ent:IsNPC() then
             local dmg = DamageInfo()
             dmg:SetDamage(75)
