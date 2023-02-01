@@ -3,10 +3,10 @@ GADGET.Description = "Allows you to quickly travel to your targeted minion's loc
 GADGET.Icon = "items/gadgets/quantum_tunnel.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
-GADGET.Active = nil
 GADGET.Params = {
 }
 GADGET.Hooks = {}
+GADGET.Active = true
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     if CLIENT then return end
