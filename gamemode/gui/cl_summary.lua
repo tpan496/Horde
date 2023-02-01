@@ -25,11 +25,11 @@ local ok_mat = Material("ok.png", "mips smooth")
 function HORDE:PlayNotification(text, type, icon, col)
     if not type then type = 0 end
     if not text then return end
-    local s = surface.GetTextSize(text) / 4 + ScreenScale(10)
+    local s = ScreenScale(surface.GetTextSize(text)/2) + ScreenScale(10)
     local main = vgui.Create("DPanel")
     local y_start = ScrH() - ScreenScale(40) - HORDE.Notifications_Count * ScreenScale(18)
-    main:SetSize(ScreenScale(s), ScreenScale(15))
-    main:SetPos(ScrW() - ScreenScale(s), y_start)
+    main:SetSize(s, ScreenScale(15))
+    main:SetPos(ScrW() - s, y_start)
     local mat
     if type == 0 then
         mat = ok_mat
@@ -42,14 +42,14 @@ function HORDE:PlayNotification(text, type, icon, col)
     local color = color_white
     if col then color = col end
     main.Paint = function ()
-        draw.RoundedBox(10, 0, 0, ScreenScale(s), ScreenScale(15), Color(40,40,40,150))
+        draw.RoundedBox(10, 0, 0, s, ScreenScale(15), Color(40,40,40,150))
         draw.SimpleText(text, "Info", ScreenScale(4) + ScreenScale(10), ScreenScale(4), color_white, TEXT_ALIGN_LEFT)
         surface.SetDrawColor(color)
         surface.SetMaterial(mat)
         surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), ScreenScale(10), ScreenScale(10))
     end
     local anim = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
-        pnl:SetPos(ScrW() - ScreenScale(s) - ScreenScale(8), inQuad(delta, y_start, - ScreenScale(30))) -- Change the X coordinate from 200 to 200+600
+        pnl:SetPos(ScrW() - s - ScreenScale(8), inQuad(delta, y_start, - ScreenScale(30))) -- Change the X coordinate from 200 to 200+600
         pnl:SetAlpha(delta * 255)
     end)
     main.Think = function(self)
@@ -81,6 +81,7 @@ function HORDE:PlayNotification(text, type, icon, col)
     end)
     HORDE.Notifications_Count = HORDE.Notifications_Count + 1
 end
+HORDE:PlayNotification("You are inflicted by Bleeding.")
 
 function PANEL:Init()
     local w = math.max(1024, math.min(1440, ScrW() * 0.75))

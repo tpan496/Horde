@@ -1,9 +1,10 @@
 PERK.PrintName = "Striker Base"
 PERK.Description = [[
-The Striker class manipulates space to its advantage.
+The Striker class relies on Barrier and manipulates space to its advantage.
 Complexity: HIGH
 
 {1} increased Blink distance.
+{2} increased maximum Barrier.
 
 SHIFT+E to activate Blink.
 Teleports to the target location.

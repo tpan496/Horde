@@ -147,7 +147,7 @@ net.Receive("Horde_RenderEnemiesCount", function()
     wave_str = net.ReadString()
     local count = net.ReadInt(32)
     if is_boss then
-        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) "|  " .. "BOSS"
+        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|  " .. "BOSS"
     else
         center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|  " .. translate.Get("Game_Enemies") .. ": " .. tostring(count)
     end
@@ -169,7 +169,7 @@ end)
 net.Receive("Horde_RenderHealer", function()
     local healer = net.ReadString()
     if heal_msg_cd <= 0 then
-        HORDE:PlayNotification(string.sub(healer, 0, 10) .. " " .. translate.Get("Game_Healed_You") .. ".", "status/hp.png", Color(50,205,50))
+        HORDE:PlayNotification(string.sub(healer, 0, 10) .. " " .. translate.Get("Game_Healed_You") .. ".", 0, "status/hp.png", Color(50,205,50))
         heal_msg_cd = 5
     end
 end)

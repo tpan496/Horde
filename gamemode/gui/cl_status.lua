@@ -372,11 +372,19 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
         draw.SimpleText(tostring(wpn:Clip2()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+    elseif wpn:GetPrimaryAmmoType() > 0 then
+        local c1 = color_white
+        local c2 = color_white
+        if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
+        if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+        --draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     else
         draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(47), icon_y + ScreenScale(15), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 
-    -- Draw weight
+    -- Draw Weight
     draw.RoundedBox(10, ScrW() - airgap - ScreenScale(78), ScrH() - ScreenScale(44) - airgap, airgap + ScreenScale(70), ScreenScale(10), Color(40,40,40,150))
     surface.SetMaterial(weight)
     surface.SetDrawColor(color_white)

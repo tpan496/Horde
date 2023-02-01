@@ -54,20 +54,20 @@ vgui.Register("HordePlayerReadyPanel", PANEL, "DPanel")
 HORDE.PlayerReadyPanel = vgui.Create("HordePlayerReadyPanel")
 HORDE.HelpPanel = vgui.Create("DPanel")
 HORDE.HelpPanel:SetSize(ScreenScale(125), ScreenScale(12.5))
-HORDE.HelpPanel:SetPos(ScrW() / 2 - ScreenScale(250/4), ScrH() - ScreenScale(75/4))
+HORDE.HelpPanel:SetPos(ScrW() / 2 - ScreenScale(125) / 2, ScrH() - ScreenScale(75/4))
 HORDE.HelpPanel.Paint = function (w,h)
     if HORDE.current_wave > 0 then
         local text = translate.Get("Game_HintBottom")
         if not text or not surface.GetTextSize(text) then return end
-        local len = math.min(500, surface.GetTextSize(text) * 1.5)
-        draw.RoundedBox(10, ScreenScale(math.max(0, 250 - len/2))/4, 0, ScreenScale(len/4), ScreenScale(12.5), HORDE.color_hollow)
-        draw.SimpleText(text, "Info", ScreenScale(math.max(0, 200 - len/2) + len / 2)/4, ScreenScale(13)/4, HORDE.color_white, TEXT_ALIGN_CENTER)
+        local len = surface.GetTextSize(text)
+        --draw.RoundedBox(10, ScreenScale(math.max(0, 250 - len/2))/4, 0, ScreenScale(len/4), ScreenScale(12.5), HORDE.color_hollow)
+        draw.SimpleText(text, "Info", ScreenScale(len)/2, ScreenScale(13)/4, HORDE.color_white, TEXT_ALIGN_CENTER)
     else
         local text = translate.Get("Game_HintBottomReady")
         if not text  or not surface.GetTextSize(text) then return end
-        local len = math.min(500, surface.GetTextSize(text) * 1.5)
-        draw.RoundedBox(10, ScreenScale(math.max(0, 250 - len/2))/4, 0, ScreenScale(len)/4, ScreenScale(50)/4, HORDE.color_hollow)
-        draw.SimpleText(text, "Info", ScreenScale(math.max(0, 200 - len/2) + len / 2)/4, ScreenScale(13)/4, HORDE.color_white, TEXT_ALIGN_CENTER)
+        local len = surface.GetTextSize(text)
+        --draw.RoundedBox(10, ScreenScale(math.max(0, 250 - len/2))/4, 0, ScreenScale(len)/4, ScreenScale(50)/4, HORDE.color_hollow)
+        draw.SimpleText(text, "Info", ScreenScale(125) / 2, ScreenScale(13)/4, HORDE.color_white, TEXT_ALIGN_CENTER)
     end
 end
 
