@@ -76,7 +76,7 @@ function PANEL:Init()
         net.Start("Horde_SetMapsWhitelistData")
             if HORDE.map_whitelist then net.WriteTable(HORDE.map_whitelist) else net.WriteTable({}) return end
         net.SendToServer()
-        notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+        HORDE:PlayNotification("Your changes have been saved.")
     end
 
     local whitelist_del_btn = vgui.Create("DButton", whitelist_tab)
@@ -93,7 +93,7 @@ function PANEL:Init()
                 net.Start("Horde_SetMapsWhitelistData")
                     net.WriteTable({})
                 net.SendToServer()
-                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+                HORDE:PlayNotification("Your changes have been saved.")
             end,
             "No", function() end
         )
@@ -126,7 +126,7 @@ function PANEL:Init()
 			net.Start("Horde_SetMapsWhitelistData")
                 if HORDE.map_whitelist then net.WriteTable(HORDE.map_whitelist) else net.WriteTable({}) return end
             net.SendToServer()
-			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+			HORDE:PlayNotification("Your changes have been saved.")
         end)
 
         menu:AddSpacer()
@@ -171,7 +171,7 @@ function PANEL:Init()
         HORDE.map_blacklist[blacklist_editor:GetText()] = blacklist_editor:GetText()
             if HORDE.map_blacklist then net.WriteTable(HORDE.map_blacklist) else net.WriteTable({}) return end
         net.SendToServer()
-        notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+        HORDE:PlayNotification("Your changes have been saved.")
     end
 
     local blacklist_del_btn = vgui.Create("DButton", blacklist_tab)
@@ -188,7 +188,7 @@ function PANEL:Init()
                 net.Start("Horde_SetMapsBlacklistData")
                     net.WriteTable({})
                 net.SendToServer()
-                notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+                HORDE:PlayNotification("Your changes have been saved.")
             end,
             "No", function() end
         )
@@ -221,7 +221,7 @@ function PANEL:Init()
 			net.Start("Horde_SetMapsBlacklistData")
                 if HORDE.map_blacklist then net.WriteTable(HORDE.map_blacklist) else net.WriteTable({}) return end
             net.SendToServer()
-			notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+			HORDE:PlayNotification("Your changes have been saved.")
         end)
 
         menu:AddSpacer()

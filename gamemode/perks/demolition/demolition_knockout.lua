@@ -10,6 +10,6 @@ PERK.Hooks = {}
 PERK.Hooks.PostEntityTakeDamage = function (ent, dmginfo, took)
     local attacker = dmginfo:GetAttacker()
     if took and ent:IsNPC() and attacker:IsPlayer() and attacker:Horde_GetPerk("demolition_knockout") and HORDE:IsBlastDamage(dmginfo) then
-        ent:Horde_AddStun(dmginfo:GetDamage())
+        ent:Horde_AddDebuffBuildup(HORDE.Status_Stun, dmginfo:GetDamage() / 3, attacker, ent:GetPos())
     end
 end

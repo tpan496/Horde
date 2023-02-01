@@ -21,13 +21,12 @@ end
 function ENT:StartTouch(entity)
     if not self.Removing and entity:IsPlayer() and entity:Alive() and not entity:IsBot() and entity:Health() < entity:GetMaxHealth() then
         sound.Play("items/medshot4.wav", entity:GetPos())
-        if entity:GetNWEntity("HordeOwner"):IsValid() then
-            local healinfo = HealInfo:New({amount=15, healer=self:GetNWEntity("HordeOwner")})
-            HORDE:OnPlayerHeal(self:GetNWEntity("HordeOwner"), healinfo)
-        else
-            local healinfo = HealInfo:New({amount=15, healer=entity})
-            HORDE:OnPlayerHeal(entity, healinfo)
+        local owner = self.Owner
+        if !IsValid(owner) then
+            owner = entity
         end
+        local healinfo = HealInfo:New({amount=15, healer=owner})
+        HORDE:OnPlayerHeal(entity, healinfo)
         self.Removing = true
         self:Remove()
     end

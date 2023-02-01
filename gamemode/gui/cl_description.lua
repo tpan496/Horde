@@ -81,6 +81,18 @@ function PANEL:Init()
         surface.PlaySound("UI/buttonrollover.wav")
     end
 
+    self.upgrade_btn = vgui.Create("DButton", self)
+    self.upgrade_btn:Dock(BOTTOM)
+    self.upgrade_btn:DockMargin(5,2.5,5,2.5)
+    self.upgrade_btn:SetFont("Content")
+    self.upgrade_btn:SetTextColor(Color(0,0,0,0))
+    self.upgrade_btn:SetText("")
+    self.upgrade_btn:SetTall(50)
+    self.upgrade_btn.Paint = function () end
+    self.upgrade_btn.OnCursorEntered = function ()
+        surface.PlaySound("UI/buttonrollover.wav")
+    end
+
     self.ammo_panel.Paint = function () end
     self.ammo_one_btn.Paint = function () end
     self.ammo_ten_btn.Paint = function () end
@@ -112,6 +124,10 @@ function PANEL:Init()
 
     function self.ammo_secondary_btn:DoClick()
         self:GetParent():AmmoDoClick(-1)
+    end
+
+    function self.upgrade_btn:DoClick()
+        self:GetParent():UpgradeDoClick()
     end
 
     function self.sell_btn:DoClick()
@@ -160,6 +176,15 @@ function PANEL:DoClick()
     if self.item.entity_properties and self.item.entity_properties.limit and self.item.entity_properties.limit > 0 and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP and drop_entities[self.item.class] and drop_entities[self.item.class] >= self.item.entity_properties.limit then return end
     -- Buy the item
     net.Start("Horde_BuyItem")
+    net.WriteString(self.item.class)
+    net.SendToServer()
+end
+
+function PANEL:UpgradeDoClick()
+    surface.PlaySound("UI/buttonclick.wav")
+    if not self.item then return end
+    if not LocalPlayer():Alive() then return end
+    net.Start("Horde_BuyItemUpgrade")
     net.WriteString(self.item.class)
     net.SendToServer()
 end
@@ -249,6 +274,7 @@ function PANEL:SetData(item)
     end
 
     if self.item and self.item.class then
+        self.is_special_weapon_item = self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic" or self.item.class == "horde_carcass" or self.item.class == "horde_pheropod"
         if GetConVar("horde_default_item_config"):GetInt() == 1 then
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
@@ -583,7 +609,7 @@ function PANEL:Paint()
                     px = px + 30
                 end
             end
-            if self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic" or self.item.class == "horde_carcass" then
+            if self:IsUpgraded() then
                 draw.DrawText(self.loc_name .. " +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class)), "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             else
                 draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
@@ -641,6 +667,7 @@ function PANEL:Paint()
             self.ammo_panel:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel:SetVisible(false)
+            self.upgrade_btn:SetVisible(false)
             
             return
         end
@@ -693,9 +720,9 @@ function PANEL:Paint()
                         surface.DrawRect(0, 0, self:GetWide(), 200)
                     end
                 else
-                    if (self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic" or self.item.class == "horde_carcass") and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 then
+                    if self.is_special_weapon_item and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 then
                         self.ammo_one_btn:SetTextColor(Color(255,255,255))
-                        local price = 800 + 25 * LocalPlayer():Horde_GetUpgrade(self.item.class)
+                        local price = HORDE:GetUpgradePrice(self.item.class)
                         self.ammo_one_btn:SetText("Upgrade to +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
                         self.ammo_one_btn:SetWide(self:GetWide())
                         self.ammo_one_btn.Paint = function ()
@@ -708,6 +735,23 @@ function PANEL:Paint()
                     else
                         self.ammo_secondary_btn:SetVisible(false)
                     end
+                end
+
+                if self:IsUpgradable() then
+                    if self.is_special_weapon_item then
+                    else
+                        self.upgrade_btn:SetVisible(true)
+                        self.upgrade_btn:SetTextColor(Color(255,255,255))
+                        local price = HORDE:GetUpgradePrice(self.item.class)
+                        self.upgrade_btn:SetText("Upgrade to +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
+                        self.upgrade_btn:SetWide(self:GetWide())
+                        self.upgrade_btn.Paint = function ()
+                            surface.SetDrawColor(Color(153,50,204))
+                            surface.DrawRect(0, 0, self:GetParent():GetWide(), 200)
+                        end
+                    end
+                else
+                    self.upgrade_btn:SetVisible(false)
                 end
 
                 self.current_ammo_panel.Paint = function ()
@@ -726,6 +770,7 @@ function PANEL:Paint()
             else
                 self.ammo_panel:SetVisible(false)
                 self.ammo_secondary_btn:SetVisible(false)
+                self.upgrade_btn:SetVisible(false)
                 self.current_ammo_panel.Paint = function () end
             end
         elseif not self.level_satisfy then
@@ -770,6 +815,7 @@ function PANEL:Paint()
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
             self.sell_btn:SetVisible(false)
+            self.upgrade_btn:SetVisible(false)
         elseif LocalPlayer():Horde_GetMoney() < self.item.price or LocalPlayer():Horde_GetWeight() < self.item.weight or (not LocalPlayer():Alive()) then
             self.buy_btn:SetTextColor(Color(200,200,200))
             if not LocalPlayer():Alive() then
@@ -784,6 +830,7 @@ function PANEL:Paint()
 
             self.ammo_panel:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
+            self.upgrade_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
                 local drop_entities = LocalPlayer():Horde_GetDropEntities()
@@ -828,6 +875,7 @@ function PANEL:Paint()
 
             self.ammo_panel:SetVisible(false)
             self.ammo_secondary_btn:SetVisible(false)
+            self.upgrade_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
         end
     else
@@ -835,8 +883,21 @@ function PANEL:Paint()
         self.sell_btn:SetVisible(false)
         self.ammo_secondary_btn:SetVisible(false)
         self.ammo_panel:SetVisible(false)
+        self.upgrade_btn:SetVisible(false)
     end
 
+end
+
+function PANEL:IsUpgraded()
+    return LocalPlayer():HasWeapon(self.item.class) and
+    ((LocalPlayer():Horde_GetCurrentSubclass() == "Gunslinger" and self.item.category == "Pistol")
+    or self.is_special_weapon_item)
+end
+
+function PANEL:IsUpgradable()
+    return LocalPlayer():HasWeapon(self.item.class) and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 and
+    ((LocalPlayer():Horde_GetCurrentSubclass() == "Gunslinger" and self.item.category == "Pistol")
+    or self.is_special_weapon_item)
 end
 
 vgui.Register("HordeDescription", PANEL, "DPanel")

@@ -5,13 +5,16 @@ PERK.Description = [[
 Press SHIFT+E to apply Hunter's Mark on an enemy.
 Hunter's Mark lasts for 5 seconds.
 You can apply 1 Hunter's Mark at a time.
+Enemies killed under Hunter's Mark has {4} chance to drop extra cash.
 
-Gains access to all Pistols.]]
+Your pistols can be upgraded for increased damage.
+Has access to all pistols.]]
 PERK.Icon = "materials/subclasses/gunslinger.png"
 PERK.Params = {
     [1] = {percent = true, base = 0, level = 0.008, max = 0.20, classname = "Gunslinger"},
     [2] = {value = 0.008, percent = true},
     [3] = {value = 0.2, percent = true},
+    [4] = {value = 0.5, percent = true},
 }
 PERK.Hooks = {}
 
@@ -57,6 +60,22 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
+PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, reward)
+    if not IsValid(victim.Horde_Has_Hunter_Mark) then return end
+    if not victim.Horde_Has_Hunter_Mark:Horde_GetPerk("gunslinger_base") then return end
+    local p = math.random()
+    if p <= 0.5 then
+        local money = ents.Create("horde_money")
+        local pos = victim:GetPos()
+        local drop_pos = pos
+        drop_pos.z = pos.z + 15
+        money:SetPos(drop_pos)
+        money:DropToFloor()
+        money:SetMoney(HORDE.kill_reward_base * 0.5)
+        money:Spawn()
+    end
+end
+
 PERK.Hooks.Horde_UseActivePerk = function (ply)
     if CLIENT then return end
     if not ply:Horde_GetPerk("gunslinger_base") then return end
@@ -69,7 +88,7 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
         if ply:Horde_GetPerk("gunslinger_puncture") then
             range = 2560000
         end
-        if ply:Horde_GetPerk("gunslinger_bladerunner") then
+        if ply:Horde_GetPerk("gunslinger_poach") then
             delay = 10
         end
         if ent:GetPos():DistToSqr(ply:GetPos()) > range then
@@ -90,13 +109,49 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
             net.WriteEntity(ent)
         net.Broadcast()
         ply.Horde_Hunter_Mark_Target = ent
-        sound.Play("buttons/combine_button1.wav", ply:GetPos(), 70, 100)
+        sound.Play("horde/player/hunter_mark.ogg", ply:GetPos(), 70, 100)
         timer.Create("Horde_HunterMarkExpire" .. id, delay, 1, function ()
             net.Start("Horde_RemoveHunterMarkHighlight")
                 net.WriteEntity(ent)
             net.Broadcast()
             ent.Horde_Has_Hunter_Mark = nil
         end)
+        if ply:Horde_GetPerk("gunslinger_exorcism") then
+            if ent.Horde_Mutation then
+                local mutations_count = table.Count(ent.Horde_Mutation)
+                if mutations_count > 0 then
+                    local muts = ent.Horde_Mutation
+                    ent:Horde_UnsetMutations()
+                    timer.Simple(10, function ()
+                        if IsValid(ent) then
+                            for mut, _ in pairs(muts) do
+                                ent:Horde_SetMutation(mut)
+                            end
+                        end
+                    end)
+                    local dmg = DamageInfo()
+                    dmg:SetAttacker(ply)
+                    dmg:SetInflictor(ply)
+                    dmg:SetDamagePosition(ent:GetPos())
+                    dmg:SetDamage(ent:GetMaxHealth() * 0.075 * mutations_count)
+                    dmg:SetDamageType(DMG_DIRECT)
+                    ent:TakeDamageInfo(dmg)
+                end
+            end
+            
+            if not ent:GetVar("is_elite") then
+                local p = math.random()
+                if p <= 0.3 then
+                    local dmg = DamageInfo()
+                    dmg:SetAttacker(ply)
+                    dmg:SetInflictor(ply)
+                    dmg:SetDamagePosition(ent:GetPos())
+                    dmg:SetDamage(ent:GetMaxHealth())
+                    dmg:SetDamageType(DMG_DIRECT)
+                    ent:TakeDamageInfo(dmg)
+                end
+            end
+        end
     else
         return true
     end

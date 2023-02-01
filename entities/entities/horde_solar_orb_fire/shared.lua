@@ -44,7 +44,7 @@ function ENT:Initialize()
         self.FireTime = 2
 
         if not self.BaseDamage then self.BaseDamage = 25 end
-        self.BaseDamage = self.BaseDamage / 3
+        self.BaseDamage = self.BaseDamage / 4
         self.DamageRadius = self:GetRadiusScale() * 150
 
         timer.Simple(0.1, function()

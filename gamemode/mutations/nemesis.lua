@@ -5,7 +5,6 @@ MUTATION.Hooks = {}
 
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "nemesis" then
-        ent.Horde_Mutation_Nemesis = true
         if SERVER then
             local e = ents.Create("obj_mutation_nemesis")
             local col_min, col_max = ent:GetCollisionBounds()
@@ -14,6 +13,7 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
             p.z = p.z + height / 2
             e:SetPos(p)
             e:SetParent(ent)
+            ent.Horde_Nemesis_Orb = e
         end
     end
 end
@@ -48,6 +48,8 @@ end
 
 MUTATION.Hooks.Horde_OnUnsetMutation = function (ent, mutation)
     if not ent:IsValid() or mutation ~= "nemesis" then return end
-    ent.Horde_Mutation_Nemesis = nil
+    if SERVER then
+        ent.Horde_Nemesis_Orb:Remove()
+    end
     ent:StopParticles()
 end

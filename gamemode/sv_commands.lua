@@ -130,16 +130,19 @@ function Shop(ply)
     end]]--
 
     if ply:Alive() then
-        if HORDE.has_buy_zone and (not ply:Horde_GetInBuyZone()) then
-            return
-        end
-
-        if HORDE.current_break_time <= 0 then
-            net.Start("Horde_LegacyNotification")
-            net.WriteString("You cannot shop after a wave has started.")
-            net.WriteInt(1,2)
-            net.Send(ply)
-            return
+        local res = hook.Run("Horde_OnPlayerOpenShop", ply)
+        if res ~= true then
+            if HORDE.has_buy_zone and (not ply:Horde_GetInBuyZone()) then
+                return
+            end
+    
+            if HORDE.current_break_time <= 0 then
+                net.Start("Horde_LegacyNotification")
+                net.WriteString("You cannot shop after a wave has started.")
+                net.WriteInt(1,2)
+                net.Send(ply)
+                return
+            end
         end
     end
     ply:Horde_RecalcWeight()
@@ -331,6 +334,7 @@ concommand.Add("horde_testing_gorlami", function (ply, cmd, args)
         local amount = 500
         ply:Horde_AddSkullTokens(amount)
         ply:Horde_SyncEconomy()
+        RunConsoleCommand("horde_testing_disable_level_restrictions")
     end
 end)
 

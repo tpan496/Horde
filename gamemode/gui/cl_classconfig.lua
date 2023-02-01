@@ -252,7 +252,7 @@ function PANEL:Init()
             net.Start("Horde_SetClassData")
             net.WriteTable(HORDE.classes)
             net.SendToServer()
-            notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+            HORDE:PlayNotification("Your changes have been saved.")
         end
     end
 
@@ -269,7 +269,7 @@ function PANEL:Init()
         net.Start("Horde_SetClassData")
         net.WriteTable(HORDE.classes)
         net.SendToServer()
-        notification.AddLegacy("Your changes have been saved.", NOTIFY_GENERIC, 5)
+        HORDE:PlayNotification("Your changes have been saved.")
     end
 
     local settings_tab = vgui.Create("DPanel", self)

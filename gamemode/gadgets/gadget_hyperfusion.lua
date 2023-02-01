@@ -21,7 +21,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     local effectdata = EffectData()
     effectdata:SetOrigin(ply:GetPos())
     effectdata:SetRadius(225)
-    util.Effect("heal_mist", effectdata)
+    util.Effect("horde_heal_mist", effectdata)
     ply:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 90, 100, 1, CHAN_AUTO)
 
     for _, ent in pairs(ents.FindInSphere(ply:GetPos(), 200)) do

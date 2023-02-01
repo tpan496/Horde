@@ -169,7 +169,7 @@ function PANEL:Init()
         local items = {}
 
         for _, item in pairs(HORDE.items) do
-            if item.category == category and ((item.whitelist == nil) or (item.whitelist and item.whitelist[class.name])) then
+            if item.category == category and ((item.whitelist == nil) or (item.whitelist and item.whitelist[class.name]) or (LocalPlayer():Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol")) then
                 if (item.category == "Gadget" and LocalPlayer():Horde_GetGadget() == item.class) or LocalPlayer():HasWeapon(item.class) then
                     item.cmp = -1
                 else
@@ -343,14 +343,19 @@ function PANEL:Paint(w, h)
     
     local text
     local weight_text
-    weight_text = translate.Get("Shop_Weight") .. ': [' .. tostring(LocalPlayer():Horde_GetMaxWeight() - LocalPlayer():Horde_GetWeight()) .. "/" .. LocalPlayer():Horde_GetMaxWeight() .. "]"
+    weight_text = translate.Get("Shop_Weight") .. ': ' .. tostring(LocalPlayer():Horde_GetMaxWeight() - LocalPlayer():Horde_GetWeight()) .. "/" .. LocalPlayer():Horde_GetMaxWeight() .. ""
+    local mat = Material("weight.png", "mips smooth")
+    surface.SetMaterial(mat)
+    surface.SetDrawColor(Color(255,255,255))
+    surface.DrawTexturedRect(self:GetWide() - 60, 14, 20, 20)
+    
     text = translate.Get("Shop_Cash") .. ": " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(LocalPlayer():Horde_GetSkullTokens()) .. '       ' .. weight_text
-    draw.SimpleText(text, 'Heading', self:GetWide() - 40, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+    draw.SimpleText(text, 'Heading', self:GetWide() - 60, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
     local mat = Material("skull.png", "mips smooth")
     surface.SetMaterial(mat)
     surface.SetDrawColor(Color(255,255,255))
-    surface.DrawTexturedRect(self:GetWide() - surface.GetTextSize(weight_text) * 1.5 - 10, 14, 20, 20)
+    surface.DrawTexturedRect(self:GetWide() - surface.GetTextSize(weight_text) * 1.5 - 30, 14, 20, 20)
 end
 
 vgui.Register("HordeShop", PANEL)

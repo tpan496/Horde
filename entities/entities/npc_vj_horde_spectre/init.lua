@@ -127,7 +127,7 @@ function ENT:CustomOnInitialize()
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     self:SetColor(Color(0, 0, 0, 200))
 	self.MeleeAttackDamage = self.MeleeAttackDamage + 3 * self.properties.level
-	self:SetHealth(80 + 17 * self.properties.level)
+	self:SetHealth(90 + 16 * self.properties.level)
 	self:AddRelationship("npc_turret_floor D_LI 99")
 	self:AddRelationship("npc_vj_horde_combat_bot D_LI 99")
 	self:AddRelationship("npc_manhack D_LI 99")

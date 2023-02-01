@@ -48,7 +48,8 @@ CreateConVar("horde_enable_3d2d_icon", 1, FCVAR_SERVER_CAN_EXECUTE, "Enables pla
 CreateConVar("horde_turret_spread", 0.5, FCVAR_SERVER_CAN_EXECUTE, "Turret spread.")
 
 CreateConVar("horde_testing_unlimited_class_change", 0, FCVAR_SERVER_CAN_EXECUTE, "You can change a class for an unlimited times. Please use this only for testing purposes.")
-CreateConVar("horde_testing_display_damage", 0, FCVAR_ARCHIVE, "Display damage.")
+CreateConVar("horde_testing_display_damage", 0, FCVAR_ARCHIVE, "Display damage for testing.")
+CreateConVar("horde_display_damage", 1, FCVAR_ARCHIVE, "Display damage.")
 
 CreateClientConVar("horde_disable_default_gadget_use_key", 0, FCVAR_ARCHIVE, "Disable default key bind for active gadgets.")
 
@@ -68,7 +69,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.1.8.0"
+HORDE.version = "1.1.9.0"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -194,4 +195,21 @@ end
 
 function HORDE:Round2(num, numDecimalPlaces)
     return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
+end
+
+function HORDE:GetUpgradePrice(class, ply)
+    local level
+    if CLIENT then
+        level = LocalPlayer():Horde_GetUpgrade(class)
+    else
+        level = ply:Horde_GetUpgrade(class)
+    end
+    if class == "horde_void_projector" or class == "horde_solar_seal" or class == "horde_astral_relic" or class == "horde_carcass" or class == "horde_pheropod" then
+        local price = 800 + 25 * level
+        return price
+    else
+        local base_price = HORDE.items[class].price
+        local price = HORDE:Round2(math.max(100, base_price / 2) + math.max(10, base_price / 64) * level)
+        return price
+    end
 end

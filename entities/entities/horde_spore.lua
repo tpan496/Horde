@@ -51,6 +51,9 @@ if SERVER then
         if ent:IsPlayer() then
             local healinfo = HealInfo:New({amount=20, healer=self.Owner})
             HORDE:OnPlayerHeal(ent, healinfo)
+        elseif ent:GetClass() == "npc_vj_horde_antlion" then
+            local healinfo = HealInfo:New({amount=20, healer=self.Owner})
+            HORDE:OnAntlionHeal(ent, healinfo)
         end
     end
 end

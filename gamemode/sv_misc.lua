@@ -22,6 +22,17 @@ function VJ_AddSpeed(ent, speed)
     ent:SetMoveVelocity(ent:GetMoveVelocity() * speed)
 end
 
+function HORDE:GetAntlionMinionsCount(ply)
+    local count = 0
+    if not HORDE.player_drop_entities[ply:SteamID()] then return 0 end
+    for id, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
+        if ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
+            count = count + 1
+        end
+    end
+    return count
+end
+
 hook.Add("EntityTakeDamage", "ManhackContactDamage", function (target, dmginfo)
     local inflictor = dmginfo:GetInflictor()
     local ply = inflictor:GetNWEntity("HordeOwner")
@@ -38,6 +49,19 @@ hook.Add("EntityTakeDamage", "ManhackContactDamage", function (target, dmginfo)
                         dd:SetInflictor(inflictor:GetNWEntity("HordeOwner"))
                         dd:SetDamageType(DMG_CRUSH)
                         dd:SetDamage(inflictor.Horde_Has_Antimatter_Shield)
+                    util.BlastDamageInfo(dd, inflictor:GetPos(), 200)
+                end
+            end
+            if inflictor.Horde_Has_Void_Shield then
+                local effectdata = EffectData()
+                effectdata:SetOrigin(inflictor:GetPos())
+                util.Effect("antimatter_explosion", effectdata)
+                if target:GetNWEntity("HordeOwner"):IsValid() then
+                    local dd = DamageInfo()
+                        dd:SetAttacker(inflictor:GetNWEntity("HordeOwner"))
+                        dd:SetInflictor(inflictor:GetNWEntity("HordeOwner"))
+                        dd:SetDamageType(DMG_CRUSH)
+                        dd:SetDamage(inflictor.Horde_Has_Void_Shield)
                     util.BlastDamageInfo(dd, inflictor:GetPos(), 200)
                 end
             end
@@ -183,3 +207,11 @@ hook.Add("PlayerTick", "Horde_Misc", function(ply, mv)
         ply:SetVelocity(vrand)
     end
 end)
+
+function HORDE:CreateTimer(identifier, delay, repitition, fn)
+    timer.Create("Horde_" .. identifier, delay, repitition, fn)
+end
+
+function HORDE:RemoveTimer(identifier)
+    timer.Remove("Horde_" .. identifier)
+end

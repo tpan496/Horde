@@ -26,6 +26,7 @@ HORDE.DMG_TYPE_STRING = {
     [HORDE.DMG_LIGHTNING] = "Lightning",
     [HORDE.DMG_POISON] = "Poison",
     [HORDE.DMG_BLAST] = "Blast",
+    [HORDE.DMG_PURE] = "Pure",
 }
 
 HORDE.DMG_TYPE_ICON = {
@@ -38,6 +39,7 @@ HORDE.DMG_TYPE_ICON = {
     [HORDE.DMG_LIGHTNING] = "materials/damagetype/lightning.png",
     [HORDE.DMG_POISON] = "materials/damagetype/poison.png",
     [HORDE.DMG_BLAST] = "materials/damagetype/blast.png",
+    [HORDE.DMG_PURE] = "materials/damagetype/physical.png",
 }
 
 HORDE.DMG_COLOR = {
@@ -50,6 +52,7 @@ HORDE.DMG_COLOR = {
     [HORDE.DMG_LIGHTNING] = Color(255,215,0),
     [HORDE.DMG_POISON] = Color(255, 0, 255),
     [HORDE.DMG_BLAST] = Color(255,140,0),
+    [HORDE.DMG_PURE] = Color(255,255,255),
 }
 
 HORDE.STATUS_COLOR = {
@@ -60,6 +63,7 @@ HORDE.STATUS_COLOR = {
     [HORDE.Status_Frostbite] = HORDE.DMG_COLOR[HORDE.DMG_COLD],
     [HORDE.Status_Shock] = HORDE.DMG_COLOR[HORDE.DMG_LIGHTNING],
     [HORDE.Status_Stun] = Color(255, 255, 0),
+    [HORDE.Status_Break] = HORDE.DMG_COLOR[HORDE.DMG_POISON],
 }
 
 function HORDE:GetDamageType(dmginfo)
@@ -180,6 +184,7 @@ net.Receive("Horde_GetStats", function (len, ply)
     HORDE:CalcImmunity(ply, stats, HORDE.Status_Frostbite)
     HORDE:CalcImmunity(ply, stats, HORDE.Status_Shock)
     HORDE:CalcImmunity(ply, stats, HORDE.Status_Break)
+    HORDE:CalcImmunity(ply, stats, HORDE.Status_Necrosis)
 
     net.Start("Horde_GiveStats")
         net.WriteTable(stats)

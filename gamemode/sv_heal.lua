@@ -98,6 +98,12 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
     end
 end
 
+function HORDE:OnAntlionHeal(npc, healinfo, silent)
+    hook.Run("Horde_OnAntlionHeal", npc, healinfo)
+    npc:Horde_Evolve(healinfo:GetHealAmount() * 1.5)
+    npc:SetHealth(math.min(npc:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), npc:Health() + healinfo:GetHealAmount()))
+end
+
 function HORDE:SelfHeal(ply, amount)
     if amount <= 0 then return end
     local healinfo = HealInfo:New({amount=amount, healer=ply})

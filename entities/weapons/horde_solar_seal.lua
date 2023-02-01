@@ -160,7 +160,7 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 0
 SWEP.Secondary.DefaultClip = 0
-SWEP.Secondary.ClipSize = 100
+SWEP.Secondary.ClipSize = 0
 
 SWEP.Delay = 1
 
@@ -384,8 +384,8 @@ function SWEP:FloatingChaos()
 	if not self.Owner:Horde_GetPerk("artificer_base") then return end
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
-	if self.Weapon:Clip1() < 25 then return end
-	self:TakePrimaryAmmo(25)
+	if self.Weapon:Clip1() < 35 then return end
+	self:TakePrimaryAmmo(35)
 	self.Owner:EmitSound( "horde_solar_seal.floating_chaos_launch" )
 
 	local tr = self.Owner:GetEyeTrace()
