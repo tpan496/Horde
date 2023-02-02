@@ -42,9 +42,9 @@ timer.Simple(5, function ()
         draw.RoundedBox(10, 0, 0, ScreenScale(280/4), ScreenScale(50/4), Color(40,40,40,200))
         if LocalPlayer():Alive() then
             if (HORDE.current_wave <= 0) or (wave_str == nil) then
-                draw.SimpleText("Preparing...", "Info", ScreenScale(35), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText(translate.Get("Game_Preparing"), "Info", ScreenScale(35), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
-                draw.SimpleText("WAVE " .. wave_str, "Info", ScreenScale(35), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText(translate.Get("Game_Wave") .. wave_str, "Info", ScreenScale(35), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
         else
             draw.SimpleText("Spectating", "Info", ScreenScale(150/4), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)

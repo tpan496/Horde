@@ -232,7 +232,7 @@ function PANEL:Paint()
 
         if LocalPlayer():HasWeapon(self.item.class) or LocalPlayer():Horde_GetGadget() == self.item.class or (LocalPlayer().Horde_drop_entities and LocalPlayer().Horde_drop_entities[self.item.class]) then
             self.price_panel:SetTextColor(HORDE.color_crimson)
-            self.price_panel:SetText("Owned")
+            self.price_panel:SetText(translate.Get("Item_Owned"))
             self.weight_panel_text:SetTextColor(HORDE.color_crimson)
             self.weight_panel_icon:SetImageColor(HORDE.color_crimson)
             if self.item.category == "Attachment" or self.item.category == "Gadget" or self.item.category == "Equipment" or self.item.category == "Explosive" or self.item.category == "Special" then

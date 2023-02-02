@@ -36,7 +36,7 @@ function PANEL:Init()
     self.subclass_btn:DockMargin(2.5,0,0,0)
     self.subclass_btn:SetFont("Content")
     self.subclass_btn:SetTall(50)
-    self.subclass_btn:SetText("Change Subclass")
+    self.subclass_btn:SetText(translate.Get("Class_Change_Subclass"))
     self.subclass_btn.OnCursorEntered = function ()
         surface.PlaySound("UI/buttonrollover.wav")
     end
@@ -153,8 +153,8 @@ function PANEL:DoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
     if not self.item.class then
-        Derma_Query("Changing class will remove all your items!", "Change Class",
-            "Yes",
+        Derma_Query(translate.Get("Class_Change_Warning"), translate.Get("Class_Change_Headline"),
+            translate.Get("Class_Change_Yes"),
             function()
                 LocalPlayer():Horde_SetSubclass(self.item.name, LocalPlayer().Horde_subclass_choices[self.item.name])
                 net.Start("Horde_SelectClass")
@@ -165,7 +165,7 @@ function PANEL:DoClick()
 
                 file.Write("horde/class_choices.txt", self.item.subclass.PrintName)
             end,
-            "No", function() end
+            translate.Get("Class_Change_No"), function() end
         )
         --warning_panel:SetFont("Title")
         return
@@ -231,15 +231,15 @@ function PANEL:SellDoClick()
     end
     if not LocalPlayer():Alive() then return end
     if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties and (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP or self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET)) then
-        Derma_Query("Sell Item?!", "Sell",
-                "Yes",
+        Derma_Query(translate.Get("Sell_Warning"), translate.Get("Sell_Headline"),
+                translate.Get("Sell_Yes"),
                 function()
                     -- Sell the item
                     net.Start("Horde_SellItem")
                     net.WriteString(self.item.class)
                     net.SendToServer()
                 end,
-                "No", function() end
+                translate.Get("Sell_No"), function() end
             )
     end
 end
@@ -283,7 +283,7 @@ function PANEL:SetData(item)
                     local activate_loc = translate.Get("Gadget_Activation") or "Press T to activate."
                     self.loc_desc = activate_loc .. "\n\n" .. self.loc_desc
                     if HORDE.gadgets[self.item.class].Once then
-                        local once = "This gadget is CONSUMED after activation."
+                        local once = translate.Get("Gadget_Consumed") or "This gadget is CONSUMED after activation."
                         self.loc_desc = once .. "\n" .. self.loc_desc
                     end
                     self.loc_desc = self.loc_desc .. "\n\n"
@@ -569,7 +569,7 @@ function PANEL:Paint()
                 w, h = surface.GetTextSize(self.loc_desc .. "\n\n")
             end
             if self.item.dmgtype then
-                draw.DrawText("Damage Type: ", "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                draw.DrawText(translate.Get("Shop_Damage_Type"), "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
                 local px = 0
                 for _, dmgtype in SortedPairs(self.item.dmgtype) do
                     local icon2 = Material(HORDE.DMG_TYPE_ICON[dmgtype], "mips smooth")
@@ -599,7 +599,7 @@ function PANEL:Paint()
                 w, h = surface.GetTextSize(self.loc_desc .. "\n")
             end
             if self.item.dmgtype then
-                draw.DrawText("Damage Type: ", "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                draw.DrawText(translate.Get("Shop_Damage_Type"), "Content", 50, 80 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
                 local px = 0
                 for _, dmgtype in SortedPairs(self.item.dmgtype) do
                     local icon = Material(HORDE.DMG_TYPE_ICON[dmgtype], "mips smooth")
@@ -674,7 +674,7 @@ function PANEL:Paint()
 
         if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET and LocalPlayer():Horde_GetGadget() == self.item.class) then
             self.buy_btn:SetTextColor(Color(255,255,255))
-            self.buy_btn:SetText("OWNED")
+            self.buy_btn:SetText(translate.Get("Shop_OWNED"))
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(Color(40,40,40))
                 surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -723,7 +723,7 @@ function PANEL:Paint()
                     if self.is_special_weapon_item and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 then
                         self.ammo_one_btn:SetTextColor(Color(255,255,255))
                         local price = HORDE:GetUpgradePrice(self.item.class)
-                        self.ammo_one_btn:SetText("Upgrade to +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
+                        self.ammo_one_btn:SetText(translate.Get("Shop_Upgrade") .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
                         self.ammo_one_btn:SetWide(self:GetWide())
                         self.ammo_one_btn.Paint = function ()
                             surface.SetDrawColor(Color(153,50,204))
