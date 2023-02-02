@@ -25,7 +25,7 @@ local ok_mat = Material("ok.png", "mips smooth")
 function HORDE:PlayNotification(text, type, icon, col)
     if not type then type = 0 end
     if not text then return end
-    local s = ScreenScale(surface.GetTextSize(text)/2) + ScreenScale(10)
+    local s = string.len(text) * ScreenScale(3) + ScreenScale(20)
     local main = vgui.Create("DPanel")
     local y_start = ScrH() - ScreenScale(40) - HORDE.Notifications_Count * ScreenScale(18)
     main:SetSize(s, ScreenScale(15))
@@ -81,7 +81,7 @@ function HORDE:PlayNotification(text, type, icon, col)
     end)
     HORDE.Notifications_Count = HORDE.Notifications_Count + 1
 end
-HORDE:PlayNotification("You are inflicted by Bleeding.")
+
 
 function PANEL:Init()
     local w = math.max(1024, math.min(1440, ScrW() * 0.75))

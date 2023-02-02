@@ -33,30 +33,31 @@ end
 
 -- Stack < 0 means disabled
 -- Stack = 0 means enabled for non-stacking status
+local status_icon_s = ScreenScale(15)
 local function DrawStatus(status, stack, displacement)
     if stack <= 0 then return end
     if not HORDE.Status_Icon[status] then return end
     local mat
     if status < HORDE.Status_Armor_Survivor or status >= HORDE.Status_ExpDisabled then
         if HORDE:IsSkillStatus(status) then
-            draw.RoundedBox(10, ScreenScale(displacement)/4, 0, ScreenScale(12.5), ScreenScale(12.5), Color(40,40,40,200))
+            draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
     
             mat = Material(HORDE.Status_Icon[status], "mips smooth")
     
             surface.SetMaterial(mat)
             surface.SetDrawColor(color_white)
-            surface.DrawTexturedRect(ScreenScale(5 + displacement)/4, ScreenScale(5/4), ScreenScale(10), ScreenScale(10))
+            surface.DrawTexturedRect(ScreenScale(1 + displacement), ScreenScale(5/4), ScreenScale(13), ScreenScale(13))
     
             local cd = LocalPlayer():Horde_GetPerkInternalCooldown()
             if cd > 0 then
-                draw.RoundedBox(10, ScreenScale(displacement)/4, 0, ScreenScale(12.5), ScreenScale(12.5), Color(40,40,40,200))
+                draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
                 surface.SetDrawColor(color_white)
-                draw.SimpleText(cd, "Trebuchet24", ScreenScale(displacement + 25)/4, ScreenScale(25/4), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText(cd, "Horde_Cd", ScreenScale(displacement + 7.5), ScreenScale(7), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
 
             local charge = LocalPlayer():Horde_GetPerkCharges()
             if HORDE:IsStackableSkillStatus(status) and charge >= 0 then
-                draw.SimpleText(charge, "Trebuchet24", ScreenScale(displacement + 39)/4, ScreenScale(10/4), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText(charge, "Horde_Cd", ScreenScale(displacement + 12), ScreenScale(2.5), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
             return
         end
@@ -66,31 +67,31 @@ local function DrawStatus(status, stack, displacement)
         end
         if color ~= color_white then
             if stack < 100 then
-                draw.RoundedBox(5, 0 + ScreenScale(displacement/4), ScreenScale(55/4), ScreenScale(50/4), ScreenScale(10/4), Color(40,40,40,200))
-                draw.RoundedBox(5, 0 + ScreenScale(displacement/4), ScreenScale(55/4), ScreenScale(50 * stack / 400), ScreenScale(10/4), HORDE.color_crimson_violet)
+                draw.RoundedBox(5, ScreenScale(displacement), ScreenScale(55/4), status_icon_s, ScreenScale(10/4), Color(40,40,40,200))
+                draw.RoundedBox(5, ScreenScale(displacement), ScreenScale(55/4), ScreenScale(50 * stack / 400), ScreenScale(10/4), HORDE.color_crimson_violet)
             else
-                draw.RoundedBox(10, 0 + ScreenScale(displacement/4), 0, ScreenScale(50/4), ScreenScale(50/4), HORDE.color_crimson_violet)
+                draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, HORDE.color_crimson_violet)
             end
-            draw.RoundedBox(10, 0 + ScreenScale(displacement/4), 0, ScreenScale(50/4), ScreenScale(50/4), Color(40,40,40,200))
+            draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
         else
-            draw.RoundedBox(10, 0 + ScreenScale(displacement/4), 0, ScreenScale(50/4), ScreenScale(50/4), Color(40,40,40,200))
+            draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
         end
 
         mat = Material(HORDE.Status_Icon[status], "mips smooth")
 
         surface.SetMaterial(mat)
         surface.SetDrawColor(color)
-        surface.DrawTexturedRect(ScreenScale(5 + displacement)/4, ScreenScale(5/4), ScreenScale(10), ScreenScale(10))
+        surface.DrawTexturedRect(ScreenScale(displacement + 1.5), ScreenScale(5/4), ScreenScale(13), ScreenScale(13))
     else
-        draw.RoundedBox(10, ScreenScale(displacement/4), 0, ScreenScale(50/4), ScreenScale(50/4), Color(40,40,40,200))
+        draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
         mat = Material(HORDE.Status_Icon[status])
         surface.SetMaterial(mat)
         surface.SetDrawColor(color_white)
-        surface.DrawTexturedRect(ScreenScale(-15 + displacement)/4, ScreenScale(5/4), ScreenScale(20), ScreenScale(10))
+        surface.DrawTexturedRect(ScreenScale(-7 + displacement), ScreenScale(0), ScreenScale(30), ScreenScale(15))
     end
 
     if stack > 0 and HORDE:IsStatusStackable(status) then
-        draw.SimpleText(stack, "Trebuchet24", ScreenScale(40 + displacement)/4, ScreenScale(2.5), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(stack, "Trebuchet24", ScreenScale(10 + displacement), ScreenScale(2.5), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 end
 
@@ -119,7 +120,7 @@ end
 
 local status_panel = vgui.Create("DPanel")
 status_panel:SetSize(ScreenScale(125), ScreenScale(25))
-status_panel:SetPos(ScreenScale(6), ScreenScale(135/4))
+status_panel:SetPos(ScreenScale(6), ScreenScale(40))
 status_panel.Paint = function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
 
@@ -129,7 +130,7 @@ status_panel.Paint = function ()
             if HORDE:IsDebuff(status) and stack < 100 then goto cont end
             if not HORDE.Status_Icon[status] then goto cont end
             DrawStatus(status, stack, pos)
-            pos = pos + 55
+            pos = pos + 17
             ::cont::
         end
     end
@@ -275,156 +276,158 @@ local font2 = "HealthInfo2"
 local font3 = "Horde_WeaponName"
 local fontweight = "Horde_Weight"
 hook.Add("HUDPaint", "Horde_DrawHud", function ()
+    if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     local colhp = Color(255, 255, 255, 255)
-    local gotarmor = false
     local airgap = ScreenScale(6)
     
-    draw.RoundedBox(10, airgap, ScrH() - ScreenScale(33) - airgap, airgap + ScreenScale(25), ScreenScale(26) + airgap, Color(40,40,40,150))
-    draw.RoundedBox(10, airgap, ScrH() - ScreenScale(33) - airgap, airgap + ScreenScale(70), ScreenScale(26) + airgap, Color(40,40,40,150))
-
-    -- Draw Class
-    local subclass = HORDE.subclasses[LocalPlayer():Horde_GetCurrentSubclass()]
-    if not subclass then subclass = HORDE.subclasses[HORDE.Class_Survivor] end
-    local display_name = subclass.PrintName
-    local class_icon = Material(subclass.Icon, "mips smooth")
-    local level = LocalPlayer():Horde_GetLevel(display_name)
-    local rank, rank_level = HORDE:LevelToRank(level)
-    local class_icon_s = ScreenScale(24)
-    surface.SetMaterial(class_icon)
-    surface.SetDrawColor(HORDE.Rank_Colors[rank])
-    local class_icon_x = airgap + ScreenScale(4)
-    local class_icon_y = ScrH() - airgap - ScreenScale(28)
-    surface.DrawTexturedRect(class_icon_x, class_icon_y, class_icon_s, class_icon_s)
-    if rank == HORDE.Rank_Master then
-        draw.SimpleText(rank_level, "Trebuchet18", class_icon_x, class_icon_y, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-    else
-        if rank_level > 0 then
-            local star = Material("star.png", "mips smooth")
-            surface.SetMaterial(star)
-            local x_pos = class_icon_x
-            local y_pos = class_icon_y + ScreenScale(12)
-            for i = 0, rank_level - 1 do
-                surface.DrawTexturedRect(x_pos - ScreenScale(3), y_pos, ScreenScale(4), ScreenScale(4))
-                y_pos = y_pos - ScreenScale(3)
-            end
-        end
-    end
-
-    if LocalPlayer():Health() <= 30 then
-        colhp = Color(150, 0, 0)
-    end
-
-    vhp = LocalPlayer():Health()
-    varmor = LocalPlayer():Armor()
-
-    local icon_s = ScreenScale(15)
     local icon_x = airgap + ScreenScale(34)
-    local icon_y = ScrH() - airgap - ScreenScale(32)
+    local icon_y = ScrH() - airgap - ScreenScale(31)
+    if GetConVarNumber("horde_enable_health_gui") == 1 then
+        draw.RoundedBox(10, airgap, ScrH() - ScreenScale(33) - airgap, airgap + ScreenScale(25), ScreenScale(26) + airgap, Color(40,40,40,150))
+        draw.RoundedBox(10, airgap, ScrH() - ScreenScale(33) - airgap, airgap + ScreenScale(70), ScreenScale(26) + airgap, Color(40,40,40,150))
 
-    surface.SetMaterial(hp)
-    surface.SetDrawColor(colhp)
-    surface.DrawTexturedRect(icon_x, icon_y, icon_s, icon_s)
-    surface.SetMaterial(armor)
-    surface.SetDrawColor(color_white)
-    surface.DrawTexturedRect(icon_x, icon_y + ScreenScale(15), icon_s, icon_s)
-
-    --DrawTextWithShadow(tostring(math.Round(vhp)), font, icon_x + icon_s + ScreenScale(1), icon_y, colhp)
-    draw.SimpleText(tostring(math.Round(vhp)), font, icon_x + icon_s + ScreenScale(1), icon_y, colhp)
-    draw.SimpleText(tostring(math.Round(varmor)), font, icon_x + icon_s + ScreenScale(1), icon_y + ScreenScale(15), color_white)
-
-    --draw.RoundedBox(10, airgap, ScrH() - ScreenScale(45) - airgap, airgap + ScreenScale(70), ScreenScale(1) + airgap, Color(40,40,40,150))
-    -- Draw Ammo
-    draw.RoundedBox(10, ScrW() - airgap - ScreenScale(78), ScrH() - ScreenScale(33) - airgap, airgap + ScreenScale(70), ScreenScale(26) + airgap, Color(40,40,40,150))
-
-    local wpn = LocalPlayer():GetActiveWeapon()
-    if not wpn or not wpn:IsValid() then return end
-    local col_ammo = color_white
-    local col_ammo2 = color_white
-    
-    if LocalPlayer():Horde_GetInfusion(wpn:GetClass()) ~= HORDE.Infusion_None then
-        local infusion = LocalPlayer():Horde_GetInfusio_n(wpn:GetClass())
-        local infusion_mat = Material(HORDE.Infusion_Icons[infusion], "mips smooth")
-        surface.SetMaterial(infusion_mat)
-        surface.SetDrawColor(HORDE.Infusion_Colors[infusion])
-        surface.DrawTexturedRect(ScrW() - ScreenScale(16), icon_y, ScreenScale(6), ScreenScale(6))
-    end
-    if (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) and (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
-        local c1 = color_white
-        local c2 = color_white
-        if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
-        if wpn:Clip2() == 0 then c2 = Color(100,0,0) end
-        draw.SimpleText(tostring(wpn:Clip1() .. " / " .. LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font, ScrW() - ScreenScale(20), icon_y + ScreenScale(13), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(tostring(wpn:Clip2() .. " / " .. LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(24), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-    elseif (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) then
-        local c1 = color_white
-        local c2 = color_white
-        if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
-        if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
-        draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-    elseif (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
-        local c1 = color_white
-        local c2 = color_white
-        if wpn:Clip2() == 0 then c1 = Color(100,0,0) end
-        if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
-        draw.SimpleText(tostring(wpn:Clip2()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-    elseif wpn:GetPrimaryAmmoType() > 0 then
-        local c1 = color_white
-        local c2 = color_white
-        if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
-        if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
-        --draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-        draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-    else
-        draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(47), icon_y + ScreenScale(15), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-    end
-
-    -- Draw Weight
-    draw.RoundedBox(10, ScrW() - airgap - ScreenScale(78), ScrH() - ScreenScale(44) - airgap, airgap + ScreenScale(70), ScreenScale(10), Color(40,40,40,150))
-    surface.SetMaterial(weight)
-    surface.SetDrawColor(color_white)
-    local wx = ScrW() - airgap - ScreenScale(80)
-    local wy = ScrH() - ScreenScale(46) - airgap
-    surface.DrawTexturedRect(wx + ScreenScale(65), wy + ScreenScale(2), ScreenScale(10), ScreenScale(10))
-    draw.SimpleText(tostring(LocalPlayer():Horde_GetMaxWeight() - LocalPlayer():Horde_GetWeight()) .. "/" .. tostring(LocalPlayer():Horde_GetMaxWeight()), fontweight, wx + ScreenScale(65), wy + ScreenScale(3), color_white, TEXT_ALIGN_RIGHT)
-    draw.SimpleText(tostring(LocalPlayer():Horde_GetMoney()) .. " $", fontweight, wx + ScreenScale(4), wy + ScreenScale(3), color_white)
-
-    -- Draw Gadget
-    if LocalPlayer():Horde_GetGadget() ~= nil then
-        local gadget = LocalPlayer():Horde_GetGadget()
-        local charge = LocalPlayer():Horde_GetGadgetCharges()
-        local cd = LocalPlayer():Horde_GetGadgetInternalCooldown()
-        local x = ScrW() - airgap - ScreenScale(78) - ScreenScale(33)
-        local y = ScrH() - ScreenScale(33) - airgap
-        local s = ScreenScale(26) + airgap
-        draw.RoundedBox(10, x, y, s, s, Color(40,40,40,150))
-
-        local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
-        surface.SetMaterial(mat) -- Use our cached material
-        if HORDE.gadgets[gadget].Active then
-            if HORDE.gadgets[gadget].Once then
-                surface.SetDrawColor(HORDE.color_gadget_once)
-            else
-                surface.SetDrawColor(HORDE.color_gadget_active)
-            end
+        -- Draw Class
+        local subclass = HORDE.subclasses[LocalPlayer():Horde_GetCurrentSubclass()]
+        if not subclass then subclass = HORDE.subclasses[HORDE.Class_Survivor] end
+        local display_name = subclass.PrintName
+        local class_icon = Material(subclass.Icon, "mips smooth")
+        local level = LocalPlayer():Horde_GetLevel(display_name)
+        local rank, rank_level = HORDE:LevelToRank(level)
+        local class_icon_s = ScreenScale(24)
+        surface.SetMaterial(class_icon)
+        surface.SetDrawColor(HORDE.Rank_Colors[rank])
+        local class_icon_x = airgap + ScreenScale(4)
+        local class_icon_y = ScrH() - airgap - ScreenScale(28)
+        surface.DrawTexturedRect(class_icon_x, class_icon_y, class_icon_s, class_icon_s)
+        if rank == HORDE.Rank_Master then
+            draw.SimpleText(rank_level, "Trebuchet18", class_icon_x, class_icon_y, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         else
-            surface.SetDrawColor(color_white)
+            if rank_level > 0 then
+                local star = Material("star.png", "mips smooth")
+                surface.SetMaterial(star)
+                local x_pos = class_icon_x
+                local y_pos = class_icon_y + ScreenScale(12)
+                for i = 0, rank_level - 1 do
+                    surface.DrawTexturedRect(x_pos - ScreenScale(3), y_pos, ScreenScale(4), ScreenScale(4))
+                    y_pos = y_pos - ScreenScale(3)
+                end
+            end
         end
-        surface.DrawTexturedRect(x - ScreenScale(14), y + ScreenScale(1), ScreenScale(60), ScreenScale(30))
 
-        if cd > 0 then
-            draw.RoundedBox(10, x, y, s, s, Color(40,40,40,225))
-            surface.SetDrawColor(color_white)
-            draw.SimpleText(cd, font, x + s/2, y + s/2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        if LocalPlayer():Health() <= 30 then
+            colhp = Color(150, 0, 0)
         end
 
-        if charge >= 0 then
-            draw.SimpleText(charge, fontweight, x + s - ScreenScale(5), y + ScreenScale(5), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        vhp = LocalPlayer():Health()
+        varmor = LocalPlayer():Armor()
+
+        local icon_s = ScreenScale(15)
+
+        surface.SetMaterial(hp)
+        surface.SetDrawColor(colhp)
+        surface.DrawTexturedRect(icon_x, icon_y, icon_s, icon_s)
+        surface.SetMaterial(armor)
+        surface.SetDrawColor(color_white)
+        surface.DrawTexturedRect(icon_x, icon_y + ScreenScale(14), icon_s, icon_s)
+
+        draw.SimpleText(tostring(math.Round(vhp)), font, icon_x + icon_s + ScreenScale(1), icon_y - ScreenScale(0.5), colhp)
+        draw.SimpleText(tostring(math.Round(varmor)), font, icon_x + icon_s + ScreenScale(1), icon_y + ScreenScale(14), color_white)
+    end
+
+    if GetConVarNumber("horde_enable_ammo_gui") == 1 then
+        -- Draw Ammo
+        draw.RoundedBox(10, ScrW() - airgap - ScreenScale(78), ScrH() - ScreenScale(33) - airgap, airgap + ScreenScale(70), ScreenScale(26) + airgap, Color(40,40,40,150))
+
+        local wpn = LocalPlayer():GetActiveWeapon()
+        if not wpn or not wpn:IsValid() then return end
+        local col_ammo = color_white
+        local col_ammo2 = color_white
+        
+        if LocalPlayer():Horde_GetInfusion(wpn:GetClass()) ~= HORDE.Infusion_None then
+            local infusion = LocalPlayer():Horde_GetInfusion(wpn:GetClass())
+            local infusion_mat = Material(HORDE.Infusion_Icons[infusion], "mips smooth")
+            surface.SetMaterial(infusion_mat)
+            surface.SetDrawColor(HORDE.Infusion_Colors[infusion])
+            surface.DrawTexturedRect(ScrW() - ScreenScale(16), icon_y, ScreenScale(6), ScreenScale(6))
+        end
+        if (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) and (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
+            local c1 = color_white
+            local c2 = color_white
+            if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
+            if wpn:Clip2() == 0 then c2 = Color(100,0,0) end
+            draw.SimpleText(tostring(wpn:Clip1() .. " / " .. LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font, ScrW() - ScreenScale(20), icon_y + ScreenScale(13), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+            draw.SimpleText(tostring(wpn:Clip2() .. " / " .. LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(24), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+            draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        elseif (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) then
+            local c1 = color_white
+            local c2 = color_white
+            if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
+            if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+            draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+            draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+            draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        elseif (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
+            local c1 = color_white
+            local c2 = color_white
+            if wpn:Clip2() == 0 then c1 = Color(100,0,0) end
+            if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+            draw.SimpleText(tostring(wpn:Clip2()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+            draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+            draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        elseif wpn:GetPrimaryAmmoType() > 0 then
+            local c1 = color_white
+            local c2 = color_white
+            if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
+            if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+            --draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+            draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(45), icon_y + ScreenScale(17), c2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        else
+            draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(47), icon_y + ScreenScale(15), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        end
+
+        -- Draw Weight
+        draw.RoundedBox(10, ScrW() - airgap - ScreenScale(78), ScrH() - ScreenScale(44) - airgap, airgap + ScreenScale(70), ScreenScale(10), Color(40,40,40,150))
+        surface.SetMaterial(weight)
+        surface.SetDrawColor(color_white)
+        local wx = ScrW() - airgap - ScreenScale(80)
+        local wy = ScrH() - ScreenScale(46) - airgap
+        surface.DrawTexturedRect(wx + ScreenScale(65), wy + ScreenScale(2), ScreenScale(10), ScreenScale(10))
+        draw.SimpleText(tostring(LocalPlayer():Horde_GetMaxWeight() - LocalPlayer():Horde_GetWeight()) .. "/" .. tostring(LocalPlayer():Horde_GetMaxWeight()), fontweight, wx + ScreenScale(65), wy + ScreenScale(3), color_white, TEXT_ALIGN_RIGHT)
+        draw.SimpleText(tostring(LocalPlayer():Horde_GetMoney()) .. " $", fontweight, wx + ScreenScale(4), wy + ScreenScale(3), color_white)
+
+        -- Draw Gadget
+        if LocalPlayer():Horde_GetGadget() ~= nil then
+            local gadget = LocalPlayer():Horde_GetGadget()
+            local charge = LocalPlayer():Horde_GetGadgetCharges()
+            local cd = LocalPlayer():Horde_GetGadgetInternalCooldown()
+            local x = ScrW() - airgap - ScreenScale(78) - ScreenScale(33)
+            local y = ScrH() - ScreenScale(33) - airgap
+            local s = ScreenScale(26) + airgap
+            draw.RoundedBox(10, x, y, s, s, Color(40,40,40,150))
+
+            local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
+            surface.SetMaterial(mat) -- Use our cached material
+            if HORDE.gadgets[gadget].Active then
+                if HORDE.gadgets[gadget].Once then
+                    surface.SetDrawColor(HORDE.color_gadget_once)
+                else
+                    surface.SetDrawColor(HORDE.color_gadget_active)
+                end
+            else
+                surface.SetDrawColor(color_white)
+            end
+            surface.DrawTexturedRect(x - ScreenScale(14), y + ScreenScale(1), ScreenScale(60), ScreenScale(30))
+
+            if cd > 0 then
+                draw.RoundedBox(10, x, y, s, s, Color(40,40,40,225))
+                surface.SetDrawColor(color_white)
+                draw.SimpleText(cd, font, x + s/2, y + s/2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            end
+
+            if charge >= 0 then
+                draw.SimpleText(charge, fontweight, x + s - ScreenScale(5), y + ScreenScale(5), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            end
         end
     end
 end)

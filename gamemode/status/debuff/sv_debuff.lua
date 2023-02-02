@@ -195,7 +195,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         if not self.Horde_Debuff_Active[debuff] then
             net.Start("Horde_LegacyNotification")
                 net.WriteString(HORDE.Debuff_Notifications[debuff])
-                net.WriteInt(0,2)
+                net.WriteInt(1,2)
             net.Send(self)
         end
 
