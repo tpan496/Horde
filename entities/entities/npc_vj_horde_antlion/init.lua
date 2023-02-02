@@ -108,6 +108,12 @@ function ENT:CustomOnInitialize()
 	self.MeleeAttackDamage = 30 + self.level * 2
 	self.RangeAttackDamage = 25 + self.level
 	hook.Run("Horde_OnRaiseAntlion", self.Owner, self)
+	self:AddRelationship("npc_turret_floor D_LI 99")
+	self:AddRelationship("npc_vj_horde_combat_bot D_LI 99")
+	self:AddRelationship("npc_manhack D_LI 99")
+	self:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
+	self:AddRelationship("npc_vj_horde_rocket_turret D_LI 99")
+	self:AddRelationship("npc_vj_horde_spectre D_LI 99")
 end
 
 function ENT:UpgradeReset()
@@ -370,9 +376,11 @@ function ENT:CustomOnMeleeAttack_BeforeChecks()
 end
 function ENT:CustomOnThink()
 	if self.LastPulse <= CurTime() then
-		local d = self:GetPos():DistToSqr(self.Owner)
+		local d = self:GetPos():DistToSqr(self.Owner:GetPos())
 		if d >= 640000 then
-			self:SetPos(self.Owner:GetPos() + VectorRand() * 20)
+			local v = VectorRand() * 20
+			v.z = 0
+			self:SetPos(self.Owner:GetPos() + v)
 		end
 		self:BugPulse()
 		local t = 5

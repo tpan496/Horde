@@ -218,6 +218,13 @@ function SWEP:RaiseAntlion()
 
 		ent.VJFriendly = false
 	end)
+
+	ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+	local id = ent:GetCreationID()
+	timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
+		if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+		ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+	end)
 end
 
 function SWEP:SecondaryAttack()

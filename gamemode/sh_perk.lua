@@ -33,6 +33,7 @@ if CLIENT then
         local ply = net.ReadEntity()
         local perk_choices = net.ReadTable()
         if ply ~= LocalPlayer() then
+            if not ply.Horde_PerkChoices then ply.Horde_PerkChoices = {} end
             ply.Horde_PerkChoices[ply:Horde_GetCurrentSubclass()] = perk_choices
         end
     end)

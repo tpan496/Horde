@@ -11,19 +11,23 @@ surface.CreateFont("LargeTitle", { font = font, size = 35 * font_scale, extended
 surface.CreateFont("Heading", { font = font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Category", { font = font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Item", { font = font, size = 20 * font_scale, extended = true })
-surface.CreateFont("Info", { font = "arial", size = ScreenScale(6) * font_scale, extended = true})
+surface.CreateFont("Info", { font = "arial", size = ScreenScale(7) * font_scale, extended = true})
 surface.CreateFont("SmallInfo", { font = font, size = 20 * font_scale, extended = true})
 surface.CreateFont("Horde_Ready", { font = font, size = ScreenScale(5) * font_scale, extended = true })
+surface.CreateFont("Horde_Cd", { font = font, size = ScreenScale(8) * font_scale, extended = true })
 
+
+local width = ScreenScale(100)
+local height = ScreenScale(15)
 local center_panel = vgui.Create("DPanel")
 local center_panel_str = ""
-center_panel:SetSize(ScreenScale(350/4), ScreenScale(50/4))
-center_panel:SetPos(ScreenScale(6), ScreenScale(20))
+center_panel:SetSize(width, height)
+center_panel:SetPos(ScreenScale(6), ScreenScale(23))
 center_panel.Paint = function (w, h)
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     if center_panel_str == "" then return end
-    draw.RoundedBox(10, 0, 0, ScreenScale(335 / 4), ScreenScale(50/4), Color(40,40,40,200))
-    draw.SimpleText(center_panel_str, "Info", ScreenScale(43), ScreenScale(6), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.RoundedBox(10, 0, 0, width, height, Color(40,40,40,200))
+    draw.SimpleText(center_panel_str, "Info", ScreenScale(50), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 end
 
 local ammobox_refresh_count = 0
@@ -33,30 +37,30 @@ end)
 
 local wave_str
 local corner_panel = vgui.Create("DPanel")
-corner_panel:SetSize(ScreenScale(350/4), ScreenScale(50/4))
-corner_panel:SetPos(ScreenScale(6), ScreenScale(25/4))
+corner_panel:SetSize(width, height)
+corner_panel:SetPos(ScreenScale(6), ScreenScale(6))
 corner_panel.Paint = function () end
 timer.Simple(5, function ()
-    if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     corner_panel.Paint = function ()
-        draw.RoundedBox(10, 0, 0, ScreenScale(280/4), ScreenScale(50/4), Color(40,40,40,200))
+        if GetConVarNumber("horde_enable_client_gui") == 0 then return end
+        draw.RoundedBox(10, 0, 0, width - height - ScreenScale(2), height, Color(40,40,40,200))
         if LocalPlayer():Alive() then
             if (HORDE.current_wave <= 0) or (wave_str == nil) then
-                draw.SimpleText("Preparing...", "Info", ScreenScale(35), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText("Preparing...", "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
-                draw.SimpleText("WAVE " .. wave_str, "Info", ScreenScale(35), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText("WAVE " .. wave_str, "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
         else
-            draw.SimpleText("Spectating", "Info", ScreenScale(150/4), ScreenScale(25/4), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Spectating", "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
-        draw.RoundedBox(10, ScreenScale(285/4), 0, ScreenScale(50/4), ScreenScale(50/4), Color(40,40,40,200))
+        draw.RoundedBox(10, width - height, 0, height, height, Color(40,40,40,200))
         if ammobox_refresh_count > 5 then
-            draw.RoundedBox(10, ScreenScale(285/4), ScreenScale((50 - ammobox_refresh_count / HORDE.ammobox_refresh_interval * 50)/4), 50, ammobox_refresh_count / HORDE.ammobox_refresh_interval * 50, HORDE.color_crimson_dark)
+            draw.RoundedBox(10, width - height, height * (1 - ammobox_refresh_count / HORDE.ammobox_refresh_interval), height, height * (ammobox_refresh_count / HORDE.ammobox_refresh_interval), HORDE.color_crimson_dark)
         end
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
         local mat = Material("materials/ammo.png", "mips smooth")
         surface.SetMaterial(mat) -- Use our cached material
-        surface.DrawTexturedRect(ScreenScale(290/4), ScreenScale(5/4), ScreenScale(10), ScreenScale(10))
+        surface.DrawTexturedRect(width - height + ScreenScale(2), ScreenScale(2), ScreenScale(10), ScreenScale(10))
     end
 end)
 
