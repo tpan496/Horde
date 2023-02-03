@@ -362,11 +362,9 @@ concommand.Add("horde_testing_take_money", function (ply, cmd, args)
         return
     end
     local amount = math.floor(tonumber(args[1]))
-	if amount > ply:Horde_GetMoney() then 
-	net.Start("Horde_LegacyNotification")
-            net.WriteString("Amount to be taken exceeds current cash!")
-            net.WriteInt(1,2)
-        net.Send(ply)
+	if amount >= ply:Horde_GetMoney() then 
+	ply:Horde_AddMoney(-(ply:Horde_GetMoney()))
+	ply:Horde_SyncEconomy()
 	return 
 	end
     ply:Horde_AddMoney(-amount)
