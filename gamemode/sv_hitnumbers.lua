@@ -18,7 +18,7 @@ hook.Add("PostEntityTakeDamage", "Horde_HitnumbersDamagePost", function(target, 
 	local dmgType   = dmginfo:GetDamageType()
 	-- Get damage position.
 	local pos = dmginfo:GetDamagePosition()
-	if dmgType == DMG_CLUB or dmgType == DMG_SLASH then
+	--[[if dmgType == DMG_CLUB or dmgType == DMG_SLASH then
 		pos = util.TraceHull({
 			start  = attacker:GetShootPos(),
 			endpos = attacker:GetShootPos() + (attacker:GetAimVector() * 100),
@@ -27,7 +27,7 @@ hook.Add("PostEntityTakeDamage", "Horde_HitnumbersDamagePost", function(target, 
 			maxs   = Vector( 10, 10, 10),
 			mask   = MASK_SHOT_HULL,
 		}).HitPos
-	end
+	end]]--
     if !pos or dmginfo:IsExplosionDamage() then
         pos = target:GetPos()
     end
