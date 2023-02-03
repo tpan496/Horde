@@ -114,6 +114,7 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
 	self:AddRelationship("npc_vj_horde_rocket_turret D_LI 99")
 	self:AddRelationship("npc_vj_horde_spectre D_LI 99")
+	self:SetCollisionBounds(Vector(0, 0, 0), Vector(0, 0, 0))
 end
 
 function ENT:UpgradeReset()

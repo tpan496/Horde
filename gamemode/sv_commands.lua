@@ -346,13 +346,14 @@ concommand.Add("horde_testing_give_money", function (ply, cmd, args)
         net.Send(ply)
         return
     end
-	
+
 	local amount = math.floor(tonumber(args[1]))
-	
-if (ply:Horde_GetMoney() + amount) < 0 then 
-	ply:Horde_AddMoney(-(ply:Horde_GetMoney()))
-	ply:Horde_SyncEconomy()
-	return end
+
+    if (ply:Horde_GetMoney() + amount) < 0 then
+        ply:Horde_AddMoney(-(ply:Horde_GetMoney()))
+        ply:Horde_SyncEconomy()
+        return
+    end
 
     ply:Horde_AddMoney(amount)
     ply:Horde_SyncEconomy()

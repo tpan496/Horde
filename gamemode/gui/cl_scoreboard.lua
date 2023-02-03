@@ -99,6 +99,7 @@ function scoreboard:show()
                 local color = color_white
                 if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then color = Color(150,150,150) end
                 if not ply.Horde_PerkChoices then break end
+                if not subclass_name then return end
                 local choice = v.choices[ply.Horde_PerkChoices[subclass_name][perk_level] or 1]
                 local perk = HORDE.perks[choice]
                 local icon = perk.Icon
