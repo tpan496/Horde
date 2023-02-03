@@ -353,6 +353,26 @@ concommand.Add("horde_testing_give_money", function (ply, cmd, args)
     ply:Horde_SyncEconomy()
 end)
 
+concommand.Add("horde_testing_take_money", function (ply, cmd, args)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
+        net.Start("Horde_LegacyNotification")
+            net.WriteString("Command only available in sandbox mode.")
+            net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
+    local amount = math.floor(tonumber(args[1]))
+	if amount > ply:Horde_GetMoney() then 
+	net.Start("Horde_LegacyNotification")
+            net.WriteString("Amount to be taken exceeds current cash!")
+            net.WriteInt(1,2)
+        net.Send(ply)
+	return 
+	end
+    ply:Horde_AddMoney(-amount)
+    ply:Horde_SyncEconomy()
+end)
+
 concommand.Add("horde_testing_free_perks", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
