@@ -146,7 +146,7 @@ function ENT:CustomOnPhysicsCollide(data, phys)
 		self.AlreadyPaintedDeathDecal = true 
 		util.Decal(VJ_PICK(self.DecalTbl_DeathDecals), data.HitPos + data.HitNormal, data.HitPos - data.HitNormal)
 	end
-	if self.ShakeWorldOnDeath == true then util.ScreenShake(data.HitPos, self.ShakeWorldOnDeathAmplitude, self.ShakeWorldOnDeathFrequency, self.ShakeWorldOnDeathDuration, self.ShakeWorldOnDeathRadius) end
+	if self.ShakeWorldOnDeath == true then util.ScreenShake(data.HitPos, self.ShakeWorldOnDeathAmplitude, self.ShakeWorldOnDeathFrequency, 1, self.ShakeWorldOnDeathRadius) end
 	self:SetDeathVariablesTrue(data, phys, true)
 	if self.DelayedRemove > 0 then
 		self:SetNoDraw(true)
