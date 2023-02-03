@@ -338,6 +338,26 @@ concommand.Add("horde_testing_gorlami", function (ply, cmd, args)
     end
 end)
 
+concommand.Add("horde_testing_give_money", function (ply, cmd, args)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
+        net.Start("Horde_LegacyNotification")
+            net.WriteString("Command only available in sandbox mode.")
+            net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
+	
+	local amount = math.floor(tonumber(args[1]))
+	
+if (ply:Horde_GetMoney() + amount) < 0 then 
+	ply:Horde_AddMoney(-(ply:Horde_GetMoney()))
+	ply:Horde_SyncEconomy()
+	return end
+
+    ply:Horde_AddMoney(amount)
+    ply:Horde_SyncEconomy()
+end)
+
 concommand.Add("horde_testing_free_perks", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         net.Start("Horde_LegacyNotification")
