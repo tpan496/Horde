@@ -332,10 +332,25 @@ concommand.Add("horde_testing_gorlami", function (ply, cmd, args)
     if ply:IsAdmin() then
         RunConsoleCommand("horde_testing_free_perks", 0)
         local amount = 500
+		local money = 100000
         ply:Horde_AddSkullTokens(amount)
+		ply:Horde_AddMoney(money)
         ply:Horde_SyncEconomy()
         RunConsoleCommand("horde_testing_disable_level_restrictions")
     end
+end)
+
+concommand.Add("horde_testing_give_money", function (ply, cmd, args)
+    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
+        net.Start("Horde_LegacyNotification")
+            net.WriteString("Command only available in sandbox mode.")
+            net.WriteInt(1,2)
+        net.Send(ply)
+        return
+    end
+    local amount = math.floor(tonumber(args[1]))
+    ply:Horde_AddMoney(amount)
+    ply:Horde_SyncEconomy()
 end)
 
 concommand.Add("horde_testing_free_perks", function (ply, cmd, args)
