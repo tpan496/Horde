@@ -5,7 +5,7 @@ Vile Blood provides {1} increased Poison damage resistance.
 Vile Blood allows player damage to inflict Break buildup.]]
 PERK.Icon = "materials/perks/hatcher/vile_blood.png"
 PERK.Params = {
-    [1] = {value = 0.4},
+    [1] = {value = 0.4, percent = true},
 }
 
 PERK.Hooks = {}

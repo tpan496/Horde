@@ -53,32 +53,28 @@ vgui.Register("HordePlayerReadyPanel", PANEL, "DPanel")
 
 HORDE.PlayerReadyPanel = vgui.Create("HordePlayerReadyPanel")
 HORDE.HelpPanel = vgui.Create("DPanel")
-HORDE.HelpPanel:SetSize(ScreenScale(125), ScreenScale(12.5))
+HORDE.HelpPanel:SetSize(ScreenScale(125), ScreenScale(15))
 HORDE.HelpPanel:SetPos(ScrW() / 2 - ScreenScale(125) / 2, ScrH() - ScreenScale(75/4))
 HORDE.HelpPanel.Paint = function (w,h)
     if HORDE.current_wave > 0 then
         local text = translate.Get("Game_HintBottom")
         if not text or not surface.GetTextSize(text) then return end
-        local len = surface.GetTextSize(text)
-        --draw.RoundedBox(10, ScreenScale(math.max(0, 250 - len/2))/4, 0, ScreenScale(len/4), ScreenScale(12.5), HORDE.color_hollow)
-        draw.SimpleText(text, "Info", ScreenScale(len)/2, ScreenScale(13)/4, HORDE.color_white, TEXT_ALIGN_CENTER)
+        draw.SimpleText(text, "Info", ScreenScale(125)/2, ScreenScale(13)/4, HORDE.color_white, TEXT_ALIGN_CENTER)
     else
         local text = translate.Get("Game_HintBottomReady")
         if not text  or not surface.GetTextSize(text) then return end
-        local len = surface.GetTextSize(text)
-        --draw.RoundedBox(10, ScreenScale(math.max(0, 250 - len/2))/4, 0, ScreenScale(len)/4, ScreenScale(50)/4, HORDE.color_hollow)
         draw.SimpleText(text, "Info", ScreenScale(125) / 2, ScreenScale(13)/4, HORDE.color_white, TEXT_ALIGN_CENTER)
     end
 end
 
 local tip = ""
 HORDE.TipPanel = vgui.Create("DPanel")
-HORDE.TipPanel:SetSize(ScrW() * 2 / 5, 50)
-HORDE.TipPanel:SetPos(ScrW() / 2 - ScrW() * 2 / 5 / 2, 25)
+HORDE.TipPanel:SetSize(ScrW() * 2 / 5, ScreenScale(15))
+HORDE.TipPanel:SetPos(ScrW() / 2 - ScrW() * 2 / 10, ScreenScale(6))
 HORDE.TipPanel.Paint = function (w,h)
     if tip == nil or tip == "" then return end
-    draw.RoundedBox(10, 0, 0, ScreenScale(ScrW() * 2 / 20), ScreenScale(12.5),  Color(40,40,40,200))
-    draw.DrawText("Tip: " .. tip, "Info", ScreenScale(ScrW() * 2 / 40), ScreenScale(13/4), HORDE.color_white, TEXT_ALIGN_CENTER)
+    draw.RoundedBox(10, 0, 0, ScrW() * 2 / 5, ScreenScale(15),  Color(40,40,40,200))
+    draw.DrawText("Tip: " .. tip, "Info", ScrW() * 2 / 10, ScreenScale(13/4), HORDE.color_white, TEXT_ALIGN_CENTER)
 end
 
 net.Receive("Horde_SyncTip", function()

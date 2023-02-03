@@ -91,7 +91,7 @@ local function DrawStatus(status, stack, displacement)
     end
 
     if stack > 0 and HORDE:IsStatusStackable(status) then
-        draw.SimpleText(stack, "Trebuchet24", ScreenScale(10 + displacement), ScreenScale(2.5), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(stack, "Horde_Cd", ScreenScale(12 + displacement), ScreenScale(2.5), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     end
 end
 
@@ -316,6 +316,8 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
 
         if LocalPlayer():Health() <= 30 then
             colhp = Color(150, 0, 0)
+        elseif LocalPlayer():Health() < 50 then
+            colhp = Color(255, 185, 185)
         end
 
         vhp = LocalPlayer():Health()

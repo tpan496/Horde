@@ -34,10 +34,10 @@ function scoreboard:show()
         draw.DrawText("Name", "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
         draw.DrawText("Class", "Content", 225, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
         draw.DrawText("Perks", "Content", 375, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText("Gadget", "Content", 721, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText("Money", "Content", 821, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-        draw.DrawText("Kill", "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-        draw.DrawText("Death", "Content", 921, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+        draw.DrawText("Gadget", "Content", 681, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
+        draw.DrawText("Money", "Content", 791, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+        draw.DrawText("Kill", "Content", 851, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+        draw.DrawText("Death", "Content", 911, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
         draw.DrawText("Ping", "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
     end
 
@@ -129,12 +129,12 @@ function scoreboard:show()
                 else
                     surface.SetDrawColor(color_white)
                 end
-                surface.DrawTexturedRect(721-20, -2, 90, 45)
+                surface.DrawTexturedRect(665, -2, 90, 45)
             end
             surface.SetDrawColor(255, 255, 255, 255)
-            draw.DrawText(tostring(ply:Horde_GetMoney()) .. "$", "Content", 821, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-            draw.DrawText(tostring(ply:Frags()), "Content", 871, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-            draw.DrawText(tostring(ply:Deaths()), "Content", 921, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+            draw.DrawText(tostring(ply:Horde_GetMoney()) .. "$", "Content", 793, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+            draw.DrawText(tostring(ply:Frags()), "Content", 851, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
+            draw.DrawText(tostring(ply:Deaths()), "Content", 911, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
             draw.DrawText(tostring(ply:Ping()), "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
         end
 
