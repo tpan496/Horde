@@ -332,9 +332,7 @@ concommand.Add("horde_testing_gorlami", function (ply, cmd, args)
     if ply:IsAdmin() then
         RunConsoleCommand("horde_testing_free_perks", 0)
         local amount = 500
-		local money = 100000
         ply:Horde_AddSkullTokens(amount)
-		ply:Horde_AddMoney(money)
         ply:Horde_SyncEconomy()
         RunConsoleCommand("horde_testing_disable_level_restrictions")
     end
