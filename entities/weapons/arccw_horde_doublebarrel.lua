@@ -7,7 +7,7 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Double Barrel"
 SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "Double barrel pump action."
+SWEP.Trivia_Desc = "Break Action Shotgun."
 
 if CLIENT then
 SWEP.Trivia_Manufacturer = "Franchi"

@@ -41,6 +41,7 @@ function ENT:Think()
         end
         self.Horde_HealthVial = ents.Create("horde_healthvial")
         self.Horde_HealthVial:SetPos(self:GetPos() - self:GetAngles():Forward() * 30)
+        self.Horde_HealthVial.Owner = self.Horde_Owner
         self.Horde_HealthVial:Spawn()
         if SERVER then
             if self.Horde_Owner:IsPlayer() then

@@ -111,4 +111,4 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     end
 end
 
-VJ.AddNPC("Father Grigori","npc_vj_horde_grigori", "Zombies")
+VJ.AddNPC("Father Grigori","npc_vj_horde_grigori", "Horde")

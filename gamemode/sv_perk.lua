@@ -1,5 +1,6 @@
 util.AddNetworkString("Horde_Perk")
 util.AddNetworkString("Horde_PerkChoice")
+util.AddNetworkString("Horde_SyncPerk")
 
 local plymeta = FindMetaTable("Player")
 
@@ -39,6 +40,11 @@ function plymeta:Horde_ApplyPerksForClass()
     end
 
     self:Horde_SetMaxHealth()
+
+    net.Start("Horde_SyncPerk")
+        net.WriteEntity(self)
+        net.WriteTable(self.Horde_PerkChoices[class])
+    net.Broadcast()
 end
 
 net.Receive("Horde_PerkChoice", function(len, ply)

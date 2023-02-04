@@ -89,6 +89,119 @@ LANGUAGE["Shop_Stock"] = "枪托"
 LANGUAGE["Shop_Ammo Type"] = "子弹类型"
 LANGUAGE["Shop_Perk"] = "武器技能"
 
+-- Infusions
+LANGUAGE["Game_Infusion"] = "变质"
+LANGUAGE["Game_Infused"] = "已嵌入"
+LANGUAGE["Infusion_None"] = "无"
+LANGUAGE["Infusion_Hemo"] = "出血"
+LANGUAGE["Infusion_Concussive"] = "眩晕"
+LANGUAGE["Infusion_Septic"] = "剧毒"
+LANGUAGE["Infusion_Flaming"] = "火焰"
+LANGUAGE["Infusion_Arctic"] = "寒冰"
+LANGUAGE["Infusion_Galvanizing"] = "雷电"
+LANGUAGE["Infusion_Quality"] = "质量"
+LANGUAGE["Infusion_Impaling"] = "穿刺"
+LANGUAGE["Infusion_Rejuvenating"] = "恢复"
+LANGUAGE["Infusion_Quicksilver"] = "水银"
+LANGUAGE["Infusion_Titanium"] = "金刚"
+LANGUAGE["Infusion_Siphoning"] = "汲取"
+LANGUAGE["Infusion_Chrono"] = "时间"
+LANGUAGE["Infusion_Ruination"] = "毁灭"
+
+LANGUAGE["Infusion_Description_Hemo"] = [[
+转换75%武器伤害为利器伤害。
+
+武器只能造成利器伤害。
+
+武器伤害对敌人累积出血值。
+]]
+LANGUAGE["Infusion_Description_Concussive"] = [[
+转换75%武器伤害为钝器伤害。
+
+武器只能造成钝器伤害。
+
+武器伤害对敌人累积眩晕值。
+]]
+LANGUAGE["Infusion_Description_Septic"] = [[
+转换75%武器伤害为毒素伤害。
+
+武器只能造成剧毒伤害。
+
+武器伤害对敌人累积毒爆值。
+]]
+LANGUAGE["Infusion_Description_Flaming"] = [[
+转换75%武器伤害为火焰伤害。
+
+武器只能造成火焰伤害。
+]]
+LANGUAGE["Infusion_Description_Arctic"] = [[
+转换75%武器伤害为寒冰伤害。
+
+武器只能造成寒冰伤害。
+
+武器伤害对敌人累积霜冻值。
+]]
+LANGUAGE["Infusion_Description_Galvanizing"] = [[
+转换75%武器伤害为雷电伤害。
+
+武器只能造成雷电伤害。
+
+武器伤害对敌人累积感电值。
+]]
+LANGUAGE["Infusion_Description_Quality"] = [[
+提升20%武器伤害。
+
+武器无法获得职业技能带来的任何效果和伤害提升！
+]]
+LANGUAGE["Infusion_Description_Impaling"] = [[
+提升25%武器爆头伤害。
+
+减少25%武器非爆头伤害。
+]]
+LANGUAGE["Infusion_Description_Rejuvenating"] = [[
+提升25%生命恢复/汲取。
+
+减少25%武器伤害。
+]]
+LANGUAGE["Infusion_Description_Quicksilver"] = [[
+根据玩家的身上负重提升/减少武器伤害。
+玩家身上的装备越少，伤害提升越高。
+
+<= 15% 负重 -> 30% 伤害提升
+<= 30% 负重 -> 25% 伤害提升 
+<= 40% 负重 -> 15% 伤害提升 
+  >40% 负重 -> 25% 伤害减少
+]]
+LANGUAGE["Infusion_Description_Titanium"] = [[
+根据当前武器重量减少玩家收到的伤害。
+
+每1负重，减少1%受到的伤害。
+
+减少25%武器伤害。
+]]
+LANGUAGE["Infusion_Description_Siphoning"] = [[
+每杀死一个敌人恢复1生命值。
+
+减少25%武器伤害。
+]]
+LANGUAGE["Infusion_Description_Chrono"] = [[
+Increases weapon damage the longer the weapon is being held by the user.
+根据玩家持有武器的时间提升武器伤害。
+
+每一回合持有当前武器，提升6%武器伤害。
+
+武器伤害提升最多为50%。
+
+减少20%武器伤害。
+]]
+LANGUAGE["Infusion_Description_Ruination"] = [[
+根据玩家当前的即死累积值提升武器伤害。
+
+每10即死累计值，提升5%武器伤害。
+
+持有当前武器时，每秒钟玩家会获得10即死累计值。
+]]
+
 -- Class Panel
 LANGUAGE["Shop_Class/Perks"] = "职业/技能"
 LANGUAGE["Shop_Select_Class"] = "选择职业（拥有物品会被去除）"

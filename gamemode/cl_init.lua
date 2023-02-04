@@ -19,6 +19,7 @@ include("sh_misc.lua")
 
 include("cl_economy.lua")
 include("cl_achievement.lua")
+include("cl_hitnumbers.lua")
 include("gui/cl_gameinfo.lua")
 include("gui/cl_status.lua")
 include("gui/cl_ready.lua")
@@ -290,10 +291,10 @@ end)
 net.Receive("Horde_LegacyNotification", function(length)
     local str = net.ReadString()
     local type = net.ReadInt(2)
-    if type == 0 then
-        notification.AddLegacy(str, NOTIFY_GENERIC, 5)
+    if string.find(str, "bought") then
+        HORDE:PlayNotification(str, type, "status/canbuy.png")
     else
-        notification.AddLegacy(str, NOTIFY_ERROR, 5)
+        HORDE:PlayNotification(str, type)
     end
 end)
 

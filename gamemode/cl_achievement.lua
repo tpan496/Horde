@@ -184,7 +184,7 @@ function HORDE:SaveMapAchievements()
     local count_new = new_achievements["completion_count"]
     if count_new > count_old then
         local str = "You have unlocked new achievements for " .. map .. "! Press F2 to view."
-        notification.AddLegacy(str, NOTIFY_GENERIC, 15)
+        HORDE:PlayNotification(str)
     end
 end
 

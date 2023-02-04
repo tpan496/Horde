@@ -10,6 +10,7 @@ HORDE.Status_Id = 0
 HORDE.Is_Status_Stackable = {}
 HORDE.Is_Status_Debuff = {}
 HORDE.Is_Status_Skill = {}
+HORDE.Status_String = {}
 
 function HORDE:RegisterStatus(name, icon, stackable, is_debuff, is_skill)
     if HORDE.Status_Id >= 256 then
@@ -18,7 +19,7 @@ function HORDE:RegisterStatus(name, icon, stackable, is_debuff, is_skill)
     end
     local s = "Status_" .. name
     HORDE[s] = HORDE.Status_Id
-    HORDE.Status_Icon[ HORDE.Status_Id] = icon
+    HORDE.Status_Icon[HORDE.Status_Id] = icon
     if stackable and stackable == true then
         HORDE.Is_Status_Stackable[HORDE.Status_Id] = true
     end
@@ -28,10 +29,11 @@ function HORDE:RegisterStatus(name, icon, stackable, is_debuff, is_skill)
     if is_skill and is_skill == true then
         HORDE.Is_Status_Skill[HORDE.Status_Id] = true
     end
+    HORDE.Status_String[HORDE.Status_Id] = name
     HORDE.Status_Id = HORDE.Status_Id + 1
 end
 
-HORDE:RegisterStatus("CanBuy", "materials/status/canbuy.png", nil, nil, true)
+HORDE:RegisterStatus("CanBuy", "materials/status/canbuy.png", nil, nil)
 HORDE:RegisterStatus("AntimatterShield", "materials/perks/antimatter_shield.png", nil, nil, true)
 HORDE:RegisterStatus("Displacer", "materials/perks/displacer.png", nil, nil, true)
 HORDE:RegisterStatus("Void_Cascade", "materials/perks/necromancer/void_cascade.png", nil, nil, true)
@@ -54,6 +56,7 @@ HORDE:RegisterStatus("Minion", "materials/status/minion.png", true)
 HORDE:RegisterStatus("Adrenaline", "materials/status/adrenaline.png", true)
 HORDE:RegisterStatus("Headhunter", "materials/perks/headhunter.png", true)
 HORDE:RegisterStatus("Deadeye", "materials/perks/gunslinger/deadeye.png", true)
+--HORDE:RegisterStatus("Barrier", "materials/status/barrier.png", true)
 HORDE:RegisterStatus("Intensity", "materials/perks/artificer/intensity.png", true)
 HORDE:RegisterStatus("Neuron_Stabilizer", "materials/perks/specops/neuron_stabilizer.png", true)
 HORDE:RegisterStatus("Phalanx", "materials/perks/phalanx.png", true)
@@ -67,6 +70,9 @@ HORDE:RegisterStatus("Twin_Heart", "materials/perks/carcass/twin_heart.png", tru
 HORDE:RegisterStatus("Fortify", "materials/perks/fortify.png")
 HORDE:RegisterStatus("Berserk", "materials/perks/berserk.png")
 HORDE:RegisterStatus("Haste", "materials/perks/haste.png")
+HORDE:RegisterStatus("Sandcloak", "materials/perks/hatcher/sand_cloak.png")
+HORDE:RegisterStatus("VileBlood", "materials/perks/hatcher/vile_blood.png")
+HORDE:RegisterStatus("FleshEater", "materials/perks/hatcher/flesh_eater.png")
 HORDE:RegisterStatus("ArmorRegen", "materials/status/armorregen.png")
 HORDE:RegisterStatus("HealthRegen", "materials/status/healthregen.png")
 HORDE:RegisterStatus("Quickdraw", "materials/perks/gunslinger/quickdraw.png")
@@ -74,7 +80,8 @@ HORDE:RegisterStatus("WardenAura", "materials/warden.png")
 HORDE:RegisterStatus("EntropyShield", "materials/perks/entropy_shield.png")
 HORDE:RegisterStatus("Tactical_Spleen", "materials/perks/carcass/tactical_spleen.png")
 HORDE:RegisterStatus("Foresight", "materials/perks/samurai/foresight.png")
-HORDE:RegisterStatus("Nine_Lives", "materials/perks/gunslinger/nine_lives.png")
+HORDE:RegisterStatus("Smuggle", "materials/perks/gunslinger/smuggle_shop.png")
+HORDE:RegisterStatus("Phantom_Reload", "materials/perks/gunslinger/phantom_reload.png")
 HORDE:RegisterStatus("Smokescreen_Effect", "materials/perks/specops/smokescreen.png")
 HORDE:RegisterStatus("Unwavering_Guard", "materials/perks/unwavering_guard.png")
 HORDE:RegisterStatus("Damage_Shard", "materials/status/damage.png")

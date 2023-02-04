@@ -5,11 +5,11 @@ You deal 50% more damage on Critical Hit.
 
 Press F to enter Frenzy Mode, replacing your flashlight.
 Lose 1 health every 0.2 seconds in Frenzy Mode, down to 1.
-{5} increased Critical Strike chance in Frenzy Mode.
+{5} increased Critical Hit chance in Frenzy Mode.
 {6} increased health recovery in Frenzy Mode.]]
 PERK.Icon = "materials/perks/gunslinger/nine_lives.png"
 PERK.Params = {
-    [1] = {percent = true, level = 0.006, base = 0.05, max = 0.20, classname = "Pyscho"},
+    [1] = {percent = true, level = 0.006, base = 0.05, max = 0.20, classname = "Psycho"},
     [2] = {value = 0.05, percent = true},
     [3] = {value = 0.006, percent = true},
     [4] = {value = 0.20, percent = true},

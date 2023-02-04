@@ -18,7 +18,7 @@ PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmgin
     if not ply:Horde_GetPerk("demolition_frag_impact")  then return end
     local inflictor = dmginfo:GetInflictor()
     if inflictor:GetClass() == "npc_grenade_frag" or inflictor:GetClass() == "arccw_go_nade_frag" then
-        npc:Horde_AddStun(dmginfo:GetDamage())
+        npc:Horde_AddDebuffBuildup(HORDE.Status_Stun, dmginfo:GetDamage(), ply, npc:GetPos())
     end
 end
 
