@@ -14,10 +14,10 @@ end
 
 function entmeta:Horde_UnsetMutations()
     if not self.Horde_Mutation then return end
-    for _, mutation in pairs(self.Horde_Mutation) do
-        self.Horde_Mutation[mutation] = nil
+    for mutation, _ in pairs(self.Horde_Mutation) do
         hook.Run("Horde_OnUnsetMutation", self, mutation)
     end
+    self.Horde_Mutation = nil
     if SERVER then
         net.Start("Horde_OnUnsetMutationEffect")
             net.WriteEntity(self)
@@ -56,7 +56,7 @@ end)
 net.Receive("Horde_OnUnsetMutationEffect", function()
     local ent = net.ReadEntity()
     if not ent:IsValid() then return end
-    ent:Horde_UnsetMutation()
+    ent:Horde_UnsetMutations()
 end)
 end
 

@@ -1,12 +1,12 @@
 PERK.PrintName = "Quickdraw"
 PERK.Description = [[
 Gain the Quickdraw status while switching weapon.
-{1} increased Pistol damage and evasion during Quickdraw status.
+{1} increased Pistol damage and adds {1} evasion during Quickdraw status.
 Quickdraw effect lasts for {2} seconds.]]
 PERK.Icon = "materials/perks/gunslinger/quickdraw.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},
-    [2] = {value = 3},
+    [2] = {value = 3}, 
 }
 PERK.Hooks = {}
 

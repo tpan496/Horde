@@ -334,7 +334,7 @@ function SWEP:ChangeFiremode(pred)
         local effectdata = EffectData()
         effectdata:SetOrigin(tr.HitPos)
         effectdata:SetRadius(50)
-        util.Effect("heal_mist", effectdata)
+        util.Effect("horde_heal_mist", effectdata)
 
         local attacker = self
 
@@ -346,6 +346,9 @@ function SWEP:ChangeFiremode(pred)
             if ent:IsPlayer() then
                 local healinfo = HealInfo:New({amount=10, healer=self.Owner})
                 HORDE:OnPlayerHeal(ent, healinfo)
+            elseif ent:GetClass() == "npc_vj_horde_antlion" then
+                local healinfo = HealInfo:New({amount=10, healer=self.Owner})
+                HORDE:OnAntlionHeal(ent, healinfo)
             elseif ent:IsNPC() then
                 local dmg = DamageInfo()
                 dmg:SetDamage(25)

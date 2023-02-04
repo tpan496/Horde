@@ -180,6 +180,11 @@ end
 
 function plymeta:Horde_DropMoney()
     if self:Horde_GetMoney() >= 50 and self:Alive() then
+        local res = hook.Run("Horde_PlayerDropMoney", self)
+        if res then
+            self:Horde_SyncEconomy()
+            return
+        end
         self:Horde_AddMoney(-50)
         local money = ents.Create("horde_money")
         local pos = self:GetPos()
@@ -318,7 +323,8 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
             if (class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() == "Necromancer") or
                (class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() == "Artificer") or
                (class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() == "Warlock") or
-               (class == "horde_carcass" and ply:Horde_GetCurrentSubclass() == "Carcass") then
+               (class == "horde_carcass" and ply:Horde_GetCurrentSubclass() == "Carcass") or
+               (class == "horde_pheropod" and ply:Horde_GetCurrentSubclass() == "Hatcher") then
                 wpn:Remove()
                 local c = wpn:GetClass()
                 timer.Simple(0, function()
@@ -340,14 +346,20 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
     if ply:IsNPC() then return true end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
-        if (ply:Horde_GetWeight() - item.weight < 0) or (item.whitelist and (not item.whitelist[ply:Horde_GetClass().name])) then
+        if (ply:Horde_GetWeight() - item.weight < 0) then
             return false
         end
+        if ply:Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol" then return true end
+        if (item.whitelist and (not item.whitelist[ply:Horde_GetClass().name])) then
+            return false
+        end
+        
         if item.starter_classes then
             if (item.class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() ~= "Necromancer") or
                (item.class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() ~= "Artificer") or
                (item.class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() ~= "Warlock") or
-               (item.class == "horde_carcass" and ply:Horde_GetCurrentSubclass() ~= "Carcass") then
+               (item.class == "horde_carcass" and ply:Horde_GetCurrentSubclass() ~= "Carcass") or
+               (item.class == "horde_pheropod" and ply:Horde_GetCurrentSubclass() ~= "Hatcher") then
                 return false
             end
         end
@@ -364,6 +376,11 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
     if not ply:IsValid() then return end
     if HORDE.items[wpn:GetClass()] then
         local item = HORDE.items[wpn:GetClass()]
+        if ply:Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol" then
+            ply:Horde_AddWeight(-item.weight)
+            ply:Horde_SyncEconomy()
+            return
+        end
         if (ply:Horde_GetWeight() - item.weight < 0) or (item.whitelist and (not item.whitelist[ply:Horde_GetClass().name])) then
             timer.Simple(0, function ()
                 ply:DropWeapon(wpn)
@@ -464,6 +481,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         end
                         ent:AddRelationship("npc_vj_horde_spectre D_LI 99")
                         ent:AddRelationship("npc_vj_horde_headcrab D_LI 99")
+                        ent:AddRelationship("npc_vj_horde_antlion D_LI 99")
     
                         ent.VJFriendly = false
                     end)
@@ -488,11 +506,11 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         end)
                         HORDE:DropTurret(ent)
                     else
-                        ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+                        --[[ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
                         timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
                             if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
                             ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
-                        end)
+                        end)]]--
                     end
 
                     -- Count Minions
@@ -837,11 +855,15 @@ net.Receive("Horde_BuyItemUpgrade", function (len, ply)
 
     if ply:Horde_GetUpgrade(class) >= 10 then return end
 
-    local price = 800 + 25 * ply:Horde_GetUpgrade(class)
+    local price = HORDE:GetUpgradePrice(class, ply)
     if ply:Horde_GetMoney() >= price then
         ply:Horde_AddMoney(-price)
         ply:Horde_SetUpgrade(class, ply:Horde_GetUpgrade(class) + 1)
         ply:Horde_SyncEconomy()
+        sound.Play("items/battery_pickup.wav", ply:GetPos())
+        if class == "horde_pheropod" then
+            ply:GetWeapon("horde_pheropod"):UpgradeReset()
+        end
     end
 end)
 
@@ -856,6 +878,14 @@ function HORDE:CanSell(ply, class)
 
     if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "Artificer" and class == "horde_solar_seal" then
         return false, "You can't sell Solar Seal as Artificer subclass!"
+    end
+
+    if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "Warlock" and class == "horde_astral_relic" then
+        return false, "You can't sell Astral Relic as Warlock subclass!"
+    end
+
+    if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "Hatcher" and class == "horde_pheropod" then
+        return false, "You can't sell pheropod as Hatcher subclass!"
     end
 
     return true

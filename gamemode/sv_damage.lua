@@ -35,6 +35,21 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
 
     -- Apply bonus
     local bonus = {increase=increase, more=more, base_add=base_add, post_add=post_add}
+    if ply:Horde_GetCurrentSubclass() == "Gunslinger" then
+        local wpn = HORDE:GetCurrentWeapon(dmginfo:GetInflictor())
+        if IsValid(wpn) then
+            -- Currently only applies to Gunslinger
+            local level = ply:Horde_GetUpgrade(wpn:GetClass())
+            if level and level > 0 then
+                if HORDE.items[wpn:GetClass()].starter_classes then
+                    -- Bonus damage to starter weapons
+                    bonus.more = bonus.more * (1 + 0.1 * level)
+                else
+                    bonus.more = bonus.more * (1 + 0.03 * level)
+                end
+            end
+        end
+    end
     local res = hook.Run("Horde_OnPlayerDamagePre", ply, npc, bonus, hitgroup, dmginfo)
     if res then
         dmginfo:AddDamage(bonus.base_add)
@@ -185,33 +200,30 @@ end
 
 hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginfo)
     local attacker = dmginfo:GetAttacker()
-    if not target:IsNPC() then return end
     if not IsValid(attacker) then return end
+    if not HORDE:IsEnemy(target) then return end
 
-    if attacker:GetNWEntity("HordeOwner"):IsPlayer() then
+    if attacker:GetClass() == "entityflame" then
+        if target:Horde_GetMostRecentFireAttacker() then
+            dmginfo:SetAttacker(target:Horde_GetMostRecentFireAttacker())
+        end
+    elseif HORDE:IsPlayerMinion(attacker) then
         dmginfo:SetInflictor(attacker)
         dmginfo:SetAttacker(attacker:GetNWEntity("HordeOwner"))
-    end
-
-    if IsValid(attacker:GetOwner()) and attacker:GetOwner():IsPlayer() then
+    elseif IsValid(attacker:GetOwner()) and attacker:GetOwner():IsPlayer() then
         dmginfo:SetAttacker(attacker:GetOwner())
     end
 
-    if target:IsNPC() and (not target:GetNWEntity("HordeOwner"):IsPlayer()) then
-        if attacker:GetClass() == "entityflame" then
-            if target:Horde_GetMostRecentFireAttacker() then
-                dmginfo:SetAttacker(target:Horde_GetMostRecentFireAttacker())
-            end
-        end
-        if dmginfo:GetAttacker():IsPlayer() then
-            HORDE:ApplyDamage(target, HITGROUP_GENERIC, dmginfo)
-        end
+    if dmginfo:GetAttacker():IsPlayer() then
+        HORDE:ApplyDamage(target, HITGROUP_GENERIC, dmginfo)
     end
 end)
 
 -- Seems like ScaleNPCDamage is called before EntityTakeDamage.
 hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo)
-    HORDE:ApplyDamage(npc, hitgroup, dmginfo)
+    if (not HORDE:IsPlayerMinion(npc)) then
+        HORDE:ApplyDamage(npc, hitgroup, dmginfo)
+    end
 end)
 
 -- Player damage taken

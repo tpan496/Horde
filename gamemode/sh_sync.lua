@@ -98,8 +98,8 @@ function HORDE:SyncToLocal()
 			::cont::
 		end
 	strm:Close()
-
-    notification.AddLegacy("Sucessfully synced local data from server.", NOTIFY_GENERIC, 5)
+	
+	HORDE:PlayNotification("Sucessfully synced local data from server.")
 end
 
 function HORDE:SyncToServer(ply)

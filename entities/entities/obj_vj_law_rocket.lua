@@ -28,6 +28,7 @@ ENT.ShakeWorldOnDeath = true -- Should the world shake when the projectile hits 
 ENT.ShakeWorldOnDeathAmplitude = 16 -- How much the screen will shake | From 1 to 16, 1 = really low 16 = really high
 ENT.ShakeWorldOnDeathRadius = 3000 -- How far the screen shake goes, in world units
 ENT.ShakeWorldOnDeathFrequency =  200 -- The frequency
+ENT.ShakeWorldOnDeathDuration = 1
 ENT.DecalTbl_DeathDecals = {"Scorch"}
 ENT.SoundTbl_Idle = {"weapons/rpg/rocket1.wav"}
 ENT.SoundTbl_OnCollide = {"ambient/explosions/explode_9.wav"}

@@ -1,5 +1,6 @@
 PERK.PrintName = "Chain Reaction"
-PERK.Description = "Enemies you kill have {1} chance to explode,\ndealing {2} of their health as Blast damage."
+PERK.Description = [[Enemies you kill have {1} chance to explode,
+dealing {2} of their health as Blast damage.]]
 PERK.Icon = "materials/perks/chain_reaction.png"
 PERK.Params = {
     [1] = {value = 0.30, percent = true},

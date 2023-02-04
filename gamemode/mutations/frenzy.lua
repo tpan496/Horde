@@ -5,7 +5,6 @@ MUTATION.Hooks = {}
 
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "frenzy" then
-        ent.Horde_Mutation_Frenzy = true
         if SERVER then
             local e = EffectData()
                 e:SetOrigin(ent:GetPos())
@@ -28,5 +27,4 @@ MUTATION.Hooks.Horde_OnUnsetMutation = function (ent, mutation)
     else
         ent:SetPlaybackRate(ent:GetPlaybackRate() / 1.5)
     end
-    ent.Horde_Mutation_Frenzy = nil
 end

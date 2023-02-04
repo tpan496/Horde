@@ -242,7 +242,7 @@ function PANEL:Paint()
     if self.item then
         local infusion = self.infusion
         if LocalPlayer():Horde_HasInfusion(self.item.class, infusion) == true then
-            self.infuse_btn:SetText("Infused")
+            self.infuse_btn:SetText(translate.Get("Game_Infused"))
             self.infuse_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -278,7 +278,7 @@ function PANEL:Paint()
         end
 
         self.infusion_description.Paint = function ()
-            draw.DrawText(HORDE.Infusion_Description[infusion], "Content", 50, 0, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            draw.DrawText(translate.Get("Infusion_Description_" .. infusion) or HORDE.Infusion_Description[infusion], "Content", 50, 0, Color(200, 200, 200), TEXT_ALIGN_LEFT)
         end
     end
 end

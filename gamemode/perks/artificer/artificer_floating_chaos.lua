@@ -4,7 +4,7 @@ PERK.Description =
 Spawns a floating orb that echoes your spells.]]
 PERK.Icon = "materials/perks/artificer/floating_chaos.png"
 PERK.Params = {
-    [1] = {value = 25},
+    [1] = {value = 35},
 }
 PERK.Hooks = {}
 

@@ -45,7 +45,7 @@ ENT.SoundTbl_Pain = {"npc/zombie_poison/pz_pain1.wav","npc/zombie_poison/pz_pain
 ENT.SoundTbl_Death = {"npc/zombie_poison/pz_die1.wav","npc/zombie_poison/pz_die2.wav"}
 
 -- Required for a boss
-ENT.Immune_AcidPoisonRadiation = true -- Makes the SNPC not get damage from Acid, posion, radiation
+ENT.Immune_AcidPoisonRadiation = false -- Makes the SNPC not get damage from Acid, posion, radiation
 ENT.Immune_Dissolve = true -- Lmao you thought combine balls would work?
 ENT.RunAwayOnUnknownDamage = false
 ENT.InvestigateSoundDistance = 100 -- How far away can the SNPC hear sounds? | This number is timed by the calculated volume of the detectable sound.

@@ -21,7 +21,7 @@ SWEP.Trivia_Year = 2007
 
 SWEP.Slot = 1
 
-SWEP.UseHands = false
+SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/c_pistol.mdl"
 SWEP.MirrorVMWM = false
@@ -213,12 +213,15 @@ function SWEP:ChangeFiremode(pred)
         local effectdata = EffectData()
         effectdata:SetOrigin(tr.HitPos)
         effectdata:SetRadius(25)
-        util.Effect("heal_mist", effectdata)
+        util.Effect("horde_heal_mist", effectdata)
 
         for _, ent in pairs(ents.FindInSphere(tr.HitPos, 80)) do
             if ent:IsPlayer() then
-                local healinfo = HealInfo:New({amount=10, healer=ply})
+                local healinfo = HealInfo:New({amount=8, healer=ply})
                 HORDE:OnPlayerHeal(ent, healinfo)
+            elseif ent:GetClass() == "npc_vj_horde_antlion" then
+                local healinfo = HealInfo:New({amount=8, healer=ply})
+                HORDE:OnAntlionHeal(ent, healinfo)
             elseif ent:IsNPC() then
                 local dmg = DamageInfo()
                 dmg:SetDamage(10)

@@ -15,6 +15,74 @@ net.Receive("Horde_RemainingTime", function (len)
     remaining_time = net.ReadInt(8)
 end)
 
+HORDE.Notifications_Count = 0
+local function inQuad(fraction, beginning, change)
+	return change * (fraction ^ 2) + beginning
+end
+
+local warning_mat = Material("warning.png", "mips smooth")
+local ok_mat = Material("ok.png", "mips smooth")
+function HORDE:PlayNotification(text, type, icon, col)
+    if not type then type = 0 end
+    if not text then return end
+    local s = string.len(text) * ScreenScale(3) + ScreenScale(20)
+    local main = vgui.Create("DPanel")
+    local y_start = ScrH() - ScreenScale(40) - HORDE.Notifications_Count * ScreenScale(18)
+    main:SetSize(s, ScreenScale(15))
+    main:SetPos(ScrW() - s, y_start)
+    local mat
+    if type == 0 then
+        mat = ok_mat
+    else
+        mat = warning_mat
+    end
+    if icon then
+        mat = Material(icon, "mips smooth")
+    end
+    local color = color_white
+    if col then color = col end
+    main.Paint = function ()
+        draw.RoundedBox(10, 0, 0, s, ScreenScale(15), Color(40,40,40,150))
+        draw.SimpleText(text, "Info", ScreenScale(4) + ScreenScale(10), ScreenScale(4), color_white, TEXT_ALIGN_LEFT)
+        surface.SetDrawColor(color)
+        surface.SetMaterial(mat)
+        surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), ScreenScale(10), ScreenScale(10))
+    end
+    local anim = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
+        pnl:SetPos(ScrW() - s - ScreenScale(8), inQuad(delta, y_start, - ScreenScale(30))) -- Change the X coordinate from 200 to 200+600
+        pnl:SetAlpha(delta * 255)
+    end)
+    main.Think = function(self)
+        if anim:Active() then
+            anim:Run()
+        end
+    end
+    anim:Start(0.5) -- Animate for two seconds
+    if anim:Active() then
+        anim:Run()
+    end
+    timer.Simple(5, function ()
+        local anim2 = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
+            pnl:SetAlpha(255 - delta * 255)
+        end)
+        anim2:Start(0.5)
+        if anim2:Active() then
+            anim2:Run()
+        end
+        main.Think = function(self)
+            if anim2:Active() then
+                anim2:Run()
+            end
+        end
+        timer.Simple(0.5, function ()
+            main:Remove()
+        end)
+        HORDE.Notifications_Count = math.max(0, HORDE.Notifications_Count - 1)
+    end)
+    HORDE.Notifications_Count = HORDE.Notifications_Count + 1
+end
+
+
 function PANEL:Init()
     local w = math.max(1024, math.min(1440, ScrW() * 0.75))
     --local h = math.max(600, ScrH() * 0.75)
@@ -316,8 +384,9 @@ function PANEL:Votediff(vote_btn, diff)
 end
 
 function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, most_heal_player, most_heal, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
-    local w = math.max(1024, ScrW() * 0.75)
-    local h = math.max(600, ScrH() * 0.75)
+    local w = math.max(1024, math.min(1440, ScrW() * 0.75))
+    --local h = math.max(600, ScrH() * 0.75)
+    local h = 600
     local w2 = (w/2 - 30)
     local percentage = 0
     if total_damage > 0 then

@@ -14,13 +14,16 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     local effectdata = EffectData()
     effectdata:SetOrigin(ply:GetPos())
     effectdata:SetRadius(225)
-    util.Effect("heal_mist", effectdata)
-    ply:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 90, 100, 1, CHAN_AUTO)
+    util.Effect("horde_life_diffuser", effectdata)
+    ply:EmitSound("horde/player/life_diffuser.ogg", 100, 100, 1, CHAN_AUTO)
 
     for _, ent in pairs(ents.FindInSphere(ply:GetPos(), 200)) do
         if ent:IsPlayer() then
             local healinfo = HealInfo:New({amount=20, healer=ply})
             HORDE:OnPlayerHeal(ent, healinfo)
+        elseif ent:GetClass() == "npc_vj_horde_antlion" then
+            local healinfo = HealInfo:New({amount=20, healer=ply})
+            HORDE:OnAntlionHeal(ent, healinfo)
         elseif ent:IsNPC() then
             local dmg = DamageInfo()
             dmg:SetDamage(65)

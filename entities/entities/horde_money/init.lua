@@ -31,10 +31,14 @@ function ENT:Initialize()
     end)
 end
 
+function ENT:SetMoney(money)
+    self.Horde_Money = money
+end
+
 function ENT:StartTouch(entity)
     if not self.Removing and entity:IsPlayer() and entity:Alive() and entity ~= self:GetOwner() and (not entity:IsBot()) then
         self.Removing = true
-        entity:Horde_AddMoney(50)
+        entity:Horde_AddMoney(self.Horde_Money or 50)
         entity:Horde_SyncEconomy()
         entity:EmitSound("horde/dosh/dosh_" .. math.random(1, 4) .. ".ogg", 70, 100, 0.25)
         self:Remove()

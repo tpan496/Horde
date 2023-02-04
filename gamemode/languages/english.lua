@@ -102,6 +102,117 @@ LANGUAGE["Shop_Buy_Secondary_Ammo"] = "Buy Secondary Ammo"
 LANGUAGE["Shop_Primary_Ammo"] = "Primary Ammo"
 LANGUAGE["Shop_Secondary_Ammo"] = "Secondary Ammo"
 
+-- Infusions
+LANGUAGE["Game_Infusion"] = "Infusion"
+LANGUAGE["Game_Infused"] = "Infused"
+LANGUAGE["Infusion_None"] = "None"
+LANGUAGE["Infusion_Hemo"] = "Hemo"
+LANGUAGE["Infusion_Concussive"] = "Concussive"
+LANGUAGE["Infusion_Septic"] = "Septic"
+LANGUAGE["Infusion_Flaming"] = "Flaming"
+LANGUAGE["Infusion_Arctic"] = "Arctic"
+LANGUAGE["Infusion_Galvanizing"] = "Galvanizing"
+LANGUAGE["Infusion_Quality"] = "Quality"
+LANGUAGE["Infusion_Impaling"] = "Impaling"
+LANGUAGE["Infusion_Rejuvenating"] = "Rejuvenating"
+LANGUAGE["Infusion_Quicksilver"] = "Quicksilver"
+LANGUAGE["Infusion_Titanium"] = "Titanium"
+LANGUAGE["Infusion_Siphoning"] = "Siphoning"
+LANGUAGE["Infusion_Chrono"] = "Chrono"
+LANGUAGE["Infusion_Ruination"] = "Ruination"
+
+LANGUAGE["Infusion_Description_Hemo"] = [[
+Convert 75% weapon damage into Slashing damage.
+
+Weapon deals only Slashing damage.
+
+Weapon damage increases Bleeding buildup. 
+]]
+LANGUAGE["Infusion_Description_Concussive"] = [[
+Convert 75% weapon damage into Blunt damage.
+
+Weapon deals only Blunt damage.
+
+Weapon damage increases Stun buildup. 
+]]
+LANGUAGE["Infusion_Description_Septic"] = [[
+Convert 75% weapon damage into Poison damage.
+
+Weapon deals only Poison damage.
+
+Weapon damage increases Break buildup. 
+]]
+LANGUAGE["Infusion_Description_Flaming"] = [[
+Convert 75% weapon damage into Fire damage.
+
+Weapon deals only Fire damage.
+
+Weapon ignites enemies on hit.
+]]
+LANGUAGE["Infusion_Description_Arctic"] = [[
+Convert 75% weapon damage into Cold damage.
+
+Weapon deals only Cold damage.
+
+Weapon damage increases Frostbite buildup. 
+]]
+LANGUAGE["Infusion_Description_Galvanizing"] = [[
+Convert 75% weapon damage into Lightning damage.
+
+Weapon deals only Lightning damage.
+
+Weapon damage increases Shock buildup. 
+]]
+LANGUAGE["Infusion_Description_Quality"] = [[
+20% increased weapon damage.
+
+Weapon damage is no longer affected by perks or gadgets.
+(i.e. Your perks become useless for this weapon)
+]]
+LANGUAGE["Infusion_Description_Impaling"] = [[
+25% increased weapon headshot damage.
+
+25% less weapon non-headshot damage.
+]]
+LANGUAGE["Infusion_Description_Rejuvenating"] = [[
+Amplifies weapon healing/leeching by 25%.
+
+20% less weapon damage.
+]]
+LANGUAGE["Infusion_Description_Quicksilver"] = [[
+Increases/decreases weapon damage based on player's available weight.
+
+<= 15% weight -> 30% damage increase
+<= 30% weight -> 25% damage increase 
+<= 40% weight -> 15% damage increase 
+>40% weight -> 25% damage decrease
+]]
+LANGUAGE["Infusion_Description_Titanium"] = [[
+Reduces player damage taken based on weapon weight.
+
+Decrease 1% damage taken for every 1 weight on the weapon.
+
+20% less weapon damage.
+]]
+LANGUAGE["Infusion_Description_Siphoning"] = [[
++1 health when you kill an enemy.
+
+20% less weapon damage.
+]]
+LANGUAGE["Infusion_Description_Chrono"] = [[
+Increases weapon damage the longer the weapon is being held by the user.
+
+6% damage increase per wave held by the user.
+Increase caps at 50%.
+
+20% decreased weapon damage.
+]]
+LANGUAGE["Infusion_Description_Ruination"] = [[
+Increases weapon damage based on your current Necrosis buildup.
+5% damage increase per 10 Necrosis buildup, up to 25%.
+
+Gain 10 Necrosis buildup per second while holding this weapon.
+]]
 
 -- Classes
 LANGUAGE["Class_Survivor"] = "Survivor"
