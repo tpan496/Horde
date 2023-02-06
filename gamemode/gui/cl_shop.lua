@@ -40,7 +40,7 @@ function PANEL:Init()
     infusion_panel:SetSize(self:GetWide() / 2, self:GetTall() - 100)
     infusion_panel:SetVisible(false)
 
-    local player_subclass = LocalPlayer():Horde_GetCurrentSubclass()
+    local player_subclass = MySelf:Horde_GetCurrentSubclass()
 
     local btns = {}
     local firstBtn = true
@@ -163,14 +163,14 @@ function PANEL:Init()
         return btn
     end
 
-    local class = LocalPlayer():Horde_GetClass()
+    local class = MySelf:Horde_GetClass()
 
     for _, category in pairs(HORDE.categories) do
         local items = {}
 
         for _, item in pairs(HORDE.items) do
-            if item.category == category and ((item.whitelist == nil) or (item.whitelist and item.whitelist[class.name]) or (LocalPlayer():Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol")) then
-                if (item.category == "Gadget" and LocalPlayer():Horde_GetGadget() == item.class) or LocalPlayer():HasWeapon(item.class) then
+            if item.category == category and ((item.whitelist == nil) or (item.whitelist and item.whitelist[class.name]) or (MySelf:Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol")) then
+                if (item.category == "Gadget" and MySelf:Horde_GetGadget() == item.class) or MySelf:HasWeapon(item.class) then
                     item.cmp = -1
                 else
                     if item.hidden == true then goto cont end
@@ -304,7 +304,7 @@ function PANEL:ReloadAttachments(attachments, container, description_panel)
         if attachments[attachment_category] then
             for _, item in pairs(attachments[attachment_category]) do
                 if item.entity_properties.arccw_attachment_wpn then
-                    if not LocalPlayer():HasWeapon(item.entity_properties.arccw_attachment_wpn) then
+                    if not MySelf:HasWeapon(item.entity_properties.arccw_attachment_wpn) then
                         goto cont
                     end
                 end
@@ -337,19 +337,19 @@ function PANEL:Paint(w, h)
     end
 
     -- Money
-    local display_name = LocalPlayer():Horde_GetCurrentSubclass()
+    local display_name = MySelf:Horde_GetCurrentSubclass()
     local loc_display_name = translate.Get("Class_" .. display_name) or display_name
     draw.SimpleText(translate.Get("Shop_Class") .. ": " .. loc_display_name, 'Heading', 170, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     
     local text
     local weight_text
-    weight_text = translate.Get("Shop_Weight") .. ': ' .. tostring(LocalPlayer():Horde_GetMaxWeight() - LocalPlayer():Horde_GetWeight()) .. "/" .. LocalPlayer():Horde_GetMaxWeight() .. ""
+    weight_text = translate.Get("Shop_Weight") .. ': ' .. tostring(MySelf:Horde_GetMaxWeight() - MySelf:Horde_GetWeight()) .. "/" .. MySelf:Horde_GetMaxWeight() .. ""
     local mat = Material("weight.png", "mips smooth")
     surface.SetMaterial(mat)
     surface.SetDrawColor(Color(255,255,255))
     surface.DrawTexturedRect(self:GetWide() - 60, 14, 20, 20)
     
-    text = translate.Get("Shop_Cash") .. ": " .. tostring(LocalPlayer():Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(LocalPlayer():Horde_GetSkullTokens()) .. '       ' .. weight_text
+    text = translate.Get("Shop_Cash") .. ": " .. tostring(MySelf:Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(MySelf:Horde_GetSkullTokens()) .. '       ' .. weight_text
     draw.SimpleText(text, 'Heading', self:GetWide() - 60, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
     local mat = Material("skull.png", "mips smooth")

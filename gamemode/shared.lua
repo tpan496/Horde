@@ -27,6 +27,9 @@ function GM:Initialize()
     game.AddAmmoType({
         name = "arccw_horde_nade_stun"
     })
+    if SERVER then
+        HORDE.NPCS = list.Get("NPC")
+    end
 end
 
 function GM:PlayerLoadout(ply) return true end

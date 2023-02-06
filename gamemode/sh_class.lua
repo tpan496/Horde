@@ -332,7 +332,7 @@ if CLIENT then
         for name, c in pairs(HORDE.classes) do
             HORDE.order_to_class_name[c.order] = name
         end
-        local class = LocalPlayer():Horde_GetCurrentSubclass() or HORDE.Class_Survivor
+        local class = MySelf:Horde_GetCurrentSubclass() or HORDE.Class_Survivor
         HORDE:SendSavedPerkChoices(class)
 
         local f = file.Read("horde/class_choices.txt", "DATA")
@@ -347,7 +347,7 @@ if CLIENT then
 
     net.Receive("Horde_SyncSubclassUnlocks", function ()
         local table = net.ReadTable()
-        LocalPlayer().Horde_subclasses_unlocked = table
+        MySelf.Horde_subclasses_unlocked = table
     end)
 end
 
@@ -523,7 +523,7 @@ function plymeta:Horde_SetSubclassUnlocked(subclass, unlocked)
 end
 
 function plymeta:Horde_SetSubclassChoice(class_name, subclass_name)
-    LocalPlayer().Horde_subclass_choices[class_name] = subclass_name
+    MySelf.Horde_subclass_choices[class_name] = subclass_name
     if CLIENT then
         HORDE:SaveSubclassChoices()
     end
@@ -560,7 +560,7 @@ end
 
 function HORDE:SaveSubclassChoices()
     local f = file.Open("horde/subclass_choices.txt", "wb", "DATA")
-    for class, subclass in pairs(LocalPlayer().Horde_subclass_choices) do
+    for class, subclass in pairs(MySelf.Horde_subclass_choices) do
         f:WriteULong(HORDE.classes_to_order[class])
         f:WriteULong(HORDE.subclass_name_to_crc[subclass])
     end
@@ -568,27 +568,27 @@ function HORDE:SaveSubclassChoices()
 end
 
 function HORDE:LoadSubclassChoices()
-    LocalPlayer().Horde_subclass_choices = {}
+    MySelf.Horde_subclass_choices = {}
     if not file.Exists("horde/subclass_choices.txt", "DATA") then
         for class_name, _ in pairs(HORDE.classes_to_subclasses) do
-            LocalPlayer().Horde_subclass_choices[class_name] = class_name
+            MySelf.Horde_subclass_choices[class_name] = class_name
         end
         HORDE:SaveSubclassChoices()
     else
         local f = file.Open("horde/subclass_choices.txt", "rb", "DATA")
-        if not LocalPlayer().Horde_subclasses then LocalPlayer().Horde_subclasses = {} end
+        if not MySelf.Horde_subclasses then MySelf.Horde_subclasses = {} end
         while not f:EndOfFile() do
             local class_order = f:ReadULong()
             local subclass_order = f:ReadULong()
-            LocalPlayer().Horde_subclass_choices[HORDE.order_to_class_name[class_order]] = HORDE.order_to_subclass_name[tostring(subclass_order)]
-            LocalPlayer().Horde_subclasses[HORDE.order_to_class_name[class_order]] = HORDE.order_to_subclass_name[tostring(subclass_order)]
+            MySelf.Horde_subclass_choices[HORDE.order_to_class_name[class_order]] = HORDE.order_to_subclass_name[tostring(subclass_order)]
+            MySelf.Horde_subclasses[HORDE.order_to_class_name[class_order]] = HORDE.order_to_subclass_name[tostring(subclass_order)]
         end
         f:Close()
 
         -- Double check that we have all the subclasses we need
         for class_name, _ in pairs(HORDE.classes_to_subclasses) do
-            if not LocalPlayer().Horde_subclass_choices[class_name] then
-                LocalPlayer().Horde_subclass_choices[class_name] = class_name
+            if not MySelf.Horde_subclass_choices[class_name] then
+                MySelf.Horde_subclass_choices[class_name] = class_name
             end
         end
     end
@@ -616,7 +616,7 @@ end)
 
 net.Receive("Horde_SubclassUnlocked", function ()
     local subclass = net.ReadString()
-    LocalPlayer():Horde_SetSubclassUnlocked(subclass, true)
+    MySelf:Horde_SetSubclassUnlocked(subclass, true)
 end)
 end
 

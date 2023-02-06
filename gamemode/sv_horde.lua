@@ -369,9 +369,12 @@ end
 -- Spawns a Horde enemy at the give position.
 -- The enemy is tracked by Horde.
 function HORDE:SpawnEnemy(enemy, pos)
-    local npc_info = list.Get("NPC")[enemy.class]
+    local npc_info = HORDE.NPCS[enemy.class]
     if not npc_info then
-        print("[HORDE] NPC does not exist in ", list.Get("NPC"))
+        net.Start("Horde_LegacyNotification")
+        net.WriteString("NPC " .. enemy.class .. " does not exist.")
+        net.WriteInt(1,2)
+        net.Broadcast()
     end
 
     local spawned_enemy = ents.Create(enemy.class)
@@ -533,13 +536,7 @@ function HORDE:SpawnEnemy(enemy, pos)
             end
         end
     end
-    --[[spawned_enemy.DoRelationshipCheck = function (ent)
-        if ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid() then return true end
-        return false
-    end]]--
-    
-    --spawned_enemy:AddRelationship("player D_HT 99")
-    --VJ_AddSpeed(spawned_enemy, 4)
+
     hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy
 end

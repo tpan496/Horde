@@ -201,7 +201,7 @@ end
 function HORDE:GetUpgradePrice(class, ply)
     local level
     if CLIENT then
-        level = LocalPlayer():Horde_GetUpgrade(class)
+        level = MySelf:Horde_GetUpgrade(class)
     else
         level = ply:Horde_GetUpgrade(class)
     end

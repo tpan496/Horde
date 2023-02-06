@@ -134,7 +134,7 @@ function HORDE:IsCurrentWeapon(dmginfo, category)
 end
 
 function HORDE:GetStats()
-if CLIENT and LocalPlayer():Alive() then
+if CLIENT and MySelf:Alive() then
     net.Start("Horde_GetStats")
     net.SendToServer()
 end
@@ -194,11 +194,11 @@ end
 
 if CLIENT then
 net.Receive("Horde_GiveStats", function ()
-    LocalPlayer().Horde_Stats = net.ReadTable()
+    MySelf.Horde_Stats = net.ReadTable()
 end)
 
 function HORDE:GetStat(stat)
-    if not LocalPlayer().Horde_Stats then return 0 end
-    return LocalPlayer().Horde_Stats[stat]
+    if not MySelf.Horde_Stats then return 0 end
+    return MySelf.Horde_Stats[stat]
 end
 end
