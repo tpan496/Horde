@@ -25,7 +25,7 @@ end
 
 function PANEL:SetData(class, description_panel)
     self.class = class
-    self.subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(self.class.name)]
+    self.subclass = HORDE.subclasses[MySelf:Horde_GetSubclass(self.class.name)]
     self.name = class.name
     self.description = class.description
     self.description_panel = description_panel
@@ -65,7 +65,7 @@ function PANEL:Paint()
         surface.DrawText(translate.Get("Class_" .. self.subclass.PrintName) or self.subclass.PrintName)
 
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-        local level = LocalPlayer():Horde_GetLevel(self.subclass.PrintName)
+        local level = MySelf:Horde_GetLevel(self.subclass.PrintName)
         local rank, rank_level = HORDE:LevelToRank(level)
         
         if self.mat then

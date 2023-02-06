@@ -1077,7 +1077,7 @@ if CLIENT then
     net.Receive("Horde_SetUpgrades", function(len, ply)
         local class = net.ReadString()
         local level = net.ReadUInt(8)
-        LocalPlayer():Horde_SetUpgrade(class, level)
+        MySelf:Horde_SetUpgrade(class, level)
     end)
 end
 

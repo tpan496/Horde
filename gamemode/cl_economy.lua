@@ -36,5 +36,5 @@ end)
 
 net.Receive("Horde_SyncMaxWeight", function (len, ply)
     local max_weight = net.ReadUInt(5)
-    LocalPlayer().Horde_max_weight = max_weight
+    MySelf.Horde_max_weight = max_weight
 end)

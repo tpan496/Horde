@@ -7,7 +7,7 @@ local path
 local strm
 
 hook.Add("InitPostEntity", "Horde_PlayerInitAchievements", function()
-    EXPECTED_HEADER = util.SHA256("HordeAchievements" .. LocalPlayer():SteamID())
+    EXPECTED_HEADER = util.SHA256("HordeAchievements" .. MySelf:SteamID())
     HORDE:CheckUpdate()
 end)
 
@@ -114,7 +114,7 @@ function HORDE:SaveMapAchievements()
     if GetConVarNumber("horde_enable_sandbox") == 1 then return end
     if HORDE.current_wave < 10 then return end
     local map = game.GetMap()
-    local ply = LocalPlayer()
+    local ply = MySelf
     if not ply:IsValid() then return end
 
 	if not file.IsDir("horde/achievements/", "DATA") then
@@ -233,7 +233,7 @@ end
 function HORDE:SaveClassAchievemnts()
     local class = ply:Horde_GetClass().name
     local difficulty = HORDE.difficulty
-    local ply = LocalPlayer()
+    local ply = MySelf
     if not ply:IsValid() then return end
 
 	if not file.IsDir("horde/achievements/classes", "DATA") then
@@ -257,7 +257,7 @@ function HORDE:SaveClassAchievemnts()
 end
 
 function HORDE:LoadMapAchievements()
-    local ply = LocalPlayer()
+    local ply = MySelf
     if not ply:IsValid() then return end
 
 	if not file.IsDir("horde/achievements/", "DATA") then
@@ -289,7 +289,7 @@ function HORDE:LoadMapAchievements()
 end
 
 function HORDE:LoadClassAchievements()
-    local ply = LocalPlayer()
+    local ply = MySelf
     if not ply:IsValid() then return end
 
 	if not file.IsDir("horde/achievements/classes", "DATA") then

@@ -54,7 +54,7 @@ function PANEL:add_infusion(infusion, price)
         surface.SetTextPos(50, 10)
         surface.DrawText(translate.Get("Infusion_" .. HORDE.Infusion_Names[infusion]) or HORDE.Infusion_Names[infusion])
 
-        local has_infusion = LocalPlayer():Horde_HasInfusion(self.item.class, infusion)
+        local has_infusion = MySelf:Horde_HasInfusion(self.item.class, infusion)
         --if has_infusion then
             --surface.SetDrawColor(Color(255,255,255))
             --surface.DrawOutlinedRect(0, 0, (self.infusion_scroll:GetWide() - 24) / 2, 40, 2)
@@ -167,7 +167,7 @@ function PANEL:Init()
     function self.infuse_btn:DoClick()
         if p.infusion == HORDE.Infusion_None then return end
         local price = 100 + p.item.price / 5
-        if (LocalPlayer():Horde_GetMoney() < price) or (LocalPlayer():Horde_HasInfusion(p.item.class, p.infusion) == true)  then return end
+        if (MySelf:Horde_GetMoney() < price) or (MySelf:Horde_HasInfusion(p.item.class, p.infusion) == true)  then return end
         surface.PlaySound("UI/buttonclick.wav")
         net.Start("Horde_BuyInfusion")
             net.WriteString(p.item.class)
@@ -229,7 +229,7 @@ function PANEL:SetData(item)
     if not item.infusions then return end
     
     for _, infusion in SortedPairsByValue(item.infusions) do
-        --if LocalPlayer():Horde_GetClass().infusions[infusion] then
+        --if MySelf:Horde_GetClass().infusions[infusion] then
             self:add_infusion(infusion, 100 + item.price / 5)
         --end
     end
@@ -241,13 +241,13 @@ function PANEL:Paint()
     local price = 100 + self.item.price / 5
     if self.item then
         local infusion = self.infusion
-        if LocalPlayer():Horde_HasInfusion(self.item.class, infusion) == true then
+        if MySelf:Horde_HasInfusion(self.item.class, infusion) == true then
             self.infuse_btn:SetText(translate.Get("Game_Infused"))
             self.infuse_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
             end
-        elseif LocalPlayer():Horde_GetMoney() < price  then
+        elseif MySelf:Horde_GetMoney() < price  then
             self.infuse_btn:SetText("Not enough money (Need " .. tostring(price) .. "$)")
             self.infuse_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
@@ -267,7 +267,7 @@ function PANEL:Paint()
             end
         end
 
-        if LocalPlayer():Horde_GetInfusion(self.item.class) ~= HORDE.Infusion_None then
+        if MySelf:Horde_GetInfusion(self.item.class) ~= HORDE.Infusion_None then
             self.remove_infuse_btn:SetVisible(true)
             self.remove_infuse_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)

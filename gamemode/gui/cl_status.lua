@@ -48,14 +48,14 @@ local function DrawStatus(status, stack, displacement)
             surface.SetDrawColor(color_white)
             surface.DrawTexturedRect(ScreenScale(1 + displacement), ScreenScale(5/4), ScreenScale(13), ScreenScale(13))
     
-            local cd = LocalPlayer():Horde_GetPerkInternalCooldown()
+            local cd = MySelf:Horde_GetPerkInternalCooldown()
             if cd > 0 then
                 draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
                 surface.SetDrawColor(color_white)
                 draw.SimpleText(cd, "Horde_Cd", ScreenScale(displacement + 7.5), ScreenScale(7), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
 
-            local charge = LocalPlayer():Horde_GetPerkCharges()
+            local charge = MySelf:Horde_GetPerkCharges()
             if HORDE:IsStackableSkillStatus(status) and charge >= 0 then
                 draw.SimpleText(charge, "Horde_Cd", ScreenScale(displacement + 12), ScreenScale(2.5), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
@@ -81,7 +81,7 @@ local function DrawStatus(status, stack, displacement)
 
         surface.SetMaterial(mat)
         surface.SetDrawColor(color)
-        surface.DrawTexturedRect(ScreenScale(displacement + 1.5), ScreenScale(5/4), ScreenScale(13), ScreenScale(13))
+        surface.DrawTexturedRect(ScreenScale(displacement + 1), ScreenScale(5/4), ScreenScale(13), ScreenScale(13))
     else
         draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
         mat = Material(HORDE.Status_Icon[status])
@@ -124,9 +124,9 @@ status_panel:SetPos(ScreenScale(6), ScreenScale(40))
 status_panel.Paint = function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
 
-    if LocalPlayer():IsValid() and LocalPlayer():Alive() and LocalPlayer():GetStatusTable() then
+    if MySelf:IsValid() and MySelf:Alive() and MySelf:GetStatusTable() then
         local pos = 0
-        for status, stack in SortedPairs(LocalPlayer():GetStatusTable()) do
+        for status, stack in SortedPairs(MySelf:GetStatusTable()) do
             if HORDE:IsDebuff(status) and stack < 100 then goto cont end
             if not HORDE.Status_Icon[status] then goto cont end
             DrawStatus(status, stack, pos)
@@ -159,11 +159,11 @@ buildup_panel:SetPos(ScrW() / 2 - 250, ScrH() - 400)
 buildup_panel.Paint = function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
 
-    if LocalPlayer():IsValid() and LocalPlayer():Alive() and LocalPlayer():GetStatusTable() then
+    if MySelf:IsValid() and MySelf:Alive() and MySelf:GetStatusTable() then
         local posx = 125
         local posy = 200
         posy = posy - (total_buildup) * 55 / 2
-        for status, stack in pairs(LocalPlayer():GetStatusTable()) do
+        for status, stack in pairs(MySelf:GetStatusTable()) do
             if HORDE:IsDebuff(status) then
                 if stack <= 0 then goto cont end
                 DrawBuildup(status, stack, posx, posy)
@@ -178,13 +178,13 @@ net.Receive("Horde_SyncStatus", function()
     local status = net.ReadUInt(8)
     local stack = net.ReadUInt(8)
 
-    if LocalPlayer().SetStatus then
-        LocalPlayer():SetStatus(status, stack)
+    if MySelf.SetStatus then
+        MySelf:SetStatus(status, stack)
     end
 
     total_buildup = 0
-    if not LocalPlayer().GetStatusTable then return end
-    for s, buildup in pairs(LocalPlayer():GetStatusTable()) do
+    if not MySelf.GetStatusTable then return end
+    for s, buildup in pairs(MySelf:GetStatusTable()) do
         if HORDE:IsDebuff(s) then
             if buildup <= 0 then goto cont end
             total_buildup = total_buildup + 1
@@ -210,8 +210,8 @@ net.Receive("Horde_SyncSpecialArmor", function()
     local armor = net.ReadString()
     local on = net.ReadUInt(3)
 
-    if LocalPlayer().SetStatus then
-        LocalPlayer():SetStatus(armor_table[armor], on)
+    if MySelf.SetStatus then
+        MySelf:SetStatus(armor_table[armor], on)
     end
 end)
 
@@ -220,18 +220,18 @@ net.Receive("Horde_SyncActivePerk", function()
     local on = net.ReadUInt(3)
 
     if on == 1 then
-        LocalPlayer().Horde_ActivePerk = status
+        MySelf.Horde_ActivePerk = status
     else
-        LocalPlayer().Horde_ActivePerk = nil
+        MySelf.Horde_ActivePerk = nil
     end
 
-    if LocalPlayer().SetStatus then
-        LocalPlayer():SetStatus(status, on)
+    if MySelf.SetStatus then
+        MySelf:SetStatus(status, on)
     end
 end)
 
 net.Receive("Horde_ClearStatus", function()
-    LocalPlayer().Horde_StatusTable = {}
+    MySelf.Horde_StatusTable = {}
 end)
 
 local barrier_panel = vgui.Create("DPanel")
@@ -240,13 +240,13 @@ barrier_panel:SetPos(ScrW() / 2 - 50, ScrH() / 2 + 50)
 barrier_panel.Paint = function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
 
-    if LocalPlayer():IsValid() and LocalPlayer():Alive() and LocalPlayer().Horde_BarrierStack and LocalPlayer().Horde_BarrierStack > 0 then
+    if MySelf:IsValid() and MySelf:Alive() and MySelf.Horde_BarrierStack and MySelf.Horde_BarrierStack > 0 then
         local mat = Material("status/barrier.png")
         surface.SetDrawColor(255, 255, 255, 150)
         surface.SetMaterial(mat)
         surface.DrawTexturedRect(0, 0, 100, 100)
 
-        draw.SimpleText(tostring(LocalPlayer().Horde_BarrierStack), "Trebuchet24", 40, 90, Color(255, 255, 255, 150))
+        draw.SimpleText(tostring(MySelf.Horde_BarrierStack), "Trebuchet24", 40, 90, Color(255, 255, 255, 150))
     end
 end
 
@@ -287,11 +287,11 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
         draw.RoundedBox(10, airgap, ScrH() - ScreenScale(33) - airgap, airgap + ScreenScale(70), ScreenScale(26) + airgap, Color(40,40,40,150))
 
         -- Draw Class
-        local subclass = HORDE.subclasses[LocalPlayer():Horde_GetCurrentSubclass()]
+        local subclass = HORDE.subclasses[MySelf:Horde_GetCurrentSubclass()]
         if not subclass then subclass = HORDE.subclasses[HORDE.Class_Survivor] end
         local display_name = subclass.PrintName
         local class_icon = Material(subclass.Icon, "mips smooth")
-        local level = LocalPlayer():Horde_GetLevel(display_name)
+        local level = MySelf:Horde_GetLevel(display_name)
         local rank, rank_level = HORDE:LevelToRank(level)
         local class_icon_s = ScreenScale(24)
         surface.SetMaterial(class_icon)
@@ -314,14 +314,14 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
             end
         end
 
-        if LocalPlayer():Health() <= 30 then
+        if MySelf:Health() <= 30 then
             colhp = Color(150, 0, 0)
-        elseif LocalPlayer():Health() < 50 then
+        elseif MySelf:Health() < 50 then
             colhp = Color(255, 185, 185)
         end
 
-        vhp = LocalPlayer():Health()
-        varmor = LocalPlayer():Armor()
+        vhp = MySelf:Health()
+        varmor = MySelf:Armor()
 
         local icon_s = ScreenScale(15)
 
@@ -340,13 +340,13 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
         -- Draw Ammo
         draw.RoundedBox(10, ScrW() - airgap - ScreenScale(78), ScrH() - ScreenScale(33) - airgap, airgap + ScreenScale(70), ScreenScale(26) + airgap, Color(40,40,40,150))
 
-        local wpn = LocalPlayer():GetActiveWeapon()
+        local wpn = MySelf:GetActiveWeapon()
         if wpn and wpn:IsValid() then
             local col_ammo = color_white
             local col_ammo2 = color_white
             
-            if LocalPlayer():Horde_GetInfusion(wpn:GetClass()) ~= HORDE.Infusion_None then
-                local infusion = LocalPlayer():Horde_GetInfusion(wpn:GetClass())
+            if MySelf:Horde_GetInfusion(wpn:GetClass()) ~= HORDE.Infusion_None then
+                local infusion = MySelf:Horde_GetInfusion(wpn:GetClass())
                 local infusion_mat = Material(HORDE.Infusion_Icons[infusion], "mips smooth")
                 surface.SetMaterial(infusion_mat)
                 surface.SetDrawColor(HORDE.Infusion_Colors[infusion])
@@ -357,32 +357,32 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
                 local c2 = color_white
                 if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
                 if wpn:Clip2() == 0 then c2 = Color(100,0,0) end
-                draw.SimpleText(tostring(wpn:Clip1() .. " / " .. LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font, ScrW() - ScreenScale(20), icon_y + ScreenScale(13), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(tostring(wpn:Clip2() .. " / " .. LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(24), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                draw.SimpleText(tostring(wpn:Clip1() .. " / " .. MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font, ScrW() - ScreenScale(20), icon_y + ScreenScale(13), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                draw.SimpleText(tostring(wpn:Clip2() .. " / " .. MySelf:GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(24), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
                 draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
             elseif (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) then
                 local c1 = color_white
                 local c2 = color_white
                 if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
-                if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+                if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
                 draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
                 draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
             elseif (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
                 local c1 = color_white
                 local c2 = color_white
                 if wpn:Clip2() == 0 then c1 = Color(100,0,0) end
-                if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+                if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
                 draw.SimpleText(tostring(wpn:Clip2()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
                 draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
             elseif wpn:GetPrimaryAmmoType() > 0 then
                 local c1 = color_white
                 local c2 = color_white
                 if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
-                if LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+                if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
                 --draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(tostring(LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(45), icon_y + ScreenScale(17), c2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(45), icon_y + ScreenScale(17), c2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                 draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
             else
                 draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(47), icon_y + ScreenScale(15), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -396,14 +396,14 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
         local wx = ScrW() - airgap - ScreenScale(80)
         local wy = ScrH() - ScreenScale(46) - airgap
         surface.DrawTexturedRect(wx + ScreenScale(65), wy + ScreenScale(2), ScreenScale(10), ScreenScale(10))
-        draw.SimpleText(tostring(LocalPlayer():Horde_GetMaxWeight() - LocalPlayer():Horde_GetWeight()) .. "/" .. tostring(LocalPlayer():Horde_GetMaxWeight()), fontweight, wx + ScreenScale(65), wy + ScreenScale(3), color_white, TEXT_ALIGN_RIGHT)
-        draw.SimpleText(tostring(LocalPlayer():Horde_GetMoney()) .. " $", fontweight, wx + ScreenScale(4), wy + ScreenScale(3), color_white)
+        draw.SimpleText(tostring(MySelf:Horde_GetMaxWeight() - MySelf:Horde_GetWeight()) .. "/" .. tostring(MySelf:Horde_GetMaxWeight()), fontweight, wx + ScreenScale(65), wy + ScreenScale(3), color_white, TEXT_ALIGN_RIGHT)
+        draw.SimpleText(tostring(MySelf:Horde_GetMoney()) .. " $", fontweight, wx + ScreenScale(4), wy + ScreenScale(3), color_white)
 
         -- Draw Gadget
-        if LocalPlayer():Horde_GetGadget() ~= nil then
-            local gadget = LocalPlayer():Horde_GetGadget()
-            local charge = LocalPlayer():Horde_GetGadgetCharges()
-            local cd = LocalPlayer():Horde_GetGadgetInternalCooldown()
+        if MySelf:Horde_GetGadget() ~= nil then
+            local gadget = MySelf:Horde_GetGadget()
+            local charge = MySelf:Horde_GetGadgetCharges()
+            local cd = MySelf:Horde_GetGadgetInternalCooldown()
             local x = ScrW() - airgap - ScreenScale(78) - ScreenScale(33)
             local y = ScrH() - ScreenScale(33) - airgap
             local s = ScreenScale(26) + airgap
@@ -452,32 +452,32 @@ if CLIENT then
         end)
     end
     net.Receive("Horde_GadgetStartCooldown", function()
-        LocalPlayer():Horde_SetGadgetInternalCooldown(net.ReadUInt(8))
-        if LocalPlayer():Horde_GetGadgetInternalCooldown() <= 0 then return end
+        MySelf:Horde_SetGadgetInternalCooldown(net.ReadUInt(8))
+        if MySelf:Horde_GetGadgetInternalCooldown() <= 0 then return end
         timer.Create("Horde_LocalGadgetCooldown", 1, 0, function()
-            if LocalPlayer():Horde_GetGadgetInternalCooldown() <= 0 then timer.Remove("Horde_LocalGadgetCooldown") return end
-            LocalPlayer():Horde_SetGadgetInternalCooldown(LocalPlayer():Horde_GetGadgetInternalCooldown() - 1)
+            if MySelf:Horde_GetGadgetInternalCooldown() <= 0 then timer.Remove("Horde_LocalGadgetCooldown") return end
+            MySelf:Horde_SetGadgetInternalCooldown(MySelf:Horde_GetGadgetInternalCooldown() - 1)
         end)
     end)
 
     net.Receive("Horde_PerkStartCooldown", function ()
-        LocalPlayer():Horde_SetPerkInternalCooldown(net.ReadUInt(8))
-        if LocalPlayer():Horde_GetPerkInternalCooldown() <= 0 then return end
+        MySelf:Horde_SetPerkInternalCooldown(net.ReadUInt(8))
+        if MySelf:Horde_GetPerkInternalCooldown() <= 0 then return end
         timer.Create("Horde_LocalPerkCooldown", 1, 0, function()
-            if LocalPlayer():Horde_GetPerkInternalCooldown() <= 0 then timer.Remove("Horde_LocalPerkCooldown") return end
-            LocalPlayer():Horde_SetPerkInternalCooldown(LocalPlayer():Horde_GetPerkInternalCooldown() - 1)
+            if MySelf:Horde_GetPerkInternalCooldown() <= 0 then timer.Remove("Horde_LocalPerkCooldown") return end
+            MySelf:Horde_SetPerkInternalCooldown(MySelf:Horde_GetPerkInternalCooldown() - 1)
         end)
     end)
 
     net.Receive("Horde_GadgetChargesUpdate", function ()
-        LocalPlayer():Horde_SetGadgetCharges(net.ReadInt(8))
+        MySelf:Horde_SetGadgetCharges(net.ReadInt(8))
     end)
 
     net.Receive("Horde_PerkChargesUpdate", function ()
-        LocalPlayer():Horde_SetPerkCharges(net.ReadInt(8))
+        MySelf:Horde_SetPerkCharges(net.ReadInt(8))
     end)
 
     net.Receive("Horde_RenderBarrier", function ()
-        LocalPlayer().Horde_BarrierStack = net.ReadUInt(32)
+        MySelf.Horde_BarrierStack = net.ReadUInt(32)
     end)
 end

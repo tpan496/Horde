@@ -44,7 +44,7 @@ timer.Simple(5, function ()
     corner_panel.Paint = function ()
         if GetConVarNumber("horde_enable_client_gui") == 0 then return end
         draw.RoundedBox(10, 0, 0, width - height - ScreenScale(2), height, Color(40,40,40,200))
-        if LocalPlayer():Alive() then
+        if MySelf:Alive() then
             if (HORDE.current_wave <= 0) or (wave_str == nil) then
                 draw.SimpleText("Preparing...", "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
@@ -77,6 +77,73 @@ boss_health_bar.Paint = function()
     draw.RoundedBox(10, 0, 0, boss_health_bar:GetWide() * delayed_boss_health / boss_max_health, 35, Color(255,255,255,225))
     draw.RoundedBox(10, 0, 0, boss_health_bar:GetWide() * boss_health / boss_max_health, 35, Color(220, 20, 60))
     draw.SimpleText(boss_name, "Info", boss_health_bar:GetWide() / 2, 50, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 5)
+end
+
+HORDE.Notifications_Count = 0
+local function inQuad(fraction, beginning, change)
+	return change * (fraction ^ 2) + beginning
+end
+
+local warning_mat = Material("warning.png", "mips smooth")
+local ok_mat = Material("ok.png", "mips smooth")
+function HORDE:PlayNotification(text, type, icon, col)
+    if not type then type = 0 end
+    if not text then return end
+    local s = string.len(text) * ScreenScale(3) + ScreenScale(20)
+    local main = vgui.Create("DPanel")
+    local y_start = ScrH() - ScreenScale(40) - HORDE.Notifications_Count * ScreenScale(18)
+    main:SetSize(s, ScreenScale(15))
+    main:SetPos(ScrW() - s, y_start)
+    local mat
+    if type == 0 then
+        mat = ok_mat
+    else
+        mat = warning_mat
+    end
+    if icon then
+        mat = Material(icon, "mips smooth")
+    end
+    local color = color_white
+    if col then color = col end
+    main.Paint = function ()
+        draw.RoundedBox(10, 0, 0, s, ScreenScale(15), Color(40,40,40,150))
+        draw.SimpleText(text, "Info", ScreenScale(4) + ScreenScale(10), ScreenScale(4), color_white, TEXT_ALIGN_LEFT)
+        surface.SetDrawColor(color)
+        surface.SetMaterial(mat)
+        surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), ScreenScale(10), ScreenScale(10))
+    end
+    local anim = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
+        pnl:SetPos(ScrW() - s - ScreenScale(8), inQuad(delta, y_start, - ScreenScale(30))) -- Change the X coordinate from 200 to 200+600
+        pnl:SetAlpha(delta * 255)
+    end)
+    main.Think = function(self)
+        if anim:Active() then
+            anim:Run()
+        end
+    end
+    anim:Start(0.5) -- Animate for two seconds
+    if anim:Active() then
+        anim:Run()
+    end
+    timer.Simple(5, function ()
+        local anim2 = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
+            pnl:SetAlpha(255 - delta * 255)
+        end)
+        anim2:Start(0.5)
+        if anim2:Active() then
+            anim2:Run()
+        end
+        main.Think = function(self)
+            if anim2:Active() then
+                anim2:Run()
+            end
+        end
+        timer.Simple(0.5, function ()
+            main:Remove()
+        end)
+        HORDE.Notifications_Count = math.max(0, HORDE.Notifications_Count - 1)
+    end)
+    HORDE.Notifications_Count = HORDE.Notifications_Count + 1
 end
 
 net.Receive("Horde_SyncGameInfo", function()
