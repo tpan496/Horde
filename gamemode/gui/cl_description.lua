@@ -37,7 +37,7 @@ function PANEL:Init()
     self.subclass_btn:SetFont("Content")
     self.subclass_btn:SetTall(50)
     self.subclass_btn:SetText(translate.Get("Class_Change_Subclass") or "Change Subclass")
-    self.subclass_btn.OnCuPrsorEntered = function ()
+    self.subclass_btn.OnCursorEntered = function ()
         surface.PlaySound("UI/buttonrollover.wav")
     end
     self.subclass_btn:SetVisible(false)
