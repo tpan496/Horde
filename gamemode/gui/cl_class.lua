@@ -15,11 +15,19 @@ function PANEL:DoClick()
 end
 
 function PANEL:OnCursorEntered()
-    self.bg_color = Color(100, 100, 100)
+    if self.is_current_class then
+        self.bg_color = Color(110, 110, 110)
+    else
+        self.bg_color = Color(100, 100, 100)
+    end
 end
 
 function PANEL:OnCursorExited()
-    self.bg_color = Color(50,50,50)
+    if self.is_current_class then
+        self.bg_color = Color(110,110,110)
+    else
+        self.bg_color = Color(50,50,50)
+    end
     surface.PlaySound("UI/buttonrollover.wav")
 end
 
@@ -30,7 +38,15 @@ function PANEL:SetData(class, description_panel)
     self.description = class.description
     self.description_panel = description_panel
     self.mat = Material(self.subclass.Icon, "mips smooth")
-
+    if self.subclass.PrintName == MySelf:Horde_GetCurrentSubclass() then
+        self.is_current_class = true
+    end
+    
+    if self.is_current_class then
+        self.bg_color = Color(110,110,110)
+    else
+        self.bg_color = Color(50,50,50)
+    end
     local btn = vgui.Create("DButton", self)
     btn:Dock(FILL)
     btn:SetText("")

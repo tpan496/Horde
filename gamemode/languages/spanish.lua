@@ -12,6 +12,8 @@ Translator: Archi, BishY
 
 translate.AddLanguage("es-ES", "Spanish")
 
+LANGUAGE["Default_Font_Bold"] = "arial bold"
+
 -- Game Info
 LANGUAGE["Game_Ready"] = "Listo"
 LANGUAGE["Game_Not Ready"] = "No Listo"

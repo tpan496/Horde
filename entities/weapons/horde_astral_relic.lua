@@ -161,6 +161,7 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 0
 SWEP.Secondary.DefaultClip = 0
+SWEP.Secondary.ClipSize = 0
 
 SWEP.Delay = 1
 

@@ -12,6 +12,7 @@ resistance vs. less damage taken: same as above.
 translate.AddLanguage("en", "English")
 
 -- Game Info
+LANGUAGE["Game_Preparing..."] = "Preparing..."
 LANGUAGE["Game_Ready"] = "Ready"
 LANGUAGE["Game_Not Ready"] = "Not Ready"
 LANGUAGE["Game_Players_Ready"] = "Players Ready"

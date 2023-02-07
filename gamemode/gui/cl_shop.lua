@@ -1,4 +1,5 @@
 local PANEL = {}
+local class_panel_active = nil
 
 function PANEL:Init()
     if ScrW() <= 1600 or ScrH() < 1080 then
@@ -48,7 +49,10 @@ function PANEL:Init()
     local function createBtn(text, panel, dock)
         panel:SetParent(container)
         panel:Dock(FILL)
-        panel.Paint = function(pnl, w, h) surface.SetDrawColor(40, 40, 40, 200) surface.DrawRect(0, 0, w, h) end
+        panel.Paint = function(pnl, w, h)
+            surface.SetDrawColor(40, 40, 40, 200)
+            surface.DrawRect(0, 0, w, h)
+        end
 
         if firstBtn then
             panel:SetZPos(100)
@@ -61,10 +65,13 @@ function PANEL:Init()
         local btn
         if text == "Class/Perks" then
             btn = vgui.Create("DButton", self)
-            btn:SetPos(11, 11)
-            btn:SetTall(40)
+            btn:SetPos(9, 9)
+            btn:SetTall(44)
             btn.PerformLayout = function(pnl)
-                pnl:SizeToContents() pnl:SetWide(pnl:GetWide() + 12) DLabel.PerformLayout(pnl)
+                pnl:SizeToContents()
+                pnl:SetWide(pnl:GetWide() + 34)
+                pnl:SetTall(pnl:GetTall() + 5)
+                DLabel.PerformLayout(pnl)
                 pnl:SetContentAlignment(4)
                 pnl:SetTextInset( 12, 0 )
             end
@@ -83,13 +90,38 @@ function PANEL:Init()
         btn:SetText(loc_text)
         btn:SetFont("Category")
 
+        local p = 0
+        local t = 0
         btn.Paint = function(pnl, w, h)
             if text == "Class/Perks" then
                 if pnl:GetActive() then
                     draw.RoundedBox(5, 0, 0, w, h, Color(40,40,40,230))
+                    class_panel_active = true
                 else
-                    draw.RoundedBox(5, 0, 0, w, h, HORDE.color_crimson)
+                    draw.RoundedBox(5, 0, 0, w, h, Color(220, 20, 60, p % 225))
+                    class_panel_active = nil
+                    if p >= 224 then
+                        t = 1
+                    elseif p < 50 then
+                        t = 0
+                    end
+
+                    if t == 0 then
+                        p = p + 1
+                    else
+                        p = p - 1
+                    end
                 end
+
+                local class_mat = Material(HORDE.subclasses[MySelf:Horde_GetCurrentSubclass()].Icon, "mips smooth")
+                surface.SetMaterial(class_mat)
+                if pnl:GetActive() then
+                    surface.SetDrawColor(HORDE.color_crimson)
+                else
+                    surface.SetDrawColor(color_white)
+                end
+                
+                surface.DrawTexturedRect(w - h - 10, 0, h, h)
             else
                 surface.SetDrawColor(0,0,0,0)
                 surface.DrawRect(0, 0, w, h)
@@ -326,6 +358,8 @@ function PANEL:ReloadAttachments(attachments, container, description_panel)
     self.AttachmentTabLayout:InvalidateLayout(true)
 end
 
+local skull_mat = Material("skull.png", "mips smooth")
+local weight_mat = Material("weight.png", "mips smooth")
 function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
@@ -336,26 +370,20 @@ function PANEL:Paint(w, h)
         draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
     end
 
-    -- Money
-    local display_name = MySelf:Horde_GetCurrentSubclass()
-    local loc_display_name = translate.Get("Class_" .. display_name) or display_name
-    draw.SimpleText(translate.Get("Shop_Class") .. ": " .. loc_display_name, 'Heading', 170, 24, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-    
     local text
     local weight_text
     weight_text = translate.Get("Shop_Weight") .. ': ' .. tostring(MySelf:Horde_GetMaxWeight() - MySelf:Horde_GetWeight()) .. "/" .. MySelf:Horde_GetMaxWeight() .. ""
-    local mat = Material("weight.png", "mips smooth")
-    surface.SetMaterial(mat)
+    surface.SetMaterial(weight_mat)
     surface.SetDrawColor(Color(255,255,255))
     surface.DrawTexturedRect(self:GetWide() - 60, 14, 20, 20)
     
-    text = translate.Get("Shop_Cash") .. ": " .. tostring(MySelf:Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(MySelf:Horde_GetSkullTokens()) .. '       ' .. weight_text
+    local text2 = translate.Get("Shop_Cash") .. ": " .. tostring(MySelf:Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(MySelf:Horde_GetSkullTokens())
+    text = text2 .. '       ' .. weight_text
     draw.SimpleText(text, 'Heading', self:GetWide() - 60, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
-    local mat = Material("skull.png", "mips smooth")
-    surface.SetMaterial(mat)
+    surface.SetMaterial(skull_mat)
     surface.SetDrawColor(Color(255,255,255))
-    surface.DrawTexturedRect(self:GetWide() - surface.GetTextSize(weight_text) * 1.5 - 30, 14, 20, 20)
+    surface.DrawTexturedRect(self:GetWide() - surface.GetTextSize(text) + surface.GetTextSize(text2) - 55, 14, 20, 20)
 end
 
 vgui.Register("HordeShop", PANEL)

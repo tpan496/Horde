@@ -167,6 +167,7 @@ function ENT:Think()
             dmg_splash:SetInflictor(self)
             dmg_splash:SetDamageType(DMG_GENERIC)
             dmg_splash:SetDamageCustom(HORDE.DMG_SPLASH)
+            dmg_splash:SetDamagePosition(self.Target:GetPos())
             if self.Target:GetVar("is_elite") and self.Owner:Horde_GetPerk("warlock_starscourge") then
                 dmg_splash:SetDamage(self.BaseDamage * 1.25)
             else

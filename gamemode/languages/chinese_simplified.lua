@@ -12,6 +12,7 @@ resistance vs. less damage taken: same as above.
 translate.AddLanguage("zh-CN", "Chinese Simplified")
 
 LANGUAGE["Default_Font"] = "Microsoft YaHei"
+LANGUAGE["Default_Font_Bold"] = "Microsoft YaHei"
 LANGUAGE["Default_Font_Scale"] = 1.20
 
 -- Game Info
