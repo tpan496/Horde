@@ -1,5 +1,6 @@
 -- Basic user ui
 local font = translate.GetFont()
+local bold_font = translate.GetBoldFont()
 local font_scale = translate.Get("Default_Font_Scale") or 1
 surface.CreateFont("Horde_PerkTitle", { font = font, size = 24 * font_scale, bold = true, extended = true })
 surface.CreateFont("Horde_PerkButton_Name", { font = font, size = 20 * font_scale, extended = true })
@@ -7,15 +8,14 @@ surface.CreateFont("Horde_PerkButton_Text", { font = font, size = 15 * font_scal
 surface.CreateFont("Title", { font = font, size = 30 * font_scale, extended = true })
 surface.CreateFont("Content", { font = font, size = 20 * font_scale, extended = true })
 surface.CreateFont("Warning", { font = font, size = 30 * font_scale, strikeout = true, extended = true })
-surface.CreateFont("LargeTitle", { font = font, size = 35 * font_scale, extended = true })
+surface.CreateFont("LargeTitle", { font = bold_font, size = 35 * font_scale, extended = true })
 surface.CreateFont("Heading", { font = font, size = 22 * font_scale, extended = true })
-surface.CreateFont("Category", { font = font, size = 22 * font_scale, extended = true })
+surface.CreateFont("Category", { font = bold_font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Item", { font = font, size = 20 * font_scale, extended = true })
 surface.CreateFont("Info", { font = font, size = ScreenScale(7) * font_scale, extended = true})
 surface.CreateFont("SmallInfo", { font = font, size = 20 * font_scale, extended = true})
 surface.CreateFont("Horde_Ready", { font = font, size = ScreenScale(5) * font_scale, extended = true })
-surface.CreateFont("Horde_Cd", { font = font, size = ScreenScale(8) * font_scale, extended = true })
-
+surface.CreateFont("Horde_Cd", { font = bold_font, size = ScreenScale(8) * font_scale, extended = true })
 
 local width = ScreenScale(100)
 local height = ScreenScale(15)
