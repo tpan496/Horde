@@ -36,8 +36,8 @@ function PANEL:Init()
     self.subclass_btn:DockMargin(2.5,0,0,0)
     self.subclass_btn:SetFont("Content")
     self.subclass_btn:SetTall(50)
-    self.subclass_btn:SetText("Change Subclass")
-    self.subclass_btn.OnCursorEntered = function ()
+    self.subclass_btn:SetText(translate.Get("Class_Change_Subclass") or "Change Subclass")
+    self.subclass_btn.OnCuPrsorEntered = function ()
         surface.PlaySound("UI/buttonrollover.wav")
     end
     self.subclass_btn:SetVisible(false)
@@ -279,26 +279,39 @@ function PANEL:SetData(item)
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
                 self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
-                if HORDE.gadgets[self.item.class].Active then
+                local g = HORDE.gadgets[self.item.class]
+                if g.Active then
                     local activate_loc = translate.Get("Gadget_Activation") or "Press T to activate."
                     self.loc_desc = activate_loc .. "\n\n" .. self.loc_desc
-                    if HORDE.gadgets[self.item.class].Once then
-                        local once = "This gadget is CONSUMED after activation."
+                    if g.Once then
+                        local once = translate.Get("Gadget_Consumed") or "This gadget is CONSUMED after activation."
                         self.loc_desc = once .. "\n" .. self.loc_desc
                     end
                     self.loc_desc = self.loc_desc .. "\n\n"
                     local seconds_loc = translate.Get("Gadget_Seconds") or "seconds"
-                    if HORDE.gadgets[self.item.class].Duration and HORDE.gadgets[self.item.class].Duration > 0 then
+                    if g.Duration and g.Duration > 0 then
                         local duration_loc = translate.Get("Gadget_Duration") or "Duration"
-                        self.loc_desc = self.loc_desc .. "\n" .. duration_loc .. ": " .. tostring(HORDE.gadgets[self.item.class].Duration) .. " " .. seconds_loc .. "."
+                        self.loc_desc = self.loc_desc .. "\n" .. duration_loc .. ": " .. tostring(g.Duration) .. " " .. seconds_loc .. "."
                     end
-                    if HORDE.gadgets[self.item.class].Cooldown and HORDE.gadgets[self.item.class].Cooldown > 0 then
+                    if g.Cooldown and g.Cooldown > 0 then
                         local cd_loc = translate.Get("Gadget_Cooldown") or "Cooldown"
-                        self.loc_desc = self.loc_desc .. "\n" .. cd_loc .. ": " .. tostring(HORDE.gadgets[self.item.class].Cooldown) .. " " .. seconds_loc .. "."
+                        self.loc_desc = self.loc_desc .. "\n" .. cd_loc .. ": " .. tostring(g.Cooldown) .. " " .. seconds_loc .. "."
                     end
                 end
                 local warning_loc = translate.Get("Gadget_Owned_Warning") or "Only 1 Gadget can be OWNED!"
                 self.loc_desc = self.loc_desc .. "\n\n" .. warning_loc
+                if g.Params then
+                    for i, v in pairs(g.Params) do
+                        local replaced = "{" .. i .. "}"
+                        if not string.find(self.loc_desc, replaced) then goto cont end
+                        local formatted = v.value
+                        if v.percent then
+                            formatted = math.Round(formatted * 100) .. "%"
+                        end
+                        self.loc_desc = string.Replace(self.loc_desc, replaced, formatted)
+                        ::cont::
+                    end
+                end
             else
                 self.loc_name = translate.Get("Item_" .. self.item.name) or self.item.name
                 self.loc_desc = translate.Get("Item_Desc_" .. self.item.name) or self.item.description
@@ -821,7 +834,7 @@ function PANEL:Paint()
             if not MySelf:Alive() then
                 self.buy_btn:SetText("You are dead.")
             else
-                self.buy_btn:SetText("Not Enough Money or Carrying Capacity!")
+                self.buy_btn:SetText(translate.Get("Shop_Not_Enough_Money_Or_Carrying_Capacity"))
             end
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)

@@ -11,7 +11,7 @@ resistance vs. less damage taken: same as above.
 
 translate.AddLanguage("zh-CN", "Chinese Simplified")
 
-LANGUAGE["Default_Font"] = "微软雅黑"
+LANGUAGE["Default_Font"] = "Microsoft YaHei"
 LANGUAGE["Default_Font_Scale"] = 1.20
 
 -- Game Info
@@ -61,7 +61,19 @@ LANGUAGE["Rank_Champion"] = "冠绝"
 LANGUAGE["Rank_Master"] = "宗师"
 
 
+-- Scoreboard
+LANGUAGE["Scoreboard_Name"] = "玩家"
+LANGUAGE["Scoreboard_Class"] = "职业"
+LANGUAGE["Scoreboard_Perks"] = "技能"
+LANGUAGE["Scoreboard_Gadget"] = "配件"
+LANGUAGE["Scoreboard_Money"] = "金钱"
+LANGUAGE["Scoreboard_Kill"] = "击杀"
+LANGUAGE["Scoreboard_Death"] = "死亡"
+LANGUAGE["Scoreboard_Ping"] = "延迟"
+
+
 -- Shop
+LANGUAGE["Shop_Not_Enough_Money_Or_Carrying_Capacity"] = "你没有足够的金钱或者负重来购买当前物品!"
 -- Categories
 LANGUAGE["Shop_Class"] = "职业"
 LANGUAGE["Shop_Cash"] = "金钱"
@@ -76,7 +88,7 @@ LANGUAGE["Shop_Explosive"] = "爆炸物"
 LANGUAGE["Shop_Special"] = "特殊"
 LANGUAGE["Shop_Equipment"] = "装备"
 LANGUAGE["Shop_Attachment"] = "配件"
-LANGUAGE["Shop_Gadget"] = "道具"
+LANGUAGE["Shop_Gadget"] = "器具"
 
 -- Attachments
 LANGUAGE["Shop_Optic"] = "瞄具"
@@ -108,6 +120,7 @@ LANGUAGE["Infusion_Siphoning"] = "汲取"
 LANGUAGE["Infusion_Chrono"] = "时间"
 LANGUAGE["Infusion_Ruination"] = "毁灭"
 
+LANGUAGE["Game_Preparing..."] = "准备中..."
 LANGUAGE["Infusion_Description_Hemo"] = [[
 转换75%武器伤害为利器伤害。
 
@@ -246,6 +259,28 @@ LANGUAGE["Class_Berserker"] = "狂战士"
 LANGUAGE["Class_Warden"] = "守望者"
 LANGUAGE["Class_Cremator"] = "火焰兵"
 
+
+-- Gadgets
+LANGUAGE["Gadget_Activation"] = [[按 T 使用。]]
+LANGUAGE["Gadget_Consumed"] = [[此器具在使用后会消失！]]
+LANGUAGE["Gadget_Seconds"] = [[秒]]
+LANGUAGE["Gadget_Duration"] = [[持续时间]]
+LANGUAGE["Gadget_Cooldown"] = [[冷却时间]]
+LANGUAGE["Gadget_Owned_Warning"] = [[你只能拥有一个器具！]]
+
+
+-- Subclasses
+LANGUAGE["Class_Change_Subclass"] = "更换附属职业"
+LANGUAGE["Class_Psycho"] = "暴徒"
+LANGUAGE["Class_SpecOps"] = "特种兵"
+LANGUAGE["Class_Carcass"] = "残骸"
+LANGUAGE["Class_Hatcher"] = "孵化者"
+LANGUAGE["Class_Warlock"] = "术士"
+LANGUAGE["Class_Gunslinger"] = "神枪手"
+LANGUAGE["Class_Necromancer"] = "死灵法师"
+LANGUAGE["Class_Samurai"] = "武士"
+LANGUAGE["Class_???"] = "???"
+LANGUAGE["Class_Artificer"] = "信仰者"
 
 -- Default Class Extra Descriptions
 LANGUAGE["Class_Description_Survivor"] = [[
@@ -1306,9 +1341,35 @@ LANGUAGE["Item_Desc_Gluon Gun"] = [[
 能够发射极其危险的超高温镭射。
 ]]
 
+LANGUAGE["Gadget_gadget_vitality_shard"] = [[生命碎片]]
+LANGUAGE["Gadget_Desc_gadget_vitality_shard"] = [[
+恢复 {1} 生命值。
+]]
+
+LANGUAGE["Gadget_gadget_damage_shard"] = [[伤害碎片]]
+LANGUAGE["Gadget_Desc_gadget_damage_shard"] = [[
+提升 {1} 全局伤害，持续 30 秒。
+]]
+
+LANGUAGE["Gadget_gadget_cleansing_shard"] = [[净化碎片]]
+LANGUAGE["Gadget_Desc_gadget_cleansing_shard"] = [[
+恢复 {1} 生命值。
+去除所有异常状态。
+]]
+
+LANGUAGE["Gadget_gadget_agility_shard"] = [[敏捷碎片]]
+LANGUAGE["Gadget_Desc_gadget_agility_shard"] = [[
+提升 {1} 移动速度，持续 30 秒。
+]]
+
+LANGUAGE["Gadget_gadget_arctic_plating"] = [[抗冻涂层]]
+LANGUAGE["Gadget_Desc_gadget_arctic_plating"] = [[
+提升 {1} 寒冰伤害抗性。
+]]
+
 LANGUAGE["Gadget_gadget_blast_plating"] = [[防爆涂层]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
-提升 {1} 爆炸和声波伤害抗性。
+提升 {1} 爆炸伤害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_shock_plating"] = [[绝缘涂层]]
@@ -1331,6 +1392,12 @@ LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
 提升 {1} 毒素伤害抗性。
 ]]
 
+LANGUAGE["Gadget_gadget_corporate_mindset"] = [[企业头脑]]
+LANGUAGE["Gadget_Desc_gadget_corporate_mindset"] = [[
+闷声发大财。
+大幅度提升骷髅币掉落概率。
+]]
+
 LANGUAGE["Gadget_gadget_vitality_booster"] = [[体力提升]]
 LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
 增加 {1} 最大生命值。
@@ -1341,6 +1408,24 @@ LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
 提升 {1} 全局伤害。
 ]]
 
+LANGUAGE["Gadget_gadget_resistance_booster"] = [[抗性提升]]
+LANGUAGE["Gadget_Desc_gadget_resistance_booster"] = [[
+提升 {1} 全局伤害抗性。
+]]
+
+LANGUAGE["Gadget_gadget_agility_booster"] = [[敏捷提升]]
+LANGUAGE["Gadget_Desc_gadget_agility_booster"] = [[
+提升 {1} 移动速度。
+]]
+
+LANGUAGE["Gadget_gadget_ultimate_booster"] = [[极限提升]]
+LANGUAGE["Gadget_Desc_gadget_ultimate_booster"] = [[
+增加 {1} 最大生命值。
+提升 {1} 全局伤害。
+提升 {1} 全局伤害抗性。
+提升 {1} 移动速度。
+]]
+
 LANGUAGE["Gadget_gadget_berserk_armor"] = [[狂战盔甲]]
 LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
 提升 {1} 全局伤害。
@@ -1348,8 +1433,8 @@ LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
 提升 {3} 移动速度。
 ]]
 
-LANGUAGE["Gadget_gadget_flash"] = [[一闪]]
-LANGUAGE["Gadget_Desc_flash"] = [[
+LANGUAGE["Gadget_gadget_gadget_flash"] = [[一闪]]
+LANGUAGE["Gadget_Desc_gadget_flash"] = [[
 向前快速移动，对路径上的所有敌人造成 {1} 利器伤害。
 提供短暂的无敌时间。
 ]]
@@ -1471,3 +1556,12 @@ LANGUAGE["Gadget_watchtower_pack"] = [[便携守望塔]]
 LANGUAGE["Gadget_shock_nova"] = [[雷神]]
 
 LANGUAGE["Gadget_barbeque"] = [[烧烤]]
+
+
+-- Notifications
+LANGUAGE["Notifications_Debuff_Bleeding"] = [[你陷入了出血状态。你的生命值在流失。]]
+LANGUAGE["Notifications_Debuff_Frostbite"] = [[你陷入了霜冻状态。你的移速被大幅减缓。]]
+LANGUAGE["Notifications_Debuff_Shock"] = [[你陷入了感电状态。你的伤害抗性大幅降低。]]
+LANGUAGE["Notifications_Debuff_Break"] = [[你陷入了毒破状态。你的生命值被大幅减少。]]
+LANGUAGE["Notifications_Debuff_Decay"] = [[你陷入了衰退状态。你的生命值无法恢复。]]
+LANGUAGE["Notifications_Debuff_Necrosis"] = [[你陷入了即死状态。你即将灭亡。]]

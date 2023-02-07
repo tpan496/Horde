@@ -62,10 +62,7 @@ function HORDE:GameEnd(status)
     end)
 
     if status == "DEFEAT" then
-        net.Start("Horde_LegacyNotification")
-        net.WriteString("All players are dead!")
-        net.WriteInt(1,2)
-        net.Broadcast()
+        HORDE:SendNotification("All players are dead!", 1)
     end
 
     if status == "VICTORY" then
@@ -551,18 +548,12 @@ end)
 HORDE.VoteChangeMap = function (ply)
     HORDE.player_vote_map_change[ply] = 1
     if table.Count(HORDE.player_vote_map_change) == table.Count(player.GetAll()) then
-        net.Start("Horde_LegacyNotification")
-        net.WriteString("All players want to change map! Initiating map vote...")
-        net.WriteInt(0,2)
-        net.Broadcast()
+        HORDE:SendNotification("All players want to change map! Initiating map vote...", 0)
         timer.Simple(1, function ()
             HORDE:GameEnd("Change Map")
         end)
     else
-        net.Start("Horde_LegacyNotification")
-    net.WriteString(ply:GetName() .. " wants to change the map. (" .. tostring(table.Count(HORDE.player_vote_map_change)) .. "/" .. tostring(table.Count(player.GetAll())) .. ")")
-        net.WriteInt(0,2)
-        net.Broadcast()
+        HORDE:SendNotification(ply:GetName() .. " wants to change the map. (" .. tostring(table.Count(HORDE.player_vote_map_change)) .. "/" .. tostring(table.Count(player.GetAll())) .. ")", 0)
     end
 end
 
@@ -740,9 +731,7 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
         end end)
         return
     end
-    net.Start("Horde_LegacyNotification")
-    net.WriteString("You are dead. You will respawn next wave.")
-    net.Send(victim)
+    HORDE:SendNotification("You are dead. You will respawn next wave.", 1, victim)
     HORDE:CheckAlivePlayers()
 
     local tip = HORDE:GetTip()

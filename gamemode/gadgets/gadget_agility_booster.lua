@@ -1,5 +1,5 @@
 GADGET.PrintName = "Agility Booster"
-GADGET.Description = "25% increased movement speed."
+GADGET.Description = "{1} increased movement speed."
 GADGET.Icon = "items/gadgets/agility_booster.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
