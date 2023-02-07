@@ -297,7 +297,7 @@ net.Receive("Horde_ForceCloseShop", function ()
     gui.EnableScreenClicker(false)
 end)
 
-net.Receive("Horde_LegacyNotification", function(length)
+net.Receive("Horde_SideNotification", function(length)
     local str = net.ReadString()
     local type = net.ReadInt(2)
     if string.find(str, "bought") then
@@ -305,6 +305,12 @@ net.Receive("Horde_LegacyNotification", function(length)
     else
         HORDE:PlayNotification(str, type)
     end
+end)
+
+net.Receive("Horde_SideNotificationDebuff", function(length)
+    local debuff = net.ReadUInt(32)
+    local debuff_str = translate.Get("Notifications_Debuff_" .. HORDE.Status_String[debuff]) or HORDE.Debuff_Notifications[debuff]
+    HORDE:PlayNotification(debuff_str, 0, HORDE.Status_Icon[debuff], HORDE.STATUS_COLOR[debuff])
 end)
 
 net.Receive("Horde_SyncItems", function ()

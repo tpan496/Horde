@@ -278,7 +278,7 @@ function PANEL:Paint()
         end
 
         self.infusion_description.Paint = function ()
-            draw.DrawText(translate.Get("Infusion_Description_" .. infusion) or HORDE.Infusion_Description[infusion], "Content", 50, 0, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+            draw.DrawText(translate.Get("Infusion_Description_" .. HORDE.Infusion_Names[infusion]) or HORDE.Infusion_Description[infusion], "Content", 50, 0, Color(200, 200, 200), TEXT_ALIGN_LEFT)
         end
     end
 end

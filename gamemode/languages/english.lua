@@ -59,7 +59,18 @@ LANGUAGE["Rank_Master"] = "Master"
 LANGUAGE["Rank_Not_Met"] = "Rank Requirement(s) Not Met"
 
 
+-- Scoreboard
+LANGUAGE["Scoreboard_Name"] = "Name"
+LANGUAGE["Scoreboard_Class"] = "Class"
+LANGUAGE["Scoreboard_Perks"] = "Perks"
+LANGUAGE["Scoreboard_Gadget"] = "Gadget"
+LANGUAGE["Scoreboard_Money"] = "Money"
+LANGUAGE["Scoreboard_Kill"] = "Kill"
+LANGUAGE["Scoreboard_Death"] = "Death"
+LANGUAGE["Scoreboard_Ping"] = "Ping"
+
 -- Shop
+LANGUAGE["Shop_Not_Enough_Money_Or_Carrying_Capacity"] = "Not Enough Money or Carrying Capacity!"
 -- Categories
 LANGUAGE["Shop_Class"] = "Class"
 LANGUAGE["Shop_Cash"] = "Cash"

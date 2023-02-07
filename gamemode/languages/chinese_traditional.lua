@@ -77,7 +77,7 @@ LANGUAGE["Shop_Explosive"] = "爆炸物"
 LANGUAGE["Shop_Special"] = "特殊"
 LANGUAGE["Shop_Equipment"] = "裝備"
 LANGUAGE["Shop_Attachment"] = "配件"
-LANGUAGE["Shop_Gadget"] = "道具"
+LANGUAGE["Shop_Gadget"] = "器具"
 
 -- Attachments
 LANGUAGE["Shop_Optic"] = "瞄具"
@@ -138,7 +138,7 @@ LANGUAGE["Class_Cremator"] = "火焰兵"
 LANGUAGE["Gadget_Activation"] = "按 T 啟動。"
 LANGUAGE["Gadget_Cooldown"] = "冷卻時間"
 LANGUAGE["Gadget_Duration"] = "持續時間"
-LANGUAGE["Gadget_Owned_Warning"] = "只能擁有 1 個道具！"
+LANGUAGE["Gadget_Owned_Warning"] = "只能擁有 1 個器具！"
 LANGUAGE["Gadget_Seconds"] = "秒"
 
 -- Default Class Extra Descriptions
@@ -1304,7 +1304,7 @@ Provides 8% increased Slashing and Blunt damage resistance.
 -- Gadgets
 LANGUAGE["Gadget_gadget_blast_plating"] = [[防爆塗層]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
-提升 20% 爆炸和聲波傷害抗性。
+提升 20% 爆炸傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_shock_plating"] = [[絕緣塗層]]

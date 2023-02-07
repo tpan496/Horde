@@ -11,7 +11,7 @@ surface.CreateFont("LargeTitle", { font = font, size = 35 * font_scale, extended
 surface.CreateFont("Heading", { font = font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Category", { font = font, size = 22 * font_scale, extended = true })
 surface.CreateFont("Item", { font = font, size = 20 * font_scale, extended = true })
-surface.CreateFont("Info", { font = "arial", size = ScreenScale(7) * font_scale, extended = true})
+surface.CreateFont("Info", { font = font, size = ScreenScale(7) * font_scale, extended = true})
 surface.CreateFont("SmallInfo", { font = font, size = 20 * font_scale, extended = true})
 surface.CreateFont("Horde_Ready", { font = font, size = ScreenScale(5) * font_scale, extended = true })
 surface.CreateFont("Horde_Cd", { font = font, size = ScreenScale(8) * font_scale, extended = true })
@@ -46,7 +46,7 @@ timer.Simple(5, function ()
         draw.RoundedBox(10, 0, 0, width - height - ScreenScale(2), height, Color(40,40,40,200))
         if MySelf:Alive() then
             if (HORDE.current_wave <= 0) or (wave_str == nil) then
-                draw.SimpleText("Preparing...", "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText(translate.Get("Game_Preparing..."), "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
                 draw.SimpleText("WAVE " .. wave_str, "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end

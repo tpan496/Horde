@@ -306,10 +306,7 @@ if SERVER then
         local cost = subclass.UnlockCost
 
         if ply:Horde_GetSubclassUnlocked(subclass_name) == true then
-            net.Start("Horde_LegacyNotification")
-            net.WriteString("Subclass " .. subclass.PrintName .. " is already unlocked!")
-            net.WriteInt(1,2)
-            net.Send(ply)
+            HORDE:SendNotification("Subclass " .. subclass.PrintName .. " is already unlocked!", 1, ply)
             return
         end
 
@@ -317,11 +314,8 @@ if SERVER then
             ply:Horde_AddSkullTokens(-cost)
             ply:Horde_SetSubclassUnlocked(subclass_name, true)
             ply:Horde_SyncEconomy()
-
-            net.Start("Horde_LegacyNotification")
-            net.WriteString("You unlocked " .. subclass.PrintName .. " subclass.")
-            net.WriteInt(0,2)
-            net.Send(ply)
+            
+            HORDE:SendNotification("You unlocked " .. subclass.PrintName .. " subclass.", 0, ply)
         end
     end)
 end
@@ -448,10 +442,8 @@ function plymeta:Horde_SetSubclass(class_name, subclass_name)
                 end
             end
         end
-        net.Start("Horde_LegacyNotification")
-            net.WriteString(class_name .. " subclass changed to " .. HORDE.subclasses[subclass_name].PrintName)
-            net.WriteInt(0,2)
-        net.Send(self)
+
+        HORDE:SendNotification(class_name .. " subclass changed to " .. HORDE.subclasses[subclass_name].PrintName, 0, self)
     end
     if CLIENT then
         net.Start("Horde_SetSubclass")

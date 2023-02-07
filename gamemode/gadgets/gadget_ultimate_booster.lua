@@ -1,12 +1,14 @@
 GADGET.PrintName = "Ultimate Booster"
-GADGET.Description = [[15% increased movement speed.
-15% increased maximum health.
-15% increased Global damage.
-15% increased Global damage resistance.]]
+GADGET.Description = [[{1} increased movement speed.
+{1} increased maximum health.
+{1} increased Global damage.
+{1} increased Global damage resistance.]]
 GADGET.Icon = "items/gadgets/ultimate_booster.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = {value = 0.15, percent = true},
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
