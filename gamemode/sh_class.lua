@@ -394,6 +394,7 @@ local function Horde_LoadSubclasses()
         include(prefix .. f)
         if SUBCLASS.Ignore then goto cont end
         SUBCLASS.SortOrder = SUBCLASS.SortOrder or 0
+        SUBCLASS.BasePerk = SUBCLASS.BasePerk or (string.lower(SUBCLASS.PrintName).. "_base")
 
         HORDE.subclasses[SUBCLASS.PrintName] = SUBCLASS
         local crc_val = util.CRC(SUBCLASS.PrintName)

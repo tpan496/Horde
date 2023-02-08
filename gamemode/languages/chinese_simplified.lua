@@ -237,7 +237,7 @@ LANGUAGE["Infusion_Hemo"] = "出血"
 LANGUAGE["Infusion_Concussive"] = "笨重"
 LANGUAGE["Infusion_Septic"] = "剧毒"
 LANGUAGE["Infusion_Flaming"] = "火焰"
-LANGUAGE["Infusion_Arctic"] = "冰霜"
+LANGUAGE["Infusion_Arctic"] = "冰冷"
 LANGUAGE["Infusion_Galvanizing"] = "雷电"
 LANGUAGE["Infusion_Quality"] = "质量"
 LANGUAGE["Infusion_Impaling"] = "穿刺"
@@ -804,8 +804,299 @@ LANGUAGE["Perk_cremator_incineration"] = [[
 提升 {1} 引燃伤害。
 提升 {2} 引燃概率。]]
 
+-- Default Perks: Psycho
+LANGUAGE["Perk_psycho_base"] = [[
+难度：中
+
++{1} 暴击率。(基础 {2} + 每级提升 {3}, 最多至 {4})。
+暴击造成 {5} 更多伤害。
+
+按 F 进入狂暴模式。
+狂暴模式中，玩家会持续失去生命值，但不会致死。
+狂暴模式中，提升 {6} 暴击概率。
+狂暴模式中，提升 {7} 生命恢复值。]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_1"] = [[暴行]]
+LANGUAGE["Perk_Title_psycho_ferocity"] = [[迅猛]]
+LANGUAGE["Perk_psycho_ferocity"] = [[
++{1} 暴击率。
++{2} 近战暴击率。]]
+
+LANGUAGE["Perk_Title_psycho_savor"] = [[品尝]]
+LANGUAGE["Perk_psycho_savor"] = [[
+提升 {1} 暴击伤害。
+吸收 {2} 暴击伤害为生命值。
+每次最多吸收 10 生命值。]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_2"] = [[Садизм]]
+LANGUAGE["Perk_Title_psycho_bloodbath"] = [[血浴]]
+LANGUAGE["Perk_psycho_bloodbath"] = [[
++{1} 暴击率。
+每次暴击恢复 1 生命值。]]
+
+LANGUAGE["Perk_Title_psycho_disembowel"] = [[肢解]]
+LANGUAGE["Perk_psycho_disembowel"] = [[
+提升 {1} 暴击伤害。
+近战暴击伤害移除尸爆变异。]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_3"] = [[致命一击]]
+LANGUAGE["Perk_Title_psycho_skewering"] = [[穿刺]]
+LANGUAGE["Perk_psycho_skewering"] = [[
+击中敌人头部使其陷入穿刺异常状态。
+玩家对穿刺状态下敌人攻击时，获得 +{1} 暴击率。]]
+
+LANGUAGE["Perk_Title_psycho_brutality"] = [[残暴]]
+LANGUAGE["Perk_psycho_brutality"] = [[
+近战击中敌人获得残暴增益效果。可叠加。
+每层残暴提供 +{1} 暴击率。
+每层残暴提升 {2} 暴击伤害。]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_4"] = [[崩坏]]
+LANGUAGE["Perk_Title_psycho_grudge"] = [[咒怨]]
+LANGUAGE["Perk_psycho_grudge"] = [[
+每缺少 {2} 生命值，提升 {1} 暴击率。
+每缺少 {4} 生命值，提升 {3} 移动速度。]]
+
+LANGUAGE["Perk_Title_psycho_bestial_wrath"] = [[兽性]]
+LANGUAGE["Perk_psycho_bestial_wrath"] = [[
+{1} 提升暴击伤害。
+狂暴模式中，近战伤害产生范围性伤害。
+狂暴模式中，每杀死一个敌人提供 1 生命恢复。]]
+
+-- Default Perks: Carcass
+LANGUAGE["Perk_carcass_base"] = [[
+难度：高
+
+提升 {1} 最大生命值。(每级提升 {2}, 最多至 {3})。
+
+击中敌人后有 {4} 概率获得“肌肉增殖”状态 (击中头部会有 {5} 概率)。
+被敌人击中后也会获得“肌肉增值”状态。
+通过技能的选择，“肌肉增殖”可以进行堆叠。
+每一层“肌肉增殖”减少 {6} 玩家受到的物理伤害。
+每一层“肌肉增殖”提供 1% 生命值恢复。
+
+你被植入了残骸生化武器系统。
+无法使用除了拳头以外的任何武器。
+
+左键：出拳。长按进行蓄力。]]
+
+LANGUAGE["Perk_Title_Carcass_Tier_1"] = [[肠胃]]
+LANGUAGE["Perk_Title_carcass_grappendix"] = [[肠钩]]
+LANGUAGE["Perk_carcass_grappendix"] = [[
+提升 {1} 最大生命值。
+右键发射大肠，用作抓钩。
+使用肠钩消耗生命值。]]
+
+LANGUAGE["Perk_Title_carcass_bio_thruster"] = [[生化推进器]]
+LANGUAGE["Perk_carcass_bio_thruster"] = [[
++{1} “肌肉增值”堆叠数。
+右键进行冲刺，消耗 {2} 生命值并获得 1 推进器堆叠数，最多 5 层。
+每层推进器堆叠提升 {1} 近战伤害，但会增加 {4} 生命值消耗。]]
+
+LANGUAGE["Perk_Title_Carcass_Tier_2"] = [[分泌]]
+LANGUAGE["Perk_Title_carcass_tactical_spleen"] = [[战术肾脏]]
+LANGUAGE["Perk_carcass_tactical_spleen"] = [[
+提升 {1} 最大生命值。
+获得一个能抵消异常状态的肾脏。
+战术肾脏每过 {2} 秒会再生。.]]
+
+LANGUAGE["Perk_Title_carcass_anabolic_gland"] = [[增值腺体]]
+LANGUAGE["Perk_carcass_anabolic_gland"] = [[
++{1} “肌肉增值”堆叠数。
++{2} 击中敌人获得“肌肉增殖”概率。]]
+
+LANGUAGE["Perk_Title_Carcass_Tier_3"] = [[四肢]]
+LANGUAGE["Perk_Title_carcass_reinforced_arms"] = [[强化手臂]]
+LANGUAGE["Perk_carcass_reinforced_arms"] = [[
++{1} “肌肉增值”堆叠数。
+拳头伤害会根据当前移动速度提升。
+拳头蓄力后，对表面攻击能产生垂直移速提升。]]
+
+LANGUAGE["Perk_Title_carcass_pneumatic_legs"] = [[气动腿]]
+LANGUAGE["Perk_carcass_pneumatic_legs"] = [[
++{1} “肌肉增值”堆叠数。
+空中按空格能够快速下降，对范围内敌人造成物理伤害。
+减少 {2} 掉落伤害。]]
+
+LANGUAGE["Perk_Title_Carcass_Tier_4"] = [[核心]]
+LANGUAGE["Perk_Title_carcass_twin_heart"] = [[双子心脏]]
+LANGUAGE["Perk_carcass_twin_heart"] = [[
+提升 {1} 最大生命值。
+按R能够切换双子心脏状态恢复生命值。
+双子心脏会积攒生命值至玩家最大生命值的 {2}。]]
+
+LANGUAGE["Perk_Title_carcass_aas_perfume"] = [[AAS香水]]
+LANGUAGE["Perk_carcass_aas_perfume"] = [[
++{1} “肌肉增值”堆叠数。
+按R发射孢子，为范围内玩家提供“肌肉增值”效果。
+效果持续 {2} 秒。有 {3} 秒冷却时间。]]
+
+-- Default Perks: Hatcher
+LANGUAGE["Perk_hatcher_base"] = [[
+难度：高
+
+提升 {1} 蚁狮进化速度。(每级提升 {2}, 最多至 {3})。
+提升 {1} 毒素伤害。(每级提升 {2}, 最多至 {3})。
+
+出身自带信息素胶囊。信息素胶囊可以商店升级。
+升级信息素胶囊可以提升蚁狮伤害和生命值。
+
+左键：释放胶囊
+投掷信息素胶囊，强制蚁狮对目标进行攻击。
+对蚁狮投掷胶囊能够恢复其 5% 生命值。
+
+右键：召唤蚁狮 (40 能量)
+创造一个蚁狮作为你的召唤物。治疗蚁狮能够加速其进化。
+长按右键能迫使蚁狮前往玩家。
+蚁狮进化后，每一阶段会获得新能力：
+阶段I   - 信息素波动：每 5 秒中产生一个波动，恢复附近玩家 5% 生命值。
+阶段II  - 提升伤害，生命值，波动频率，提升 50% 毒素伤害抗性。
+阶段III - 提升伤害，生命值，波动频率，免疫毒素伤害和破坏异常状态。]]
+
+-- Default Perks: Gunslinger
+LANGUAGE["Perk_gunslinger_base"] = [[
+难度：中等
+
+提升 {1} 手枪类武器伤害。(每级提升 {2}, 最多至 {3})。
+你可以在商店升级手枪类武器。
+
+按 SHIFT+E 对敌人施加猎人标记。
+猎人标记持续 5 秒钟。
+最多可以存在 1 个猎人标记。
+在猎人标记下死去的敌人有 {4} 概率掉落额外金钱。
+
+你可以购买所有的手枪类武器。]]
+
+-- Default Perks: Specops
+LANGUAGE["Perk_specops_base"] = [[
+难度：中等
+
+按 F 进入战术模式。
+战术模式提供夜视效果。
+战术模式中无法跑步。
+战术模式会减少玩家 50% 移动速度。
+
+战术模式中，提升 {1} 更多移动速度。(每级提升 {2}, 最多至 {3})。
+战术模式中，提升 {1} 更多爆头伤害。(每级提升 {2}, 最多至 {3})。]]
+
+
+-- Default Perks: Necromancer
+LANGUAGE["Perk_necromancer_base"] = [[
+难度：中等
+
+冰冷伤害造成 {1} 霜冻累计值。 (基础 {2} + 每级提升 {3}, 最多至 {4})。
+提升 {5} 冰冷伤害抗性。(每级提升 {6}, 最多至 {7})。
+
+出身自带虚空投射器。虚空投射器能够通过商店升级。
+升级虚空投射器能提升虚空之矛伤害，死灵伤害和死灵生命值。
+
+左键：虚空之矛 (消耗5/10/20能量)
+投射能够造成冰冷伤害的暗物质，并造成霜冻累计值。
+长按左键能够进行蓄力。
+
+右键：召唤死灵 (消耗40能量)
+创造一个死灵为你的召唤物。
+死灵能对敌人造成近战伤害并造成霜冻累计值。
+长按右键能将全部死灵召唤至你身旁。]]
+
+-- Default Perks: Warlock
+LANGUAGE["Perk_warlock_base"] = [[
+难度：中等
+
+提升 {1} 最大能量值。(每级提升 {2}, 最多至 {3})。
+
+出身自带星体遗物。星体遗物能够通过商店升级。
+升级星体遗物能提升其伤害。
+
+左键：星体波动 (消耗10能量)
+创造 1 个能自动搜寻并缠绕敌人的能量体，对其造成持续性物理伤害。
+最多可以存在 2 个星体波动。
+长按左键可以引爆所有的星体波动。
+
+右键：星体残影 (消耗5能量)
+创造会接触引爆的能量体，对范围内敌人造成物理伤害。
+最多可以存在 5 个星体残影。
+长按右键可以增加星体残影的大小并刷新持续时间。]]
+
+-- Default Perks: Artificer
+LANGUAGE["Perk_artificer_base"] = [[
+难度：中等
+
+雷电伤害造成 {1} 感电累计值。 (每级提升 {2}, 最多至 {3})。
+提升 {1} 火焰和雷电伤害。(每级提升 {2}, 最多至 {3})。
+
+出身自带炎阳护符。炎阳护符能够通过商店升级。
+升级炎阳护符能提升其伤害。
+
+左键：炎阳火球 (消耗5/10/20能量)
+发射能够造成火焰伤害的炙热能量球。
+长按左键能够进行蓄力。
+
+右键：炎阳雷击 (消耗5/10/20能量)
+制造闪电，对敌人瞬间造成雷电伤害。
+长按右键能够进行蓄力。]]
+
+-- Default Perks: Samurai
+LANGUAGE["Perk_samurai_base"] = [[
+难度: 高
+近战伤害造成 {1} 武器基础伤害的出血累计值。 (基础 {2} + 每级提升 {3}, 最多至 {4})。
+提升 {5} 全局伤害抗性。 (每级提升 {6}，最多至 {7})。
+
+使用 SHIFT + E 疾步，能够根据方向键快速移动。
+疾步状态中获得 100% 闪避值。]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_1"] = [[技巧]]
+LANGUAGE["Perk_Title_samurai_focus_slash"] = [[居合斩]]
+LANGUAGE["Perk_samurai_focus_slash"] = [[
++1 疾步充能。
+疾步中，增加 {1} 近战伤害。]]
+
+LANGUAGE["Perk_Title_samurai_flesh_bloom"] = [[绽放]]
+LANGUAGE["Perk_samurai_flesh_bloom"] = [[
+近战伤害对范围内敌人累积出血值。]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_2"] = [[压倒]]
+LANGUAGE["Perk_Title_samurai_demon_stomp"] = [[鬼步]]
+LANGUAGE["Perk_samurai_demon_stomp"] = [[
++1 疾步充能。
+使用疾步会产生冲击波，对附近敌人造成 {1} 物理伤害。
+冲击波每击中一个敌人就能够提供 {2} 生命恢复。]]
+
+LANGUAGE["Perk_Title_samurai_exsanguinate"] = [[血道]]
+LANGUAGE["Perk_samurai_exsanguinate"] = [[
+{1} 增加出血累计值。
+在出血敌人附近时能够恢复生命值。
+免疫出血异常状态。]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_3"] = [[精神]]
+LANGUAGE["Perk_Title_samurai_foresight"] = [[见切]]
+LANGUAGE["Perk_samurai_foresight"] = [[
++1 疾步充能。
+获得见切被动效果，能够抵挡并反射一次物理伤害。
+见切效果会在抵挡后消失，5 秒钟后恢复。]]
+
+LANGUAGE["Perk_Title_samurai_resolution"] = [[决意]]
+LANGUAGE["Perk_samurai_resolution"] = [[
+玩家最大负重降低至7。
+{1} 更多近战伤害。
++3 抵挡值。]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_4"] = [[武道]]
+LANGUAGE["Perk_Title_samurai_blade_dance"] = [[剑舞]]
+LANGUAGE["Perk_samurai_blade_dance"] = [[
++1 疾步充能。
+击杀敌人恢复 2 疾步充能。
+延长疾步带来的无敌时间。]]
+
+LANGUAGE["Perk_Title_samurai_demon_strike"] = [[魔刃]]
+LANGUAGE["Perk_samurai_demon_strike"] = [[
+{1} 提升出血累计值。
+{2} 提升对出血状态中敌人的近战伤害。
+吸收 {3} 在疾步中造成的近战伤害为生命值。]]
+
 -- Default Config Shop Items
 -- Optional
+-- Melee Items
 LANGUAGE["Item_Stunstick"] = [[电击棍]]
 LANGUAGE["Item_Desc_Stunstick"] = [[
 能放出电流的警棍。
@@ -822,6 +1113,17 @@ LANGUAGE["Item_Desc_Combat Knife"] = [[
 右键能使出威力更大的横砍。
 ]]
 
+LANGUAGE["Item_Machete"] = [[砍刀]]
+LANGUAGE["Item_Desc_Bat"] = [[
+大砍刀。
+]]
+
+LANGUAGE["Item_Fireaxe"] = [[消防服]]
+LANGUAGE["Item_Desc_Fireaxe"] = [[
+消防用斧头。
+厚重，但是威力不小。
+]]
+
 LANGUAGE["Item_Katana"] = [[武士刀]]
 LANGUAGE["Item_Desc_Katana"] = [[
 忍者武士刀。
@@ -834,7 +1136,37 @@ LANGUAGE["Item_Desc_Bat"] = [[
 对敌人造成钝器伤害。
 ]]
 
+LANGUAGE["Item_Chainsaw"] = [[电锯]]
+LANGUAGE["Item_Desc_Chainsaw"] = [[
+用来砍刀大树的工业电锯。
 
+长按右键能对敌人造成持续伤害。
+]]
+
+LANGUAGE["Item_Mjollnir"] = [[雷神之锤]]
+LANGUAGE["Item_Desc_Mjollnir"] = [[
+隐藏着雷电能力的战锤。
+
+右键能够激活战锤的雷电能力。
+战锤激活后，下一次攻击会对范围内敌人造成雷电伤害。
+]]
+
+LANGUAGE["Item_Inferno Blade"] = [[恶魔刀锋]]
+LANGUAGE["Item_Desc_Inferno Blade"] = [[
+蕴含着火焰力量的弯刀。
+
+右键开启火焰模式，使攻击附带范围性火焰伤害。
+火焰模式会对使用者造成持续的火焰伤害。
+]]
+
+LANGUAGE["Item_Thorn Mace"] = [[荆棘之星]]
+LANGUAGE["Item_Desc_Thorn Mace"] = [[
+蕴含着剧毒的锤矛。
+
+
+]]
+
+-- Pistol Items
 LANGUAGE["Item_9mm"] = [[9mm]]
 LANGUAGE["Item_Desc_9mm"] = [[
 联合军标配手枪。
@@ -877,7 +1209,7 @@ Delivers a highly accurate and powerful round,
 at the expense of a lengthy trigger-pull.
 ]]
 
-LANGUAGE["Item_Deagle"] = [[Deagle]]
+LANGUAGE["Item_Deagle"] = [[沙漠之鹰]]
 LANGUAGE["Item_Desc_Deagle"] = [[
 Night Hawk .50C.
 An iconic pistol that is diffcult to master.
@@ -889,7 +1221,7 @@ Colt 1911.
 Standard-issue sidearm for the United States Armed Forces.
 ]]
 
-LANGUAGE["Item_FiveSeven"] = [[FiveSeven]]
+LANGUAGE["Item_FiveSeven"] = [[57式]]
 LANGUAGE["Item_Desc_FiveSeven"] = [[
 ES Five-seven.
 A Belgian semi-automatic pistol made by FN Herstal.
@@ -924,6 +1256,11 @@ LANGUAGE["Item_Desc_Anaconda"] = [[
 Colt Anaconda.
 Chambered for the powerful .44 Magnum.
 ]]
+
+LANGUAGE["Item_Dual Glock17"] = [[双持Glock17]]
+LANGUAGE["Item_Dual M9"] = [[双持M9]]
+LANGUAGE["Item_Dual Deagle"] = [[双持沙漠之鹰]]
+
 
 
 LANGUAGE["Item_SMG1"] = [[SMG1]]
@@ -964,7 +1301,7 @@ KM UMP45.
 A lighter and cheaper successor to the MP5.
 ]]
 
-LANGUAGE["Item_PP Bizon"] = [[PP Bizon]]
+LANGUAGE["Item_PP Bizon"] = [[PP-野牛]]
 LANGUAGE["Item_Desc_PP Bizon"] = [[
 PP-19 Bizon.
 Offers a high-capacity magazine that reloads quickly.
@@ -976,14 +1313,7 @@ ES C90.
 A Belgian bullpup PDW with a magazine of 50 rounds.
 ]]
 
-LANGUAGE["Item_Vector"] = [[Vector]]
-LANGUAGE["Item_Desc_Vector"] = [[
-KRISS Vector Gen I.
-Uses an unconventional blowback system that results in its high firerate.
-]]
-
-
-LANGUAGE["Item_Pump-Action"] = [[Pump-Action]]
+LANGUAGE["Item_Pump-Action"] = [[简易霰弹枪]]
 LANGUAGE["Item_Desc_Pump-Action"] = [[
 A standard 12-gauge shotgun.
 RMB to fire 2 shots at once.
@@ -1086,6 +1416,12 @@ IWI Tavor-21.
 Designed to maximize reliability, durability, and simplicity.
 ]]
 
+LANGUAGE["Item_Winchester LAR"] = [[温切斯特杠杆步枪]]
+LANGUAGE["Item_Desc_Winchester LAR"] = [[
+温切斯特杠杆步枪。
+经典步兵武器。
+]]
+
 
 LANGUAGE["Item_ACR"] = [[ACR]]
 LANGUAGE["Item_Desc_ACR"] = [[
@@ -1111,7 +1447,7 @@ G3 Battle Rifle.
 A 7.62×51mm NATO, select-fire battle rifle developed by H&K.
 ]]
 
-LANGUAGE["Item_Barret AMR"] = [[Barret AMR]]
+LANGUAGE["Item_Barret AMR"] = [[巴雷特反器材步枪]]
 LANGUAGE["Item_Desc_Barret AMR"] = [[
 .50 Cal Anti-Material Sniper Rifle.
 能对目标造成巨额的子弹伤害。
@@ -1149,34 +1485,95 @@ Heckler & Koch MG4.
 A belt-fed 5.56 mm light machine gun that replaced MG3.
 ]]
 
+LANGUAGE["Item_GAU-19"] = [[GAU-19转轮机枪]]
+LANGUAGE["Item_Desc_MG4"] = [[
+GAU-19 转轮机枪。
+每分钟发射1300发.50BMG机枪子弹。
+
+长按右键预热机枪。
+]]
 
 LANGUAGE["Item_Frag Grenade"] = [[高爆手雷]]
 LANGUAGE["Item_Desc_Frag Grenade"] = [[
 常规军用手雷。
-能对大片敌人造成伤害。
+能对大片敌人造成爆炸伤害。
 ]]
 
-LANGUAGE["Item_DamageResistance RPG"] = [[反抗军RPG]]
-LANGUAGE["Item_Desc_DamageResistance RPG"] = [[
+LANGUAGE["Item_M67 Grenade"] = [[破片手雷]]
+LANGUAGE["Item_Desc_M67 Grenade"] = [[
+M67 破片手雷。
+能对大片敌人造成大额爆炸伤害。
+]]
+
+LANGUAGE["Item_Stun Grenade"] = [[闪光弹]]
+LANGUAGE["Item_Desc_Stun Grenade"] = [[
+闪光手雷。
+对范围内敌人造成小额爆炸伤害和眩晕。
+]]
+
+LANGUAGE["Item_Resistance RPG"] = [[反抗军RPG]]
+LANGUAGE["Item_Desc_Resistance RPG"] = [[
 反抗军粗制火箭筒。
+发射可制导的迷你火箭。
 ]]
 
-LANGUAGE["Item_RPG-7"] = [[RPG-7]]
+LANGUAGE["Item_M79 GL"] = [[M79榴弹发射器]]
+LANGUAGE["Item_Desc_M79 GL"] = [[
+M79 榴弹发射器。
+发射 40x66 毫米榴弹炮。
+]]
+
+LANGUAGE["Item_Sticky Launcher"] = [[粘弹发射器]]
+LANGUAGE["Item_Desc_Sticky Launcher"] = [[
+粘弹发射器。
+发射能够固定在物体表面的粘弹。
+
+右键引爆所有的粘弹。
+]]
+
+LANGUAGE["Item_M32 GL"] = [[M32榴弹发射器]]
+LANGUAGE["Item_Desc_M32 GL"] = [[
+M32 榴弹发射器。
+拥有六个转轮榴弹发射位。
+发射 40x66 毫米榴弹炮。
+]]
+
+LANGUAGE["Item_RPG-7"] = [[RPG火箭筒]]
 LANGUAGE["Item_Desc_RPG-7"] = [[
-Ruchnoy Protivotankoviy Granatomyot.
+火箭推进榴弹。
 对敌人能造成大量的爆炸伤害。
 ]]
 
-LANGUAGE["Item_SLAM"] = [[SLAM]]
+LANGUAGE["Item_M72 LAW"] = [[M72反装甲武器]]
+LANGUAGE["Item_Desc_M72 LAW"] = [[
+M72 轻型反装甲武器。
+比起爆炸范围，更加注重造成巨额的爆炸伤害。
+]]
+
+LANGUAGE["Item_SLAM"] = [[地雷]]
 LANGUAGE["Item_Desc_SLAM"] = [[
-Selectable Lightweight Attack Munition.
-右键引爆。对墙按左键激活镭射引爆模式。
+反抗军地雷。
+
+右键引爆。
+对墙按左键激活镭射引爆模式。
 ]]
 
 LANGUAGE["Item_Incendiary Grenade"] = [[燃烧手雷]]
 LANGUAGE["Item_Desc_Incendiary Grenade"] = [[
-引爆后产生大量火焰。
+一定延迟后引爆，产生大量火焰。
 火焰对敌人造成持续伤害。
+]]
+
+LANGUAGE["Item_Molotov"] = [[莫咯托夫]]
+LANGUAGE["Item_Desc_Molotov"] = [[
+落地后产生大量火焰。
+火焰对敌人造成持续伤害。
+]]
+
+LANGUAGE["Item_Incendiary Launcher"] = [[燃烧弹发射器]]
+LANGUAGE["Item_Desc_Incendiary Launcher"] = [[
+燃烧弹发射器。
+发射炙热的易燃榴弹，在接触后引爆。
 ]]
 
 
@@ -1190,6 +1587,12 @@ LANGUAGE["Item_Turret"] = [[步哨枪]]
 LANGUAGE["Item_Desc_Turret"] = [[
 联合军专用步哨枪。
 能够用来看守固定区域。
+]]
+
+LANGUAGE["Item_Rocket Turret"] = [[榴弹步哨枪]]
+LANGUAGE["Item_Desc_Rocket Turret"] = [[
+光圈科技实验性步哨枪。
+对敌人发射迷你榴弹。
 ]]
 
 LANGUAGE["Item_Medic Grenade"] = [[医疗手雷]]
@@ -1218,6 +1621,12 @@ LANGUAGE["Item_Desc_Medkit"] = [[
 右键治疗自己，左键治疗队友。
 ]]
 
+LANGUAGE["Item_Welder"] = [[电焊]]
+LANGUAGE["Item_Desc_Welder"] = [[
+工程师使用的电焊枪。
+能够治疗玩家的召唤物，也能对敌人造成伤害。
+]]
+
 LANGUAGE["Item_Health Vial"] = [[治疗药瓶]]
 LANGUAGE["Item_Desc_Health Vial"] = [[
 装有绿色液体的药瓶。
@@ -1226,7 +1635,7 @@ LANGUAGE["Item_Desc_Health Vial"] = [[
 
 LANGUAGE["Item_Kevlar Armor Battery"] = [[护甲包]]
 LANGUAGE["Item_Desc_Kevlar Armor Battery"] = [[
-提供15护甲。
+提供 15 护甲。
 ]]
 
 LANGUAGE["Item_Full Kevlar Armor"] = [[全套护甲]]
@@ -1258,6 +1667,12 @@ LANGUAGE["Item_Desc_Tau Cannon"] = [[
 蓄力时间过长会产生爆炸。
 ]]
 
+LANGUAGE["Item_Spore Launcher"] = [[孢子枪]]
+LANGUAGE["Item_Desc_Spore Launcher"] = [[
+异星生物武器，发射溶解性的孢子。
+对敌人造成毒素伤害，但是能够治疗队友。
+]]
+
 LANGUAGE["Item_MP7A1 Medic PDW"] = [[MP7A1医疗冲锋枪]]
 LANGUAGE["Item_Desc_MP7A1 Medic PDW"] = [[
 MP7A1 医疗改进版。
@@ -1267,36 +1682,13 @@ MP7A1 医疗改进版。
 Healing dart recharges every 1 second.
 ]]
 
-LANGUAGE["Item_Vector Medic PDW"] = [[Vector医疗冲锋枪]]
+LANGUAGE["Item_Vector Medic PDW"] = [[维克多医疗冲锋枪]]
 LANGUAGE["Item_Desc_Vector Medic PDW"] = [[
 维克托冲锋枪，配备了先进的医疗针发射器。
 有着无与伦比的射速。
 
 按 B 或者 放大键 发射医疗针。
 医疗针冷却时间为 1.5 秒。
-]]
-
-LANGUAGE["Item_Chainsaw"] = [[电锯]]
-LANGUAGE["Item_Desc_Chainsaw"] = [[
-Brrrrrrrrrrrrrrrr.
-
-长按右键进行持续劈砍。
-]]
-
-LANGUAGE["Item_Mjollnir"] = [[雷神之锤]]
-LANGUAGE["Item_Desc_Mjollnir"] = [[
-蕴含着雷电力量的战锤。
-
-右键对武器进行充能。
-充能后，下次武器攻击命中敌人会造成范围性雷电伤害。
-]]
-
-LANGUAGE["Item_Inferno Blade"] = [[恶魔刀锋]]
-LANGUAGE["Item_Desc_Inferno Blade"] = [[
-蕴含着火焰力量的弯刀。
-
-右键开启火焰模式，使攻击附带范围性火焰伤害。
-火焰模式会对使用者造成持续的火焰伤害。
 ]]
 
 LANGUAGE["Item_Double Barrel"] = [[双管猎枪]]
@@ -1333,12 +1725,15 @@ XEN星球士兵使用的生物兵器。
 右键能够快速射出无追踪能力的蜂群。
 ]]
 
-LANGUAGE["Item_M2 Flamethrower"] = [[M2 喷火器]]
+LANGUAGE["Item_M2 Flamethrower"] = [[M2火焰喷射器]]
+LANGUAGE["Item_Desc_M2 Flamethrower"] = [[
+M2火焰喷射器。
+由美国美国陆军化学战争工作局所设计的单兵携带及背负式火焰喷射器。
+]]
 
 LANGUAGE["Item_Gluon Gun"] = [[胶子枪]]
 LANGUAGE["Item_Desc_Gluon Gun"] = [[
 量子热力学溶解类武器。
-
 能够发射极其危险的超高温镭射。
 ]]
 
@@ -1427,6 +1822,100 @@ LANGUAGE["Gadget_Desc_gadget_ultimate_booster"] = [[
 提升 {1} 移动速度。
 ]]
 
+-- Assault Gadgets
+LANGUAGE["Gadget_gadget_iv_injection"] = [[生命注射剂]]
+LANGUAGE["Gadget_Desc_iv_injection"] = [[
+恢复 25 点生命值。
+]]
+
+LANGUAGE["Gadget_gadget_cortex"] = [[皮层刺激器]]
+
+LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[精神统一]]
+
+LANGUAGE["Gadget_gadget_ouroboros"] = [[咬尾蛇]]
+
+-- Heavy Gadgets
+LANGUAGE["Gadget_gadget_energy_shield"] = [[能量盾]]
+LANGUAGE["Gadget_Desc_energy_shield"] = [[
+暂时获得额外 25 点护甲。
+]]
+
+LANGUAGE["Gadget_gadget_exoskeleton"] = [[外骨骼]]
+
+LANGUAGE["Gadget_gadget_hardening_injection"] = [[硬化注射剂]]
+LANGUAGE["Gadget_Desc_hardening_injection"] = [[
+移动速度减缓 {1}。
+提升 {2} 全局伤害抗性。
+提升 {3} 物理伤害抗性。
+]]
+
+-- Medic Gadgets
+LANGUAGE["Gadget_gadget_life_diffuser"] = [[活体扩散器]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[发射器（治愈弹）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
+发射带有治愈效果的化学药弹。
+治愈弹造成 {1} 范围性毒素伤害。
+治愈弹对范围内友军提供 {2} 生命恢复。
+]]
+
+LANGUAGE["Gadget_gadget_healing_beam"] = [[治疗光波]]
+
+-- Demolition Gadgets
+LANGUAGE["Gadget_gadget_proximity_defense"] = [[近身制御]]
+LANGUAGE["Gadget_Desc_proximity_defense"] = [[
+眩晕自身周围的所有敌人。
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[发射器（破片弹）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
+发射不稳定爆破弹。
+爆破弹造成 {1} 范围性爆炸伤害。
+爆破弹爆炸后，产生 {2} 个额外破片爆炸。
+]]
+
+LANGUAGE["Gadget_gadget_nitrous_propellor"] = [[氮气弹射器]]
+
+LANGUAGE["Gadget_gadget_ied"] = [[应急地雷]]
+
+-- Ghost Gadgets
+LANGUAGE["Gadget_gadget_optical_camouflage"] = [[光学迷彩]]
+LANGUAGE["Gadget_Desc_optical_camouflage"] = [[
+强制提供 5 秒迷彩效果。
+迷彩效果期间，提升 50% 闪避概率。
+]]
+
+LANGUAGE["Gadget_gadget_projectile_launcher_ballistic"] = [[发射器（冲击弹）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
+发射能产生大量冲击的弓箭。
+弓箭造成 {1} 子弹伤害。
+弓箭对击中敌人造成眩晕效果。
+]]
+
+LANGUAGE["Gadget_gadget_death_mark"] = [[死亡标记]]
+
+LANGUAGE["Gadget_gadget_assassin_optics"] = [[刺客镜片]]
+
+-- Engineer Gadgets
+LANGUAGE["Gadget_gadget_displacer"] = [[传送器]]
+LANGUAGE["Gadget_gadget_turret_pack"] = [[便携步哨]]
+
+LANGUAGE["Gadget_gadget_e_parasite"] = [[E-寄生虫]]
+LANGUAGE["Gadget_Desc_gadget_e_parasite"] = [[
+发射E-寄生虫，感染击中的目标。
+E-寄生虫享有全部的召唤物技能效果。
+E-寄生虫对感染目标造成持续伤害。
+E-寄生虫为使用者提供持续生命恢复。
+被感染的目标死亡后，造成等于目标最大生命值的爆炸伤害。
+]]
+
+-- Berserker Gadgets
+LANGUAGE["Gadget_gadget_chakra"] = [[查克拉]]
+LANGUAGE["Gadget_Desc_gadget_chakra"] = [[
+去除全部异常状态。
+恢复 10 生命值。
+]]
+
 LANGUAGE["Gadget_gadget_berserk_armor"] = [[狂战盔甲]]
 LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
 提升 {1} 全局伤害。
@@ -1440,6 +1929,24 @@ LANGUAGE["Gadget_Desc_gadget_flash"] = [[
 提供短暂的无敌时间。
 ]]
 
+LANGUAGE["Gadget_gadget_hemocannon"] = [[血能炮]]
+LANGUAGE["Gadget_Desc_gadget_hemocannon"] = [[
+消耗 10 生命值，发射血浆制作的投射物。
+血浆爆炸后对敌人造成 100 利器伤害并且累积出血值。
+最多有 5 发充能。每 5 秒充能一次。
+]]
+
+-- Warden Gadgets
+LANGUAGE["Gadget_gadget_solar_array"] = [[太阳能阵列]]
+LANGUAGE["Gadget_gadget_watchtower_pack"] = [[便携守望塔]]
+LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[发射器（雷电弹）]]
+LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
+发射能够穿透敌人的雷电弹。
+雷电弹每穿透一个敌人，造成 {1} 范围性雷电伤害。
+]]
+LANGUAGE["Gadget_gadget_shock_nova"] = [[雷神]]
+
+-- Cremator Gadgets
 LANGUAGE["Gadget_gadget_butane_can"] = [[易燃物]]
 LANGUAGE["Gadget_Desc_gadget_butane_can"] = [[
 生成一个丙烷气罐。
@@ -1454,115 +1961,14 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_fire"] = [[
 火焰弹基础引燃伤害为 {1}。
 ]]
 
-LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[发射器（雷电弹）]]
-LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
-发射能够穿透敌人的雷电弹。
-雷电弹每穿透一个敌人，造成 {1} 范围性雷电伤害。
-]]
-
-
-LANGUAGE["Gadget_gadget_projectile_launcher_ballistic"] = [[发射器（冲击弹）]]
-LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
-发射能产生大量冲击的弓箭。
-弓箭造成 {1} 子弹伤害。
-弓箭对击中敌人造成眩晕效果。
-]]
-
-
-LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[发射器（破片弹）]]
-LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
-发射不稳定爆破弹。
-爆破弹造成 {1} 范围性爆炸伤害。
-爆破弹爆炸后，产生 {2} 个额外破片爆炸。
-]]
-
-LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[发射器（治愈弹）]]
-LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
-发射带有治愈效果的化学药弹。
-治愈弹造成 {1} 范围性毒素伤害。
-治愈弹对范围内友军提供 {2} 生命恢复。
-]]
-
-LANGUAGE["Gadget_gadget_e_parasite"] = [[E-寄生虫]]
-LANGUAGE["Gadget_Desc_gadget_e_parasite"] = [[
-发射E-寄生虫，感染击中的目标。
-E-寄生虫享有全部的召唤物技能效果。
-E-寄生虫对感染目标造成持续伤害。
-E-寄生虫为使用者提供持续生命恢复。
-被感染的目标死亡后，造成等于目标最大生命值的爆炸伤害。
-]]
-
-LANGUAGE["Gadget_gadget_energy_shield"] = [[能量盾]]
-LANGUAGE["Gadget_Desc_energy_shield"] = [[
-暂时获得额外 25 点护甲。
-]]
-
-LANGUAGE["Gadget_gadget_hardening_injection"] = [[硬化注射剂]]
-LANGUAGE["Gadget_Desc_hardening_injection"] = [[
-移动速度减缓 {1}。
-提升 {2} 全局伤害抗性。
-提升 {3} 物理伤害抗性。
-]]
-
-LANGUAGE["Gadget_gadget_iv_injection"] = [[生命注射剂]]
-LANGUAGE["Gadget_Desc_iv_injection"] = [[
-恢复 25 点生命值。
-]]
-
-LANGUAGE["Gadget_gadget_proximity_defense"] = [[近身制御]]
-LANGUAGE["Gadget_Desc_proximity_defense"] = [[
-眩晕自身周围的所有敌人。
-]]
-
-LANGUAGE["Gadget_gadget_optical_camouflage"] = [[光学迷彩]]
-LANGUAGE["Gadget_Desc_optical_camouflage"] = [[
-强制提供 5 秒迷彩效果。
-迷彩效果期间，提升 50% 闪避概率。
-]]
-
-LANGUAGE["Gadget_gadget_life_diffuser"] = [[活体扩散器]]
-
-LANGUAGE["Gadget_gadget_solar_array"] = [[太阳能阵列]]
-
-LANGUAGE["Gadget_gadget_turret_pack"] = [[便携步哨]]
-
-LANGUAGE["Gadget_gadget_cortex"] = [[皮层刺激器]]
-
-LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[精神统一]]
-
-LANGUAGE["Gadget_ouroboros"] = [[咬尾蛇]]
-
-LANGUAGE["Gadget_exoskeleton"] = [[外骨骼]]
-
-LANGUAGE["Gadget_t_virus"] = [[T-病毒]]
-
-LANGUAGE["Gadget_healing_beam"] = [[治疗光波]]
-
-LANGUAGE["Gadget_nitrous_propellor"] = [[氮气弹射器]]
-
-LANGUAGE["Gadget_ied"] = [[应急地雷]]
-
-LANGUAGE["Gadget_death_mark"] = [[死亡标记]]
-
-LANGUAGE["Gadget_gunslinger"] = [[神枪手]]
-
-LANGUAGE["Gadget_displacer"] = [[传送器]]
-
-LANGUAGE["Gadget_aerial_guard"] = [[空中制御]]
-
-LANGUAGE["Gadget_hemocannon"] = [[血能炮]]
-
-LANGUAGE["Gadget_watchtower_pack"] = [[便携守望塔]]
-
-LANGUAGE["Gadget_shock_nova"] = [[雷神]]
-
-LANGUAGE["Gadget_barbeque"] = [[烧烤]]
+LANGUAGE["Gadget_gadget_barbeque"] = [[烧烤]]
 
 
 -- Notifications
-LANGUAGE["Notifications_Debuff_Bleeding"] = [[你陷入了出血状态。你的生命值在流失。]]
-LANGUAGE["Notifications_Debuff_Frostbite"] = [[你陷入了霜冻状态。你的移速被大幅减缓。]]
-LANGUAGE["Notifications_Debuff_Shock"] = [[你陷入了感电状态。你的伤害抗性大幅降低。]]
+LANGUAGE["Notifications_Debuff_Bleeding"] = [[你陷入了出血状态。你的生命值在慢慢流失。]]
+LANGUAGE["Notifications_Debuff_Ignite"] = [[你陷入了引燃状态。你在被火焰灼烧。]]
+LANGUAGE["Notifications_Debuff_Frostbite"] = [[你陷入了霜冻状态。你的双脚难以行动。]]
+LANGUAGE["Notifications_Debuff_Shock"] = [[你陷入了感电状态。你的防御力大幅降低。]]
 LANGUAGE["Notifications_Debuff_Break"] = [[你陷入了毒破状态。你的生命值被大幅减少。]]
-LANGUAGE["Notifications_Debuff_Decay"] = [[你陷入了衰退状态。你的生命值无法恢复。]]
-LANGUAGE["Notifications_Debuff_Necrosis"] = [[你陷入了即死状态。你即将灭亡。]]
+LANGUAGE["Notifications_Debuff_Decay"] = [[你陷入了衰退状态。你的身体无法恢复。]]
+LANGUAGE["Notifications_Debuff_Necrosis"] = [[你陷入了即死状态。你的生命即将结束。]]
