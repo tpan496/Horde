@@ -345,10 +345,13 @@ function PANEL:SetData(item)
     if not self.item then return end
     if not self.item.class then
         local subclass = HORDE.subclasses[MySelf:Horde_GetSubclass(self.item.name)]
-        self.item.subclass = subclass
-        if subclass.BasePerk and self.item.base_perk ~= subclass.BasePerk then
-            self.item.base_perk = subclass.BasePerk
+        if not subclass then
+            subclass = HORDE.subclasses[self.item.name]
         end
+
+        self.item.subclass = subclass
+        self.item.base_perk = subclass.BasePerk
+
         self.exp_diff = MySelf:Horde_GetExp(self.item.subclass.PrintName)
         self.exp_total = HORDE:GetExpToNextLevel(MySelf:Horde_GetLevel(self.item.subclass.PrintName) + 1)
         if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
@@ -558,7 +561,11 @@ function PANEL:Paint()
                         ::cont::
                     end
                 end
-                draw.DrawText(loc_perk_desc .. "\n\n" .. loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                if self.item.subclass.ParentClass then
+                    draw.DrawText(loc_perk_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                else
+                    draw.DrawText(loc_perk_desc .. "\n\n" .. loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                end
             else
                 draw.DrawText(loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             end

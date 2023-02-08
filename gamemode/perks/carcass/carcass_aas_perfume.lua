@@ -2,7 +2,7 @@ PERK.PrintName = "Tren Perfume"
 PERK.Description =
 [[Adds {1} maximum Hypertrophy stacks.
 Press R to shoot a spore that provides Hypertrophy to players in an area.
-Effect lasts for {2} seconds and has a cooldown of {3} seconds]]
+Effect lasts for {2} seconds and has a cooldown of {3} seconds.]]
 PERK.Icon = "materials/perks/carcass/aas_perfume.png"
 PERK.Params = {
     [1] = {value = 2},
