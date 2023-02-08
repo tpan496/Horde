@@ -2379,7 +2379,7 @@ LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
 
 LANGUAGE["Gadget_gadget_resistance_booster"] = [[Усилитель сопротивления]]
 LANGUAGE["Gadget_Desc_gadget_resistance_booster"] = [[
-На 2{1} увеличено глобальное сопротивление к урону.
+На {1} увеличено глобальное сопротивление к урону.
 ]]
 
 LANGUAGE["Gadget_gadget_ultimate_booster"] = [[Предельный усилитель]]
@@ -2387,7 +2387,7 @@ LANGUAGE["Gadget_Desc_gadget_ultimate_booster"] = [[
 На {1} увеличена скорость передвижения.
 На {1} увеличено максимальное здоровье.
 На {1} увеличен любой урон.
-На {2} увеличено глобальное сопротивление к урону.
+На {1} увеличено глобальное сопротивление к урону.
 ]]
 
 -- Assault Gadgets
