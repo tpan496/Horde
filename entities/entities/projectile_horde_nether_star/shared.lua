@@ -75,17 +75,17 @@ function ENT:Initialize()
     end
     end
 
-    if CLIENT then
+    --if CLIENT then
     timer.Simple(0, function ()
         if not self:IsValid() then return end
         local charged = self:GetCharged()
         if charged >= 1 then
-            ParticleEffectAttach("nether_scourge", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+            ParticleEffectAttach("nether_star", PATTACH_ABSORIGIN_FOLLOW, self, 0)
         else
             ParticleEffectAttach("nether_star", PATTACH_ABSORIGIN_FOLLOW, self, 0)
         end
     end)
-    end
+    --end
 end
 
 function ENT:SetupDataTables()
