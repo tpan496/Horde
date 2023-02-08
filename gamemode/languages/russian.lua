@@ -235,9 +235,9 @@ LANGUAGE["Scoreboard_Class"] = "Класс"
 LANGUAGE["Scoreboard_Perks"] = "Перки"
 LANGUAGE["Scoreboard_Gadget"] = "Гаджет"
 LANGUAGE["Scoreboard_Money"] = "Деньги"
-LANGUAGE["Scoreboard_Kill"] = "Убийства"
-LANGUAGE["Scoreboard_Death"] = "Смерти"
-LANGUAGE["Scoreboard_Ping"] = "Пинг"
+--LANGUAGE["Scoreboard_Kill"] = "Убийства"
+--LANGUAGE["Scoreboard_Death"] = "Смерти"
+--LANGUAGE["Scoreboard_Ping"] = "Пинг"
 
 -- Shop
 LANGUAGE["Shop_Not_Enough_Money_Or_Carrying_Capacity"] = "Недостаточно денег или грузоподъемности!"
