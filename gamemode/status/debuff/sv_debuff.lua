@@ -182,7 +182,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         end
 
         if not self.Horde_Debuff_Active[debuff] then
-            HORDE:SendDebuffNotification(debuff, self)
+            HORDE:SendNotificationDebuff(debuff, self)
         end
 
         self.Horde_Debuff_Active[debuff] = true

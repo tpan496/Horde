@@ -15,7 +15,7 @@ end
 
 PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("assault_heightened_reflex")  then return end
-    if ply:Horde_GetAdrenalineStack() == ply:Horde_GetMaxAdrenalineStack() then
+    if ply:Horde_GetAdrenalineStack() >= ply:Horde_GetMaxAdrenalineStack() then
         bonus.resistance = bonus.resistance + 0.20
     end
 end
