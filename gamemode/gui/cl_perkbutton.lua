@@ -140,6 +140,7 @@ end
 
 function PANEL:Think()
     if not self.info then return end
+    --PrintTable(MySelf.Horde_PerkChoices)
     self.info.active = (MySelf.Horde_PerkChoices[self.info.class][self.info.perk_level] or 1) == self.info.choice
     if self.locked then
         if self.info and self.info.active then
