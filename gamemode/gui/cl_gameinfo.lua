@@ -16,6 +16,7 @@ surface.CreateFont("Info", { font = font, size = ScreenScale(7) * font_scale, ex
 surface.CreateFont("SmallInfo", { font = font, size = 20 * font_scale, extended = true})
 surface.CreateFont("Horde_Ready", { font = font, size = ScreenScale(5) * font_scale, extended = true })
 surface.CreateFont("Horde_Cd", { font = bold_font, size = ScreenScale(8) * font_scale, extended = true })
+surface.CreateFont("Horde_Wave_Banner", { font = bold_font, size = ScreenScale(15) * font_scale, extended = true })
 
 local width = ScreenScale(100)
 local height = ScreenScale(15)
@@ -146,6 +147,54 @@ function HORDE:PlayNotification(text, type, icon, col)
     HORDE.Notifications_Count = HORDE.Notifications_Count + 1
 end
 
+function HORDE:PlayWaveNotification(wave)
+    local text = (translate.Get("Game_WAVE ") or "WAVE ") .. wave
+    local main = vgui.Create("DPanel")
+    local y_start = ScrH() / 4
+    local h = ScreenScale(40)
+    main:SetSize(ScrW(), h)
+    main:SetPos(0, y_start)
+    main.Paint = function ()
+        surface.SetDrawColor(Color(40,40,40,200))
+        surface.DrawRect(0, 0, ScrW(), h)
+        draw.SimpleText(text, "Horde_Wave_Banner", ScrW()/2, ScreenScale(12), color_white, TEXT_ALIGN_CENTER)
+    end
+    local anim = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
+        pnl:SetTall(delta * h)
+        pnl:SetPos(0, y_start - h/2 * delta)
+        pnl:SetAlpha(delta * 255)
+    end)
+    main.Think = function(self)
+        if anim:Active() then
+            anim:Run()
+        end
+    end
+    anim:Start(0.5) -- Animate for two seconds
+    if anim:Active() then
+        anim:Run()
+    end
+    timer.Simple(5, function ()
+        local anim2 = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
+            pnl:SetTall((1 - delta) * h)
+            pnl:SetPos(0, y_start - h/2 + h/2 * delta)
+            pnl:SetAlpha(255 - delta * 255)
+        end)
+        anim2:Start(0.5)
+        if anim2:Active() then
+            anim2:Run()
+        end
+        main.Think = function(self)
+            if anim2:Active() then
+                anim2:Run()
+            end
+        end
+        timer.Simple(0.5, function ()
+            main:Remove()
+        end)
+    end)
+end
+
+
 net.Receive("Horde_SyncGameInfo", function()
     HORDE.current_wave = net.ReadUInt(16)
 end)
@@ -208,6 +257,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
     end
     if num == 0 then
         center_panel_str = translate.Format("Game_Wave_Has_Started", tostring(HORDE.current_wave)) .. "!"
+        timer.Simple(1, function() HORDE:PlayWaveNotification(HORDE.current_wave) end)
     else
         center_panel_str = translate.Format("Game_Next_Wave_Starts_In", num)
     end
@@ -240,7 +290,7 @@ end)
 net.Receive("Horde_RenderHealer", function()
     local healer = net.ReadString()
     if heal_msg_cd <= 0 then
-        HORDE:PlayNotification(string.sub(healer, 0, 10) .. " " .. translate.Get("Game_Healed_You") .. ".", 0, "status/hp.png", Color(50,205,50))
+        HORDE:PlayNotification(string.sub(healer, 0, 20) .. " " .. translate.Get("Game_Healed_You") .. ".", 0, "status/hp.png", Color(50,205,50))
         heal_msg_cd = 5
     end
 end)

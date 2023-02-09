@@ -23,7 +23,7 @@ end
 hook.Add("EntityTakeDamage", "Horde_HinderDamageTaken", function(target, dmg)
     local attacker = dmg:GetAttacker()
     if attacker:IsValid() and attacker:Horde_GetHinder() and HORDE:IsPhysicalDamage(dmg) then
-        dmg:ScaleDamage(1 - 0.15 * target.Horde_Hinder)
+        dmg:ScaleDamage(1 - 0.15 * attacker.Horde_Hinder)
     end
 end)
 

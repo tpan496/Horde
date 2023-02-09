@@ -227,7 +227,7 @@ function HORDE:SendNotification(text, type, ply)
     end
 end
 
-function HORDE:SendDebuffNotification(debuff, ply)
+function HORDE:SendNotificationDebuff(debuff, ply)
     net.Start("Horde_SideNotificationDebuff")
     net.WriteUInt(debuff, 32)
     net.Send(ply)

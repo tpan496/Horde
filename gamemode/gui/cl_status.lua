@@ -275,6 +275,7 @@ local font = "HealthInfo"
 local font2 = "HealthInfo2"
 local font3 = "Horde_WeaponName"
 local fontweight = "Horde_Weight"
+local display_money = 0
 hook.Add("HUDPaint", "Horde_DrawHud", function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     local colhp = Color(255, 255, 255, 255)
@@ -320,8 +321,14 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
             colhp = Color(255, 185, 185)
         end
 
-        vhp = MySelf:Health()
-        varmor = MySelf:Armor()
+        if MySelf:Alive() then
+            vhp = MySelf:Health()
+            varmor = MySelf:Armor()
+        else
+            vhp = 0
+            varmor = 0
+        end
+        
 
         local icon_s = ScreenScale(15)
 
@@ -397,7 +404,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
         local wy = ScrH() - ScreenScale(46) - airgap
         surface.DrawTexturedRect(wx + ScreenScale(65), wy + ScreenScale(2), ScreenScale(10), ScreenScale(10))
         draw.SimpleText(tostring(MySelf:Horde_GetMaxWeight() - MySelf:Horde_GetWeight()) .. "/" .. tostring(MySelf:Horde_GetMaxWeight()), fontweight, wx + ScreenScale(65), wy + ScreenScale(3), color_white, TEXT_ALIGN_RIGHT)
-        draw.SimpleText(tostring(MySelf:Horde_GetMoney()) .. " $", fontweight, wx + ScreenScale(4), wy + ScreenScale(3), color_white)
+        draw.SimpleText(tostring(display_money) .. " $", fontweight, wx + ScreenScale(4), wy + ScreenScale(3), color_white)
 
         -- Draw Gadget
         if MySelf:Horde_GetGadget() ~= nil then
@@ -434,6 +441,59 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
         end
     end
 end)
+
+function HORDE:PlayMoneyNotification(diff, money)
+    if diff == 0 then return end
+    local color = HORDE.color_crimson_dark
+    local text = diff
+    if diff > 0 then
+        text = "+" .. diff .. "$"
+        color = Color(50,205,50)
+    else
+        text = diff .. "$"
+        color = HORDE.color_crimson_dim
+    end
+    local main = vgui.Create("DPanel")
+    local x = ScrW() - ScreenScale(120)
+    local y_start = ScrH() - ScreenScale(46) - ScreenScale(6) + ScreenScale(3)
+    local h = ScreenScale(10)
+    main:SetSize(200, h)
+    main:SetPos(x, y_start)
+    main.Paint = function ()
+        draw.SimpleTextOutlined(text, fontweight, 100, 0, color, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP, 0, Color(40, 40, 40, 200))
+    end
+    local anim = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
+        pnl:SetAlpha(delta * 255)
+    end)
+    main.Think = function(self)
+        if anim:Active() then
+            anim:Run()
+        end
+    end
+    anim:Start(0.5) -- Animate for two seconds
+    if anim:Active() then
+        anim:Run()
+    end
+    timer.Simple(0.75, function ()
+        local anim2 = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
+            pnl:SetAlpha(255 - delta * 255)
+            pnl:SetPos(x + ScreenScale(20) * delta, y_start)
+        end)
+        anim2:Start(0.5)
+        if anim2:Active() then
+            anim2:Run()
+        end
+        main.Think = function(self)
+            if anim2:Active() then
+                anim2:Run()
+            end
+        end
+        timer.Simple(0.5, function ()
+            display_money = money
+            main:Remove()
+        end)
+    end)
+end
 
 -- Override health, armor and ammo
 function ArcCW:ShouldDrawHUDElement(ele)
