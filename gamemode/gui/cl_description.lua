@@ -839,7 +839,7 @@ function PANEL:Paint()
         elseif MySelf:Horde_GetMoney() < self.item.price or MySelf:Horde_GetWeight() < self.item.weight or (not MySelf:Alive()) then
             self.buy_btn:SetTextColor(Color(200,200,200))
             if not MySelf:Alive() then
-                self.buy_btn:SetText(translate.Get("Shop_You_Are_Dead")
+                self.buy_btn:SetText(translate.Get("Shop_You_Are_Dead"))
             else
                 self.buy_btn:SetText(translate.Get("Shop_Not_Enough_Money_Or_Carrying_Capacity"))
             end
