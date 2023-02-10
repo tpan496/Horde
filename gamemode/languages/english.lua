@@ -426,7 +426,7 @@ LANGUAGE["Perk_Title_Assault_Tier_4"] = [[Conditioning]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[Heightened Reflex]]
 LANGUAGE["Perk_assault_heightened_reflex"] = [[
 {1} increased headshot damage.
-{2} increased global damage resistance on full health.]]
+{2} increased global damage resistance on maximum Adrenaline.]]
 
 LANGUAGE["Perk_Title_assault_merciless_assault"] = [[Merciless Assault]]
 LANGUAGE["Perk_assault_merciless_assault"] = [[
