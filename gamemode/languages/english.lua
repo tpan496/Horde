@@ -12,9 +12,9 @@ resistance vs. less damage taken: same as above.
 translate.AddLanguage("en", "English")
 
 -- Game Info
-LANGUAGE["Game_Preparing..."] = "Preparing..."
 LANGUAGE["Game_Ready"] = "Ready"
 LANGUAGE["Game_Not Ready"] = "Not Ready"
+LANGUAGE["Game_Spectate"] = "Spectating"
 LANGUAGE["Game_Players_Ready"] = "Players Ready"
 LANGUAGE["Game_Next_Wave_Starts_In"] = "Next wave starts in %d"
 LANGUAGE["Game_Difficulty_NORMAL"] = "NORMAL"
@@ -47,7 +47,19 @@ LANGUAGE["Game_Headshots"] = "Headshots"
 LANGUAGE["Game_Most_Heal"] = "Team Healer"
 LANGUAGE["Game_Healed"] = "Healed"
 LANGUAGE["Game_Healed_You"] = "healed you"
-
+LANGUAGE["Game_Preparing..."] = "Preparing..."
+LANGUAGE["Game_WAVE"] = "WAVE "
+LANGUAGE["Class_Change_Subclass"] = "Change Subclass"
+LANGUAGE["Class_Change_Warning"] = "Changing class will remove all your items!"
+LANGUAGE["Class_Change_Headline"] = "Change Class"
+LANGUAGE["Sell_Warning"] = "Sell Item?!"
+LANGUAGE["Sell_Headline"] = "Sell"
+LANGUAGE["Button_Yes"] = "Yes"
+LANGUAGE["Button_No"] = "No"
+LANGUAGE["Subclass_Unlock_Warning"] = "Unlock?"
+LANGUAGE["Subclass_Unlock_Headline"] = "Unlock Subclass"
+LANGUAGE["Subclass_Change_Warning"] = "Change Subclass?"
+LANGUAGE["Subclass_Change_Headline"] = "Change Subclass"
 
 -- Ranks
 LANGUAGE["Rank_Novice"] = "Novice"
@@ -58,7 +70,6 @@ LANGUAGE["Rank_Expert"] = "Expert"
 LANGUAGE["Rank_Champion"] = "Champion"
 LANGUAGE["Rank_Master"] = "Master"
 LANGUAGE["Rank_Not_Met"] = "Rank Requirement(s) Not Met"
-
 
 -- Scoreboard
 LANGUAGE["Scoreboard_Name"] = "Name"
@@ -72,6 +83,7 @@ LANGUAGE["Scoreboard_Ping"] = "Ping"
 
 -- Shop
 LANGUAGE["Shop_Not_Enough_Money_Or_Carrying_Capacity"] = "Not Enough Money or Carrying Capacity!"
+LANGUAGE["Shop_You_Are_Dead"] = "You Are Dead."
 -- Categories
 LANGUAGE["Shop_Class"] = "Class"
 LANGUAGE["Shop_Cash"] = "Cash"
@@ -108,15 +120,22 @@ LANGUAGE["Shop_Unlocks_After_Wave"] = "Unlocks After Wave %d"
 LANGUAGE["Shop_Buy_Ammo_Clip"] = "Buy Ammo Clip"
 LANGUAGE["Shop_Sell_For"] = "Sell For"
 LANGUAGE["Shop_Sell_All_For"] = "Sell All For"
+LANGUAGE["Shop_Upgrade"] = "Upgrade to +"
+LANGUAGE["Shop_Damage_Type"] = "Damage Type: "
 LANGUAGE["Shop_Buy_Item"] = "Buy Item"
 LANGUAGE["Shop_OWNED"] = "OWNED"
+LANGUAGE["Item_Owned"] = "Owned"
 LANGUAGE["Shop_Buy_Secondary_Ammo"] = "Buy Secondary Ammo"
 LANGUAGE["Shop_Primary_Ammo"] = "Primary Ammo"
 LANGUAGE["Shop_Secondary_Ammo"] = "Secondary Ammo"
 
 -- Infusions
 LANGUAGE["Game_Infusion"] = "Infusion"
+LANGUAGE["Game_No_Infusion_Selected"] = "No infusion selected."
 LANGUAGE["Game_Infused"] = "Infused"
+LANGUAGE["Shop_Infused"] = "INFUSED"
+LANGUAGE["Infusion_Not_Enough_Money"] = "Not enough money (Need "
+LANGUAGE["Infusion_Remove"] = "Remove Infusion"
 LANGUAGE["Infusion_None"] = "None"
 LANGUAGE["Infusion_Hemo"] = "Hemo"
 LANGUAGE["Infusion_Concussive"] = "Concussive"
@@ -407,7 +426,7 @@ LANGUAGE["Perk_Title_Assault_Tier_4"] = [[Conditioning]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[Heightened Reflex]]
 LANGUAGE["Perk_assault_heightened_reflex"] = [[
 {1} increased headshot damage.
-{2} increased global damage resistance on maximum Adrenaline.]]
+{2} increased global damage resistance on full health.]]
 
 LANGUAGE["Perk_Title_assault_merciless_assault"] = [[Merciless Assault]]
 LANGUAGE["Perk_assault_merciless_assault"] = [[
