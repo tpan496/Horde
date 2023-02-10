@@ -136,7 +136,7 @@ function PANEL:Init()
     self.remove_infuse_btn:DockMargin(5,2.5,5,2.5)
     self.remove_infuse_btn:SetFont("Content")
     self.remove_infuse_btn:SetTextColor(Color(255,255,255))
-    self.remove_infuse_btn:SetText("Remove Infusion")
+    self.remove_infuse_btn:SetText(translate.Get("Infusion_Remove"))
     self.remove_infuse_btn:SetTall(50)
     self.remove_infuse_btn.Paint = function () end
     self.remove_infuse_btn:SetZPos(100)
