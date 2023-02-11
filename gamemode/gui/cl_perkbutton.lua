@@ -37,10 +37,10 @@ end
 function PANEL:DoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.info then return end
-    LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}
-    LocalPlayer().Horde_PerkChoices[self.info.class] = LocalPlayer().Horde_PerkChoices[self.info.class] or {}
-    LocalPlayer().Horde_PerkChoices[self.info.class][self.info.perk_level] = self.info.choice
-    file.Write("horde/perk_choices.txt", util.TableToJSON(LocalPlayer().Horde_PerkChoices))
+    MySelf.Horde_PerkChoices = MySelf.Horde_PerkChoices or {}
+    MySelf.Horde_PerkChoices[self.info.class] = MySelf.Horde_PerkChoices[self.info.class] or {}
+    MySelf.Horde_PerkChoices[self.info.class][self.info.perk_level] = self.info.choice
+    file.Write("horde/perk_choices.txt", util.TableToJSON(MySelf.Horde_PerkChoices))
     net.Start("Horde_PerkChoice")
         net.WriteString(self.info.class)
         net.WriteUInt(self.info.perk_level, 4)
@@ -98,9 +98,9 @@ function PANEL:SetData(classname, perk_level, choice, subclass)
         self.locked_icon:SetVisible(false)
     end
 
-    LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}
-    LocalPlayer().Horde_PerkChoices[classname] = LocalPlayer().Horde_PerkChoices[classname] or {}
-    local tbl_choices = LocalPlayer().Horde_PerkChoices[classname]
+    MySelf.Horde_PerkChoices = MySelf.Horde_PerkChoices or {}
+    MySelf.Horde_PerkChoices[classname] = MySelf.Horde_PerkChoices[classname] or {}
+    local tbl_choices = MySelf.Horde_PerkChoices[classname]
 
     self.info.active = (tbl_choices[perk_level] or 1) == choice
 
@@ -115,7 +115,7 @@ function PANEL:SetData(classname, perk_level, choice, subclass)
             local replaced = "{" .. i .. "}"
             if not string.find(loc_desc, replaced) then goto cont end
             if v.level then
-                v.value = math.min(v.max, LocalPlayer():Horde_GetLevel(classname) * v.level)
+                v.value = math.min(v.max, MySelf:Horde_GetLevel(classname) * v.level)
             end
             local formatted = v.value
             if v.percent then
@@ -140,8 +140,7 @@ end
 
 function PANEL:Think()
     if not self.info then return end
-    --PrintTable(LocalPlayer().Horde_PerkChoices)
-    self.info.active = (LocalPlayer().Horde_PerkChoices[self.info.class][self.info.perk_level] or 1) == self.info.choice
+    self.info.active = (MySelf.Horde_PerkChoices[self.info.class][self.info.perk_level] or 1) == self.info.choice
     if self.locked then
         if self.info and self.info.active then
             self.bg_color = Color(100, 00, 00, 150)

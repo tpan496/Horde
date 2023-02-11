@@ -658,19 +658,19 @@ function PANEL:Init()
         
 
         draw.SimpleText(tostring(HORDE:GetStat("speed") * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 100, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(tostring(LocalPlayer():Health()) .. " / " .. tostring(LocalPlayer():GetMaxHealth()), 'Heading', self:GetWide() / 3 - 10, 150, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-        draw.SimpleText(tostring(LocalPlayer():Armor()) .. " / " .. tostring(LocalPlayer():GetMaxArmor()), 'Heading', self:GetWide() / 3 - 10, 200, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(tostring(MySelf:Health()) .. " / " .. tostring(MySelf:GetMaxHealth()), 'Heading', self:GetWide() / 3 - 10, 150, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(tostring(MySelf:Armor()) .. " / " .. tostring(MySelf:GetMaxArmor()), 'Heading', self:GetWide() / 3 - 10, 200, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(tostring(HORDE:GetStat("evasion") * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 250, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(HORDE:GetStat("block"), 'Heading', self:GetWide() / 3 - 10, 300, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
         draw.SimpleText("Perks", 'Heading', 50, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         local y = 50
-        local class = LocalPlayer():Horde_GetCurrentSubclass()
+        local class = MySelf:Horde_GetCurrentSubclass()
         mat = Material(HORDE.subclasses[class].Icon, "mips smooth")
         surface.SetMaterial(mat)
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(50, 375 + y, 40, 40)
-        draw.SimpleText(HORDE.perks[LocalPlayer():Horde_GetClass().base_perk].PrintName, 'Heading', 100, 400 + y, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(HORDE.perks[MySelf:Horde_GetClass().base_perk].PrintName, 'Heading', 100, 400 + y, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         y = y + 50
 
         local perks
@@ -682,8 +682,8 @@ function PANEL:Init()
 
         for perk_level, v in SortedPairs(perks) do
             if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then goto cont end
-            if not LocalPlayer().Horde_PerkChoices then break end
-            local choice = v.choices[LocalPlayer().Horde_PerkChoices[class][perk_level] or 1]
+            if not MySelf.Horde_PerkChoices then break end
+            local choice = v.choices[MySelf.Horde_PerkChoices[class][perk_level] or 1]
             if not choice then error("Invalid choice in perk level " .. perk_level .. " for " .. class .. "!") return end
             local perk = HORDE.perks[choice]
             local icon = perk.Icon

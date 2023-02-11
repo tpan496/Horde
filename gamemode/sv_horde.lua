@@ -248,15 +248,11 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                 ent:Horde_SetMostRecentAttacker(dmg:GetAttacker())
                 if GetConVar("horde_testing_display_damage"):GetInt() == 1 then
                     local dmgtype = HORDE:GetDamageType(dmg)
-                    net.Start("Horde_LegacyNotification")
                         if dmgtype == HORDE.DMG_PURE then
-                            net.WriteString("You dealt " .. dmg:GetDamage() .. " damage to " .. ent:GetClass())
-                            net.WriteInt(0,2)
+                            HORDE:SendNotification("You dealt " .. dmg:GetDamage() .. " damage to " .. ent:GetClass(), 0, dmg:GetAttacker())
                         else
-                            net.WriteString("You dealt " .. dmg:GetDamage() .. " " .. HORDE.DMG_TYPE_STRING[dmgtype] .. " damage to " .. ent:GetClass())
-                            net.WriteInt(0,2)
+                            HORDE:SendNotification("You dealt " .. dmg:GetDamage() .. " " .. HORDE.DMG_TYPE_STRING[dmgtype] .. " damage to " .. ent:GetClass(), 0, dmg:GetAttacker())
                         end
-                    net.Send(dmg:GetAttacker())
                 end
 
                 local boss_properties = ent:Horde_GetBossProperties()
@@ -289,15 +285,11 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
             HORDE.player_damage_taken[id] = HORDE.player_damage_taken[id] + dmg:GetDamage()
             if GetConVar("horde_testing_display_damage"):GetInt() == 1 then
                 local dmgtype = HORDE:GetDamageType(dmg)
-                net.Start("Horde_LegacyNotification")
-                    if dmgtype == HORDE.DMG_PURE then
-                        net.WriteString("You received " .. dmg:GetDamage() .. " damage from " .. dmg:GetAttacker():GetClass())
-                        net.WriteInt(0,2)
-                    else
-                        net.WriteString("You received " .. dmg:GetDamage() .. " " .. HORDE.DMG_TYPE_STRING[dmgtype] ..  " damage from " .. dmg:GetAttacker():GetClass())
-                        net.WriteInt(0,2)
-                    end
-                net.Send(ent)
+                if dmgtype == HORDE.DMG_PURE then
+                    HORDE:SendNotification("You received " .. dmg:GetDamage() .. " damage from " .. dmg:GetAttacker():GetClass(), ent)
+                else
+                    HORDE:SendNotification("You received " .. dmg:GetDamage() .. " " .. HORDE.DMG_TYPE_STRING[dmgtype] ..  " damage from " .. dmg:GetAttacker():GetClass(), 0, ent)
+                end
             end
         end
     end
@@ -369,9 +361,9 @@ end
 -- Spawns a Horde enemy at the give position.
 -- The enemy is tracked by Horde.
 function HORDE:SpawnEnemy(enemy, pos)
-    local npc_info = list.Get("NPC")[enemy.class]
+    local npc_info = HORDE.NPCS[enemy.class]
     if not npc_info then
-        print("[HORDE] NPC does not exist in ", list.Get("NPC"))
+        HORDE:SendNotification("NPC " .. enemy.class .. " does not exist.", 1)
     end
 
     local spawned_enemy = ents.Create(enemy.class)
@@ -533,13 +525,7 @@ function HORDE:SpawnEnemy(enemy, pos)
             end
         end
     end
-    --[[spawned_enemy.DoRelationshipCheck = function (ent)
-        if ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid() then return true end
-        return false
-    end]]--
-    
-    --spawned_enemy:AddRelationship("player D_HT 99")
-    --VJ_AddSpeed(spawned_enemy, 4)
+
     hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy
 end
@@ -688,10 +674,7 @@ function HORDE:SpawnEnemies(enemies, valid_nodes)
 
                 -- This in fact should not happen
                 if table.IsEmpty(horde_current_enemies_list) then
-                    net.Start("Horde_LegacyNotification")
-                        net.WriteString("Current enemy list is empty!")
-                        net.WriteInt(1,2)
-                    net.Broadcast()
+                    HORDE:SendNotification("Current enemy list is empty!", 1)
                     return
                 end
 
@@ -914,19 +897,13 @@ end
 function HORDE:WaveStart()
     if (HORDE.enemies_normalized == nil) or table.IsEmpty(HORDE.enemies_normalized) then
         HORDE:HardResetDirector()
-        net.Start("Horde_LegacyNotification")
-        net.WriteString("Enemies list is empty. Config the enemy list or no enemies wil spawn.")
-        net.WriteInt(1,2)
-        net.Broadcast()
+        HORDE:SendNotification("Enemies list is empty. Config the enemy list or no enemies wil spawn.", 1)
         HORDE.start_game = false
         return
     end
 
     if HORDE.endless == 0 and table.IsEmpty(HORDE.enemies_normalized[HORDE.current_wave]) then
-        net.Start("Horde_LegacyNotification")
-        net.WriteString("No enemy config set for this wave. Falling back to previous wave settings.")
-        net.WriteInt(1,2)
-        net.Broadcast()
+        HORDE:SendNotification("No enemy config set for this wave. Falling back to previous wave settings.", 1)
     end
 
     local current_wave = ((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1
@@ -1072,10 +1049,7 @@ function HORDE:WaveEnd()
         boss_music_loop:Play()
     else
         HORDE:BroadcastBreakCountDownMessage(0, true)
-        net.Start("Horde_LegacyNotification")
-            net.WriteString("Wave Completed!")
-            net.WriteInt(0,2)
-        net.Broadcast()
+        HORDE:SendNotification("Wave Completed!", 0)
 
         -- Send Tips
         local tip = HORDE:GetTip()
@@ -1112,10 +1086,7 @@ function HORDE:WaveEnd()
     -- Global Wave End Effects
     if horde_perk_progress <= 4 and HORDE:Horde_GetWaveForPerk(horde_perk_progress) and HORDE.current_wave >= HORDE:Horde_GetWaveForPerk(horde_perk_progress) then
         timer.Simple(1, function()
-            net.Start("Horde_LegacyNotification")
-                net.WriteString("Tier " .. horde_perk_progress .. " perks have been unlocked!")
-                net.WriteInt(0,2)
-            net.Broadcast()
+            HORDE:SendNotification("Tier " .. horde_perk_progress .. " perks have been unlocked!", 0)
             horde_perk_progress = horde_perk_progress + 1
         end)
     end
@@ -1199,10 +1170,7 @@ function HORDE:Direct()
 
     if not HORDE.ai_nodes or table.IsEmpty(HORDE.ai_nodes) then
         print("[HORDE] No info_node(s) in map! NPCs will not spawn.")
-        net.Start("Horde_LegacyNotification")
-            net.WriteString("Map has no info nodes! NPCs will not spawn.")
-            net.WriteInt(1,2)
-        net.Broadcast()
+        HORDE:SendNotification("Map has no info nodes! NPCs will not spawn.", 1)
         return
     end
 

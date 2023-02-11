@@ -15,22 +15,38 @@ function PANEL:DoClick()
 end
 
 function PANEL:OnCursorEntered()
-    self.bg_color = Color(100, 100, 100)
+    if self.is_current_class then
+        self.bg_color = Color(110, 110, 110)
+    else
+        self.bg_color = Color(100, 100, 100)
+    end
 end
 
 function PANEL:OnCursorExited()
-    self.bg_color = Color(50,50,50)
+    if self.is_current_class then
+        self.bg_color = Color(110,110,110)
+    else
+        self.bg_color = Color(50,50,50)
+    end
     surface.PlaySound("UI/buttonrollover.wav")
 end
 
 function PANEL:SetData(class, description_panel)
     self.class = class
-    self.subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(self.class.name)]
+    self.subclass = HORDE.subclasses[MySelf:Horde_GetSubclass(self.class.name)]
     self.name = class.name
     self.description = class.description
     self.description_panel = description_panel
     self.mat = Material(self.subclass.Icon, "mips smooth")
-
+    if self.subclass.PrintName == MySelf:Horde_GetCurrentSubclass() then
+        self.is_current_class = true
+    end
+    
+    if self.is_current_class then
+        self.bg_color = Color(110,110,110)
+    else
+        self.bg_color = Color(50,50,50)
+    end
     local btn = vgui.Create("DButton", self)
     btn:Dock(FILL)
     btn:SetText("")
@@ -65,7 +81,7 @@ function PANEL:Paint()
         surface.DrawText(translate.Get("Class_" .. self.subclass.PrintName) or self.subclass.PrintName)
 
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-        local level = LocalPlayer():Horde_GetLevel(self.subclass.PrintName)
+        local level = MySelf:Horde_GetLevel(self.subclass.PrintName)
         local rank, rank_level = HORDE:LevelToRank(level)
         
         if self.mat then

@@ -1,5 +1,5 @@
 GADGET.PrintName = "Agility Shard"
-GADGET.Description = "20% increased movement speed for 30 seconds."
+GADGET.Description = "{1} increased movement speed for 30 seconds."
 GADGET.Icon = "items/gadgets/agility_shard.png"
 GADGET.Droppable = true
 GADGET.Once = true

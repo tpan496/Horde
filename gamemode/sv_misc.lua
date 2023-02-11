@@ -215,3 +215,34 @@ end
 function HORDE:RemoveTimer(identifier)
     timer.Remove("Horde_" .. identifier)
 end
+
+function HORDE:SendNotification(text, type, ply)
+    net.Start("Horde_SideNotification")
+    net.WriteString(text)
+    net.WriteInt(type,2)
+    if ply == nil then
+        net.Broadcast()
+    else
+        net.Send(ply)
+    end
+end
+
+function HORDE:SendNotificationDebuff(debuff, ply)
+    net.Start("Horde_SideNotificationDebuff")
+    net.WriteUInt(debuff, 32)
+    net.Send(ply)
+end
+
+function HORDE:SendNotificationDenyAccess(ply)
+    net.Start("Horde_SideNotification")
+    net.WriteString("You do not have access to this command.")
+    net.WriteInt(1,2)
+    net.Send(ply)
+end
+
+function HORDE:SendNotificationSandboxOnly(ply)
+    net.Start("Horde_SideNotification")
+    net.WriteString("Command only available in sandbox mode.")
+    net.WriteInt(1,2)
+    net.Send(ply)
+end

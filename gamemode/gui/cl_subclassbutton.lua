@@ -48,7 +48,7 @@ function PANEL:DoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.info then return end
     if self.locked then
-        if LocalPlayer():Horde_GetSkullTokens() < self.info.subclass.UnlockCost then return end
+        if MySelf:Horde_GetSkullTokens() < self.info.subclass.UnlockCost then return end
         Derma_Query("Unlock?", "Unlock Subclass",
                 "Yes",
                 function()
@@ -63,11 +63,11 @@ function PANEL:DoClick()
         Derma_Query("Change Subclass?", "Change Subclass",
                 "Yes",
                 function()
-                    LocalPlayer():Horde_SetSubclass(self.info.class, self.info.subclass.PrintName)
+                    MySelf:Horde_SetSubclass(self.info.class, self.info.subclass.PrintName)
                     HORDE:ToggleShop()
-                    LocalPlayer().Horde_subclass_choices[self.info.class] = self.info.subclass.PrintName
+                    MySelf.Horde_subclass_choices[self.info.class] = self.info.subclass.PrintName
                     local subclass = HORDE.subclasses[self.info.subclass.PrintName]
-                    local current_subclass = HORDE.subclasses[LocalPlayer():Horde_GetCurrentSubclass()]
+                    local current_subclass = HORDE.subclasses[MySelf:Horde_GetCurrentSubclass()]
                     local parent_class = subclass.ParnetClass or subclass
                     local current_parent_class = current_subclass.ParnetClass or current_subclass
                     if parent_class == current_parent_class then
@@ -79,10 +79,10 @@ function PANEL:DoClick()
             )
     end
     
-    --[[LocalPlayer().Horde_PerkChoices = LocalPlayer().Horde_PerkChoices or {}
-    LocalPlayer().Horde_PerkChoices[self.info.class] = LocalPlayer().Horde_PerkChoices[self.info.class] or {}
-    LocalPlayer().Horde_PerkChoices[self.info.class][self.info.perk_level] = self.info.choice
-    file.Write("horde/perk_choices.txt", util.TableToJSON(LocalPlayer().Horde_PerkChoices))
+    --[[MySelf.Horde_PerkChoices = MySelf.Horde_PerkChoices or {}
+    MySelf.Horde_PerkChoices[self.info.class] = MySelf.Horde_PerkChoices[self.info.class] or {}
+    MySelf.Horde_PerkChoices[self.info.class][self.info.perk_level] = self.info.choice
+    file.Write("horde/perk_choices.txt", util.TableToJSON(MySelf.Horde_PerkChoices))
     net.Start("Horde_PerkChoice")
         net.WriteString(self.info.class)
         net.WriteUInt(self.info.perk_level, 4)
@@ -115,7 +115,7 @@ function PANEL:SetData(classname, subclass_name)
     local icon = subclass.Icon
     self.icon:SetMaterial(Material(icon, "mips smooth"))
 
-    self.locked = LocalPlayer():Horde_GetSubclassUnlocked(subclass.PrintName) == false
+    self.locked = MySelf:Horde_GetSubclassUnlocked(subclass.PrintName) == false
     if self.locked == true then
         self.icon:SetImageColor(Color(150,150,150,255))
         self.title:SetColor(Color(150,150,150,255))
@@ -136,7 +136,7 @@ function PANEL:SetData(classname, subclass_name)
         self.title:SetText(loc_title)
     end
 
-    self.info.active = LocalPlayer():Horde_GetSubclass(classname) == subclass.PrintName
+    self.info.active = MySelf:Horde_GetSubclass(classname) == subclass.PrintName
     self.locked_panel:SetSize(self:GetWide(), self:GetTall())
 end
 
@@ -150,7 +150,7 @@ end
 
 function PANEL:Think()
     if not self.info then return end
-    self.info.active = LocalPlayer():Horde_GetSubclass(self.info.class) == self.info.subclass.PrintName
+    self.info.active = MySelf:Horde_GetSubclass(self.info.class) == self.info.subclass.PrintName
     if self.locked then
         self.bg_color = Color(50, 50, 50)
     else

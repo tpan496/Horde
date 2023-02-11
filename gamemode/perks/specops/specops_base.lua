@@ -102,9 +102,9 @@ end
 
 local function nv_cansee(ent)
 	local tracedata = {}
-	tracedata.start = LocalPlayer():GetShootPos()
+	tracedata.start = MySelf:GetShootPos()
 	tracedata.endpos = nv_center(ent)
-	tracedata.filter = {ent, LocalPlayer()}
+	tracedata.filter = {ent, MySelf}
 	local trace = util.TraceLine(tracedata)
 	if trace.Hit then
 		return false
@@ -116,7 +116,7 @@ end
 local function nv_ents()
 	local entities = {}
 
-	for k, v in pairs(ents.FindInSphere(LocalPlayer():GetPos(), 1000)) do
+	for k, v in pairs(ents.FindInSphere(MySelf:GetPos(), 1000)) do
         if v:Health() > 0 and (v:IsPlayer() or v:IsNPC()) then
 		    table.insert(entities, v)
         end
@@ -127,12 +127,12 @@ end
 
 PERK.Hooks.Think = function()
     if SERVER then return end
-    local ply = LocalPlayer()
+    local ply = MySelf
     if not ply.Horde_StatusTable then return end
 	if not ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then return end
     local light = DynamicLight(0)
     if (light) then
-        light.Pos = LocalPlayer():GetPos() + Vector(0,0,30)
+        light.Pos = MySelf:GetPos() + Vector(0,0,30)
         light.r = nv_color().r
         light.g = nv_color().g
         light.b = nv_color().b
@@ -144,7 +144,7 @@ PERK.Hooks.Think = function()
 end
 
 PERK.Hooks.HUDPaint = function()
-    local ply = LocalPlayer()
+    local ply = MySelf
     if not ply.Horde_StatusTable then return end
 	if ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then
 		surface.SetDrawColor(Color(nv_color().r,nv_color().g,nv_color().b,math.random(255)))

@@ -45,6 +45,15 @@ include("gui/npcinfo/cl_npcinfo.lua")
 -- Some users report severe lag with halo
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
 
+MySelf = MySelf or NULL
+hook.Add("InitPostEntity", "GetLocal", function()
+    MySelf = LocalPlayer()
+
+    GAMEMODE.HookGetLocal = GAMEMODE.HookGetLocal or function(g) end
+    gamemode.Call("HookGetLocal", MySelf)
+    RunConsoleCommand("initpostentity")
+end)
+
 function HORDE:ToggleShop()
     if not HORDE.ShopGUI then
         HORDE.ShopGUI = vgui.Create("HordeShop")
@@ -169,9 +178,9 @@ end
 HORDE.Player_Looking_At_Minion = nil
 if GetConVarNumber("horde_enable_halo") == 1 then
     hook.Add("PreDrawHalos", "Horde_AddMinionHalos", function()
-        local ent = util.TraceLine(util.GetPlayerTrace(LocalPlayer())).Entity
+        local ent = util.TraceLine(util.GetPlayerTrace(MySelf)).Entity
         if ent and ent:IsValid() then
-            if ent:GetNWEntity("HordeOwner") and ent:GetNWEntity("HordeOwner") == LocalPlayer() then
+            if ent:GetNWEntity("HordeOwner") and ent:GetNWEntity("HordeOwner") == MySelf then
                 -- Do not highlight minions if they do not belong to you
                 halo.Add({ent}, Color(0, 255, 0), 1, 1, 1, true, true)
                 HORDE.Player_Looking_At_Minion = ent
@@ -288,7 +297,7 @@ net.Receive("Horde_ForceCloseShop", function ()
     gui.EnableScreenClicker(false)
 end)
 
-net.Receive("Horde_LegacyNotification", function(length)
+net.Receive("Horde_SideNotification", function(length)
     local str = net.ReadString()
     local type = net.ReadInt(2)
     if string.find(str, "bought") then
@@ -296,6 +305,12 @@ net.Receive("Horde_LegacyNotification", function(length)
     else
         HORDE:PlayNotification(str, type)
     end
+end)
+
+net.Receive("Horde_SideNotificationDebuff", function(length)
+    local debuff = net.ReadUInt(32)
+    local debuff_str = translate.Get("Notifications_Debuff_" .. HORDE.Status_String[debuff]) or HORDE.Debuff_Notifications[debuff]
+    HORDE:PlayNotification(debuff_str, 0, HORDE.Status_Icon[debuff], HORDE.STATUS_COLOR[debuff])
 end)
 
 net.Receive("Horde_SyncItems", function ()

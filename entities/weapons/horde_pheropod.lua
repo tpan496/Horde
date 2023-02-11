@@ -160,15 +160,15 @@ end
 function SWEP:RaiseAntlion()
 	if IsValid(self.Owner) then
 		if not self.Owner:Horde_GetPerk("hatcher_base") then return end
-		if self.Weapon:Clip1() < 40 then return end
-		self:TakePrimaryAmmo(40)
-		self:RaiseAntlion()
 	end
 	if self.Owner:Horde_GetPerk("hatcher_swarm") then
 		if HORDE:GetAntlionMinionsCount(self.Owner) > 1 then return end
 	else
 		if HORDE:GetAntlionMinionsCount(self.Owner) > 0 then return end
 	end
+
+	if self.Weapon:Clip1() < 40 then return end
+	self:TakePrimaryAmmo(40)
 	
 	self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 	self.SecondaryCharging = 1

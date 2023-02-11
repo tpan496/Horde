@@ -3,17 +3,6 @@ local entmeta = FindMetaTable("Entity")
 
 util.AddNetworkString("Horde_OnEnemyDebuffRemove")
 
-HORDE.Debuff_Notifications = {
-    [HORDE.Status_Bleeding] = "You are inflicted by Bleeding.\nYour health is removed over time.",
-    [HORDE.Status_Ignite] = "You are inflicted by Ignite.\nYou take Fire damage over time.",
-    [HORDE.Status_Frostbite] = "You are inflicted by Frostbite.\nYour movement speed is reduced.",
-    [HORDE.Status_Shock] = "You are inflicted by Shock.\nYou take increased damage from all sources.",
-    [HORDE.Status_Break] = "You are inflicted by Break.\nYour health is reduced drastically and will recover slowly.",
-    [HORDE.Status_Decay] = "You are inflicted by Decay.\nYou cannot heal.",
-    [HORDE.Status_Psychosis] = "Y'ai 'ng'ngah, Yog-Sothoth h'ee - l'geb f'ai throdog uaaah.",
-    [HORDE.Status_Necrosis] = "You are dying from Necrosis."
-}
-
 function HORDE:ApplyDebuffInRadius(debuff, pos, radius, buildup, inflictor, callback)
     for _, ent in pairs(ents.FindInSphere(pos, radius)) do
         if ent:IsNPC() and HORDE:IsPlayerOrMinion(ent) ~= true then
@@ -193,10 +182,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         end
 
         if not self.Horde_Debuff_Active[debuff] then
-            net.Start("Horde_LegacyNotification")
-                net.WriteString(HORDE.Debuff_Notifications[debuff])
-                net.WriteInt(1,2)
-            net.Send(self)
+            HORDE:SendNotificationDebuff(debuff, self)
         end
 
         self.Horde_Debuff_Active[debuff] = true

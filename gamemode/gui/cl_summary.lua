@@ -3,6 +3,11 @@ local players_map_votes = {}
 local players_diff_votes = {}
 local remaining_time = 60
 
+local font_scale = translate.Get("Default_Font_Scale") or 1
+surface.CreateFont("SummaryText", { font = "arial", size = ScreenScale(12.5) * font_scale, extended = true })
+surface.CreateFont("AwardText", { font = "arial bold", size = ScreenScale(12.5) * font_scale, extended = true })
+
+
 net.Receive("Horde_VotemapSync", function (len)
     players_map_votes = net.ReadTable()
 end)
@@ -15,78 +20,9 @@ net.Receive("Horde_RemainingTime", function (len)
     remaining_time = net.ReadInt(8)
 end)
 
-HORDE.Notifications_Count = 0
-local function inQuad(fraction, beginning, change)
-	return change * (fraction ^ 2) + beginning
-end
-
-local warning_mat = Material("warning.png", "mips smooth")
-local ok_mat = Material("ok.png", "mips smooth")
-function HORDE:PlayNotification(text, type, icon, col)
-    if not type then type = 0 end
-    if not text then return end
-    local s = string.len(text) * ScreenScale(3) + ScreenScale(20)
-    local main = vgui.Create("DPanel")
-    local y_start = ScrH() - ScreenScale(40) - HORDE.Notifications_Count * ScreenScale(18)
-    main:SetSize(s, ScreenScale(15))
-    main:SetPos(ScrW() - s, y_start)
-    local mat
-    if type == 0 then
-        mat = ok_mat
-    else
-        mat = warning_mat
-    end
-    if icon then
-        mat = Material(icon, "mips smooth")
-    end
-    local color = color_white
-    if col then color = col end
-    main.Paint = function ()
-        draw.RoundedBox(10, 0, 0, s, ScreenScale(15), Color(40,40,40,150))
-        draw.SimpleText(text, "Info", ScreenScale(4) + ScreenScale(10), ScreenScale(4), color_white, TEXT_ALIGN_LEFT)
-        surface.SetDrawColor(color)
-        surface.SetMaterial(mat)
-        surface.DrawTexturedRect(ScreenScale(2), ScreenScale(2), ScreenScale(10), ScreenScale(10))
-    end
-    local anim = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
-        pnl:SetPos(ScrW() - s - ScreenScale(8), inQuad(delta, y_start, - ScreenScale(30))) -- Change the X coordinate from 200 to 200+600
-        pnl:SetAlpha(delta * 255)
-    end)
-    main.Think = function(self)
-        if anim:Active() then
-            anim:Run()
-        end
-    end
-    anim:Start(0.5) -- Animate for two seconds
-    if anim:Active() then
-        anim:Run()
-    end
-    timer.Simple(5, function ()
-        local anim2 = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
-            pnl:SetAlpha(255 - delta * 255)
-        end)
-        anim2:Start(0.5)
-        if anim2:Active() then
-            anim2:Run()
-        end
-        main.Think = function(self)
-            if anim2:Active() then
-                anim2:Run()
-            end
-        end
-        timer.Simple(0.5, function ()
-            main:Remove()
-        end)
-        HORDE.Notifications_Count = math.max(0, HORDE.Notifications_Count - 1)
-    end)
-    HORDE.Notifications_Count = HORDE.Notifications_Count + 1
-end
-
-
 function PANEL:Init()
-    local w = math.max(1024, math.min(1440, ScrW() * 0.75))
-    --local h = math.max(600, ScrH() * 0.75)
-    local h = 600
+    local w = math.max(1024, ScrW() * 0.75)
+    local h = math.min(800, math.max(600, ScrH() * 0.75))
     self:SetSize(w, h)
     self:SetPos(ScrW()/2 - (self:GetWide() / 2), ScrH()/2 - (self:GetTall() / 2))
     self:SetBackgroundColor(Color(0,0,0,0))
@@ -99,17 +35,19 @@ function PANEL:Init()
     local summary_btn = vgui.Create("DButton", self)
     local summary_activated = true
     local summary_hovered = false
+    local summary_btn_w = 250
+    local summary_btn_h = 50
     summary_btn:SetText(translate.Get("Game_Game_Summary"))
     summary_btn:SetTextColor(Color(255,255,255))
     summary_btn:SetFont("Title")
-    summary_btn:SetSize(250, 50)
+    summary_btn:SetSize(summary_btn_w, summary_btn_h)
     summary_btn:SetPos(0, 0)
     summary_btn.Paint = function ()
         if summary_hovered then draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_crimson) return end
         if summary_activated then
-            draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_hollow)
+            draw.RoundedBox(0, 0, 0, summary_btn_w, summary_btn_h, HORDE.color_hollow)
         else
-            draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_hollow_dim)
+            draw.RoundedBox(0, 0, 0, summary_btn_w, summary_btn_h, HORDE.color_hollow_dim)
         end
     end
 
@@ -244,50 +182,59 @@ function PANEL:Init()
         votemap_hovered = false
     end
 
-    local r = (h / 600)
+    local player_panel_h = (h - 150) / 4 - 2
 
     self.create_player_panel = function (pos, ply, award, reason)
         local panel = vgui.Create("DPanel", summary_panel)
         -- panel:Dock(TOP)
         panel:DockPadding(10, 10, 10, 10)
-        panel:SetSize(w/2 - 30, 80)
+        panel:SetSize(w, player_panel_h)
         panel:SetPos(pos.x, pos.y)
         panel:SetBackgroundColor(HORDE.color_hollow)
+        panel.Paint = function ()
+            if award == "MVP" then
+                draw.RoundedBox(10, 0, 0, w / 2, player_panel_h, HORDE.color_crimson)
+            else
+                --draw.RoundedBox(10, 0, 0, w / 2, player_panel_h, Color(100,100,100))
+            end
+            draw.RoundedBox(10, 2, 2, w / 2 - 4, player_panel_h - 4, Color(40,40,40))
+        end
         local avatar = vgui.Create("AvatarImage", panel)
         avatar:Dock(LEFT)
-        avatar:SetSize(64,64)
-        avatar:SetPlayer(ply, 64)
-
-        local name_label = vgui.Create("DLabel", panel)
-        name_label:SetPos(90,-20)
-        name_label:SetText(ply:GetName())
-        name_label:SetSize(125, 80)
-        name_label:SetColor(Color(255,255,255))
-        name_label:SetFont("Title")
+        avatar:SetSize((player_panel_h - 15),(player_panel_h - 15))
+        avatar:SetPlayer(ply, (player_panel_h - 15))
 
         local award_label = vgui.Create("DLabel", panel)
-        award_label:SetPos(210, -20)
+        award_label:SetPos((player_panel_h - 15) + 20, -(player_panel_h - 60)/2)
         award_label:SetText(award)
-        award_label:SetSize(250, 80)
+        award_label:SetSize(w/2 - player_panel_h - 20, player_panel_h)
         award_label:SetColor(HORDE.color_crimson)
-        award_label:SetFont("Title")
+        award_label:SetFont("AwardText")
+
+        local name_label = vgui.Create("DLabel", panel)
+        name_label:SetPos((player_panel_h - 15) + 20, 0)
+        name_label:SetText(ply:GetName())
+        name_label:SetSize(w/2 - player_panel_h - 20, player_panel_h)
+        name_label:SetColor(Color(255,255,255))
+        name_label:SetFont("SummaryText")
 
         local reason_label = vgui.Create("DLabel", panel)
-        reason_label:SetPos(90,20)
+        reason_label:SetPos((player_panel_h - 15) + 20, (player_panel_h - 60)/2)
         reason_label:SetText(reason)
-        reason_label:SetSize(400, 80)
+        reason_label:SetSize(w/2 - player_panel_h - 20, player_panel_h)
         reason_label:SetColor(Color(255,255,255))
-        reason_label:SetFont("Title")
+        reason_label:SetFont("SummaryText")
 
+        local icon_s = ScreenScale(24)
         local class_icon = vgui.Create("DPanel", panel)
-        class_icon:SetPos(w/2 - 80, 22)
-        class_icon:SetSize(40, 40)
+        class_icon:SetPos(w/2 - 80 - icon_s/2, player_panel_h/2 - icon_s/2)
+        class_icon:SetSize(icon_s, icon_s)
         local subclass = HORDE.subclasses[ply:Horde_GetCurrentSubclass()]
         local mat = Material(subclass.Icon, "mips smooth")
         class_icon.Paint = function ()
             if not ply:Horde_GetClass() then return end
             surface.SetMaterial(mat) -- Use our cached material
-            surface.DrawTexturedRect(0, 0, 40, 40)
+            surface.DrawTexturedRect(0, 0, icon_s, icon_s)
         end
 
         return panel
@@ -355,6 +302,7 @@ function PANEL:Init()
     local counter_label = vgui.Create("DLabel", self)
     counter_label:SetText("")
     counter_label:SetSize(1024, 50)
+    counter_label:SetSize(240)
     counter_label:SetTextColor(Color(255,255,255))
     counter_label.Paint = function ()
         draw.SimpleText(translate.Get("Game_Remaining_Time") .. ": " .. tostring(remaining_time), "Title", self:GetWide() - 240, 12.5, Color(255,255,255))
@@ -384,21 +332,21 @@ function PANEL:Votediff(vote_btn, diff)
 end
 
 function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player, most_damage, kills_player, most_kills, most_heal_player, most_heal, headshot_player, most_headshots, elite_kill_player, most_elite_kills, damage_taken_player, most_damage_taken, total_damage, maps)
-    local w = math.max(1024, math.min(1440, ScrW() * 0.75))
+    local w = math.max(1024, ScrW() * 0.75)
     --local h = math.max(600, ScrH() * 0.75)
-    local h = 600
-    local w2 = (w/2 - 30)
+    local h = math.min(800, math.max(600, ScrH() * 0.75))
+    local player_panel_h = (h - 150) / 4  - 2
     local percentage = 0
     if total_damage > 0 then
         percentage = HORDE:Round2(mvp_damage / total_damage, 2) * 100
     end
-    self.create_player_panel({x=w/2 - w2/2,y=170}, mvp_player,              "MVP", tostring(mvp_kills) .. " " .. translate.Get("Game_Kills") .. ", " .. tostring(mvp_damage) .. " " .. translate.Get("Game_Damage") .. " (" .. tostring(percentage) .. "%)")
-    self.create_player_panel({x=w/2 - w2 - 5,y=280}, damage_player,       translate.Get("Game_Most_Damage_Dealt"), tostring(most_damage) .. " " .. translate.Get("Game_Damage"))
-    self.create_player_panel({x=w/2 + 5, y=280}, kills_player,             translate.Get("Game_Most_Kills"), tostring(most_kills) .. " " .. translate.Get("Game_Kills"))
-    self.create_player_panel({x=w/2 - w2 - 5,y=390}, damage_taken_player, translate.Get("Game_Most_Damage_Taken"), tostring(most_damage_taken) .. " " .. translate.Get("Game_Damage_Taken"))
-    self.create_player_panel({x=w/2 + 5,y=390}, elite_kill_player,         translate.Get("Game_Elite_Killer"), tostring(most_elite_kills) .. " " .. translate.Get("Game_Elite_Kills"))
-    self.create_player_panel({x=w/2 + 5,y=500}, most_heal_player,          translate.Get("Game_Most_Heal"), tostring(most_heal) .. " " .. translate.Get("Game_Healed"))
-    self.create_player_panel({x=w/2 - w2 - 5,y=500}, headshot_player,     translate.Get("Game_SharpShooter"), tostring(most_headshots) .. " " .. translate.Get("Game_Headshots"))
+    self.create_player_panel({x=w/4,y=150}, mvp_player,              "MVP", tostring(mvp_kills) .. " " .. translate.Get("Game_Kills") .. ", " .. tostring(mvp_damage) .. " " .. translate.Get("Game_Damage") .. " (" .. tostring(percentage) .. "%)")
+    self.create_player_panel({x=0,  y=160 + player_panel_h}, damage_player,       translate.Get("Game_Most_Damage_Dealt"), tostring(most_damage) .. " " .. translate.Get("Game_Damage"))
+    self.create_player_panel({x=w/2,y=160 + player_panel_h}, kills_player,             translate.Get("Game_Most_Kills"), tostring(most_kills) .. " " .. translate.Get("Game_Kills"))
+    self.create_player_panel({x=0  ,y=160 + 2*player_panel_h}, damage_taken_player, translate.Get("Game_Most_Damage_Taken"), tostring(most_damage_taken) .. " " .. translate.Get("Game_Damage_Taken"))
+    self.create_player_panel({x=w/2,y=160 + 2*player_panel_h}, elite_kill_player,         translate.Get("Game_Elite_Killer"), tostring(most_elite_kills) .. " " .. translate.Get("Game_Elite_Kills"))
+    self.create_player_panel({x=0,  y=160 + 3*player_panel_h}, most_heal_player,          translate.Get("Game_Most_Heal"), tostring(most_heal) .. " " .. translate.Get("Game_Healed"))
+    self.create_player_panel({x=w/2,y=160 + 3*player_panel_h}, headshot_player,     translate.Get("Game_SharpShooter"), tostring(most_headshots) .. " " .. translate.Get("Game_Headshots"))
 
     for _, map in pairs(maps) do
         self.create_map_panel(map)
@@ -406,7 +354,7 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
 
     local summary_label = vgui.Create("DLabel", self.summary_panel)
     summary_label:SetSize(900,100)
-    summary_label:SetPos(w/2 - 450,100)
+    summary_label:SetPos(w/2 - 450, 80)
     summary_label:SetText("")
     summary_label:SetTextColor(Color(255,255,255))
     summary_label.Paint = function ()

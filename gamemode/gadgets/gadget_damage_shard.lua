@@ -1,5 +1,5 @@
 GADGET.PrintName = "Damage Shard"
-GADGET.Description = "20% increased Global damage for 30 seconds."
+GADGET.Description = "{1} increased Global damage for 30 seconds."
 GADGET.Icon = "items/gadgets/damage_shard.png"
 GADGET.Droppable = true
 GADGET.Once = true

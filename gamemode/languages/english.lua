@@ -12,6 +12,7 @@ resistance vs. less damage taken: same as above.
 translate.AddLanguage("en", "English")
 
 -- Game Info
+LANGUAGE["Game_Preparing..."] = "Preparing..."
 LANGUAGE["Game_Ready"] = "Ready"
 LANGUAGE["Game_Not Ready"] = "Not Ready"
 LANGUAGE["Game_Players_Ready"] = "Players Ready"
@@ -59,7 +60,18 @@ LANGUAGE["Rank_Master"] = "Master"
 LANGUAGE["Rank_Not_Met"] = "Rank Requirement(s) Not Met"
 
 
+-- Scoreboard
+LANGUAGE["Scoreboard_Name"] = "Name"
+LANGUAGE["Scoreboard_Class"] = "Class"
+LANGUAGE["Scoreboard_Perks"] = "Perks"
+LANGUAGE["Scoreboard_Gadget"] = "Gadget"
+LANGUAGE["Scoreboard_Money"] = "Money"
+LANGUAGE["Scoreboard_Kill"] = "Kill"
+LANGUAGE["Scoreboard_Death"] = "Death"
+LANGUAGE["Scoreboard_Ping"] = "Ping"
+
 -- Shop
+LANGUAGE["Shop_Not_Enough_Money_Or_Carrying_Capacity"] = "Not Enough Money or Carrying Capacity!"
 -- Categories
 LANGUAGE["Shop_Class"] = "Class"
 LANGUAGE["Shop_Cash"] = "Cash"
@@ -395,7 +407,7 @@ LANGUAGE["Perk_Title_Assault_Tier_4"] = [[Conditioning]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[Heightened Reflex]]
 LANGUAGE["Perk_assault_heightened_reflex"] = [[
 {1} increased headshot damage.
-{2} increased global damage resistance on full health.]]
+{2} increased global damage resistance on maximum Adrenaline.]]
 
 LANGUAGE["Perk_Title_assault_merciless_assault"] = [[Merciless Assault]]
 LANGUAGE["Perk_assault_merciless_assault"] = [[
