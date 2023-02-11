@@ -6,7 +6,7 @@ function entmeta:Horde_AddHinder(inflictor, duration, more)
         self:Horde_RemoveHinder()
     end)
     if not self.Horde_Hinder then
-        hook.Run("Horde_PostEnemyDebuffApply", self, inflictor, HORDE.Status_Hindered, self:GetPos())
+        hook.Run("Horde_PostEnemyDebuffApply", self, inflictor, HORDE.Status_Hinder, self:GetPos())
     end
     self.Horde_Hinder = math.max(1, 1 * more)
 end

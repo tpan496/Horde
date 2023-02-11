@@ -53,13 +53,7 @@ if CLIENT then
         net.Start("Horde_PerkChoice")
             net.WriteString(class)
             net.WriteUInt(0, 4)
-            local perks
-            if HORDE.subclasses[class].ParentClass then
-                perks = HORDE.subclasses[class].Perks
-            else
-                perks = HORDE.classes[class].perks
-            end
-            for perk_level, choices in SortedPairs(perks) do
+            for perk_level = 1,4 do
                 if not tbl or not tbl[class] then
                     net.WriteUInt(1, 4)
                 else
