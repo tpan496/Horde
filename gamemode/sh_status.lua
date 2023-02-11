@@ -111,8 +111,8 @@ HORDE:RegisterStatus("Necrosis", "materials/status/necrosis.png", nil, true)
 HORDE:RegisterStatus("Psychosis", "materials/status/psychosis.png", nil, true)
 HORDE:RegisterStatus("Stun", "materials/perks/knockout.png", nil, true)
 HORDE:RegisterStatus("Freeze", "materials/status/frostbite.png", nil, true)
-HORDE:RegisterStatus("Weakened", "materials/perks/crude_casing.png", nil, true)
-HORDE:RegisterStatus("Hindered", "materials/perks/sticky_compound.png", nil, true)
+HORDE:RegisterStatus("Weaken", "materials/perks/crude_casing.png", nil, true)
+HORDE:RegisterStatus("Hinder", "materials/perks/sticky_compound.png", nil, true)
 
 HORDE.Status_Buildup_Sounds = {}
 HORDE.Status_Buildup_Sounds[HORDE.Status_Bleeding] = "horde/status/bleeding_buildup.ogg"

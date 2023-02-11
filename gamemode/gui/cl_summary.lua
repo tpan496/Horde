@@ -4,8 +4,8 @@ local players_diff_votes = {}
 local remaining_time = 60
 
 local font_scale = translate.Get("Default_Font_Scale") or 1
-surface.CreateFont("SummaryText", { font = "arial", size = ScreenScale(12.5) * font_scale, extended = true })
-surface.CreateFont("AwardText", { font = "arial bold", size = ScreenScale(12.5) * font_scale, extended = true })
+surface.CreateFont("SummaryText", { font = "arial", size = ScreenScale(10) * font_scale, extended = true })
+surface.CreateFont("AwardText", { font = "arial bold", size = ScreenScale(10) * font_scale, extended = true })
 
 
 net.Receive("Horde_VotemapSync", function (len)
@@ -299,13 +299,15 @@ function PANEL:Init()
         self.map_btns[vote_btn] = 0
     end
 
-    local counter_label = vgui.Create("DLabel", self)
-    counter_label:SetText("")
-    counter_label:SetSize(1024, 50)
-    counter_label:SetSize(240)
-    counter_label:SetTextColor(Color(255,255,255))
+    local counter_label = vgui.Create("DPanel", self)
+    counter_label:SetSize(100, 50)
+    counter_label:SetPos(w - 50, 0)
     counter_label.Paint = function ()
-        draw.SimpleText(translate.Get("Game_Remaining_Time") .. ": " .. tostring(remaining_time), "Title", self:GetWide() - 240, 12.5, Color(255,255,255))
+        if remaining_time <= 10 then
+            draw.SimpleText(tostring(remaining_time), "Title", 0, 10, HORDE.color_crimson)
+        else
+            draw.SimpleText(tostring(remaining_time), "Title", 0, 10, Color(255,255,255))
+        end
     end
 end
 

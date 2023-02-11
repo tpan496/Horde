@@ -66,7 +66,6 @@ net.Receive("Horde_PerkChoice", function(len, ply)
         for perk_level, choices in SortedPairs(perks) do
             ply.Horde_PerkChoices[subclass_name][perk_level] = net.ReadUInt(4)
         end
-        ply:Horde_ApplyPerksForClass()
     else
         ply.Horde_PerkChoices[subclass_name] = ply.Horde_PerkChoices[subclass_name] or {}
         ply.Horde_PerkChoices[subclass_name][level] = net.ReadUInt(4)
