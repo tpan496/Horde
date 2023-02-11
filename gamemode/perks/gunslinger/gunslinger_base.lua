@@ -1,13 +1,13 @@
 PERK.PrintName = "Gunslinger Base"
 PERK.Description = [[
 {1} increased Pistol damage. ({2} per level, up to {3}).
+Your pistols can be upgraded in shop for increased damage.
 
 Press SHIFT+E to apply Hunter's Mark on an enemy.
 Hunter's Mark lasts for 5 seconds.
 You can apply 1 Hunter's Mark at a time.
 Enemies killed under Hunter's Mark has {4} chance to drop extra cash.
 
-Your pistols can be upgraded for increased damage.
 Has access to all pistols.]]
 PERK.Icon = "materials/subclasses/gunslinger.png"
 PERK.Params = {

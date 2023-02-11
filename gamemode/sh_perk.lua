@@ -32,7 +32,7 @@ if CLIENT then
     net.Receive("Horde_SyncPerk", function ()
         local ply = net.ReadEntity()
         local perk_choices = net.ReadTable()
-        if ply ~= LocalPlayer() then
+        if ply ~= MySelf then
             if not ply.Horde_PerkChoices then ply.Horde_PerkChoices = {} end
             if not ply:Horde_GetCurrentSubclass() then return end
             ply.Horde_PerkChoices[ply:Horde_GetCurrentSubclass()] = perk_choices
@@ -41,12 +41,12 @@ if CLIENT then
 
     -- Get our saved choice and send it to the server
     function HORDE:SendSavedPerkChoices(class)
-        local tbl = LocalPlayer().Horde_PerkChoices
+        local tbl = MySelf.Horde_PerkChoices
         if not tbl or tbl == {} then
             local f = file.Read("horde/perk_choices.txt", "DATA")
             if f then
-                LocalPlayer().Horde_PerkChoices = util.JSONToTable(f)
-                tbl = LocalPlayer().Horde_PerkChoices
+                MySelf.Horde_PerkChoices = util.JSONToTable(f)
+                tbl = MySelf.Horde_PerkChoices
             end
         end
 
@@ -68,7 +68,7 @@ if CLIENT then
             end
         net.SendToServer()
     end
-    net.Receive("Horde_PerkChoice", function() HORDE:SendSavedPerkChoices(LocalPlayer():Horde_GetCurrentSubclass()) end)
+    net.Receive("Horde_PerkChoice", function() HORDE:SendSavedPerkChoices(MySelf:Horde_GetCurrentSubclass()) end)
 end
 
 function HORDE:Horde_GetWaveForPerk(perk_level)

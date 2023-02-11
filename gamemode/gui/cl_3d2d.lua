@@ -11,7 +11,7 @@ local function Render(bdepth, bskybox)
     if bskybox then return end
 
     for _, ply in pairs(player.GetAll()) do
-        if not IsValid(ply) or (ply == LocalPlayer()) or (not ply:Alive()) then
+        if not IsValid(ply) or (ply == MySelf) or (not ply:Alive()) then
             goto cont
         end
 

@@ -126,9 +126,7 @@ local function GetItemsData()
 
             for _, item in pairs(t) do
                 if item.name == "" or item.class == "" or item.name == nil or item.category == nil or item.class == nil or item.ammo_price == nil or item.secondary_ammo_price == nil then
-                    net.Start("Horde_LegacyNotification")
-                        net.WriteString("Item config file validation failed! Please update your file or delete it.")
-                    net.WriteInt(1,2)
+                    HORDE:SendNotification("Item config file validation failed! Please update your file or delete it.", 1)
                     return
                 end
             end
@@ -343,11 +341,11 @@ function HORDE:GetDefaultItemsData()
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLUNT}, nil, {"Survivor", "Assault", "Medic", "Demolition", "Engineer", "Ghost", "Gunslinger", "Heavy", "Cremator"})
     HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_horde_knife",    100,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH}, nil, {"Berserker", "Samurai"})
-    HORDE:CreateItem("Melee",      "Machete",        "arccw_horde_machete", 1000,  3, "Machete.",
+    HORDE:CreateItem("Melee",      "Machete",        "arccw_horde_machete", 1000,  3, "A rusty machete.\nEasy to use.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
     --HORDE:CreateItem("Melee",      "Parrying Dagger","arccw_horde_parrying_dagger", 1000,  3, "A small dagger used for parrying.",
     --nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
-    HORDE:CreateItem("Melee",      "Fireaxe",        "arccw_horde_axe",     1500,  4, "Fireaxe.\nChops enemies in half.",
+    HORDE:CreateItem("Melee",      "Fireaxe",        "arccw_horde_axe",     1500,  4, "Fireaxe.\nHeavy, but can chops most enemies in half.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Melee",      "Katana",         "arccw_horde_katana",  2000,  5, "Ninja sword.\nLong attack range and fast attack speed.",
     {Survivor=true, Berserker=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
@@ -514,7 +512,7 @@ function HORDE:GetDefaultItemsData()
     {Demolition=true, Survivor=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "M79 GL",         "arccw_horde_m79",    2000,  6, "M79 Grenade Launcher.\nShoots 40x46mm grenades the explodes on impact.",
     {Demolition=true, Survivor=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
-    HORDE:CreateItem("Explosive",  "Sticky Launcher",  "horde_sticky_launcher", 2500,  7, "Sticky grenade launcher.",
+    HORDE:CreateItem("Explosive",  "Sticky Launcher",  "horde_sticky_launcher", 2500,  7, "Sticky grenade launcher.\nLaunches grenades that stick to surfaces and entities.\n\nRMB to detonate.",
     {Demolition=true}, 50, -1, nil, nil, {Demolition=4}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "M32 GL",         "arccw_horde_m32",    3000,  8, "Milkor Multiple Grenade Launcher.\nA lightweight 40mm six-shot revolver grenade launcher.",
     {Demolition=true}, 50, -1, nil, nil, {Demolition=3}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
@@ -1077,7 +1075,7 @@ if CLIENT then
     net.Receive("Horde_SetUpgrades", function(len, ply)
         local class = net.ReadString()
         local level = net.ReadUInt(8)
-        LocalPlayer():Horde_SetUpgrade(class, level)
+        MySelf:Horde_SetUpgrade(class, level)
     end)
 end
 

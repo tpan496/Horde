@@ -55,7 +55,8 @@ CreateConVar("horde_enable_ammo_gui", 1, FCVAR_ARCHIVE, "Enables ammo UI.")
 CreateClientConVar("horde_disable_default_gadget_use_key", 0, FCVAR_ARCHIVE, "Disable default key bind for active gadgets.")
 
 if SERVER then
-util.AddNetworkString("Horde_LegacyNotification")
+util.AddNetworkString("Horde_SideNotification")
+util.AddNetworkString("Horde_SideNotificationDebuff")
 util.AddNetworkString("Horde_PlayerInit")
 util.AddNetworkString("Horde_SyncItems")
 util.AddNetworkString("Horde_SyncEnemies")
@@ -201,7 +202,7 @@ end
 function HORDE:GetUpgradePrice(class, ply)
     local level
     if CLIENT then
-        level = LocalPlayer():Horde_GetUpgrade(class)
+        level = MySelf:Horde_GetUpgrade(class)
     else
         level = ply:Horde_GetUpgrade(class)
     end

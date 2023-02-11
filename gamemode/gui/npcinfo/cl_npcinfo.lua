@@ -269,7 +269,7 @@ do
         if not bEnabled then return end
         if snoiNPCs.count < 1 then return end
 
-        local client = LocalPlayer()
+        local client = MySelf
         if IsValid(client) then
             local pos = client:EyePos()
             local vec = GetAimVector(client)

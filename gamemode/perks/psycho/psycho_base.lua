@@ -13,8 +13,9 @@ PERK.Params = {
     [2] = {value = 0.05, percent = true},
     [3] = {value = 0.006, percent = true},
     [4] = {value = 0.20, percent = true},
-    [5] = {value = 1, percent = true},
+    [5] = {value = 0.5, percent = true},
     [6] = {value = 1, percent = true},
+    [7] = {value = 1, percent = true},
 }
 PERK.Hooks = {}
 

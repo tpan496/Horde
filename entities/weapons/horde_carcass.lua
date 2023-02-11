@@ -116,7 +116,7 @@ local phys_pushscale = GetConVar( "phys_pushscale" )
 function SWEP:DealDamage()
 	if SERVER then
 		local level = self.Owner:Horde_GetUpgrade("horde_carcass")
-		self.BaseDamage = 20 + 7.5 * level
+		self.BaseDamage = 25 + 8 * level
 	end
 
 	local anim = self:GetSequenceName(self.Owner:GetViewModel():GetSequence())

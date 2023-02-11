@@ -95,6 +95,7 @@ function ENT:Think()
         dmg_splash:SetDamageType(DMG_GENERIC)
         dmg_splash:SetDamage(self.BaseDamage)
         dmg_splash:SetDamageCustom(HORDE.DMG_SPLASH)
+        dmg_splash:SetDamagePosition(self:GetPos())
         util.BlastDamageInfo(dmg_splash, self:GetPos(), 150)
 
         ParticleEffect("nether_mine_explode", self:GetPos(), Angle(0,0,0), self.Owner)
@@ -147,6 +148,7 @@ function ENT:Detonate()
         dmg_splash:SetInflictor(self)
         dmg_splash:SetDamageType(DMG_GENERIC)
         dmg_splash:SetDamage(self.BaseDamage * dmg_mult)
+        dmg_splash:SetDamagePosition(self:GetPos())
         HORDE:ApplyDamageInRadius(self:GetPos(), 150 * radius_mult, dmg_splash)
         if charged > 0 then
             self:SetCharged(0)
@@ -160,6 +162,7 @@ function ENT:Detonate()
         dmg_splash:SetDamageType(DMG_GENERIC)
         dmg_splash:SetDamage(self.BaseDamage * dmg_mult)
         dmg_splash:SetDamageCustom(HORDE.DMG_SPLASH)
+        dmg_splash:SetDamagePosition(self:GetPos())
         util.BlastDamageInfo(dmg_splash, self:GetPos(), 150 * radius_mult)
     end
 

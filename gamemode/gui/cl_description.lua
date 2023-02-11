@@ -36,7 +36,7 @@ function PANEL:Init()
     self.subclass_btn:DockMargin(2.5,0,0,0)
     self.subclass_btn:SetFont("Content")
     self.subclass_btn:SetTall(50)
-    self.subclass_btn:SetText("Change Subclass")
+    self.subclass_btn:SetText(translate.Get("Class_Change_Subclass") or "Change Subclass")
     self.subclass_btn.OnCursorEntered = function ()
         surface.PlaySound("UI/buttonrollover.wav")
     end
@@ -156,12 +156,12 @@ function PANEL:DoClick()
         Derma_Query("Changing class will remove all your items!", "Change Class",
             "Yes",
             function()
-                LocalPlayer():Horde_SetSubclass(self.item.name, LocalPlayer().Horde_subclass_choices[self.item.name])
+                MySelf:Horde_SetSubclass(self.item.name, MySelf.Horde_subclass_choices[self.item.name])
                 net.Start("Horde_SelectClass")
                 net.WriteString(self.item.name)
-                net.WriteString(LocalPlayer().Horde_subclass_choices[self.item.name])
+                net.WriteString(MySelf.Horde_subclass_choices[self.item.name])
                 net.SendToServer()
-                HORDE:SendSavedPerkChoices(LocalPlayer().Horde_subclass_choices[self.item.name])
+                HORDE:SendSavedPerkChoices(MySelf.Horde_subclass_choices[self.item.name])
 
                 file.Write("horde/class_choices.txt", self.item.subclass.PrintName)
             end,
@@ -170,9 +170,9 @@ function PANEL:DoClick()
         --warning_panel:SetFont("Title")
         return
     end
-    if not LocalPlayer():Alive() then return end
-    if LocalPlayer():Horde_GetMoney() < self.item.price or LocalPlayer():Horde_GetWeight() < self.item.weight or (not self.level_satisfy) then return end
-    local drop_entities = LocalPlayer():Horde_GetDropEntities()
+    if not MySelf:Alive() then return end
+    if MySelf:Horde_GetMoney() < self.item.price or MySelf:Horde_GetWeight() < self.item.weight or (not self.level_satisfy) then return end
+    local drop_entities = MySelf:Horde_GetDropEntities()
     if self.item.entity_properties and self.item.entity_properties.limit and self.item.entity_properties.limit > 0 and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP and drop_entities[self.item.class] and drop_entities[self.item.class] >= self.item.entity_properties.limit then return end
     -- Buy the item
     net.Start("Horde_BuyItem")
@@ -183,7 +183,7 @@ end
 function PANEL:UpgradeDoClick()
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
-    if not LocalPlayer():Alive() then return end
+    if not MySelf:Alive() then return end
     net.Start("Horde_BuyItemUpgrade")
     net.WriteString(self.item.class)
     net.SendToServer()
@@ -192,7 +192,7 @@ end
 function PANEL:AmmoDoClick(count)
     surface.PlaySound("UI/buttonclick.wav")
     if not self.item then return end
-    if not LocalPlayer():Alive() then return end
+    if not MySelf:Alive() then return end
     if self.item.ammo_price < 0 then
         net.Start("Horde_BuyItemUpgrade")
         net.WriteString(self.item.class)
@@ -201,7 +201,7 @@ function PANEL:AmmoDoClick(count)
     end
     if count == -1 then
         -- Secondary ammo
-        if self.item.secondary_ammo_price <= 0 or LocalPlayer():Horde_GetMoney() < self.item.secondary_ammo_price then return end
+        if self.item.secondary_ammo_price <= 0 or MySelf:Horde_GetMoney() < self.item.secondary_ammo_price then return end
         -- Buy the item
         net.Start("Horde_BuyItemAmmoSecondary")
         net.WriteString(self.item.class)
@@ -210,7 +210,7 @@ function PANEL:AmmoDoClick(count)
     end
     local price = self.item.ammo_price and self.item.ammo_price or HORDE.default_ammo_price
     price = price * count
-    if LocalPlayer():Horde_GetMoney() < price then return end
+    if MySelf:Horde_GetMoney() < price then return end
     -- Buy the item
     net.Start("Horde_BuyItemAmmoPrimary")
     net.WriteString(self.item.class)
@@ -229,8 +229,8 @@ function PANEL:SellDoClick()
         end
         return
     end
-    if not LocalPlayer():Alive() then return end
-    if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties and (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP or self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET)) then
+    if not MySelf:Alive() then return end
+    if MySelf:HasWeapon(self.item.class) or (self.item.entity_properties and (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP or self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET)) then
         Derma_Query("Sell Item?!", "Sell",
                 "Yes",
                 function()
@@ -266,7 +266,7 @@ function PANEL:SetData(item)
     self.level_satisfy = true
     if self.item and self.item.levels and (HORDE.disable_levels_restrictions == 0) then
         for class, level in pairs(self.item.levels) do
-            if LocalPlayer():Horde_GetLevel(class) < level then
+            if MySelf:Horde_GetLevel(class) < level then
                 self.level_satisfy = false
                 break
             end
@@ -279,26 +279,39 @@ function PANEL:SetData(item)
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
                 self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
-                if HORDE.gadgets[self.item.class].Active then
+                local g = HORDE.gadgets[self.item.class]
+                if g.Active then
                     local activate_loc = translate.Get("Gadget_Activation") or "Press T to activate."
                     self.loc_desc = activate_loc .. "\n\n" .. self.loc_desc
-                    if HORDE.gadgets[self.item.class].Once then
-                        local once = "This gadget is CONSUMED after activation."
+                    if g.Once then
+                        local once = translate.Get("Gadget_Consumed") or "This gadget is CONSUMED after activation."
                         self.loc_desc = once .. "\n" .. self.loc_desc
                     end
                     self.loc_desc = self.loc_desc .. "\n\n"
                     local seconds_loc = translate.Get("Gadget_Seconds") or "seconds"
-                    if HORDE.gadgets[self.item.class].Duration and HORDE.gadgets[self.item.class].Duration > 0 then
+                    if g.Duration and g.Duration > 0 then
                         local duration_loc = translate.Get("Gadget_Duration") or "Duration"
-                        self.loc_desc = self.loc_desc .. "\n" .. duration_loc .. ": " .. tostring(HORDE.gadgets[self.item.class].Duration) .. " " .. seconds_loc .. "."
+                        self.loc_desc = self.loc_desc .. "\n" .. duration_loc .. ": " .. tostring(g.Duration) .. " " .. seconds_loc .. "."
                     end
-                    if HORDE.gadgets[self.item.class].Cooldown and HORDE.gadgets[self.item.class].Cooldown > 0 then
+                    if g.Cooldown and g.Cooldown > 0 then
                         local cd_loc = translate.Get("Gadget_Cooldown") or "Cooldown"
-                        self.loc_desc = self.loc_desc .. "\n" .. cd_loc .. ": " .. tostring(HORDE.gadgets[self.item.class].Cooldown) .. " " .. seconds_loc .. "."
+                        self.loc_desc = self.loc_desc .. "\n" .. cd_loc .. ": " .. tostring(g.Cooldown) .. " " .. seconds_loc .. "."
                     end
                 end
                 local warning_loc = translate.Get("Gadget_Owned_Warning") or "Only 1 Gadget can be OWNED!"
                 self.loc_desc = self.loc_desc .. "\n\n" .. warning_loc
+                if g.Params then
+                    for i, v in pairs(g.Params) do
+                        local replaced = "{" .. i .. "}"
+                        if not string.find(self.loc_desc, replaced) then goto cont end
+                        local formatted = v.value
+                        if v.percent then
+                            formatted = math.Round(formatted * 100) .. "%"
+                        end
+                        self.loc_desc = string.Replace(self.loc_desc, replaced, formatted)
+                        ::cont::
+                    end
+                end
             else
                 self.loc_name = translate.Get("Item_" .. self.item.name) or self.item.name
                 self.loc_desc = translate.Get("Item_Desc_" .. self.item.name) or self.item.description
@@ -331,13 +344,16 @@ function PANEL:SetData(item)
     end
     if not self.item then return end
     if not self.item.class then
-        local subclass = HORDE.subclasses[LocalPlayer():Horde_GetSubclass(self.item.name)]
-        self.item.subclass = subclass
-        if subclass.BasePerk and self.item.base_perk ~= subclass.BasePerk then
-            self.item.base_perk = subclass.BasePerk
+        local subclass = HORDE.subclasses[MySelf:Horde_GetSubclass(self.item.name)]
+        if not subclass then
+            subclass = HORDE.subclasses[self.item.name]
         end
-        self.exp_diff = LocalPlayer():Horde_GetExp(self.item.subclass.PrintName)
-        self.exp_total = HORDE:GetExpToNextLevel(LocalPlayer():Horde_GetLevel(self.item.subclass.PrintName) + 1)
+
+        self.item.subclass = subclass
+        self.item.base_perk = subclass.BasePerk
+
+        self.exp_diff = MySelf:Horde_GetExp(self.item.subclass.PrintName)
+        self.exp_total = HORDE:GetExpToNextLevel(MySelf:Horde_GetLevel(self.item.subclass.PrintName) + 1)
         if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
         if not self.perk_scroll_panel then
             self.perk_scroll_panel = vgui.Create("DScrollPanel", self.perk_panel)
@@ -535,7 +551,7 @@ function PANEL:Paint()
                         local replaced = "{" .. i .. "}"
                         if not string.find(loc_perk_desc, replaced) then goto cont end
                         if v.level then
-                            v.value = math.min(v.max, (v.base or 0) + LocalPlayer():Horde_GetLevel(v.classname) * v.level)
+                            v.value = math.min(v.max, (v.base or 0) + MySelf:Horde_GetLevel(v.classname) * v.level)
                         end
                         local formatted = v.value
                         if v.percent then
@@ -545,7 +561,11 @@ function PANEL:Paint()
                         ::cont::
                     end
                 end
-                draw.DrawText(loc_perk_desc .. "\n\n" .. loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                if self.item.subclass.ParentClass then
+                    draw.DrawText(loc_perk_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                else
+                    draw.DrawText(loc_perk_desc .. "\n\n" .. loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                end
             else
                 draw.DrawText(loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             end
@@ -555,7 +575,7 @@ function PANEL:Paint()
             surface.DrawTexturedRect(self:GetWide() / 2 + string.len(loc_name) * 2 + 20, 28, 40, 40)
 
             self.class_progress.Paint = function()
-                draw.SimpleText(translate.Get("Rank_" .. LocalPlayer():Horde_GetRank(self.item.subclass.PrintName)) .. " " .. LocalPlayer():Horde_GetRankLevel(self.item.subclass.PrintName), "Content", 0, 5, color_white, TEXT_ALIGN_LEFT)
+                draw.SimpleText(translate.Get("Rank_" .. MySelf:Horde_GetRank(self.item.subclass.PrintName)) .. " " .. MySelf:Horde_GetRankLevel(self.item.subclass.PrintName), "Content", 0, 5, color_white, TEXT_ALIGN_LEFT)
                 draw.SimpleText(self.exp_diff .. " / "  .. self.exp_total, "Content", self:GetWide() - 10, 5, color_white, TEXT_ALIGN_RIGHT)
                 draw.RoundedBox(5, 5, 30, self:GetWide() - 20, 10, Color(80,80,80))
                 draw.RoundedBox(5, 5, 30, self:GetWide() * (self.exp_diff / self.exp_total), 10, Color(220,220,220))
@@ -610,7 +630,7 @@ function PANEL:Paint()
                 end
             end
             if self:IsUpgraded() then
-                draw.DrawText(self.loc_name .. " +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class)), "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+                draw.DrawText(self.loc_name .. " +" .. tostring(MySelf:Horde_GetUpgrade(self.item.class)), "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             else
                 draw.DrawText(self.loc_name, "Title", self:GetWide() / 2, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
             end
@@ -672,7 +692,7 @@ function PANEL:Paint()
             return
         end
 
-        if LocalPlayer():HasWeapon(self.item.class) or (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET and LocalPlayer():Horde_GetGadget() == self.item.class) then
+        if MySelf:HasWeapon(self.item.class) or (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET and MySelf:Horde_GetGadget() == self.item.class) then
             self.buy_btn:SetTextColor(Color(255,255,255))
             self.buy_btn:SetText("OWNED")
             self.buy_btn.Paint = function ()
@@ -720,10 +740,10 @@ function PANEL:Paint()
                         surface.DrawRect(0, 0, self:GetWide(), 200)
                     end
                 else
-                    if self.is_special_weapon_item and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 then
+                    if self.is_special_weapon_item and MySelf:Horde_GetUpgrade(self.item.class) < 10 then
                         self.ammo_one_btn:SetTextColor(Color(255,255,255))
                         local price = HORDE:GetUpgradePrice(self.item.class)
-                        self.ammo_one_btn:SetText("Upgrade to +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
+                        self.ammo_one_btn:SetText("Upgrade to +" .. tostring(MySelf:Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
                         self.ammo_one_btn:SetWide(self:GetWide())
                         self.ammo_one_btn.Paint = function ()
                             surface.SetDrawColor(Color(153,50,204))
@@ -743,7 +763,7 @@ function PANEL:Paint()
                         self.upgrade_btn:SetVisible(true)
                         self.upgrade_btn:SetTextColor(Color(255,255,255))
                         local price = HORDE:GetUpgradePrice(self.item.class)
-                        self.upgrade_btn:SetText("Upgrade to +" .. tostring(LocalPlayer():Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
+                        self.upgrade_btn:SetText("Upgrade to +" .. tostring(MySelf:Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
                         self.upgrade_btn:SetWide(self:GetWide())
                         self.upgrade_btn.Paint = function ()
                             surface.SetDrawColor(Color(153,50,204))
@@ -756,12 +776,12 @@ function PANEL:Paint()
 
                 self.current_ammo_panel.Paint = function ()
                     if not self.item then return end
-                    local wpn = LocalPlayer():GetWeapon(self.item.class)
+                    local wpn = MySelf:GetWeapon(self.item.class)
                     local clip_ammo = wpn:Clip1()
-                    local total_ammo = LocalPlayer():GetAmmoCount(wpn:GetPrimaryAmmoType())
+                    local total_ammo = MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())
                     if wpn:GetSecondaryAmmoType() > 0 then
                         local clip_ammo2 = wpn:Clip2()
-                        local total_ammo2 = LocalPlayer():GetAmmoCount(wpn:GetSecondaryAmmoType())
+                        local total_ammo2 = MySelf:GetAmmoCount(wpn:GetSecondaryAmmoType())
                         draw.SimpleText(translate.Get("Shop_Primary_Ammo") .. ": " .. tonumber(clip_ammo) .. " / " .. tonumber(total_ammo) .. " | " .. translate.Get("Shop_Secondary_Ammo") .. ": " .. tonumber(total_ammo2), "Content", self:GetWide()/2, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                     else
                         draw.SimpleText(translate.Get("Shop_Primary_Ammo") .. ": " .. tonumber(clip_ammo) .. " / " .. tonumber(total_ammo), "Content", self:GetWide()/2, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -816,12 +836,12 @@ function PANEL:Paint()
             self.current_ammo_panel.Paint = function () end
             self.sell_btn:SetVisible(false)
             self.upgrade_btn:SetVisible(false)
-        elseif LocalPlayer():Horde_GetMoney() < self.item.price or LocalPlayer():Horde_GetWeight() < self.item.weight or (not LocalPlayer():Alive()) then
+        elseif MySelf:Horde_GetMoney() < self.item.price or MySelf:Horde_GetWeight() < self.item.weight or (not MySelf:Alive()) then
             self.buy_btn:SetTextColor(Color(200,200,200))
-            if not LocalPlayer():Alive() then
+            if not MySelf:Alive() then
                 self.buy_btn:SetText("You are dead.")
             else
-                self.buy_btn:SetText("Not Enough Money or Carrying Capacity!")
+                self.buy_btn:SetText(translate.Get("Shop_Not_Enough_Money_Or_Carrying_Capacity"))
             end
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
@@ -833,7 +853,7 @@ function PANEL:Paint()
             self.upgrade_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
-                local drop_entities = LocalPlayer():Horde_GetDropEntities()
+                local drop_entities = MySelf:Horde_GetDropEntities()
                 if drop_entities[self.item.class] then
                     self.sell_btn:SetVisible(true)
                     self.sell_btn:SetTextColor(Color(255,255,255))
@@ -851,7 +871,7 @@ function PANEL:Paint()
         else
             self.buy_btn:SetText(translate.Get("Shop_Buy_Item"))
             if self.item.entity_properties and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
-                local drop_entities = LocalPlayer():Horde_GetDropEntities()
+                local drop_entities = MySelf:Horde_GetDropEntities()
                 if drop_entities[self.item.class] then
                     self.buy_btn:SetText(translate.Get("Shop_Buy_Item") .. " " .. drop_entities[self.item.class] .. "/" .. self.item.entity_properties.limit)
                     self.sell_btn:SetVisible(true)
@@ -889,14 +909,14 @@ function PANEL:Paint()
 end
 
 function PANEL:IsUpgraded()
-    return LocalPlayer():HasWeapon(self.item.class) and
-    ((LocalPlayer():Horde_GetCurrentSubclass() == "Gunslinger" and self.item.category == "Pistol")
+    return MySelf:HasWeapon(self.item.class) and
+    ((MySelf:Horde_GetCurrentSubclass() == "Gunslinger" and self.item.category == "Pistol")
     or self.is_special_weapon_item)
 end
 
 function PANEL:IsUpgradable()
-    return LocalPlayer():HasWeapon(self.item.class) and LocalPlayer():Horde_GetUpgrade(self.item.class) < 10 and
-    ((LocalPlayer():Horde_GetCurrentSubclass() == "Gunslinger" and self.item.category == "Pistol")
+    return MySelf:HasWeapon(self.item.class) and MySelf:Horde_GetUpgrade(self.item.class) < 10 and
+    ((MySelf:Horde_GetCurrentSubclass() == "Gunslinger" and self.item.category == "Pistol")
     or self.is_special_weapon_item)
 end
 
