@@ -422,6 +422,10 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 -- Give entity
                 if GetConVar("horde_default_item_config"):GetInt() == 1 and class == "item_battery" then
                     -- Prevent distribution of batteries.
+                   if ply:Armor() >= ply:GetMaxArmor() then return end
+                end
+				if GetConVar("horde_shop_battery_drop_disabled"):GetInt() == 1 and class == "item_battery" then
+                    -- Prevent distribution of batteries.
                     if ply:Armor() >= ply:GetMaxArmor() then return end
                 end
                 ply:Horde_AddMoney(-price)
