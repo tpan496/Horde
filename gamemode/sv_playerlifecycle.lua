@@ -430,14 +430,18 @@ function HORDE:PlayerInit(ply)
     ply:Horde_SyncExp()
     for _, other_ply in pairs(player.GetAll()) do
         if other_ply == ply then goto cont end
-        for name, class in pairs(HORDE.classes) do
-            net.Start("Horde_SyncExp")
-                net.WriteEntity(other_ply)
-                net.WriteUInt(class.order, 4)
-                net.WriteUInt(other_ply:Horde_GetExp(name), 32)
-                net.WriteUInt(other_ply:Horde_GetLevel(name), 8)
-            net.Send(ply)
-        end
+        local subclass = other_ply:Horde_GetCurrentSubclass()
+        net.Start("Horde_SyncExp")
+            net.WriteEntity(other_ply)
+            net.WriteString(subclass)
+            net.WriteUInt(other_ply:Horde_GetExp(subclass), 32)
+            net.WriteUInt(other_ply:Horde_GetLevel(subclass), 8)
+        net.Send(ply)
+
+        net.Start("Horde_SyncPerk")
+            net.WriteEntity(other_ply)
+            net.WriteTable(other_ply.Horde_PerkChoices[subclass])
+        net.Send(ply)
         ::cont::
     end
     net.Start("Horde_SyncClientExps")
@@ -711,6 +715,7 @@ function HORDE:CheckAlivePlayers()
         HORDE:GameEnd("DEFEAT")
     end
 end
+
 
 hook.Add("PlayerDeathThink", "Horde_PlayerDeathThink", function (ply)
     --if GetConVarNumber("horde_enable_respawn") == 1 then return true end

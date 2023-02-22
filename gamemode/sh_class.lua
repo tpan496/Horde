@@ -327,16 +327,6 @@ if CLIENT then
             HORDE.order_to_class_name[c.order] = name
         end
         local class = MySelf:Horde_GetCurrentSubclass() or HORDE.Class_Survivor
-        HORDE:SendSavedPerkChoices(class)
-
-        local f = file.Read("horde/class_choices.txt", "DATA")
-        if HORDE.subclasses_to_classes[f] then
-            f = HORDE.subclasses_to_classes[f]
-        end
-
-        if f then
-            HORDE:SendSavedPerkChoices(f)
-        end
     end)
 
     net.Receive("Horde_SyncSubclassUnlocks", function ()
@@ -597,10 +587,20 @@ hook.Add("InitPostEntity", "Horde_PlayerInit", function()
             if not HORDE.subclasses[class] then
                 class = HORDE.Class_Survivor
             end
+            local f2 = file.Read("horde/class_choices.txt", "DATA")
+            if HORDE.subclasses_to_classes[f2] then
+                f2 = HORDE.subclasses_to_classes[f2]
+            end
+
+            if f2 then
+                HORDE:SendSavedPerkChoices(f2)
+            else
+                HORDE:SendSavedPerkChoices(class)
+            end
+
             net.Start("Horde_InitClass")
             net.WriteString(class)
             net.SendToServer()
-            --HORDE:SendSavedPerkChoices(class)
         end
         net.Start("Horde_PlayerInit")
         net.SendToServer()
@@ -611,8 +611,4 @@ net.Receive("Horde_SubclassUnlocked", function ()
     local subclass = net.ReadString()
     MySelf:Horde_SetSubclassUnlocked(subclass, true)
 end)
-end
-
-if SERVER then
-    
 end

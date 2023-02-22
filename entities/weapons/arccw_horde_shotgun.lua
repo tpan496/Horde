@@ -24,6 +24,11 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.ViewModelFOV = 60
+SWEP.WorldModelOffset = {
+    pos = Vector(-20, 10, -10),
+    ang = Angle(0, 0, 180),
+    scale = 1
+}
 
 SWEP.DefaultBodygroups = "000000000000"
 
@@ -100,6 +105,7 @@ SWEP.IronSightStruct = {
     CrosshairInSights = false
 }
 
+SWEP.Holdtype = "shotgun"
 SWEP.HoldtypeHolstered = "passive"
 SWEP.HoldtypeActive = "shotgun"
 SWEP.HoldtypeSights = "shotgun"
@@ -139,7 +145,7 @@ SWEP.Attachments = {
 
 SWEP.Animations = {
     ["idle"] = {
-        Source = "idle01",
+        Source = "idle1",
     },
     ["draw"] = {
         Source = "draw",
@@ -147,7 +153,6 @@ SWEP.Animations = {
     },
     ["fire"] = {
         Source = "fire",
-        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN,
         Time = 1,
     },
     ["cycle"] = {

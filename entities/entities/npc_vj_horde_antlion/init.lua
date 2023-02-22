@@ -411,42 +411,6 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
     end
 end
 
-local finishAttack = {
-	[VJ_ATTACK_MELEE] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_melee_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Melee, self.NextAnyAttackTime_Melee_DoRand, self.TimeUntilMeleeAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
-				self:StopAttacks()
-				self:DoChaseAnimation()
-			end)
-		end
-		timer.Create("timer_melee_finished_abletomelee"..self:EntIndex(), self:DecideAttackTimer(self.NextMeleeAttackTime, self.NextMeleeAttackTime_DoRand), 1, function()
-			self.IsAbleToMeleeAttack = true
-		end)
-	end,
-	[VJ_ATTACK_RANGE] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_range_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Range, self.NextAnyAttackTime_Range_DoRand, self.TimeUntilRangeAttackProjectileRelease, self.CurrentAttackAnimationDuration), 1, function()
-				self:StopAttacks()
-				self:DoChaseAnimation()
-			end)
-		end
-		timer.Create("timer_range_finished_abletorange"..self:EntIndex(), self:DecideAttackTimer(self.NextRangeAttackTime, self.NextRangeAttackTime_DoRand), 1, function()
-			self.IsAbleToRangeAttack = true
-		end)
-	end,
-	[VJ_ATTACK_LEAP] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_leap_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Leap, self.NextAnyAttackTime_Leap_DoRand, self.TimeUntilLeapAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
-				self:StopAttacks()
-				self:DoChaseAnimation()
-			end)
-		end
-		timer.Create("timer_leap_finished_abletoleap"..self:EntIndex(), self:DecideAttackTimer(self.NextLeapAttackTime, self.NextLeapAttackTime_DoRand), 1, function()
-			self.IsAbleToLeapAttack = true
-		end)
-	end
-}
-
 function ENT:RangeAttackLocation(pos)
 	if self.Evolve_Stage == 4 then return end
 	local seed = CurTime(); self.CurAttackSeed = seed
