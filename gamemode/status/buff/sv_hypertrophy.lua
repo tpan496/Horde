@@ -3,12 +3,12 @@ local plymeta = FindMetaTable("Player")
 function plymeta:Horde_AddHypertrophyStack(override_max)
     if not override_max or self:Horde_GetMaxHypertrophyStack() > 0 then
         if self.Horde_HypertrophyStack < self:Horde_GetMaxHypertrophyStack() then
-            self:Horde_SetHealthRegenPercentage(self:Horde_GetHealthRegenPercentage() + 0.01)
+            self:Horde_SetHealthRegenPercentage(self:Horde_GetHealthRegenPercentage() + 0.02)
             self.Horde_HypertrophyStack = self.Horde_HypertrophyStack + 1
         end
     else
         if self.Horde_HypertrophyStack < 2 then
-            self:Horde_SetHealthRegenPercentage(self:Horde_GetHealthRegenPercentage() + 0.01)
+            self:Horde_SetHealthRegenPercentage(self:Horde_GetHealthRegenPercentage() + 0.02)
             self.Horde_HypertrophyStack = self.Horde_HypertrophyStack + 1
         end
     end
@@ -32,7 +32,7 @@ function plymeta:Horde_RemoveHypertrophyStack()
     if self.Horde_HypertrophyStack <= 0 then return end
     if self.Horde_HypertrophyStackAdded then return end
     self.Horde_HypertrophyStack = math.max(0, self.Horde_HypertrophyStack - 1)
-    self:Horde_SetHealthRegenPercentage(self:Horde_GetHealthRegenPercentage() - 0.01)
+    self:Horde_SetHealthRegenPercentage(self:Horde_GetHealthRegenPercentage() - 0.02)
     
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Hypertrophy, 8)

@@ -24,7 +24,9 @@ net.Receive("Horde_SyncEconomy", function(length)
     local ply = net.ReadEntity()
     local prev_money = ply.Horde_money or 0
     ply.Horde_money = net.ReadInt(32)
-    HORDE:PlayMoneyNotification(ply.Horde_money - prev_money, ply.Horde_money)
+    if MySelf == ply then
+        HORDE:PlayMoneyNotification(ply.Horde_money - prev_money, ply.Horde_money)
+    end
     ply.Horde_skull_tokens = net.ReadInt(32)
     ply.Horde_weight = net.ReadInt(32)
 

@@ -107,7 +107,7 @@ function ENT:Roar()
 end
 
 function ENT:CustomOnInitialize()
-	self:SetCollisionBounds(Vector(13, 13, 50), Vector(-13, -13, 0))
+	self:SetCollisionBounds(Vector(0, 0, 0), Vector(0, 0, 0))
 	self.AnimTbl_Run = ACT_RUN
     if self.properties.abyssal_might == true then
 		local id = self:GetCreationID()
@@ -309,6 +309,42 @@ function ENT:DoEntityRelationshipCheck()
 	if eneSeen == true then return true else return false end
 end
 
+local finishAttack = {
+	[VJ_ATTACK_MELEE] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_melee_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Melee, self.NextAnyAttackTime_Melee_DoRand, self.TimeUntilMeleeAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_melee_finished_abletomelee"..self:EntIndex(), self:DecideAttackTimer(self.NextMeleeAttackTime, self.NextMeleeAttackTime_DoRand), 1, function()
+			self.IsAbleToMeleeAttack = true
+		end)
+	end,
+	[VJ_ATTACK_RANGE] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_range_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Range, self.NextAnyAttackTime_Range_DoRand, self.TimeUntilRangeAttackProjectileRelease, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_range_finished_abletorange"..self:EntIndex(), self:DecideAttackTimer(self.NextRangeAttackTime, self.NextRangeAttackTime_DoRand), 1, function()
+			self.IsAbleToRangeAttack = true
+		end)
+	end,
+	[VJ_ATTACK_LEAP] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_leap_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Leap, self.NextAnyAttackTime_Leap_DoRand, self.TimeUntilLeapAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_leap_finished_abletoleap"..self:EntIndex(), self:DecideAttackTimer(self.NextLeapAttackTime, self.NextLeapAttackTime_DoRand), 1, function()
+			self.IsAbleToLeapAttack = true
+		end)
+	end
+}
+
 function ENT:MeleeAttackCode(isPropAttack, attackDist, customEnt)
 	if self.Dead == true or self.vACT_StopAttacks == true or self.Flinching == true or (self.StopMeleeAttackAfterFirstHit == true && self.AlreadyDoneMeleeAttackFirstHit == true) then return end
 	isPropAttack = isPropAttack or self.MeleeAttack_DoingPropAttack -- Is this a prop attack?
@@ -320,7 +356,7 @@ function ENT:MeleeAttackCode(isPropAttack, attackDist, customEnt)
 	local myPos = self:GetPos()
 	local hitRegistered = false
 	for _,v in pairs(ents.FindInSphere(self:SetMeleeAttackDamagePosition(), attackDist)) do
-		if v != self && v:GetClass() != self:GetClass() && (((v:IsNPC() or (v:IsPlayer() && v:Alive() && GetConVar("ai_ignoreplayers"):GetInt() == 0)) && self:Disposition(v) != D_LI) or v:GetClass() == "func_breakable_surf" or self.EntitiesToDestroyClass[v:GetClass()] or v.VJ_AddEntityToSNPCAttackList == true) && self:GetSightDirection():Dot((Vector(v:GetPos().x, v:GetPos().y, 0) - Vector(myPos.x, myPos.y, 0)):GetNormalized()) > math.cos(math.rad(self.MeleeAttackDamageAngleRadius)) then
+		if v != self && v:GetClass() != self:GetClass() && (((v:IsNPC() or (v:IsPlayer() && v:Alive() && GetConVar("ai_ignoreplayers"):GetInt() == 0)) && self:Disposition(v) != D_LI)) && self:GetSightDirection():Dot((Vector(v:GetPos().x, v:GetPos().y, 0) - Vector(myPos.x, myPos.y, 0)):GetNormalized()) > math.cos(math.rad(self.MeleeAttackDamageAngleRadius)) then
 			if isPropAttack == true && (v:IsPlayer() or v:IsNPC()) && self:VJ_GetNearestPointToEntityDistance(v) > self.MeleeAttackDistance then continue end //if (self:GetPos():Distance(v:GetPos()) <= self:VJ_GetNearestPointToEntityDistance(v) && self:VJ_GetNearestPointToEntityDistance(v) <= self.MeleeAttackDistance) == false then
 			if self:CustomOnMeleeAttack_AfterChecks(v, vProp) == true then continue end
 			-- Knockback
@@ -335,6 +371,7 @@ function ENT:MeleeAttackCode(isPropAttack, attackDist, customEnt)
             if v:IsNPC() or v:IsPlayer() then applyDmg:SetDamageForce(self:GetForward()*((applyDmg:GetDamage()+100)*70)) end
             applyDmg:SetInflictor(self)
             applyDmg:SetAttacker(self)
+			applyDmg:SetDamagePosition(v:GetPos())
             if self:GetNWEntity("HordeOwner"):IsValid() then
                 applyDmg:SetAttacker(self:GetNWEntity("HordeOwner"))
             end
@@ -349,18 +386,22 @@ function ENT:MeleeAttackCode(isPropAttack, attackDist, customEnt)
 			end
 		end
 	end
+	if self.AttackStatus < VJ_ATTACK_STATUS_EXECUTED then
+		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED
+		if self.TimeUntilMeleeAttackDamage != false then
+			finishAttack[VJ_ATTACK_MELEE](self)
+		end
+	end
 	if hitRegistered == true then
 		self:PlaySoundSystem("MeleeAttack")
-		if self.StopMeleeAttackAfterFirstHit == true then self.AlreadyDoneMeleeAttackFirstHit = true end
+		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED_HIT
 	else
 		self:CustomOnMeleeAttack_Miss()
-		if self.MeleeAttackWorldShakeOnMiss == true then util.ScreenShake(myPos,self.MeleeAttackWorldShakeOnMissAmplitude,self.MeleeAttackWorldShakeOnMissFrequency,self.MeleeAttackWorldShakeOnMissDuration,self.MeleeAttackWorldShakeOnMissRadius) end
+		-- !!!!!!!!!!!!!! DO NOT USE THESE !!!!!!!!!!!!!! [Backwards Compatibility!]
+		if self.MeleeAttackWorldShakeOnMiss then util.ScreenShake(myPos, self.MeleeAttackWorldShakeOnMissAmplitude or 16, 100, self.MeleeAttackWorldShakeOnMissDuration or 1, self.MeleeAttackWorldShakeOnMissRadius or 2000) end
+		-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		self:PlaySoundSystem("MeleeAttackMiss", {}, VJ_EmitSound)
 	end
-	if self.AlreadyDoneFirstMeleeAttack == false && self.TimeUntilMeleeAttackDamage != false then
-		self:MeleeAttackCode_DoFinishTimers()
-	end
-	self.AlreadyDoneFirstMeleeAttack = true
 end
 
 VJ.AddNPC("Spectre","npc_vj_horde_spectre", "Horde")
