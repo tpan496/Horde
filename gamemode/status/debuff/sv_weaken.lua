@@ -6,7 +6,7 @@ function entmeta:Horde_AddWeaken(inflictor, duration, more)
         self:Horde_RemoveWeaken()
     end)
     if not self.Horde_Weaken then
-        hook.Run("Horde_PostEnemyDebuffApply", self, inflictor, HORDE.Status_Weakened, self:GetPos())
+        hook.Run("Horde_PostEnemyDebuffApply", self, inflictor, HORDE.Status_Weaken, self:GetPos())
     end
     self.Horde_Weaken = math.max(1, 1 * more)
 end

@@ -102,6 +102,26 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
     if hitEnt and IsValid(hitEnt) and hitEnt:IsPlayer() then
         self:UnRage()
         hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 30, self)
+    elseif not self.Raging then
+        -- Reset rage timer if not raging and hitting
+        local id = self:GetCreationID()
+        timer.Remove("Horde_FlayerRage" .. id)
+        timer.Create("Horde_FlayerRage" .. id, 10, 1, function ()
+            if not IsValid(self) then return end
+            self:Rage()
+        end)
+    end
+end
+
+function ENT:CustomOnMeleeAttack_Miss()
+    if not self.Raging then
+        -- Reset rage timer if not raging and hitting
+        local id = self:GetCreationID()
+        timer.Remove("Horde_FlayerRage" .. id)
+        timer.Create("Horde_FlayerRage" .. id, 10, 1, function ()
+            if not IsValid(self) then return end
+            self:Rage()
+        end)
     end
 end
 

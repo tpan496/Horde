@@ -443,6 +443,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
 end)
 
 function HORDE:PlayMoneyNotification(diff, money)
+    if GetConVarNumber("horde_enable_ammo_gui") == 0 then return end
     if diff == 0 then return end
     local color = HORDE.color_crimson_dark
     local text = diff
