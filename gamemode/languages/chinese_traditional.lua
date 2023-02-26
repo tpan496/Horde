@@ -296,13 +296,13 @@ LANGUAGE["Class_Description_Cremator"] = [[
 -- Default Base Perks
 LANGUAGE["Perk_survivor_base"] = [[
 倖存者擁有最大的武器池，從而可以彌補團隊中所缺的任何角色。
-複雜度：簡單
+難度：簡單
 
 無額外特性。]]
 
 LANGUAGE["Perk_assault_base"] = [[
 突擊兵擁有出色的移動力和穩定的輸出，從而能應對任何場景。
-複雜度：簡單
+難度：簡單
 
 提升 {1} 移動速度。（每級提升 {2}，最多至 {3}）。
 
@@ -311,14 +311,14 @@ LANGUAGE["Perk_assault_base"] = [[
 
 LANGUAGE["Perk_heavy_base"] = [[
 重裝兵擁有高超的護甲防禦機制，同時能使用重武器對敵人造成火力壓制。
-複雜度：簡單
+難度：簡單
 
 每秒恢復 {1} 點護甲。
 護甲回復上限為 {2}。（基礎{3} + 每級提升 {4}，最多至 {5}）。]]
 
 LANGUAGE["Perk_medic_base"] = [[
 醫療兵擁有強大的生命恢復能力，同時能為隊友提供治療以及各種增益效果。
-複雜度：中等
+難度：中等
 
 提升 {1} 治療量。（每級提升 {2}，最多至 {3}）。
 
@@ -326,7 +326,7 @@ LANGUAGE["Perk_medic_base"] = [[
 
 LANGUAGE["Perk_demolition_base"] = [[
 爆破兵擁有強大的範圍性輸出。根據技能的選擇，爆破兵也能提供超群的單體輸出能力。
-複雜度：中等
+難度：中等
 
 提升 {1} 爆炸傷害抗性。（基礎 {2} + 每級提升 {3}，最多至 {4}）。
 
@@ -334,7 +334,7 @@ LANGUAGE["Perk_demolition_base"] = [[
 
 LANGUAGE["Perk_ghost_base"] = [[
 幻影是一個圍繞著精準度和「迷彩」機制的職業。使用恰當的話，幻影可以提供無以匹敵的單體輸出。
-複雜度：困難
+難度：困難
 
 {1} 更多爆頭傷害。（每級提升 {2}，最多至 {3}）。
 
@@ -343,7 +343,7 @@ LANGUAGE["Perk_ghost_base"] = [[
 
 LANGUAGE["Perk_engineer_base"] = [[
 工程師是一個圍繞著召喚物的職業。召喚物能有效地進行區域性防守並且為隊友提供掩護。
-複雜度：中等
+難度：中等
 
 提升 {1} 召喚物傷害。（每級提升 {2}，最多至 {3}）。
 
@@ -351,7 +351,7 @@ LANGUAGE["Perk_engineer_base"] = [[
 
 LANGUAGE["Perk_berserker_base"] = [[
 狂戰士是近距離格鬥專家。
-複雜度：困難
+難度：困難
 
 提升 {1} 所有傷害抗性。（每級提升 {2}，最多至 {3}）。
 提升 {4} 近戰傷害。（每級提升 {5}，最多至 {6}）。
@@ -360,7 +360,7 @@ LANGUAGE["Perk_berserker_base"] = [[
 
 LANGUAGE["Perk_warden_base"] = [[
 守望者是是一個使用自身光環和建築來為隊友提供各種有利效果的輔助職業。
-複雜度：中等
+難度：中等
 
 提升 {1} 「守望光環」半徑。（每級提升 {2}，最多至 {3}）。
 
@@ -369,7 +369,7 @@ LANGUAGE["Perk_warden_base"] = [[
 
 LANGUAGE["Perk_cremator_base"] = [[
 火焰兵使用火焰傷害進行進攻和防禦。
-複雜度：簡單
+難度：簡單
 
 提升 {1} 火焰傷害抗性。（基礎 {2} + 每級提升 {3}，最多至 {4}）。
 
@@ -786,7 +786,7 @@ LANGUAGE["Perk_cremator_incineration"] = [[
 
 -- Default Perks: Psycho
 LANGUAGE["Perk_psycho_base"] = [[
-難度：中
+難度：中等
 
 +{1} 暴擊率。(基礎 {2} + 每級提升 {3}，最多至 {4})。
 暴擊造成 {5} 更多傷害。
@@ -845,7 +845,7 @@ LANGUAGE["Perk_psycho_bestial_wrath"] = [[
 
 -- Default Perks: Carcass
 LANGUAGE["Perk_carcass_base"] = [[
-難度：高
+難度：困難
 
 提升 {1} 最大生命值。(每級提升 {2}，最多至 {3})。
 
@@ -913,7 +913,7 @@ LANGUAGE["Perk_carcass_aas_perfume"] = [[
 
 -- Default Perks: Hatcher
 LANGUAGE["Perk_hatcher_base"] = [[
-難度：高
+難度：困難
 
 提升 {1} 蟻獅進化速度。(每級提升 {2}，最多至 {3})。
 提升 {1} 毒素傷害。(每級提升 {2}，最多至 {3})。
@@ -1018,7 +1018,7 @@ LANGUAGE["Perk_artificer_base"] = [[
 
 -- Default Perks: Samurai
 LANGUAGE["Perk_samurai_base"] = [[
-難度: 高
+難度：困難
 近戰傷害造成 {1} 武器基礎傷害的出血累計值。 (基礎 {2} + 每級提升 {3}，最多至 {4})。
 提升 {5} 全局傷害抗性。 (每級提升 {6}，最多至 {7})。
 
