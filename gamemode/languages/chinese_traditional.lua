@@ -7,7 +7,6 @@ HORDE Translation Guideline
 increase vs. more: these two descriptions are DIFFERENT!
 resistance vs. less damage taken: same as above.
 5. Translate AS IS.
-Transalted by Evilblue210
 --]]
 
 translate.AddLanguage("zh-TW", "Chinese Traditional")
@@ -15,6 +14,7 @@ translate.AddLanguage("zh-TW", "Chinese Traditional")
 LANGUAGE["Default_Font_Scale"] = 1.20
 
 -- Game Info
+LANGUAGE["Game_Preparing..."] = "準備中..."
 LANGUAGE["Game_Ready"] = "    準備"
 LANGUAGE["Game_Not Ready"] = "    未準備"
 LANGUAGE["Game_Players_Ready"] = "等待玩家"
@@ -62,7 +62,18 @@ LANGUAGE["Rank_Master"] = "宗師"
 LANGUAGE["Rank_Not_Met"] = "未達等級需求"
 
 
+-- Scoreboard
+LANGUAGE["Scoreboard_Name"] = "玩家"
+LANGUAGE["Scoreboard_Class"] = "職業"
+LANGUAGE["Scoreboard_Perks"] = "技能"
+LANGUAGE["Scoreboard_Gadget"] = "配件"
+LANGUAGE["Scoreboard_Money"] = "金錢"
+LANGUAGE["Scoreboard_Kill"] = "擊殺"
+LANGUAGE["Scoreboard_Death"] = "死亡"
+LANGUAGE["Scoreboard_Ping"] = "延遲"
+
 -- Shop
+LANGUAGE["Shop_Not_Enough_Money_Or_Carrying_Capacity"] = "沒有足夠的金錢或負重來購買當前物品！"
 -- Categories
 LANGUAGE["Shop_Class"] = "職業"
 LANGUAGE["Shop_Cash"] = "金錢"
@@ -106,6 +117,8 @@ LANGUAGE["Shop_Primary_Ammo"] = "主要彈藥"
 LANGUAGE["Shop_Secondary_Ammo"] = "次要彈藥"
 
 -- Infusions
+LANGUAGE["Game_Infusion"] = "變質"
+LANGUAGE["Game_Infused"] = "已嵌入"
 LANGUAGE["Infusion"] = "變質"
 LANGUAGE["Infusion_Hemo"] = "出血"
 LANGUAGE["Infusion_Concussive"] = "笨重"
@@ -121,6 +134,99 @@ LANGUAGE["Infusion_Siphoning"] = "汲取"
 LANGUAGE["Infusion_Titanium"] = "白金"
 LANGUAGE["Infusion_Chrono"] = "時間"
 LANGUAGE["Infusion_Ruination"] = "毀滅"
+
+LANGUAGE["Infusion_Description_Hemo"] = [[
+轉換 75% 武器傷害為利器傷害。
+
+武器只能造成利器傷害。
+
+武器傷害對敵人累積出血值。
+]]
+LANGUAGE["Infusion_Description_Concussive"] = [[
+轉換 75% 武器傷害為鈍器傷害。
+
+武器只能造成鈍器傷害。
+
+武器傷害對敵人累積眩暈值。
+]]
+LANGUAGE["Infusion_Description_Septic"] = [[
+轉換 75% 武器傷害為毒素傷害。
+
+武器只能造成劇毒傷害。
+
+武器傷害對敵人累積毒爆值。
+]]
+LANGUAGE["Infusion_Description_Flaming"] = [[
+轉換 75% 武器傷害為火焰傷害。
+
+武器只能造成火焰傷害。
+]]
+LANGUAGE["Infusion_Description_Arctic"] = [[
+轉換 75% 武器傷害為寒冰傷害。
+
+武器只能造成寒冰傷害。
+
+武器傷害對敵人累積霜凍值。
+]]
+LANGUAGE["Infusion_Description_Galvanizing"] = [[
+轉換 75% 武器傷害為雷電傷害。
+
+武器只能造成雷電傷害。
+
+武器傷害對敵人累積感電值。
+]]
+LANGUAGE["Infusion_Description_Quality"] = [[
+提升 20% 武器傷害。
+
+武器無法獲得職業技能帶來的任何效果和傷害提升！
+]]
+LANGUAGE["Infusion_Description_Impaling"] = [[
+提升 25% 武器爆頭傷害。
+
+減少 25% 武器非爆頭傷害。
+]]
+LANGUAGE["Infusion_Description_Rejuvenating"] = [[
+提升 25% 生命恢復/汲取。
+
+減少 25% 武器傷害。
+]]
+LANGUAGE["Infusion_Description_Quicksilver"] = [[
+根據玩家的身上負重提升/減少武器傷害。
+玩家身上的裝備越少，傷害提升越高。
+
+<= 15% 負重 -> 30% 傷害提升
+<= 30% 負重 -> 25% 傷害提升 
+<= 40% 負重 -> 15% 傷害提升 
+  >40% 負重 -> 25% 傷害減少
+]]
+LANGUAGE["Infusion_Description_Titanium"] = [[
+根據當前武器重量減少玩家受到的傷害。
+
+每 1 負重，減少 1% 受到的傷害。
+
+減少 25% 武器傷害。
+]]
+LANGUAGE["Infusion_Description_Siphoning"] = [[
+每殺死一個敵人恢復 1 生命值。
+
+減少 25% 武器傷害。
+]]
+LANGUAGE["Infusion_Description_Chrono"] = [[
+根據玩家持有武器的時間提升武器傷害。
+
+每一回合持有當前武器，提升 6% 武器傷害。
+
+武器傷害提升最多為 50%。
+
+減少 20% 武器傷害。
+]]
+LANGUAGE["Infusion_Description_Ruination"] = [[
+根據玩家當前的即死累積值提升武器傷害。
+
+每 10 即死累計值，提升 5% 武器傷害。
+
+持有當前武器時，每秒玩家會獲得 10 即死累計值。
+]]
 
 -- Classes
 LANGUAGE["Class_Survivor"] = "倖存者"
@@ -140,6 +246,20 @@ LANGUAGE["Gadget_Cooldown"] = "冷卻時間"
 LANGUAGE["Gadget_Duration"] = "持續時間"
 LANGUAGE["Gadget_Owned_Warning"] = "只能擁有 1 個器具！"
 LANGUAGE["Gadget_Seconds"] = "秒"
+
+
+-- Subclasses
+LANGUAGE["Class_Change_Subclass"] = "變更附屬職業"
+LANGUAGE["Class_Psycho"] = "暴徒"
+LANGUAGE["Class_SpecOps"] = "特種兵"
+LANGUAGE["Class_Carcass"] = "殘骸"
+LANGUAGE["Class_Hatcher"] = "孵化者"
+LANGUAGE["Class_Warlock"] = "術士"
+LANGUAGE["Class_Gunslinger"] = "神槍手"
+LANGUAGE["Class_Necromancer"] = "死靈法師"
+LANGUAGE["Class_Samurai"] = "武士"
+LANGUAGE["Class_???"] = "???"
+LANGUAGE["Class_Artificer"] = "信仰者"
 
 -- Default Class Extra Descriptions
 LANGUAGE["Class_Description_Survivor"] = [[
@@ -176,13 +296,13 @@ LANGUAGE["Class_Description_Cremator"] = [[
 -- Default Base Perks
 LANGUAGE["Perk_survivor_base"] = [[
 倖存者擁有最大的武器池，從而可以彌補團隊中所缺的任何角色。
-複雜度：簡單
+難度：簡單
 
 無額外特性。]]
 
 LANGUAGE["Perk_assault_base"] = [[
 突擊兵擁有出色的移動力和穩定的輸出，從而能應對任何場景。
-複雜度：簡單
+難度：簡單
 
 提升 {1} 移動速度。（每級提升 {2}，最多至 {3}）。
 
@@ -191,14 +311,14 @@ LANGUAGE["Perk_assault_base"] = [[
 
 LANGUAGE["Perk_heavy_base"] = [[
 重裝兵擁有高超的護甲防禦機制，同時能使用重武器對敵人造成火力壓制。
-複雜度：簡單
+難度：簡單
 
 每秒恢復 {1} 點護甲。
 護甲回復上限為 {2}。（基礎{3} + 每級提升 {4}，最多至 {5}）。]]
 
 LANGUAGE["Perk_medic_base"] = [[
 醫療兵擁有強大的生命恢復能力，同時能為隊友提供治療以及各種增益效果。
-複雜度：中等
+難度：中等
 
 提升 {1} 治療量。（每級提升 {2}，最多至 {3}）。
 
@@ -206,7 +326,7 @@ LANGUAGE["Perk_medic_base"] = [[
 
 LANGUAGE["Perk_demolition_base"] = [[
 爆破兵擁有強大的範圍性輸出。根據技能的選擇，爆破兵也能提供超群的單體輸出能力。
-複雜度：中等
+難度：中等
 
 提升 {1} 爆炸傷害抗性。（基礎 {2} + 每級提升 {3}，最多至 {4}）。
 
@@ -214,7 +334,7 @@ LANGUAGE["Perk_demolition_base"] = [[
 
 LANGUAGE["Perk_ghost_base"] = [[
 幻影是一個圍繞著精準度和「迷彩」機制的職業。使用恰當的話，幻影可以提供無以匹敵的單體輸出。
-複雜度：困難
+難度：困難
 
 {1} 更多爆頭傷害。（每級提升 {2}，最多至 {3}）。
 
@@ -223,7 +343,7 @@ LANGUAGE["Perk_ghost_base"] = [[
 
 LANGUAGE["Perk_engineer_base"] = [[
 工程師是一個圍繞著召喚物的職業。召喚物能有效地進行區域性防守並且為隊友提供掩護。
-複雜度：中等
+難度：中等
 
 提升 {1} 召喚物傷害。（每級提升 {2}，最多至 {3}）。
 
@@ -231,7 +351,7 @@ LANGUAGE["Perk_engineer_base"] = [[
 
 LANGUAGE["Perk_berserker_base"] = [[
 狂戰士是近距離格鬥專家。
-複雜度：困難
+難度：困難
 
 提升 {1} 所有傷害抗性。（每級提升 {2}，最多至 {3}）。
 提升 {4} 近戰傷害。（每級提升 {5}，最多至 {6}）。
@@ -240,7 +360,7 @@ LANGUAGE["Perk_berserker_base"] = [[
 
 LANGUAGE["Perk_warden_base"] = [[
 守望者是是一個使用自身光環和建築來為隊友提供各種有利效果的輔助職業。
-複雜度：中等
+難度：中等
 
 提升 {1} 「守望光環」半徑。（每級提升 {2}，最多至 {3}）。
 
@@ -249,7 +369,7 @@ LANGUAGE["Perk_warden_base"] = [[
 
 LANGUAGE["Perk_cremator_base"] = [[
 火焰兵使用火焰傷害進行進攻和防禦。
-複雜度：簡單
+難度：簡單
 
 提升 {1} 火焰傷害抗性。（基礎 {2} + 每級提升 {3}，最多至 {4}）。
 
@@ -289,8 +409,8 @@ LANGUAGE["Perk_Title_Assault_Tier_3"] = [[進攻]]
 LANGUAGE["Perk_Title_assault_cardiac_resonance"] = [[心室共鳴]]
 LANGUAGE["Perk_assault_cardiac_resonance"] = [[
 每次擊殺敵人後，
-附近玩家獲得 {1} 「腎上腺素」, 最多至 {2}.
-「腎上腺素」最大堆疊次數 +{3}.]]
+附近玩家獲得 {1} 「腎上腺素」，最多至 {2}。
+「腎上腺素」最大堆疊次數 +{3}。]]
 
 LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[心臟過載]]
 LANGUAGE["Perk_assault_cardiac_overload"] = [[
@@ -327,7 +447,7 @@ LANGUAGE["Perk_heavy_repair_catalyst"] = [[
 
 LANGUAGE["Perk_Title_heavy_floating_carrier"] = [[懸浮倉]]
 LANGUAGE["Perk_heavy_floating_carrier"] = [[
-+5 最大負重.]]
++5 最大負重。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[護甲強化]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[流體裝甲]]
@@ -343,7 +463,7 @@ LANGUAGE["Perk_heavy_reactive_armor"] = [[
 LANGUAGE["Perk_Title_Heavy_Tier_4"] = [[先進科技]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[納米機器]]
 LANGUAGE["Perk_heavy_nanomachine"] = [[
-提升 {1} 護甲值恢復速度.]]
+提升 {1} 護甲值恢復速度。]]
 
 LANGUAGE["Perk_Title_heavy_ballistic_shock"] = [[彈道衝擊]]
 LANGUAGE["Perk_heavy_ballistic_shock"] = [[
@@ -546,22 +666,22 @@ LANGUAGE["Perk_berserker_bloodlust"] = [[
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[技巧]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[劍舞]]
 LANGUAGE["Perk_berserker_bushido"] = [[
-提升 {1} 利器傷害。
+近戰爆頭傷害提升敵人眩暈值。
 提升 {2} 移動速度。]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[殘暴]]
 LANGUAGE["Perk_berserker_savagery"] = [[
-提升 {1} 鈍器傷害。
+提升 {1} 近戰傷害。
 提升 {2} 最大生命值。]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[格擋]]
-LANGUAGE["Perk_Title_berserker_graceful_guard"] = [[Graceful Guard]]
+LANGUAGE["Perk_Title_berserker_graceful_guard"] = [[優雅護衛]]
 LANGUAGE["Perk_berserker_graceful_guard"] = [[
 空中格擋成功後：
   - 移除所有的異常狀態和異常狀態累計值。
   - 恢復 {1} 生命值。]]
 
-LANGUAGE["Perk_Title_berserker_unwavering_guard"] = [[Unwavering Guard]]
+LANGUAGE["Perk_Title_berserker_unwavering_guard"] = [[堅定護衛]]
 LANGUAGE["Perk_berserker_unwavering_guard"] = [[
 空中格擋成功後：
   - 提升 {1} 物理傷害，持續 {3} 秒。
@@ -664,10 +784,300 @@ LANGUAGE["Perk_Title_cremator_incineration"] = [[燃燒殆盡]]
 LANGUAGE["Perk_cremator_incineration"] = [[
 提升 {1} 引燃傷害。]]
 
+-- Default Perks: Psycho
+LANGUAGE["Perk_psycho_base"] = [[
+難度：中等
+
++{1} 暴擊率。(基礎 {2} + 每級提升 {3}，最多至 {4})。
+暴擊造成 {5} 更多傷害。
+
+按 F 進入狂暴模式。
+狂暴模式中，玩家會持續失去生命值，但不會致死。
+狂暴模式中，提升 {6} 暴擊機率。
+狂暴模式中，提升 {7} 生命恢復值。]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_1"] = [[暴行]]
+LANGUAGE["Perk_Title_psycho_ferocity"] = [[迅猛]]
+LANGUAGE["Perk_psycho_ferocity"] = [[
++{1} 暴擊率。
++{2} 近戰暴擊率。]]
+
+LANGUAGE["Perk_Title_psycho_savor"] = [[品嘗]]
+LANGUAGE["Perk_psycho_savor"] = [[
+提升 {1} 暴擊傷害。
+吸收 {2} 暴擊傷害為生命值。
+每次最多吸收 10 生命值。]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_2"] = [[虐待狂]]
+LANGUAGE["Perk_Title_psycho_bloodbath"] = [[血浴]]
+LANGUAGE["Perk_psycho_bloodbath"] = [[
++{1} 暴擊率。
+每次暴擊恢復 1 生命值。]]
+
+LANGUAGE["Perk_Title_psycho_disembowel"] = [[肢解]]
+LANGUAGE["Perk_psycho_disembowel"] = [[
+提升 {1} 暴擊傷害。
+近戰暴擊傷害移除屍爆變異。]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_3"] = [[致命一擊]]
+LANGUAGE["Perk_Title_psycho_skewering"] = [[穿刺]]
+LANGUAGE["Perk_psycho_skewering"] = [[
+擊中敵人頭部使其陷入穿刺異常狀態。
+玩家對穿刺狀態下敵人攻擊時，獲得 +{1} 暴擊率。]]
+
+LANGUAGE["Perk_Title_psycho_brutality"] = [[殘暴]]
+LANGUAGE["Perk_psycho_brutality"] = [[
+近戰擊中敵人獲得殘暴增益效果。可疊加。
+每層殘暴提供 +{1} 暴擊率。
+每層殘暴提升 {2} 暴擊傷害。]]
+
+LANGUAGE["Perk_Title_Psycho_Tier_4"] = [[崩壞]]
+LANGUAGE["Perk_Title_psycho_grudge"] = [[咒怨]]
+LANGUAGE["Perk_psycho_grudge"] = [[
+每缺少 {2} 生命值，提升 {1} 暴擊率。
+每缺少 {4} 生命值，提升 {3} 移動速度。]]
+
+LANGUAGE["Perk_Title_psycho_bestial_wrath"] = [[獸性]]
+LANGUAGE["Perk_psycho_bestial_wrath"] = [[
+{1} 提升暴擊傷害。
+狂暴模式中，近戰傷害產生範圍性傷害。
+狂暴模式中，每殺死一個敵人提供 1 生命恢復。]]
+
+-- Default Perks: Carcass
+LANGUAGE["Perk_carcass_base"] = [[
+難度：困難
+
+提升 {1} 最大生命值。(每級提升 {2}，最多至 {3})。
+
+擊中敵人後有 {4} 機率獲得「肌肉增殖」狀態 (擊中頭部會有 {5} 機率)。
+被敵人擊中後也會獲得「肌肉增值」狀態。
+透過技能的選擇，「肌肉增殖」可以進行堆疊。
+每一層「肌肉增殖」減少 {6} 玩家受到的物理傷害。
+每一層「肌肉增殖」提供 2% 生命值恢復。
+
+你被植入了殘骸生化武器系統。
+無法使用除了拳頭以外的任何武器。
+
+左鍵：出拳。長按進行蓄力。]]
+
+LANGUAGE["Perk_Title_Carcass_Tier_1"] = [[腸胃]]
+LANGUAGE["Perk_Title_carcass_grappendix"] = [[腸鉤]]
+LANGUAGE["Perk_carcass_grappendix"] = [[
+提升 {1} 最大生命值。
+右鍵發射大腸，用作抓鉤。
+使用腸鉤消耗生命值。]]
+
+LANGUAGE["Perk_Title_carcass_bio_thruster"] = [[生化推進器]]
+LANGUAGE["Perk_carcass_bio_thruster"] = [[
++{1} 「肌肉增值」堆疊數。
+右鍵進行衝刺，消耗 {2} 生命值並獲得 1 推進器堆疊數，最多 5 層。
+每層推進器堆疊提升 {1} 近戰傷害，但會增加 {4} 生命值消耗。]]
+
+LANGUAGE["Perk_Title_Carcass_Tier_2"] = [[分泌]]
+LANGUAGE["Perk_Title_carcass_tactical_spleen"] = [[戰術腎臟]]
+LANGUAGE["Perk_carcass_tactical_spleen"] = [[
+提升 {1} 最大生命值。
+獲得一個能抵消異常狀態的腎臟。
+戰術腎臟每過 {2} 秒會再生。]]
+
+LANGUAGE["Perk_Title_carcass_anabolic_gland"] = [[增值腺體]]
+LANGUAGE["Perk_carcass_anabolic_gland"] = [[
++{1} 「肌肉增值」堆疊數。
++{2} 擊中敵人獲得「肌肉增殖」機率。]]
+
+LANGUAGE["Perk_Title_Carcass_Tier_3"] = [[四肢]]
+LANGUAGE["Perk_Title_carcass_reinforced_arms"] = [[強化手臂]]
+LANGUAGE["Perk_carcass_reinforced_arms"] = [[
++{1} 「肌肉增值」堆疊數。
+拳頭傷害會根據當前移動速度提升。
+拳頭蓄力後，對表面攻擊能產生垂直移速提升。]]
+
+LANGUAGE["Perk_Title_carcass_pneumatic_legs"] = [[氣動腿]]
+LANGUAGE["Perk_carcass_pneumatic_legs"] = [[
++{1} 「肌肉增值」堆疊數。
+空中按空格能夠快速下降，對範圍內敵人造成物理傷害。
+減少 {2} 掉落傷害。]]
+
+LANGUAGE["Perk_Title_Carcass_Tier_4"] = [[核心]]
+LANGUAGE["Perk_Title_carcass_twin_heart"] = [[雙子心臟]]
+LANGUAGE["Perk_carcass_twin_heart"] = [[
+提升 {1} 最大生命值。
+按 R 能夠切換雙子心臟狀態恢復生命值。
+雙子心臟會積攢生命值至玩家最大生命值的 {2}。]]
+
+LANGUAGE["Perk_Title_carcass_aas_perfume"] = [[AAS香水]]
+LANGUAGE["Perk_carcass_aas_perfume"] = [[
++{1} 「肌肉增值」堆疊數。
+按 R 發射孢子，為範圍內玩家提供「肌肉增值」效果。
+效果持續 {2} 秒。有 {3} 秒冷卻時間。]]
+
+-- Default Perks: Hatcher
+LANGUAGE["Perk_hatcher_base"] = [[
+難度：困難
+
+提升 {1} 蟻獅進化速度。(每級提升 {2}，最多至 {3})。
+提升 {1} 毒素傷害。(每級提升 {2}，最多至 {3})。
+
+出身自帶費洛蒙膠囊。費洛蒙膠囊可以商店升級。
+升級費洛蒙膠囊可以提升蟻獅傷害和生命值。
+
+左鍵：釋放膠囊
+投擲費洛蒙膠囊，強制蟻獅對目標進行攻擊。
+對蟻獅投擲膠囊能夠恢復其 5% 生命值。
+
+右鍵：召喚蟻獅 (40 能量)
+創造一個蟻獅作為你的召喚物。治療蟻獅能夠加速其進化。
+長按右鍵能迫使蟻獅前往玩家。
+蟻獅進化後，每一階段會獲得新能力：
+階段I   - 費洛蒙波動：每 5 秒中產生一個波動，恢復附近玩家 5% 生命值。
+階段II  - 提升傷害，生命值，波動頻率，提升 50% 毒素傷害抗性。
+階段III - 提升傷害，生命值，波動頻率，免疫毒素傷害和破壞異常狀態。]]
+
+-- Default Perks: Gunslinger
+LANGUAGE["Perk_gunslinger_base"] = [[
+難度：中等
+
+提升 {1} 手槍類武器傷害。(每級提升 {2}，最多至 {3})。
+你可以在商店升級手槍類武器。
+
+按 SHIFT+E 對敵人施加獵人標記。
+獵人標記持續 5 秒鐘。
+最多可以存在 1 個獵人標記。
+在獵人標記下死去的敵人有 {4} 機率掉落額外金錢。
+
+你可以購買所有的手槍類武器。]]
+
+-- Default Perks: Specops
+LANGUAGE["Perk_specops_base"] = [[
+難度：中等
+
+按 F 進入戰術模式。
+戰術模式提供夜視效果。
+戰術模式中無法跑步。
+戰術模式會減少玩家 50% 移動速度。
+
+戰術模式中，提升 {1} 更多移動速度。(每級提升 {2}，最多至 {3})。
+戰術模式中，提升 {1} 更多爆頭傷害。(每級提升 {2}，最多至 {3})。]]
+
+
+-- Default Perks: Necromancer
+LANGUAGE["Perk_necromancer_base"] = [[
+難度：中等
+
+冰冷傷害造成 {1} 霜凍累計值。 (基礎 {2} + 每級提升 {3}，最多至 {4})。
+提升 {5} 冰冷傷害抗性。(每級提升 {6}，最多至 {7})。
+
+出身自帶虛空投射器。虛空投射器能夠通過商店升級。
+升級虛空投射器能提升虛空之矛傷害，死靈傷害和死靈生命值。
+
+左鍵：虛空之矛 (消耗 5/10/20 能量)
+投射能夠造成冰冷傷害的暗物質，並造成霜凍累計值。
+長按左鍵能夠進行蓄力。
+
+右鍵：召喚死靈 (消耗 40 能量)
+創造一個死靈為你的召喚物。
+死靈能對敵人造成近戰傷害並造成霜凍累計值。
+長按右鍵能將全部死靈召喚至你身旁。]]
+
+-- Default Perks: Warlock
+LANGUAGE["Perk_warlock_base"] = [[
+難度：中等
+
+提升 {1} 最大能量值。(每級提升 {2}，最多至 {3})。
+
+出身自帶星體遺物。星體遺物能夠通過商店升級。
+升級星體遺物能提升其傷害。
+
+左鍵：星體波動 (消耗 10 能量)
+創造 1 個能自動搜尋並纏繞敵人的能量體，對其造成持續性物理傷害。
+最多可以存在 2 個星體波動。
+長按左鍵可以引爆所有的星體波動。
+
+右鍵：星體殘影 (消耗 5 能量)
+創造會接觸引爆的能量體，對範圍內敵人造成物理傷害。
+最多可以存在 5 個星體殘影。
+長按右鍵可以增加星體殘影的大小並刷新持續時間。]]
+
+-- Default Perks: Artificer
+LANGUAGE["Perk_artificer_base"] = [[
+難度：中等
+
+雷電傷害造成 {1} 感電累計值。 (每級提升 {2}，最多至 {3})。
+提升 {1} 火焰和雷電傷害。(每級提升 {2}，最多至 {3})。
+
+出身自帶炎陽護符。炎陽護符能夠通過商店升級。
+升級炎陽護符能提升其傷害。
+
+左鍵：炎陽火球 (消耗 5/10/20 能量)
+發射能夠造成火焰傷害的炙熱能量球。
+長按左鍵能夠進行蓄力。
+
+右鍵：炎陽雷擊 (消耗 5/10/20 能量)
+製造閃電，對敵人瞬間造成雷電傷害。
+長按右鍵能夠進行蓄力。]]
+
+-- Default Perks: Samurai
+LANGUAGE["Perk_samurai_base"] = [[
+難度：困難
+近戰傷害造成 {1} 武器基礎傷害的出血累計值。 (基礎 {2} + 每級提升 {3}，最多至 {4})。
+提升 {5} 全局傷害抗性。 (每級提升 {6}，最多至 {7})。
+
+使用 SHIFT + E 疾步，能夠根據方向鍵快速移動。
+疾步狀態中獲得 100% 閃避值。]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_1"] = [[技巧]]
+LANGUAGE["Perk_Title_samurai_focus_slash"] = [[居合斬]]
+LANGUAGE["Perk_samurai_focus_slash"] = [[
++1 疾步充能。
+疾步中，增加 {1} 近戰傷害。]]
+
+LANGUAGE["Perk_Title_samurai_flesh_bloom"] = [[綻放]]
+LANGUAGE["Perk_samurai_flesh_bloom"] = [[
+近戰傷害對範圍內敵人累積出血值。]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_2"] = [[壓倒]]
+LANGUAGE["Perk_Title_samurai_demon_stomp"] = [[鬼步]]
+LANGUAGE["Perk_samurai_demon_stomp"] = [[
++1 疾步充能。
+使用疾步會產生衝擊波，對附近敵人造成 {1} 物理傷害。
+衝擊波每擊中一個敵人就能夠提供 {2} 生命恢復。]]
+
+LANGUAGE["Perk_Title_samurai_exsanguinate"] = [[血道]]
+LANGUAGE["Perk_samurai_exsanguinate"] = [[
+{1} 增加出血累計值。
+在出血敵人附近時能夠恢復生命值。
+免疫出血異常狀態。]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_3"] = [[精神]]
+LANGUAGE["Perk_Title_samurai_foresight"] = [[見切]]
+LANGUAGE["Perk_samurai_foresight"] = [[
++1 疾步充能。
+獲得見切被動效果，能夠抵擋並反射一次物理傷害。
+見切效果會在抵擋後消失，5 秒鐘後恢復。]]
+
+LANGUAGE["Perk_Title_samurai_resolution"] = [[決意]]
+LANGUAGE["Perk_samurai_resolution"] = [[
+玩家最大負重降低至 7。
+{1} 更多近戰傷害。
++3 抵擋值。]]
+
+LANGUAGE["Perk_Title_Samurai_Tier_4"] = [[武道]]
+LANGUAGE["Perk_Title_samurai_blade_dance"] = [[劍舞]]
+LANGUAGE["Perk_samurai_blade_dance"] = [[
++1 疾步充能。
+擊殺敵人恢復 2 疾步充能。
+延長疾步帶來的無敵時間。]]
+
+LANGUAGE["Perk_Title_samurai_demon_strike"] = [[魔刃]]
+LANGUAGE["Perk_samurai_demon_strike"] = [[
+{1} 提升出血累計值。
+{2} 提升對出血狀態中敵人的近戰傷害。
+吸收 {3} 在疾步中造成的近戰傷害為生命值。]]
 
 -- Default Config Shop Items
 -- Optional
-LANGUAGE["Item_Stunstick"] = [[Stunstick]]
+-- Melee Items
+LANGUAGE["Item_Stunstick"] = [[電擊棒]]
 LANGUAGE["Item_Desc_Stunstick"] = [[
 能放出電流的武器。
 ]]
@@ -683,6 +1093,17 @@ LANGUAGE["Item_Desc_Combat Knife"] = [[
 右鍵能使出威力更大的橫砍。
 ]]
 
+LANGUAGE["Item_Machete"] = [[砍刀]]
+LANGUAGE["Item_Desc_Bat"] = [[
+大砍刀。
+]]
+
+LANGUAGE["Item_Fireaxe"] = [[消防斧]]
+LANGUAGE["Item_Desc_Fireaxe"] = [[
+消防用斧頭。
+厚重，但是威力不小。
+]]
+
 LANGUAGE["Item_Katana"] = [[武士刀]]
 LANGUAGE["Item_Desc_Katana"] = [[
 忍者武士刀。
@@ -695,7 +1116,37 @@ LANGUAGE["Item_Desc_Bat"] = [[
 對敵人造成鈍器傷害。
 ]]
 
+LANGUAGE["Item_Chainsaw"] = [[鏈鋸]]
+LANGUAGE["Item_Desc_Chainsaw"] = [[
+用來砍刀大樹的工業電鋸。
 
+長按右鍵能對敵人造成持續傷害。
+]]
+
+LANGUAGE["Item_Mjollnir"] = [[雷神之錘]]
+LANGUAGE["Item_Desc_Mjollnir"] = [[
+蘊含著雷電力量的戰錘。
+
+右鍵對武器進行充能。
+充能後，下次武器攻擊命中敵人會造成範圍性雷電傷害。
+]]
+
+LANGUAGE["Item_Inferno Blade"] = [[惡魔刀鋒]]
+LANGUAGE["Item_Desc_Inferno Blade"] = [[
+蘊含著火焰力量的彎刀。
+
+右鍵開啟火焰模式，使攻擊附帶範圍性火焰傷害。
+火焰模式會對使用者造成持續的火焰傷害。
+]]
+
+LANGUAGE["Item_Thorn Mace"] = [[荊棘之星]]
+LANGUAGE["Item_Desc_Thorn Mace"] = [[
+蘊含著劇毒的錘矛。
+
+
+]]
+
+-- Pistol Items
 LANGUAGE["Item_9mm"] = [[9mm]]
 LANGUAGE["Item_Desc_9mm"] = [[
 合成人標配手槍。
@@ -738,7 +1189,7 @@ Delivers a highly accurate and powerful round,
 at the expense of a lengthy trigger-pull.
 ]]
 
-LANGUAGE["Item_Deagle"] = [[Deagle]]
+LANGUAGE["Item_Deagle"] = [[沙漠之鷹]]
 LANGUAGE["Item_Desc_Deagle"] = [[
 Night Hawk .50C.
 An iconic pistol that is diffcult to master.
@@ -1009,6 +1460,13 @@ M249 light machine gun.
 A gas operated and air-cooled weapon of destruction.
 ]]
 
+LANGUAGE["Item_M240B"] = [[M240B]]
+LANGUAGE["Item_Desc_M240B"] = [[
+M240 Bravo.
+Fires 7.62mm NATO ammunition.
+Equipped by U.S. Armed Forces.
+]]
+
 LANGUAGE["Item_MG4"] = [[MG4]]
 LANGUAGE["Item_Desc_MG4"] = [[
 Heckler & Koch MG4.
@@ -1027,21 +1485,22 @@ LANGUAGE["Item_Desc_DamageResistance RPG"] = [[
 反抗軍粗製火箭筒。
 ]]
 
-LANGUAGE["Item_M79 GL"] = [[M79 GL]]
+LANGUAGE["Item_M79 GL"] = [[M79 榴彈發射器]]
 LANGUAGE["Item_Desc_M79 GL"] = [[
-M79 Grenade Launcher.
-Shoots 40x46mm grenades the explodes on impact.
+M79 榴彈發射器。
+發射 40x66 毫米榴彈炮。
 ]]
 
-LANGUAGE["Item_M32 GL"] = [[M32 GL]]
+LANGUAGE["Item_M32 GL"] = [[M32 榴彈發射器]]
 LANGUAGE["Item_Desc_M32 GL"] = [[
-Milkor Multiple Grenade Launcher.
-A lightweight 40mm six-shot revolver grenade launcher.
+M32 榴彈發射器。
+擁有六個轉輪榴彈發射位。
+發射 40x66 毫米榴彈炮。
 ]]
 
 LANGUAGE["Item_RPG-7"] = [[RPG-7]]
 LANGUAGE["Item_Desc_RPG-7"] = [[
-Ruchnoy Protivotankoviy Granatomyot.
+火箭推進榴彈。
 對敵人能造成大量的爆炸傷害。
 ]]
 
@@ -1059,14 +1518,14 @@ LANGUAGE["Item_Desc_Incendiary Grenade"] = [[
 
 LANGUAGE["Item_Molotov"] = [[莫洛托夫汽油彈]]
 LANGUAGE["Item_Desc_Molotov"] = [[
-Generates a pool of fire on impact.
-Sets everything on fire within its effect.
+落地後產生大量火焰。
+火焰對敵人造成持續傷害。
 ]]
 
-LANGUAGE["Item_Incendiary Launcher"] = [[Incendiary Launcher]]
+LANGUAGE["Item_Incendiary Launcher"] = [[燃燒彈發射器]]
 LANGUAGE["Item_Desc_Incendiary Launcher"] = [[
-Incendiary Grenade Launcher.
-Shoots incendiary grenades the erupt into flames on impact.
+燃燒彈發射器。
+發射炙熱的易燃榴彈，在接觸後引爆。
 ]]
 
 
@@ -1080,6 +1539,12 @@ LANGUAGE["Item_Turret"] = [[步哨槍]]
 LANGUAGE["Item_Desc_Turret"] = [[
 合成人專用步哨槍。
 能夠用來看守固定區域。
+]]
+
+LANGUAGE["Item_Rocket Turret"] = [[榴彈步哨槍]]
+LANGUAGE["Item_Desc_Rocket Turret"] = [[
+光圈科技實驗性步哨槍。
+對敵人發射迷你榴彈。
 ]]
 
 LANGUAGE["Item_Medic Grenade"] = [[醫療手榴彈]]
@@ -1101,17 +1566,22 @@ LANGUAGE["Item_Desc_Watchtower"] = [[
 （實體名稱：horde_watchtower）
 ]]
 
-LANGUAGE["Item_M2 Flamethrower"] = [[M2 噴火器]]
+LANGUAGE["Item_M2 Flamethrower"] = [[M2 火焰噴射器]]
 LANGUAGE["Item_Desc_M2 Flamethrower"] = [[
-M2-2 Flamethrower.
-An American man-portable backpack flamethrower.
+M2 火焰噴射器。
+由美國陸軍化學戰爭工作局所設計的單兵攜帶及背負式火焰噴射器。
 ]]
-
 
 LANGUAGE["Item_Medkit"] = [[醫療包]]
 LANGUAGE["Item_Desc_Medkit"] = [[
 自動充能的醫療包。
 右鍵治療自己，左鍵治療隊友。
+]]
+
+LANGUAGE["Item_Welder"] = [[電焊]]
+LANGUAGE["Item_Desc_Welder"] = [[
+工程師使用的電焊槍。
+能夠治療玩家的召喚物，也能對敵人造成傷害。
 ]]
 
 LANGUAGE["Item_Health Vial"] = [[治療藥瓶]]
@@ -1153,6 +1623,12 @@ LANGUAGE["Item_Desc_Tau Cannon"] = [[
 蓄力時間過長會產生爆炸。
 ]]
 
+LANGUAGE["Item_Spore Launcher"] = [[孢子槍]]
+LANGUAGE["Item_Desc_Spore Launcher"] = [[
+異星生物武器，發射溶解性的孢子。
+對敵人造成毒素傷害，但是能夠治療隊友。
+]]
+
 LANGUAGE["Item_MP7A1 Medic PDW"] = [[MP7A1 醫療衝鋒槍]]
 LANGUAGE["Item_Desc_MP7A1 Medic PDW"] = [[
 MP7A1 醫療改進版。
@@ -1168,21 +1644,6 @@ Vector 衝鋒槍，配備了先進的醫療針發射器。
 
 按 B 或者 放大鍵 發射醫療針。
 醫療針冷卻時間為 1.5 秒。
-]]
-
-LANGUAGE["Item_Chainsaw"] = [[電鋸]]
-LANGUAGE["Item_Desc_Chainsaw"] = [[
-Brrrrrrrrrrrrrrrr.
-
-長按右鍵進行持續劈砍。
-]]
-
-LANGUAGE["Item_Mjollnir"] = [[雷神之錘]]
-LANGUAGE["Item_Desc_Mjollnir"] = [[
-蘊含著雷電力量的戰錘。
-
-右鍵對武器進行充能。
-充能後，下次武器攻擊命中敵人會造成範圍性雷電傷害。
 ]]
 
 LANGUAGE["Item_Double Barrel"] = [[雙管獵槍]]
@@ -1220,6 +1681,14 @@ LANGUAGE["Item_Combat Bot"] = [[戰鬥機器人]]
 LANGUAGE["Item_Desc_Combat Bot"] = [[
 解釋可靠的戰鬥機器人。
 會使用威力巨大的近距離攻擊和遠距離投擲攻擊。
+]]
+
+LANGUAGE["Item_Hivehand"] = [[蜂巢槍]]
+LANGUAGE["Item_Desc_Hivehand"] = [[
+XEN 星球士兵使用的生物兵器。
+
+左鍵發射帶有追蹤功能的蜂群。
+右鍵能夠快速射出無追蹤能力的蜂群。
 ]]
 
 LANGUAGE["Item_Advanced Kevlar Armor"] = [[Advanced Kevlar Armor]]
@@ -1302,6 +1771,32 @@ Provides 8% increased Slashing and Blunt damage resistance.
 ]]
 
 -- Gadgets
+LANGUAGE["Gadget_gadget_vitality_shard"] = [[生命碎片]]
+LANGUAGE["Gadget_Desc_gadget_vitality_shard"] = [[
+恢復 {1} 生命值。
+]]
+
+LANGUAGE["Gadget_gadget_damage_shard"] = [[傷害碎片]]
+LANGUAGE["Gadget_Desc_gadget_damage_shard"] = [[
+提升 {1} 全局傷害，持續 30 秒。
+]]
+
+LANGUAGE["Gadget_gadget_cleansing_shard"] = [[淨化碎片]]
+LANGUAGE["Gadget_Desc_gadget_cleansing_shard"] = [[
+恢復 {1} 生命值。
+移除所有異常狀態。
+]]
+
+LANGUAGE["Gadget_gadget_agility_shard"] = [[敏捷碎片]]
+LANGUAGE["Gadget_Desc_gadget_agility_shard"] = [[
+提升 {1} 移動速度，持續 30 秒。
+]]
+
+LANGUAGE["Gadget_gadget_arctic_plating"] = [[抗凍塗層]]
+LANGUAGE["Gadget_Desc_gadget_arctic_plating"] = [[
+提升 {1} 寒冰傷害抗性。
+]]
+
 LANGUAGE["Gadget_gadget_blast_plating"] = [[防爆塗層]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
 提升 20% 爆炸傷害抗性。
@@ -1327,11 +1822,11 @@ LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
 提升 15% 物理傷害抗性。
 ]]
 
-LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Corporate Mindset]]
+LANGUAGE["Gadget_gadget_corporate_mindset"] = [[企業頭腦]]
 LANGUAGE["Gadget_Desc_gadget_corporate_mindset"] = [[
 "Set goals. Have a ten year plan. Invest. Wake up Early. CEO Mindset."
 
-Greatly increases skull tokens drop chance.
+大幅度提升骷髏幣掉落機率。
 ]]
 
 -- Survivor Gadgets
@@ -1499,6 +1994,12 @@ E-寄生蟲為使用者提供持續生命恢復。
 ]]
 
 -- Berserker Gadgets
+LANGUAGE["Gadget_gadget_chakra"] = [[查克拉]]
+LANGUAGE["Gadget_Desc_gadget_chakra"] = [[
+移除所有異常狀態。
+恢復 10 生命值。
+]]
+
 LANGUAGE["Gadget_gadget_berserk_armor"] = [[狂戰盔甲]]
 LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
 提升 25% 全局傷害。
@@ -1519,11 +2020,9 @@ While in air, take 65% less Physical damage.
 
 LANGUAGE["Gadget_gadget_hemocannon"] = [[血能炮]]
 LANGUAGE["Gadget_Desc_hemocannon"] = [[
-Shoots a projectile at the cost of 10 health.
-The projectile travels for a short distance and explodes.
-The explosion deals 100 Slashing damage.
-Has a maximum of 5 charges.
-Recharges after 5 seconds.
+消耗 10 生命值，發射血漿製作的投射物。
+血漿爆炸後對敵人造成 100 利器傷害並且累積出血值。
+最多有 5 發充能。每 5 秒充能一次。
 ]]
 
 -- Warden Gadgets
@@ -1569,3 +2068,12 @@ LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
 Ignited enemies killed by you drop edible gibs.
 Each gib restores 5 health.
 ]]
+
+-- Notifications
+LANGUAGE["Notifications_Debuff_Bleeding"] = [[你陷入了出血狀態。你的生命值在慢慢流失。]]
+LANGUAGE["Notifications_Debuff_Ignite"] = [[你陷入了引燃狀態。你在被火焰灼燒。]]
+LANGUAGE["Notifications_Debuff_Frostbite"] = [[你陷入了霜凍狀態。你的雙腳難以行動。]]
+LANGUAGE["Notifications_Debuff_Shock"] = [[你陷入了感電狀態。你的防禦力大幅降低。]]
+LANGUAGE["Notifications_Debuff_Break"] = [[你陷入了毒破狀態。你的生命值被大幅減少。]]
+LANGUAGE["Notifications_Debuff_Decay"] = [[你陷入了衰退狀態。你的身體無法恢復。]]
+LANGUAGE["Notifications_Debuff_Necrosis"] = [[你陷入了即死狀態。你的生命即將結束。]]
