@@ -1118,7 +1118,7 @@ LANGUAGE["Item_Desc_Bat"] = [[
 
 LANGUAGE["Item_Chainsaw"] = [[鏈鋸]]
 LANGUAGE["Item_Desc_Chainsaw"] = [[
-用來砍刀大樹的工業電鋸。
+用來砍倒大樹的工業鏈鋸。
 
 長按右鍵能對敵人造成持續傷害。
 ]]
@@ -1664,11 +1664,11 @@ Steyr AUG HBAR.
 A light-support machine gun variant of the AUG assault rifle.
 ]]
 
-LANGUAGE["Item_Manhack"] = [[巡邏無人機]]
+LANGUAGE["Item_Manhack"] = [[鋸鳥]]
 LANGUAGE["Item_Desc_Manhack"] = [[
-會自我再生的巡邏無人機。
-巡邏無人機攻擊敵人後直接死亡。
-巡邏無人機對敵人造成自生生命值的傷害。
+會自我再生的鋸鳥。
+鋸鳥攻擊敵人後直接死亡。
+鋸鳥對敵人造成自生生命值的傷害。
 ]]
 
 LANGUAGE["Item_Vortigaunt"] = [[弗地岡]]
