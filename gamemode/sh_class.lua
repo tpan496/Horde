@@ -588,9 +588,10 @@ hook.Add("InitPostEntity", "Horde_PlayerInit", function()
                 class = HORDE.Class_Survivor
             end
             local f2 = file.Read("horde/class_choices.txt", "DATA")
-            if HORDE.subclasses_to_classes[f2] then
+	    -- I Seriously don't understand what it's supposed to do.
+            --[[if HORDE.subclasses_to_classes[f2] then
                 f2 = HORDE.subclasses_to_classes[f2]
-            end
+            end]]--
 
             if f2 then
                 HORDE:SendSavedPerkChoices(f2)
