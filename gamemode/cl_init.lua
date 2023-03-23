@@ -43,8 +43,6 @@ include("gui/cl_perkbutton.lua")
 include("gui/npcinfo/sh_npcinfo.lua")
 include("gui/npcinfo/cl_npcinfo.lua")
 
-include("player_movement/client/player_movement.lua")
-
 include("vgui/dpingmeter.lua")
 include("vgui/dheaderpanel.lua")
 include("vgui/dplayerline.lua")
