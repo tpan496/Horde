@@ -44,6 +44,9 @@ AddCSLuaFile("gui/cl_perkbutton.lua")
 AddCSLuaFile("gui/npcinfo/sh_npcinfo.lua")
 AddCSLuaFile("gui/npcinfo/cl_npcinfo.lua")
 
+AddCSLuaFile("player_movement/client/player_movement.lua")
+AddCSLuaFile("player_movement/shared/player_movement.lua")
+
 AddCSLuaFile("vgui/dpingmeter.lua")
 AddCSLuaFile("vgui/dheaderpanel.lua")
 AddCSLuaFile("vgui/dplayerline.lua")
@@ -68,6 +71,8 @@ include("sh_sync.lua")
 include("sh_misc.lua")
 include("gui/npcinfo/sh_npcinfo.lua")
 include("gui/npcinfo/sv_npcinfo.lua")
+
+include("player_movement/shared/player_movement.lua")
 
 include("sv_damage.lua")
 include("sv_heal.lua")
