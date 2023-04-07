@@ -104,14 +104,14 @@ function SWEP:MeleeAttack(melee2)
 
     end
 
-    if SERVER and IsValid(tr.Entity) then
+    if SERVER and IsValid(tr.Entity) and IsValid(self:GetOwner()) then
         local phys = tr.Entity:GetPhysicsObject()
         if IsValid(phys) then
             phys:ApplyForceOffset(self:GetOwner():GetAimVector() * 80 * phys:GetMass(), tr.HitPos)
         end
     end
 
-    self:GetBuff_Hook("Hook_PostBash", {tr = tr, dmg = dmg})
+    self:GetBuff_Hook("Hook_PostBash", {tr = tr, dmg = dmg, melee2 = melee2})
 
     self:GetOwner():LagCompensation(false)
 end

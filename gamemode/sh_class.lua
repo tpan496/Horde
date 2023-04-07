@@ -102,7 +102,7 @@ function HORDE:GetDefaultClassesData()
             [1] = {title = "Survival", choices = {"medic_antibiotics", "assault_charge"}},
             [2] = {title = "Improvise", choices = {"berserker_breathing_technique", "demolition_frag_cluster"}},
             [3] = {title = "Imprinting", choices = {"heavy_liquid_armor", "cremator_entropy_shield"}},
-            [4] = {title = "Inspired Learning", choices = {"ghost_headhunter", "engineer_symbiosis"}},
+            [4] = {title = "Inspired Learning", choices = {"ghost_headhunter", "carcass_anabolic_gland"}},
         },
         0,nil,nil,nil,
         {HORDE.Class_Survivor}

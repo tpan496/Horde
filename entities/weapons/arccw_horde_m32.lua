@@ -22,11 +22,10 @@ SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/c_m32.mdl"
 SWEP.WorldModel = "models/horde/weapons/w_m79.mdl"
-SWEP.MirrorVMWM = false
+SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos        =    Vector(12.5, 1, 2),
-    ang        =    Angle(-10, 2.5, 180),
-    bone    =    "ValveBiped.Bip01_R_Hand",
+    pos = Vector(-5, 5, 15),
+    ang = Angle(-90, 10, 180),
 }
 SWEP.ViewModelFOV = 60
 
@@ -110,8 +109,8 @@ SWEP.IronSightStruct = {
     Magnification = 2,
 }
 
-SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "shotgun"
+SWEP.HoldtypeHolstered = "ar2"
+SWEP.HoldtypeActive = "ar2"
 SWEP.HoldtypeSights = "ar2"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL

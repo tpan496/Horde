@@ -1,21 +1,34 @@
--- UI Overhaul
-
--- Damage Display System
-
--- New Subclass: Hatcher
--- Gunslinger reworked.
-
--- New Gadgets:
-    - Survivor: Ultimate Booster
-    - Demolition: Nuke
-    - Engineer: Quantum Tunnel / Voidout effects changed. 
-    - ???
-
--- Perk balances:
-    - Ghost - Brain Snap: Increased freeze cooldown
-    - Demolition - Pressurized Warhead: Reduced percentage-base damage
-    - Artificer - Reduced Solar Orb base burn damage. Increased Floating Chaos energy usage. 
-    - Necromancer - Increased Spectre base health, reduced Spectre incremental health (so at max level health remains the same.)
+-- Boss Changes
+    - Alpha Gonome: 
+    - Gamma Gonome: Can go invisible. Cross shaped blast.
+    - Breen: If you are hit by him, you will be infested. The infest bar does not go away.
 
 
-- Check weapons when changing subclass
+-- Weapon Changes:
+    - Double Barrel: Added fire mode that allows you to perform double shot.
+    - M200 Intervention: Reworked.
+    - New Weapon: OSPIR
+    - New Weapon: RPD
+    - New Weapon: Zweihander
+    - Chainsaw Reworked
+    - Throwing Knives -> Kunai (Reworked)
+    - Gluon gun buff
+    - Fixed 3rd person views for most weapons
+    - New Weapon: Crowbar, Stunstick
+    - New Weapon: Helios Rifle
+    - Medic specific weapons reworked. They now show locked on targets for healing.
+    - M16M203 buffed
+    - FNFAL/G3 balance
+    - New minions: Shotgun Turret, Sniper Turret, Laser Turret
+    - New Weapon: Syringe. Recovers 30 health and reduces status buildup. LMB stab on other players, RMB on urself. Deals poison damage when stabbed on enemies.
+    - New Watchtowers: Interceptor, Guardian
+    - Inferno Blade: Now deals Slashing + Fire damage when activated, thus allowing melee perks to activate
+
+-- Perk Changes:
+    - Chain Reaction: effect changed
+    - Entropy Shield: increased cooldown
+    - Foresight: increased cooldown
+
+-- Enemy changes:
+    - Scorcher sometimes uses a flamethrower attack at close-medium range.
+    - New enemy: Pale

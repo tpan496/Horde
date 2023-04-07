@@ -1,0 +1,15 @@
+"refract"
+{
+	$normalmap 				"models/elemental/frozen_bump"
+	$bumpmap 				"models/elemental/frozen_bump"
+	
+	$refracttint 			"[ 1.6 1.8 2 ]"
+	$refracttinttexture 	"models/elemental/frozen_baset"
+
+	$forcerefract 			1
+	$refractamount 			1
+	$bluramount 			2 
+
+	$translucent 			1
+	$additive 				1
+}

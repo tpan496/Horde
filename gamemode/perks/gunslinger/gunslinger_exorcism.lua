@@ -6,7 +6,7 @@ Hunter's Mark has {3} chance to instantly kill non-elite enemies.]]
 PERK.Icon = "materials/perks/gunslinger/exorcism.png"
 PERK.Params = {
     [1] = {value = 10},
-    [2] = {value = 0.075, percent = true},
+    [2] = {value = 0.05, percent = true},
     [3] = {value = 0.3, percent = true},
 }
 PERK.Hooks = {}

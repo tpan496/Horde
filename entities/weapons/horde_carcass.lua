@@ -182,7 +182,6 @@ function SWEP:DealDamage()
 				if ply.Horde_Bio_Thruster_Stack and ply.Horde_Bio_Thruster_Stack > 0 then
 					bonus.increase = bonus.increase + ply.Horde_Bio_Thruster_Stack * 0.1
 				end
-				
 
 				dmginfo:ScaleDamage((1 + bonus.increase) * bonus.more)
 				dmginfo:SetDamageType(DMG_CLUB)

@@ -27,7 +27,13 @@ SWEP.NotForNPCs = true
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/c_bat.mdl"
-SWEP.WorldModel = "models/horde/weapons/w_bat.mdl"
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(-7, 2, -3),
+    ang = Angle(-10, 0, 180),
+    scale = 3,
+}
+SWEP.WorldModel = "models/horde/weapons/c_bat.mdl"
 SWEP.ViewModelFOV = 60
 
 SWEP.DefaultSkin = 0
@@ -39,13 +45,13 @@ SWEP.Melee2Damage = 160
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
 SWEP.MeleeDamageType = DMG_CLUB
-SWEP.MeleeRange = 60
+SWEP.MeleeRange = 70
 SWEP.MeleeAttackTime = 0.15
 SWEP.MeleeTime = 0.65
 SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 
 SWEP.Melee2 = true
-SWEP.Melee2Range = 80
+SWEP.Melee2Range = 75
 SWEP.Melee2AttackTime = 0.6
 SWEP.Melee2Time = 1.35
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
@@ -119,8 +125,3 @@ SWEP.BashAng = Angle(35, -30, 0)
 
 SWEP.HolsterPos = Vector(0, -3, -2)
 SWEP.HolsterAng = Angle(-10, 0, 0)
-
-SWEP.WorldModelOffset = {
-    pos = Vector(4, 3, -5),
-    ang = Angle(-10, 0, 180),
-}

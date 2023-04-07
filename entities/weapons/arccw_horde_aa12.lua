@@ -26,8 +26,12 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_aa12_1.mdl"
-SWEP.MirrorVMWM = false
-SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(0, 3, -8),
+    ang = Angle(-10, 0, 180),
+    scale = 1.25
+}
 SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 20

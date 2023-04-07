@@ -40,6 +40,7 @@ function ENT:Initialize()
     timer.Simple(5, function ()
         if IsValid(self) then self:Remove() end
     end)
+    ParticleEffectAttach("vj_rpg1_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 
 function ENT:Think()
@@ -47,36 +48,6 @@ function ENT:Think()
         self:Detonate()
     end
 end
-
-else
-
-function ENT:Think()
-    if self.Ticks % 5 == 0 then
-        local emitter = ParticleEmitter(self:GetPos())
-
-        if !self:IsValid() or self:WaterLevel() > 2 then return end
-        if !IsValid(emitter) then return end
-
-        local smoke = emitter:Add("particle/particle_smokegrenade", self:GetPos())
-        smoke:SetVelocity( VectorRand() * 25 )
-        smoke:SetGravity( Vector(math.Rand(-5, 5), math.Rand(-5, 5), math.Rand(-20, -25)) )
-        smoke:SetDieTime( math.Rand(1.5, 2.0) )
-        smoke:SetStartAlpha( 255 )
-        smoke:SetEndAlpha( 0 )
-        smoke:SetStartSize( 0 )
-        smoke:SetEndSize( 100 )
-        smoke:SetRoll( math.Rand(-180, 180) )
-        smoke:SetRollDelta( math.Rand(-0.2,0.2) )
-        smoke:SetColor( 20, 20, 20 )
-        smoke:SetAirResistance( 5 )
-        smoke:SetPos( self:GetPos() )
-        smoke:SetLighting( false )
-        emitter:Finish()
-    end
-
-    self.Ticks = self.Ticks + 1
-end
-
 end
 
 function ENT:Detonate()

@@ -36,7 +36,7 @@ end
 PERK.Hooks.Horde_UseActivePerk = function (ply)
     if not ply:Horde_GetPerk("specops_flare") then return end
 
-    local rocket = ents.Create("projectile_horde_flare")
+    local rocket = ents.Create("projectile_horde_specops_flare")
     local vel = 10
     local ang = ply:EyeAngles()
 

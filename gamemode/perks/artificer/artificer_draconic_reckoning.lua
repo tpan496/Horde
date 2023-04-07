@@ -1,24 +1,23 @@
 PERK.PrintName = "Draconic Reckoning"
 PERK.Description =
-[[Lightning damage ignores enemy Lightning damage resistance.
-Solar Orb has Lightning damage area of effect.
-Solar Storm has {1} increased damage and gains an extra charge stage.]]
+[[{1} more Lightning damage.
+Your Fire damage also inflicts Shock.]]
 PERK.Icon = "materials/perks/artificer/draconic_reckoning.png"
 PERK.Params = {
     [1] = {value = 0.20, percent = true},
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("artificer_draconic_reckoning")  then return end
     if HORDE:IsLightningDamage(dmginfo) then
-        dmginfo:ScaleDamage(1.2)
-        dmginfo:SetDamageType(DMG_DIRECT)
+        bonus.more = bonus.more * 1.2
     end
 end
 
-PERK.Hooks.Horde_OnSolarSealLaunch = function (ply, properties)
-    if ply:Horde_GetPerk("artificer_draconic_reckoning") then
-        properties.draconic = true
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
+    if not ply:Horde_GetPerk("artificer_draconic_reckoning") then return end
+    if HORDE:IsFireDamage(dmginfo) then
+        npc:Horde_AddDebuffBuildup(HORDE.Status_Shock, dmginfo:GetDamage() * (0.1 + ply:Horde_GetPerkLevelBonus("artificer_base")), ply, dmginfo:GetDamagePosition())
     end
 end

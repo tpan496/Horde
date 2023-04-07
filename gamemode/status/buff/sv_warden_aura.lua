@@ -18,7 +18,7 @@ end
 
 function entmeta:Horde_RemoveWardenAura()
     if not self:IsValid() then return end
-    if self.Horde_WardenAura then
+    if self.Horde_WardenAura and self.Horde_WardenAura:IsValid() then
         self.Horde_WardenAura:OnRemove()
         self.Horde_WardenAura:Remove()
         self.Horde_WardenAura = nil
@@ -69,6 +69,7 @@ function plymeta:Horde_GetEnableWardenAuraBuffBonus()
 end
 
 function plymeta:Horde_AddWardenAuraEffects(provider)
+    if not provider:Alive() then return end
     if HORDE:IsWatchTower(provider) then
         self.Horde_WardenAuraProvider = provider:GetNWEntity("HordeOwner")
     else

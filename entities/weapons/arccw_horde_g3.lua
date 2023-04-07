@@ -27,8 +27,8 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "00000000000"
 
-SWEP.Damage = 61
-SWEP.DamageMin = 45 -- damage done at maximum range
+SWEP.Damage = 91
+SWEP.DamageMin = 75 -- damage done at maximum range
 SWEP.Range = 150 -- in METRES
 SWEP.Penetration = 21
 SWEP.DamageType = DMG_BULLET
@@ -40,17 +40,15 @@ SWEP.Primary.ClipSize = 20 -- DefaultClip is automatically set.
 
 SWEP.PhysBulletMuzzleVelocity = 800
 
+SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.800
 SWEP.RecoilSide = 0.550
 SWEP.RecoilRise = 0.1
-SWEP.RecoilPunch = 2.5
+SWEP.RecoilPunch = 0.2
 
 SWEP.Delay = 60 / 550 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
-    {
-        Mode = 2,
-    },
     {
         Mode = 1,
     },
@@ -63,8 +61,8 @@ SWEP.NPCWeaponType = "weapon_ar2"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 2 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 900 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 200
+SWEP.HipDispersion = 300 -- inaccuracy added by hip firing.
+SWEP.MoveDispersion = 100
 
 SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses
 SWEP.MagID = "stanag" -- the magazine pool this gun draws from
@@ -90,9 +88,9 @@ SWEP.ShellRotateAngle = Angle(0, 180, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.91
+SWEP.SpeedMult = 0.95
 SWEP.SightedSpeedMult = 0.75
-SWEP.SightTime = 0.40
+SWEP.SightTime = 0.25
 
 SWEP.IronSightStruct = {
     Pos = Vector(-4.73312, -8.573, 2.2),
@@ -361,10 +359,6 @@ SWEP.Attachments = {
         PrintName = "Ammo Type",
         Slot = "go_ammo",
         DefaultAttName = "Standard Ammo"
-    },
-    {
-        PrintName = "Perk",
-        Slot = "go_perk"
     },
     {
         PrintName = "Charm",

@@ -27,7 +27,12 @@ SWEP.NotForNPCs = true
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/c_katana.mdl"
-SWEP.WorldModel = "models/horde/weapons/w_katana.mdl"
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(-15, 7, -5),
+    ang = Angle(-10, 0, 180),
+}
+SWEP.WorldModel = "models/horde/weapons/c_katana.mdl"
 SWEP.ViewModelFOV = 60
 
 SWEP.DefaultSkin = 0
@@ -39,16 +44,16 @@ SWEP.Melee2Damage = 150
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
 SWEP.MeleeDamageType = DMG_SLASH
-SWEP.MeleeRange = 60
+SWEP.MeleeRange = 75
 SWEP.MeleeAttackTime = 0.2
 SWEP.MeleeTime = 0.65
-SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
+SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.Melee2 = true
 SWEP.Melee2Range = 80
 SWEP.Melee2AttackTime = 0.5
 SWEP.Melee2Time = 1.25
-SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
+SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 
 SWEP.MeleeSwingSound = {
     "horde/weapons/katana/katana_swing_miss1.ogg",

@@ -50,13 +50,12 @@ SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
         Mode = 2,
+        PrintName = "Ballistic Mode"
     },
     {
-        Mode = 1,
+        Mode = 3,
+        PrintName = "Bio Mode"
     },
-    {
-        Mode = 0
-    }
 }
 
 SWEP.NPCWeaponType = "weapon_smg1"
@@ -403,47 +402,87 @@ sound.Add({
     sound = "arccw_go/mp7/mp7_cliphit.wav"
 })
 
-function SWEP:ChangeFiremode(pred)
-    if self:GetNextSecondaryFire() > CurTime() then return end
-    if !self.CanBash and !self:GetBuff_Override("Override_CanBash") then return end
-    if CLIENT then return end
-    local ply = self:GetOwner()
-    local filter = {self:GetOwner()}
+SWEP.LastBioTime = 0
+function SWEP:Hook_ShouldNotFireFirst()
+    if self:GetCurrentFiremode().Mode == 3 then
+        if self.LastBioTime > CurTime() then return true end
+        if !self.CanBash and !self:GetBuff_Override("Override_CanBash") then return true end
+        local ply = self:GetOwner()
+        local filter = {self:GetOwner()}
+        local tr = util.TraceHull({
+            start = self:GetOwner():GetShootPos(),
+            endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 5000,
+            filter = filter,
+            mins = Vector(-20, -20, -8),
+            maxs = Vector(20, 20, 8),
+            mask = MASK_SHOT_HULL
+        })
+        if tr.Hit then
+            local effectdata = EffectData()
+            effectdata:SetOrigin(tr.HitPos)
+            effectdata:SetRadius(50)
+            util.Effect("horde_heal_mist", effectdata)
+
+            if SERVER then
+                for _, ent in pairs(ents.FindInSphere(tr.HitPos, 100)) do
+                    if ent:IsPlayer() then
+                        local healinfo = HealInfo:New({amount=10, healer=ply})
+                        HORDE:OnPlayerHeal(ent, healinfo)
+                    elseif ent:GetClass() == "npc_vj_horde_antlion" then
+                        local healinfo = HealInfo:New({amount=10, healer=ply})
+                        HORDE:OnAntlionHeal(ent, healinfo)
+                    elseif ent:IsNPC() then
+                        local dmg = DamageInfo()
+                        dmg:SetDamage(25)
+                        dmg:SetDamageType(DMG_NERVEGAS)
+                        dmg:SetAttacker(ply)
+                        dmg:SetInflictor(self)
+                        dmg:SetDamagePosition(tr.HitPos)
+                        ent:TakeDamageInfo(dmg)
+                    end
+                end
+            end
+        end
+
+        ply:EmitSound("horde/weapons/mp7m/heal.ogg", 125, 100, 1, CHAN_AUTO)
+
+        self.LastBioTime = CurTime() + 1
+        return true
+    else
+        self.ShootEntity = nil
+    end
+end
+
+function SWEP:Hook_Think()
+    if SERVER then return end
     local tr = util.TraceHull({
         start = self:GetOwner():GetShootPos(),
         endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 5000,
         filter = filter,
-        mins = Vector(-16, -16, -8),
-        maxs = Vector(16, 16, 8),
+        mins = Vector(-20, -20, -8),
+        maxs = Vector(20, 20, 8),
         mask = MASK_SHOT_HULL
     })
-    if tr.Hit then
-        local effectdata = EffectData()
-        effectdata:SetOrigin(tr.HitPos)
-        effectdata:SetRadius(50)
-        util.Effect("horde_heal_mist", effectdata)
 
-        for _, ent in pairs(ents.FindInSphere(tr.HitPos, 100)) do
-            if ent:IsPlayer() then
-                local healinfo = HealInfo:New({amount=10, healer=ply})
-                HORDE:OnPlayerHeal(ent, healinfo)
-            elseif ent:GetClass() == "npc_vj_horde_antlion" then
-                local healinfo = HealInfo:New({amount=10, healer=ply})
-                HORDE:OnAntlionHeal(ent, healinfo)
-            elseif ent:IsNPC() then
-                local dmg = DamageInfo()
-                dmg:SetDamage(25)
-                dmg:SetDamageType(DMG_NERVEGAS)
-                dmg:SetAttacker(ply)
-                dmg:SetInflictor(self)
-                dmg:SetDamagePosition(tr.HitPos)
-                ent:TakeDamageInfo(dmg)
-            end
-        end
+    if tr.Hit and tr.Entity and tr.Entity:IsPlayer()then
+        self.Horde_HealTarget = tr.Entity
+    else
+        self.Horde_HealTarget = nil
     end
+end
 
-    ply:EmitSound("horde/weapons/mp7m/heal.ogg", 125, 100, 1, CHAN_AUTO)
+local function nv_center(ent)
+	return ent:LocalToWorld(ent:OBBCenter())
+end
 
-    self:SetNextSecondaryFire(CurTime() + 1)
-    return true
+function SWEP:Hook_DrawHUD()
+    if self.Horde_HealTarget then
+        local pos = nv_center(self.Horde_HealTarget):ToScreen()
+		surface.SetDrawColor(Color(50, 200, 50))
+        surface.DrawCircle(pos.x, pos.y, 30)
+        --surface.DrawLine(pos.x, 0, pos.x, ScrH())
+        --surface.DrawLine(0, pos.y, ScrW(), pos.y)
+        draw.DrawText(self.Horde_HealTarget:Health(), "Trebuchet24",
+        pos.x - 15, pos.y - 15, Color(50, 200, 50), TEXT_ALIGN_LEFT)
+    end
 end

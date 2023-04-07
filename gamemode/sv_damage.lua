@@ -120,6 +120,7 @@ function entmeta:TakeDamageOverTime(attacker, dmg, dmgtype, interval, duration)
     dmginfo:SetDamageType(dmgtype)
     dmginfo:SetDamage(dmg)
     dmginfo:SetDamageCustom(HORDE.DMG_OVER_TIME)
+    dmginfo:SetDamagePosition(self:GetPos())
 
     self:TakeDamageInfo(dmginfo)
     for i = 1, duration / interval do
@@ -131,6 +132,7 @@ function entmeta:TakeDamageOverTime(attacker, dmg, dmgtype, interval, duration)
                 dmginfo2:SetDamageType(dmgtype)
                 dmginfo2:SetDamage(dmg)
                 dmginfo2:SetDamageCustom(HORDE.DMG_OVER_TIME)
+                dmginfo2:SetDamagePosition(self:GetPos())
                 self:TakeDamageInfo(dmginfo2)
             end
         end)
@@ -140,8 +142,8 @@ end
 function HORDE:ApplyDamageInRadius(pos, radius, dmginfo, callback)
     for _, ent in pairs(ents.FindInSphere(pos, radius)) do
         if ent:IsNPC() and HORDE:IsPlayerOrMinion(ent) ~= true then
-            ent:TakeDamageInfo(dmginfo)
             dmginfo:SetDamagePosition(ent:GetPos())
+            ent:TakeDamageInfo(dmginfo)
             if callback then
                 callback(ent)
             end
@@ -185,6 +187,7 @@ function HORDE:TakeDamage(victim, damage, dmgtype, attacker, inflictor, damage_c
         dmginfo:SetInflictor(Entity(0))
     end
     
+    dmginfo:SetDamagePosition(victim:GetPos())
     
     if dmgtype then
         dmginfo:SetDamageType(dmgtype)

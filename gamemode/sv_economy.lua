@@ -3,6 +3,9 @@ concommand.Add("horde_drop_money", function (ply, cmd, args)
 end)
 
 concommand.Add("horde_drop_weapon", function (ply, cmd, args)
+    if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon().Base == "horde_spell_weapon_base" then
+        return
+    end
     ply:DropWeapon()
 end)
 
@@ -10,6 +13,8 @@ util.AddNetworkString("Horde_BuyItem")
 util.AddNetworkString("Horde_BuyItemAmmoPrimary")
 util.AddNetworkString("Horde_BuyItemAmmoSecondary")
 util.AddNetworkString("Horde_BuyItemUpgrade")
+util.AddNetworkString("Horde_BuySpellUpgrade")
+util.AddNetworkString("Horde_BuySpell")
 util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
 util.AddNetworkString("Horde_InitClass")
@@ -28,6 +33,16 @@ function plymeta:Horde_SetMaxHealth(base)
         hook.Run("Horde_OnSetMaxHealth", self, bonus)
         self:SetMaxHealth(bonus.add + base * bonus.more * (1 + bonus.increase))
         self:SetHealth(self:GetMaxHealth())
+    end)
+end
+
+function plymeta:Horde_SetMaxHealthOnly(base)
+    timer.Simple(0, function ()
+        if not self:IsValid() then return end
+        if not base then base = 100 end
+        local bonus = {increase = 0, more = 1, add = 0}
+        hook.Run("Horde_OnSetMaxHealth", self, bonus)
+        self:SetMaxHealth(bonus.add + base * bonus.more * (1 + bonus.increase))
     end)
 end
 
@@ -323,13 +338,37 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
                (class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() == "Warlock") or
                (class == "horde_carcass" and ply:Horde_GetCurrentSubclass() == "Carcass") or
                (class == "horde_pheropod" and ply:Horde_GetCurrentSubclass() == "Hatcher") then
-                wpn:Remove()
                 local c = wpn:GetClass()
-                timer.Simple(0, function()
-                    if ply:Alive() then
-                        ply:Give(c)
-                    end
-                end)
+                if (wpn.Base == "horde_spell_weapon_base") then
+                    -- Store spell cooldowns
+                    local primary_next = wpn:GetNextPrimaryFire()
+                    local secondary_next = wpn:GetNextSecondaryFire()
+                    local utility_next = wpn:GetNextUtilityFire()
+                    local ultimate_next = wpn:GetNextUltimateFire()
+
+                    wpn:Remove()
+                    timer.Simple(0, function()
+                        if ply:Alive() then
+                            ply:Give(c)
+                            timer.Simple(0, function ()
+                                local w2 = ply:Horde_GetSpellWeapon()
+                                if w2 then
+                                    w2:SetNextPrimaryFire(primary_next)
+                                    w2:SetNextSecondaryFire(secondary_next)
+                                    w2:SetNextUtilityFire(utility_next)
+                                    w2:SetNextUltimateFire(ultimate_next)
+                                end
+                            end)
+                        end
+                    end)
+                else
+                    wpn:Remove()
+                    timer.Simple(0, function()
+                        if ply:Alive() then
+                            ply:Give(c)
+                        end
+                    end)
+                end
             end
         end
 
@@ -478,6 +517,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                             ent:AddRelationship("npc_manhack D_LI 99")
                         end
                         ent:AddRelationship("npc_vj_horde_spectre D_LI 99")
+                        ent:AddRelationship("npc_vj_horde_shadow_hulk D_LI 99")
                         ent:AddRelationship("npc_vj_horde_headcrab D_LI 99")
                         ent:AddRelationship("npc_vj_horde_antlion D_LI 99")
     
@@ -498,17 +538,17 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     local id = ent:GetCreationID()
                     if ent:GetClass() == "npc_turret_floor" then
                         ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
-                        timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
-                            if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+                        timer.Simple(0.1, function ()
+                            if not ent:IsValid() then return end
                             ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
                         end)
                         HORDE:DropTurret(ent)
                     else
-                        --[[ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
-                        timer.Create("Horde_MinionCollision" .. id, 1, 0, function ()
-                            if not ent:IsValid() then timer.Remove("Horde_MinionCollision" .. id) return end
+                        ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+                        timer.Simple(0.1, function ()
+                            if not ent:IsValid() then return end
                             ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
-                        end)]]--
+                        end)
                     end
 
                     -- Count Minions
@@ -594,6 +634,19 @@ net.Receive("Horde_BuyItem", function (len, ply)
     end
 end)
 
+net.Receive("Horde_BuySpell", function (len, ply)
+    if not ply:IsValid() or not ply:Alive() then return end
+    local spell_name = net.ReadString()
+    if not HORDE.spells[spell_name] then return end
+    local price = HORDE.spells[spell_name].Price or 0
+    if ply:Horde_GetMoney() >= price then
+        ply:Horde_AddMoney(-price)
+        ply:Horde_SetSpell(spell_name)
+        HORDE:SendNotification("You bought " .. HORDE.spells[spell_name].PrintName .. ".", 0, ply)
+        ply:Horde_SyncEconomy()
+    end
+end)
+
 function GM:PlayerUse(other_ply, target)    -- This will make it to be default behaviour, that can be overridden by other addons hooks. Let's hope they won't return true >.>
     local owner = target:GetNWEntity("HordeOwner")
     if IsValid(owner) and other_ply ~= owner then return false end   -- If owner disconnected/not valid, why would we care about ownership?
@@ -628,13 +681,17 @@ function HORDE:DropTurret(ent)
 end
 
 hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
-    if ent:GetNWEntity("HordeOwner") and (ent:GetClass() == "npc_turret_floor" or (ent:GetClass() == "npc_vj_horde_rocket_turret" and (not ent.Horde_Pickedup))) then
+    if ent:GetNWEntity("HordeOwner") and (ent:GetClass() == "npc_turret_floor" or (ent.Horde_TurretMinion and (not ent.Horde_Pickedup))) then
         -- Turrets should always stay straight.
         local a = ent:GetAngles()
-        ent:SetAngles(Angle(0, a.y, 0))
+        if ent:GetClass() == "npc_vj_horde_sniper_turret" then
+        else
+            ent:SetAngles(Angle(0, a.y, 0))
+        end
+        
         HORDE:DropTurret(ent)
 
-        if ent:GetClass() == "npc_vj_horde_rocket_turret" then
+        if ent:GetClass() == "npc_vj_horde_rocket_turret" || ent:GetClass() == "npc_vj_horde_laser_turret" then
             ent:SetAngles(Angle(0,0,0))
             ent:PhysicsInit(SOLID_OBB)
         end

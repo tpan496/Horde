@@ -1,7 +1,7 @@
 function EFFECT:Init(effectdata)
 	local pos = effectdata:GetOrigin()
-	local normal = effectdata:GetNormal()
-	local scale = effectdata:GetScale() or 1
+	local normal = Vector(0,0,1)
+	local scale = 1
 
 	local particle
 

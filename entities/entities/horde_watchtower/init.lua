@@ -68,12 +68,28 @@ function ENT:Think()
 end
 
 hook.Add("PlayerUse", "PickUpWatchtower", function(ply, ent)
-	if HORDE:IsWatchTower(ent) and ent:GetNWEntity("HordeOwner"):IsValid() and ent:GetNWEntity("HordeOwner") == ply then
+	if HORDE:IsWatchTower(ent) and ent:GetNWEntity("HordeOwner"):IsValid() and ent:GetNWEntity("HordeOwner") == ply then        
+        if not ent.Horde_WatchtowerPickupCd then
+            ent.Horde_WatchtowerPickupCd = CurTime() + 0.5
+        else
+            if ent.Horde_WatchtowerPickupCd > CurTime() then
+                return
+            else
+                if ent.Horde_WatchtowerPickedUp then
+                    ply:DropObject(ent)
+                    ent.Horde_WatchtowerPickupCd = CurTime() + 0.5
+                    ent.Horde_WatchtowerPickedUp = nil
+                    return
+                end
+            end
+        end
         local p = ent:GetPos()
 		p.z = ply:GetPos().z + 12
         ent:SetPos(p)
-        ply:PickupObject(ent)
         local a = ply:GetAngles()
         ent:SetAngles(Angle(0, a.y, 0))
+        ply:PickupObject(ent)
+        ent.Horde_WatchtowerPickedUp = ply
+        ent.Horde_WatchtowerPickupCd = CurTime() + 0.5
     end
 end )

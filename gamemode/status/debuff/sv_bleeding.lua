@@ -18,7 +18,7 @@ function entmeta:Horde_AddBleedingEffect(inflictor)
                     dmg:SetInflictor(Entity(0))
                 end
                 dmg:SetDamageType(DMG_DIRECT)
-                dmg:SetDamage(1000)
+                dmg:SetDamage(100)
                 self:TakeDamageInfo(dmg)
             end
             sound.Play("player/pl_pain5.wav", self:GetPos())

@@ -159,15 +159,27 @@ ENT.SoundTbl_Pain = {"horde/gonome/gonome_pain1.ogg","horde/gonome/gonome_pain2.
 ENT.SoundTbl_Death = {"horde/gonome/gonome_death.ogg"}
 
 ENT.NextBlastTime = CurTime()
-ENT.NextBlastCooldown = 10
+ENT.NextBlastCooldown = 15
+ENT.InvisBreakDmg = 0
+ENT.InvisBreakDmgMax = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
     self:SetCollisionBounds(Vector(20, 20, 85), Vector(-20, -20, 0))
     self:SetSkin(1)
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
-    self:SetColor(Color(0, 150, 255, 175))
+    self:SetColor(Color(0, 150, 255, 150))
     self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
+end
+
+function ENT:GoInvis()
+    self:SetColor(Color(0, 150, 255, 50))
+    self.Horde_Gamma_Invis = true
+end
+
+function ENT:UnInvis()
+    self:SetColor(Color(0, 150, 255, 255))
+    self.Horde_Gamma_Invis = nil
 end
 
 function ENT:RangeAttackCode_GetShootPos(TheProjectile)
@@ -175,28 +187,63 @@ function ENT:RangeAttackCode_GetShootPos(TheProjectile)
 end
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+    if dmginfo:GetAttacker() == self then dmginfo:SetDamage(0) return true end
 	if HORDE:IsColdDamage(dmginfo) then
-		dmginfo:ScaleDamage(0.25)
+		dmginfo:ScaleDamage(0.5)
     elseif HORDE:IsFireDamage(dmginfo) then
         dmginfo:ScaleDamage(1.25)
     end
+
+    if self.InvisBreakDmg >= 500 then
+        self:UnInvis()
+        local id = self:GetCreationID()
+        timer.Remove("Horde_GammaGoInvis" .. id)
+        timer.Create("Horde_GammaGoInvis" .. id, 5, 1, function ()
+            if not self:IsValid() then timer.Remove("Horde_GammaGoInvis" .. id) return end
+            self:GoInvis()
+        end)
+        self.InvisBreakDmg = 0
+    else
+        self.InvisBreakDmg = self.InvisBreakDmg + dmginfo:GetDamage()
+    end
 end
 
-function ENT:ColdAttack(delay)
+function ENT:CustomOnMeleeAttack_BeforeChecks()
+    self:UnInvis()
+    local id = self:GetCreationID()
+    timer.Remove("Horde_GammaGoInvis" .. id)
+    timer.Create("Horde_GammaGoInvis" .. id, 5, 1, function ()
+        if not self:IsValid() then timer.Remove("Horde_GammaGoInvis" .. id) return end
+        self:GoInvis()
+    end)
+end
+
+function ENT:ColdAttack(delay, dir)
+    timer.Simple(delay - 1, function()
+		if not self:IsValid() then return end
+        local rand = VectorRand()
+        rand.z = 0
+        local pos = self:GetPos() + dir
+
+        local e = EffectData()
+			e:SetOrigin(pos)
+			e:SetScale(1)
+		util.Effect("horde_ring_effect", e, true, true)
+	end)
 	timer.Simple(delay, function()
 		if not self:IsValid() then return end
         local rand = VectorRand()
         rand.z = 0
-        local pos = self:GetPos() + rand * math.Rand(250, 500)
+        local pos = self:GetPos() + dir
 
 		local dmg = DamageInfo()
 		dmg:SetAttacker(self)
 		dmg:SetInflictor(self)
 		dmg:SetDamageType(DMG_REMOVENORAGDOLL)
-		dmg:SetDamage(10)
-		util.BlastDamageInfo(dmg, pos, 300)
+		dmg:SetDamage(25)
+		util.BlastDamageInfo(dmg, pos, 200)
 
-		for _, ent in pairs(ents.FindInSphere(pos, 300)) do
+		for _, ent in pairs(ents.FindInSphere(pos, 200)) do
 			if ent:IsPlayer() then
 				ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 4, self)
 			end
@@ -204,27 +251,104 @@ function ENT:ColdAttack(delay)
 
         local e = EffectData()
 			e:SetOrigin(pos)
-			e:SetNormal(Vector(0,0,1))
-			e:SetScale(1.2)
+			e:SetScale(1)
 		util.Effect("weeper_blast", e, true, true)
         sound.Play("horde/status/cold_explosion.ogg", pos, 80, math.random(70, 90))
 	end)
+end
+
+function ENT:Horde_SpawnIce(right)
+    local projectile = ents.Create(self.RangeAttackEntityToSpawn)
+    projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
+    projectile:SetOwner(self)
+    projectile:SetPhysicsAttacker(self)
+    projectile:Spawn()
+    projectile.RadiusDamageRadius = 150
+    projectile:Activate()
+    local phys = projectile:GetPhysicsObject()
+    if IsValid(phys) then
+        phys:Wake()
+        local vel = self:RangeAttackCode_GetShootPos(projectile)
+        local ang = vel:Angle()
+        local right_vec = ang:Right()
+        local v2
+        if right then
+            v2 = vel:Length() * (vel:GetNormal() * 0.7 + right_vec:GetNormal() * 0.3)
+        else
+            v2 = vel:Length() * (vel:GetNormal() * 0.7 - right_vec:GetNormal() * 0.3)
+        end
+        
+        phys:SetVelocity(v2)
+        projectile:SetAngles(v2:GetNormal():Angle())
+    end
+end
+
+function ENT:CustomRangeAttackCode_BeforeProjectileSpawn(projectile2)
+    if true then
+        if not self.Critical then
+            self:Horde_SpawnIce(true)
+            self:Horde_SpawnIce()
+        end
+    end
 end
 
 function ENT:CustomOnThink()
 	if self.Critical then
         if not self:GetEnemy() then return end
         local EnemyDistance = self.NearestPointToEnemyDistance
-        if EnemyDistance < 350 then
+        if EnemyDistance < 800 then
             if CurTime() > self.NextBlastTime then
                 sound.Play("horde/gonome/gonome_jumpattack.ogg", self:GetPos(), 100, 30)
                 self:VJ_ACT_PLAYACTIVITY("big_flinch", true, 5, false)
-                for i = 1, 25 do
-                    self:ColdAttack(3 + i * math.random() / 5)
-                    self:ColdAttack(3 + i * math.random() / 5)
+                local p = math.random()
+                local p2 = math.random()
+                -- Cross shape blast
+                for i = 1, 20 do
+                    self:ColdAttack(2, self:GetForward() * i * 100)
+                    self:ColdAttack(2, -self:GetForward() * i * 100)
+                    self:ColdAttack(2, self:GetRight() * i * 100)
+                    self:ColdAttack(2, -self:GetRight() * i * 100)
+                    
+                    local k1 = self:GetForward() + self:GetRight()
+                    k1:Normalize()
+                    local k2 = self:GetForward() - self:GetRight()
+                    k2:Normalize()
+                    self:ColdAttack(4, k1 * i * 100)
+                    self:ColdAttack(4, -k1 * i * 100)
+                    self:ColdAttack(4, k2 * i * 100)
+                    self:ColdAttack(4, -k2 * i * 100)
+
+                    if p <= 0.5 then
+                        if p2 <= 0.5 then
+                            self:ColdAttack(6, self:GetForward() * i * 100)
+                            self:ColdAttack(6, -self:GetForward() * i * 100)
+                            self:ColdAttack(6, self:GetRight() * i * 100)
+                            self:ColdAttack(6, -self:GetRight() * i * 100)
+                        else
+                            self:ColdAttack(6, k1 * i * 100)
+                            self:ColdAttack(6, -k1 * i * 100)
+                            self:ColdAttack(6, k2 * i * 100)
+                            self:ColdAttack(6, -k2 * i * 100)
+                        end
+                    end
                 end
                 self.NextBlastTime = CurTime() + self.NextBlastCooldown
+                self:GoInvis()
+                local id = self:GetCreationID()
+                timer.Remove("Horde_GammaUnInvis" .. id)
+                timer.Create("Horde_GammaUnInvis" .. id, 30, 1, function ()
+                    if not self:IsValid() then timer.Remove("Horde_GammaUnInvis" .. id) return end
+                    self:UnInvis()
+                end)
             end
+        end
+	end
+
+    if self:IsOnGround() and self.Horde_Gamma_Invis == true then
+        if self.Critical then
+            self:SetLocalVelocity(self:GetMoveVelocity() * 3)
+        else
+            self:SetLocalVelocity(self:GetMoveVelocity() * 2)
         end
 	end
 end

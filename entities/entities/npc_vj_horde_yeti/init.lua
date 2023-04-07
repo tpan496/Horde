@@ -60,7 +60,7 @@ end
 
 function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
 	if HORDE:IsColdDamage(dmginfo) then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
 	elseif HORDE:IsFireDamage(dmginfo) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 1.25)
 	end
@@ -93,6 +93,7 @@ function ENT:CustomOnThink()
 				self.NextTick = CurTime() + 0.5
 				local e = EffectData()
 					e:SetOrigin(self:GetPos())
+					e:SetScale(1)
 				util.Effect("frostcloud", e, true, true)
 			end
 		end

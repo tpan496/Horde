@@ -26,7 +26,7 @@ function ENT:CustomPhysicsObjectOnInitialize(phys)
 	phys:Wake()
 	phys:SetBuoyancyRatio(0)
 	phys:EnableDrag(false)
-	self:SetColor(Color(0,150,255,200))
+	self:SetColor(Color(0,150,255,255))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
@@ -36,6 +36,7 @@ end
 function ENT:CustomOnThink()
 	local e = EffectData()
 		e:SetOrigin(self:GetPos())
+		e:SetScale(0.5)
 	util.Effect("frostcloud", e, true, true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

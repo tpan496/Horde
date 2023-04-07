@@ -39,14 +39,14 @@ ENT.FootStepTimeWalk = 0.6 -- Next foot step sound when it is walking
 	-- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {"npc/fast_zombie/foot1.wav","npc/fast_zombie/foot2.wav","npc/fast_zombie/foot3.wav","npc/fast_zombie/foot4.wav"}
-ENT.SoundTbl_Breath = {"npc/fast_zombie/breathe_loop1.wav"}
-ENT.SoundTbl_Alert = {"npc/fast_zombie/fz_alert_close1.wav"}
+ENT.SoundTbl_Breath = nil
+--ENT.SoundTbl_Alert = {"npc/fast_zombie/fz_alert_close1.wav"}
 ENT.SoundTbl_MeleeAttack = {"npc/fast_zombie/claw_strike1.wav","npc/fast_zombie/claw_strike2.wav","npc/fast_zombie/claw_strike3.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"zsszombie/miss1.wav","zsszombie/miss2.wav","zsszombie/miss3.wav","zsszombie/miss4.wav"}
-ENT.SoundTbl_LeapAttackJump = {"npc/fast_zombie/fz_scream1.wav"}
+--ENT.SoundTbl_LeapAttackJump = {"npc/fast_zombie/fz_scream1.wav"}
 ENT.SoundTbl_LeapAttackDamage = {"npc/fast_zombie/claw_strike1.wav","npc/fast_zombie/claw_strike2.wav","npc/fast_zombie/claw_strike3.wav"}
-ENT.SoundTbl_Pain = {"npc/fast_zombie/idle1.wav","npc/fast_zombie/idle2.wav","npc/fast_zombie/idle3.wav"}
-ENT.SoundTbl_Death = {"npc/fast_zombie/wake1.wav"}
+ENT.SoundTbl_Pain = nil
+--ENT.SoundTbl_Death = {"npc/fast_zombie/wake1.wav"}
 
 ENT.GeneralSoundPitch1 = 75
 ENT.GeneralSoundPitch2 = 75
@@ -80,7 +80,7 @@ function ENT:Shockwave(delay)
 
 		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 250)) do
 			if HORDE:IsEnemy(ent) then
-				ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 8)
+				ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 8, self:GetNWEntity("HordeOwner"))
 				ent:TakeDamageInfo(dmg)
 				dmg:SetDamagePosition(ent:GetPos())
 			end
@@ -88,15 +88,13 @@ function ENT:Shockwave(delay)
 
 		local e = EffectData()
 			e:SetOrigin(self:GetPos())
-			e:SetNormal(Vector(0,0,1))
-			e:SetScale(1)
 		util.Effect("abyssal_roar", e, true, true)
 	end)
 end
 
 function ENT:Roar()
 	if not self:IsValid() then return end
-    sound.Play("npc/fast_zombie/fz_frenzy1.wav", self:GetPos(), 75, 75)
+    sound.Play("horde/spectres/abyssal_roar.ogg", self:GetPos(), 75, 100)
     self:VJ_ACT_PLAYACTIVITY("BR2_Roar", true, 1.5, false)
 	-- Deals heavy Physical damage to nearby enemies
 	self:Shockwave(0.2)
@@ -104,6 +102,14 @@ function ENT:Roar()
 	self:Shockwave(0.6)
 	self:Shockwave(0.8)
 	self:Shockwave(1.0)
+end
+
+function ENT:Horde_SetGreaterSpectre()
+	self:SetModelScale(1.5)
+	self.HasLeapAttack = false
+	self.MeleeAttackDamage = self.MeleeAttackDamage * 1.65
+	self.NextAnyAttackTime_Melee = 0.75
+	self:SetHealth(1.25 * (90 + 2 * 16 * self.properties.level))
 end
 
 function ENT:CustomOnInitialize()
@@ -126,8 +132,8 @@ function ENT:CustomOnInitialize()
 	util.Effect("abyssal_roar", e, true, true)
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     self:SetColor(Color(0, 0, 0, 200))
-	self.MeleeAttackDamage = self.MeleeAttackDamage + 3 * self.properties.level
-	self:SetHealth(90 + 16 * self.properties.level)
+	self.MeleeAttackDamage = self.MeleeAttackDamage + 6 * self.properties.level
+	self:SetHealth(90 + 2 * 16 * self.properties.level)
 	self:AddRelationship("npc_turret_floor D_LI 99")
 	self:AddRelationship("npc_vj_horde_combat_bot D_LI 99")
 	self:AddRelationship("npc_manhack D_LI 99")
@@ -376,7 +382,7 @@ function ENT:MeleeAttackCode(isPropAttack, attackDist, customEnt)
                 applyDmg:SetAttacker(self:GetNWEntity("HordeOwner"))
             end
             v:TakeDamageInfo(applyDmg)
-			v:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, self.MeleeAttackDamage / 2)
+			v:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, self.MeleeAttackDamage / 2, self:GetNWEntity("HordeOwner"))
 			if v:IsPlayer() then
 				-- Apply DSP
 				if self.MeleeAttackDSPSoundType != false && ((self.MeleeAttackDSPSoundUseDamage == false) or (self.MeleeAttackDSPSoundUseDamage == true && self.MeleeAttackDamage >= self.MeleeAttackDSPSoundUseDamageAmount && GetConVar("vj_npc_nomeleedmgdsp"):GetInt() == 0)) then

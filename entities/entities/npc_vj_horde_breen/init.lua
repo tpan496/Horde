@@ -5,7 +5,7 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/horde/gonome_beast/gonome.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = {"models/horde/gonome/gonome.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 9000
 ENT.HullType = HULL_MEDIUM_TALL
 ENT.FindEnemy_CanSeeThroughWalls = true
@@ -30,7 +30,7 @@ ENT.BloodColor = "Red" -- The blood type, this will determine what it should use
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
 ENT.MeleeAttackExtraTimers = {1.0} -- Extra melee attack timers | it will run the damage code after the given amount of seconds
-ENT.MeleeAttackDistance = 35 -- How close does it have to be until it attacks?
+ENT.MeleeAttackDistance = 60 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 80 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = 0.6 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 40
@@ -83,11 +83,45 @@ ENT.Horde_NoRandAngle = true
 
 ENT.GeneralSoundPitch1 = 50
 ENT.GeneralSoundPitch2 = 50
+local finishAttack = {
+	[VJ_ATTACK_MELEE] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_melee_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Melee, self.NextAnyAttackTime_Melee_DoRand, self.TimeUntilMeleeAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_melee_finished_abletomelee"..self:EntIndex(), self:DecideAttackTimer(self.NextMeleeAttackTime, self.NextMeleeAttackTime_DoRand), 1, function()
+			self.IsAbleToMeleeAttack = true
+		end)
+	end,
+	[VJ_ATTACK_RANGE] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_range_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Range, self.NextAnyAttackTime_Range_DoRand, self.TimeUntilRangeAttackProjectileRelease, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_range_finished_abletorange"..self:EntIndex(), self:DecideAttackTimer(self.NextRangeAttackTime, self.NextRangeAttackTime_DoRand), 1, function()
+			self.IsAbleToRangeAttack = true
+		end)
+	end,
+	[VJ_ATTACK_LEAP] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_leap_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Leap, self.NextAnyAttackTime_Leap_DoRand, self.TimeUntilLeapAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_leap_finished_abletoleap"..self:EntIndex(), self:DecideAttackTimer(self.NextLeapAttackTime, self.NextLeapAttackTime_DoRand), 1, function()
+			self.IsAbleToLeapAttack = true
+		end)
+	end
+}
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
-	if self.Horde_Stunned then return end
-	if self.Critical and self:IsOnGround() then
-		self:SetLocalVelocity(self:GetMoveVelocity() * 2)
+	if self.Critical then
 	end
 
 	if self.DamageReceived >= self.DamageThreshold and CurTime() > self.NextBlastTime then
@@ -112,14 +146,14 @@ function ENT:CustomOnThink()
 
 					for _, ent in pairs(ents.FindInSphere(self:GetPos(), 450)) do
 						if ent:IsPlayer() then
-							ent:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 60)
+							ent:Horde_AddHemorrhage(self)
 							ent:Horde_AddDebuffBuildup(HORDE.Status_Shock, 30)
 						end
 					end
 				end)
 				self.NextBlastTime = CurTime() + self.NextBlastCooldown
 				self.DamageReceived = 0
-				self:RangeAttackCode_DoFinishTimers()
+				finishAttack[VJ_ATTACK_RANGE](self)
 			end
 		else
 			sound.Play("weapons/physcannon/physcannon_charge.wav", self:GetPos())
@@ -146,12 +180,14 @@ function ENT:CustomOnThink()
 				end
 			end)
 			self.NextBlastTime = CurTime() + self.NextBlastCooldown
-			self:RangeAttackCode_DoFinishTimers()
+			finishAttack[VJ_ATTACK_RANGE](self)
 		end
 	end
 end
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
+	self:SetColor(Color(148,0,211))
 	self:SetCollisionBounds(Vector(25, 25, 90), Vector(-25, -25, 0))
 	self:SetModelScale(1.25)
 	timer.Simple(1, function() self.DamageThreshold = self:GetMaxHealth() * 0.05 end)
@@ -237,6 +273,7 @@ function ENT:RangeAttackCode()
 		self:RangeAttackCode_DoFinishTimers()
 	end
 	self.AlreadyDoneRangeAttackFirstProjectile = true
+	finishAttack[VJ_ATTACK_RANGE](self)
 end
 
 
@@ -267,7 +304,7 @@ function ENT:CustomOnMeleeAttack_AfterChecks(TheHitEntity)
 	ParticleEffect("antlion_gib_02_juice",TheHitEntity:GetPos() + self:GetUp()* 10,Angle(0,0,0),nil)
 
 	if TheHitEntity and IsValid(TheHitEntity) and TheHitEntity:IsPlayer() then
-        TheHitEntity:Horde_AddDebuffBuildup(HORDE.Status_Break, 40)
+        TheHitEntity:Horde_AddHemorrhage(self)
     end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -281,7 +318,7 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
         self.Critical = true
 		self.AnimTbl_Walk = ACT_RUN
 		self.AnimTbl_Run = ACT_RUN
-		self.AnimationPlaybackRate = 1.5
+		self.AnimationPlaybackRate = 1.25
     end
 	self.DamageReceived = self.DamageReceived + dmginfo:GetDamage()
 end

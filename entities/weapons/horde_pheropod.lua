@@ -204,6 +204,7 @@ function SWEP:RaiseAntlion()
 			ent:AddRelationship("npc_manhack D_LI 99")
 		end
 		ent:AddRelationship("npc_vj_horde_spectre D_LI 99")
+		ent:AddRelationship("npc_vj_horde_shadow_hulk D_LI 99")
 		ent:AddRelationship("npc_vj_horde_headcrab D_LI 99")
 
 		ply:Horde_SetMinionCount(ply:Horde_GetMinionCount() + 1)

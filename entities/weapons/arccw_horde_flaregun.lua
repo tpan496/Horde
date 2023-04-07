@@ -35,7 +35,7 @@ SWEP.DamageMin = 0 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 0
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "obj_vj_horde_flare" -- entity to fire, if any
+SWEP.ShootEntity = "projectile_horde_flaregun_flare" -- entity to fire, if any
 SWEP.MuzzleVelocity = 3000 -- projectile or phys bullet muzzle velocity
 
 SWEP.CanFireUnderwater = false
@@ -78,7 +78,7 @@ SWEP.ShootSound = "vj_weapons/flare/fire.wav"
 SWEP.ShootSoundSilenced = "vj_weapons/flare/fire_dist.wav"
 SWEP.DistantShootSound = "vj_weapons/flare/fire_dist.wav"
 
---SWEP.MuzzleEffect = "muzzleflash_pistol"
+SWEP.MuzzleEffect = "muzzleflash_pistol"
 SWEP.ShellModel = "models/shells/shell_9mm.mdl"
 SWEP.ShellScale = 1
 
