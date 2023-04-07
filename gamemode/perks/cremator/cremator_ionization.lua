@@ -16,5 +16,7 @@ end
 
 PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("cremator_ionization")  then return end
+	if HORDE:IsFireDamage(dmginfo) then
     dmginfo:SetDamageType(DMG_DIRECT)
+	end
 end
