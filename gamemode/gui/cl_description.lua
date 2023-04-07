@@ -156,12 +156,11 @@ function PANEL:DoClick()
         Derma_Query("Changing class will remove all your items!", "Change Class",
             "Yes",
             function()
-                MySelf:Horde_SetSubclass(self.item.name, MySelf.Horde_subclass_choices[self.item.name])
+                HORDE:SendSavedPerkChoices(MySelf.Horde_subclass_choices[self.item.name])
                 net.Start("Horde_SelectClass")
                 net.WriteString(self.item.name)
                 net.WriteString(MySelf.Horde_subclass_choices[self.item.name])
                 net.SendToServer()
-                HORDE:SendSavedPerkChoices(MySelf.Horde_subclass_choices[self.item.name])
 
                 file.Write("horde/class_choices.txt", self.item.subclass.PrintName)
             end,
