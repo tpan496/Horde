@@ -68,20 +68,20 @@ function PANEL:PerformLayout()
 	self.m_PlayerLabel:AlignLeft(w * 0.05)
 	self.m_PlayerLabel:CenterVertical()
 
-	self.m_RankLabel:AlignLeft(w * 0.27)
+	self.m_RankLabel:AlignLeft(w * 0.22)
 	self.m_RankLabel:SizeToContents()
 	self.m_RankLabel:CenterVertical()
 
 	self.m_MoneyLabel:SizeToContents()
-	self.m_MoneyLabel:AlignRight(w * 0.3075)
+	self.m_MoneyLabel:AlignRight(w * 0.3)
 	self.m_MoneyLabel:CenterVertical()
 
 	self.m_KillsLabel:SizeToContents()
-	self.m_KillsLabel:SetPos(w * 0.7575, 0)
+	self.m_KillsLabel:AlignRight(w * 0.2, 0)
 	self.m_KillsLabel:CenterVertical()
 
 	self.m_DeathsLabel:SizeToContents()
-	self.m_DeathsLabel:SetPos(w * 0.8175, 0)
+	self.m_DeathsLabel:AlignRight(w * 0.1, 0)
 	self.m_DeathsLabel:CenterVertical()
 
 	local pingsize = self:GetTall() - 8
@@ -197,9 +197,9 @@ function PANEL:Paint()
         local rank_level = pl:Horde_GetRankLevel(subclass.PrintName)
         surface.SetMaterial(mat) -- Use our cached material
         surface.SetDrawColor(HORDE.Rank_Colors[rank])
-        surface.DrawTexturedRect(wide * 0.198, 2, 38, 38)
+        surface.DrawTexturedRect(wide * 0.18, 2, 38, 38)
         if rank == HORDE.Rank_Master then
-            draw.SimpleText(rank_level, "Trebuchet18", wide * 0.195, 12, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(rank_level, "Trebuchet18", wide * 0.177, 12, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             
         else
             if rank_level > 0 then
@@ -207,7 +207,7 @@ function PANEL:Paint()
                 surface.SetMaterial(star)
                 local y_pos = 26
                 for i = 0, rank_level - 1 do
-                    surface.DrawTexturedRect(wide * 0.191, y_pos, 10, 10)
+                    surface.DrawTexturedRect(wide * 0.173, y_pos, 10, 10)
                     y_pos = y_pos - 7
             	end
         	end
@@ -215,7 +215,7 @@ function PANEL:Paint()
 		
     end
 
-	local x = wide * 0.45
+	local x = wide * 0.36
 	for perk_level, v in SortedPairs(perks) do
 		local color = color_white
 		if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then 
@@ -259,7 +259,7 @@ function PANEL:Paint()
         else
             surface.SetDrawColor(color_white)
         end
-        surface.DrawTexturedRect(wide * 0.3325, -2, 90, 45)
+        surface.DrawTexturedRect(wide * 0.53, -2, 90, 45)
     end
 
 	return true

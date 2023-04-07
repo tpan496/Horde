@@ -10,14 +10,6 @@ function PANEL:Init()
 
     self.ClassPanel = self.m_HeaderPanel:Add("DPanel")
 
-    local class_icon = "materials/skull.png"
-
-    self.m_ClassIcon = vgui.Create("DImage",self.ClassPanel)
-    self.m_ClassIcon:SetSize(self.ClassPanel:GetWide(),self.ClassPanel:GetTall())
-    self.m_ClassIcon:SetImage( class_icon )
-    self.m_ClassIcon:SetImageColor( Color(255,255,255) )
-    self.m_ClassIcon:SetSize(32, 32)
-
 	self.m_NameLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
 	self.m_ClassLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
     self.m_GadgetLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
@@ -49,33 +41,33 @@ function PANEL:PerformLayout()
     self.m_NameLabel:SizeToContents()
 
     self.ClassPanel:SetSize(32,32)
-    self.ClassPanel:AlignLeft(w * 0.2)
+    self.ClassPanel:AlignLeft(w * 0.15)
     self.ClassPanel:CenterVertical()
     self.ClassPanel:SizeToContents()
     self.ClassPanel:SetPaintBackground(false)
 	self.ClassPanel:SetMouseInputEnabled(false)
 
-	self.m_ClassLabel:AlignLeft(w * 0.27)
+	self.m_ClassLabel:AlignLeft(w * 0.22)
 	self.m_ClassLabel:CenterVertical()
     self.m_ClassLabel:SizeToContents()
 
-    self.m_GadgetLabel:AlignLeft(w * 0.35)
-	self.m_GadgetLabel:CenterVertical()
-    self.m_GadgetLabel:SizeToContents()
-
-    self.m_PerksLabel:AlignLeft(w * 0.45)
+    self.m_PerksLabel:AlignLeft(w * 0.36)
 	self.m_PerksLabel:CenterVertical()
     self.m_PerksLabel:SizeToContents()
 
-    self.m_MoneyLabel:AlignRight(w * 0.305)
+    self.m_GadgetLabel:AlignRight(w * 0.4)
+	self.m_GadgetLabel:CenterVertical()
+    self.m_GadgetLabel:SizeToContents()
+
+    self.m_MoneyLabel:AlignRight(w * 0.3)
 	self.m_MoneyLabel:CenterVertical()
     self.m_MoneyLabel:SizeToContents()
 
-    self.m_KillsLabel:SetPos(w * 0.7525, 0)
+    self.m_KillsLabel:AlignRight(w * 0.2, 0)
 	self.m_KillsLabel:CenterVertical()
     self.m_KillsLabel:SizeToContents()
 
-    self.m_DeathsLabel:SetPos(w * 0.8035, 0)
+    self.m_DeathsLabel:AlignRight(w * 0.1, 0)
 	self.m_DeathsLabel:CenterVertical()
     self.m_DeathsLabel:SizeToContents()
 
@@ -112,11 +104,6 @@ function PANEL:RefreshContents()
 
     self.m_PingLabel:SetText( translate.Get("Scoreboard_Ping") )
     self.m_PingLabel:SizeToContents()
-
-    local class_icon = "materials/skull.png"
-
-    self.m_ClassIcon:SetImage( class_icon )
-    self.m_ClassIcon:SetImageColor( Color(255,255,255) )
 
 	self:InvalidateLayout()
 end

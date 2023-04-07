@@ -42,8 +42,8 @@ function scoreboard:show()
     function title:Paint(w, h)
 
 		draw.RoundedBoxEx(8,0,0,w,h * 0.135, Color(30,30,30,150), true, true, false,false)
-        draw_SimpleText("Horde - " .. map_name .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "Title", 0, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
-        draw_SimpleText(server_name, "Title", width, 12, HORDE.color_crimson_dim, TEXT_ALIGN_RIGHT)
+        draw_SimpleText("Horde - " .. map_name .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "Title", 10, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
+        draw_SimpleText(server_name, "Title", width - 10, 12, HORDE.color_crimson_dim, TEXT_ALIGN_RIGHT)
     end
 
 	local header = title:Add("DHeaderPanel")

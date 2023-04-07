@@ -1,5 +1,5 @@
 PERK.PrintName = "Breathing Technique"
-PERK.Description = "Regenerate {1} health per second.\nImmune to Poison damage and Break."
+PERK.Description = "Regenerate {1} health per second.\nImmune to Poison damage."
 PERK.Icon = "materials/perks/breathing_technique.png"
 PERK.Params = {
     [1] = {value = 0.02, percent = true},
@@ -25,9 +25,9 @@ PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     end
 end
 
-PERK.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus)
+--[[PERK.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus)
     if ply:Horde_GetPerk("berserker_breathing_technique") and debuff == HORDE.Status_Break then
         bonus.apply = 0
         return true
     end
-end
+end]]--
