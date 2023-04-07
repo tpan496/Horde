@@ -59,6 +59,7 @@ end)
 
 hook.Add("Horde_OnPlayerDebuffApply", "Horde_BarrierDebuff", function (ply, debuff, bonus, inflictor, buildup)
     if ply.Horde_BarrierStack <= 0 then return end
+    if not buildup then return end
     if buildup >= ply.Horde_BarrierStack * 1.25 then
         bonus.add = -ply.Horde_BarrierStack * 1.25
         ply:Horde_RemoveBarrierStack(ply.Horde_BarrierStack)

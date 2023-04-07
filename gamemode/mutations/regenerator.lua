@@ -7,14 +7,6 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "regenerator" then
         ent.Horde_Mutation_Regenerator = true
         if SERVER then
-            local col_min, col_max = ent:GetCollisionBounds()
-            local radius = col_max:Distance(col_min) / 2
-            local e = EffectData()
-                e:SetOrigin(ent:GetPos())
-                e:SetEntity(ent)
-                e:SetRadius(radius)
-            util.Effect("regenerator", e, true, true)
-
             local mult = 1
             if ent:GetVar("is_boss") == true then
                 mult = 0.5

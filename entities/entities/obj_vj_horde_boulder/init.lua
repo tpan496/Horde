@@ -36,15 +36,6 @@ function ENT:CustomOnInitialize()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DeathEffects(data,phys)
-	--[[ParticleEffect("vj_impact1_black", data.HitPos, Angle(0,0,0), nil)
-	ParticleEffect("antlion_gib_02_gas", data.HitPos, Angle(0,0,0), nil)
-		local bloodspray = EffectData()
-		bloodspray:SetOrigin(self:GetPos())
-		bloodspray:SetScale(25)
-		bloodspray:SetFlags(3)
-		bloodspray:SetColor(255,255,102)
-		util.Effect("gas",bloodspray)
-		util.Effect("gas",bloodspray)]]--
 	for i = 1, math.random(10,20) do
 		local debris = ents.Create("base_gmodentity")
 		local mat = "debris/debris" .. tostring(math.random(1, 4))

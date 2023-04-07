@@ -187,7 +187,7 @@ end
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if HORDE:IsPoisonDamage(dmginfo) then
-		dmginfo:ScaleDamage(0.25)
+		dmginfo:ScaleDamage(0.75)
     elseif HORDE:IsLightningDamage(dmginfo) then
         dmginfo:ScaleDamage(1.25)
     end

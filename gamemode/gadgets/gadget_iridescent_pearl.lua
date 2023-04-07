@@ -10,5 +10,5 @@ GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     if CLIENT then return end
-    if ply:Horde_GetGadget() ~= "gadget_life_diffuser" then return end
+    if ply:Horde_GetGadget() ~= "gadget_iridescent_pearl" then return end
 end

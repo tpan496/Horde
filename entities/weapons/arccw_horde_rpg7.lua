@@ -29,6 +29,10 @@ SWEP.UseHands = true
 
 SWEP.ViewModel = "models/vj_weapons/c_rpg7.mdl"
 SWEP.WorldModel = "models/vj_weapons/w_ins_rpg7.mdl"
+SWEP.WorldModelOffset = {
+    pos = Vector(0, 0, -7),
+    ang = Angle(0, 0, 0),
+}
 SWEP.ViewModelFOV = 60
 
 SWEP.Damage = 500
@@ -103,7 +107,7 @@ SWEP.IronSightStruct = {
     Magnification = 1.3,
 }
 
-SWEP.HoldtypeHolstered = "normal"
+SWEP.HoldtypeHolstered = "rpg"
 SWEP.HoldtypeActive = "rpg"
 SWEP.HoldtypeSights = "rpg"
 

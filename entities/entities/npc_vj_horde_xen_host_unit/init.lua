@@ -115,7 +115,9 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if HORDE:IsPhysicalDamage(dmginfo) then
 		dmginfo:ScaleDamage(0.75)
 	elseif HORDE:IsPoisonDamage(dmginfo) then
-		dmginfo:ScaleDamage(0.25)
+		dmginfo:ScaleDamage(0.5)
+	elseif HORDE:IsBlastDamage(dmginfo) then
+		dmginfo:ScaleDamage(1.25)
 	end
 end
 

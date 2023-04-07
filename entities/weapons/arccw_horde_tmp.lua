@@ -27,8 +27,8 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/w_smg_tmp.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 20
-SWEP.DamageMin = 15
+SWEP.Damage = 21
+SWEP.DamageMin = 18
 SWEP.Range = 500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 4
 SWEP.DamageType = DMG_BULLET
@@ -62,8 +62,8 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
 SWEP.NPCWeight = 100
 
-SWEP.AccuracyMOA = 8 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 300 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 30 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 200 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 175
 
 SWEP.Primary.Ammo = "pistol" -- what ammo type the gun uses

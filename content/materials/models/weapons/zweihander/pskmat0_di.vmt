@@ -1,0 +1,11 @@
+"VertexlitGeneric"
+{
+	$basetexture "models/weapons/zweihander/WEP_1P_Zweihander_D"
+	$bumpmap "models/weapons/zweihander/WEP_1P_Zweihander_N2"
+	$phongexponenttexture "models/weapons/zweihander/WEP_1P_Zweihander_M"
+	
+	$phong "1"
+	$phongboost "4"
+	$phongalbedotint "0"
+	$phongfresnelranges "[0.05 0.15 1.0]"
+}

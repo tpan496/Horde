@@ -27,7 +27,7 @@ SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/c_machete.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_machete.mdl"
-SWEP.ViewModelFOV = 45
+SWEP.ViewModelFOV = 55
 SWEP.WorldModelOffset = {
     pos        =    Vector(-15, 6, -7),
     ang        =    Angle(-10, 0, 190),
@@ -114,7 +114,7 @@ SWEP.Animations = {
 
 SWEP.IronSightStruct = false
 
-SWEP.ActivePos = Vector(3, 4.5, 0)
+SWEP.ActivePos = Vector(3, 4, 0)
 SWEP.ActiveAng = Angle(0, 0, 0)
 
 SWEP.BashPreparePos = Vector(0, 0, 0)

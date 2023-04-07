@@ -38,7 +38,6 @@ ENT.SoundTbl_Death = {"zsszombies/zmisc_die1.wav","zsszombies/zmisc_die2.wav","z
 ENT.FootStepSoundLevel = 55
 ENT.NextBlastTime = CurTime()
 ENT.NextBlastCooldown = 8
-ENT.Immune_Electricity = true
 ENT.AnimTbl_MeleeAttack = {}
 ENT.Critical = nil
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -47,6 +46,14 @@ function ENT:CustomOnInitialize()
 	--self:SetModelScale(1.25, 0)
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
+end
+
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	if HORDE:IsLightningDamage(dmginfo) then
+		dmginfo:ScaleDamage(0.5)
+    elseif HORDE:IsBlastDamage(dmginfo) then
+        dmginfo:ScaleDamage(1.25)
+    end
 end
 
 function ENT:ShockAttack(delay)

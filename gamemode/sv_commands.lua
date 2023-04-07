@@ -10,6 +10,7 @@ util.AddNetworkString("Horde_RenderCenterText")
 util.AddNetworkString("Horde_RenderPlayersReady")
 util.AddNetworkString("Horde_RenderBreakCountDown")
 util.AddNetworkString("Horde_RenderEnemiesCount")
+util.AddNetworkString("Horde_RenderObjectives")
 util.AddNetworkString("Horde_RenderGameResult")
 util.AddNetworkString("Horde_Console_Commands")
 util.AddNetworkString("Horde_Disable_Levels")
@@ -217,6 +218,9 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     elseif text == "!mapconfig" then
         MapConfig(ply)
     elseif text == "!drop" then
+        if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon().Base == "horde_spell_weapon_base" then
+            return
+        end
         ply:DropWeapon()
     elseif text == "!throwmoney" then
         ply:Horde_DropMoney()

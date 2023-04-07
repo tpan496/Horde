@@ -6,7 +6,6 @@ ENT.Information 		= ""
 
 ENT.Spawnable 			= false
 
-
 AddCSLuaFile()
 
 ENT.Model = "models/items/ar2_grenade.mdl"
@@ -41,7 +40,7 @@ function ENT:Initialize()
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
     
-    self:SetCollisionGroup(COLLISION_GROUP_NPC)
+    self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
     self.ExplodeTimer = CurTime() + 60
 
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)

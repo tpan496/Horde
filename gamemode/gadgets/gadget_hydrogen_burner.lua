@@ -1,5 +1,5 @@
 GADGET.PrintName = "Hydrogen Burner"
-GADGET.Description = "Blue flame.\n25% increased Fire damage.\nYour Fire damage no longer Ignites."
+GADGET.Description = "Blue flame.\n25% more Fire damage.\nYour Fire damage no longer Ignites."
 GADGET.Icon = "items/gadgets/hydrogen_burner.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
@@ -11,6 +11,6 @@ GADGET.Hooks = {}
 GADGET.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if ply:Horde_GetGadget() ~= "gadget_hydrogen_burner" then return end
     if HORDE:IsFireDamage(dmginfo) then
-        bonus.increase = bonus.increase + 0.25
+        bonus.more = bonus.more * 1.25
     end
 end

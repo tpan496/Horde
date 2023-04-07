@@ -5,7 +5,7 @@ Shield explodes on hit and recharges after {1} seconds.
 Explosion deals {2} Fire damage.]]
 PERK.Icon = "materials/perks/entropy_shield.png"
 PERK.Params = {
-    [1] = {value = 5},
+    [1] = {value = 7},
     [2] = {value = 100},
 }
 

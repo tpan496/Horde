@@ -1,6 +1,6 @@
 @include "base.fgd" 
 
-// Horde.fgd made by: GoodFishMan //
+// Horde.fgd made by: GoodFishMan, Gorlami //
 
 
 //////////////////////////////
@@ -38,6 +38,36 @@
 
 ]
 
+@SolidClass base(Trigger, Targetname) = trigger_horde_escapezone :
+	"If this is present, the game will only end if one player has reached the escape zone. When multiple escape zones are present, players can escape via any escape zone. Make sure the CENTER of this zone is above ground level!"
+[
+	// Keys
+	group(integer) : "Group" : 0 : "Only one zone in the same group will be activated."
+]
+
+@SolidClass base(Trigger, Targetname) = trigger_horde_holdzone :
+	"If this is present, the game will use it as an objective for a wave to finish. When multiple zones are available in a wave, the game will choose one zone randomly. Hold zones are NOT active on boss waves. Make sure the CENTER of this zone is above ground level!"
+[
+	// Keys
+	wave(integer)  : "Wave"  : 1 : "Wave for when the zone will be used. Use 0 or -1 for all waves."
+	label(string)  : "Label" : "the area" : "Name of the zone."
+	group(integer) : "Group" : 0 : "Given the wave, only one zone in the same group will be activated."
+
+	// Outputs
+	output oncompleted(void)    : "Called when the zone is successfully held."
+]
+
+@SolidClass base(Trigger, Targetname) = trigger_horde_payload_destination :
+	"Used in conjunction with info_horde_payload_spawn. Ends the objective when the payload is delievered to the zone. Make sure the CENTER of this zone is above ground level!"
+[
+	// Keys
+	wave(integer) : "Wave" : 1 : "Wave for when the zone will be used. Use 0 or -1 for all waves."
+	group(integer) : "Group" : 0 : "Given the wave, only one destination in the same group will be activated."
+
+	// Outputs
+	output ondelivered(void)    : "Called when a payload is delivered."
+]
+
 @PointClass base(Targetname, Angles) studio("models/zombie/classic.mdl") = info_horde_enemy_spawn :
 	"If this is present in a map, Horde will use those points to spawn enemies, instead of searching for info nodes. Note that when fixed spawn points are present, enemies will no longer despawn due to distance mechanics."
 [
@@ -54,6 +84,21 @@
 	"An ammo box spawn point. If this is present in a map, Horde will spawn ammo boxes only on those points."
 [
 
+]
+
+@PointClass base(Targetname, Angles) studio("models/props_lab/crematorcase.mdl") = info_horde_payload_spawn :
+	"Objective payload spawn point. If this is present in a map, Horde will spawn a payload that needs to be delivered to trigger_horde_payload_destination."
+[
+	// Keys
+	wave(integer)  : "Wave"  : 1 : "Wave for when the payload will spawn. Use -1 for all waves."
+	label(string)  : "Label" : "the payload" : "Name of the payload."
+	mass(integer)  : "Mass"  : 0 : "From 0 to 50, caps at 50. Player speed is reduced by Mass%."
+	model(string)  : "Model" : "models/props_lab/crematorcase.mdl" : "Model for the payload."
+	icon(integer)  : "Icon"  : 0 : "Display icon for the payload. 0=generic, 1=card, 2=key, 3=chemical."
+	group(integer) : "Group" : 0 : "Given the wave, only one payload spawn in the same group will be activated."
+
+	// Outputs
+	output oncompleted(void)    : "Called when the payload is delivered."
 ]
 
 ////////////////////////////

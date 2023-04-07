@@ -20,20 +20,16 @@ function ENT:Initialize()
 		phys:EnableDrag(false)
 		phys:SetBuoyancyRatio(0)
 	end
+
+    self:SetRenderMode(RENDERMODE_TRANSCOLOR)
+    self:SetColor(Color(0,0,0,0))
 	
 	self.delayRemove = CurTime() + 60
 	if self:GetScale() > 1 then self.deploy = CurTime() +0.2 end
 
     self.Target = nil
     self.NextScale = CurTime()
-
-    local function repeatsound()
-        self:EmitSound("ambient/energy/whiteflash.wav")
-        timer.Simple(3, function ()
-            if self:IsValid() then repeatsound() end
-        end)
-    end
-    repeatsound()
+    self.NextSound = CurTime()
 end
 
 function ENT:SetScale(nScale)
@@ -53,6 +49,10 @@ function ENT:OnRemove()
 end
 
 function ENT:Think()
+    if SERVER and self.NextSound <= CurTime() then
+        self:EmitSound("ambient/energy/whiteflash.wav")
+        self.NextSound = self.NextSound + 3
+    end
     if self.Removing and self.NextScale < CurTime() then
         self:SetScale(self:GetScale() + 3)
         self.NextScale = CurTime() + 0.1
@@ -70,7 +70,7 @@ function ENT:Think()
 		if IsValid(self.entOwner) then
 			local pos = self:GetPos()
 			for _, ent in pairs(ents.FindInSphere(pos, 600)) do
-				if HORDE:IsPlayerOrMinion(ent) then
+				if ent:IsPlayer() then
                     self.Target = ent
                     break
 				end
@@ -78,6 +78,18 @@ function ENT:Think()
 		end
 	end
 	if CurTime() < self.delayRemove then return end
+
+    local dmg = DamageInfo()
+    dmg:SetDamage(self:GetScale() * 2)
+    dmg:SetDamageType(DMG_SHOCK)
+    dmg:SetAttacker(self.entOwner)
+    dmg:SetInflictor(self)
+    dmg:SetDamagePosition(self:GetPos())
+    util.BlastDamageInfo(dmg, self:GetPos(), 150)
+    ParticleEffect("vj_explosionspark1", self:GetPos(), Angle(0,0,0), nil)
+    ParticleEffect("vj_explosionspark2", self:GetPos(), Angle(0,0,0), nil)
+    ParticleEffect("vj_explosionspark3", self:GetPos(), Angle(0,0,0), nil)
+
 	self:Remove()
 end
 

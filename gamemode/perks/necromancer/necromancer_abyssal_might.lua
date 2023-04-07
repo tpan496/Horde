@@ -27,12 +27,6 @@ PERK.Hooks.Horde_OnUnsetPerk = function (ply, perk)
     if perk == "necromancer_abyssal_might" then
         ply.Horde_Spectre_Max_Count = ply.Horde_Spectre_Max_Count - 1
 
-        if HORDE.player_drop_entities[ply:SteamID()] then
-            for id, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-                if ent:IsNPC() and ent:GetClass() == "npc_vj_horde_spectre" then
-                    ent:Remove()
-                end
-            end
-        end
+        HORDE:RemoveSpectres(ply)
     end
 end

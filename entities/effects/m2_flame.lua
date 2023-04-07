@@ -19,7 +19,7 @@ function EFFECT:Init(data)
 				p:SetColor(0,100,255)
 			end
             p:SetDieTime(1.8)
-			p:SetStartAlpha(255)
+			p:SetStartAlpha(100)
 			p:SetEndAlpha(0)
 			p:SetStartSize(math.Rand(0.8, 1.5))
 			p:SetEndSize(math.random(50, 75))

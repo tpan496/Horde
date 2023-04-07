@@ -7,8 +7,8 @@ Engineer subclass.
 Specializes in cold damage and spectre minions.]] -- Required
 SUBCLASS.BasePerk = "necromancer_base"
 SUBCLASS.Perks = {
-    [1] = {title = "Initialization", choices = {"necromancer_void_sphere", "necromancer_hollow_essence"}},
-    [2] = {title = "Recovery", choices = {"necromancer_void_siphon", "necromancer_superfluidity"}},
-    [3] = {title = "Annihilation", choices = {"necromancer_void_field", "necromancer_abyssal_might"}},
-    [4] = {title = "Mastery", choices = {"necromancer_beacon_of_void", "necromancer_necromastery"}},
+    [1] = {title = "Domination", choices = {"necromancer_withering_prescence", "necromancer_hollow_essence"}},
+    [2] = {title = "Recovery", choices = {"necromancer_energy_siphon", "necromancer_eldritch_protection"}},
+    [3] = {title = "Occultism", choices = {"necromancer_occult_armor", "necromancer_abyssal_might"}},
+    [4] = {title = "Apex", choices = {"necromancer_beacon_of_void", "necromancer_necromastery"}},
 } -- Required

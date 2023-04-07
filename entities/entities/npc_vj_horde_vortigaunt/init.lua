@@ -19,7 +19,7 @@ ENT.SightDistance = 8000
 ENT.HullType = HULL_HUMAN
 ENT.PlayerFriendly = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.AllowIgnition = false -- Can this SNPC be set on fire?
 ENT.Immune_AcidPoisonRadiation = false -- Immune to Acid, Poison and Radiation
@@ -97,7 +97,7 @@ ENT.DisableDefaultRangeAttackCode = true
 ENT.DisableMakingSelfEnemyToNPCs = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-    
+    self:SetCollisionBounds(Vector(0,0,0), Vector(0,0,0))
 end
 
 function ENT:OnRemove()

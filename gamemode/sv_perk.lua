@@ -40,6 +40,9 @@ function plymeta:Horde_ApplyPerksForClass()
     end
 
     self:Horde_SetMaxHealth()
+    if self:Horde_GetSpellWeapon() then
+        self:Horde_RecalcAndSetMaxMind()
+    end
 
     net.Start("Horde_SyncPerk")
         net.WriteEntity(self)
@@ -71,7 +74,16 @@ net.Receive("Horde_PerkChoice", function(len, ply)
         ply.Horde_PerkChoices[subclass_name][level] = net.ReadUInt(4)
     end
 
+    net.Start("Horde_SyncPerk")
+        net.WriteEntity(ply)
+        net.WriteTable(ply.Horde_PerkChoices[class])
+    net.Broadcast()
+
     ply:Horde_SetMaxHealth()
+    if ply:Horde_GetSpellWeapon() then
+        ply:Horde_RecalcAndSetMaxMind()
+    end
+    
 
     if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(level) then return end
 
