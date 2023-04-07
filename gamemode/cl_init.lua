@@ -20,6 +20,7 @@ include("sh_misc.lua")
 include("cl_economy.lua")
 include("cl_achievement.lua")
 include("cl_hitnumbers.lua")
+include("cl_custom.lua")
 include("gui/cl_gameinfo.lua")
 include("gui/cl_status.lua")
 include("gui/cl_ready.lua")
@@ -41,6 +42,10 @@ include("gui/cl_subclassbutton.lua")
 include("gui/cl_perkbutton.lua")
 include("gui/npcinfo/sh_npcinfo.lua")
 include("gui/npcinfo/cl_npcinfo.lua")
+
+include("vgui/dpingmeter.lua")
+include("vgui/dheaderpanel.lua")
+include("vgui/dplayerline.lua")
 
 -- Some users report severe lag with halo
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
