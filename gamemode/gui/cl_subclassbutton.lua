@@ -63,6 +63,7 @@ function PANEL:DoClick()
         Derma_Query("Change Subclass?", "Change Subclass",
                 "Yes",
                 function()
+                    HORDE:SendSavedPerkChoices(self.info.subclass.PrintName)
                     MySelf:Horde_SetSubclass(self.info.class, self.info.subclass.PrintName)
                     HORDE:ToggleShop()
                     MySelf.Horde_subclass_choices[self.info.class] = self.info.subclass.PrintName
