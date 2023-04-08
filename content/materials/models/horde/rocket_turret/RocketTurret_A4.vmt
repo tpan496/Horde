@@ -1,7 +1,7 @@
 
 "VertexLitGeneric"
 {
-	$baseTexture "models\horde\rocket_turret\RocketTurret_A"
+	$baseTexture "models\horde\rocket_turret\rocketturret_a"
 
 	$surfaceprop "metal"
 

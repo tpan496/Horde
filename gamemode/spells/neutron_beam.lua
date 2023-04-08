@@ -70,9 +70,10 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 		end
 	end
 end
-SPELL.Price                      = 100
+SPELL.Price                      = 50
 SPELL.Upgrades                   = 5
 SPELL.Upgrade_Description        = "Increases damage and penetration power."
 SPELL.Upgrade_Prices             = function (upgrade_level)
     return 550 + 50 * upgrade_level
 end
+SPELL.Levels          = {Warlock=5}

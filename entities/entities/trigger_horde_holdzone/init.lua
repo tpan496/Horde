@@ -8,10 +8,22 @@ function ENT:Initialize()
 	self.Horde_Players_In_Zone = {}
 
 	self.Horde_Hold_Progress = 0
-	self.Horde_Progress_Amount = 10
+	self.Horde_Progress_Amount = 1
 	self.Horde_Activated = nil
 
 	self.Horde_Zone_Id = self:GetCreationID()
+	self.Horde_Player_Count = player.GetCount()
+end
+
+function ENT:Horde_SetActivated(activated)
+	self.Horde_Activated = activated
+	self.Horde_Player_Count = player.GetCount()
+	if self.Horde_Player_Count == 1 then
+	elseif self.Horde_Player_Count == 2 then
+		self.Horde_Progress_Amount = 0.65
+	elseif self.Horde_Player_Count >= 3 then
+		self.Horde_Progress_Amount = 0.5
+	end
 end
 
 function ENT:Think()
@@ -45,12 +57,15 @@ function ENT:Think()
 				HORDE:SyncHoldZoneProgress(self.Horde_Zone_Id, self.Horde_Hold_Progress)
 			end
 		else
+			local progress = 0
 			for _, p in pairs(self.Horde_Players_In_Zone) do
 				if p:IsValid() and p:Alive() then
-					self.Horde_Hold_Progress = math.min(100, self.Horde_Hold_Progress + self.Horde_Progress_Amount)
-					HORDE:SyncHoldZoneProgress(self.Horde_Zone_Id, self.Horde_Hold_Progress)
+					progress = progress + self.Horde_Progress_Amount
 				end
 			end
+			progress = math.min(1.5, self.Horde_Progress_Amount)
+			self.Horde_Hold_Progress = self.Horde_Hold_Progress + progress
+			HORDE:SyncHoldZoneProgress(self.Horde_Zone_Id, self.Horde_Hold_Progress)
 		end
 
 		self.LastThink = CurTime() + self.ThinkInterval

@@ -40,7 +40,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage, param)
         end)
     end
 end
-SPELL.Price                      = 100
+SPELL.Price                      = 50
 SPELL.Upgrades                   = 5
 SPELL.Upgrade_Description        = "Increases area of effect and charge speed increase (+10% per level)."
 SPELL.Upgrade_Prices             = function (upgrade_level)

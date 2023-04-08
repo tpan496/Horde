@@ -258,30 +258,48 @@ function PANEL:Init()
     local update_text_panel = vgui.Create("DPanel", description_panel)
     update_text_panel:SetSize(self:GetParent():GetWide(), 1000)
     update_text_panel:SetVisible(true)
-    local update_text = [[
-        -- UI Overhaul
+    local update_text =[[
+-- Objective Mode Support
+    - Horde now has objective mode entities. See the FGD for more info.
+    - Holdout: Players have to hold an area for a certain amount of time.
+    - Payload: Players have to deliver items to certain areas.
+    - Escape: Only triggered on the last wave. A player needs to escape to win the round.
 
-        -- Damage Display System
-            - horde_display_damage 0/1
+-- Spell System Rework:
+    - Horde has its own unique spell system that supports adding custom spells through lua.
+    - horde_spell_weapon_base: a weapon base I created for spell weapons. If you want to make spell weapons, use this as base.
+    - Spell Forge: Artificer/Necromancer/Warlock now have access to the Spell Forge.
 
-        -- New Subclass: Hatcher
-        -- Gunslinger reworked.
+-- Class Rework:
+    - Artificer/Necromancer/Warlock have been reworked.
 
-        -- New Gadgets:
-            - Survivor: Ultimate Booster
-            - Demolition: Nuke
-            - Engineer: Quantum Tunnel / Voidout effects changed. 
-            - ???
+-- Item Changes:
+    - Shotgun Turret, Sniper Turret, Laser Turret (Engineer)
+    - Watchtower Interceptor, Watchtower Guardian, Watchtower Beacon (Warden)
+    - Chainsaw (rework), Jotuun, Zweihander (Berserker)
+    - M200 Intervention (reworked, Ghost)
+    - RPD (Heavy)
+    - Crowbar, Stunstick (reworked into ArcCW base)
+    - Apollo (Cremator)
+    - OSPIR (Assault)
+    - Medic-specific weapons reworked. They now show locked on targets for healing.
+    - Double Barrel: Added fire mode that allows you to perform double shot.
+    - Throwing Knives -> Kunai (Reworked)
+    - Gluon gun buff
+    - Fixed 3rd person views for most weapons
+    - M16M203 buffed
+    - FNFAL/G3 balance
+    - Inferno Blade: Now deals Slashing + Fire damage when activated, thus allowing melee perks to activate
 
-        -- Perk balances:
-            - Ghost - Brain Snap: Increased freeze cooldown
-            - Demolition - Pressurized Warhead: Reduced percentage-base damage
-            - Artificer - Reduced Solar Orb base burn damage. Increased Floating Chaos energy usage. 
-            - Necromancer - Increased Spectre base health, reduced Spectre incremental health (so at max level health remains the same.)
-        ]]
+-- New Scoreboard by Crash
+
+-- Perk Changes:
+    - Entropy Shield: increased cooldown
+    - Foresight: increased cooldown
+    - Several bug fixes by 1337Ghost]]
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Major Update 1.1.9", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Major Update 1.2.0", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 

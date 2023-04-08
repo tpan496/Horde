@@ -225,7 +225,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_stunstick"].infusions = melee_blunt_infusions
     HORDE.items["arccw_horde_crowbar"].infusions = melee_blunt_infusions
     HORDE.items["arccw_horde_knife"].infusions = melee_slash_infusions
-    HORDE.items["arccw_horde_kunai"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
+    --HORDE.items["arccw_horde_kunai"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
     HORDE.items["arccw_horde_machete"].infusions = melee_slash_infusions
     HORDE.items["arccw_horde_axe"].infusions = melee_slash_infusions
     HORDE.items["arccw_horde_katana"].infusions = {HORDE.Infusion_Chrono, HORDE.Infusion_Hemo, HORDE.Infusion_Flaming, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Rejuvenating}
@@ -347,8 +347,8 @@ function HORDE:GetDefaultItemsData()
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
     --HORDE:CreateItem("Melee",      "Parrying Dagger","arccw_horde_parrying_dagger", 1000,  3, "A small dagger used for parrying.",
     --nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
-    HORDE:CreateItem("Melee",      "Kunai",          "arccw_horde_kunai",     1500,  3, "Ranged throwing knives.\nThrown blades are retrievable.",
-    {Berserker=true}, 10, -1, nil, nil, {Berserker=1}, nil, {HORDE.DMG_SLASH})
+    --HORDE:CreateItem("Melee",      "Kunai",          "arccw_horde_kunai",     1500,  3, "Ranged throwing knives.\nThrown blades are retrievable.",
+    --{Berserker=true}, 10, -1, nil, nil, {Berserker=1}, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Melee",      "Fireaxe",        "arccw_horde_axe",       1500,  5, "Fireaxe.\nHeavy, but can chops most enemies in half.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Melee",      "Stunstick",      "arccw_horde_stunstick", 1500,  4, "Electric baton.\nDeals extra Lightning damage.",
@@ -600,16 +600,7 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Special",    "Void Projector",   "horde_void_projector",   0,  11,
     [[Only usable by Necromancer subclass!
-    Manipulates dark energy to inflict hypothermia and conjure entities.
-    
-    LMB: Void Spear (5/10/20 Energy)
-    Releases a projectile that deals Cold damage.
-    HOLD LMB for different effects.
-    
-    RMB: Raise Spectre (40 Energy)
-    Conjures a Spectre minion.
-    The Spectre minion deals Physical damage and applies Frostbite buildup.
-    HOLD RMB to recall Spectres to your side.]],
+    Manipulates dark energy to inflict hypothermia and conjure entities.]],
     {Engineer=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_COLD, HORDE.DMG_PHYSICAL}, nil, {"Necromancer"}, true)
 
     HORDE:CreateItem("Special",    "Solar Seal",   "horde_solar_seal",   0,  11,
@@ -619,17 +610,7 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Special",    "Astral Relic",   "horde_astral_relic",   0,  11,
     [[Only usable by Warlock subclass!
-    Manipulates negative energy fields.
-    
-    LMB: Astral Pulsar (10 Energy)
-    Releases a homing object that attaches to enemies and deals Physical damage over time.
-    You can have at most 2 active Astral Pulsars.
-    HOLD LMB to detonate all active Astral Pulsars.
-    
-    RMB: Astral Remnant (5 Energy)
-    Plants energy bodies that explode when enemies are nearby, dealing Physical damage.
-    You can plant at most 5 active Astral Remnants.
-    HOLD RMB to charge and refresh duration of all active Astral Remnants.]],
+    Manipulates negative energy fields.]],
     {Demolition=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_PHYSICAL}, nil, {"Warlock"}, true)
 
     HORDE:CreateItem("Special",    "Carcass Biosystem",   "horde_carcass",   0,  13,
