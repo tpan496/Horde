@@ -563,6 +563,7 @@ HORDE.VoteChangeMap = function (ply)
 end
 
 hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
+    if ply.Horde_Has_Ice_Coffin == true then return end
     if ply:IsValid() then
         ply:SetCollisionGroup(15)
         ply:SetCanZoom(false)
@@ -574,6 +575,53 @@ hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
         if beacons and #beacons > 0 then
             local i = math.random(1, #beacons)
             ply:SetPos(beacons[i]:GetPos() + Vector(0,0,24))
+        end
+
+        if HORDE.horde_active_holdzones then
+            for id, zone in pairs(HORDE.horde_active_holdzones) do
+                net.Start("Horde_SyncHoldLocation")
+                net.WriteUInt(zone.Horde_Zone_Id, 4)
+                net.WriteVector(zone:GetPos())
+                net.WriteVector(zone:OBBMins())
+                net.WriteVector(zone:OBBMaxs())
+                net.Send(ply)
+            end
+        end
+
+        if HORDE.horde_active_escapezones then
+            for id, zone in pairs(HORDE.horde_active_escapezones) do
+                net.Start("Horde_SyncEscapeLocation")
+                net.WriteUInt(zone.Horde_Zone_Id, 4)
+                net.WriteVector(zone:GetPos())
+                net.WriteVector(zone:OBBMins())
+                net.WriteVector(zone:OBBMaxs())
+                net.Send(ply)
+            end
+        end
+
+        if HORDE.horde_active_payload_spawns then
+            for id, spawn in pairs(HORDE.horde_active_payload_spawns) do
+                net.Start("Horde_SyncPayloadLocation")
+                net.WriteUInt(spawn.Horde_Payload_Spawn_Id, 4)
+                net.WriteVector(spawn:GetPos())
+                net.Send(ply)
+
+                net.Start("Horde_SyncPayloadIcon")
+                net.WriteUInt(spawn.Horde_Payload_Spawn_Id, 4)
+                net.WriteUInt(spawn.Horde_Payload_Icon, 4)
+                net.Send(ply)
+            end
+        end
+
+        if HORDE.horde_active_payload_destinations then
+            for id, dest in pairs(HORDE.horde_active_payload_destinations) do
+                net.Start("Horde_SyncPayloadDestinationLocation")
+                net.WriteUInt(dest.Horde_Payload_Destination_Id, 4)
+                net.WriteVector(dest:GetPos())
+                net.WriteVector(dest:OBBMins())
+                net.WriteVector(dest:OBBMaxs())
+                net.Send(ply)
+            end
         end
     end
 end)

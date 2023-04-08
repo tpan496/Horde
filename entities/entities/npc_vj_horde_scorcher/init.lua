@@ -175,7 +175,7 @@ function ENT:CustomOnThink_AIEnabled()
 		self.AnimTbl_IdleStand = {"shootflames2"}
 		self.NextIdleStandTime = 0
 		self:StopMoving()
-		util.VJ_SphereDamage(self, self, self:GetPos() + self:OBBCenter() + self:GetForward()*50, range, 2, DMG_BURN, true, true, {UseCone=true, UseConeDegree=30}, function(ent) if HORDE:IsPlayerOrMinion(ent) then ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 7, self) end end)
+		util.VJ_SphereDamage(self, self, self:GetPos() + self:OBBCenter() + self:GetForward()*50, range, 2, DMG_BURN, true, true, {UseCone=true, UseConeDegree=30})
 		-- COSMETICS: Sound, particle and decal
 		self.Garg_FlameSd = VJ_CreateSound(self, "horde/gargantua/gar_flamerun1.ogg")
 		self:StopParticles()

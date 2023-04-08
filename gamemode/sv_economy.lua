@@ -250,6 +250,7 @@ function plymeta:Horde_RecalcWeight()
 end
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
+    if ply.Horde_Has_Ice_Coffin == true then return end
     hook.Run("Horde_ResetStatus", ply)
     net.Start("Horde_ClearStatus")
     net.Send(ply)

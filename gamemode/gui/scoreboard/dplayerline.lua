@@ -113,27 +113,29 @@ function PANEL:RefreshPlayer()
 	local class = translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName
 
 	local name = pl:Name()
+	local color = Color(255,255,255,200)
 
 	self.m_AvatarPanel:CenterVertical()
 
 	self.m_PlayerLabel:SetText( name )
-	self.m_PlayerLabel:SetColor( Color(255,255,255,200) )
+	self.m_PlayerLabel:SetColor( color )
 	self.m_PlayerLabel:SizeToContents()
 
 	self.m_RankLabel:SetText( class )
 	self.m_RankLabel:SizeToContents()
+	self.m_RankLabel:SetColor( color )
 
 	self.m_MoneyLabel:SizeToContents()
 	self.m_MoneyLabel:SetText(pl:Horde_GetMoney().."$")
-	self.m_MoneyLabel:SetColor( Color(255,255,255,200) )
+	self.m_MoneyLabel:SetColor( color )
 	
 	self.m_KillsLabel:SizeToContents()
 	self.m_KillsLabel:SetText(pl:Frags())
-	self.m_KillsLabel:SetColor( Color(255,255,255,200) )
+	self.m_KillsLabel:SetColor( color )
 
 	self.m_DeathsLabel:SizeToContents()
 	self.m_DeathsLabel:SetText(pl:Deaths())
-	self.m_DeathsLabel:SetColor( Color(255,255,255,200) )
+	self.m_DeathsLabel:SetColor( color )
 
 	self.m_PingMeter:CenterVertical()
 
@@ -164,8 +166,9 @@ function PANEL:Paint()
 
 	if P_IsValid then
 		col = Color(40,40,40,200)
-
-		local color_black = Color(0,0,0)
+		if !pl:Alive() then
+			col = Color(100, 0, 0, 200)
+		end
 
 		if self.Hovered then
 			mul = 2
@@ -223,11 +226,13 @@ function PANEL:Paint()
 		end
 
 		if not pl.Horde_PerkChoices then
-			break 
+			break
 		end
 		if (not subclass_name) or (not perk_level) or (not v.choices) then 
-			break 
+			break
 		end
+
+		if (not pl.Horde_PerkChoices[subclass_name]) then break end
 
 		local choice = v.choices[pl.Horde_PerkChoices[subclass_name][perk_level] or 1]
 		local perk = HORDE.perks[choice]

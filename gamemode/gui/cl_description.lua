@@ -302,7 +302,7 @@ function PANEL:SetData(item)
     end
 
     if self.item and self.item.class then
-        self.is_special_weapon_item = self.item.class == "horde_void_projector" or self.item.class == "horde_solar_seal" or self.item.class == "horde_astral_relic" or self.item.class == "horde_carcass" or self.item.class == "horde_pheropod"
+        self.is_special_weapon_item = self.item.class == "horde_carcass" or self.item.class == "horde_pheropod"
         if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_WPN then
             self.wpn = MySelf:GetWeapon(self.item.class)
         end
@@ -957,35 +957,18 @@ function PANEL:Paint()
                         surface.DrawRect(0, 0, self:GetWide(), 200)
                     end
                 else
-                    if self.is_special_weapon_item and MySelf:Horde_GetUpgrade(self.item.class) < 10 then
-                        self.ammo_one_btn:SetTextColor(Color(255,255,255))
-                        local price = HORDE:GetUpgradePrice(self.item.class)
-                        self.ammo_one_btn:SetText("Upgrade to +" .. tostring(MySelf:Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
-                        self.ammo_one_btn:SetWide(self:GetWide())
-                        self.ammo_one_btn.Paint = function ()
-                            surface.SetDrawColor(Color(153,50,204))
-                            surface.DrawRect(0, 0, self:GetParent():GetParent():GetWide(), 200)
-                        end
-
-
-                        self.ammo_ten_btn:SetWide(0)
-                    else
-                        self.ammo_secondary_btn:SetVisible(false)
-                    end
+                    self.ammo_secondary_btn:SetVisible(false)
                 end
 
                 if self:IsUpgradable() then
-                    if self.is_special_weapon_item then
-                    else
-                        self.upgrade_btn:SetVisible(true)
-                        self.upgrade_btn:SetTextColor(Color(255,255,255))
-                        local price = HORDE:GetUpgradePrice(self.item.class)
-                        self.upgrade_btn:SetText("Upgrade to +" .. tostring(MySelf:Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
-                        self.upgrade_btn:SetWide(self:GetWide())
-                        self.upgrade_btn.Paint = function ()
-                            surface.SetDrawColor(Color(153,50,204))
-                            surface.DrawRect(0, 0, self:GetParent():GetWide(), 200)
-                        end
+                    self.upgrade_btn:SetVisible(true)
+                    self.upgrade_btn:SetTextColor(Color(255,255,255))
+                    local price = HORDE:GetUpgradePrice(self.item.class)
+                    self.upgrade_btn:SetText("Upgrade to +" .. tostring(MySelf:Horde_GetUpgrade(self.item.class) + 1) .. " (" .. tostring(price) .. "$)")
+                    self.upgrade_btn:SetWide(self:GetWide())
+                    self.upgrade_btn.Paint = function ()
+                        surface.SetDrawColor(Color(153,50,204))
+                        surface.DrawRect(0, 0, self:GetParent():GetWide(), 200)
                     end
                 else
                     self.upgrade_btn:SetVisible(false)
