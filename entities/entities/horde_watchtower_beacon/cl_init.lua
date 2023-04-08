@@ -11,7 +11,7 @@ function ENT:Think()
         self.dlight.r = 255
         self.dlight.g = 255
         self.dlight.b = 255
-        self.dlight.Brightness = 6
+        self.dlight.Brightness = 4
         self.dlight.Size = 500
         self.dlight.DieTime = CurTime() + 1
     end

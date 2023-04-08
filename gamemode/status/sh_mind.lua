@@ -63,7 +63,7 @@ hook.Add("PlayerTick", "Horde_MindRegen", function (ply)
         hook.Run("Horde_MindRegeneration", ply, bonus)
         ply.Horde_MindRegenLast = ply:Horde_GetMindRegenTick() / (1 + bonus.increase) + CurTime()
         if ply:Armor() > 0 then
-            ply:Horde_SetMind(ply:Horde_GetMind() + ply:Armor() / 2)
+            ply:Horde_SetMind(math.min(ply:Horde_GetMaxMind(), ply:Horde_GetMind() + ply:Armor() / 2))
             ply:SetArmor(0)
         end
     end
