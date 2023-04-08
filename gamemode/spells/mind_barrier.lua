@@ -11,3 +11,4 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
     ply:Horde_AddBarrierStack(20)
 end
 SPELL.Price          = 600
+SPELL.Levels          = {Artificer=5, Warlock=5, Necromancer=5}

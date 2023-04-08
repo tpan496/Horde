@@ -27,7 +27,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
     end
     return HORDE:RaiseSpectre(ply, {greater_spectre=true})
 end
-SPELL.Price                      = 100
+SPELL.Price                      = 50
 SPELL.Upgrades                   = 5
 SPELL.Upgrade_Description        = "Increases minion health and damage."
 SPELL.Upgrade_Prices             = function (upgrade_level)

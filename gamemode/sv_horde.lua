@@ -1052,7 +1052,7 @@ function HORDE:WaveStart()
         if has_hold_obj then
             HORDE.horde_active_holdzones = holdzones
             for id, zone in pairs(holdzones) do
-                zone.Horde_Activated = true
+                zone:Horde_SetActivated(true)
                 HORDE:StartObjective(HORDE.OBJECTIVE_HOLD, {zone=zone})
             end
             HORDE.horde_has_active_objective = true

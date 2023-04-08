@@ -4,13 +4,12 @@ SPELL.Mind            = {35}
 SPELL.Price           = 1500
 SPELL.ChargeTime      = {0}
 SPELL.ChargeRelease   = true
-SPELL.Cooldown        = 5
+SPELL.Cooldown        = 15
 SPELL.Slot            = HORDE.Spell_Slot_Reload
 SPELL.DamageType      = nil
 SPELL.Icon            = "spells/floating_chaos.png"
 SPELL.Type            = {HORDE.Spell_Type_Utility}
 SPELL.Description     = [[Conjures an energy portal that reflects your spells.]]
-SPELL.Levels          = {Artificer=5}
 SPELL.Fire            = function (ply, wpn, charge_stage)
     ply:EmitSound("horde/weapons/solar_seal/floating_chaos_launch.ogg")
     local tr = ply:GetEyeTrace()

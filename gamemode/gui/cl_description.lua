@@ -925,6 +925,7 @@ function PANEL:Paint()
             if self.item.category ~= "Equipment" and self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_WPN then
                 self.ammo_panel:SetVisible(true)
 
+                self.wpn = MySelf:GetWeapon(self.item.class)
                 if self.item.ammo_price and self.item.ammo_price >= 0 and IsValid(self.wpn) and self.wpn:GetPrimaryAmmoType() > 0 then
                     self.ammo_one_btn:SetTextColor(Color(255,255,255))
                     local price = self.item.ammo_price and self.item.ammo_price or HORDE.default_ammo_price

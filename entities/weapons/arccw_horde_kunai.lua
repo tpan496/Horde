@@ -6,7 +6,7 @@ if CLIENT then
     killicon.Add("arccw_horde_throwing_knife", "arccw/weaponicons/arccw_go_nade_knife", Color(0, 0, 0, 255))
     killicon.Add("arccw_horde_thr_knife", "arccw/weaponicons/arccw_go_nade_knife", Color(0, 0, 0, 255))
 end
-SWEP.Base = "arccw_horde_base_melee"
+SWEP.Base = "arccw_base_nade"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -44,14 +44,7 @@ SWEP.Primary.ClipSize = 1
 SWEP.MuzzleVelocity = 10000
 --SWEP.ShootEntity = "arccw_horde_thr_knife"
 
-game.AddAmmoType({
-    name = "arccw_go_nade_knife",
-})
-if CLIENT then
-    language.Add("arccw_go_nade_knife_ammo", SWEP.PrintName)
-end
-
-SWEP.Primary.Ammo = "arccw_go_nade_knife"
+SWEP.Primary.Ammo = "GrenadeHL1"
 
 SWEP.TTTWeaponType = "weapon_ttt_confgrenade"
 SWEP.NPCWeaponType = "weapon_grenade"
@@ -124,12 +117,16 @@ SWEP.Animations = {
     ["idle"] = false,
 }
 
+function SWEP:GetPrimaryAmmoType()
+    return "GrenadeHL1"
+end
+
 function SWEP:SecondaryAttack()
     if self:GetNextSecondaryFire() > CurTime() then return end
     local ply = self:GetOwner()
-    if ply:GetAmmoCount("arccw_go_nade_knife") <= 0 then return end
+    if ply:GetAmmoCount("GrenadeHL1") <= 0 then return end
     self:FireRocket("arccw_horde_thr_knife", 4000, ply:EyeAngles())
-    ply:SetAmmo(ply:GetAmmoCount("arccw_go_nade_knife")-1, "arccw_go_nade_knife")
+    ply:SetAmmo(ply:GetAmmoCount("GrenadeHL1")-1, "GrenadeHL1")
 	self.Weapon:SetNextSecondaryFire(CurTime() + 1)
     local anim = self:SelectAnimation("bash2")
     self:PlayAnimation( anim )

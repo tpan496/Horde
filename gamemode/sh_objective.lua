@@ -226,7 +226,7 @@ function HORDE:GetHoldZones(wave)
     local count = table.Count(final_zones)
     local progress = total_progress / count
     for _, zone in pairs(final_zones) do
-        zone.Horde_Progress_Amount = progress
+        zone.Horde_Progress_Amount = math.max(5, progress)
     end
 
     return final_zones

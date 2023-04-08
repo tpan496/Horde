@@ -41,7 +41,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
 
     ply:EmitSound("horde/weapons/void_projector/void_spear_launch.ogg", 100, math.random(70, 90))
 end
-SPELL.Price                      = 100
+SPELL.Price                      = 50
 SPELL.Upgrades                   = 5
 SPELL.Upgrade_Description        = "Increases damage."
 SPELL.Upgrade_Prices             = function (upgrade_level)

@@ -75,8 +75,7 @@ end
 function ENT:Touch(ply)
     if !ply:IsPlayer() then return end
 
-    ply:Give("arccw_go_nade_knife", true)
-    ply:GiveAmmo(1, "arccw_go_nade_knife", false)
+    ply:GiveAmmo(1, "GrenadeHL1", false)
     self:Remove()
 end
 
