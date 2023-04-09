@@ -42,6 +42,9 @@ function plymeta:Horde_ApplyPerksForClass()
     self:Horde_SetMaxHealth()
     if self:Horde_GetSpellWeapon() then
         self:Horde_RecalcAndSetMaxMind()
+    else
+        self:Horde_SetMaxMind(0)
+        self:Horde_SetMind(0)
     end
 
     net.Start("Horde_SyncPerk")
@@ -82,6 +85,9 @@ net.Receive("Horde_PerkChoice", function(len, ply)
     ply:Horde_SetMaxHealth()
     if ply:Horde_GetSpellWeapon() then
         ply:Horde_RecalcAndSetMaxMind()
+    else
+        ply:Horde_SetMaxMind(0)
+        ply:Horde_SetMind(0)
     end
     
 

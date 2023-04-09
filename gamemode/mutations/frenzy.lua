@@ -6,11 +6,6 @@ MUTATION.Hooks = {}
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "frenzy" then
         if SERVER then
-            local e = EffectData()
-                e:SetOrigin(ent:GetPos())
-                e:SetEntity(ent)
-            util.Effect("frenzy", e)
-
             if ent.AnimationPlaybackRate then
                 ent.AnimationPlaybackRate = ent.AnimationPlaybackRate * 1.5
             else

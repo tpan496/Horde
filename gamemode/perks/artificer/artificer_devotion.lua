@@ -4,7 +4,7 @@ PERK.Description =
 Immune to Ignite and Shock.]]
 PERK.Icon = "materials/perks/artificer/devotion.png"
 PERK.Params = {
-    [1] = {value = 0.25, precent = true},
+    [1] = {value = 0.25, percent = true},
 }
 PERK.Hooks = {}
 

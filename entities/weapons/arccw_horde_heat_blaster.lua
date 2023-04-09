@@ -4,8 +4,9 @@ if (CLIENT) then
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
 	killicon.Add("arccw_horde_heat_blaster", "vgui/hud/arccw_horde_heat_blaster", color_white)
+    killicon.Add("projectile_horde_heat_blaster_projectile", "vgui/hud/arccw_horde_heat_blaster", color_white)
 end
-SWEP.Base = "arccw_base"
+SWEP.Base = "arccw_horde_gl_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -169,10 +170,19 @@ SWEP.Animations = {
     },
 }
 
+function SWEP:Hook_ShouldNotFire()
+    if self:GetCurrentFiremode().Mode == 3 then
+        self.Delay = 120 / 100
+    else
+        self.Delay = 60 / 100
+    end
+end
+
+
 function SWEP:Hook_PostFireRocket(rocket)
     if self:GetCurrentFiremode().Mode == 3 then
-        rocket.Horde_Charged = 1
+        rocket:SetCharged(true)
     else
-        rocket.Horde_Charged = 0
+        rocket:SetCharged(false)
     end
 end

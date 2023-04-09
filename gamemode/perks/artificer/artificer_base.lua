@@ -27,6 +27,8 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         ply:Horde_UnsetSpellWeapon()
         ply:StripWeapons()
         timer.Simple(0, function()
+            if !ply:Alive() then return end
+            if !ply:Horde_GetPerk("artificer_base") then return end
             ply:Give("horde_solar_seal")
             if (!ply:Horde_GetPrimarySpell() or ( ply:Horde_GetPrimarySpell().Weapon ~= nil and !table.HasValue(ply:Horde_GetPrimarySpell().Weapon, "horde_solar_seal") )) then
                 ply:Horde_SetSpell("solar_orb")

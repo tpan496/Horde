@@ -71,7 +71,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
     local level = ply:Horde_GetSpellUpgrade("solar_bolt")
     local bonus = {increase = 0, more = 1}
 	hook.Run("Horde_OnPlayerSpellDamage", ply, bonus)
-    local base_damage = math.floor(25 + 12 * math.pow(level, 1.1)) * bonus.more * (1 + bonus.increase) * 1.25
+    local base_damage = math.floor(25 + 15 * math.pow(level, 1.1)) * bonus.more * (1 + bonus.increase) * 1.25
 
     local dir = ply:GetAimVector()
     local src = ply:GetShootPos()
@@ -86,9 +86,6 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
     if ply.Horde_Floating_Chaos and ply.Horde_Floating_Chaos:IsValid() then
         local pos = ply.Horde_Floating_Chaos:GetPos()
         local max_targets = 5 + ply.Horde_Floating_Chaos.Horde_Spell_Level
-        if charge_stage > 1 then
-            max_targets = 1
-        end
         for _, target in pairs(ents.FindInSphere(ply.Horde_Floating_Chaos:GetPos(), 1000)) do
             if HORDE:IsEnemy(target) and max_targets > 0 then
                 local target_pos = target:GetPos() + target:OBBCenter()

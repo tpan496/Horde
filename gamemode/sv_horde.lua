@@ -214,7 +214,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             HORDE.horde_boss = nil
             horde_boss_properties = nil
             if boss_properties.end_wave and boss_properties.end_wave == true then
-                if HORDE.has_escape_zones then
+                if HORDE.current_wave == HORDE.max_waves and HORDE.has_escape_zones then
                     -- Activate escape zone
                     local zones = HORDE:GetEscapeZones()
                     HORDE.horde_active_escapezones = zones

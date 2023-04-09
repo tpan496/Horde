@@ -9,7 +9,7 @@ PERK.Params = {
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetMaxMind = function (ply, bonus)
+PERK.Hooks.Horde_MindRegeneration = function (ply, bonus)
     if ply:Horde_GetPerk("warlock_sigil_of_courage") then
         bonus.increase = bonus.increase + 0.25
     end

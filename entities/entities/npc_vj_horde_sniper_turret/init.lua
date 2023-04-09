@@ -34,7 +34,7 @@ ENT.NextAnyAttackTime_Range = 0.01 -- How much time until it can use any attack 
 ENT.TimeUntilRangeAttackProjectileRelease = 0.2 -- How much time until the projectile code is ran?
 ENT.RangeDistance = 4000 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 0 -- How close does it have to be until it uses melee?
-ENT.NextRangeAttackTime = 0.85 -- How much time until it can use a range attack?
+ENT.NextRangeAttackTime = 0.9 -- How much time until it can use a range attack?
 ENT.HasFootStepSound = false
 ENT.SoundTbl_FootStep = {}
 ENT.CanTurnWhileStationary = false
@@ -95,19 +95,17 @@ function ENT:CustomRangeAttackCode()
 	if v < 60 then v = 0 end
 	bullet.Num = 1
 	bullet.Src = gunPos
-	local headPos = self:GetEnemy():GetAttachment(self:GetEnemy():LookupAttachment("eyes"))
 	local pos = self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter()
-	if headPos then
-		pos = headPos.Pos
-		pos.z = pos.z - 2
-	end
 	bullet.Dir = pos - gunPos
 	bullet.Spread = Vector(math.random(-5, 5), math.random(-5, 5), math.random(-5, 5))
 	bullet.Tracer = 1
 	bullet.TracerName = "HelicopterTracer"
 	bullet.Force = 10
-	bullet.Damage = 150
+	bullet.Damage = 160
 	bullet.AmmoType = "SniperRound"
+	bullet.Callback = function (ent, tr)
+		util.ParticleTracerEx("HelicopterTracer", gunPos, tr.HitPos, true, self:EntIndex(), -1)
+	end
 	self:FireBullets(bullet)
 	
 	VJ_EmitSound(self, {"npc/sniper/sniper1.wav"}, 90, self:VJ_DecideSoundPitch(100, 110))

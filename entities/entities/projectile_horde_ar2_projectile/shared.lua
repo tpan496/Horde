@@ -9,8 +9,8 @@ ENT.Spawnable 			= false
 AddCSLuaFile()
 
 ENT.Model = "models/effects/combineball.mdl"
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PASSABLE_DOOR
+ENT.CollisionGroupType = COLLISION_GROUP_PASSABLE_DOOR
 ENT.Removing = nil
 ENT.StartPos = nil
 ENT.PlaySoundTimer = 0
@@ -100,7 +100,7 @@ function ENT:PhysicsCollide(data, phys)
 		dmg:SetDamageType(DMG_GENERIC)
 		dmg:SetAttacker(self.Owner)
 		dmg:SetInflictor(self)
-		dmg:SetDamage(45)
+		dmg:SetDamage(40)
 		dmg:SetDamagePosition(self:GetPos())
 		hitEnt:TakeDamageInfo(dmg)
     end
@@ -119,7 +119,7 @@ function ENT:PhysicsCollide(data, phys)
 	dataF = EffectData()
 	dataF:SetOrigin(data.HitPos)
 	dataF:SetNormal(data.HitNormal)
-	dataF:SetScale(50)
+	dataF:SetScale(5)
 	util.Effect("AR2Impact", dataF)
 end
 

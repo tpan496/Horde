@@ -113,7 +113,7 @@ function PANEL:RefreshPlayer()
 	local class = translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName
 
 	local name = pl:Name()
-	local color = Color(255,255,255,200)
+	local color = color_white
 
 	self.m_AvatarPanel:CenterVertical()
 
@@ -264,7 +264,7 @@ function PANEL:Paint()
         else
             surface.SetDrawColor(color_white)
         end
-        surface.DrawTexturedRect(wide * 0.53, -2, 90, 45)
+        surface.DrawTexturedRect(wide * 0.555, -2, 90, 45)
     end
 
 	return true

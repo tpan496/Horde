@@ -21,7 +21,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
         ent:SetAngles(angles)
         local level = ply:Horde_GetSpellUpgrade("ice_arrow")
         ent:SetSpellLevel(level)
-        ent:SetSpellBaseDamages({math.floor(0.75 * 25 + 0.75 * math.pow(level, 1.1) * 5.5), math.floor(7.5 + 0.75 * math.pow(level, 1.1) * 7)})
+        ent:SetSpellBaseDamages({math.floor(0.75 * 25 + 0.75 * math.pow(level, 1.1) * 6), math.floor(7.5 + 0.75 * math.pow(level, 1.1) * 8)})
         ent:Spawn()
         ent:GetPhysicsObject():ApplyForceCenter( force )
     end

@@ -178,6 +178,11 @@ end
 
 function PANEL:SetData(item)
     self.item = item
+    if MySelf.Horde_Infusions and MySelf.Horde_Infusions[item.class] then
+        self.infusion = MySelf.Horde_Infusions[item.class]
+    else
+        self.infusion = HORDE.Infusion_None
+    end
     self.infusion_scroll:Remove()
     self.infusion_scroll = vgui.Create("DScrollPanel", self)
     self.infusion_scroll:Dock(TOP)

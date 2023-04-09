@@ -25,7 +25,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 	
 	local level = ply:Horde_GetSpellUpgrade("pulsar")
 	ent:SetSpellLevel(level)
-	ent:SetSpellBaseDamages({math.floor(150 + math.pow(level, 1.2) * 2)})
+	ent:SetSpellBaseDamages({math.floor(150 + math.pow(level, 1.2) * 50)})
     ent:SetPos( ply:EyePos() + (ply:GetAimVector() * 16 ))
 	ent:SetAngles( ply:EyeAngles() )
 
@@ -40,7 +40,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 end
 SPELL.Price                      = 1500
 SPELL.Upgrades                   = 3
-SPELL.Upgrade_Description        = "Increases damage."
+SPELL.Upgrade_Description        = "Increases damage and number of bounces."
 SPELL.Upgrade_Prices             = function (upgrade_level)
     return 800 + 100 * upgrade_level
 end

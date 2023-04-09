@@ -124,9 +124,14 @@ function scoreboard:show()
 
     board:SizeToChildren(true, false)
 
-	for _, pl in ipairs(player_GetAll()) do
-		CreatePlayerPanel(pl)
-	end
+    local player_score = {}
+    for _, ply in pairs(player.GetAll()) do
+        player_score[ply] = ply:Frags()
+    end
+
+    for ply, _ in SortedPairsByValue(player_score, true) do
+        CreatePlayerPanel(ply)
+    end
 
     local function GetPlayerPanel(pl)
         for _, panel in pairs(PlayerPanels) do

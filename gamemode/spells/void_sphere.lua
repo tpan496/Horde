@@ -20,7 +20,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
         
         local level = ply:Horde_GetSpellUpgrade("void_sphere")
         ent:SetSpellLevel(level)
-        ent:SetSpellBaseDamages({math.floor(25 + math.pow(level, 1.1) * 5.5), math.floor(10 + math.pow(level, 1.1) * 7)})
+        ent:SetSpellBaseDamages({math.floor(25 + math.pow(level, 1.1) * 6), math.floor(10 + math.pow(level, 1.1) * 8)})
         ent:Spawn()
         ent:GetPhysicsObject():ApplyForceCenter( force )
     end

@@ -21,17 +21,17 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
         for i = 1,10 do
             local LT = ents.Create("info_target")
             LT:SetKeyValue("targetname","bolt_target_" .. ply:Name().. "_" .. tostring(i))
-            local f = math.random(-25,25)
-            local g = math.random(-25,25)
+            local f = math.random(-200,200)
+            local g = math.random(-200,200)
             LT:SetPos(Vector(pos.x + f, pos.y + g, -500))
             LT:Fire("kill","",0.5)
             LT:Spawn()
     
             if i == 5 then
-                for _, ent in pairs(ents.FindInSphere(pos, 50)) do
+                for _, ent in pairs(ents.FindInSphere(pos, 200)) do
                     if HORDE:IsEnemy(ent) then
                         local dmg2 = DamageInfo()
-                        dmg2:SetDamage(base_damage * 5)
+                        dmg2:SetDamage(base_damage)
                         dmg2:SetDamageType(DMG_SHOCK)
                         dmg2:SetAttacker(ply)
                         dmg2:SetInflictor(wpn)
@@ -42,10 +42,10 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
             elseif i == 10 then
                 timer.Simple(0.2, function ()
                     if !IsValid(wpn) or !IsValid(ply) then return end
-                    for _, ent in pairs(ents.FindInSphere(pos, 50)) do
+                    for _, ent in pairs(ents.FindInSphere(pos, 200)) do
                         if HORDE:IsEnemy(ent) then
                             local dmg2 = DamageInfo()
-                            dmg2:SetDamage(base_damage * 5)
+                            dmg2:SetDamage(base_damage)
                             dmg2:SetDamageType(DMG_SHOCK)
                             dmg2:SetAttacker(ply)
                             dmg2:SetInflictor(wpn)
@@ -98,8 +98,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
     ply:EmitSound("horde/weapons/solar_seal/hallowed_bolt_launch.ogg", 100, math.random(90, 110))
 
 	local level = ply:Horde_GetSpellUpgrade("hallowed_bolt")
-	local base_damage = 30 + math.floor(10 * math.pow(level, 1.2))
-	base_damage = base_damage * 1.25
+	local base_damage = 400 + math.floor(100 * math.pow(level, 1.2))
 
 	local tr = ply:GetEyeTrace()
 	local param = {}
@@ -127,7 +126,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 		local ent = tr.Entity
 		timer.Simple(0.3, function()
 			if !IsValid(wpn) then return end
-		    LSS(pos, base_damage, ent, properties)
+		    LSS(pos, base_damage, ent)
 		end)
 	end
 end
