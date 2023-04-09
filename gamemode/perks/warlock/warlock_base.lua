@@ -8,9 +8,9 @@ Uses Mind instead of Armor.
 Has access to spells for Astral Relic.]]
 PERK.Icon = "materials/subclasses/warlock.png"
 PERK.Params = {
-    [1] = {percent = true, base = 0, level = 0.02, max = 0.5, classname = "Warlock"},
-    [2] = {value = 0.02, percent = true},
-    [3] = {value = 0.5, percent = true},
+    [1] = {percent = true, base = 0, level = 0.01, max = 0.25, classname = "Warlock"},
+    [2] = {value = 0.01, percent = true},
+    [3] = {value = 0.25, percent = true},
 }
 PERK.Hooks = {}
 
@@ -34,6 +34,8 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         ply:Horde_UnsetSpellWeapon()
         ply:StripWeapons()
         timer.Simple(0, function()
+            if !ply:Alive() then return end
+            if !ply:Horde_GetPerk("warlock_base") then return end
             ply:Give("horde_astral_relic")
             if (!ply:Horde_GetPrimarySpell() or ( ply:Horde_GetPrimarySpell().Weapon ~= nil and !table.HasValue(ply:Horde_GetPrimarySpell().Weapon, "horde_astral_relic"))) then
                 ply:Horde_SetSpell("meteor")

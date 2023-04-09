@@ -818,6 +818,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     ply:Horde_SetMinionCount(0)
 
     ply:Horde_SetMaxWeight(HORDE.max_weight)
+    ply:Horde_UnsetSpellWeapon()
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
     if ply.Horde_Special_Armor then

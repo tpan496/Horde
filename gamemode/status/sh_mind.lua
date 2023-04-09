@@ -7,6 +7,7 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_RecalcAndSetMaxMind()
     timer.Simple(0, function ()
+        if not self:Horde_GetSpellWeapon() then return end
         local bonus = {increase = 0, more = 1, add = 0}
         hook.Run("Horde_OnSetMaxMind", self, bonus)
         self:Horde_SetMaxMind(100 * bonus.more * (1 + bonus.increase) + bonus.add)

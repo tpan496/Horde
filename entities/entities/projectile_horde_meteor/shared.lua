@@ -10,8 +10,7 @@ ENT.Spawnable 			= false
 AddCSLuaFile()
 
 ENT.Model = "models/props_lab/bigrock.mdl"
-ENT.Models = {"models/props_wasteland/rockgranite02b.mdl",
-"models/props_wasteland/rockgranite03b.mdl",}
+ENT.Models = {"models/props_wasteland/rockgranite03b.mdl"}
 ENT.Ticks = 0
 ENT.FuseTime = 5
 ENT.CollisionGroup = COLLISION_GROUP_PASSABLE_DOOR

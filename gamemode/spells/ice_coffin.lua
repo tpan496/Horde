@@ -1,6 +1,6 @@
 SPELL.PrintName      = "Ice Coffin"
 SPELL.Weapon         = {"horde_void_projector"}
-SPELL.Mind           = {25}
+SPELL.Mind           = {20}
 SPELL.Price          = 1500
 SPELL.ChargeTime     = {0}
 SPELL.ChargeRelease  = true

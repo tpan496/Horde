@@ -32,9 +32,6 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
                     net.WriteVector(tr.HitPos)
                 net.Broadcast()
 
-                util.ParticleTracerEx("vortigaunt_beam", src, tr.HitPos, true, -1, -1)
-				util.ParticleTracerEx("vortigaunt_beam_b", src, tr.HitPos, true, -1, -1)
-
                 if c == 1 then
                     ply:EmitSound("horde/weapons/solar_seal/solar_storm_launch.ogg", 100, math.random(70, 90))
                     sound.Play("horde/weapons/solar_seal/solar_storm_hit.ogg", tr.HitPos, 80, math.random(70, 90))
@@ -82,31 +79,28 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
     local src = ply:GetShootPos()
     if charge_stage == 1 then
         for i = 1, 4 do
-            Hitscan(base_damage, Vector(0.25, 0.25, 0), dir, src, p)
+            Hitscan(base_damage, Vector(0.25, 0.25, 0), dir, src)
         end
     elseif charge_stage == 2 then
         for i = 1, 6 do
-            Hitscan(base_damage, Vector(0.15, 0.15, 0), dir, src, p)
+            Hitscan(base_damage, Vector(0.15, 0.15, 0), dir, src)
         end
     elseif charge_stage == 3 then
         for i = 1, 4 do
-            Hitscan(base_damage, Vector(0.05, 0.05, 0), dir, src, p)
-            Hitscan(base_damage, Vector(0.1, 0.1, 0), dir, src, p)
+            Hitscan(base_damage, Vector(0.05, 0.05, 0), dir, src)
+            Hitscan(base_damage, Vector(0.1, 0.1, 0), dir, src)
         end
     end
 
     if ply.Horde_Floating_Chaos and ply.Horde_Floating_Chaos:IsValid() then
         local pos = ply.Horde_Floating_Chaos:GetPos()
         local max_targets = 5 + ply.Horde_Floating_Chaos.Horde_Spell_Level
-        if charge_stage > 1 then
-            max_targets = 1
-        end
         for _, target in pairs(ents.FindInSphere(ply.Horde_Floating_Chaos:GetPos(), 1000)) do
             if HORDE:IsEnemy(target) and max_targets > 0 then
                 local target_pos = target:GetPos() + target:OBBCenter()
                 local d2 = target_pos - pos
                 d2:Normalize()
-                Hitscan(base_damage, nil, d2, pos, p)
+                Hitscan(base_damage, nil, d2, pos)
                 max_targets = max_targets - 1
             end
         end

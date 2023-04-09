@@ -36,10 +36,13 @@ end
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "necromancer_base" then
         ply:Horde_SetMindRegenTick(0.25)
+        ply:SetMaxArmor(0)
         if ply:HasWeapon("horde_void_projector") == true then return end
         ply:Horde_UnsetSpellWeapon()
         ply:StripWeapons()
         timer.Simple(0, function()
+            if !ply:Alive() then return end
+            if !ply:Horde_GetPerk("necromancer_base") then return end
             ply:Give("horde_void_projector")
             if (!ply:Horde_GetPrimarySpell() or ( ply:Horde_GetPrimarySpell().Weapon ~= nil and !table.HasValue(ply:Horde_GetPrimarySpell().Weapon, "horde_void_projector"))) then
                 ply:Horde_SetSpell("void_sphere")
@@ -63,6 +66,7 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
         ply:Horde_SetMaxMind(0)
         ply:Horde_SetMind(0)
         ply:Horde_SetMindRegenTick(0)
+        ply:SetMaxArmor(100)
     end
 end
 

@@ -368,18 +368,23 @@ net.Receive("Horde_BuyInfusion", function (len, ply)
     if not ply:IsValid() or not ply:Alive() then return end
     local class = net.ReadString()
     local infusion = net.ReadUInt(5)
-    local price = 100 + HORDE.items[class].price / 5
-    if ply:Horde_GetMoney() >= price then
-        ply:Horde_AddMoney(-price)
-        HORDE:InfuseWeapon(ply, class, infusion)
-        net.Start("Horde_SyncInfusion")
-            net.WriteTable(ply.Horde_Infusions)
-        net.Send(ply)
-        ply:Horde_SyncEconomy()
-    end
+    if HORDE.items[class]
+    and HORDE.items[class].infusions
+    and !table.IsEmpty(HORDE.items[class].infusions)
+    and table.HasValue(HORDE.items[class].infusions, infusion) then
+        local price = 100 + HORDE.items[class].price / 5
+        if ply:Horde_GetMoney() >= price then
+            ply:Horde_AddMoney(-price)
+            HORDE:InfuseWeapon(ply, class, infusion)
+            net.Start("Horde_SyncInfusion")
+                net.WriteTable(ply.Horde_Infusions)
+            net.Send(ply)
+            ply:Horde_SyncEconomy()
+        end
 
-    if infusion == HORDE.Infusion_Ruination then
-        ply.Horde_Last_Ruination_Check = CurTime()
+        if infusion == HORDE.Infusion_Ruination then
+            ply.Horde_Last_Ruination_Check = CurTime()
+        end
     end
 end)
 

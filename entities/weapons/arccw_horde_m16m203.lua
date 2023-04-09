@@ -294,11 +294,11 @@ end
 SWEP.Animations = {
 		["enter_ubgl"] = {
 			Source = "idle",
-			Time = 1/30
+			Time = 1/60
 		},
 		["exit_ubgl"] = {
 			Source = "idle",
-			Time = 1/30
+			Time = 1/60
 		}, 						-- Fuck you.
     ["idle"] = {
         Source = "idle",

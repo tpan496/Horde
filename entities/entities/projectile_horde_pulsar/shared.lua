@@ -54,7 +54,7 @@ function ENT:CustomOnInitialize()
         self.Target = nil
     end
 
-    self.TotalBounce = 20
+    self.TotalBounce = 25 + (self.Horde_SpellLevel or 0) * 10
     end
 
     --if CLIENT then

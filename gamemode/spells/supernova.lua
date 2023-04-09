@@ -35,7 +35,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
     sound.Play("horde/spells/supernova.ogg", pos, 500, 100, 1, CHAN_AUTO)
     for i = 1, 17 do
         timer.Simple((i-1) * 0.2, function ()
-            HORDE:ApplyDamageInRadius(pos, 650, HORDE:DamageInfo(base_damage, DMG_BURN, ply, wpn), function (ent)
+            HORDE:ApplyDamageInRadius(pos, 750, HORDE:DamageInfo(base_damage, DMG_BURN, ply, wpn), function (ent)
             end)
         end)
     end
@@ -68,7 +68,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
         dmg:SetDamageType(DMG_BLAST)
         dmg:SetDamage(base_damage_2)
         dmg:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
-        util.BlastDamageInfo(dmg, pos, 650)
+        util.BlastDamageInfo(dmg, pos, 850)
     end)
 end
 SPELL.Price                      = 1500

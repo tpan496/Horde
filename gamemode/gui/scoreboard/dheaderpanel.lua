@@ -10,14 +10,14 @@ function PANEL:Init()
 
     self.ClassPanel = self.m_HeaderPanel:Add("DPanel")
 
-	self.m_NameLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
-	self.m_ClassLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
-    self.m_GadgetLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
-    self.m_PerksLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
-    self.m_MoneyLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
-    self.m_KillsLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
-    self.m_DeathsLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
-    self.m_PingLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white_alpha200)
+	self.m_NameLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white)
+	self.m_ClassLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white)
+    self.m_GadgetLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white)
+    self.m_PerksLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white)
+    self.m_MoneyLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white)
+    self.m_KillsLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white)
+    self.m_DeathsLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white)
+    self.m_PingLabel = HORDE:EasyLabel(self.m_HeaderPanel, " ", "Content", color_white)
 
 	self:InvalidateLayout()
 end

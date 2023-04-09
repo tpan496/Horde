@@ -7,7 +7,7 @@ end
 function EFFECT:Think()
     if self.ticks % 5 == 0 then
         if not self.entity or not self.entity:IsValid() then return true end
-        if not self.entity.Horde_Mutation then self.emitter:Finish() return false end
+        if not self.entity.Horde_Mutation and IsValid(self.emitter) then self.emitter:Finish() return false end
         local pos = self.entity:GetPos()
         if not self.emitter then
             self.emitter = ParticleEmitter(pos)

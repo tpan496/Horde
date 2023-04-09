@@ -71,7 +71,7 @@ function ENT:Think()
             if ent:IsValid() and ent:IsNPC() and ent:Health() > 0 and not HORDE:IsPlayerMinion(ent) then
                 dmg:SetDamagePosition(ent:GetPos() + ent:OBBCenter())
                 self:EmitSound("npc/vort/attack_shoot.wav")
-                util.BlastDamageInfo(dmg, ent:GetPos(), 80)
+                ent:TakeDamageInfo(dmg)
                 util.ParticleTracerEx("vortigaunt_beam", self:GetPos(), ent:GetPos() + ent:OBBCenter(), true, self:EntIndex(), -1)
                 util.ParticleTracerEx("vortigaunt_beam_b", self:GetPos(), ent:GetPos() + ent:OBBCenter(), true, self:EntIndex(), -1)
                 break

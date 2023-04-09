@@ -38,7 +38,8 @@ if SERVER then
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_SetEscapeProgress(progress)
-    if progress > 100 then
+    if progress > 60 then
+        if HORDE.game_end then return end
         HORDE:WaveEnd()
         HORDE:GameEnd("VICTORY")
         return
@@ -194,7 +195,7 @@ end
 function HORDE:GetHoldZones(wave)
     if not HORDE.has_hold_zones then return end
     local zones = {}
-    local total_progress = 10
+    local total_progress = 90
     if not table.IsEmpty(HORDE.hold_zones_all_waves) then
         for _, zone in pairs(HORDE.hold_zones_all_waves) do
             if not zones[zone.Horde_Zone_Group] then
@@ -226,7 +227,7 @@ function HORDE:GetHoldZones(wave)
     local count = table.Count(final_zones)
     local progress = total_progress / count
     for _, zone in pairs(final_zones) do
-        zone.Horde_Progress_Amount = math.max(5, progress)
+        zone.Horde_Total_Progress = progress / count
     end
 
     return final_zones

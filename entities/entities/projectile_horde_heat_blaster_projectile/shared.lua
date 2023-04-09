@@ -19,6 +19,15 @@ ENT.Horde_Charged = 0
 function ENT:Draw()
 self.Entity:DrawModel()
 end
+
+function ENT:SetupDataTables()
+    self:NetworkVar( "Bool", 0, "Charged" )
+
+    if SERVER then
+        self:SetCharged(false)
+    end
+end
+
 if SERVER then
 
 function ENT:Initialize()
@@ -37,12 +46,13 @@ function ENT:Initialize()
 	self.StartGlow1:SetKeyValue( "framerate","10.0" )
 	self.StartGlow1:SetKeyValue( "model","sprites/orangeglow1.spr" )
 	self.StartGlow1:SetKeyValue( "spawnflags","0" )
-    if self.Horde_Charged >= 1 then
-        self.StartGlow1:SetKeyValue( "scale","2" )
-    else
-        self.StartGlow1:SetKeyValue( "scale","0.5" )
-    end
-	
+    timer.Simple(0, function ()
+        if self:GetCharged() == true then
+            self.StartGlow1:SetKeyValue( "scale","2" )
+        else
+            self.StartGlow1:SetKeyValue( "scale","0.5" )
+        end
+    end)
 	self.StartGlow1:SetPos( self.Entity:GetPos() )
 	self.StartGlow1:Spawn()
 	self.StartGlow1:SetParent( self.Entity )
@@ -98,13 +108,13 @@ end
 function ENT:PhysicsCollide(data, collider)
     if self.Removing then return end
     local v = 125
-    if self.Horde_Charged >= 1 then
+    if self:GetCharged() == true then
         v = 250
     end
 
 	local dmg = DamageInfo()
 	dmg:SetAttacker(self.Owner)
-	dmg:SetInflictor(self.Inflictor)
+	dmg:SetInflictor(self.Owner)
 	dmg:SetDamageType(DMG_BURN)
 	dmg:SetDamage(v)
 	util.BlastDamageInfo(dmg, self:GetPos(), v)
@@ -113,9 +123,13 @@ function ENT:PhysicsCollide(data, collider)
 		util.Decal("Scorch", data.HitPos + data.HitNormal, data.HitPos - data.HitNormal)
 	end
 
+    local attacker = self
+    if self.Owner:IsValid() then
+        attacker = self.Owner
+    end
+
     self:FireBullets({
-        Attacker = owner,
-        Inflitor = self,
+        Attacker = attacker,
         Damage = v,
         Tracer = 0,
         Distance = 1000,
@@ -128,7 +142,11 @@ function ENT:PhysicsCollide(data, collider)
 
     local effectdata = EffectData()
 	effectdata:SetOrigin(data.HitPos)
-	effectdata:SetScale((1 + self.Horde_Charged)/2.5)
+    if self:GetCharged() == true then
+        effectdata:SetScale(2/2.5)
+    else
+        effectdata:SetScale(1/2.5)
+    end
 	effectdata:SetEntity(self.Owner)
 	util.Effect("horde_blaster_flame_explosion", effectdata )
 
@@ -166,7 +184,7 @@ function ENT:Think()
         particle:SetDieTime(0.5)
         particle:SetStartAlpha(255)
         particle:SetEndAlpha(0)
-        if self.Horde_Charged >= 1 then
+        if self:GetCharged() == true then
             particle:SetStartSize(math.Rand(10, 30))
         else
             particle:SetStartSize(math.Rand(5, 15))

@@ -38,7 +38,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
     local base_damage = math.floor((50 + 17 * math.pow(level, 1.2)) * bonus.more * (1 + bonus.increase))
     for i = 1, 17 do
         timer.Simple((i-1) * 0.2, function ()
-            HORDE:ApplyDamageInRadius(pos, 650, HORDE:DamageInfo(base_damage, DMG_REMOVENORAGDOLL, ply, wpn), function (ent)
+            HORDE:ApplyDamageInRadius(pos, 750, HORDE:DamageInfo(base_damage, DMG_REMOVENORAGDOLL, ply, wpn), function (ent)
                 local dir = (ent:GetPos() - pos) * -1
                 local acc = math.max(500 * 1.05 - dir:Length(), 0 ) * 0.03
                 acc = math.Round( acc )

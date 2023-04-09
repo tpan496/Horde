@@ -1,6 +1,6 @@
 SPELL.PrintName      = "Static Guard"
 SPELL.Weapon         = {"horde_solar_seal"}
-SPELL.Mind           = {10}
+SPELL.Mind           = {5}
 SPELL.ChargeTime     = {0}
 SPELL.ChargeRelease  = true
 SPELL.Cooldown       = 5
@@ -57,4 +57,4 @@ SPELL.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
         end
     end
 end
-SPELL.Price = 500
+SPELL.Price = 300
