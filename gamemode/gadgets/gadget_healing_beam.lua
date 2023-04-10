@@ -72,8 +72,16 @@ GADGET.Hooks.Horde_OnSetGadget = function (ply, gadget)
     if gadget ~= "gadget_healing_beam" then return end
     local id = ply:SteamID()
     timer.Create("Horde_Healing_Beam_Effect" .. id, 0.01, 0, function ()
-        if not ply.Horde_Healing_Beam or not ply.Horde_Healing_Beam:IsValid() then return end
-        if not ply.Horde_Healing_BeamTarget or not ply.Horde_Healing_BeamTarget:IsValid() then return end
+        if not ply.Horde_Healing_Beam or not ply.Horde_Healing_Beam:IsValid() then
+            ply.Horde_Healing_Beam:Remove()
+            ply.Horde_Healing_BeamTarget:Remove()
+            return
+        end
+        if not ply.Horde_Healing_BeamTarget or not ply.Horde_Healing_BeamTarget:IsValid() then
+            ply.Horde_Healing_Beam:Remove()
+            ply.Horde_Healing_BeamTarget:Remove()
+            return
+        end
         if not ply.Horde_Healing_Target or not ply.Horde_Healing_Target:IsValid() then
             ply.Horde_Healing_Beam:Remove()
             ply.Horde_Healing_BeamTarget:Remove()

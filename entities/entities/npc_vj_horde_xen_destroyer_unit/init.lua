@@ -122,6 +122,13 @@ function ENT:CustomOnInitialize()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Critical = nil
+
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	if HORDE:IsLightningDamage(dmginfo) or HORDE:IsBlastDamage(dmginfo) then
+		dmginfo:ScaleDamage(1.25)
+    end
+end
+
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     if not self.Critical and (self:Health() < self:GetMaxHealth() * 0.6) then
         self.Critical = true

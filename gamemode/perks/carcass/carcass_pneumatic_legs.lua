@@ -29,7 +29,6 @@ PERK.Hooks.Horde_GetFallDamage = function(ply, speed, bonus)
     if ply:Horde_GetPerk("carcass_pneumatic_legs") then
         bonus.less = bonus.less * 0.1
         local dmg = math.max(0, math.ceil(0.2418 * speed - 141.75)) * 2
-        print(dmg)
         if dmg < 10 then return end
         local dmginfo = DamageInfo()
         dmginfo:SetAttacker(ply)
@@ -37,11 +36,11 @@ PERK.Hooks.Horde_GetFallDamage = function(ply, speed, bonus)
         dmginfo:SetDamageType(DMG_GENERIC)
         dmginfo:SetDamage(dmg)
         dmginfo:SetDamagePosition(ply:GetPos())
-        util.BlastDamageInfo(dmginfo, ply:GetPos(), 200)
+        util.BlastDamageInfo(dmginfo, ply:GetPos(), 250)
         local e = EffectData()
             e:SetNormal(Vector(0,0,1))
             e:SetOrigin(ply:GetPos())
-            e:SetRadius(200)
+            e:SetRadius(250)
         util.Effect("seismic_wave", e, true, true)
         ply.Horde_Pneumatic_Leg_Ready = true
     end

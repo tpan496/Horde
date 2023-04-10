@@ -1,5 +1,5 @@
 ENT.Type 				= "anim"
-ENT.Base 				= "base_entity"
+ENT.Base 				= "projectile_horde_spell_base"
 ENT.PrintName 			= "HE Round"
 ENT.Author 				= ""
 ENT.Information 		= ""
@@ -17,14 +17,12 @@ ENT.Removing = nil
 ENT.StartPos = nil
 ENT.PlaySoundTimer = 0
 ENT.StartTime = 0
-ENT.BaseDamage = 25
-ENT.BaseSplashDamage = 10
 
 function ENT:Draw()
 self.Entity:DrawModel()
 end
 
-function ENT:Initialize()
+function ENT:CustomOnInitialize()
     if SERVER then
     local pb_vert = 1
     local pb_hor = 1
@@ -46,22 +44,19 @@ function ENT:Initialize()
     self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
     self.ExplodeTimer = CurTime() + 0.4
 
-    if self.properties.charged == 1 then
+    if self:GetCharged() == 1 then
         self.ExplodeTimer = self.ExplodeTimer + 0.5
-    elseif self.properties.charged == 2 then
+    elseif self:GetCharged() == 2 then
         self.ExplodeTimer = self.ExplodeTimer + 0.6
     end
 
-    if self.properties.cascade == true then
+    if self.VoidCascade == true then
         self.ExplodeTimer = CurTime() + 5
         self:SetCollisionGroup(COLLISION_GROUP_WORLD)
     end
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     self:SetColor(Color(0,0,0,0))
     self.StartTime = CurTime()
-
-    self.BaseDamage = self.BaseDamage + 3 * self.properties.level
-    self.BaseSplashDamage = self.BaseSplashDamage + 4 * self.properties.level
     end
 
     ParticleEffectAttach("snowcore_small", PATTACH_ABSORIGIN_FOLLOW, self, 0)
@@ -87,16 +82,16 @@ end
 function ENT:Think()
     if SERVER and self.PlaySoundTimer <= CurTime() then
         self:EmitSound("weapons/physcannon/energy_bounce2.wav", 100, 50)
-        if self.properties.cascade then
+        if self.VoidCascade then
             self.PlaySoundTimer = CurTime() + 0.25
             local dmg_mult = 1
-            if self.properties.siphon == true then
+            --[[if self.properties.siphon == true then
                 dmg_mult = dmg_mult * (1 + 0.25 * self.properties.energy / 100)
             end
 
             if self.properties.field == true then
                 dmg_mult = dmg_mult * math.max(1, (1 + math.max(0, (CurTime() - self.StartTime))))
-            end
+            end]]--
 
             local e = EffectData()
             e:SetOrigin(self:GetPos())
@@ -108,7 +103,7 @@ function ENT:Think()
             dmg_splash:SetAttacker(self.Owner)
             dmg_splash:SetInflictor(self)
             dmg_splash:SetDamageType(DMG_REMOVENORAGDOLL)
-            dmg_splash:SetDamage(self.BaseDamage * dmg_mult)
+            dmg_splash:SetDamage(self:GetSpellBaseDamage(1) * dmg_mult)
             dmg_splash:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
             util.BlastDamageInfo(dmg_splash, self:GetPos(), 150)
         else
@@ -120,13 +115,9 @@ function ENT:Think()
     end
 end
 
-function ENT:SetupDataTables()
-	self:NetworkVar( "Int", 0, "Charged" )
-end
-
 function ENT:Detonate(hitpos, ent)
     if !self:IsValid() or self.Removing then return end
-
+    if self.VoidCascade == true then return end
     local attacker = self
 
     if self.Owner:IsValid() then
@@ -135,26 +126,26 @@ function ENT:Detonate(hitpos, ent)
 
     local dmg_mult = 1
     local radius_mult = 0.75
-    if self.properties.charged == 1 then
+    if self:GetCharged() == 1 then
         dmg_mult = 1.5
         radius_mult = 1
-    elseif self.properties.charged == 2 then
+    elseif self:GetCharged() == 2 then
         dmg_mult = 2
         radius_mult = 1.5
     end
 
-    if self.properties.field == true then
+    --[[if self.properties.field == true then
         dmg_mult = dmg_mult * math.max(1, (1 + math.max(0, (CurTime() - self.StartTime))))
     end
 
     if self.properties.siphon == true then
         dmg_mult = dmg_mult * (1 + 0.25 * self.properties.energy / 100)
-    end
+    end]]--
 
-    if self.properties.sphere ~= true then
+    --[[if self.properties.sphere ~= true then
         self:FireBullets({
             Attacker = attacker,
-            Damage = self.BaseDamage * dmg_mult,
+            Damage = self:GetSpellBaseDamage(1) * dmg_mult,
             Tracer = 0,
             Distance = 4000,
             Dir = (hitpos - self:GetPos()),
@@ -173,21 +164,21 @@ function ENT:Detonate(hitpos, ent)
                     tr.Entity:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, dmg:GetDamage()/2, self.Owner)
                 end
 
-                if self.properties.charged >= 1 then
+                if self:GetCharged() >= 1 then
                     local dmg_splash = DamageInfo()
                     dmg_splash:SetAttacker(self.Owner)
                     dmg_splash:SetInflictor(tr.Entity)
                     dmg_splash:SetDamageType(DMG_REMOVENORAGDOLL)
-                    dmg_splash:SetDamage(self.BaseSplashDamage * dmg_mult)
+                    dmg_splash:SetDamage(self:GetSpellBaseDamage(2) * dmg_mult)
                     dmg_splash:SetDamageCustom(HORDE.DMG_SPLASH)
                     util.BlastDamageInfo(dmg_splash, self:GetPos(), 150 * radius_mult)
                 end
             end
         })
-    else
+    else]]--
         self:FireBullets({
             Attacker = attacker,
-            Damage = self.BaseDamage * dmg_mult,
+            Damage = self:GetSpellBaseDamage(1) * dmg_mult,
             Tracer = 0,
             Distance = 4000,
             Dir = (hitpos - self:GetPos()),
@@ -200,22 +191,20 @@ function ENT:Detonate(hitpos, ent)
                 if (not tr.Entity:IsValid()) or (not tr.Entity:IsNPC()) then
                     if ent:IsNPC() then
                         ent:TakeDamageInfo(dmg)
-                        ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, dmg:GetDamage()/2, self.Owner)
                     end
                 else
-                    tr.Entity:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, dmg:GetDamage()/2, self.Owner)
                 end
 
                 local dmg_splash = DamageInfo()
                 dmg_splash:SetAttacker(self.Owner)
                 dmg_splash:SetInflictor(tr.Entity)
                 dmg_splash:SetDamageType(DMG_REMOVENORAGDOLL)
-                dmg_splash:SetDamage(self.BaseSplashDamage * dmg_mult)
+                dmg_splash:SetDamage(self:GetSpellBaseDamage(2) * dmg_mult)
                 dmg_splash:SetDamageCustom(HORDE.DMG_SPLASH)
                 util.BlastDamageInfo(dmg_splash, self:GetPos(), 150 * 1.25 * radius_mult)
             end
         })
-    end
+    --end
 
     self.Removing = true
     self:Remove()
@@ -223,30 +212,29 @@ end
 
 function ENT:PhysicsCollide(colData, collider)
     if !self:IsValid() or self.Removing then return end
-    if self.properties.cascade then return end
     local pos = colData.HitPos
-    if self.properties.field == true then
+    --[[if self.properties.field == true then
         if colData.HitEntity:IsNPC() then
             local buildup_mult = 1
-            if self.properties.charged == 1 then
+            if self:GetCharged() == 1 then
                 buildup_mult = 1.5
-            elseif self.properties.charged == 2 then
+            elseif self:GetCharged() == 2 then
                 buildup_mult = 2
             end
             colData.HitEntity:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, 20 * buildup_mult, self.Owner)
         end
-    end
+    end]]--
     ParticleEffect("ice_impact_heavy", pos, Angle(0,0,0), self.Owner)
     sound.Play("horde/weapons/void_projector/void_spear_hit.ogg", pos, 100, math.random(70, 90))
 
-    if self.properties.charged == 1 then
+    if self:GetCharged() == 1 then
         local e = EffectData()
             e:SetOrigin(pos)
             e:SetNormal(Vector(0,0,1))
             e:SetScale(0.4)
         util.Effect("cold_explosion", e, true, true)
         sound.Play("horde/weapons/void_projector/void_spear_blast.ogg", pos, 100, math.random(70, 90))
-    elseif self.properties.charged == 2 then
+    elseif self:GetCharged() == 2 then
         local e = EffectData()
             e:SetOrigin(pos)
             e:SetNormal(Vector(0,0,1))

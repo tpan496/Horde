@@ -19,8 +19,11 @@ local status_color = {
     [HORDE.Status_Shock] = HORDE.DMG_COLOR[HORDE.DMG_LIGHTNING],
     [HORDE.Status_Break] = HORDE.DMG_COLOR[HORDE.DMG_POISON],
     [HORDE.Status_Bleeding] = HORDE.color_crimson_violet,
+    [HORDE.Status_Hemorrhage] = HORDE.color_crimson_violet,
     [HORDE.Status_Decay] = HORDE.STATUS_COLOR[HORDE.Status_Decay],
-    [HORDE.Status_Necrosis] = HORDE.STATUS_COLOR[HORDE.Status_Necrosis]
+    [HORDE.Status_Necrosis] = HORDE.STATUS_COLOR[HORDE.Status_Necrosis],
+    [HORDE.Status_CanHold] = Color(0, 255, 0),
+    [HORDE.Status_HasPayload] = Color(0, 255, 0),
 }
 
 local function DrawTextWithShadow(text, font, x, y, col, align_x, align_y)
@@ -65,13 +68,8 @@ local function DrawStatus(status, stack, displacement)
         if status_color[status] then
             color = status_color[status]
         end
-        if color ~= color_white then
-            if stack < 100 then
-                draw.RoundedBox(5, ScreenScale(displacement), ScreenScale(55/4), status_icon_s, ScreenScale(10/4), Color(40,40,40,200))
-                draw.RoundedBox(5, ScreenScale(displacement), ScreenScale(55/4), ScreenScale(50 * stack / 400), ScreenScale(10/4), HORDE.color_crimson_violet)
-            else
-                draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, HORDE.color_crimson_violet)
-            end
+        if HORDE.Is_Status_Debuff[status] then
+            draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, HORDE.color_crimson_violet)
             draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
         else
             draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
@@ -115,6 +113,22 @@ local function DrawBuildup(status, buildup, x, y)
 
     surface.SetMaterial(mat)
     surface.SetDrawColor(color)
+    surface.DrawTexturedRect(5 + x, 5 + y, 30, 30)
+end
+
+local function DrawProgress(status, buildup, x, y)
+    if buildup <= 0 then return end
+    local mat
+    local color = Color(0, 255, 0)
+
+    draw.RoundedBox(5, x + 50, y + 10, 200, 15, Color(40,40,40,200))
+    draw.RoundedBox(5, x + 50, y + 10, 200 * buildup / 100, 15, color)
+    draw.RoundedBox(10, x, y, 40, 40, Color(40,40,40,200))
+
+    mat = Material(HORDE.Status_Icon[status], "mips smooth")
+
+    surface.SetMaterial(mat)
+    surface.SetDrawColor(color_white)
     surface.DrawTexturedRect(5 + x, 5 + y, 30, 30)
 end
 
@@ -164,7 +178,12 @@ buildup_panel.Paint = function ()
         local posy = 200
         posy = posy - (total_buildup) * 55 / 2
         for status, stack in pairs(MySelf:GetStatusTable()) do
-            if HORDE:IsDebuff(status) then
+            if status == HORDE.Status_CanEscape then
+                if stack <= 0 then goto cont end
+                DrawProgress(status, stack, posx, posy)
+                posy = posy + 45
+                ::cont::
+            elseif HORDE:IsDebuff(status) then
                 if stack <= 0 then goto cont end
                 DrawBuildup(status, stack, posx, posy)
                 posy = posy + 45
@@ -264,13 +283,18 @@ end)
 
 local hp = Material("status/hp.png", "smooth")
 local armor = Material("status/armor.png", "mips smooth")
+local mind = Material("status/mind.png", "mips smooth")
 local weight = Material("weight.png")
 local vhp = 0
 local varmor = 0
+local vmind = 0
 surface.CreateFont("HealthInfo", { font = "arial", size = ScreenScale(15), extended = true})
 surface.CreateFont("HealthInfo2", { font = "arial", size = ScreenScale(12), extended = true})
 surface.CreateFont("Horde_WeaponName", { font = "arial", size = ScreenScale(6), extended = true})
 surface.CreateFont("Horde_Weight", { font = "arial", size = ScreenScale(8), extended = true})
+surface.CreateFont("Horde_SpellButton", { font = "arial", size = ScreenScale(4), extended = true})
+surface.CreateFont("Horde_SpellCooldown", { font = "arial", size = ScreenScale(6), extended = true})
+surface.CreateFont("Horde_SpellMindCost", { font = "arial", size = ScreenScale(4), extended = true})
 local font = "HealthInfo"
 local font2 = "HealthInfo2"
 local font3 = "Horde_WeaponName"
@@ -321,9 +345,14 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
             colhp = Color(255, 185, 185)
         end
 
+        local use_mind = MySelf:Horde_GetMaxMind() > 0
         if MySelf:Alive() then
             vhp = MySelf:Health()
-            varmor = MySelf:Armor()
+            if use_mind then
+                vmind = MySelf:Horde_GetMind()
+            else
+                varmor = MySelf:Armor()
+            end
         else
             vhp = 0
             varmor = 0
@@ -335,12 +364,19 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
         surface.SetMaterial(hp)
         surface.SetDrawColor(colhp)
         surface.DrawTexturedRect(icon_x, icon_y, icon_s, icon_s)
-        surface.SetMaterial(armor)
+        
+        if use_mind then
+            surface.SetMaterial(mind)
+            draw.SimpleText(tostring(math.Round(vmind)), font, icon_x + icon_s + ScreenScale(1), icon_y + ScreenScale(14), color_white)
+        else
+            surface.SetMaterial(armor)
+            draw.SimpleText(tostring(math.Round(varmor)), font, icon_x + icon_s + ScreenScale(1), icon_y + ScreenScale(14), color_white)
+        end
+        
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(icon_x, icon_y + ScreenScale(14), icon_s, icon_s)
 
         draw.SimpleText(tostring(math.Round(vhp)), font, icon_x + icon_s + ScreenScale(1), icon_y - ScreenScale(0.5), colhp)
-        draw.SimpleText(tostring(math.Round(varmor)), font, icon_x + icon_s + ScreenScale(1), icon_y + ScreenScale(14), color_white)
     end
 
     if GetConVarNumber("horde_enable_ammo_gui") == 1 then
@@ -349,50 +385,144 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
 
         local wpn = MySelf:GetActiveWeapon()
         if wpn and wpn:IsValid() then
-            local col_ammo = color_white
-            local col_ammo2 = color_white
-            
-            if MySelf:Horde_GetInfusion(wpn:GetClass()) ~= HORDE.Infusion_None then
-                local infusion = MySelf:Horde_GetInfusion(wpn:GetClass())
-                local infusion_mat = Material(HORDE.Infusion_Icons[infusion], "mips smooth")
-                surface.SetMaterial(infusion_mat)
-                surface.SetDrawColor(HORDE.Infusion_Colors[infusion])
-                surface.DrawTexturedRect(ScrW() - ScreenScale(16), icon_y, ScreenScale(6), ScreenScale(6))
-            end
-            if (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) and (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
-                local c1 = color_white
-                local c2 = color_white
-                if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
-                if wpn:Clip2() == 0 then c2 = Color(100,0,0) end
-                draw.SimpleText(tostring(wpn:Clip1() .. " / " .. MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font, ScrW() - ScreenScale(20), icon_y + ScreenScale(13), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(tostring(wpn:Clip2() .. " / " .. MySelf:GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(24), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+            if wpn.Base == "horde_spell_weapon_base" then
                 draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-            elseif (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) then
-                local c1 = color_white
-                local c2 = color_white
-                if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
-                if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
-                draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-            elseif (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
-                local c1 = color_white
-                local c2 = color_white
-                if wpn:Clip2() == 0 then c1 = Color(100,0,0) end
-                if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
-                draw.SimpleText(tostring(wpn:Clip2()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-            elseif wpn:GetPrimaryAmmoType() > 0 then
-                local c1 = color_white
-                local c2 = color_white
-                if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
-                if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
-                --draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
-                draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(45), icon_y + ScreenScale(17), c2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+                
+                -- Spell Icons
+                surface.SetDrawColor(Color(255,255,255))
+                surface.DrawOutlinedRect(ScrW() - ScreenScale(81), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15), 2)
+                surface.DrawOutlinedRect(ScrW() - ScreenScale(63), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15), 2)
+                surface.DrawOutlinedRect(ScrW() - ScreenScale(44), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15), 2)
+                surface.DrawOutlinedRect(ScrW() - ScreenScale(26), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15), 2)
+
+                draw.SimpleText("LMB", "Horde_SpellButton", ScrW() - ScreenScale(74), icon_y + ScreenScale(27), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText("RMB", "Horde_SpellButton", ScrW() - ScreenScale(56), icon_y + ScreenScale(27), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText("F", "Horde_SpellButton", ScrW() - ScreenScale(37), icon_y + ScreenScale(27), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText("R", "Horde_SpellButton", ScrW() - ScreenScale(19), icon_y + ScreenScale(27), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                
+                if MySelf:Horde_GetPrimarySpell() then
+                    local spell = MySelf:Horde_GetPrimarySpell()
+                    surface.SetMaterial(Material(spell.Icon, "mips smooth"))
+                    surface.DrawTexturedRect(ScrW() - ScreenScale(81), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15))
+                    local t = MySelf:Horde_GetPrimarySpellCooldown()
+                    if t > 0 then
+                        surface.SetDrawColor(Color(40,40,40, 200))
+                        surface.DrawRect(ScrW() - ScreenScale(81), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15))
+                        surface.SetDrawColor(color_white)
+                        draw.SimpleText(string.format("%.1f", t), "Horde_SpellCooldown", ScrW() - ScreenScale(74), icon_y + ScreenScale(15), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    end
+                    local c = Color(0,255,0)
+                    if MySelf:Horde_GetMind() < spell.Mind[1] then
+                        c = Color(200, 0, 0)
+                    end
+                    draw.SimpleTextOutlined(spell.Mind[1], "Horde_SpellMindCost", ScrW() - ScreenScale(67), icon_y + ScreenScale(20), c, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, 1, Color(0,0,0))
+                else
+                    surface.SetMaterial(mind)
+                end
+
+                if MySelf:Horde_GetSecondarySpell() then
+                    local spell = MySelf:Horde_GetSecondarySpell()
+                    surface.SetMaterial(Material(spell.Icon, "mips smooth"))
+                    surface.DrawTexturedRect(ScrW() - ScreenScale(63), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15))
+                    local t = MySelf:Horde_GetSecondarySpellCooldown()
+                    if t > 0 then
+                        surface.SetDrawColor(Color(40,40,40, 200))
+                        surface.DrawRect(ScrW() - ScreenScale(63), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15))
+                        surface.SetDrawColor(color_white)
+                        draw.SimpleText(string.format("%.1f", t), "Horde_SpellCooldown", ScrW() - ScreenScale(56), icon_y + ScreenScale(15), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    end
+                    local c = Color(0,255,0)
+                    if MySelf:Horde_GetMind() < spell.Mind[1] then
+                        c = Color(200, 0, 0)
+                    end
+                    draw.SimpleTextOutlined(spell.Mind[1], "Horde_SpellMindCost", ScrW() - ScreenScale(49), icon_y + ScreenScale(20), c, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, 1, Color(0,0,0))
+                else
+                    surface.SetMaterial(mind)
+                end
+
+                if MySelf:Horde_GetUtilitySpell() then
+                    local spell = MySelf:Horde_GetUtilitySpell()
+                    surface.SetMaterial(Material(spell.Icon, "mips smooth"))
+                    surface.DrawTexturedRect(ScrW() - ScreenScale(44), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15))
+                    local t = MySelf:Horde_GetUtilitySpellCooldown()
+                    if t > 0 then
+                        surface.SetDrawColor(Color(40,40,40, 200))
+                        surface.DrawRect(ScrW() - ScreenScale(44), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15))
+                        surface.SetDrawColor(color_white)
+                        draw.SimpleText(string.format("%.1f", t), "Horde_SpellCooldown", ScrW() - ScreenScale(37), icon_y + ScreenScale(15), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    end
+                    local c = Color(0,255,0)
+                    if MySelf:Horde_GetMind() < spell.Mind[1] then
+                        c = Color(200, 0, 0)
+                    end
+                    draw.SimpleTextOutlined(spell.Mind[1], "Horde_SpellMindCost", ScrW() - ScreenScale(30), icon_y + ScreenScale(20), c, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, 1, Color(0,0,0))
+                else
+                    surface.SetMaterial(mind)
+                end
+
+                if MySelf:Horde_GetUltimateSpell() then
+                    local spell = MySelf:Horde_GetUltimateSpell()
+                    surface.SetMaterial(Material(spell.Icon, "mips smooth"))
+                    surface.DrawTexturedRect(ScrW() - ScreenScale(26), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15))
+                    local t = MySelf:Horde_GetUltimateSpellCooldown()
+                    if t > 0 then
+                        surface.SetDrawColor(Color(40,40,40, 200))
+                        surface.DrawRect(ScrW() - ScreenScale(26), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15))
+                        surface.SetDrawColor(color_white)
+                        draw.SimpleText(string.format("%.1f", t), "Horde_SpellCooldown", ScrW() - ScreenScale(19), icon_y + ScreenScale(15), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    end
+                    local c = Color(0,255,0)
+                    if MySelf:Horde_GetMind() < spell.Mind[1] then
+                        c = Color(200, 0, 0)
+                    end
+                    draw.SimpleTextOutlined(spell.Mind[1], "Horde_SpellMindCost", ScrW() - ScreenScale(12), icon_y + ScreenScale(20), c, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, 1, Color(0,0,0))
+                else
+                    surface.SetMaterial(mind)
+                end
+
             else
-                draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(47), icon_y + ScreenScale(15), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                if MySelf:Horde_GetInfusion(wpn:GetClass()) ~= HORDE.Infusion_None then
+                    local infusion = MySelf:Horde_GetInfusion(wpn:GetClass())
+                    local infusion_mat = Material(HORDE.Infusion_Icons[infusion], "mips smooth")
+                    surface.SetMaterial(infusion_mat)
+                    surface.SetDrawColor(HORDE.Infusion_Colors[infusion])
+                    surface.DrawTexturedRect(ScrW() - ScreenScale(16), icon_y, ScreenScale(6), ScreenScale(6))
+                end
+                if (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) and (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
+                    local c1 = color_white
+                    local c2 = color_white
+                    if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
+                    if wpn:Clip2() == 0 then c2 = Color(100,0,0) end
+                    draw.SimpleText(tostring(wpn:Clip1() .. " / " .. MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font, ScrW() - ScreenScale(20), icon_y + ScreenScale(13), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(tostring(wpn:Clip2() .. " / " .. MySelf:GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(24), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+                elseif (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) then
+                    local c1 = color_white
+                    local c2 = color_white
+                    if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
+                    if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+                    draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+                elseif (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
+                    local c1 = color_white
+                    local c2 = color_white
+                    if wpn:Clip2() == 0 then c1 = Color(100,0,0) end
+                    if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+                    draw.SimpleText(tostring(wpn:Clip2()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+                elseif wpn:GetPrimaryAmmoType() > 0 then
+                    local c1 = color_white
+                    local c2 = color_white
+                    if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
+                    if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
+                    --draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(45), icon_y + ScreenScale(17), c2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+                else
+                    draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(47), icon_y + ScreenScale(15), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                end
             end
         end
 

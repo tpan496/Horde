@@ -2,18 +2,10 @@ PERK.PrintName = "Warlock Base"
 PERK.Description = [[
 COMPLEXITY: HIGH
 
-{1} increased maximum energy. ({2} per level, up to {3}).
+{1} increased maximum Mind. ({2} per level, up to {3}).
 
-Equipped with Astral Relic. Upgradable through shop.
-LMB: Astral Pulsar (10 Energy)
-Releases a homing object that attaches to enemies and deals Physical damage over time.
-You can have at most 2 active Astral Pulsars.
-HOLD LMB to detonate all active Astral Pulsars.
-
-RMB: Astral Remnant (5 Energy)
-Plants energy bodies that explode when enemies are nearby, dealing Physical damage.
-You can plant at most 5 active Astral Remnants.
-HOLD RMB to charge and refresh duration of all active Astral Remnants.]]
+Uses Mind instead of Armor.
+Has access to spells for Astral Relic.]]
 PERK.Icon = "materials/subclasses/warlock.png"
 PERK.Params = {
     [1] = {percent = true, base = 0, level = 0.01, max = 0.25, classname = "Warlock"},
@@ -22,50 +14,51 @@ PERK.Params = {
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
-    if SERVER and perk == "warlock_base" then
-        if ply:HasWeapon("horde_astral_relic") == true then return end
-        ply:StripWeapons()
-        timer.Simple(0, function() ply:Give("horde_astral_relic") end)
-    end
-end
-
 PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
     if SERVER then
         ply:Horde_SetPerkLevelBonus("warlock_base", math.min(0.25, 0.01 * ply:Horde_GetLevel("Warlock")))
     end
 end
 
+PERK.Hooks.Horde_OnSetMaxMind = function(ply, bonus)
+    if ply:Horde_GetPerk("warlock_base") then
+        bonus.increase = bonus.increase + ply:Horde_GetPerkLevelBonus("warlock_base")
+    end
+end
+
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "warlock_base" then
+        ply:Horde_SetMindRegenTick(0.25)
+        ply:SetMaxArmor(0)
         if ply:HasWeapon("horde_astral_relic") == true then return end
+        ply:Horde_UnsetSpellWeapon()
         ply:StripWeapons()
-        timer.Simple(0,
-            function()
-                local wpn = ply:Give("horde_astral_relic")
-                if (not wpn) or (not wpn:IsValid()) then return end
-                wpn.Primary.MaxAmmo = 100 + 100 * ply:Horde_GetPerkLevelBonus("warlock_base")
-                if ply:Horde_GetPerk("warlock_nucleosynthesis") then
-                    wpn.Primary.MaxAmmo = wpn.Primary.MaxAmmo + 50
-                end
-                if ply:Horde_GetPerk("warlock_dirac_sea") then
-                    wpn.Primary.MaxAmmo = wpn.Primary.MaxAmmo + 25
-                end
+        timer.Simple(0, function()
+            if !ply:Alive() then return end
+            if !ply:Horde_GetPerk("warlock_base") then return end
+            ply:Give("horde_astral_relic")
+            if (!ply:Horde_GetPrimarySpell() or ( ply:Horde_GetPrimarySpell().Weapon ~= nil and !table.HasValue(ply:Horde_GetPrimarySpell().Weapon, "horde_astral_relic"))) then
+                ply:Horde_SetSpell("meteor")
             end
-        )
+            if (!ply:Horde_GetSecondarySpell() or ( ply:Horde_GetSecondarySpell().Weapon ~= nil and !table.HasValue(ply:Horde_GetSecondarySpell().Weapon, "horde_astral_relic"))) then
+                ply:Horde_SetSpell("sigil_of_arcana")
+            end
+            if (!ply:Horde_GetUtilitySpell() or ( ply:Horde_GetUtilitySpell().Weapon ~= nil and !table.HasValue(ply:Horde_GetUtilitySpell().Weapon, "horde_astral_relic") )) then
+                ply:Horde_SetSpell("illuminate")
+            end
+            if (ply:Horde_GetUltimateSpell() and ( ply:Horde_GetUltimateSpell().Weapon ~= nil and !table.HasValue(ply:Horde_GetUltimateSpell().Weapon, "horde_astral_relic"))) then
+                ply:Horde_UnsetSpell(ply:Horde_GetUltimateSpell().ClassName)
+            end
+            ply:Horde_RecalcAndSetMaxMind()
+        end)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "warlock_base" then
-        local wpn = ply:GetWeapon("horde_astral_relic")
-        if (not wpn) or (not wpn:IsValid()) then return end
-        wpn.Primary.MaxAmmo = 100 + 100 * ply:Horde_GetPerkLevelBonus("warlock_base")
-        if ply:Horde_GetPerk("warlock_nucleosynthesis") then
-            wpn.Primary.MaxAmmo = wpn.Primary.MaxAmmo + 50
-        end
-        if ply:Horde_GetPerk("warlock_dirac_sea") then
-            wpn.Primary.MaxAmmo = wpn.Primary.MaxAmmo + 25
-        end
+        ply:Horde_SetMaxMind(0)
+        ply:Horde_SetMind(0)
+        ply:Horde_SetMindRegenTick(0)
+        ply:SetMaxArmor(100)
     end
 end

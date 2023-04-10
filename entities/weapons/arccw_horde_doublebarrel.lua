@@ -22,8 +22,12 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_ranger_2.mdl"
-SWEP.MirrorVMWM = false
-SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(-10, 3, -5),
+    ang = Angle(-10, 0, 180),
+    scale = 1.5
+}
 SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 75
@@ -51,7 +55,8 @@ SWEP.Firemodes = {
         Mode = 1,
     },
     {
-        Mode = 0,
+        Mode = 3,
+        PrintName = "Double Shot"
     },
 }
 
@@ -280,3 +285,17 @@ local nvcnaw2 = 5
 SWEP.Inaccuracy_Add_ADS			= 0
 SWEP.Inaccuracy_Add_Hip			= 0
 SWEP.Inaccuracy_Add_Move		= 0.1
+
+
+function SWEP:Hook_ShouldNotFireFirst()
+    if self:GetCurrentFiremode().Mode == 3 then
+        self.Num = 12
+        local ply = self:GetOwner()
+        local dir = -ply:GetForward()
+        dir:Normalize()
+        local vel = dir * 200
+        ply:SetLocalVelocity(ply:GetVelocity() + vel)
+    else
+        self.Num = 6
+    end
+end

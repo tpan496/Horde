@@ -77,6 +77,11 @@ function ENT:Initialize()
 	self.StartLight1:Activate()
 	self.StartLight1:Fire("TurnOn", "", 0)
 	self:DeleteOnRemove(self.StartLight1)
+
+	timer.Simple(10, function ()
+		if !IsValid(self) then return end
+		self:Remove()
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DeathEffects(data,phys)

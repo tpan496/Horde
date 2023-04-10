@@ -29,7 +29,7 @@ SWEP.ViewModel = "models/horde/weapons/c_fireaxe.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_fireaxe.mdl"
 SWEP.ViewModelFOV = 45
 SWEP.WorldModelOffset = {
-    pos        =    Vector(-20, 6, -15),
+    pos        =    Vector(-20, 6, -20),
     ang        =    Angle(-60, 50, 110),
     bone    =    "ValveBiped.Bip01_R_Hand",
 }
@@ -38,20 +38,20 @@ SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
 SWEP.MeleeDamage = 80
-SWEP.Melee2Damage = 125
+SWEP.Melee2Damage = 140
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
 SWEP.MeleeDamageType = DMG_SLASH
 SWEP.MeleeRange = 70
 SWEP.MeleeAttackTime = 0.5
-SWEP.MeleeTime = 1.2
+SWEP.MeleeTime = 1
 SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.Melee2 = true
 SWEP.Melee2Range = 80
 SWEP.Melee2AttackTime = 0.6
-SWEP.Melee2Time = 1.5
+SWEP.Melee2Time = 1.25
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.MeleeSwingSound = {

@@ -74,6 +74,18 @@ hook.Add("Horde_OnEnemyKilled", "Horde_IntensityApply", function(victim, killer,
     end
 end)
 
+hook.Add("Horde_OnSpellCooldown", "Horde_IntensityCooldown", function (ply, bonus, spell)
+    if ply:Horde_GetMaxIntensityStack() > 0 then
+        bonus.less = bonus.less * (1 - 0.08 * ply:Horde_GetMaxIntensityStack())
+    end
+end)
+
+hook.Add("Horde_MindRegeneration", "Horde_IntensityMindRegen", function (ply, bonus)
+    if ply:Horde_GetMaxIntensityStack() > 0 then
+        bonus.increase = bonus.increase + 0.08 * ply:Horde_GetMaxIntensityStack()
+    end
+end)
+
 hook.Add("Horde_ResetStatus", "Horde_IntensityReset", function(ply)
     ply.Horde_IntensityStack = 0
     ply.Horde_MaxIntensityStack = 0

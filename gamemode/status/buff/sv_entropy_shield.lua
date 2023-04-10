@@ -44,7 +44,7 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_EntropyShieldDamage", function (ply
         util.BlastDamageInfo(dmg, ply:GetPos(), 150)
         ply:Horde_RemoveEntropyShield()
         timer.Remove("Horde_RestockEntropyShield" .. ply:SteamID())
-        timer.Create("Horde_RestockEntropyShield" .. ply:SteamID(), 5, 1, function ()
+        timer.Create("Horde_RestockEntropyShield" .. ply:SteamID(), 7, 1, function ()
             ply:Horde_AddEntropyShield()
         end)
     end

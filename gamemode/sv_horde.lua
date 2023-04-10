@@ -15,6 +15,8 @@ local horde_force_spawn_enemies = {}
 
 HORDE.horde_boss = nil
 HORDE.horde_boss_name = nil
+HORDE.finished_objs = 0
+HORDE.max_objs = 0
 local horde_boss_spawned = false
 local horde_boss_reposition = false
 local horde_boss_properties = nil
@@ -22,6 +24,9 @@ local boss_music_loop = nil
 
 -- These are for horde default bosses only,
 local horde_boss_critical = nil
+
+HORDE.horde_active_holdzones = nil
+local horde_has_escapezone = nil
 
 local entmeta = FindMetaTable("Entity")
 function entmeta:Horde_SetMostRecentAttacker(attacker)
@@ -98,6 +103,8 @@ hook.Add("InitPostEntity", "Horde_Init", function()
         ent:KeyValue("killrewardbase", ent:GetInternalVariable("killrewardbase"))
         ent:KeyValue("roundbonusbase", ent:GetInternalVariable("roundbonusbase"))
     end
+
+    HORDE:LoadObjectives()
 end)
 
 hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
@@ -143,7 +150,11 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         HORDE.spawned_enemies[victim:EntIndex()] = nil
         if (not HORDE.horde_boss) or (HORDE.horde_boss and (not horde_boss_properties.unlimited_enemies_spawn)) then
             HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave - 1
-            HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
+            if (not HORDE.horde_has_active_objective) or (HORDE.killed_enemies_this_wave <= math.min(100, HORDE.total_enemies_this_wave_fixed * 0.5)) then
+                HORDE.killed_enemies_this_wave = HORDE.killed_enemies_this_wave + 1
+            else
+                HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
+            end
         end
         
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
@@ -152,17 +163,19 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             net.Broadcast()
         end
         
-        if HORDE.endless == 1 then
-            if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
-                HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. " / ∞", 0)
+        if not HORDE.horde_has_active_objective then
+            if HORDE.endless == 1 then
+                if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
+                    HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. " / ∞", 0)
+                else
+                    HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. " / ∞", HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+                end
             else
-                HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. " / ∞", HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
-            end
-        else
-            if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
-                HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. " / " .. tostring(HORDE.max_waves), 0)
-            else
-                HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. " / " .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+                if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
+                    HORDE:BroadcastEnemiesCountMessage(true, tostring(HORDE.current_wave) .. " / " .. tostring(HORDE.max_waves), 0)
+                else
+                    HORDE:BroadcastEnemiesCountMessage(false, tostring(HORDE.current_wave) .. " / " .. tostring(HORDE.max_waves), HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave)
+                end
             end
         end
         
@@ -201,7 +214,18 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             HORDE.horde_boss = nil
             horde_boss_properties = nil
             if boss_properties.end_wave and boss_properties.end_wave == true then
-                HORDE:WaveEnd()
+                if HORDE.current_wave == HORDE.max_waves and HORDE.has_escape_zones then
+                    -- Activate escape zone
+                    local zones = HORDE:GetEscapeZones()
+                    HORDE.horde_active_escapezones = zones
+                    for id, zone in pairs(zones) do
+                        zone.Horde_Activated = true
+                    end
+                    HORDE:StartObjective(HORDE.OBJECTIVE_ESCAPE, {zones=zones})
+                    HORDE.horde_has_active_objective = true
+                else
+                    HORDE:WaveEnd()
+                end
             end
 
             -- Boss reward is global.
@@ -286,7 +310,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
             if GetConVar("horde_testing_display_damage"):GetInt() == 1 then
                 local dmgtype = HORDE:GetDamageType(dmg)
                 if dmgtype == HORDE.DMG_PURE then
-                    HORDE:SendNotification("You received " .. dmg:GetDamage() .. " damage from " .. dmg:GetAttacker():GetClass(), ent)
+                    HORDE:SendNotification("You received " .. dmg:GetDamage() .. " damage from " .. dmg:GetAttacker():GetClass(), 0, ent)
                 else
                     HORDE:SendNotification("You received " .. dmg:GetDamage() .. " " .. HORDE.DMG_TYPE_STRING[dmgtype] ..  " damage from " .. dmg:GetAttacker():GetClass(), 0, ent)
                 end
@@ -525,6 +549,8 @@ function HORDE:SpawnEnemy(enemy, pos)
             end
         end
     end
+
+    spawned_enemy.Horde_Debuff_Threshold = math.min(500, math.max(50, spawned_enemy:GetMaxHealth() * 0.2))
 
     hook.Run("HordeEnemySpawn", spawned_enemy)
     return spawned_enemy
@@ -1000,6 +1026,51 @@ function HORDE:WaveStart()
         net.WriteUInt(HORDE.Status_CanBuy, 8)
         net.WriteUInt(0, 8)
         net.Broadcast()
+    end
+
+    -- Get objectives, if there are any
+    if not has_boss then
+        local holdzones = HORDE:GetHoldZones(current_wave)
+        local payload_spawns = HORDE:GetPayloadSpawns(current_wave)
+        local payload_destinations = HORDE:GetPayloadDestinations(current_wave)
+
+        HORDE.horde_active_holdzones = nil
+
+        local has_hold_obj = holdzones and not table.IsEmpty(holdzones)
+        local has_payload_obj = payload_spawns and not table.IsEmpty(payload_spawns) and payload_destinations and not table.IsEmpty(payload_destinations)
+        if has_hold_obj and has_payload_obj then
+            local p = math.random()
+            if p <= 0.5 then
+                has_hold_obj = nil
+            else
+                has_payload_obj = nil
+            end
+        end
+
+        HORDE.max_objs = 0
+        HORDE.finished_objs = 0
+        if has_hold_obj then
+            HORDE.horde_active_holdzones = holdzones
+            for id, zone in pairs(holdzones) do
+                zone:Horde_SetActivated(true)
+                HORDE:StartObjective(HORDE.OBJECTIVE_HOLD, {zone=zone})
+            end
+            HORDE.horde_has_active_objective = true
+        elseif has_payload_obj then
+            HORDE.horde_active_payload_spawns = payload_spawns
+            HORDE.horde_active_payload_destinations = payload_destinations
+
+            for id, spawn in pairs(payload_spawns) do
+                spawn.Horde_Activated = true
+                HORDE:StartObjective(HORDE.OBJECTIVE_PAYLOAD, {spawn=spawn})
+            end
+
+            for id, dest in pairs(payload_destinations) do
+                dest.Horde_Activated = true
+                HORDE:StartPayloadDestination(dest)
+            end
+            HORDE.horde_has_active_objective = true
+        end
     end
 
     for _, ent in pairs(ents.FindByClass("logic_horde_waves")) do

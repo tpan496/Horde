@@ -1,7 +1,7 @@
 
 "VertexLitGeneric"
 {
-	$baseTexture "models\horde\rocket_turret\RocketTurret_A"
+	$baseTexture "models\horde\rocket_turret\rocketturret_a"
 
 	$surfaceprop "metal"
 
@@ -18,7 +18,7 @@
 
 	$emissiveBlendEnabled 1
 	$emissiveBlendTexture     "models\horde\rocket_turret\devwhite"
-	$emissiveBlendBaseTexture	"models\horde\rocket_turret\RocketTurret_Glow"
+	$emissiveBlendBaseTexture	"models\horde\rocket_turret\rocketturret_glow"
 	$emissiveBlendTint "[0.1 2 0.1]"
 	$emissiveBlendStrength 1
 	$emissiveBlendScrollVector "[0 0]"

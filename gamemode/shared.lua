@@ -27,6 +27,9 @@ function GM:Initialize()
     game.AddAmmoType({
         name = "arccw_horde_nade_stun"
     })
+    game.AddAmmoType({
+        name = "arccw_go_nade_kunai",
+    })
     if SERVER then
         HORDE.NPCS = list.Get("NPC")
     end
@@ -128,6 +131,23 @@ function GM:ShouldCollide(ent1, ent2)
     end
 
     return true
+end
+
+function GM:PlayerButtonDown(ply, button)
+    if (ply:Horde_GetMaxMind() <= 0) then return end
+    if button != KEY_F then return end
+    if CLIENT then
+		if ( IsFirstTimePredicted() ) then ply.Horde_UseSpellUtlity = true end
+	else
+		ply.Horde_UseSpellUtlity = true
+	end
+end
+
+function GM:PlayerButtonUp(ply, button)
+    if not IsFirstTimePredicted() then return end
+    if (ply:Horde_GetMaxMind() <= 0) then return end
+    if button != KEY_F then return end
+    ply.Horde_UseSpellUtlity = nil
 end
 --[[
 function GM:SetupWorldFog()

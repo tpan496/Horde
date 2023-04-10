@@ -26,8 +26,12 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2/c_barrett_1.mdl"
-SWEP.MirrorVMWM = false
-SWEP.WorldModel = "models/weapons/w_snip_sg550.mdl"
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(0, 5, -8),
+    ang = Angle(-10, 0, 180),
+    scale = 1.25
+}
 SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 900
@@ -43,7 +47,7 @@ SWEP.Recoil = 2
 SWEP.RecoilSide = 5
 
 SWEP.AccuracyMOA = 0.01 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 200 -- inaccuracy added by hip firing.
+SWEP.HipDispersion = 500 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 25
 
 SWEP.Delay = 1.25 -- 60 / RPM.

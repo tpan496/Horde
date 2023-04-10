@@ -51,11 +51,13 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 
-function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if HORDE:IsColdDamage(dmginfo) then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
+		dmginfo:ScaleDamage(0.5)
 	elseif HORDE:IsLightningDamage(dmginfo) then
-		dmginfo:SetDamage(dmginfo:GetDamage() * 0.75)
+		dmginfo:ScaleDamage(0.75)
+	elseif HORDE:IsBlastDamage(dmginfo) or HORDE:IsFireDamage(dmginfo) then
+		dmginfo:ScaleDamage(1.25)
 	end
 end
 

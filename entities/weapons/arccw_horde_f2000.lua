@@ -9,7 +9,7 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "F2000 (Horde)"
+SWEP.PrintName = "F2000"
 SWEP.Trivia_Class = "Assault Rifle"
 SWEP.Trivia_Desc = "Fully automatic, all purpose weapon.\n\n\nFish."
 
@@ -26,8 +26,12 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2/c_f2000_2a.mdl"
-SWEP.MirrorVMWM = false
-SWEP.WorldModel = "models/weapons/w_rif_famas.mdl"
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(-5, 3, -5),
+    ang = Angle(-10, 0, 180),
+    scale = 1.25
+}
 SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 38

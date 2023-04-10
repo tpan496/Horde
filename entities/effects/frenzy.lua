@@ -7,10 +7,11 @@ end
 -- Bubbles
 function EFFECT:Think()
     if not self.entity or not self.entity:IsValid() then return true end
-    if not self.entity.Horde_Mutation then return false end
+    if not self.entity.Horde_Mutation then self.emitter:Finish() return false end
     local pos = self.entity:GetPos()
     if not self.emitter then
         self.emitter = ParticleEmitter(pos)
+        self.emitter:SetNearClip(24, 32)
     end
 
     if self.emitter then

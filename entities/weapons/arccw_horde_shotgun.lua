@@ -145,7 +145,7 @@ SWEP.Attachments = {
 
 SWEP.Animations = {
     ["idle"] = {
-        Source = "idle1",
+        Source = "idle01",
     },
     ["draw"] = {
         Source = "draw",

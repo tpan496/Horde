@@ -37,7 +37,6 @@ ENT.NextRangeAttackTime = 10 -- How much time until it can use a range attack?
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {"npc/zombie/foot1.wav","npc/zombie/foot2.wav","npc/zombie/foot3.wav"}
 --ENT.SoundTbl_Breath = {"npc/zombie_poison/pz_breathe_loop1.ogg"}
-ENT.SoundTbl_Idle = {"horde/bloodsquid/bc_idle1.ogg", "horde/bloodsquid/bc_idle2.ogg"}
 ENT.SoundTbl_Alert = {"horde/bloodsquid/bc_attackgrowl1.ogg","horde/bloodsquid/bc_attackgrowl2.ogg","horde/bloodsquid/bc_attackgrowl3.ogg"}
 ENT.SoundTbl_MeleeAttack = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"zsszombie/miss1.wav","zsszombie/miss2.wav","zsszombie/miss3.wav","zsszombie/miss4.wav"}
@@ -60,6 +59,42 @@ function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
 		dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
 	end
 end
+
+local finishAttack = {
+	[VJ_ATTACK_MELEE] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_melee_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Melee, self.NextAnyAttackTime_Melee_DoRand, self.TimeUntilMeleeAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_melee_finished_abletomelee"..self:EntIndex(), self:DecideAttackTimer(self.NextMeleeAttackTime, self.NextMeleeAttackTime_DoRand), 1, function()
+			self.IsAbleToMeleeAttack = true
+		end)
+	end,
+	[VJ_ATTACK_RANGE] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_range_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Range, self.NextAnyAttackTime_Range_DoRand, self.TimeUntilRangeAttackProjectileRelease, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_range_finished_abletorange"..self:EntIndex(), self:DecideAttackTimer(self.NextRangeAttackTime, self.NextRangeAttackTime_DoRand), 1, function()
+			self.IsAbleToRangeAttack = true
+		end)
+	end,
+	[VJ_ATTACK_LEAP] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_leap_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Leap, self.NextAnyAttackTime_Leap_DoRand, self.TimeUntilLeapAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_leap_finished_abletoleap"..self:EntIndex(), self:DecideAttackTimer(self.NextLeapAttackTime, self.NextLeapAttackTime_DoRand), 1, function()
+			self.IsAbleToLeapAttack = true
+		end)
+	end
+}
 
 function ENT:RangeAttackCode()
 	if self.Dead == true or self.vACT_StopAttacks == true or self.Flinching == true or self.MeleeAttacking == true then return end
@@ -90,6 +125,12 @@ function ENT:RangeAttackCode()
 		self:RangeAttackCode_DoFinishTimers()
 	end
 	self.AlreadyDoneRangeAttackFirstProjectile = true
+	if self.AttackStatus < VJ_ATTACK_STATUS_EXECUTED then
+		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED
+		if self.TimeUntilRangeAttackProjectileRelease != false then
+			finishAttack[VJ_ATTACK_RANGE](self)
+		end
+	end
 end
 
 /*-----------------------------------------------

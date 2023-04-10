@@ -27,7 +27,7 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 90
+SWEP.Damage = 85
 SWEP.DamageMin = 80
 SWEP.RangeMin = 1000 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Range = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
@@ -46,7 +46,7 @@ SWEP.Recoil = 0.7
 SWEP.RecoilSide = 0.7
 SWEP.RecoilRise = 0.2
 
-SWEP.Delay = 0.06 -- 60 / RPM.
+SWEP.Delay = 60 / 600 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -61,7 +61,7 @@ SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 0.1 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 200 -- inaccuracy added by hip firing.
+SWEP.HipDispersion = 400 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 75
 
 SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses

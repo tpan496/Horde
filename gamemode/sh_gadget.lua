@@ -89,7 +89,7 @@ function plymeta:Horde_SetGadget(gadget)
     sound.Play("items/suitchargeok1.wav", self:GetPos())
 
     if SERVER then
-        self:Horde_SetMaxHealth()
+        self:Horde_SetMaxHealthOnly()
         net.Start("Horde_Gadget")
             net.WriteUInt(HORDE.NET_PERK_SET, HORDE.NET_PERK_BITS)
             net.WriteEntity(self)

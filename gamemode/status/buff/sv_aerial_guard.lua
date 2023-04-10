@@ -46,6 +46,14 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_AerialGuardDamageTaken", function (
     end
     if ply:Horde_GetAerialGuard() == 1 and HORDE:IsPhysicalDamage(dmginfo) then
         bonus.less = bonus.less * 0.35
+        local e = EffectData()
+        if dmginfo:GetDamagePosition() ~= Vector(0,0,0) then
+            e:SetOrigin(dmginfo:GetDamagePosition())
+        else
+            e:SetOrigin(ply:GetPos() + Vector(0,0,30))
+        end
+            
+        util.Effect("horde_aerial_parry", e, true, true)
         if not silent then
             sound.Play("horde/gadgets/guard" .. tostring(math.random(1,2)) ..".ogg", ply:GetPos(), 125, 100, 1, CHAN_AUTO)
         end
@@ -83,18 +91,20 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_AerialGuardDamageTaken", function (
     end
 end)
 
+hook.Add("PlayerButtonDown", "Horde_AerialGuardActivate", function (ply, key)
+    if key == KEY_SPACE and ply:Horde_GetAerialGuardEnabled() and ply:IsOnGround() then
+        ply:Horde_AddAerialGuard()
+        ply.Horde_Aerial_Guard_Pressed = true
+        timer.Simple(0.5, function ()
+            if not ply:IsValid() then return end
+            ply.Horde_Aerial_Guard_Pressed = nil
+        end)
+    end
+end)
 hook.Add("PlayerTick", "Horde_AerialGuardOn", function(ply, mv)
     if not ply:Horde_GetAerialGuardEnabled() or not ply:Alive() then return end
-    if not ply:IsOnGround() then
-        if ply:Horde_GetAerialGuard() == 1 or ply.Horde_ShouldAerialGuard then return end
-        ply.Horde_ShouldAerialGuard = true
-        timer.Create("Horde_AerialGuard" .. ply:UniqueID(), 0.1, 1, function()
-            if ply.Horde_ShouldAerialGuard then
-                ply:Horde_AddAerialGuard()
-            end
-        end)
-    else
-        ply.Horde_ShouldAerialGuard = nil
+    if ply.Horde_Aerial_Guard_Pressed then return end
+    if ply:IsOnGround() then
         ply:Horde_RemoveAerialGuard()
     end
 end)

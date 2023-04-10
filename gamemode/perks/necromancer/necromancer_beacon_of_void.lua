@@ -1,59 +1,33 @@
 PERK.PrintName = "Beacon of Void"
 PERK.Description =
-[[Cold damage ignores enemy Cold damage resistance.
-Unlocks Void Cascade for Void Projector ({1} energy, R button).
-Perk bonuses to Void Spear also apply to Void Cascade.]]
-PERK.Icon = "materials/perks/necromancer/void_cascade.png"
+[[{1} more Cold damage.
+{2} increased Frostbite duration.
+You are immune to Frostbite.]]
+PERK.Icon = "materials/perks/necromancer/beacon_of_void.png"
 PERK.Params = {
-    [1] = {value = 30},
+    [1] = {value = 0.2, percent = true},
+    [2] = {value = 0.5, percent = true},
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("necromancer_beacon_of_void")  then return end
     if HORDE:IsColdDamage(dmginfo) then
-        dmginfo:SetDamageType(DMG_DIRECT)
+        bonus.more = bonus.more * 1.2
     end
 end
 
---[[PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
+
+PERK.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus)
     if not ply:Horde_GetPerk("necromancer_beacon_of_void")  then return end
-    if HORDE:IsColdDamage(dmginfo) then
-        bonus.increase = bonus.increase + 0.2
+    if debuff == HORDE.Status_Frostbite then
+        bonus.apply = 0
+        return true
     end
 end
 
-
-PERK.Hooks.Horde_OnEnemyDebuffApply = function (npc, debuff, bonus, inflictor)
-    if debuff == HORDE.Status_Frostbite and inflictor and inflictor:IsValid() and inflictor:Horde_GetPerk("necromancer_beacon_of_void") then
-        bonus.increase = bonus.increase + 0.2
+PERK.Hooks.Horde_OnEnemyFrostbiteApply = function (inflictor, ent, duration_bonus)
+    if inflictor and inflictor:IsPlayer() and inflictor:Horde_GetPerk("necromancer_beacon_of_void") then
+        duration_bonus.increase = duration_bonus.increase + 0.5
     end
-end]]--
-
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
-    if SERVER and perk == "necromancer_beacon_of_void" then
-        ply:Horde_SetPerkCooldown(10)
-        net.Start("Horde_SyncActivePerk")
-            net.WriteUInt(HORDE.Status_Void_Cascade, 8)
-            net.WriteUInt(1, 3)
-        net.Send(ply)
-    end
-end
-
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
-    if SERVER and perk == "necromancer_beacon_of_void" then
-        net.Start("Horde_SyncActivePerk")
-            net.WriteUInt(HORDE.Status_Void_Cascade, 8)
-            net.WriteUInt(0, 3)
-        net.Send(ply)
-    end
-end
-
-
-PERK.Hooks.Horde_UseActivePerk = function (ply)
-    if not ply:Horde_GetPerk("necromancer_beacon_of_void") then return end
-    local active_weapon = ply:GetActiveWeapon()
-    if not active_weapon:IsValid() or not active_weapon:GetClass() == "horde_void_projector" then return false end
-    local res = active_weapon:VoidCascade()
-    if res then return true end
 end

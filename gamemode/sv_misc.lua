@@ -246,3 +246,34 @@ function HORDE:SendNotificationSandboxOnly(ply)
     net.WriteInt(1,2)
     net.Send(ply)
 end
+
+function HORDE:SendNotificationObjective(objective, str, ply)
+    net.Start("Horde_SideNotificationObjective")
+    net.WriteUInt(objective, 4)
+    if str then
+        net.WriteString(str)
+    else
+        net.WriteString("Objective")
+    end
+    if ply then
+        net.Send(ply)
+    else
+        net.Broadcast()
+    end
+end
+
+hook.Add("PlayerSwitchFlashlight", "Horde_BlockFlashlightForMages", function (ply, switchOn)
+    if (ply:Horde_GetMaxMind() > 0) then return false end
+end)
+
+function HORDE:SimpleParticleSystem(particle_name, pos, angles, parent)
+    local p = ents.Create("info_particle_system")
+    p:SetKeyValue("effect_name", particle_name)
+    p:SetPos(pos)
+    p:SetAngles(angles)
+    p:SetParent(parent)
+    p:Spawn()
+    p:Activate()
+    p:Fire( "start", "", 0 )
+    return p
+end

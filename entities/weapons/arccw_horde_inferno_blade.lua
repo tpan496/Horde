@@ -11,7 +11,7 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "Inferno Blade"
+SWEP.PrintName = "Inferno"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Curved sword imbued with fire energy."
 SWEP.Trivia_Manufacturer = "Horzine"
@@ -44,20 +44,20 @@ SWEP.Melee2Damage = 64
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
 SWEP.MeleeDamageType = DMG_SLASH
-SWEP.MeleeRange = 60
+SWEP.MeleeRange = 65
 SWEP.MeleeAttackTime = 0.1
 SWEP.MeleeTime = 0.70
 SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 
 SWEP.Melee2 = true
-SWEP.Melee2Range = 80
+SWEP.Melee2Range = 65
 SWEP.Melee2AttackTime = 0.1
 SWEP.Melee2Time = 0.5
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
 
 SWEP.MeleeSwingSound = {
     "horde/weapons/inferno_blade/swing_00.ogg",
-    "horde/weapons/inferno_bla de/swing_01.ogg"
+    "horde/weapons/inferno_blade/swing_01.ogg"
 }
 SWEP.MeleeMissSound = {
     "horde/weapons/inferno_blade/swing_00.ogg",
@@ -158,7 +158,6 @@ function SWEP:SecondaryAttack()
     if self.Charged then
         self.Charged = nil
         self.Weapon:SetNextSecondaryFire(CurTime() + 0.5)
-        self.MeleeDamageType = DMG_SLASH
         self.Weapon:SetSubMaterial(3, "models/weapons/inferno_blade/mtl_t6_wpn_pulwar_blade_s")
         self.Weapon:SetSubMaterial(4, "models/weapons/inferno_blade/mtl_t6_wpn_pulwar_blade_s")
         self.Owner:GetViewModel():SetSubMaterial(0, "")
@@ -176,7 +175,6 @@ function SWEP:SecondaryAttack()
         self.Charged = true
         self.ChargeLoopCooldown = CurTime() + 1.25
         self.Weapon:SetNextSecondaryFire(CurTime() + 0.5)
-        self.MeleeDamageType = DMG_BURN
         self.Weapon:SetSubMaterial(4, "models/weapons/inferno_blade/mtl_t6_wpn_pulwar_blade_s_fire")
         self.Owner:GetViewModel():SetSubMaterial(0, "")
         self.Owner:GetViewModel():SetSubMaterial(1, "")
@@ -200,7 +198,7 @@ net.Receive("Horde_DemonicEdgeCharge", function ()
         self:GetViewModel():SetSubMaterial(1, "")
         self:GetViewModel():SetSubMaterial(2, "models/weapons/inferno_blade/mtl_t6_wpn_pulwar_blade_s_fire")
         self:GetViewModel():SetSubMaterial(3, "models/weapons/inferno_blade/mtl_t6_wpn_pulwar_blade_s_fire")
-        self.Client_Charged = true
+        self.Client_Charged = truew
     else
         self:GetWeapon("arccw_horde_inferno_blade"):SetSubMaterial(3, "models/weapons/inferno_blade/mtl_t6_wpn_pulwar_blade_s")
         self:GetWeapon("arccw_horde_inferno_blade"):SetSubMaterial(4, "models/weapons/inferno_blade/mtl_t6_wpn_pulwar_blade_s")
@@ -219,7 +217,7 @@ function SWEP:Hook_PostBash(info)
             if (HORDE:IsPlayerOrMinion(ent) == true) then
             elseif ent:IsNPC() then
                 local dmg = DamageInfo()
-                dmg:SetDamage(60)
+                dmg:SetDamage(50)
                 dmg:SetDamageType(DMG_BURN)
                 dmg:SetAttacker(self.Owner)
                 dmg:SetInflictor(self)

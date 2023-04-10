@@ -18,16 +18,11 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_m16.mdl"
-SWEP.MirrorVMWM = false
---SWEP.WorldModelOffset = {
---    pos = Vector(-5, 3, -5),
---    ang = Angle(-10, 0, 180),
---    scale = 1.25
---view-worldmodel}
+SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(15, 1, 3.5),
-    ang = Angle(-10, 5, 180),
-    scale = 1
+    pos = Vector(-5, 3, -5),
+    ang = Angle(-10, 0, 180),
+    scale = 1.25
 }
 SWEP.WorldModel = "models/weapons/w_rif_m4a1.mdl"
 SWEP.ViewModelFOV = 65
@@ -234,7 +229,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = {"go_perk"}
     },
     {
         PrintName = "Camouflage",
@@ -299,11 +294,11 @@ end
 SWEP.Animations = {
 		["enter_ubgl"] = {
 			Source = "idle",
-			Time = 1/30
+			Time = 1/60
 		},
 		["exit_ubgl"] = {
 			Source = "idle",
-			Time = 1/30
+			Time = 1/60
 		}, 						-- Fuck you.
     ["idle"] = {
         Source = "idle",

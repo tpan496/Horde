@@ -24,3 +24,10 @@ PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
         bonus.resistance = bonus.resistance + 1.0
     end
 end
+
+--[[PERK.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus)
+    if ply:Horde_GetPerk("berserker_breathing_technique") and debuff == HORDE.Status_Break then
+        bonus.apply = 0
+        return true
+    end
+end]]--

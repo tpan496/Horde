@@ -11,7 +11,7 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "mjollnir"
+SWEP.PrintName = "Mjollnir"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Warhammer."
 SWEP.Trivia_Manufacturer = "Asgard"
@@ -45,7 +45,7 @@ SWEP.MeleeTime = 0.8
 SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 
 SWEP.Melee2 = true
-SWEP.Melee2Range = 80
+SWEP.Melee2Range = 55
 SWEP.Melee2AttackTime = 0.1
 SWEP.Melee2Time = 0.5
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2

@@ -2,44 +2,127 @@ if GetConVarNumber("horde_enable_scoreboard") == 0 then return end
 
 local scoreboard = {}
 
+local draw_SimpleText = draw.SimpleText
+
+local draw_RoundedBoxEx = draw.RoundedBoxEx
+local draw_RoundedBox = draw.RoundedBox
+
+local player_GetAll = player.GetAll
+
+local server_name = GetHostName()
+local map_name = game.GetMap()
+-- EasyLabel
+function HORDE:EasyLabel(parent, text, font, textcolor)
+	local ELpanel = vgui.Create("DLabel", parent)
+	if font then
+		ELpanel:SetFont(font or "DefaultFont")
+	end
+	ELpanel:SetText(text)
+	ELpanel:SizeToContents()
+	if textcolor then
+		ELpanel:SetTextColor(textcolor)
+	end
+	ELpanel:SetKeyboardInputEnabled(false)
+	ELpanel:SetMouseInputEnabled(false)
+
+	return ELpanel
+end
+
 function scoreboard:show()
+
+	local width = ScrW() * 0.6
+	local height = ScrH() * 0.65
+
     local title = vgui.Create("DPanel")
-    title:SetSize(1000, 100)
-    title:SetPos(ScrW()/2 - 1000 / 2, ScrH()/5 - 50)
+    title:SetSize(width, height)
+	title:AlignTop( ScrH() * 0.15 )
+    --title:SetPos(ScrW()/2 - 1000 / 2, ScrH()/5 - 50)
+	title:CenterHorizontal()
+
     function title:Paint(w, h)
-        draw.SimpleText("Horde - " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "Title", 0, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
-        draw.SimpleText(GetHostName(), "Title", 1000, 12, HORDE.color_crimson_dim, TEXT_ALIGN_RIGHT)
+
+		draw.RoundedBoxEx(8,0,0,w,h * 0.135, Color(30,30,30,150), true, true, false,false)
+        draw_SimpleText("Horde - " .. map_name .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "Title", 10, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
+        draw_SimpleText(server_name, "Title", width - 10, 12, HORDE.color_crimson_dim, TEXT_ALIGN_RIGHT)
     end
 
-    local board = vgui.Create("DPanel")
-    board:SetSize(1000, ScrH()/2)
-    board:SetPos(ScrW()/2-(1000/2), ScrH()/5)
+	local header = title:Add("DHeaderPanel")
+	header:Dock(TOP)
+    header:SetSize(title:GetWide(), 45)
+    header:DockMargin(0,50,0,0)
 
-    local scroll = vgui.Create("DScrollPanel", board)
-    scroll:Dock(FILL)
-
-    local lists = vgui.Create("DListLayout", scroll)
-    lists:Dock(FILL)
-
+    local board = title:Add("DPanel")
+	board:Dock(FILL)
+    board:SetSize(width)
+	--board:AlignTop( ScrH() * 0.25 )
+	board:CenterHorizontal()
+    --board:SetPos(ScrW()/2-(1000/2), ScrH()/5)
     function board:Paint(w, h)
-        draw.RoundedBox(0, 0, 0, w, h, Color(0,0,0,0))
+        --draw.RoundedBox(0, 0, 0, w, h, Color(255,255,255, 100))
     end
 
-    local header = lists:Add("DPanel")
-    header:SetSize(lists:GetWide(), 45)
-    header:Dock(TOP)
-    header:DockMargin(0,0,0,10)
-    function header:Paint(w,h)
-        draw.RoundedBox(5, 0, 0, w, 40, Color(40,40,40,200), true, true, false, false )
-        draw.DrawText(translate.Get("Scoreboard_Name"), "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText(translate.Get("Scoreboard_Class"), "Content", 225, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText(translate.Get("Scoreboard_Perks"), "Content", 375, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText(translate.Get("Scoreboard_Gadget"), "Content", 681, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-        draw.DrawText(translate.Get("Scoreboard_Money"), "Content", 791, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-        draw.DrawText(translate.Get("Scoreboard_Kill"), "Content", 851, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-        draw.DrawText(translate.Get("Scoreboard_Death"), "Content", 911, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-        draw.DrawText(translate.Get("Scoreboard_Ping"), "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
+    local ScrollPanel = board:Add("DScrollPanel")
+    ScrollPanel:Dock(FILL)
+
+    local Bar = ScrollPanel:GetVBar()
+    local butC = 0
+
+    -- Paint ScrollBar
+    function Bar:Paint(w,h)
+        draw.RoundedBox(8,  w / 2 - w / 2, butC, w / 2, h - butC * 2, color_black_alpha120 )
     end
+
+    function Bar.btnDown:Paint(w,h)
+    end
+
+    function Bar.btnUp:Paint(w,h)
+        butC = h
+    end
+
+    function Bar.btnGrip:Paint(w,h)
+        draw.RoundedBox(8,  w / 2 - w / 2, 0, w / 2, h, color_black)
+    end
+    local PlayerPanels
+    if PlayerPanels == nil then
+        PlayerPanels = {}
+    end
+
+    local function RemovePlayerPanel(panel)
+	    if panel:IsValid() then
+	    	PlayerPanels[panel:GetPlayer()] = nil
+	    	panel:Remove()
+	    end
+    end
+
+	for pl, panel in pairs(PlayerPanels) do
+		if not panel:IsValid() or pl:IsValid() and pl:IsSpectator() then
+			RemovePlayerPanel(panel)
+		end
+	end
+
+    local function GetPlayerPanel(pl)
+        for _, panel in pairs(PlayerPanels) do
+            if panel:IsValid() and panel:GetPlayer() == pl then
+                return panel
+            end
+        end
+    end
+
+    local function CreatePlayerPanel(pl)
+        local curpan = GetPlayerPanel(pl)
+        if curpan and curpan:IsValid() then return curpan end
+
+        local panel = ScrollPanel:Add("DPlayerLine")
+        panel:SetPlayer(pl)
+        panel:Dock(TOP)
+        panel:DockMargin(ScrollPanel:GetWide() * 0.01, 2, ScrollPanel:GetWide() * 0.01, 2)
+    
+        PlayerPanels[pl] = panel
+    
+        return panel
+    end
+
+    board:SizeToChildren(true, false)
 
     local player_score = {}
     for _, ply in pairs(player.GetAll()) do
@@ -47,106 +130,15 @@ function scoreboard:show()
     end
 
     for ply, _ in SortedPairsByValue(player_score, true) do
-        if not ply:IsValid() then goto cont end
-        local subclass_name = HORDE.Class_Survivor
-        if ply:Horde_GetCurrentSubclass() then subclass_name = ply:Horde_GetCurrentSubclass() end
-        local perks
-        if HORDE.classes[subclass_name] then
-            perks = HORDE.classes[subclass_name].perks
-        else
-            perks = HORDE.subclasses[subclass_name].Perks
+        CreatePlayerPanel(ply)
+    end
+
+    local function GetPlayerPanel(pl)
+        for _, panel in pairs(PlayerPanels) do
+            if panel:IsValid() and panel:GetPlayer() == pl then
+                return panel
+            end
         end
-        local gadget = ply:Horde_GetGadget()
-
-        local list = lists:Add("DPanel")
-        list:SetSize(lists:GetWide(), 45)
-        list:Dock(TOP)
-        function list:Paint(w,h)
-            if not ply:IsValid() then return end
-            if ply:Alive() then
-                draw.RoundedBox(5, 0, 0, w, 40, Color(40,40,40,200), true, true, false, false)
-            else
-                draw.RoundedBox(5, 0, 0, w, 40, Color(100,0,0,200), true, true, false, false)
-            end
-            draw.DrawText(ply:Name():sub(1,20), "Content", 51, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-            local subclass = HORDE.subclasses[subclass_name]
-            if subclass then
-                local mat = Material(subclass.Icon, "mips smooth")
-                local rank = ply:Horde_GetRank(subclass.PrintName)
-                local rank_level = ply:Horde_GetRankLevel(subclass.PrintName)
-                surface.SetMaterial(mat) -- Use our cached material
-                surface.SetDrawColor(HORDE.Rank_Colors[rank])
-                surface.DrawTexturedRect(200, 2, 38, 38)
-                if rank == HORDE.Rank_Master then
-                    draw.SimpleText(rank_level, "Trebuchet18", 200 - 5, 15, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                    draw.DrawText(translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName, "Content", 250, 11, HORDE.Rank_Colors[rank], TEXT_ALIGN_LEFT )
-                else
-                    if rank_level > 0 then
-                        local star = Material("star.png", "mips smooth")
-                        surface.SetMaterial(star)
-                        local y_pos = 27
-                        for i = 0, rank_level - 1 do
-                            surface.DrawTexturedRect(200 - 10, y_pos, 10, 10)
-                            y_pos = y_pos - 7
-                        end
-                    end
-                    draw.DrawText(translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName, "Content", 250, 11, Color(255, 255, 255, 200), TEXT_ALIGN_LEFT )
-                end
-            end
-
-            local x = 375
-            for perk_level, v in SortedPairs(perks) do
-                local color = color_white
-                if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then color = Color(150,150,150) end
-                if not ply.Horde_PerkChoices then break end
-                if (not subclass_name) or (not perk_level) or (not v.choices) then break end
-                local choice = v.choices[ply.Horde_PerkChoices[subclass_name][perk_level] or 1]
-                local perk = HORDE.perks[choice]
-                local icon = perk.Icon
-                if icon then
-                    local mat = Material(icon, "mips smooth")
-                    surface.SetMaterial(mat)
-                    surface.SetDrawColor(color)
-                    surface.DrawTexturedRect(x, 2, 35, 35)
-                else
-                    local mat = Material(HORDE.subclasses[subclass_name].Icon, "mips smooth")
-                    surface.SetMaterial(mat)
-                    surface.SetDrawColor(color)
-                    surface.DrawTexturedRect(x, 2, 35, 35)
-                end
-                x = x + 40
-                ::cont::
-            end
-            
-            if gadget then
-                local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
-                surface.SetMaterial(mat) -- Use our cached material
-                if HORDE.gadgets[gadget].Active then
-                    if HORDE.gadgets[gadget].Once then
-                        surface.SetDrawColor(HORDE.color_gadget_once)
-                    else
-                        surface.SetDrawColor(HORDE.color_gadget_active)
-                    end
-                else
-                    surface.SetDrawColor(color_white)
-                end
-                surface.DrawTexturedRect(665, -2, 90, 45)
-            end
-            surface.SetDrawColor(255, 255, 255, 255)
-            draw.DrawText(tostring(ply:Horde_GetMoney()) .. "$", "Content", 793, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-            draw.DrawText(tostring(ply:Frags()), "Content", 851, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-            draw.DrawText(tostring(ply:Deaths()), "Content", 911, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER )
-            draw.DrawText(tostring(ply:Ping()), "Content", 971, 11, Color(255, 255, 255, 200), TEXT_ALIGN_CENTER)
-        end
-
-        local avatar = lists:Add("AvatarImage")
-        avatar:SetParent(list)
-        avatar:Dock(NODOCK)
-	    avatar:SetPos(2, 2)
-		avatar:SetSize(36, 36)
-        avatar:SetPlayer(ply)
-
-        ::cont::
     end
 
     function scoreboard:hide()

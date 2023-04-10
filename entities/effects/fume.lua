@@ -6,8 +6,8 @@ end
 
 function EFFECT:Think()
     if self.ticks % 5 == 0 then
-        if not self.entity or not self.entity:IsValid() then return end
-        if not self.entity.Horde_Mutation then return false end
+        if not self.entity or not self.entity:IsValid() then return true end
+        if not self.entity.Horde_Mutation and IsValid(self.emitter) then self.emitter:Finish() return false end
         local pos = self.entity:GetPos()
         if not self.emitter then
             self.emitter = ParticleEmitter(pos)
@@ -20,7 +20,7 @@ function EFFECT:Think()
             smoke:SetStartAlpha(20)
             smoke:SetEndAlpha(0)
             smoke:SetStartSize(10)
-            smoke:SetEndSize(300)
+            smoke:SetEndSize(200)
             smoke:SetRoll( math.Rand(-180, 180) )
             smoke:SetRollDelta( math.Rand(-0.2,0.2) )
             smoke:SetColor(200, 50, 50)

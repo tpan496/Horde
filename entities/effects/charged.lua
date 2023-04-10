@@ -9,9 +9,9 @@ end
 function EFFECT:Think()
     if not self.entity or not self.entity:IsValid() then return true end
     if self.entity:IsWeapon() then
-        if not self.entity.Mjollner_Charged then return false end
+        if not self.entity.Mjollner_Charged then if IsValid(self.emitter) then self.emitter:Finish() end return false end
     else
-        if not self.entity.Horde_Mutation_Charged then return false end
+        if not self.entity.Horde_Mutation_Charged then if IsValid(self.emitter) then self.emitter:Finish() end return false end
     end
     local pos = self.entity:GetPos()
     if not self.emitter then

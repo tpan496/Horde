@@ -75,8 +75,10 @@ ENT.SoundTbl_OnPlayerSight = {
 }
 
 ENT.Immune_AcidPoisonRadiation = true -- Makes the SNPC not get damage from Acid, posion, radiation
+ENT.Horde_Immune_Bleeding = true
 
 function ENT:CustomOnInitialize()
+	self:SetSkin(math.random(0,3))
 	timer.Simple(0.1, function ()
 		self:SetAngles(Angle(0,0,0))
 		HORDE:DropTurret(self)
@@ -88,7 +90,7 @@ function ENT:DoPoseParameterLooking()
 	local p_enemy = 0 -- Pitch
 	local y_enemy = 0 -- Yaw
 	if IsValid(ent) then
-		local enemy_pos = ent:GetPos() + ent:OBBCenter()
+		local enemy_pos = ent:GetPos()
 		local self_ang = self:GetAngles()
 		local enemy_ang = (enemy_pos - (self:GetPos() + self:OBBCenter())):Angle()
 		p_enemy = math.AngleDifference(enemy_ang.p, self_ang.p)
@@ -109,9 +111,9 @@ function ENT:CustomRangeAttackCode_AfterProjectileSpawn(projectile)
 	local phys = projectile:GetPhysicsObject()
 	local ent = self:GetEnemy()
 	if IsValid(phys) then
-		local dir = (ent:GetPos() + ent:OBBCenter() - self:GetAttachment(2).Pos)
+		local dir = (ent:GetPos() - self:GetAttachment(2).Pos)
 		dir:Normalize()
-		local vel = dir * 2000
+		local vel = dir * 4000
 		phys:SetVelocity(vel)
 	end
 end
@@ -123,6 +125,8 @@ end
 -----------------------------------------------*/
 
 VJ.AddNPC("Rocket Turret","npc_vj_horde_rocket_turret", "Horde")
+ENT.Horde_TurretMinion = true
+
 
 function ENT:Follow(ply)
 	if self:GetNWEntity("HordeOwner") == ply then

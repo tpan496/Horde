@@ -62,6 +62,11 @@ SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/c_law.mdl"
 SWEP.WorldModel = "models/weapons/w_rocket_launcher.mdl"
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(-15, 12, -10),
+    ang = Angle(0, 0, 180),
+}
 SWEP.ViewModelFOV = 45
 
 SWEP.Damage = 1000
@@ -141,7 +146,7 @@ SWEP.IronSightStruct = {
     Magnification = 1.3,
 }
 
-SWEP.HoldtypeHolstered = "normal"
+SWEP.HoldtypeHolstered = "rpg"
 SWEP.HoldtypeActive = "rpg"
 SWEP.HoldtypeSights = "rpg"
 

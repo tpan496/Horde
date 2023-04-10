@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	$baseTexture "models\horde\rocket_turret\Eye_A"
+	$baseTexture "models\horde\rocket_turret\eye_a"
                 $Color2 "[0 0 0]"
 	$nodecal "1"
 }
