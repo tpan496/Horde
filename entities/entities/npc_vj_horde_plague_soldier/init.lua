@@ -47,6 +47,7 @@ ENT.MoveOrHideOnDamageByEnemy = false
 ENT.WeaponSpread = 1.35
 ENT.Weapon_FiringDistanceFar = 1500
 ENT.WeaponReload_FindCover = false
+ENT.Horde_Plague_Soldier = true
 
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",
@@ -65,6 +66,8 @@ ENT.SoundTbl_FootStep = {
 "npc/combine_soldier/gear4.wav",
 "npc/combine_soldier/gear5.wav",
 "npc/combine_soldier/gear6.wav"}
+
+ENT.SoundTbl_Alert = {"zsszombine/alert1.wav","zsszombine/alert2.wav","zsszombine/alert3.wav","zsszombine/alert4.wav","zsszombine/alert5.wav","zsszombine/alert6.wav"}
 
 
 	-- ====== Sound Pitch ====== --
