@@ -5,7 +5,7 @@ ENT.ThinkInterval = 0.5
 function ENT:Initialize()
 	self.LastThink = CurTime()
 	self.Horde_Players_In_Zone = {}
-	self.Horde_Progress_Amount = 1
+	self.Horde_Progress_Amount = 100/60
 	self.Horde_Activated = nil
 	self.Horde_Zone_Id = self:GetCreationID()
 end

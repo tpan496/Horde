@@ -21,14 +21,14 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
         for i = 1,10 do
             local LT = ents.Create("info_target")
             LT:SetKeyValue("targetname","bolt_target_" .. ply:Name().. "_" .. tostring(i))
-            local f = math.random(-200,200)
-            local g = math.random(-200,200)
+            local f = math.random(-125,125)
+            local g = math.random(-125,125)
             LT:SetPos(Vector(pos.x + f, pos.y + g, -500))
             LT:Fire("kill","",0.5)
             LT:Spawn()
     
             if i == 5 then
-                for _, ent in pairs(ents.FindInSphere(pos, 200)) do
+                for _, ent in pairs(ents.FindInSphere(pos, 125)) do
                     if HORDE:IsEnemy(ent) then
                         local dmg2 = DamageInfo()
                         dmg2:SetDamage(base_damage)
@@ -42,7 +42,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
             elseif i == 10 then
                 timer.Simple(0.2, function ()
                     if !IsValid(wpn) or !IsValid(ply) then return end
-                    for _, ent in pairs(ents.FindInSphere(pos, 200)) do
+                    for _, ent in pairs(ents.FindInSphere(pos, 125)) do
                         if HORDE:IsEnemy(ent) then
                             local dmg2 = DamageInfo()
                             dmg2:SetDamage(base_damage)
@@ -98,7 +98,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
     ply:EmitSound("horde/weapons/solar_seal/hallowed_bolt_launch.ogg", 100, math.random(90, 110))
 
 	local level = ply:Horde_GetSpellUpgrade("hallowed_bolt")
-	local base_damage = 400 + math.floor(100 * math.pow(level, 1.2))
+	local base_damage = 300 + math.floor(100 * math.pow(level, 1.2))
 
 	local tr = ply:GetEyeTrace()
 	local param = {}
