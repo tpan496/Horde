@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/combine_super_soldier.mdl" -- Leave empty if using more than one model
-ENT.StartHealth = 1000
+ENT.StartHealth = 1050
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.MeleeAttackDamage = 30
 ENT.MoveType = MOVETYPE_STEP
@@ -27,7 +27,7 @@ ENT.MoveWhenDamagedByEnemySCHED1 = SCHED_FORCED_GO_RUN -- The schedule it runs w
 ENT.MoveWhenDamagedByEnemySCHED2 = SCHED_FORCED_GO_RUN -- The schedule it runs when MoveWhenDamagedByEnemy code is ran | The second # in math.random
 ENT.NextMoveWhenDamagedByEnemy1 = 3 -- Next time it moves when getting damaged | The first # in math.random
 ENT.NextMoveWhenDamagedByEnemy2 = 3.5 -- Next time it moves when getting damaged | The second # in math.random
-ENT.HasAllies = false -- Put to false if you want it not to have any allies
+ENT.HasAllies = true -- Put to false if you want it not to have any allies
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.HasGrenadeAttack = true -- Should the SNPC have a grenade attack?
 ENT.NextThrowGrenadeTime1 = 10 -- Time until it runs the throw grenade code again | The first # in math.random
@@ -47,12 +47,22 @@ ENT.MoveOrHideOnDamageByEnemy = false
 ENT.WeaponSpread = 1.5
 ENT.Weapon_FiringDistanceFar = 2500
 ENT.WeaponReload_FindCover = false
+ENT.Horde_Plague_Soldier = true
 
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",
 "npc/combine_soldier/pain2.wav",
 "npc/combine_soldier/pain3.wav"}
 
+ENT.SoundTbl_FootStep = {
+	"npc/combine_soldier/gear1.wav",
+	"npc/combine_soldier/gear2.wav",
+	"npc/combine_soldier/gear3.wav",
+	"npc/combine_soldier/gear4.wav",
+	"npc/combine_soldier/gear5.wav",
+	"npc/combine_soldier/gear6.wav"}
+ENT.SoundTbl_Idle = {"zsszombine/idle1.wav","zsszombine/idle2.wav","zsszombine/idle3.wav","zsszombine/idle4.wav","zsszombine/idle5.wav"}
+ENT.SoundTbl_Alert = {"zsszombine/alert1.wav","zsszombine/alert2.wav","zsszombine/alert3.wav","zsszombine/alert4.wav","zsszombine/alert5.wav","zsszombine/alert6.wav"}
 
 	-- ====== Sound Pitch ====== --
 -- Higher number = Higher pitch | Lower number = Lower pitch
@@ -61,65 +71,14 @@ ENT.SoundTbl_Pain = {
 ENT.UseTheSameGeneralSoundPitch = true
 	-- If set to true, it will make the game decide a number when the SNPC is created and use it for all sound pitches set to "UseGeneralPitch"
 	-- It picks the number between the two variables below:
-ENT.GeneralSoundPitch1 = 100
-ENT.GeneralSoundPitch2 = 100
-	-- This two variables control any sound pitch variable that is set to "UseGeneralPitch"
-	-- To not use these variables for a certain sound pitch, just put the desired number in the specific sound pitch
-ENT.FootStepPitch1 = 100
-ENT.FootStepPitch2 = 100
-ENT.BreathSoundPitch1 = 100
-ENT.BreathSoundPitch2 = 100
-ENT.IdleSoundPitch1 = "UseGeneralPitch"
-ENT.IdleSoundPitch2 = "UseGeneralPitch"
-ENT.CombatIdleSoundPitch1 = "UseGeneralPitch"
-ENT.CombatIdleSoundPitch2 = "UseGeneralPitch"
-ENT.OnReceiveOrderSoundPitch1 = "UseGeneralPitch"
-ENT.OnReceiveOrderSoundPitch2 = "UseGeneralPitch"
-ENT.FollowPlayerPitch1 = "UseGeneralPitch"
-ENT.FollowPlayerPitch2 = "UseGeneralPitch"
-ENT.UnFollowPlayerPitch1 = "UseGeneralPitch"
-ENT.UnFollowPlayerPitch2 = "UseGeneralPitch"
-ENT.BeforeHealSoundPitch1 = "UseGeneralPitch"
-ENT.BeforeHealSoundPitch2 = "UseGeneralPitch"
-ENT.AfterHealSoundPitch1 = 100
-ENT.AfterHealSoundPitch2 = 100
-ENT.OnPlayerSightSoundPitch1 = "UseGeneralPitch"
-ENT.OnPlayerSightSoundPitch2 = "UseGeneralPitch"
-ENT.AlertSoundPitch1 = "UseGeneralPitch"
-ENT.AlertSoundPitch2 = "UseGeneralPitch"
-ENT.CallForHelpSoundPitch1 = "UseGeneralPitch"
-ENT.CallForHelpSoundPitch2 = "UseGeneralPitch"
-ENT.BecomeEnemyToPlayerPitch1 = "UseGeneralPitch"
-ENT.BecomeEnemyToPlayerPitch2 = "UseGeneralPitch"
-ENT.BeforeMeleeAttackSoundPitch1 = "UseGeneralPitch"
-ENT.BeforeMeleeAttackSoundPitch2 = "UseGeneralPitch"
-ENT.MeleeAttackSoundPitch1 = 100
-ENT.MeleeAttackSoundPitch2 = 100
-ENT.ExtraMeleeSoundPitch1 = 100
-ENT.ExtraMeleeSoundPitch2 = 100
-ENT.MeleeAttackMissSoundPitch1 = 100
-ENT.MeleeAttackMissSoundPitch2 = 100
-ENT.SuppressingPitch1 = "UseGeneralPitch"
-ENT.SuppressingPitch2 = "UseGeneralPitch"
-ENT.WeaponReloadSoundPitch1 = "UseGeneralPitch"
-ENT.WeaponReloadSoundPitch2 = "UseGeneralPitch"
-ENT.GrenadeAttackSoundPitch1 = "UseGeneralPitch"
-ENT.GrenadeAttackSoundPitch2 = "UseGeneralPitch"
-ENT.OnGrenadeSightSoundPitch1 = "UseGeneralPitch"
-ENT.OnGrenadeSightSoundPitch2 = "UseGeneralPitch"
-ENT.PainSoundPitch1 = "UseGeneralPitch"
-ENT.PainSoundPitch2 = "UseGeneralPitch"
-ENT.ImpactSoundPitch1 = 100
-ENT.ImpactSoundPitch2 = 100
-ENT.DamageByPlayerPitch1 = "UseGeneralPitch"
-ENT.DamageByPlayerPitch2 = "UseGeneralPitch"
-ENT.DeathSoundPitch1 = "UseGeneralPitch"
-ENT.DeathSoundPitch2 = "UseGeneralPitch"
+ENT.GeneralSoundPitch1 = 75
+ENT.GeneralSoundPitch2 = 75
 
 function ENT:CustomOnInitialize()
 	self:SetModelScale(1.25)
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
+	self:SetColor(Color(50,50,50))
 
 	local p = math.random()
 	self:Give("weapon_vj_horde_ar2")
@@ -130,18 +89,46 @@ function ENT:CustomOnInitialize()
 	pos = attach.Pos
 	ang = attach.Ang
 	pos.x = pos.x - 3
-	pos.z = pos.z - 7
+	pos.z = pos.z - 6
 	pos.y = pos.y
 	self.model = ents.Create("prop_dynamic")
 	self.model:SetModel("models/headcrabblack.mdl")
 	self.model:SetColor(Color(255, 0, 0))
 	--self.model = ClientsideModel("models/headcrabblack.mdl", RENDERGROUP_OPAQUE)
-	self.model:SetSequence("ragdoll")
+	self.model:SetSequence("idle01")
 	self.model:SetPos(pos)
 	self.model:SetAngles(ang)
 	self.model:Spawn()
 	self.model:SetParent(self, attach_id)
-	self.model:SetModelScale(1.25)
+	self.model:SetModelScale(1.5)
+
+	self:EmitSound("npc/combine_gunship/see_enemy.wav", 3000, 100, 2, CHAN_STATIC)
+end
+
+local defAng = Angle(0, 0, 0)
+
+ENT.ZBoss_NextMiniBossSpawnT = 0
+function ENT:CustomOnThink_AIEnabled()
+	if IsValid(self:GetEnemy()) && CurTime() > self.ZBoss_NextMiniBossSpawnT && !IsValid(self.MiniBoss1) && !IsValid(self.MiniBoss2) then
+		self:VJ_ACT_PLAYACTIVITY("vjseq_releasecrab", true, false, false)
+		ParticleEffect("aurora_shockwave_debris", self:GetPos(), defAng, nil)
+		ParticleEffect("aurora_shockwave", self:GetPos(), defAng, nil)
+		self:EmitSound("horde/plague_elite/summon.ogg")
+		
+		self.MiniBoss1 = ents.Create("npc_vj_horde_plague_soldier")
+		self.MiniBoss1:SetPos(self:GetPos() + self:GetRight()*45)
+		self.MiniBoss1:SetAngles(self:GetAngles())
+		self.MiniBoss1:Spawn()
+		self.MiniBoss1:SetOwner(self)
+		
+		self.MiniBoss2 = ents.Create("npc_vj_horde_zombine")
+		self.MiniBoss2:SetPos(self:GetPos() + self:GetRight()*-45)
+		self.MiniBoss2:SetAngles(self:GetAngles())
+		self.MiniBoss2:Spawn()
+		self.MiniBoss2:SetOwner(self)
+		
+		self.ZBoss_NextMiniBossSpawnT = CurTime() + 15
+	end
 end
 
 /*-----------------------------------------------

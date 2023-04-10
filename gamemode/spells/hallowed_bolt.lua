@@ -98,7 +98,10 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
     ply:EmitSound("horde/weapons/solar_seal/hallowed_bolt_launch.ogg", 100, math.random(90, 110))
 
 	local level = ply:Horde_GetSpellUpgrade("hallowed_bolt")
-	local base_damage = 300 + math.floor(100 * math.pow(level, 1.2))
+
+    local bonus = {increase = 0, more = 1}
+	hook.Run("Horde_OnPlayerSpellDamage", ply, bonus)
+	local base_damage = (300 + math.floor(100 * math.pow(level, 1.2))) * bonus.more * (1 + bonus.increase)
 
 	local tr = ply:GetEyeTrace()
 	local param = {}

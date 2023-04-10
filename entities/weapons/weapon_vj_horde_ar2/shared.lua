@@ -14,14 +14,14 @@ SWEP.SlotPos = 4 -- Which part of that slot do you want the SWEP to be in? (1 2 
 SWEP.UseHands = true
 end
 	-- NPC Settings ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.NPC_HasSecondaryFire = true -- Can the weapon have a secondary fire?
+SWEP.NPC_HasSecondaryFire = false -- Can the weapon have a secondary fire?
 SWEP.NPC_SecondaryFireEnt = "obj_vj_combineball"
 SWEP.NPC_SecondaryFireDistance = 3000 -- How close does the owner's enemy have to be for it to fire?
-SWEP.NPC_SecondaryFireChance = 4 -- Chance that the secondary fire is used | 1 = always
+SWEP.NPC_SecondaryFireChance = 3 -- Chance that the secondary fire is used | 1 = always
 SWEP.NPC_SecondaryFireNext = VJ_Set(15, 20) -- How much time until the secondary fire can be used again?
-SWEP.NPC_NextPrimaryFire = 2 -- Next time it can use primary fire
+SWEP.NPC_NextPrimaryFire = 4 -- Next time it can use primary fire
 SWEP.NPC_TimeUntilFire = 0.1 -- How much time until the bullet/projectile is fired?
-SWEP.NPC_TimeUntilFireExtraTimers = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6} -- Extra timers, which will make the gun fire again! | The seconds are counted after the self.NPC_TimeUntilFire!
+SWEP.NPC_TimeUntilFireExtraTimers = {0.1, 0.2, 0.3, 0.4} -- Extra timers, which will make the gun fire again! | The seconds are counted after the self.NPC_TimeUntilFire!
 	-- Main Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.ViewModel = "models/weapons/c_irifle.mdl"
 SWEP.WorldModel = "models/weapons/w_irifle.mdl"
@@ -29,7 +29,7 @@ SWEP.HoldType = "ar2"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = false
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Primary.Damage = 8 -- Damage
+SWEP.Primary.Damage = 7 -- Damage
 SWEP.Primary.Force = 0 -- Force applied on the object the bullet hits
 SWEP.Primary.ClipSize = 30 -- Max amount of bullets per clip
 SWEP.Primary.Delay = 0.1 -- Time until it can shoot again
