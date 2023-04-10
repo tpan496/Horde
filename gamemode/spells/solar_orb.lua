@@ -12,7 +12,6 @@ SPELL.Type           = {HORDE.Spell_Type_Projectile, HORDE.Spell_Type_AOE}
 SPELL.Description    = [[Conjures fireballs using solar energy. Charge for differnet effects.]]
 SPELL.Fire           = function (ply, wpn, charge_stage)
     local function SpawnProjectile(pos, angles, dir, properties)
-        hook.Run("Horde_OnSolarSealLaunch", ply, properties)
         local ent = ents.Create("projectile_horde_solar_orb")
         ent:SetOwner(ply)
         ent:SetCharged(charge_stage - 1)
@@ -21,6 +20,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
         ent:SetSpellBaseDamages({math.floor(25 + math.pow(level, 1.1) * 5.5), math.floor(10 + math.pow(level, 1.1) * 7)})
         ent:SetPos( pos )
         ent:SetAngles( angles )
+        hook.Run("Horde_OnDraconicCheck", ply, ent)
         ent:Spawn()
 
         local phys = ent:GetPhysicsObject()
