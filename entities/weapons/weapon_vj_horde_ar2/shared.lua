@@ -29,11 +29,11 @@ SWEP.HoldType = "ar2"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = false
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Primary.Damage = 7 -- Damage
+SWEP.Primary.Damage = 0 -- Damage
 SWEP.Primary.Force = 0 -- Force applied on the object the bullet hits
 SWEP.Primary.ClipSize = 30 -- Max amount of bullets per clip
 SWEP.Primary.Delay = 0.1 -- Time until it can shoot again
-SWEP.Primary.TracerType = "AR2Tracer" -- Tracer type (Examples: AR2, laster, 9mm)
+SWEP.Primary.TracerType = "None" -- Tracer type (Examples: AR2, laster, 9mm)
 SWEP.Primary.Automatic = true -- Is it automatic?
 SWEP.Primary.Ammo = "AR2" -- Ammo type
 SWEP.Primary.Sound = {"vj_weapons/hl2_ar2/ar2_single1.wav","vj_weapons/hl2_ar2/ar2_single2.wav","vj_weapons/hl2_ar2/ar2_single3.wav"}
@@ -46,9 +46,11 @@ SWEP.PrimaryEffects_DynamicLightColor = Color(0, 31, 225)
 
 SWEP.DryFireSound = {"weapons/ar2/ar2_empty.wav"}
 	-- Reload Settings ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.HasReloadSound				= false -- Does it have a reload sound? Remember even if this is set to false, the animation sound will still play!
+SWEP.HasReloadSound				= true -- Does it have a reload sound? Remember even if this is set to false, the animation sound will still play!
 SWEP.ReloadSound				= "weapons/ar2/ar2_reload.wav"
 SWEP.Reload_TimeUntilAmmoIsSet	= 0.8 -- Time until ammo is set to the weapon
+SWEP.Primary.Tracer = 0
+SWEP.Primary.DisableBulletCode = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:NPC_SecondaryFire_BeforeTimer(eneEnt, fireTime)
 	VJ_EmitSound(self, "weapons/cguard/charging.wav", 70)
@@ -72,84 +74,28 @@ function SWEP:NPC_SecondaryFire()
 	VJ_CreateSound(self, "weapons/irifle/irifle_fire2.wav", 90)
 end
 
+function SWEP:CustomOnPrimaryAttack_BeforeShoot()
+	if CLIENT then return end
+	local bullet = ents.Create("obj_vj_horde_bullet")
+	bullet:SetPos(self:GetAttachment(self:LookupAttachment("muzzle")).Pos)
+	bullet:SetAngles(self:GetOwner():GetAngles())
+	bullet:SetOwner(self:GetOwner())
+	bullet:Activate()
+	bullet.TracerColor = Color(0, 191, 255)
+	bullet.TracerWidth = 20
+	bullet:Spawn()
+	bullet.DirectDamage = 8
+	
+	local phy = bullet:GetPhysicsObject()
+	if phy:IsValid() then
+		local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
+		dir:Normalize()
+		dir = dir + VectorRand() * 0.02
+		dir:Normalize()
+		phy:ApplyForceCenter(dir * 1000)
+	end
+end
 
-function SWEP:CustomOnThink()
-
-if self.Owner.SquadName == "resistance" then
-
-if self.Owner.FollowingPlayer == false then
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE_SHOTGUN}
-self.Owner.AnimTbl_Run = {ACT_RUN_RIFLE}
-
-self.Owner.AnimTbl_Walk = {ACT_WALK_RIFLE}
-end
-if self.Owner.FollowingPlayer == true then
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE_SHOTGUN_AGITATED}
-self.Owner.AnimTbl_Run = {ACT_RUN_RIFLE}
-self.Owner.AnimTbl_Walk = {ACT_WALK_RIFLE}
-end
-end
-if self.Owner.SquadName == "metrocop" then
-self.HoldType 					= "smg"
-self.Primary.Damage				= 10 
-self.Primary.ClipSize			= 1
-self.Owner.WeaponSpread = 0
-if self.Owner.FollowingPlayer == false then
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE}
-self.Owner.AnimTbl_Run = {ACT_RUN}
-self.Owner.AnimTbl_WeaponReload = {ACT_RELOAD_SMG1}
-self.Owner.AnimTbl_Walk = {ACT_WALK}
-end
-if self.Owner.FollowingPlayer == true then
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE_SMG1}
-self.Owner.AnimTbl_Run = {ACT_RUN_RIFLE}
-self.Owner.AnimTbl_WeaponReload = {ACT_RELOAD_SMG1}
-self.Owner.AnimTbl_Walk = {ACT_WALK_RIFLE}
-end
-end
-if self.Owner.SquadName == "combine" then
-
-if self.Owner.FollowingPlayer == false then
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE_SMG1}
-self.Owner.AnimTbl_Run = {ACT_RUN_RIFLE}
-
-self.Owner.AnimTbl_Walk = {ACT_WALK_RIFLE}
-end
-if self.Owner.FollowingPlayer == true then
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE_ANGRY_SHOTGUN}
-self.Owner.AnimTbl_Run = {ACT_RUN_AIM_SHOTGUN}
-self.Owner.AnimTbl_Walk = {ACT_WALK_AIM_SHOTGUN}
-end
-end
-if self.Owner.SquadName == "combine_nova" then
-
-if self.Owner.FollowingPlayer == false then
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE_SMG1}
-self.Owner.AnimTbl_Run = {ACT_RUN_RIFLE}
-
-self.Owner.AnimTbl_Walk = {ACT_IDLE_SMG1}
-end
-if self.Owner.FollowingPlayer == true then
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE_ANGRY_SHOTGUN}
-self.Owner.AnimTbl_Run = {ACT_RUN_AIM_SHOTGUN}
-self.Owner.AnimTbl_Walk = {ACT_WALK_AIM_SHOTGUN}
-end
-end
-if self.Owner.SquadName == "metrocops" then
-self.HoldType 					= "smg"
-if self.Owner.FollowingPlayer == false then
-
-self.Owner.AnimTbl_Run = {ACT_RUN}
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE}
-self.Owner.AnimTbl_Walk = {ACT_IDLE}
-end
-if self.Owner.FollowingPlayer == true then
-self.Owner.AnimTbl_IdleStand = {ACT_IDLE_SMG1}
-self.Owner.AnimTbl_Run = {ACT_RUN_RIFLE}
-self.Owner.AnimTbl_Walk = {ACT_WALK_RIFLE}
-end
-end
-end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnPrimaryAttack_AfterShoot()
 	timer.Simple(0.2,function()

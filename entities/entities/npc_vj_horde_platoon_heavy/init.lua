@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/combine_super_soldier.mdl" -- Leave empty if using more than one model
-ENT.StartHealth = 1050
+ENT.StartHealth = 2500
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.MeleeAttackDamage = 30
 ENT.MoveType = MOVETYPE_STEP
@@ -74,14 +74,19 @@ ENT.UseTheSameGeneralSoundPitch = true
 ENT.GeneralSoundPitch1 = 75
 ENT.GeneralSoundPitch2 = 75
 
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	if HORDE:IsPhysicalDamage(dmginfo) then
+		dmginfo:ScaleDamage(0.75)
+	end
+end
+
 function ENT:CustomOnInitialize()
 	self:SetModelScale(1.25)
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
-	self:SetColor(Color(50,50,50))
+	self:SetColor(Color(100,100,100))
 
-	local p = math.random()
-	self:Give("weapon_vj_horde_ar2")
+	self:Give("weapon_vj_horde_m249")
 	local pos = Vector()
 	local ang = Angle()
 	local attach_id = self:LookupAttachment("eyes")
@@ -93,8 +98,7 @@ function ENT:CustomOnInitialize()
 	pos.y = pos.y
 	self.model = ents.Create("prop_dynamic")
 	self.model:SetModel("models/headcrabblack.mdl")
-	self.model:SetColor(Color(255, 0, 0))
-	--self.model = ClientsideModel("models/headcrabblack.mdl", RENDERGROUP_OPAQUE)
+	self.model:SetColor(Color(100, 100, 100))
 	self.model:SetSequence("idle01")
 	self.model:SetPos(pos)
 	self.model:SetAngles(ang)
@@ -109,30 +113,7 @@ local defAng = Angle(0, 0, 0)
 
 ENT.ZBoss_NextMiniBossSpawnT = 0
 function ENT:CustomOnThink_AIEnabled()
-	if IsValid(self:GetEnemy()) && CurTime() > self.ZBoss_NextMiniBossSpawnT && (!IsValid(self.MiniBoss1) || !IsValid(self.MiniBoss2)) then
-		self:VJ_ACT_PLAYACTIVITY("vjseq_releasecrab", true, false, false)
-		ParticleEffect("aurora_shockwave_debris", self:GetPos(), defAng, nil)
-		ParticleEffect("aurora_shockwave", self:GetPos(), defAng, nil)
-		self:EmitSound("horde/plague_elite/summon.ogg")
-		
-		if (!IsValid(self.MiniBoss1)) then
-			self.MiniBoss1 = ents.Create("npc_vj_horde_plague_soldier")
-			self.MiniBoss1:SetPos(self:GetPos() + self:GetRight()*45)
-			self.MiniBoss1:SetAngles(self:GetAngles())
-			self.MiniBoss1:Spawn()
-			self.MiniBoss1:SetOwner(self)
-		end
-		
-		if (!IsValid(self.MiniBoss2)) then
-			self.MiniBoss2 = ents.Create("npc_vj_horde_zombine")
-			self.MiniBoss2:SetPos(self:GetPos() + self:GetRight()*-45)
-			self.MiniBoss2:SetAngles(self:GetAngles())
-			self.MiniBoss2:Spawn()
-			self.MiniBoss2:SetOwner(self)
-		end
-		
-		self.ZBoss_NextMiniBossSpawnT = CurTime() + 15
-	end
+	return
 end
 
 /*-----------------------------------------------
@@ -141,4 +122,4 @@ end
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 
-VJ.AddNPC("Hulk","npc_vj_horde_plague_elite", "Zombies")
+VJ.AddNPC("Platoon","npc_vj_horde_platoon_heavy", "Zombies")
