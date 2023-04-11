@@ -712,17 +712,15 @@ function HORDE:RemoveAINode(pos)
 end
 
 function HORDE:AddBossNode(pos)
-	local new_node = {}
-	new_node["pos"] = pos
 	for i, node in pairs(HORDE.boss_spawns) do
-		if node["pos"] == pos then return end
+		if node == pos then return end
 	end
-	table.insert(HORDE.boss_spawns, new_node)
+	table.insert(HORDE.boss_spawns, pos)
 end
 
 function HORDE:RemoveBossNode(pos)
 	for i, node in pairs(HORDE.boss_spawns) do
-		if node["pos"] == pos then
+		if node == pos then
 			table.remove(HORDE.boss_spawns, i)
 		end
 	end
