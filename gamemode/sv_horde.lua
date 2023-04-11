@@ -687,6 +687,8 @@ function HORDE:GetValidNodes(enemies)
     return valid_nodes
 end
 
+-- Add/remove ai/boss nodes.
+-- Can be compressed, but I left it at that for the sake of clarity.
 function HORDE:AddAINode(pos)
 	local new_node = {}
 	new_node["pos"] = pos
@@ -700,6 +702,23 @@ function HORDE:RemoveAINode(pos)
 	for i, node in pairs(HORDE.ai_nodes) do
 		if node["pos"] == pos then
 			table.remove(HORDE.ai_nodes, i)
+		end
+	end
+end
+
+function HORDE:AddBossNode(pos)
+	local new_node = {}
+	new_node["pos"] = pos
+	for i, node in pairs(HORDE.boss_spawns) do
+		if node["pos"] == pos then return end
+	end
+	table.insert(HORDE.boss_spawns, new_node)
+end
+
+function HORDE:RemoveBossNode(pos)
+	for i, node in pairs(HORDE.boss_spawns) do
+		if node["pos"] == pos then
+			table.remove(HORDE.boss_spawns, i)
 		end
 	end
 end
