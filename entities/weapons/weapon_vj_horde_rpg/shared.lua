@@ -47,6 +47,7 @@ SWEP.PrimaryEffects_SpawnShells = false
 SWEP.HasReloadSound				= true -- Does it have a reload sound? Remember even if this is set to false, the animation sound will still play!
 SWEP.Reload_TimeUntilAmmoIsSet	= 0.8 -- Time until ammo is set to the weapon
 SWEP.ReloadSound				= "vj_weapons/reload_rpg.wav"
+SWEP.Critical = nil
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	if CLIENT then return end
@@ -84,4 +85,12 @@ end
 function SWEP:CustomOnReload_Finish()
 	self:SetBodygroup(1, 0)
 	return true
+end
+
+function SWEP:CustomOnThink()
+	if not self.Critical and self:GetOwner() and IsValid(self:GetOwner()) then
+		if self:GetOwner().Critical then
+			self.NPC_NextPrimaryFire = 5
+		end
+	end
 end
