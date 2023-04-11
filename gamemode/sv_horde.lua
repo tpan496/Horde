@@ -56,6 +56,7 @@ end
 hook.Add("InitPostEntity", "Horde_Init", function()
     HORDE.ai_nodes = {}
     local horde_boss_nodes = {}
+    local horde_nodes = {}
     for _, node in pairs(ents.FindByClass("info_horde_enemy_spawn")) do -- Only include nodes that are enabled
 	    if not node.Disabled then
 		    table.insert(horde_nodes, node)
