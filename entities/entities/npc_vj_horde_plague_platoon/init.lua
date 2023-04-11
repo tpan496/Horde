@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/headcrab.mdl"
-ENT.StartHealth = 7500
+ENT.StartHealth = 7750
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.MovementType = VJ_MOVETYPE_STATIONARY
 ENT.HasMeleeAttack = false
@@ -29,6 +29,7 @@ function ENT:CustomOnInitialize()
 	self:SetRenderMode(RENDERMODE_TRANSCOLOR)
 	self:SetColor(Color(0,0,0,0))
 	timer.Simple(1, function ()
+		print(self:GetMaxHealth())
 		ParticleEffect("aurora_shockwave_debris", self:GetPos(), Angle(0,0,0), nil)
 		ParticleEffect("aurora_shockwave", self:GetPos(), Angle(0,0,0), nil)
 		self.MiniBoss1 = ents.Create("npc_vj_horde_platoon_heavy")
@@ -56,7 +57,7 @@ function ENT:CustomOnInitialize()
 		self.MiniBoss3:SetHealth(self.MiniBoss3:GetMaxHealth())
 		self.Init = true
 
-		self:SetMaxHealth(self.MiniBoss1:GetMaxHealth() + self.MiniBoss12:GetMaxHealth() + self.MiniBoss3:GetMaxHealth())
+		self:SetMaxHealth(self.MiniBoss1:GetMaxHealth() + self.MiniBoss2:GetMaxHealth() + self.MiniBoss3:GetMaxHealth())
 	end)
 end
 
@@ -103,6 +104,16 @@ function ENT:CustomOnThink_AIEnabled()
 
 	if dead > 0 and not self.Critical then
 		self.Critical = true
+		if self.MiniBoss1 and IsValid(self.MiniBoss1) then
+			self.MiniBoss1.Critical = true
+		end
+		if self.MiniBoss2 and IsValid(self.MiniBoss2) then
+			self.MiniBoss2.Critical = true
+			self.AnimationPlaybackRate = 1.25
+		end
+		if self.MiniBoss3 and IsValid(self.MiniBoss3) then
+			self.MiniBoss3.Critical = true
+		end
 	end
 end
 
