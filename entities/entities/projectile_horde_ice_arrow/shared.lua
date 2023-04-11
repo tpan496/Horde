@@ -84,7 +84,7 @@ function ENT:Detonate(hitpos, ent)
 
     self:FireBullets({
         Attacker = attacker,
-        Damage = self:GetSpellBaseDamage(1) * dmg_mult * 0.75,
+        Damage = self:GetSpellBaseDamage(1) * dmg_mult,
         Tracer = 0,
         Distance = 4000,
         Dir = (hitpos - self:GetPos()),

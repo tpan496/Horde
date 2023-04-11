@@ -18,7 +18,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
     ent:SetAngles( ply:EyeAngles() )
     local level = ply:Horde_GetSpellUpgrade("void_cascade")
     ent:SetSpellLevel(level)
-    ent:SetSpellBaseDamages({math.floor(25 + math.pow(level, 1.1) * 5.5, 10 + math.pow(level, 1.1) * 7)})
+    ent:SetSpellBaseDamages({math.floor(70 + math.pow(level, 1.1) * 30, 10 + math.pow(level, 1.1) * 7)})
     ent:Spawn()
 
     local phys = ent:GetPhysicsObject()

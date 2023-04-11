@@ -53,7 +53,7 @@ end
 
 hook.Add("Horde_OnPlayerSpellDamage", "Horde_SolarFluxCooldown", function (ply, bonus)
     if ply:Horde_GetSolarFluxStack() > 0 then
-        bonus.increase = bonus.increase + 0.08 * ply:Horde_GetMaxSolarFluxStack()
+        bonus.increase = bonus.increase + 0.08 * ply:Horde_GetSolarFluxStack()
     end
 end)
 

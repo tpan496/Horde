@@ -85,7 +85,7 @@ function ENT:Think()
                         dmg:SetAttacker(self.Horde_Owner)
                         dmg:SetInflictor(self)
                         dmg:SetDamageType(DMG_BURN)
-                        dmg:SetDamage(7)
+                        dmg:SetDamage(6)
                         dmg:SetDamagePosition(ene:GetPos())
                         ene:TakeDamageInfo(dmg)
                     end

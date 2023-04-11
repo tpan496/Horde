@@ -38,7 +38,7 @@ if SERVER then
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_SetEscapeProgress(progress)
-    if progress > 60 then
+    if progress >= 100 then
         if HORDE.game_end then return end
         HORDE:WaveEnd()
         HORDE:GameEnd("VICTORY")

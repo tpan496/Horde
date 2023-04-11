@@ -175,20 +175,15 @@ function ENT:CustomOnThink_AIEnabled()
 		self.AnimTbl_IdleStand = {"shootflames2"}
 		self.NextIdleStandTime = 0
 		self:StopMoving()
-		util.VJ_SphereDamage(self, self, self:GetPos() + self:OBBCenter() + self:GetForward()*50, range, 2, DMG_BURN, true, true, {UseCone=true, UseConeDegree=30})
+		util.VJ_SphereDamage(self, self, self:GetPos() + self:OBBCenter() + self:GetForward() * 50, range, 2, DMG_BURN, true, true, {UseCone=true, UseConeDegree=30}, function(ent) if HORDE:IsPlayerOrMinion(ent) then ent:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 3, self) end end)
 		-- COSMETICS: Sound, particle and decal
 		self.Garg_FlameSd = VJ_CreateSound(self, "horde/gargantua/gar_flamerun1.ogg")
 		self:StopParticles()
-		ParticleEffectAttach("xen_destroyer_flame", PATTACH_POINT_FOLLOW, self, 1)
-		ParticleEffectAttach("xen_destroyer_flame", PATTACH_POINT_FOLLOW, self, 1)
+		ParticleEffectAttach("scorcher_flame", PATTACH_POINT_FOLLOW, self, 1)
 		local startPos1 = self:GetAttachment(1).Pos
-		local startPos2 = self:GetAttachment(1).Pos
 		local tr1 = util.TraceLine({start = startPos1, endpos = startPos1 + self:GetForward()*range, filter = self})
-		local tr2 = util.TraceLine({start = startPos2, endpos = startPos2 + self:GetForward()*range, filter = self})
 		local hitPos1 = tr1.HitPos
-		local hitPos2 = tr2.HitPos
 		sound.EmitHint(SOUND_DANGER, (hitPos1 + startPos1) / 2, 300, 1, self) -- Pos: Midpoint of start and hit pos, same as Vector((hitPos1.x + startPos1.x ) / 2, (hitPos1.y + startPos1.y ) / 2, (hitPos1.z + startPos1.z ) / 2)
-		sound.EmitHint(SOUND_DANGER, (hitPos2 + startPos2) / 2, 300, 1, self)
 		--util.Decal("VJ_HLR_Scorch", hitPos1 + tr1.HitNormal, hitPos1 - tr1.HitNormal)
 		--util.Decal("VJ_HLR_Scorch", hitPos2 + tr2.HitNormal, hitPos2 - tr2.HitNormal)
 		-- Make it constantly delay the range attack timer by 1 second (Which will also successfully play the flame-end sound)

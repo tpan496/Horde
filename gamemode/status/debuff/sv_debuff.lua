@@ -36,6 +36,7 @@ function plymeta:Horde_ReduceDebuffBuildup(debuff, amount)
     net.Send(self)
     if debuff == HORDE.Status_Bleeding then
         local d2 = HORDE.Status_Hemorrhage
+        if not self.Horde_Debuff_Buildup[d2] then return end
         self.Horde_Debuff_Buildup[d2] = math.max(0, self.Horde_Debuff_Buildup[d2] - amount)
         net.Start("Horde_SyncStatus")
             net.WriteUInt(d2, 8)
