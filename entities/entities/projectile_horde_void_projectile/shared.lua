@@ -44,8 +44,6 @@ function ENT:CustomOnInitialize()
     self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
     self.ExplodeTimer = CurTime() + 0.4
 
-    print(self:GetCharged())
-
     if self:GetCharged() == 1 then
         self.ExplodeTimer = self.ExplodeTimer + 0.3
     elseif self:GetCharged() == 2 then
@@ -66,7 +64,6 @@ function ENT:CustomOnInitialize()
     timer.Simple(0.1, function ()
         if not self:IsValid() then return end
         local charged = self:GetCharged()
-        print(charged)
         if charged >= 1 then
             ParticleEffectAttach("snowcore_small", PATTACH_ABSORIGIN_FOLLOW, self, 0)
             if charged >= 2 then

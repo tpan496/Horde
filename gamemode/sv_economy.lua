@@ -541,10 +541,10 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     -- Special case for turrets
                     local id = ent:GetCreationID()
                     if ent:GetClass() == "npc_turret_floor" then
-                        ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+                        ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
                         timer.Simple(0.1, function ()
                             if not ent:IsValid() then return end
-                            ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+                            ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
                         end)
                         HORDE:DropTurret(ent)
                     else

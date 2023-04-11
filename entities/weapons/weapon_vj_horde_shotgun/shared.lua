@@ -25,10 +25,10 @@ SWEP.HoldType = "shotgun"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = false
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Primary.Damage = 4 -- Damage
+SWEP.Primary.Damage = 0 -- Damage
 SWEP.Primary.PlayerDamage = "Double" -- Only applies for players | "Same" = Same as self.Primary.Damage, "Double" = Double the self.Primary.Damage OR put a number to be different from self.Primary.Damage
 SWEP.Primary.Force = 1 -- Force applied on the object the bullet hits
-SWEP.Primary.NumberOfShots = 6 -- How many shots per attack?
+SWEP.Primary.NumberOfShots = 5 -- How many shots per attack?
 SWEP.Primary.ClipSize = 6 -- Max amount of bullets per clip
 SWEP.Primary.Cone = 12 -- How accurate is the bullet? (Players)
 SWEP.Primary.Delay = 0.8 -- Time until it can shoot again
@@ -46,6 +46,8 @@ SWEP.Secondary.Ammo = "Buckshot" -- Ammo type
 SWEP.HasReloadSound = true -- Does it have a reload sound? Remember even if this is set to false, the animation sound will still play!
 SWEP.ReloadSound = {"weapons/shotgun/shotgun_reload1.wav","weapons/shotgun/shotgun_reload2.wav","weapons/shotgun/shotgun_reload3.wav"}
 SWEP.Reload_TimeUntilAmmoIsSet = 0.3 -- Time until ammo is set to the weapon
+SWEP.Primary.Tracer = 0
+SWEP.Primary.DisableBulletCode = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnPrimaryAttack_AfterShoot()
 	local owner = self:GetOwner()
@@ -61,6 +63,30 @@ function SWEP:CustomOnPrimaryAttack_AfterShoot()
 		end)
 	end
 end
+
+function SWEP:CustomOnPrimaryAttack_BeforeShoot()
+	if CLIENT then return end
+	for i = 1, 6 do
+		local bullet = ents.Create("obj_vj_horde_bullet")
+		bullet:SetPos(self:GetAttachment(self:LookupAttachment("muzzle")).Pos)
+		bullet:SetAngles(self:GetOwner():GetAngles())
+		bullet:SetOwner(self:GetOwner())
+		bullet:Activate()
+		bullet:Spawn()
+		bullet.DirectDamage = 4
+		
+		local phy = bullet:GetPhysicsObject()
+		if phy:IsValid() then
+			local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
+			dir:Normalize()
+			dir = dir + VectorRand() * 0.06
+			dir:Normalize()
+			phy:ApplyForceCenter(dir * 1000)
+		end
+	end
+	
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnSecondaryAttack()
 	if self:Clip1() > 1 then
@@ -97,14 +123,4 @@ function SWEP:CustomOnReload_Finish()
 		end)
 	end
 	return false
-end
-
----------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnPrimaryAttack_AfterShoot()
-	timer.Simple(0.2,function()
-		if IsValid(self) && IsValid(self.Owner) && self.Owner:IsPlayer() then
-			self.Weapon:EmitSound(Sound("weapons/shotgun/shotgun_empty.wav"),80,100)
-			self.Weapon:SendWeaponAnim(ACT_SHOTGUN_PUMP)
-		end
-	end)
 end

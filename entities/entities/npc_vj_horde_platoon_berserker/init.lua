@@ -5,8 +5,8 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/combine_super_soldier.mdl" -- Leave empty if using more than one model
-ENT.StartHealth = 1050
+ENT.Model = "models/police.mdl" -- Leave empty if using more than one model
+ENT.StartHealth = 3000
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.MeleeAttackDamage = 30
 ENT.MoveType = MOVETYPE_STEP
@@ -29,7 +29,7 @@ ENT.NextMoveWhenDamagedByEnemy1 = 3 -- Next time it moves when getting damaged |
 ENT.NextMoveWhenDamagedByEnemy2 = 3.5 -- Next time it moves when getting damaged | The second # in math.random
 ENT.HasAllies = true -- Put to false if you want it not to have any allies
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.HasGrenadeAttack = true -- Should the SNPC have a grenade attack?
+ENT.HasGrenadeAttack = false -- Should the SNPC have a grenade attack?
 ENT.NextThrowGrenadeTime1 = 10 -- Time until it runs the throw grenade code again | The first # in math.random
 ENT.NextThrowGrenadeTime2 = 15 -- Time until it runs the throw grenade code again | The second # in math.random
 ENT.ThrowGrenadeChance = 1 -- Chance that it will throw the grenade | Set to 1 to throw all the time
@@ -78,10 +78,10 @@ function ENT:CustomOnInitialize()
 	self:SetModelScale(1.25)
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
-	self:SetColor(Color(50,50,50))
+	self:SetColor(Color(150,100,100))
 
 	local p = math.random()
-	self:Give("weapon_vj_horde_ar2")
+	self:Give("weapon_vj_horde_katana")
 	local pos = Vector()
 	local ang = Angle()
 	local attach_id = self:LookupAttachment("eyes")
@@ -89,12 +89,11 @@ function ENT:CustomOnInitialize()
 	pos = attach.Pos
 	ang = attach.Ang
 	pos.x = pos.x - 3
-	pos.z = pos.z - 6
+	pos.z = pos.z - 25
 	pos.y = pos.y
 	self.model = ents.Create("prop_dynamic")
-	self.model:SetModel("models/headcrabblack.mdl")
-	self.model:SetColor(Color(255, 0, 0))
-	--self.model = ClientsideModel("models/headcrabblack.mdl", RENDERGROUP_OPAQUE)
+	self.model:SetModel("models/headcrab.mdl")
+	self.model:SetColor(Color(100, 100, 100))
 	self.model:SetSequence("idle01")
 	self.model:SetPos(pos)
 	self.model:SetAngles(ang)
@@ -105,34 +104,15 @@ function ENT:CustomOnInitialize()
 	self:EmitSound("npc/combine_gunship/see_enemy.wav", 3000, 100, 2, CHAN_STATIC)
 end
 
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	dmginfo:ScaleDamage(0.9)
+end
+
 local defAng = Angle(0, 0, 0)
 
 ENT.ZBoss_NextMiniBossSpawnT = 0
 function ENT:CustomOnThink_AIEnabled()
-	if IsValid(self:GetEnemy()) && CurTime() > self.ZBoss_NextMiniBossSpawnT && (!IsValid(self.MiniBoss1) || !IsValid(self.MiniBoss2)) then
-		self:VJ_ACT_PLAYACTIVITY("vjseq_releasecrab", true, false, false)
-		ParticleEffect("aurora_shockwave_debris", self:GetPos(), defAng, nil)
-		ParticleEffect("aurora_shockwave", self:GetPos(), defAng, nil)
-		self:EmitSound("horde/plague_elite/summon.ogg")
-		
-		if (!IsValid(self.MiniBoss1)) then
-			self.MiniBoss1 = ents.Create("npc_vj_horde_plague_soldier")
-			self.MiniBoss1:SetPos(self:GetPos() + self:GetRight()*45)
-			self.MiniBoss1:SetAngles(self:GetAngles())
-			self.MiniBoss1:Spawn()
-			self.MiniBoss1:SetOwner(self)
-		end
-		
-		if (!IsValid(self.MiniBoss2)) then
-			self.MiniBoss2 = ents.Create("npc_vj_horde_zombine")
-			self.MiniBoss2:SetPos(self:GetPos() + self:GetRight()*-45)
-			self.MiniBoss2:SetAngles(self:GetAngles())
-			self.MiniBoss2:Spawn()
-			self.MiniBoss2:SetOwner(self)
-		end
-		
-		self.ZBoss_NextMiniBossSpawnT = CurTime() + 15
-	end
+	return
 end
 
 /*-----------------------------------------------
@@ -141,4 +121,4 @@ end
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 
-VJ.AddNPC("Hulk","npc_vj_horde_plague_elite", "Zombies")
+VJ.AddNPC("Platoon Berserker","npc_vj_horde_platoon_berserker", "Zombies")
