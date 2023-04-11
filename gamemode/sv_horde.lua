@@ -697,7 +697,7 @@ end
 
 function HORDE:RemoveAINode(pos)
 	for i, node in pairs(HORDE.ai_nodes) do
-		if node["pos"] == pos then)
+		if node["pos"] == pos then
 			table.remove(HORDE.ai_nodes, i)
 		end
 	end
