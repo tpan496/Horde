@@ -290,11 +290,13 @@ SWEP.Inaccuracy_Add_Move		= 0.1
 function SWEP:Hook_ShouldNotFireFirst()
     if self:GetCurrentFiremode().Mode == 3 then
         self.Num = 12
-        local ply = self:GetOwner()
-        local dir = -ply:GetForward()
-        dir:Normalize()
-        local vel = dir * 200
-        ply:SetLocalVelocity(ply:GetVelocity() + vel)
+        if self:Clip1() > 0 then
+            local ply = self:GetOwner()
+            local dir = -ply:GetForward()
+            dir:Normalize()
+            local vel = dir * 200
+            ply:SetLocalVelocity(ply:GetVelocity() + vel)
+        end
     else
         self.Num = 6
     end

@@ -8,8 +8,8 @@ ENT.Instructions 	= "Click on the spawnicon to spawn it."
 ENT.Category		= "Xeian"
 
 if (CLIENT) then
-local Name = "Platoon Executioner"
-local LangName = "npc_vj_horde_platoon_executioner"
+local Name = "Platoon Berserker"
+local LangName = "npc_vj_horde_platoon_berserker"
 language.Add(LangName, Name)
 killicon.Add(LangName,"HUD/killicons/default",Color(255,80,0,255))
 language.Add("#"..LangName, Name)

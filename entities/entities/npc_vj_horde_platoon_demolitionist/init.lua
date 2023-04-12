@@ -110,13 +110,6 @@ function ENT:CustomOnInitialize()
 	self:EmitSound("npc/combine_gunship/see_enemy.wav", 3000, 100, 2, CHAN_STATIC)
 end
 
-local defAng = Angle(0, 0, 0)
-
-ENT.ZBoss_NextMiniBossSpawnT = 0
-function ENT:CustomOnThink_AIEnabled()
-	return
-end
-
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2015 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
