@@ -69,15 +69,27 @@
 ]
 
 @PointClass base(Targetname, Angles) studio("models/zombie/classic.mdl") = info_horde_enemy_spawn :
-	"If this is present in a map, Horde will use those points to spawn enemies, instead of searching for info nodes. Note that when fixed spawn points are present, enemies will no longer despawn due to distance mechanics."
+	"If this is present in a map, Horde will use those points to spawn enemies, instead of searching for info nodes. Note that when fixed spawn points are present, enemies will no longer despawn due to distance mechanics. Also note that, if there are no enabled spawn points on map load, enemies will be able to spawn on any info node."
 [
-
+	// Keys
+	disabled(integer) : "Disabled" : 0 : "Should this spawn point start disabled?"
+	
+	// Inputs
+	input disable(void) : "Disables this spawn point."
+	input enable(void)  : "Enables this spawn point."
+	input toggle(void)  : "Toggles the state of this spawn point."
 ]
 
 @PointClass base(Targetname, Angles) studio("models/zombie/poison.mdl") = info_horde_boss_spawn :
-	"If this is present in a map, Horde will use those points to spawn bosses."
+	"If this is present in a map, Horde will use those points to spawn bosses.  Note that, if there are no enabled boss spawn points on map load, bosses will be able to spawn on any info node."
 [
-
+	// Keys
+	disabled(integer) : "Disabled" : 0 : "Should this spawn point start disabled?"
+	
+	// Inputs
+	input disable(void) : "Disables this spawn point."
+	input enable(void)  : "Enables this spawn point."
+	input toggle(void)  : "Toggles the state of this spawn point."
 ]
 
 @PointClass base(Targetname, Angles) studio("models/Items/BoxMRounds.mdl") = info_horde_ammobox_spawn :
