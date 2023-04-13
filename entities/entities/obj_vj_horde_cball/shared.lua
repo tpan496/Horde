@@ -157,7 +157,7 @@ function ENT:CustomOnPhysicsCollide(data, phys)
     dmg:SetAttacker(self.Owner)
     dmg:SetInflictor(self)
     dmg:SetDamageType(DMG_GENERIC)
-    dmg:SetDamage(70)
+    dmg:SetDamage(60)
     util.BlastDamageInfo(dmg, self:GetPos(), 150)
 	--util.VJ_SphereDamage(self, self, myPos, 250, 100, DMG_BLAST, true, true, {DisableVisibilityCheck=true, Force=80})
 

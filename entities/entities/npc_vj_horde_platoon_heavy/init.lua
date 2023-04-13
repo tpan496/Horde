@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/combine_super_soldier.mdl" -- Leave empty if using more than one model
-ENT.StartHealth = 2500
+ENT.StartHealth = 4500
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.MeleeAttackDamage = 30
 ENT.MoveType = MOVETYPE_STEP
@@ -45,9 +45,10 @@ ENT.CallForBackUpOnDamage = false -- Should the SNPC call for help when damaged?
 ENT.CanDetectDangers = false
 ENT.MoveOrHideOnDamageByEnemy = false
 ENT.WeaponSpread = 1.5
-ENT.Weapon_FiringDistanceFar = 2500
+ENT.Weapon_FiringDistanceFar = 1750
 ENT.WeaponReload_FindCover = false
 ENT.Horde_Plague_Soldier = true
+ENT.EntitiesToNoCollide = {"npc_vj_horde_platoon_heavy", "npc_vj_horde_platoon_berserker", "npc_vj_horde_platoon_demolitionist"}
 
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",
@@ -73,10 +74,15 @@ ENT.UseTheSameGeneralSoundPitch = true
 	-- It picks the number between the two variables below:
 ENT.GeneralSoundPitch1 = 75
 ENT.GeneralSoundPitch2 = 75
+ENT.DisableCritical = nil
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if HORDE:IsPhysicalDamage(dmginfo) then
 		dmginfo:ScaleDamage(0.75)
+	end
+
+	if (not self.DisableCritical) and self:Health() <= self:GetMaxHealth() * 0.5 then
+		self.Critical = true
 	end
 end
 
@@ -109,11 +115,7 @@ function ENT:CustomOnInitialize()
 	self:EmitSound("npc/combine_gunship/see_enemy.wav", 3000, 100, 2, CHAN_STATIC)
 end
 
-function ENT:CustomOnThink()
-	if self.Critical and self:IsOnGround() then
-		self:SetLocalVelocity(self:GetMoveVelocity() * 1.5)
-	end
-end
+
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2015 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,

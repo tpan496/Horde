@@ -207,10 +207,12 @@ function HORDE:GetHoldZones(wave)
 
     if not table.IsEmpty(HORDE.hold_zones) and HORDE.hold_zones[wave] and not table.IsEmpty(HORDE.hold_zones[wave]) then
         for _, zone in pairs(HORDE.hold_zones[wave]) do
-            if not zones[zone.Horde_Zone_Group] then
-                zones[zone.Horde_Zone_Group] = {}
+            local group = zone.Horde_Zone_Group
+            if not group then group = 0 end
+            if not zones[group] then
+                zones[group] = {}
             end
-            table.insert(zones[zone.Horde_Zone_Group], zone)
+            table.insert(zones[group], zone)
         end
     end
 

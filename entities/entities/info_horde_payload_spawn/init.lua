@@ -24,6 +24,8 @@ function ENT:KeyValue(key, value)
 		self.Horde_Payload_Model = value or nil
 	elseif key == "icon" then
 		self.Horde_Payload_Icon = tonumber(value) or 0
+	elseif key == "mass" then
+		self.Horde_Payload_Mass = tonumber(value) or 0.5
 	end
 end
 
