@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/police.mdl" -- Leave empty if using more than one model
-ENT.StartHealth = 3000
+ENT.StartHealth = 5000
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.MeleeAttackDamage = 30
 ENT.MoveType = MOVETYPE_STEP
@@ -73,6 +73,9 @@ ENT.UseTheSameGeneralSoundPitch = true
 	-- It picks the number between the two variables below:
 ENT.GeneralSoundPitch1 = 75
 ENT.GeneralSoundPitch2 = 75
+ENT.DisableCritical = nil
+ENT.EntitiesToNoCollide = {"npc_vj_horde_platoon_heavy", "npc_vj_horde_platoon_berserker", "npc_vj_horde_platoon_demolitionist"}
+
 
 function ENT:CustomOnInitialize()
 	self:SetModelScale(1.25)
@@ -114,9 +117,13 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
         else
             e:SetOrigin(self:GetPos() + self:OBBCenter() + self:GetForward() * 25)
         end
-		dmginfo:ScaleDamage(0.65)
+		dmginfo:ScaleDamage(0.75)
 		util.Effect("horde_platoon_parry", e, true, true)
 		sound.Play("horde/gadgets/guard" .. tostring(math.random(1,2)) ..".ogg", self:GetPos(), 125, 100, 1, CHAN_AUTO)
+	end
+
+	if (not self.DisableCritical) and self:Health() <= self:GetMaxHealth() * 0.5 then
+		self.Critical = true
 	end
 end
 

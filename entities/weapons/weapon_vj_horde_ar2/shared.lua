@@ -169,7 +169,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	bullet.TracerColor = Color(0, 191, 255)
 	bullet.TracerWidth = 20
 	bullet:Spawn()
-	bullet.DirectDamage = 9
+	bullet.DirectDamage = 8
 	
 	local phy = bullet:GetPhysicsObject()
 	if phy:IsValid() then

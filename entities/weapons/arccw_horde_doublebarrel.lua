@@ -290,7 +290,9 @@ SWEP.Inaccuracy_Add_Move		= 0.1
 function SWEP:Hook_ShouldNotFireFirst()
     if self:GetCurrentFiremode().Mode == 3 then
         self.Num = 12
-        if self:Clip1() > 0 then
+        local owner = self:GetOwner()
+        if self:Clip1() > 0 and !owner:KeyDown(IN_USE) then
+            self.AccuracyMOA = 150
             local ply = self:GetOwner()
             local dir = -ply:GetForward()
             dir:Normalize()
@@ -299,5 +301,6 @@ function SWEP:Hook_ShouldNotFireFirst()
         end
     else
         self.Num = 6
+        self.AccuracyMOA = 100
     end
 end

@@ -647,6 +647,17 @@ hook.Add("Move", "Horde_PlayerMove", function (ply, mv)
     end
 end)
 
+hook.Add("Horde_PlayerMoveBonus", "Horde_PlayerPayloadMove", function (ply, bonus_walk, bonus_run)
+    if ply:Horde_HasPayload() then
+        local mass = ply.Horde_Payload_Spawn.Horde_Payload_Mass
+        if mass and mass > 0 then
+            bonus_walk.more = bonus_walk.more * (1 - mass)
+            bonus_run.more = bonus_run.more * (1 - mass)
+        end
+    end
+end)
+
+
 local function Horde_DeathSpectatingFunction(victim, inflictor, attacker)
     if not HORDE.start_game or HORDE.current_break_time > 0 then return end
     timer.Simple(1, function()
