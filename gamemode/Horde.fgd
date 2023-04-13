@@ -104,7 +104,7 @@
 	// Keys
 	wave(integer)  : "Wave"  : 1 : "Wave for when the payload will spawn. Use -1 for all waves."
 	label(string)  : "Label" : "the payload" : "Name of the payload."
-	mass(integer)  : "Mass"  : 0.4 : "From 0 to 50, caps at 50. Player speed is reduced by Mass%."
+	mass(integer)  : "Mass"  : 0.4 : "From 0 to 1. Player speed will be multiplied by this number (at 0.5, moves at half speed)."
 	model(string)  : "Model" : "models/props_lab/crematorcase.mdl" : "Model for the payload."
 	icon(integer)  : "Icon"  : 0 : "Display icon for the payload. 0=generic, 1=card, 2=key, 3=chemical."
 	group(integer) : "Group" : 0 : "Given the wave, only one payload spawn in the same group will be activated."
