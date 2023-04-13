@@ -651,8 +651,8 @@ hook.Add("Horde_PlayerMoveBonus", "Horde_PlayerPayloadMove", function (ply, bonu
     if ply:Horde_HasPayload() then
         local mass = ply.Horde_Payload_Spawn.Horde_Payload_Mass
         if mass and mass > 0 then
-            bonus_walk.more = bonus_walk.more * (1 - mass)
-            bonus_run.more = bonus_run.more * (1 - mass)
+            bonus_walk.more = bonus_walk.more * (1 - math.max(0.1, mass/100))
+            bonus_run.more = bonus_run.more * (1 - math.max(0.1, mass/100))
         end
     end
 end)
