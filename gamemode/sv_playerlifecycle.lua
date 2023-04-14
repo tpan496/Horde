@@ -516,6 +516,12 @@ function HORDE:PlayerInit(ply)
     end
 
     ply.Horde_Init_Complete = true
+    local added = HORDE:TryAddTopTen(ply)
+    if not added then
+        net.Start("Horde_SyncTopTen")
+            net.WriteString(util.TableToJSON(HORDE.top_tens))
+        net.Broadcast()
+    end
 
     if not HORDE.has_buy_zone then
         net.Start("Horde_SyncStatus")

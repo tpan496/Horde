@@ -1224,6 +1224,7 @@ function HORDE:WaveEnd()
         end
         
         ply:Horde_SyncExp()
+        HORDE:TryAddTopTen(ply)
     end
 
     if not HORDE.has_buy_zone then
