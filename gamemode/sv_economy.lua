@@ -839,6 +839,8 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
 
     ply:Horde_SyncEconomy()
+
+    HORDE:TryAddTopTen(ply)
 end)
 
 net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)

@@ -479,7 +479,7 @@ function PANEL:Init()
         draw.SimpleText("Vomitter", 'Heading', 50, 850, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Ranged attackers that spits flesh at enemies. Inflicts Bleeding.", 'Content', 100, 900, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Scorcher", 'Heading', 50, 950, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Vomitters covered in flames. Spits burning flesh that deal Fire damage.", 'Content', 100, 1000, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Vomitters covered in flames. Spits burning flesh that deal Fire damage. Has a flamethrower attack.", 'Content', 100, 1000, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(950, {[HORDE.DMG_FIRE] = 0.5, [HORDE.DMG_COLD] = 1.25})
 
         draw.SimpleText("Screecher", 'Heading', 50, 1050, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -525,10 +525,11 @@ function PANEL:Init()
         draw.SimpleText("Subject: Wallace Breen", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
             "A gonome infused with a human subject to increase cognitive capabilities.",
-            "Claw Attack: Deals Slashing damage.",
+            "Claw Attack: Deals Slashing damage. Inflicts Haemorrhage.",
             "Particle Cannon: An accurate ranged cannon that deals massive Physical and Blast damage. Inflicts Decay.",
             "Particle Cannon (Phase 2): Generates continuous explosions post detonation.",
-            "Shockwave: Generates a shockwave when it received certain amount of damage. Inflicts Bleeding, Shock and Decay.",
+            "Shockwave: Generates a shockwave when it received certain amount of damage. Inflicts Haemorrhage.",
+            "Haemorrhage: A strong Bleeding debuff that builds up slowly on its own. Removes health one the bar is full."
         }, next_pos + 100)
 
         draw.SimpleText("Xen Destroyer Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
