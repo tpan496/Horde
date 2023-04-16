@@ -49,7 +49,7 @@ SWEP.Delay = 60 / 950 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
-        Mode = 1,
+        Mode = 2,
     },
     {
         Mode = 0,
@@ -400,9 +400,7 @@ sound.Add({
     sound = "arccw_go/mp7/mp7_cliphit.wav"
 })
 
-function SWEP:ChangeFiremode(pred)
 
-end
 function SWEP:ChangeFiremode(pred)
     if self:GetNextSecondaryFire() > CurTime() then return end
     if !self.CanBash and !self:GetBuff_Override("Override_CanBash") then return end

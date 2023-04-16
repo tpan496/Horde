@@ -149,4 +149,12 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
     end
 end
 
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	if HORDE:IsFireDamage(dmginfo) then
+		dmginfo:ScaleDamage(0.75)
+	elseif HORDE:IsColdDamage(dmginfo) or HORDE:IsMeleeDamage(dmginfo) then
+		dmginfo:ScaleDamage(1.25)
+	end
+end
+
 VJ.AddNPC("Charred Zombine","npc_vj_horde_charred_zombine", "Zombies")

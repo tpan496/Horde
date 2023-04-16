@@ -9,8 +9,8 @@ ENT.Spawnable 			= false
 AddCSLuaFile()
 
 ENT.Model = "models/dav0r/hoverball.mdl"
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PASSABLE_DOOR
+ENT.CollisionGroupType = COLLISION_GROUP_PASSABLE_DOOR
 ENT.Removing = nil
 ENT.StartPos = nil
 ENT.PlaySoundTimer = 0

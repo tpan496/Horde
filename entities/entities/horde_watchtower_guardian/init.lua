@@ -5,6 +5,7 @@ ENT.CleanupPriority = 2
 
 function ENT:Initialize()
     self:SetModel("models/props_combine/combine_light001a.mdl")
+    self:SetModelScale(1.25)
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)

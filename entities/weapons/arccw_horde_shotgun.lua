@@ -32,7 +32,7 @@ SWEP.WorldModelOffset = {
 
 SWEP.DefaultBodygroups = "000000000000"
 
-SWEP.Damage = 8
+SWEP.Damage = 80000
 SWEP.DamageMin = 4 -- damage done at maximum range
 SWEP.Num = 6
 SWEP.Range = 31 -- in METRES

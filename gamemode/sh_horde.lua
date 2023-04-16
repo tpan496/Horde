@@ -52,6 +52,8 @@ CreateConVar("horde_testing_display_damage", 0, FCVAR_ARCHIVE, "Display damage f
 CreateConVar("horde_display_damage", 1, FCVAR_ARCHIVE, "Display damage.")
 CreateConVar("horde_enable_health_gui", 1, FCVAR_ARCHIVE, "Enables health UI.")
 CreateConVar("horde_enable_ammo_gui", 1, FCVAR_ARCHIVE, "Enables ammo UI.")
+
+CreateConVar("horde_enable_class_models", 1, FCVAR_ARCHIVE, "Enables ammo UI.")
 CreateClientConVar("horde_disable_default_gadget_use_key", 0, FCVAR_ARCHIVE, "Disable default key bind for active gadgets.")
 
 if SERVER then

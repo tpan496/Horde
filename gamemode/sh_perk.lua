@@ -82,7 +82,11 @@ function plymeta:Horde_SetPerk(perk, shared)
     if SERVER then
         hook.Run("Horde_PrecomputePerkLevelBonus", self)
     end
-    hook.Run("Horde_OnSetPerk", self, perk)
+
+    if self:Alive() then
+        -- No need to set perks when dead
+        hook.Run("Horde_OnSetPerk", self, perk)
+    end
 
     if SERVER and not shared then
         net.Start("Horde_Perk")
