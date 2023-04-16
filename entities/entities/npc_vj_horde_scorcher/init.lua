@@ -58,8 +58,8 @@ end
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if HORDE:IsFireDamage(dmginfo) then
-		dmginfo:ScaleDamage(0.5)
-	elseif HORDE:IsLightningDamage(dmginfo) then
+		dmginfo:ScaleDamage(0.75)
+	elseif HORDE:IsColdDamage(dmginfo) or HORDE:IsMeleeDamage(dmginfo) then
 		dmginfo:ScaleDamage(1.25)
 	end
 end
@@ -175,7 +175,7 @@ function ENT:CustomOnThink_AIEnabled()
 		self.AnimTbl_IdleStand = {"shootflames2"}
 		self.NextIdleStandTime = 0
 		self:StopMoving()
-		util.VJ_SphereDamage(self, self, self:GetPos() + self:OBBCenter() + self:GetForward() * 50, range, 2, DMG_BURN, true, true, {UseCone=true, UseConeDegree=30}, function(ent) if HORDE:IsPlayerOrMinion(ent) then ent:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 3, self) end end)
+		util.VJ_SphereDamage(self, self, self:GetPos() + self:OBBCenter() + self:GetForward() * 50, range, 2, DMG_BURN, true, true, {UseCone=true, UseConeDegree=30}, function(ent) if HORDE:IsPlayerOrMinion(ent) then ent:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 2, self) end end)
 		-- COSMETICS: Sound, particle and decal
 		self.Garg_FlameSd = VJ_CreateSound(self, "horde/gargantua/gar_flamerun1.ogg")
 		self:StopParticles()

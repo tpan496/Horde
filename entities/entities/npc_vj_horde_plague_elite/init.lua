@@ -49,6 +49,7 @@ ENT.Weapon_FiringDistanceFar = 1750
 ENT.WeaponReload_FindCover = false
 ENT.Horde_Plague_Soldier = true
 ENT.WeaponAttackSecondaryTimeUntilFire = 2
+ENT.EntitiesToNoCollide = {"npc_vj_horde_zombine", "npc_vj_horde_plague_soldier"}
 
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",

@@ -78,7 +78,7 @@ function ENT:Initialize()
         phys:SetMass(1)
         phys:SetBuoyancyRatio(0)
         phys:EnableDrag(false)
-        phys:EnableGravity(false)
+        phys:EnableGravity(true)
     end
 
     timer.Simple(2, function() if IsValid(self) then
@@ -89,9 +89,6 @@ function ENT:Initialize()
 
 	self:DrawShadow(false)
 	self:ResetSequence("idle")
-    local pb_vert = 1
-    local pb_hor = 1
-    self:PhysicsInitBox( Vector(-pb_vert,-pb_hor,-pb_hor), Vector(pb_vert,pb_hor,pb_hor) )
 
     self.SpawnTime = CurTime()
 
@@ -107,14 +104,14 @@ end
 
 function ENT:PhysicsCollide(data, collider)
     if self.Removing then return end
-    local v = 125
+    local v = 80
     if self:GetCharged() == true then
         v = 250
     end
 
 	local dmg = DamageInfo()
 	dmg:SetAttacker(self.Owner)
-	dmg:SetInflictor(self.Owner)
+	dmg:SetInflictor(self)
 	dmg:SetDamageType(DMG_BURN)
 	dmg:SetDamage(v)
 	util.BlastDamageInfo(dmg, self:GetPos(), v)

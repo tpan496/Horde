@@ -102,7 +102,7 @@ function HORDE:GetDefaultClassesData()
             [1] = {title = "Survival", choices = {"medic_antibiotics", "assault_charge"}},
             [2] = {title = "Improvise", choices = {"berserker_breathing_technique", "demolition_frag_cluster"}},
             [3] = {title = "Imprinting", choices = {"heavy_liquid_armor", "cremator_entropy_shield"}},
-            [4] = {title = "Inspired Learning", choices = {"ghost_headhunter", "carcass_anabolic_gland"}},
+            [4] = {title = "Inspired Learning", choices = {"ghost_headhunter", "specops_flare"}},
         },
         0,nil,nil,nil,
         {HORDE.Class_Survivor}
@@ -409,6 +409,7 @@ local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_SetClass(class)
     self.Horde_class = class
+    if GetConVarNumber("horde_enable_class_models") == 0 then return end
     self:Horde_SetClassModel(class)
 end
 

@@ -37,22 +37,12 @@ HORDE.Payload_Icon = {
 if SERVER then
 local plymeta = FindMetaTable("Player")
 
-function plymeta:Horde_SetEscapeProgress(progress)
-    if progress >= 100 then
-        if HORDE.game_end then return end
-        HORDE:WaveEnd()
-        HORDE:GameEnd("VICTORY")
-        return
-    end
-    self.Horde_EscapeProgress = progress
+function plymeta:Horde_SetEscape(can)
+    self.Horde_EscapeProgress = can
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanEscape, 8)
-        net.WriteUInt(self.Horde_EscapeProgress, 8)
+        net.WriteUInt(can, 8)
     net.Send(self)
-end
-
-function plymeta:Horde_GetEscapeProgress(progress)
-    return self.Horde_EscapeProgress or 0
 end
 
 function plymeta:Horde_SetPayloadSpawn(payload)

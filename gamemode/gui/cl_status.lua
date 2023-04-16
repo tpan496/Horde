@@ -178,12 +178,7 @@ buildup_panel.Paint = function ()
         local posy = 200
         posy = posy - (total_buildup) * 55 / 2
         for status, stack in pairs(MySelf:GetStatusTable()) do
-            if status == HORDE.Status_CanEscape then
-                if stack <= 0 then goto cont end
-                DrawProgress(status, stack, posx, posy)
-                posy = posy + 45
-                ::cont::
-            elseif HORDE:IsDebuff(status) then
+            if HORDE:IsDebuff(status) then
                 if stack <= 0 then goto cont end
                 DrawBuildup(status, stack, posx, posy)
                 posy = posy + 45

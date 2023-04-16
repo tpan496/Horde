@@ -11,10 +11,10 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "Incendiary Launcher"
-SWEP.TrueName = "Incendiary Launcher"
-SWEP.Trivia_Class = "Incendiary Launcher"
-SWEP.Trivia_Desc = "Launches an incendiary grenade that explodes on impact."
+SWEP.PrintName = "Heat Blaster"
+SWEP.TrueName = "Heat Blaster"
+SWEP.Trivia_Class = "Heat Blaster"
+SWEP.Trivia_Desc = "Launches concentrated heat projectiles that explode on impact."
 SWEP.Trivia_Manufacturer = "???"
 SWEP.Trivia_Calibre = "Grenade"
 SWEP.Trivia_Mechanism = "Projectile Launcher"
@@ -60,11 +60,11 @@ SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
         Mode = 2,
-        PrintName = "Fireball Mode"
+        PrintName = "Rapid Fire Mode"
     },
     {
         Mode = 3,
-        PrintName = "Charge Mode"
+        PrintName = "Charged Mode"
     },
 }
 
@@ -182,6 +182,12 @@ end
 function SWEP:Hook_PostFireRocket(rocket)
     if self:GetCurrentFiremode().Mode == 3 then
         rocket:SetCharged(true)
+        self:TakePrimaryAmmo(math.min(self.Weapon:Clip1(), 3))
+        local phys = rocket:GetPhysicsObject()
+        if phys:IsValid() then
+            phys:Wake()
+            phys:EnableGravity(true)
+        end
     else
         rocket:SetCharged(false)
     end

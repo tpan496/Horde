@@ -492,6 +492,7 @@ function HORDE:PlayerInit(ply)
     for _, other_ply in pairs(player.GetAll()) do
         if other_ply == ply then goto cont end
         local subclass = other_ply:Horde_GetCurrentSubclass()
+        if not subclass then goto cont end
         net.Start("Horde_SyncExp")
             net.WriteEntity(other_ply)
             net.WriteString(subclass)

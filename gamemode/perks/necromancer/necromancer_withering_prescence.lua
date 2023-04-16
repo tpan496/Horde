@@ -1,4 +1,4 @@
-PERK.PrintName = "Withering Prescence"
+PERK.PrintName = "Withering Presence"
 PERK.Description =
 [[{1} increased Frostbite buildup.
 {2} increased Frostbite duration.]]
