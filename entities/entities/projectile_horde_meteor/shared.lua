@@ -149,7 +149,7 @@ function ENT:Detonate()
         d2:SetAttacker(self.Owner)
         d2:SetInflictor(self)
         d2:SetDamageType(DMG_BLAST)
-        d2:SetDamage(100)
+        d2:SetDamage(self:GetSpellBaseDamage(1) / 1.5)
         util.BlastDamageInfo(dmg, self:GetPos(), 200)
     end
 

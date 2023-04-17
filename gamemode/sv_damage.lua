@@ -400,6 +400,18 @@ hook.Add("EntityTakeDamage", "Horde_MutationDamage", function (target, dmg)
     end
 end)
 
+hook.Add("Horde_OnPlayerDamageTaken",  "Horde_MeteorDefense", function (ply, dmginfo, bonus)
+    if ply:Horde_GetMaxMind() > 0 and IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor():GetClass() == "projectile_horde_meteor" then
+        if dmginfo:IsDamageType(DMG_BLAST) then
+            dmginfo:SetDamage(math.min(10, dmginfo:GetDamage()))
+            dmginfo:SetDamageType(DMG_DIRECT)
+        else
+            dmginfo:SetDamage(math.min(70, dmginfo:GetDamage()))
+            dmginfo:SetDamageType(DMG_DIRECT)
+        end
+    end
+end)
+
 -- Main target does not take splash damage
 hook.Add("EntityTakeDamage", "Horde_SplashDamage", function (target, dmg)
     if target:IsValid() and target:IsNPC() and dmg:GetInflictor() == target and dmg:GetAttacker():IsPlayer() and dmg:GetDamageCustom() == HORDE.DMG_SPLASH then

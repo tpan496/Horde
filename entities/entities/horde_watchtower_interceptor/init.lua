@@ -63,7 +63,7 @@ function ENT:Think()
 
     if CurTime() >= self.Horde_NextShockAttack + self.Horde_ShockAttackInterval then
         for _, ent in pairs(ents.FindInSphere(self:GetPos(), 500)) do
-            if ent ~= self and ent.Horde_WatchTower then
+            if ent ~= self and ent.Horde_WatchTower and ent.Horde_Owner == self.Horde_Owner then
                 local start = self:GetPos() + self:OBBCenter()
                 local epos = ent:GetPos() + ent:OBBCenter()
 
@@ -85,7 +85,7 @@ function ENT:Think()
                         dmg:SetAttacker(self.Horde_Owner)
                         dmg:SetInflictor(self)
                         dmg:SetDamageType(DMG_BLAST)
-                        dmg:SetDamage(6)
+                        dmg:SetDamage(5)
                         dmg:SetDamagePosition(ene:GetPos())
                         ene:TakeDamageInfo(dmg)
                     end

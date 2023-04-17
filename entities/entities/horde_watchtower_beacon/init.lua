@@ -64,15 +64,6 @@ function ENT:Think()
             self.Horde_NextShockWave = CurTime()
         end
     end
-
-    if CurTime() >= self.Horde_NextShockAttack + self.Horde_ShockAttackInterval then
-        for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
-            if ent:IsValid() and ent:IsPlayer() then
-                ent:SetArmor(math.min(ent:GetMaxArmor(), ent:Armor() + 1))
-            end
-        end
-        self.Horde_NextShockAttack = CurTime()
-    end
 end
 
 function ENT:StartTouch(ent)
