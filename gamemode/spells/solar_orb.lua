@@ -45,7 +45,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
     if ply.Horde_Floating_Chaos and ply.Horde_Floating_Chaos:IsValid() then
         local pos = ply.Horde_Floating_Chaos:GetPos()
         local fired
-        local max_targets = 5 + ply.Horde_Floating_Chaos.Horde_Spell_Level
+        local max_targets = 3 + ply.Horde_Floating_Chaos.Horde_Spell_Level
         if charge_stage > 1 then
             max_targets = 1
         end

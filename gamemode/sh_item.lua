@@ -277,7 +277,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_nova"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
     HORDE.items["arccw_go_870"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_mag7"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_m1014"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_m1014"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_doublebarrel"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Concussive, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_trenchgun"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Flaming, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_mw2_spas12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
@@ -441,14 +441,14 @@ function HORDE:GetDefaultItemsData()
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, {Engineer=1}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "MAG7",           "arccw_go_mag7",     1500, 4, "Techno Arms MAG-7.\nFires a specialized 60mm 12 gauge shell.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Shotgun",    "XM1014",         "arccw_go_m1014",    2000, 5, "Benelli M4 Super 90.\nFully automatic shotgun.",
+    HORDE:CreateItem("Shotgun",    "XM1014",         "arccw_horde_m1014",    2000, 5, "Benelli M4 Super 90.\nFully automatic shotgun.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Shotgun",    "Double Barrel",  "arccw_horde_doublebarrel",    2000, 5, "Double Barrel Shotgun.\nDevastating power at close range.",
-    {Survivor=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "Trench Gun",     "arccw_horde_trenchgun", 2250, 6, "Winchester Model 1200.\nShoots incendiary pellets.",
     {Warden=true, Cremator=true}, 15, -1, nil, nil, {Warden=1, Cremator=1}, nil, {HORDE.DMG_FIRE}, {HORDE.Infusion_Quality, HORDE.Infusion_Impaling})
-    HORDE:CreateItem("Shotgun",    "SPAS-12",        "arccw_mw2_spas12",  2500, 7, "Franchi SPAS-12.\nA combat shotgun manufactured by Italian firearms company Franchi.",
+    HORDE:CreateItem("Shotgun",    "SPAS-12",        "arccw_mw2_spas12",  2250, 7, "Franchi SPAS-12.\nA combat shotgun manufactured by Italian firearms company Franchi.",
     {Survivor=true, Warden=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Shotgun",    "Double Barrel",  "arccw_horde_doublebarrel",    2500, 5, "Double Barrel Shotgun.\nDevastating power at close range.",
+    {Survivor=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "Striker",        "arccw_horde_striker", 2500, 8, "Armsel Striker.\nA 12-gauge shotgun with a revolving cylinder from South Africa.",
     {Warden=true}, 15, -1, nil, nil, {Warden=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "AA12",           "arccw_horde_aa12",  3000, 9, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",

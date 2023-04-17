@@ -1,8 +1,8 @@
 SPELL.PrintName       = "Raise Hulk Spectre"
 SPELL.Weapon          = {"horde_void_projector"}
 SPELL.Mind            = {60}
-SPELL.ChargeTime      = {0}
-SPELL.ChargeRelease   = true
+SPELL.ChargeTime      = {1}
+SPELL.ChargeRelease   = nil
 SPELL.Cooldown        = 10
 SPELL.Slot            = HORDE.Spell_Slot_Reload
 SPELL.DamageType      = {HORDE.DMG_PHYSICAL}

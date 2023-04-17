@@ -13,9 +13,9 @@ PERK.Params = {
     [2] = {value = 0.15, percent = true},
     [3] = {value = 0.01, percent = true},
     [4] = {value = 0.4, percent = true},
-    [5] = {percent = true, base = 0, level = 0.008, max = 0.2, classname = "Artificer"},
-    [6] = {value = 0.008, percent = true},
-    [7] = {value = 0.2, percent = true},
+    [5] = {percent = true, base = 0, level = 0.004, max = 0.1, classname = "Artificer"},
+    [6] = {value = 0.004, percent = true},
+    [7] = {value = 0.1, percent = true},
 }
 PERK.Hooks = {}
 
