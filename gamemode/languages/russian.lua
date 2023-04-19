@@ -203,7 +203,7 @@ LANGUAGE["Infusion_Description_Siphoning"] = [[
 ]]
 
 LANGUAGE["Infusion_Description_Chrono"] = [[
-Увеличивает урон от оружия, чем дольше оружие находится в руках пользователя.
+Увеличивается урон от оружия, чем дольше оружие находится в руках пользователя.
 
 Увеличение урона на 6% за волну, удерживаемую пользователем.
 
@@ -2673,7 +2673,7 @@ LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
 
 LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[Нейроусилитель]]
 LANGUAGE["Gadget_Desc_gadget_neuro_amplifier"] = [[
-Адреналин увеличивает уклонение на 6 %.
+Адреналин увеличивает уклонение на 6%.
 ]]
 
 LANGUAGE["Gadget_gadget_ouroboros"] = [[Уроборос]]
