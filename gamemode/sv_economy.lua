@@ -195,7 +195,8 @@ end
 
 function plymeta:Horde_DropMoney(amount)
 	amount = tonumber(amount)
-	if not amount then amount = 50 end 
+	amount = floor(amount) -- ensure that unholy amounts of money are not being dropped
+	if not amount or amount < 50 then amount = 50 end 
     if self:Horde_GetMoney() >= amount and self:Alive() then
         local res = hook.Run("Horde_PlayerDropMoney", self)
         if res then
