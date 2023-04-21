@@ -194,39 +194,44 @@ end
 
 hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     if not ply:IsValid() then return end
-    local text = string.lower(input) -- Make the chat message entirely lowercase
-    if text == "!help" then
+    local text = {}
+	
+    for str in string.gmatch(string.lower(input), "([^".."%s".."]+)") do -- splits and lowercases the input string
+       table.insert(text, str)
+    end
+	
+    if text[1] == "!help" then
         ply:PrintMessage(HUD_PRINTTALK, "'!ready' - Get ready")
         ply:PrintMessage(HUD_PRINTTALK, "'!shop' - Open shop")
         ply:PrintMessage(HUD_PRINTTALK, "'!drop' - Drop weapon")
         ply:PrintMessage(HUD_PRINTTALK, "'!throwmoney' - Drop 50$")
         ply:PrintMessage(HUD_PRINTTALK, "'!rtv' -Initiate a map change vote")
-    elseif text == "!start" then
+    elseif text[1] == "!start" then
         Start(ply)
-    elseif text == "!ready" then
+    elseif text[1] == "!ready" then
         Ready(ply)
-    elseif text == "!end" then
+    elseif text[1] == "!end" then
         End(ply)
-    elseif text == "!shop" then
+    elseif text[1] == "!shop" then
         Shop(ply)
-    elseif text == "!itemconfig" then
+    elseif text[1] == "!itemconfig" then
         ItemConfig(ply)
-    elseif text == "!enemyconfig" then
+    elseif text[1] == "!enemyconfig" then
         EnemyConfig(ply)
-    elseif text == "!classconfig" then
+    elseif text[1] == "!classconfig" then
         ClassConfig(ply)
-    elseif text == "!mapconfig" then
+    elseif text[1] == "!mapconfig" then
         MapConfig(ply)
-    elseif text == "!drop" then
+    elseif text[1] == "!drop" then
         if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon().Base == "horde_spell_weapon_base" then
             return
         end
         ply:DropWeapon()
-    elseif text == "!throwmoney" then
-        ply:Horde_DropMoney()
-    elseif text == "!rtv" then
+    elseif text[1] == "!throwmoney" then
+        ply:Horde_DropMoney(text[2])
+    elseif text[1] == "!rtv" then
         HORDE.VoteChangeMap(ply)
-    elseif text == "!stats" then
+    elseif text[1] == "!stats" then
         StatsMenu(ply)
     --[[elseif text == "!sync_to_local" then
         HORDE:SyncToLocal(ply)
