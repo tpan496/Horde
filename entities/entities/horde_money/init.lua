@@ -24,7 +24,7 @@ function ENT:Initialize()
     self.Removing = false
     self:PhysWake()
 
-    timer.Simple(5, function ()
+    timer.Simple(10, function ()
         if self:IsValid() then
             self:Remove()
         end
