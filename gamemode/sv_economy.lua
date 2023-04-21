@@ -1,5 +1,5 @@
 concommand.Add("horde_drop_money", function (ply, cmd, args)
-    ply:Horde_DropMoney()
+    ply:Horde_DropMoney(args[1])
 end)
 
 concommand.Add("horde_drop_weapon", function (ply, cmd, args)
@@ -193,14 +193,16 @@ function plymeta:Horde_GetDropEntities()
     return self.Horde_drop_entities
 end
 
-function plymeta:Horde_DropMoney()
-    if self:Horde_GetMoney() >= 50 and self:Alive() then
+function plymeta:Horde_DropMoney(amount)
+	amount = tonumber(amount)
+	if not amount then amount = 50 end 
+    if self:Horde_GetMoney() >= amount and self:Alive() then
         local res = hook.Run("Horde_PlayerDropMoney", self)
         if res then
             self:Horde_SyncEconomy()
             return
         end
-        self:Horde_AddMoney(-50)
+        self:Horde_AddMoney(-amount)
         local money = ents.Create("horde_money")
         local pos = self:GetPos()
         local dir = (self:GetEyeTrace().HitPos - pos)
@@ -208,11 +210,13 @@ function plymeta:Horde_DropMoney()
         local drop_pos = pos + dir * 50
         drop_pos.z = pos.z + 15
         money:SetPos(drop_pos)
-        money:DropToFloor()
+        --money:DropToFloor() -- DropToFloor() causes money to fall through dispacements and slopes
         money:Spawn()
+		money:SetMoney(amount)
         self:Horde_SyncEconomy()
     end
 end
+
 
 function plymeta:Horde_GetMaxWeight()
     return self.Horde_max_weight
