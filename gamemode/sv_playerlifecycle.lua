@@ -795,6 +795,8 @@ function HORDE:CheckAlivePlayers()
             -- ply:ScreenFade(SCREENFADE.OUT, Color(0,0,0), 6, 2)
             -- ply:Freeze(true)
         end
+        local ret = hook.Run("Horde_ShouldContinueGameWhenAllPlayersAreDead")
+        if ret then return end
         HORDE:GameEnd("DEFEAT")
     end
 end

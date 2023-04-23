@@ -21,15 +21,15 @@ SWEP.Spawnable = true
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/v_m79.mdl"
-SWEP.WorldModel = "models/horde/weapons/w_m79.mdl"
-SWEP.MirrorVMWM = false
+SWEP.WorldModel = "models/horde/weapons/v_m79.mdl"
+SWEP.MirrorVMWM = true
 --SWEP.WorldModelOffset = {
 --    pos        =    Vector(-8, 5, -8),
 --    ang        =    Angle(-6, 0, 180),
 --    bone    =    "ValveBiped.Bip01_R_Hand",
 --}
 SWEP.WorldModelOffset = {
-    pos        =    Vector(12.5, 1, 2),
+    pos        =    Vector(0, 5, -7),
     ang        =    Angle(-10, 2.5, 180),
     bone    =    "ValveBiped.Bip01_R_Hand",
 }

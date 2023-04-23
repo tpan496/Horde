@@ -265,6 +265,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_mac10"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_go_mp9"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_horde_mp40"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_horde_uzi"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_go_mp5"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_go_ump"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_go_bizon"].infusions = ballistic_infusions_smgs

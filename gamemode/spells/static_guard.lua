@@ -33,6 +33,14 @@ SPELL.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if ply.Horde_Has_Static_Guard and dmginfo:GetDamage() >= 10 then
         bonus.less = bonus.less * 0.1
         ply:EmitSound("horde/spells/static_guard_retaliate.ogg")
+        local e = EffectData()
+        if dmginfo:GetDamagePosition() ~= Vector(0,0,0) then
+            e:SetOrigin(dmginfo:GetDamagePosition())
+        else
+            e:SetOrigin(ply:GetPos() + Vector(0,0,30))
+        end
+            
+        util.Effect("horde_static_guard", e, true, true)
         if dmginfo:GetAttacker() then
             local ent = dmginfo:GetAttacker()
             local dmg = DamageInfo()
