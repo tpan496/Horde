@@ -649,12 +649,12 @@ Immune to Bleeding.]]
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[Technique]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[Bushido]]
 LANGUAGE["Perk_berserker_bushido"] = [[
-Melee headshots increases Stun buildup.
+{1} increased Slashing damage.
 {2} increased movement speed.]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[Savagery]]
 LANGUAGE["Perk_berserker_savagery"] = [[
-{1} increased Melee damage.
+{1} increased Blunt damage.
 {2} increased maximum health.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Parry]]

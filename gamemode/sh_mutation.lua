@@ -33,6 +33,7 @@ function entmeta:Horde_SetMutation(mutation)
             return
         end
     end
+    if not self:IsValid() then return end
     if not self.Horde_Mutation then self.Horde_Mutation = {} end
     if self.Horde_Mutation[mutation] then return end
     self.Horde_Mutation[mutation] = true

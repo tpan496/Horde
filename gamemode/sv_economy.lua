@@ -257,18 +257,13 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     ply:SetCustomCollisionCheck(true)
     HORDE.refresh_living_players = true
 
-    --[[if not ply.killed then
-        ply:KillSilent()
-        timer.Simple(10, function ()
-            ply.killed = true
-            ply:Spawn()
-        end)
-    end]]--
-
     if HORDE.start_game and HORDE.current_break_time <= 0 then
         if ply:IsValid() then
-            ply:KillSilent()
-            HORDE:SendNotification("You will respawn next wave.", 0, ply)
+            local ret = hook.Run("Horde_OnPlayerShouldRespawnDuringWave")
+            if not ret then
+                ply:KillSilent()
+                HORDE:SendNotification("You will respawn next wave.", 0, ply)
+            end
         end
     end
 

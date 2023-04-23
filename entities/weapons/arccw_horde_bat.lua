@@ -29,9 +29,9 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/horde/weapons/c_bat.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-7, 2, -3),
-    ang = Angle(-10, 0, 180),
-    scale = 3,
+    pos = Vector(-15, 8, -10),
+    ang = Angle(20, 0, 180),
+    scale = 1,
 }
 SWEP.WorldModel = "models/horde/weapons/c_bat.mdl"
 SWEP.ViewModelFOV = 60

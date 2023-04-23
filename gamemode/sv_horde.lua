@@ -547,7 +547,10 @@ function HORDE:SpawnEnemy(enemy, pos)
             local p = math.random()
             if p <= mut_prob then
                 local mut = HORDE.current_mutations[math.random(1, #HORDE.current_mutations)]
-                timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(mut) end)
+                timer.Simple(0.1, function()
+                    if !IsValid(spawned_enemy) then return end
+                    spawned_enemy:Horde_SetMutation(mut)
+                end)
             end
 
             if HORDE.difficulty >= 4 then
@@ -1000,11 +1003,13 @@ function HORDE:WaveStart()
     -- Get mutations
     HORDE.current_mutations = {}
     for _, mutation in pairs(HORDE.mutations_rand) do
+        if mutation == "shadow" then goto cont end
         if mutation.Wave and HORDE.current_wave >= mutation.Wave then
             table.insert(HORDE.current_mutations, mutation.ClassName)
         elseif not mutation.Wave then
             table.insert(HORDE.current_mutations, mutation.ClassName)
         end
+        ::cont::
     end
     
     -- Additional custom scaling
