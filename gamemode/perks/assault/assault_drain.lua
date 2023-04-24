@@ -7,7 +7,7 @@ PERK.Params = {
 }
 
 PERK.Hooks = {}
-PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
+PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not killer:Horde_GetPerk("assault_drain")  then return end
     HORDE:SelfHeal(killer, killer:GetMaxHealth() * 0.02)
 end

@@ -7,7 +7,7 @@ PERK.Params = {
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
+PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not IsValid(victim.Horde_Has_Hunter_Mark) then return end
     if not victim.Horde_Has_Hunter_Mark:Horde_GetPerk("gunslinger_bounty_hunter") then return end
 

@@ -9,7 +9,7 @@ PERK.Params = {
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
+PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not killer:Horde_GetPerk("samurai_blade_dance") then return end
     HORDE:RefreshPerkCooldown(killer)
     local max_charges = 1

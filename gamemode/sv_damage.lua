@@ -425,9 +425,3 @@ hook.Add("ScaleNPCDamage", "Horde_BossHeadshotDamage", function (npc, hitgroup, 
         dmg:ScaleDamage(0.70)
     end
 end)
-
-hook.Add("OnNPCKilled", "Horde_OnNPCKilledHook", function (victim, killer, wpn)
-    if not killer:IsPlayer() then return end
-    if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
-    hook.Run("Horde_OnNPCKilled", victim, killer, wpn)
-end)

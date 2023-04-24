@@ -11,7 +11,7 @@ GADGET.Params = {
 }
 GADGET.Hooks = {}
 
-GADGET.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
+GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if killer:Horde_GetGadget() ~= "gadget_barbeque" then return end
     local health = victim:GetMaxHealth()
     local i = 1
