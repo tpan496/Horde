@@ -9,12 +9,14 @@ PERK.Params = {
 local exp = {npc_grenade_frag = 100, npc_satchel = 100, npc_tripmine = 100, arccw_thr_go_frag = 200}
 PERK.Hooks = {}
 PERK.Hooks.EntityRemoved = function(ent)
+    if !IsValid(ent) then return end
+    if not exp[ent:GetClass()] then return end
     local owner = ent:GetInternalVariable("m_hThrower")
     if ent.Owner and ent.Owner:IsPlayer() then
         owner = ent.Owner
     end
     if not owner then ent = ent:GetInternalVariable("m_hOwner") end
-    if SERVER and IsValid(ent) and exp[ent:GetClass()] and IsValid(owner)
+    if SERVER and IsValid(owner)
             and owner:IsPlayer() and owner:Horde_GetPerk("demolition_frag_cluster") then
         local dmg = exp[ent:GetClass()]
         local rad = 200

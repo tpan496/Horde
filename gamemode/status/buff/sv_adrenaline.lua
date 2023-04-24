@@ -85,7 +85,6 @@ hook.Add("Horde_PlayerMoveBonus", "Horde_AdrenalineStackMovespeed", function(ply
 end)
 
 hook.Add("Horde_OnEnemyKilled", "Horde_AdrenalineApply", function(victim, killer, wpn)
-    if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
     if killer:Horde_GetMaxAdrenalineStack() <= 0 then return end
     killer:Horde_AddAdrenalineStack()
     if killer:Horde_GetCardiacResonanceEnabled() then

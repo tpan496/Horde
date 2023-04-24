@@ -63,7 +63,6 @@ end
 
 GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not victim.Horde_Has_Death_Mark then return end
-    if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
     local health = victim:GetMaxHealth()
     local dmg = DamageInfo()
     dmg:SetAttacker(victim.Horde_Has_Death_Mark)

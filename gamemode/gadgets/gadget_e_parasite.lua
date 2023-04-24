@@ -53,7 +53,6 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
 end
 
 GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
-    if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
     if victim.Horde_Has_Parasite then
         local rad = 250
         local e = EffectData()

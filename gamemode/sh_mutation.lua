@@ -61,14 +61,6 @@ net.Receive("Horde_OnUnsetMutationEffect", function()
 end)
 end
 
--- Remove mutations when enemies are dead
-hook.Add("EntityRemoved", "Horde_UnsetMutationOnEntityRemoved", function(ent)
-    if CLIENT then return end
-    if ent:IsNPC() and ent:Horde_GetMostRecentAttacker() then
-        --hook.Run("Horde_OnUnsetMutation", ent, ent.Horde_Mutation)
-    end
-end)
-
 HORDE.mutations = {}
 HORDE.mutations_rand = {}
 
