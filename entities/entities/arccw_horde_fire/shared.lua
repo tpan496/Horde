@@ -88,7 +88,7 @@ function ENT:Initialize()
 
         timer.Simple(0.1, function()
             if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+            self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
         end)
     end
 

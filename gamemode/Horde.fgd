@@ -69,15 +69,27 @@
 ]
 
 @PointClass base(Targetname, Angles) studio("models/zombie/classic.mdl") = info_horde_enemy_spawn :
-	"If this is present in a map, Horde will use those points to spawn enemies, instead of searching for info nodes. Note that when fixed spawn points are present, enemies will no longer despawn due to distance mechanics."
+	"If this is present in a map, Horde will use those points to spawn enemies, instead of searching for info nodes. Note that when fixed spawn points are present, enemies will no longer despawn due to distance mechanics. Also note that, if there are no enabled spawn points on map load, enemies will be able to spawn on any info node."
 [
-
+	// Keys
+	disabled(integer) : "Disabled" : 0 : "Should this spawn point start disabled?"
+	
+	// Inputs
+	input disable(void) : "Disables this spawn point."
+	input enable(void)  : "Enables this spawn point."
+	input toggle(void)  : "Toggles the state of this spawn point."
 ]
 
 @PointClass base(Targetname, Angles) studio("models/zombie/poison.mdl") = info_horde_boss_spawn :
-	"If this is present in a map, Horde will use those points to spawn bosses."
+	"If this is present in a map, Horde will use those points to spawn bosses.  Note that, if there are no enabled boss spawn points on map load, bosses will be able to spawn on any info node."
 [
-
+	// Keys
+	disabled(integer) : "Disabled" : 0 : "Should this spawn point start disabled?"
+	
+	// Inputs
+	input disable(void) : "Disables this spawn point."
+	input enable(void)  : "Enables this spawn point."
+	input toggle(void)  : "Toggles the state of this spawn point."
 ]
 
 @PointClass base(Targetname, Angles) studio("models/Items/BoxMRounds.mdl") = info_horde_ammobox_spawn :
@@ -92,7 +104,7 @@
 	// Keys
 	wave(integer)  : "Wave"  : 1 : "Wave for when the payload will spawn. Use -1 for all waves."
 	label(string)  : "Label" : "the payload" : "Name of the payload."
-	mass(integer)  : "Mass"  : 0 : "From 0 to 50, caps at 50. Player speed is reduced by Mass%."
+	mass(integer)  : "Mass"  : 40 : "From 0 to 100. Player speed will be multiplied by this number percentage (at 50, moves at half speed)."
 	model(string)  : "Model" : "models/props_lab/crematorcase.mdl" : "Model for the payload."
 	icon(integer)  : "Icon"  : 0 : "Display icon for the payload. 0=generic, 1=card, 2=key, 3=chemical."
 	group(integer) : "Group" : 0 : "Given the wave, only one payload spawn in the same group will be activated."

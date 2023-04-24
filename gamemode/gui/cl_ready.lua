@@ -83,6 +83,7 @@ net.Receive("Horde_SyncTip", function()
         HORDE.TipPanel:SetVisible(false)
     else
         HORDE.TipPanel:SetVisible(true)
+        HORDE:ShowLeaderboardThenFadeOut()
     end
 end)
 

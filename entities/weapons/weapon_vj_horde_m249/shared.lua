@@ -60,7 +60,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	bullet:SetOwner(self:GetOwner())
 	bullet:Activate()
 	bullet:Spawn()
-	bullet.DirectDamage = 4
+	bullet.DirectDamage = 6
 	
 	local phy = bullet:GetPhysicsObject()
 	if phy:IsValid() then
@@ -68,5 +68,13 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 		dir = dir + VectorRand() * 0.03
 		dir:Normalize()
 		phy:ApplyForceCenter(dir * 1000)
+	end
+end
+
+function SWEP:CustomOnThink()
+	if not self.Critical and self:GetOwner() and IsValid(self:GetOwner()) then
+		if self:GetOwner().Critical then
+			self.NPC_NextPrimaryFire = 3
+		end
 	end
 end

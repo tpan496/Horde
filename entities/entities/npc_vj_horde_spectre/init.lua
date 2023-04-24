@@ -131,7 +131,7 @@ function ENT:CustomOnInitialize()
 		e:SetScale(0.25)
 	util.Effect("abyssal_roar", e, true, true)
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
-    self:SetColor(Color(0, 0, 0, 200))
+    self:SetColor(Color(0, 0, 100, 200))
 	self.MeleeAttackDamage = self.MeleeAttackDamage + 6 * self.properties.level
 	self:SetHealth(90 + 2 * 16 * self.properties.level)
 	self:AddRelationship("npc_turret_floor D_LI 99")

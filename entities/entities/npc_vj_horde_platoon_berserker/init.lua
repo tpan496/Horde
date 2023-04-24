@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/police.mdl" -- Leave empty if using more than one model
-ENT.StartHealth = 3000
+ENT.StartHealth = 5000
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.MeleeAttackDamage = 30
 ENT.MoveType = MOVETYPE_STEP
@@ -73,6 +73,9 @@ ENT.UseTheSameGeneralSoundPitch = true
 	-- It picks the number between the two variables below:
 ENT.GeneralSoundPitch1 = 75
 ENT.GeneralSoundPitch2 = 75
+ENT.DisableCritical = nil
+ENT.EntitiesToNoCollide = {"npc_vj_horde_platoon_heavy", "npc_vj_horde_platoon_berserker", "npc_vj_horde_platoon_demolitionist"}
+
 
 function ENT:CustomOnInitialize()
 	self:SetModelScale(1.25)
@@ -88,12 +91,12 @@ function ENT:CustomOnInitialize()
 	local attach = self:GetAttachment(attach_id)
 	pos = attach.Pos
 	ang = attach.Ang
-	pos.x = pos.x - 3
+	pos.x = pos.x
 	pos.z = pos.z - 25
 	pos.y = pos.y
 	self.model = ents.Create("prop_dynamic")
 	self.model:SetModel("models/headcrab.mdl")
-	self.model:SetColor(Color(100, 100, 100))
+	self.model:SetColor(Color(150, 100, 100))
 	self.model:SetSequence("idle01")
 	self.model:SetPos(pos)
 	self.model:SetAngles(ang)
@@ -106,15 +109,34 @@ end
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	dmginfo:ScaleDamage(0.9)
+	local p = math.random()
+	if HORDE:IsPhysicalDamage(dmginfo) and p <= 0.25 then
+		local e = EffectData()
+        if dmginfo:GetDamagePosition() ~= Vector(0,0,0) then
+            e:SetOrigin(dmginfo:GetDamagePosition())
+        else
+            e:SetOrigin(self:GetPos() + self:OBBCenter() + self:GetForward() * 25)
+        end
+		dmginfo:ScaleDamage(0.75)
+		util.Effect("horde_platoon_parry", e, true, true)
+		sound.Play("horde/gadgets/guard" .. tostring(math.random(1,2)) ..".ogg", self:GetPos(), 125, 100, 1, CHAN_AUTO)
+	end
+
+	if (not self.DisableCritical) and self:Health() <= self:GetMaxHealth() * 0.5 then
+		self.Critical = true
+	end
 end
 
-local defAng = Angle(0, 0, 0)
-
-ENT.ZBoss_NextMiniBossSpawnT = 0
-function ENT:CustomOnThink_AIEnabled()
-	return
+function ENT:CustomOnThink()
+	if self:IsOnGround() then
+		if self.Critical then
+			self:SetLocalVelocity(self:GetMoveVelocity() * 1.5)
+		else
+			self:SetLocalVelocity(self:GetMoveVelocity() * 1.25)
+		end
+	else
+	end
 end
-
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2015 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,

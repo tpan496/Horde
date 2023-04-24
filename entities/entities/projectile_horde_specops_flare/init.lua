@@ -28,11 +28,15 @@ function ENT:CustomOnInitialize()
         self:SetSolid( SOLID_VPHYSICS )
         self:PhysicsInit( SOLID_VPHYSICS )
         self:DrawShadow( true )
+        self:SetRenderMode(RENDERMODE_TRANSCOLOR)
+        self:SetColor(Color(0,0,0,0))
+        self:DropToFloor()
 
         local phys = self:GetPhysicsObject()
         if phys:IsValid() then
             phys:Wake()
             phys:SetBuoyancyRatio(0)
+            phys:EnableGravity(true)
         end
 
         self.SpawnTime = CurTime()
@@ -41,7 +45,7 @@ function ENT:CustomOnInitialize()
 
         timer.Simple(0, function()
             if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+            self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
         end)
     else
         self:SetColor(Color(255, 0, 0))

@@ -9,14 +9,37 @@ SPELL.Slot           = HORDE.Spell_Slot_RMB
 SPELL.DamageType     = {HORDE.DMG_LIGHTNING}
 SPELL.Icon           = "spells/solar_bolt.png"
 SPELL.Type           = {HORDE.Spell_Type_Hitscan}
-SPELL.Description    = [[Surgically strikes the target with lightning. Charge for differnet effects.]]
+SPELL.Description    = [[Surgically strikes the target with lightning. Charge to increase damage and range.]]
 SPELL.Fire           = function (ply, wpn, charge_stage)
     local function Hitscan(damage, spread, dir, src, level)
+        local d = 1000 + (charge_stage - 1) * 250
+        local tr = util.TraceLine({
+            start = src,
+            endpos = src + dir * d,
+            filter = {ply, ply.Horde_Floating_Chaos},
+        })
+        net.Start("Horde_SolarStormTracer")
+            net.WriteUInt(charge_stage - 1, 3)
+            net.WriteVector(src)
+            net.WriteVector(tr.HitPos)
+        net.Broadcast()
+
+        if charge_stage == 1 then
+            ply:EmitSound("horde/weapons/solar_seal/solar_storm_launch.ogg", 100, math.random(70, 90))
+            sound.Play("horde/weapons/solar_seal/solar_storm_hit.ogg", tr.HitPos, 80, math.random(70, 90))
+        elseif charge_stage == 2 then
+            ply:EmitSound("horde/weapons/solar_seal/solar_storm_launch.ogg", 120, math.random(100, 120))
+            sound.Play("horde/weapons/solar_seal/solar_storm_hit.ogg", tr.HitPos, 120, math.random(100, 120))
+        elseif charge_stage == 3 then
+            ply:EmitSound("horde/weapons/solar_seal/solar_storm_launch.ogg", 150, math.random(30, 50))
+            sound.Play("horde/weapons/solar_seal/solar_storm_hit.ogg", tr.HitPos, 150, math.random(30, 50))
+        end
+        if tr.Hit ~= true then return end
         wpn:FireBullets({
             Attacker = ply,
             Damage = damage,
             Tracer = 0,
-            Distance = 4000,
+            Distance = 1000 + (charge_stage - 1) * 250,
             Dir = dir,
             Src = src,
             Spread = spread,
@@ -25,21 +48,6 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
                 dmg:SetDamageType(DMG_SHOCK)
                 dmg:SetAttacker(ply)
                 dmg:SetInflictor(wpn)
-                net.Start("Horde_SolarStormTracer")
-                    net.WriteUInt(charge_stage - 1, 3)
-                    net.WriteVector(src)
-                    net.WriteVector(tr.HitPos)
-                net.Broadcast()
-                if charge_stage == 1 then
-                    ply:EmitSound("horde/weapons/solar_seal/solar_storm_launch.ogg", 100, math.random(70, 90))
-                    sound.Play("horde/weapons/solar_seal/solar_storm_hit.ogg", tr.HitPos, 80, math.random(70, 90))
-                elseif charge_stage == 2 then
-                    ply:EmitSound("horde/weapons/solar_seal/solar_storm_launch.ogg", 120, math.random(100, 120))
-                    sound.Play("horde/weapons/solar_seal/solar_storm_hit.ogg", tr.HitPos, 120, math.random(100, 120))
-                elseif charge_stage == 3 then
-                    ply:EmitSound("horde/weapons/solar_seal/solar_storm_launch.ogg", 150, math.random(30, 50))
-                    sound.Play("horde/weapons/solar_seal/solar_storm_hit.ogg", tr.HitPos, 150, math.random(30, 50))
-                end
 
                 local param = {}
                 hook.Run("Horde_OnGodSlayerCheck", ply, param)
@@ -85,13 +93,14 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
 
     if ply.Horde_Floating_Chaos and ply.Horde_Floating_Chaos:IsValid() then
         local pos = ply.Horde_Floating_Chaos:GetPos()
-        local max_targets = 5 + ply.Horde_Floating_Chaos.Horde_Spell_Level
-        for _, target in pairs(ents.FindInSphere(ply.Horde_Floating_Chaos:GetPos(), 1000)) do
+        local max_targets = 3 + ply.Horde_Floating_Chaos.Horde_Spell_Level
+        local d = 1000 + (charge_stage - 1) * 250
+        for _, target in pairs(ents.FindInSphere(ply.Horde_Floating_Chaos:GetPos(), d - 50)) do
             if HORDE:IsEnemy(target) and max_targets > 0 then
                 local target_pos = target:GetPos() + target:OBBCenter()
                 local d2 = target_pos - pos
                 d2:Normalize()
-                Hitscan(base_damage, nil, d2, pos, p)
+                Hitscan(base_damage, nil, d2, pos)
                 max_targets = max_targets - 1
             end
         end

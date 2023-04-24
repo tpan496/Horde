@@ -15,7 +15,7 @@ function ENT:Initialize()
 	self.Horde_Player_Count = player.GetCount()
 	self.Horde_Last_Holding = 0
 
-	self.Horde_Total_Progress = 90
+	self.Horde_Total_Progress = 100
 end
 
 function ENT:Horde_SetActivated(activated)

@@ -18,7 +18,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 
 	local level = ply:Horde_GetSpellUpgrade("meteor")
 	ent:SetSpellLevel(level)
-	ent:SetSpellBaseDamages({125 + math.pow(level, 1.1) * 25})
+	ent:SetSpellBaseDamages({120 + math.pow(level, 1.1) * 25})
     ent:SetPos( ply:EyePos() + (ply:GetAimVector() * 16 ))
 	ent:SetAngles( ply:EyeAngles() )
 	ent:Spawn()

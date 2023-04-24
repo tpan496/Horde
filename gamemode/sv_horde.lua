@@ -55,8 +55,18 @@ end
 
 hook.Add("InitPostEntity", "Horde_Init", function()
     HORDE.ai_nodes = {}
-    local horde_nodes = ents.FindByClass("info_horde_enemy_spawn")
-    local horde_boss_nodes = ents.FindByClass("info_horde_boss_spawn")
+    local horde_nodes = {}
+    for _, node in pairs(ents.FindByClass("info_horde_enemy_spawn")) do -- Only include nodes that are enabled
+        if not node.Disabled then
+            table.insert(horde_nodes, node)
+        end
+    end
+    local horde_boss_nodes = {}
+    for _, node in pairs(ents.FindByClass("info_horde_boss_spawn")) do
+        if not node.Disabled then
+            table.insert(horde_boss_nodes, node)
+        end
+    end
     HORDE.spawned_enemies = {}
     HORDE.found_ai_nodes = false
     HORDE.found_horde_nodes = false
@@ -537,7 +547,10 @@ function HORDE:SpawnEnemy(enemy, pos)
             local p = math.random()
             if p <= mut_prob then
                 local mut = HORDE.current_mutations[math.random(1, #HORDE.current_mutations)]
-                timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(mut) end)
+                timer.Simple(0.1, function()
+                    if !IsValid(spawned_enemy) then return end
+                    spawned_enemy:Horde_SetMutation(mut)
+                end)
             end
 
             if HORDE.difficulty >= 4 then
@@ -680,6 +693,40 @@ function HORDE:GetValidNodes(enemies)
         table.insert(valid_nodes, invalid_nodes[math.random(#invalid_nodes)])
     end
     return valid_nodes
+end
+
+-- Add/remove ai/boss nodes.
+-- Can be compressed, but I left it at that for the sake of clarity.
+function HORDE:AddAINode(pos)
+	local new_node = {}
+	new_node["pos"] = pos
+	for i, node in pairs(HORDE.ai_nodes) do -- Making sure that duplicate nodes are not being added
+		if node["pos"] == pos then return end
+	end
+	table.insert(HORDE.ai_nodes, new_node)
+end
+
+function HORDE:RemoveAINode(pos)
+	for i, node in pairs(HORDE.ai_nodes) do
+		if node["pos"] == pos then
+			table.remove(HORDE.ai_nodes, i)
+		end
+	end
+end
+
+function HORDE:AddBossNode(pos)
+	for i, node in pairs(HORDE.boss_spawns) do
+		if node == pos then return end
+	end
+	table.insert(HORDE.boss_spawns, pos)
+end
+
+function HORDE:RemoveBossNode(pos)
+	for i, node in pairs(HORDE.boss_spawns) do
+		if node == pos then
+			table.remove(HORDE.boss_spawns, i)
+		end
+	end
 end
 
 -- Loops over valid nodes and spawn enemies.
@@ -956,11 +1003,13 @@ function HORDE:WaveStart()
     -- Get mutations
     HORDE.current_mutations = {}
     for _, mutation in pairs(HORDE.mutations_rand) do
+        if mutation == "shadow" then goto cont end
         if mutation.Wave and HORDE.current_wave >= mutation.Wave then
             table.insert(HORDE.current_mutations, mutation.ClassName)
         elseif not mutation.Wave then
             table.insert(HORDE.current_mutations, mutation.ClassName)
         end
+        ::cont::
     end
     
     -- Additional custom scaling
@@ -1180,6 +1229,7 @@ function HORDE:WaveEnd()
         end
         
         ply:Horde_SyncExp()
+        HORDE:TryAddTopTen(ply)
     end
 
     if not HORDE.has_buy_zone then

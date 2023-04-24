@@ -30,7 +30,7 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 75
+SWEP.Damage = 50
 SWEP.DamageMin = 35
 SWEP.Range = 400 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.RangeMin = 200 * 0.025  -- GAME UNITS * 0.025 = METRES
@@ -290,12 +290,22 @@ SWEP.Inaccuracy_Add_Move		= 0.1
 function SWEP:Hook_ShouldNotFireFirst()
     if self:GetCurrentFiremode().Mode == 3 then
         self.Num = 12
-        local ply = self:GetOwner()
-        local dir = -ply:GetForward()
-        dir:Normalize()
-        local vel = dir * 200
-        ply:SetLocalVelocity(ply:GetVelocity() + vel)
+        self.AccuracyMOA = 200
     else
         self.Num = 6
+        self.AccuracyMOA = 100
+    end
+end
+
+function SWEP:Hook_ShouldNotFire()
+    if CLIENT then return end
+    if self:GetCurrentFiremode().Mode == 3 then
+        local ply = self:GetOwner()
+        if self:Clip1() >= 2 and !ply:KeyDown(IN_USE) then
+            local dir = -ply:GetForward()
+            dir:Normalize()
+            local vel = dir * 200
+            ply:SetLocalVelocity(ply:GetVelocity() + vel)
+        end
     end
 end

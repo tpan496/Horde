@@ -139,7 +139,7 @@ function ENT:CustomOnThink_AIEnabled()
 		bullet.AmmoType = "GaussEnergy"
 		bullet.Distance = 1000
 		bullet.Callback = function (ent, tr, dmginfo)
-			dmginfo:SetDamageType(DMG_BURN)
+			dmginfo:SetDamageType(DMG_BLAST)
 			util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
 		end
 		self:FireBullets( bullet )

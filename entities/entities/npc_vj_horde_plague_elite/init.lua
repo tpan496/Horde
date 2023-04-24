@@ -45,9 +45,11 @@ ENT.CallForBackUpOnDamage = false -- Should the SNPC call for help when damaged?
 ENT.CanDetectDangers = false
 ENT.MoveOrHideOnDamageByEnemy = false
 ENT.WeaponSpread = 1.5
-ENT.Weapon_FiringDistanceFar = 2500
+ENT.Weapon_FiringDistanceFar = 1750
 ENT.WeaponReload_FindCover = false
 ENT.Horde_Plague_Soldier = true
+ENT.WeaponAttackSecondaryTimeUntilFire = 2
+ENT.EntitiesToNoCollide = {"npc_vj_horde_zombine", "npc_vj_horde_plague_soldier"}
 
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",
@@ -95,7 +97,7 @@ function ENT:CustomOnInitialize()
 	self.model:SetModel("models/headcrabblack.mdl")
 	self.model:SetColor(Color(255, 0, 0))
 	--self.model = ClientsideModel("models/headcrabblack.mdl", RENDERGROUP_OPAQUE)
-	self.model:SetSequence("idle01")
+	self.model:SetSequence("ragdoll")
 	self.model:SetPos(pos)
 	self.model:SetAngles(ang)
 	self.model:Spawn()

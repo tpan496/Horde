@@ -492,6 +492,7 @@ function HORDE:PlayerInit(ply)
     for _, other_ply in pairs(player.GetAll()) do
         if other_ply == ply then goto cont end
         local subclass = other_ply:Horde_GetCurrentSubclass()
+        if not subclass then goto cont end
         net.Start("Horde_SyncExp")
             net.WriteEntity(other_ply)
             net.WriteString(subclass)
@@ -516,6 +517,12 @@ function HORDE:PlayerInit(ply)
     end
 
     ply.Horde_Init_Complete = true
+    local added = HORDE:TryAddTopTen(ply)
+    if not added then
+        net.Start("Horde_SyncTopTen")
+            net.WriteString(util.TableToJSON(HORDE.top_tens))
+        net.Broadcast()
+    end
 
     if not HORDE.has_buy_zone then
         net.Start("Horde_SyncStatus")
@@ -647,6 +654,17 @@ hook.Add("Move", "Horde_PlayerMove", function (ply, mv)
     end
 end)
 
+hook.Add("Horde_PlayerMoveBonus", "Horde_PlayerPayloadMove", function (ply, bonus_walk, bonus_run)
+    if ply:Horde_HasPayload() then
+        local mass = ply.Horde_Payload_Spawn.Horde_Payload_Mass
+        if mass and mass > 0 then
+            bonus_walk.more = bonus_walk.more * (1 - math.max(0.1, mass/100))
+            bonus_run.more = bonus_run.more * (1 - math.max(0.1, mass/100))
+        end
+    end
+end)
+
+
 local function Horde_DeathSpectatingFunction(victim, inflictor, attacker)
     if not HORDE.start_game or HORDE.current_break_time > 0 then return end
     timer.Simple(1, function()
@@ -777,6 +795,8 @@ function HORDE:CheckAlivePlayers()
             -- ply:ScreenFade(SCREENFADE.OUT, Color(0,0,0), 6, 2)
             -- ply:Freeze(true)
         end
+        local ret = hook.Run("Horde_ShouldContinueGameWhenAllPlayersAreDead")
+        if ret then return end
         HORDE:GameEnd("DEFEAT")
     end
 end

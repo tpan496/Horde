@@ -1,6 +1,7 @@
 if not ArcCWInstalled then return end
 if CLIENT then
-    killicon.AddAlias("arccw_horde_akimbo_m9", "arccw_go_m9")
+    SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_horde_akimbo_m9")
+    killicon.Add("arccw_horde_akimbo_m9", "arccw/weaponicons/arccw_horde_akimbo_m9", Color(0, 0, 0, 255))
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
@@ -58,8 +59,8 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = {"weapon_pistol"}
 SWEP.NPCWeight = 100
 
-SWEP.AccuracyMOA = 9 / 2 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 125 / 2 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 6 / 2 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 100 / 2 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 25
 
 SWEP.Primary.Ammo = "pistol" -- what ammo type the gun uses

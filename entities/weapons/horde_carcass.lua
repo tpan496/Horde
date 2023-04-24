@@ -1,5 +1,8 @@
 
 AddCSLuaFile()
+if CLIENT then
+    killicon.Add("horde_carcass", "vgui/hud/punch", Color(0, 0, 0, 255))
+end
 
 SWEP.PrintName = "Carcass Biosystem"
 SWEP.Author = "Gorlami"

@@ -6,7 +6,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/headcrab.mdl"
-ENT.StartHealth = 7500
+ENT.StartHealth = 7750
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.MovementType = VJ_MOVETYPE_STATIONARY
 ENT.HasMeleeAttack = false
@@ -21,6 +21,8 @@ ENT.UseTheSameGeneralSoundPitch = true
 ENT.GeneralSoundPitch1 = 75
 ENT.GeneralSoundPitch2 = 75
 ENT.LastHp = 0
+ENT.EntitiesToNoCollide = {"npc_vj_horde_platoon_heavy", "npc_vj_horde_platoon_berserker", "npc_vj_horde_platoon_demolitionist"}
+
 
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(0,0,0),Vector(0,0,0))
@@ -36,27 +38,42 @@ function ENT:CustomOnInitialize()
 		self.MiniBoss1:SetAngles(self:GetAngles())
 		self.MiniBoss1:Spawn()
 		self.MiniBoss1:SetOwner(self)
-		self.MiniBoss1:SetMaxHealth(self:GetMaxHealth() * 0.3)
-		self.MiniBoss1:SetHealth(self.MiniBoss1:GetMaxHealth())
+		timer.Simple(0.1, function ()
+			self.MiniBoss1:SetMaxHealth(self:GetMaxHealth() * 0.3)
+			self.MiniBoss1:SetHealth(self.MiniBoss1:GetMaxHealth())
+		end)
+		
+		self.MiniBoss1.DisableCritical = true
 
 		self.MiniBoss2 = ents.Create("npc_vj_horde_platoon_berserker")
-		self.MiniBoss2:SetPos(self:GetPos() + self:GetRight()*-45)
+		self.MiniBoss2:SetPos(self:GetPos() + self:GetRight()*-10)
 		self.MiniBoss2:SetAngles(self:GetAngles())
 		self.MiniBoss2:Spawn()
 		self.MiniBoss2:SetOwner(self)
-		self.MiniBoss2:SetMaxHealth(self:GetMaxHealth() * 0.4)
-		self.MiniBoss2:SetHealth(self.MiniBoss2:GetMaxHealth())
+		timer.Simple(0.1, function ()
+			self.MiniBoss2:SetMaxHealth(self:GetMaxHealth() * 0.4)
+			self.MiniBoss2:SetHealth(self.MiniBoss2:GetMaxHealth())
+		end)
+		self.MiniBoss2.DisableCritical = true
 
 		self.MiniBoss3 = ents.Create("npc_vj_horde_platoon_demolitionist")
-		self.MiniBoss3:SetPos(self:GetPos() + self:GetRight()*45)
+		self.MiniBoss3:SetPos(self:GetPos() + self:GetRight()*10)
 		self.MiniBoss3:SetAngles(self:GetAngles())
 		self.MiniBoss3:Spawn()
 		self.MiniBoss3:SetOwner(self)
-		self.MiniBoss3:SetMaxHealth(self:GetMaxHealth() * 0.3)
-		self.MiniBoss3:SetHealth(self.MiniBoss3:GetMaxHealth())
+		timer.Simple(0.1, function ()
+			self.MiniBoss3:SetMaxHealth(self:GetMaxHealth() * 0.3)
+			self.MiniBoss3:SetHealth(self.MiniBoss3:GetMaxHealth())
+		end)
+		self.MiniBoss3.DisableCritical = true
 		self.Init = true
 
-		self:SetMaxHealth(self.MiniBoss1:GetMaxHealth() + self.MiniBoss12:GetMaxHealth() + self.MiniBoss3:GetMaxHealth())
+		timer.Simple(0.1, function ()
+			self:SetMaxHealth(self.MiniBoss1:GetMaxHealth() + self.MiniBoss2:GetMaxHealth() + self.MiniBoss3:GetMaxHealth())
+			net.Start("Horde_SyncBossHealth")
+			net.WriteInt(self:Health(), 32)
+			net.Broadcast()
+		end)
 	end)
 end
 
@@ -103,6 +120,16 @@ function ENT:CustomOnThink_AIEnabled()
 
 	if dead > 0 and not self.Critical then
 		self.Critical = true
+		if self.MiniBoss1 and IsValid(self.MiniBoss1) then
+			self.MiniBoss1.Critical = true
+		end
+		if self.MiniBoss2 and IsValid(self.MiniBoss2) then
+			self.MiniBoss2.Critical = true
+			self.AnimationPlaybackRate = 1.25
+		end
+		if self.MiniBoss3 and IsValid(self.MiniBoss3) then
+			self.MiniBoss3.Critical = true
+		end
 	end
 end
 

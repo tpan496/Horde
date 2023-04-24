@@ -1,5 +1,5 @@
 concommand.Add("horde_drop_money", function (ply, cmd, args)
-    ply:Horde_DropMoney()
+    ply:Horde_DropMoney(args[1])
 end)
 
 concommand.Add("horde_drop_weapon", function (ply, cmd, args)
@@ -193,14 +193,17 @@ function plymeta:Horde_GetDropEntities()
     return self.Horde_drop_entities
 end
 
-function plymeta:Horde_DropMoney()
-    if self:Horde_GetMoney() >= 50 and self:Alive() then
+function plymeta:Horde_DropMoney(amount)
+	amount = tonumber(amount)
+	amount = floor(amount) -- ensure that unholy amounts of money are not being dropped
+	if not amount or amount < 50 then amount = 50 end 
+    if self:Horde_GetMoney() >= amount and self:Alive() then
         local res = hook.Run("Horde_PlayerDropMoney", self)
         if res then
             self:Horde_SyncEconomy()
             return
         end
-        self:Horde_AddMoney(-50)
+        self:Horde_AddMoney(-amount)
         local money = ents.Create("horde_money")
         local pos = self:GetPos()
         local dir = (self:GetEyeTrace().HitPos - pos)
@@ -208,11 +211,13 @@ function plymeta:Horde_DropMoney()
         local drop_pos = pos + dir * 50
         drop_pos.z = pos.z + 15
         money:SetPos(drop_pos)
-        money:DropToFloor()
+        --money:DropToFloor() -- DropToFloor() causes money to fall through dispacements and slopes
         money:Spawn()
+		money:SetMoney(amount)
         self:Horde_SyncEconomy()
     end
 end
+
 
 function plymeta:Horde_GetMaxWeight()
     return self.Horde_max_weight
@@ -257,18 +262,13 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     ply:SetCustomCollisionCheck(true)
     HORDE.refresh_living_players = true
 
-    --[[if not ply.killed then
-        ply:KillSilent()
-        timer.Simple(10, function ()
-            ply.killed = true
-            ply:Spawn()
-        end)
-    end]]--
-
     if HORDE.start_game and HORDE.current_break_time <= 0 then
         if ply:IsValid() then
-            ply:KillSilent()
-            HORDE:SendNotification("You will respawn next wave.", 0, ply)
+            local ret = hook.Run("Horde_OnPlayerShouldRespawnDuringWave")
+            if not ret then
+                ply:KillSilent()
+                HORDE:SendNotification("You will respawn next wave.", 0, ply)
+            end
         end
     end
 
@@ -839,6 +839,8 @@ net.Receive("Horde_SelectClass", function (len, ply)
     end
 
     ply:Horde_SyncEconomy()
+
+    HORDE:TryAddTopTen(ply)
 end)
 
 net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)

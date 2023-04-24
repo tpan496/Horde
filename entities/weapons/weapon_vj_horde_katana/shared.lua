@@ -23,12 +23,12 @@ SWEP.HoldType = "melee"
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Primary.Damage = 40 -- Damage
 SWEP.IsMeleeWeapon = true -- Should this weapon be a melee weapon?
-SWEP.MeleeWeaponDistance = 100 -- If it's this close, it will attack
+SWEP.MeleeWeaponDistance = 85 -- If it's this close, it will attack
 SWEP.MeleeWeaponSound_Hit = {"horde/weapons/katana/melee_katana_01.ogg",
 "horde/weapons/katana/melee_katana_02.ogg",
 "horde/weapons/katana/melee_katana_03.ogg"} -- Sound it plays when it hits something
 SWEP.MeleeWeaponSound_Miss = {"weapons/iceaxe/iceaxe_swing1.wav"} -- Sound it plays when it misses (Doesn't hit anything)
-SWEP.MeleeAttackDamageAngleRadius = 90
+SWEP.MeleeAttackDamageAngleRadius = 75
 
 function SWEP:CustomOnPrimaryAttack_BeforeShoot()
     local meleeHitEnt = false

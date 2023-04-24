@@ -82,6 +82,9 @@ local function GetTipsData()
             AddTip("Lesions will enrage when provoked.")
             AddTip("Lesions will enrage when left alone for too long.")
             AddTip("Poison Headcrabs increase Break buildup based on your health.")
+            AddTip("Plague Elite can resummon his minions.")
+            AddTip("Plague Elite can fire particle projectiles that deal lethal damage.")
+            AddTip("Scorchers sometimes use flamethrower attacks in close range.")
         end
 
         if GetConVar("horde_default_class_config"):GetInt() == 1 then
