@@ -146,9 +146,12 @@ hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
 end)
 
 function HORDE:OnEnemyKilled(victim, killer, weapon)
-    if victim:IsNPC() and not victim:GetVar("horde_killed") then
+    if IsValid(victim) and victim:IsNPC() and not victim:GetVar("horde_killed") then
         victim:SetVar("horde_killed", true)
-        hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
+        if IsValid(killer) and killer:IsPlayer() then
+            hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
+        end
+        
         if victim.Horde_Gadget_On_Death then
             local gadget_box = ents.Create("horde_gadgetbox")
             gadget_box.Horde_Gadget = victim.Horde_Gadget_On_Death
@@ -246,7 +249,6 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         end
 
         victim:Horde_SetMostRecentAttacker(nil)
-        --hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
     end
 end
 

@@ -60,7 +60,7 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, reward)
+PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not IsValid(victim.Horde_Has_Hunter_Mark) then return end
     if not victim.Horde_Has_Hunter_Mark:Horde_GetPerk("gunslinger_base") then return end
     local p = math.random()

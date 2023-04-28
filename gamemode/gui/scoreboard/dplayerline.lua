@@ -1,5 +1,6 @@
 
 local P_meta = FindMetaTable("Panel")
+local P_Player = FindMetaTable("Player")
 local P_IsValid = P_meta.IsValid
 
 local PANEL = {}
@@ -16,6 +17,15 @@ local function MuteDoClick(self)
 		pl:SetMuted(not pl:IsMuted())
 		self:GetParent().NextRefresh = RealTime()
 	end
+end
+
+function P_Player:LongName()
+	local name = self:Name()
+	if #name > 25 then
+		name = string.sub(name, 1, 25)..".."
+	end
+
+	return name
 end
 
 function PANEL:Init()
@@ -68,16 +78,16 @@ function PANEL:PerformLayout()
 	self.m_PlayerLabel:AlignLeft(w * 0.05)
 	self.m_PlayerLabel:CenterVertical()
 
-	self.m_RankLabel:AlignLeft(w * 0.22)
+	self.m_RankLabel:AlignLeft(w * 0.25)
 	self.m_RankLabel:SizeToContents()
 	self.m_RankLabel:CenterVertical()
 
 	self.m_MoneyLabel:SizeToContents()
-	self.m_MoneyLabel:AlignRight(w * 0.3)
+	self.m_MoneyLabel:AlignRight(w * 0.26)
 	self.m_MoneyLabel:CenterVertical()
 
 	self.m_KillsLabel:SizeToContents()
-	self.m_KillsLabel:AlignRight(w * 0.2, 0)
+	self.m_KillsLabel:AlignRight(w * 0.18, 0)
 	self.m_KillsLabel:CenterVertical()
 
 	self.m_DeathsLabel:SizeToContents()
@@ -93,7 +103,7 @@ function PANEL:PerformLayout()
 
 	self.m_Mute:SizeToContents()
 	self.m_Mute:SetSize(16, 16)
-	self.m_Mute:MoveLeftOf(self.m_PingMeter, 30)
+	self.m_Mute:MoveLeftOf(self.m_PingMeter, 15)
 	self.m_Mute:CenterVertical()
 
 end
@@ -112,7 +122,7 @@ function PANEL:RefreshPlayer()
 
 	local class = translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName
 
-	local name = pl:Name()
+	local name = pl:LongName()
 	local color = color_white
 
 	self.m_AvatarPanel:CenterVertical()
@@ -166,7 +176,7 @@ function PANEL:Paint()
 
 	if P_IsValid then
 		col = Color(40,40,40,200)
-		if !pl:Alive() then
+		if not pl:Alive() then
 			col = Color(100, 0, 0, 200)
 		end
 
@@ -200,9 +210,9 @@ function PANEL:Paint()
         local rank_level = pl:Horde_GetRankLevel(subclass.PrintName)
         surface.SetMaterial(mat) -- Use our cached material
         surface.SetDrawColor(HORDE.Rank_Colors[rank])
-        surface.DrawTexturedRect(wide * 0.18, 2, 38, 38)
+        surface.DrawTexturedRect(wide * 0.215, 2, 38, 38)
         if rank == HORDE.Rank_Master then
-            draw.SimpleText(rank_level, "Trebuchet18", wide * 0.177, 12, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText(rank_level, "Trebuchet18", wide * 0.2075, 12, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             
         else
             if rank_level > 0 then
@@ -210,7 +220,7 @@ function PANEL:Paint()
                 surface.SetMaterial(star)
                 local y_pos = 26
                 for i = 0, rank_level - 1 do
-                    surface.DrawTexturedRect(wide * 0.173, y_pos, 10, 10)
+                    surface.DrawTexturedRect(wide * 0.2075, y_pos, 10, 10)
                     y_pos = y_pos - 7
             	end
         	end
@@ -264,7 +274,7 @@ function PANEL:Paint()
         else
             surface.SetDrawColor(color_white)
         end
-        surface.DrawTexturedRect(wide * 0.555, -2, 90, 45)
+        surface.DrawTexturedRect(wide * 0.526, -2, 90, 45)
     end
 
 	return true

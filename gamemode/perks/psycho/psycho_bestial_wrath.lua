@@ -28,8 +28,8 @@ PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmgin
     end
 end
 
-PERK.Hooks.Horde_OnNPCKilled = function(victim, killer, wpn)
-    if killer.Horde_In_Frenzy_Mode and killer:Horde_GetPerk("psycho_bestial_wrath")  then
+PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
+    if killer.Horde_In_Frenzy_Mode and killer:Horde_GetPerk("psycho_bestial_wrath") then
         HORDE:SelfHeal(killer, 1)
     end
 end
