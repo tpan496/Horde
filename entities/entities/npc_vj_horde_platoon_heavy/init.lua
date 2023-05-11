@@ -38,7 +38,7 @@ ENT.GrenadeAttackThrowDistanceClose = 500 -- How close until it stops throwing g
 ENT.AnimTbl_GrenadeAttack = {"grenThrow"} -- Grenade Attack Animations
 ENT.GrenadeAttackAnimationDelay = 0 -- It will wait certain amount of time before playing the animation
 ENT.GrenadeAttackAnimationStopAttacks = true -- Should it stop attacks for a certain amount of time?
-ENT.GrenadeAttackEntity = "npc_grenade_frag" -- The entity that the SNPC throws | Half Life 2 Grenade: "npc_grenade_frag"
+ENT.GrenadeAttackEntity = "horde_vj_platoon_heavy_nade" -- The entity that the SNPC throws | Half Life 2 Grenade: "npc_grenade_frag"
 ENT.FootStepTimeRun = 0.3 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.5 -- Next foot step sound when it is walking
 ENT.CallForBackUpOnDamage = false -- Should the SNPC call for help when damaged? (Only happens if the SNPC hasn't seen a enemy)
@@ -91,6 +91,13 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 	self:SetColor(Color(100,100,100))
+
+	local p = math.random()
+	if p <= 0.5 then
+		self.Weaken = true
+	else
+		self.Hinder = true
+	end
 
 	self:Give("weapon_vj_horde_m249")
 	local pos = Vector()

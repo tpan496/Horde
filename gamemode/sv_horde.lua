@@ -209,8 +209,9 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
                 defer_reward = true
             end
             if not defer_reward then
-                if victim.Horde_Assist and victim.Horde_Assist ~= killer and IsValid(victim.Horde_Assist) then
+                if IsValid(victim.Horde_Assist) and victim.Horde_Assist ~= killer then
                     victim.Horde_Assist:Horde_AddMoney(reward * 0.1)
+                    victim.Horde_Assist:Horde_SyncEconomy()
                     killer:Horde_AddMoney(reward * 0.9)
                 else
                     killer:Horde_AddMoney(reward)
@@ -224,7 +225,6 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
 
             killer:AddFrags(1)
             killer:Horde_SyncEconomy()
-
         end
 
         -- When a boss is killed.

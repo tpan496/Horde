@@ -61,6 +61,12 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	bullet:Activate()
 	bullet:Spawn()
 	bullet.DirectDamage = 6
+	if self.Owner.Weaken then
+		bullet.Weaken = true
+	elseif self.Owner.Hinder then
+		bullet.Hinder = true
+	end
+	
 	
 	local phy = bullet:GetPhysicsObject()
 	if phy:IsValid() then

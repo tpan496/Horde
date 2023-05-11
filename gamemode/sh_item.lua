@@ -295,12 +295,12 @@ function HORDE:GetDefaultItemInfusions()
     local ballistic_infusions_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
     -- Rifles
     HORDE.items["arccw_horde_ar15"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
-    HORDE.items["arccw_horde_famas"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo}
-    HORDE.items["arccw_horde_ace"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Flaming}
-    HORDE.items["arccw_horde_ak47"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Concussive}
-    HORDE.items["arccw_horde_m4"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Galvanizing}
-    HORDE.items["arccw_horde_sg556"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Septic}
-    HORDE.items["arccw_horde_aug"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Arctic}
+    HORDE.items["arccw_horde_famas"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_horde_ace"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_horde_ak47"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_horde_m4"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_horde_sg556"].infusions = ballistic_infusions_rifles
+    HORDE.items["arccw_horde_aug"].infusions = ballistic_infusions_rifles
     HORDE.items["arccw_horde_f2000"].infusions = ballistic_infusions_rifles
     HORDE.items["arccw_horde_tavor"].infusions = ballistic_infusions_rifles
     HORDE.items["arccw_horde_scarl"].infusions = ballistic_infusions_rifles
@@ -309,6 +309,7 @@ function HORDE:GetDefaultItemInfusions()
     local ballistic_infusions_sniper_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_winchester"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
     HORDE.items["arccw_horde_m200"].infusions = ballistic_infusions_sniper_rifles
+    HORDE.items["arccw_horde_ssg08"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_awp"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_scarh"].infuwsions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_g3"].infusions = ballistic_infusions_sniper_rifles
@@ -339,7 +340,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_m32"].infusions = {}
     HORDE.items["arccw_horde_rpg7"].infusions = {}
     HORDE.items["arccw_horde_law"].infusions = {}
-    HORDE.items["arccw_horde_apollo"].infusions = {}
+    HORDE.items["arccw_horde_apollo"].infusions = {HORDE.Infusion_Quality}
 end
 
 function HORDE:GetDefaultItemsData()
