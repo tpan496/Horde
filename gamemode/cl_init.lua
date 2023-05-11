@@ -55,6 +55,8 @@ include("arccw/attachments/horde_akimbo_deagle.lua")
 include("arccw/attachments/horde_akimbo_m9.lua")
 include("arccw/attachments/horde_akimbo_glock.lua")
 include("arccw/attachments/horde_ubgl_medic.lua")
+include("arccw/attachments/horde_ammo_ap.lua")
+include("arccw/attachments/horde_ammo_sabot.lua")
 
 -- Some users report severe lag with halo
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")

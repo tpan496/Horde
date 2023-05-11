@@ -26,9 +26,11 @@ function ENT:Initialize()
             phys:Wake()
             phys:SetBuoyancyRatio(0)
             phys:SetMass(1)
+            phys:SetDamping(0.5, 0.5)
         end
 
         self.SpawnTime = CurTime()
+        self:SetColor(Color(0, 0, 0))
 
         if self.FuseTime <= 0 then
             self:Detonate()
@@ -67,40 +69,23 @@ function ENT:Detonate()
         local effectdata = EffectData()
             effectdata:SetOrigin( self:GetPos() )
 
-        if self:WaterLevel() >= 1 then
-            util.Effect("WaterSurfaceExplosion", effectdata)
-            self:EmitSound("weapons/underwater_explode3.wav", 120, 100, 1, CHAN_AUTO)
-        else
-            util.Effect("Explosion", effectdata)
-            self:EmitSound("arccw_go/hegrenade/hegrenade_detonate_01.wav", 125, 100, 1, CHAN_AUTO)
-        end
-
         local attacker = self
 
         if self.Owner:IsValid() then
             attacker = self.Owner
         end
-        util.BlastDamage(self, attacker, self:GetPos(), 150, 100)
-        local dmg = 50
-        local rad = 200
-        for i = 1, 3 do
-            local prop = ents.Create("prop_physics")
-            prop:SetModel("models/Combine_Helicopter/helicopter_bomb01.mdl")
-            prop:SetModelScale(0.25, 0)
-            prop:SetPos(self:GetPos() + VectorRand() * 4 + Vector(0, 0, 8))
-            prop:SetAngles(AngleRand())
-            prop:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-            prop:Spawn()
-            prop:Activate()
-            timer.Simple(0, function() prop:GetPhysicsObject():AddVelocity(VectorRand() * 300 + Vector(0, 0, 200)) end)
-            timer.Simple(0.5 + i * 0.1, function() if IsValid(prop) then
-                local e = EffectData()
-                e:SetOrigin(prop:GetPos())
-                util.Effect("Explosion", e)
-                util.BlastDamage(prop, attacker, prop:GetPos(), rad, dmg)
-                prop:Remove()
-            end end)
-        end
+
+        self:EmitSound("ambient/explosions/explode_1.wav", 100, 100, 1, CHAN_ITEM)
+        local dmginfo = DamageInfo()
+        dmginfo:SetDamage(80)
+        dmginfo:SetDamageType(DMG_BULLET)
+        dmginfo:SetAttacker(attacker)
+        dmginfo:SetInflictor(self)
+        util.BlastDamageInfo(dmginfo, self:GetPos(), 175)
+
+        local ed = EffectData()
+        ed:SetOrigin(self:GetPos())
+        util.Effect("horde_shrapnel_grenade_explosion", ed, true, true)
 
         self:Remove()
 

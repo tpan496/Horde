@@ -256,50 +256,100 @@ function PANEL:Init()
     description_panel:SetSize(self:GetParent():GetWide() - 266, self:GetParent():GetTall())
 
     local update_text_panel = vgui.Create("DPanel", description_panel)
-    update_text_panel:SetSize(self:GetParent():GetWide(), 1000)
+    update_text_panel:SetSize(self:GetParent():GetWide(), 2000)
     update_text_panel:SetVisible(true)
     local update_text =[[
--- Objective Mode Support
-    - Horde now has objective mode entities. See the FGD for more info.
-    - Holdout: Players have to hold an area for a certain amount of time.
-    - Payload: Players have to deliver items to certain areas.
-    - Escape: Only triggered on the last wave. A player needs to escape to win the round.
+        -- Assist
+            Added a simple assist reward.
 
--- Spell System Rework:
-    - Horde has its own unique spell system that supports adding custom spells through lua.
-    - horde_spell_weapon_base: a weapon base I created for spell weapons. If you want to make spell weapons, use this as base.
-    - Spell Forge: Artificer/Necromancer/Warlock now have access to the Spell Forge.
-
--- Class Rework:
-    - Artificer/Necromancer/Warlock have been reworked.
-
--- Item Changes:
-    - Shotgun Turret, Sniper Turret, Laser Turret (Engineer)
-    - Watchtower Interceptor, Watchtower Guardian, Watchtower Beacon (Warden)
-    - Chainsaw (rework), Jotuun, Zweihander (Berserker)
-    - M200 Intervention (reworked, Ghost)
-    - RPD (Heavy)
-    - Crowbar, Stunstick (reworked into ArcCW base)
-    - Apollo (Cremator)
-    - OSPIR (Assault)
-    - Medic-specific weapons reworked. They now show locked on targets for healing.
-    - Double Barrel: Added fire mode that allows you to perform double shot.
-    - Throwing Knives -> Kunai (Reworked)
-    - Gluon gun buff
-    - Fixed 3rd person views for most weapons
-    - M16M203 buffed
-    - FNFAL/G3 balance
-    - Inferno Blade: Now deals Slashing + Fire damage when activated, thus allowing melee perks to activate
-
--- New Scoreboard by Crash
-
--- Perk Changes:
-    - Entropy Shield: increased cooldown
-    - Foresight: increased cooldown
-    - Several bug fixes by 1337Ghost]]
+        -- Class Grenades
+        Each class now has its own unique grenade that complements its playstyle.
+        Grenades have an ammo limit of 6 in total.
+        
+        < Assasult: Stun Grenade (arccw_horde_nade_stun)
+        < Heavy: Shrapnel Grenade (arccw_horde_nade_shrapnel)
+        < Ghost: Sonar Grenade (arccw_horde_nade_sonar)
+        < Demolition: M67 Frag Grenade (arccw_horde_m67)
+        < Medic: Medic Grenade (arccw_nade_medic)
+        < Engineer: Nanobot Grenade (arccw_horde_nade_nanobot)
+        < Berserker: Hemo Grenade (arccw_horde_nade_hemo)
+        < Warden: EMP Grenade (arccw_horde_nade_emp)
+        < Cremator: Molotov (arccw_horde_nade_molotov)
+        
+        -- Assault Class Changes:
+        Item Changes:
+            < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
+            < Reworked Weapon: FAMAS (arccw_horde_famas)
+            < Reworked Weapon: Galil (arccw_horde_ace)
+            < Reworked Weapon: M4A1 (arccw_horde_m4)
+            < Reworked Weapon: AK47 (arccw_horde_ak47)
+            < Reworked Weapon: SG556 (arccw_horde_sg556)
+            < Reworked Weapon: AUG (arccw_horde_aug)
+        
+        -- Heavy Class Changes
+        Perk Changes:
+            < Added maximum armor bonus passive.
+            < Ballistic Shock effect changed.
+            < Reactive Armor perk effect changed.
+        
+        Item Changes:
+            < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
+            < Weapons with visible Bipods will now have Bipods by default.
+            < Energy Shield gadget effect changed.
+            < ULPA Filter gadget effect changed.
+            < New Gadget: Armor Fusion (gadget_armor_fusion)
+        
+        -- Demolition Class Changes
+        Perk changes:
+            < Reduced Blast resistance passive
+            < Added Blast damage bonus passive
+            < Pressurized Warhead / Chain Reaction effects changed
+        
+        Weapon changes:
+            < All default config demolition weapons now have arm distance and headshot detection.
+            < Added two new attachments for explosive projectile weapons.
+            < Rebalanced weapon damage values.
+            < New Weapon: FGM-148 Javelin (arccw_horde_javelin)
+        
+        -- Medic Class Changes:
+        Item Changes:
+            < New Weapon: MP9 Medic (arccw_horde_mp9m)
+            < New Weapon: MP5K Medic (arccw_horde_mp5k)
+            < New Weapon: ACR Medic (arccw_horde_medic_acr)
+            < New Gadget: Aegis (gadget_aegis)
+        
+        -- Ghost Class Changes:
+        Item Changes:
+            < Slightly reduced damage of Barrett and M200.
+            < Increased price and damage of AWP.
+            < Increased damage of heat crossbow.
+            < Automatic weapons have been removed from Ghost weapon pool.
+            < Dual pistols off-hand damage have been fixed.
+            < New Weapon: SSG08 (arccw_horde_ssg08)
+        
+        -- Warden Class Changes:
+        Perk Changes:
+            < Energize and Inoculation have switched slots.
+            < Energize now only applies to damage instance at least 8.
+        
+        Item Changes:
+            < Fixed Double Barrel dealing too much damage as intended and added back knockback boost.
+            < Reworked Weapon: SPAS12 (arccw_horde_spas12)
+        
+        -- Cremator Class Changes:
+        Perk Changes:
+            < Reduced passive Fire damage resistance.
+            < Entropy Shield effect changed.
+        
+        Item Changes:
+            < Increased price of some weapons.
+        
+        -- Berserker Class Changes:
+        Item Changes:
+            < New Gadget: Omnislash (gadget_omnislash)]]
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Major Update 1.2.0", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Major Update 1.2.1", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
@@ -503,7 +553,7 @@ function PANEL:Init()
         draw.SimpleText("Lesion", 'Heading', 50, 1550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Dangerous enemy with high health and agility. Rages periodically or when provoked.", 'Content', 100, 1600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("Plauge Elite", 'Heading', 50, 1650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Plague Elite", 'Heading', 50, 1650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Dangerous enemy with high health. Can fire devastating energy balls and summon minions.", 'Content', 100, 1700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
         draw.SimpleText("Bosses", 'LargeTitle', 50, 1750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -515,7 +565,7 @@ function PANEL:Init()
             "Claw Attack: Deals Slashing damage. Inflicts Bleeding.",
             "Acid Throw: Ranged attack that deals Poison damage.",
             "Frenzy (Phase 2): Passively increases movement speed and action speed.",
-        }, 1800)
+        }, 1850)
 
         draw.SimpleText("Gamma Gonome", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
@@ -533,6 +583,14 @@ function PANEL:Init()
             "Particle Cannon (Phase 2): Generates continuous explosions post detonation.",
             "Shockwave: Generates a shockwave when it received certain amount of damage. Inflicts Haemorrhage.",
             "Haemorrhage: A strong Bleeding debuff that builds up slowly on its own. Removes health one the bar is full."
+        }, next_pos + 100)
+
+        draw.SimpleText("Xen Host Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        next_pos = write_paragraph({
+            "Experimental unit made from Gonarch.",
+            "Claw Attack: Deals Slash damage.",
+            "Acid Mortar: Spits acid from above acting like a mortar.",
+            "Spawn Baby Headcrab: Spawns a swarm of baby headcrabs.",
         }, next_pos + 100)
 
         draw.SimpleText("Xen Destroyer Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -553,6 +611,15 @@ function PANEL:Init()
             "Lightning Orb: Creates homing lightning orbs that follow players. Explodes after delay on contact, dealing Lightning damage.",
             "Melee Mode (Phase 2): Greatly increases speed and focuses on Melee attacks.",
             "Psionic Shield (Phase 2): Melee Mode only. When the shield is active, reduces damage taken by 50%.",
+        }, next_pos + 100)
+
+        draw.SimpleText("Plague Platoon", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        next_pos = write_paragraph({
+            "Combine commanders that have been converted into biological weapons using parasites.",
+            "While their brains are fully infested, they retain a low level of setience.",
+            "Plague Heavy: Armed with an M249 machine gun. Can throw shrapnel grenades",
+            "Plague Demolition: Armed with an RPG-7. Can throw M67 grenade with mini-cluster nades.",
+            "Plauge Berserker: Armed with a katana and inflicts Bleeding buildup on you.",
         }, next_pos + 100)
     end
 

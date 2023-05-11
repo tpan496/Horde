@@ -114,16 +114,14 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     end
 
     hook.Run("Horde_OnPlayerDamagePost", ply, npc, bonus, hitgroup, dmginfo)
-
+    
     if not npc.Horde_Assist then
         npc.Horde_Assist = ply
-    else
-        if npc.Horde_Assist == ply then
-            return
-        else
-            npc.Horde_Assist = ply
-        end
+    elseif ply ~= npc.Horde_Hit then
+        npc.Horde_Assist = npc.Horde_Hit
     end
+
+    npc.Horde_Hit = ply
 end
 
 function entmeta:TakeDamageOverTime(attacker, dmg, dmgtype, interval, duration)

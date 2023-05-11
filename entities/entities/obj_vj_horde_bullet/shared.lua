@@ -63,4 +63,10 @@ function ENT:CustomOnDoDamage_Direct(data, phys, hitEnt)
 		damagecode:SetDamagePosition(self:GetPos())
 		hitEnt:TakeDamageInfo(damagecode, self)
 	end
+
+	if self.Weaken then
+		hitEnt:Horde_AddWeaken(self, 3, 1)
+	elseif self.Hinder then
+		hitEnt:Horde_AddHinder(self, 3, 1)
+	end
 end

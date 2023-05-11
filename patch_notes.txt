@@ -1,30 +1,31 @@
 Major Update 1.2.1
 
+-- Assist
+Added a simple assist reward.
+
 -- Class Grenades
 Each class now has its own unique grenade that complements its playstyle.
 Grenades have an ammo limit of 6 in total.
 
-Assasult: Stun Grenade (arccw_horde_nade_stun)
-Heavy: Shrapnel Grenade (arccw_horde_nade_shrapnel)
-Ghost: Sonar Grenade (arccw_horde_nade_sonar)
-Demolition: M67 Frag Grenade (arccw_horde_m67)
-Medic: Medic Grenade (arccw_nade_medic)
-Engineer: Nanobot Grenade (arccw_horde_nade_nanobot)
-Berserker: Hemo Grenade (arccw_horde_nade_hemo)
-Warden: EMP Grenade (arccw_horde_nade_emp)
-Cremator: Molotov (arccw_horde_nade_molotov)
+< Assasult: Stun Grenade (arccw_horde_nade_stun)
+< Heavy: Shrapnel Grenade (arccw_horde_nade_shrapnel)
+< Ghost: Sonar Grenade (arccw_horde_nade_sonar)
+< Demolition: M67 Frag Grenade (arccw_horde_m67)
+< Medic: Medic Grenade (arccw_nade_medic)
+< Engineer: Nanobot Grenade (arccw_horde_nade_nanobot)
+< Berserker: Hemo Grenade (arccw_horde_nade_hemo)
+< Warden: EMP Grenade (arccw_horde_nade_emp)
+< Cremator: Molotov (arccw_horde_nade_molotov)
 
--- Demolition Class Changes
-Perk changes:
-    < Reduced Blast resistance passive
-    < Added Blast damage bonus passive
-    < Pressurized Warhead / Chain Reaction effects changed
-
-Weapon changes:
-    < All default config demolition weapons now have arm distance and headshot detection.
-    < Added two new attachments for explosive projectile weapons.
-    < Rebalanced weapon damage values.
-    < New Weapon: FGM-148 Javelin (arccw_horde_javelin)
+-- Assault Class Changes:
+Item Changes:
+    < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
+    < Reworked Weapon: FAMAS (arccw_horde_famas)
+    < Reworked Weapon: Galil (arccw_horde_ace)
+    < Reworked Weapon: M4A1 (arccw_horde_m4)
+    < Reworked Weapon: AK47 (arccw_horde_ak47)
+    < Reworked Weapon: SG556 (arccw_horde_sg556)
+    < Reworked Weapon: AUG (arccw_horde_aug)
 
 -- Heavy Class Changes
 Perk Changes:
@@ -39,15 +40,17 @@ Item Changes:
     < ULPA Filter gadget effect changed.
     < New Gadget: Armor Fusion (gadget_armor_fusion)
 
--- Assault Class Changes:
-Item Changes:
-    < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
-    < Reworked Weapon: FAMAS (arccw_horde_famas)
-    < Reworked Weapon: Galil (arccw_horde_ace)
-    < Reworked Weapon: M4A1 (arccw_horde_m4)
-    < Reworked Weapon: AK47 (arccw_horde_ak47)
-    < Reworked Weapon: SG556 (arccw_horde_sg556)
-    < Reworked Weapon: AUG (arccw_horde_aug)
+-- Demolition Class Changes
+Perk changes:
+    < Reduced Blast resistance passive
+    < Added Blast damage bonus passive
+    < Pressurized Warhead / Chain Reaction effects changed
+
+Weapon changes:
+    < All default config demolition weapons now have arm distance and headshot detection.
+    < Added two new attachments for explosive projectile weapons.
+    < Rebalanced weapon damage values.
+    < New Weapon: FGM-148 Javelin (arccw_horde_javelin)
 
 -- Medic Class Changes:
 Item Changes:
@@ -62,11 +65,8 @@ Item Changes:
     < Increased price and damage of AWP.
     < Increased damage of heat crossbow.
     < Automatic weapons have been removed from Ghost weapon pool.
-    < New Weapon: SSG08 (arccw_horde_ssg08)
-
--- Gunslinger Class Changes:
-Item Changes:
     < Dual pistols off-hand damage have been fixed.
+    < New Weapon: SSG08 (arccw_horde_ssg08)
 
 -- Warden Class Changes:
 Perk Changes:
@@ -75,6 +75,7 @@ Perk Changes:
 
 Item Changes:
     < Fixed Double Barrel dealing too much damage as intended and added back knockback boost.
+    < Reworked Weapon: SPAS12 (arccw_horde_spas12)
 
 -- Cremator Class Changes:
 Perk Changes:
