@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\weapons\javelin\lens"
+	"$bumpmap" "models\weapons\javelin\lens"
+	"$surfaceprop" "Metal"
+	"$nocull" "0"
+	"$halflambert" "1"
+
+}

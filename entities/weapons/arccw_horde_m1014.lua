@@ -1,3 +1,8 @@
+if not ArcCWInstalled then return end
+if CLIENT then
+    SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_go_m1014")
+    killicon.Add("arccw_horde_m1014", "arccw/weaponicons/arccw_go_m1014", Color(0, 0, 0, 255))
+end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - GSO (SGs)" -- edit this if you like
@@ -22,8 +27,8 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "001000000000"
 
-SWEP.Damage = 13
-SWEP.DamageMin = 6 -- damage done at maximum range
+SWEP.Damage = 18
+SWEP.DamageMin = 13 -- damage done at maximum range
 SWEP.Num = 8
 SWEP.Range = 60 -- in METRES
 SWEP.Penetration = 1
@@ -80,9 +85,9 @@ SWEP.ShellRotateAngle = Angle(0, 180, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.95
+SWEP.SpeedMult = 1
 SWEP.SightedSpeedMult = 0.75
-SWEP.SightTime = 0.25
+SWEP.SightTime = 0.2
 
 SWEP.IronSightStruct = {
     Pos = Vector(-4.30635, -5, 2.8417),

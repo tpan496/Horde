@@ -48,5 +48,6 @@ end
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply.Horde_Invincible  then return end
-    bonus.resistance = bonus.resistance + 1.00
+    dmginfo:SetDamage(0)
+    return true
 end

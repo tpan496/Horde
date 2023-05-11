@@ -5,14 +5,14 @@ PERK.Description =
 +3 damage block.]]
 PERK.Icon = "materials/perks/samurai/resolution.png"
 PERK.Params = {
-    [1] = {value = 0.5, percent = true},
+    [1] = {value = 0.75, percent = true},
 }
 PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("samurai_resolution") then return end
     if HORDE:IsMeleeDamage(dmginfo) then
-        bonus.more = bonus.more * 1.5
+        bonus.more = bonus.more * 1.75
     end
 end
 

@@ -16,6 +16,8 @@ SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Gasoline + Dish Soap"
 SWEP.Trivia_Country = "Finland"
 SWEP.Trivia_Year = 1939
+SWEP.Primary.MaxAmmo = 7
+SWEP.ForceDefaultAmmo = 0
 
 SWEP.Slot = 4
 

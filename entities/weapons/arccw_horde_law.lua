@@ -4,7 +4,7 @@ if (CLIENT) then
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
 	killicon.Add("arccw_horde_law", "vgui/hud/arccw_horde_law", color_white)
-    killicon.Add("obj_vj_law_rocket", "vgui/hud/arccw_horde_law", color_white)
+    killicon.Add("horde_projectile_law", "vgui/hud/arccw_horde_law", color_white)
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
@@ -15,7 +15,7 @@ SWEP.PrintName = "M72 LAW"
 SWEP.TrueName = "M72 Light Anti-Armor Weapon"
 SWEP.Trivia_Class = "Rocket Launcher"
 SWEP.Trivia_Desc = "Portable one-shot 66-mm unguided anti-tank weapon."
-SWEP.Trivia_Manufacturer = "???"
+SWEP.Trivia_Manufacturer = "NAMMO Defense Systems"
 SWEP.Trivia_Calibre = "Rockets"
 SWEP.Trivia_Mechanism = "Explosive"
 SWEP.Trivia_Country = "United States"
@@ -74,7 +74,7 @@ SWEP.DamageMin = 1000 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 0
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "obj_vj_law_rocket" -- entity to fire, if any
+SWEP.ShootEntity = "horde_projectile_law" -- entity to fire, if any
 SWEP.MuzzleVelocity = 100000 -- projectile or phys bullet muzzle velocity
 -- IN M/S
 
@@ -170,14 +170,15 @@ SWEP.AttachmentElements = {
 
 SWEP.ExtraSightDist = 5
 
+SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
     {
-        PrintName = "Rocket Type",
-        Slot = "ammo_kf1rocket"
+        PrintName = "Ammo",
+        Slot = "horde_ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
 }
 

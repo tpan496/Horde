@@ -31,9 +31,6 @@ hook.Add("PostEntityTakeDamage", "Horde_HitnumbersDamagePost", function(target, 
     if !pos or dmginfo:IsExplosionDamage() then
         pos = target:GetPos()
     end
-	if target:Health() <= 0 then
-		target:Remove()
-	end
 
 	-- Create and send the indicator to players.
 	net.Start("Horde_HitnumbersSpawn", true)

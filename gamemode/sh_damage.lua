@@ -119,7 +119,7 @@ function HORDE:IsPoisonDamage(dmginfo)
 end
 
 function HORDE:IsBlastDamage(dmginfo)
-    return dmginfo:IsDamageType(DMG_BLAST + DMG_MISSILEDEFENSE)
+    return dmginfo:IsDamageType(DMG_BLAST)
 end
 
 -- Weapon types

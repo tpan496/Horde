@@ -30,7 +30,7 @@ function entmeta:Horde_AddEffect_Molotov(ent)
     timer.Create("Horde_MolotovEffect" .. id, 0.5, 0, function ()
         if not self:IsValid() then timer.Remove("Horde_MolotovEffect" .. id) return end
         local d = DamageInfo()
-        d:SetDamage(25)
+        d:SetDamage(15)
         d:SetAttacker(ent.Owner)
         d:SetInflictor(ent)
         d:SetDamageType(DMG_BURN)
@@ -72,6 +72,7 @@ function ENT:Initialize()
         self:PhysicsInit(SOLID_VPHYSICS)
         self:DrawShadow( false )
         self:SetCollisionBounds(Vector(-150,-150,-100), Vector(150,150,100))
+        self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
         self:SetTrigger(true)
         self:UseTriggerBounds(true, 24)
 
@@ -85,11 +86,6 @@ function ENT:Initialize()
         self:Detonate()
 
         self.FireTime = math.Rand(4.5, 5.5)
-
-        timer.Simple(0.1, function()
-            if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
-        end)
     end
 
     local owner = self:GetOwner()

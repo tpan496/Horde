@@ -61,7 +61,7 @@ end
 
 hook.Add("PlayerTick", "Horde_ArmorRegen", function(ply, mv)
     if not ply:Horde_GetArmorRegenEnabled() or not ply:Alive() then return end
-    if ply:Armor() >= ply:Horde_GetArmorRegenMax() then
+    if ply:Armor() >= ply:GetMaxArmor() * ply:Horde_GetArmorRegenMax() then
         ply:Horde_RemoveArmorRegen()
         return
     else
@@ -69,7 +69,7 @@ hook.Add("PlayerTick", "Horde_ArmorRegen", function(ply, mv)
     end
     
     if ply:Horde_GetArmorRegen() == 1 and CurTime() >= ply.Horde_ArmorRegenCurTime + 1 then
-        ply:SetArmor(math.min(ply:Armor() + ply:Horde_GetArmorRegenAmount(), ply:Horde_GetArmorRegenMax()))
+        ply:SetArmor(math.min(ply:Armor() + ply:Horde_GetArmorRegenAmount(), ply:GetMaxArmor() * ply:Horde_GetArmorRegenMax()))
         ply.Horde_ArmorRegenCurTime = CurTime()
     end
 end)

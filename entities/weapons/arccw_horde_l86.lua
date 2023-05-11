@@ -28,9 +28,10 @@ SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "100000"
 
-SWEP.Damage = 40
-SWEP.DamageMin = 40
-SWEP.Range = 1400 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Damage = 38
+SWEP.DamageMin = 35
+SWEP.RangeMin = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Range = 3000 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 7
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -41,9 +42,10 @@ SWEP.ExtendedClipSize = 60
 SWEP.ReducedClipSize = 45
 
 SWEP.VisualRecoilMult = 0
-SWEP.Recoil = 0.5
-SWEP.RecoilSide = 0.5
-SWEP.RecoilRise = 0
+SWEP.Recoil = 0.3
+SWEP.RecoilSide = 0.2
+SWEP.RecoilRise = 0.2
+SWEP.RecoilPunch = 2.5
 
 SWEP.Delay = 0.075 -- lazy, fix this l8r btich -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
@@ -62,7 +64,7 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
 SWEP.NPCWeight = 150
 
-SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.AccuracyMOA = 3 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 500 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 250
 
@@ -86,9 +88,14 @@ SWEP.ShellRotateAngle = Angle(0, 90, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.875
+SWEP.SpeedMult = 0.9
 SWEP.SightedSpeedMult = 0.35
 SWEP.SightTime = 0.25
+SWEP.ShootSpeedMult = 0.8
+
+SWEP.Bipod_Integral = true
+SWEP.BipodDispersion = 0.5
+SWEP.BipodRecoil = 0.5
 
 SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
     -- [0] = "bulletchamber",
@@ -201,11 +208,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo",
+        DefaultAttName = "Standard Ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",

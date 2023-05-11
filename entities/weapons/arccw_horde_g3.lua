@@ -62,7 +62,7 @@ SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 2 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 300 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 100
+SWEP.MoveDispersion = 150
 
 SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses
 SWEP.MagID = "stanag" -- the magazine pool this gun draws from
@@ -283,6 +283,7 @@ SWEP.WorldModelOffset = {
 
 SWEP.MirrorVMWM = true
 
+SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
     {
         PrintName = "Optic",
@@ -359,6 +360,10 @@ SWEP.Attachments = {
         PrintName = "Ammo Type",
         Slot = "go_ammo",
         DefaultAttName = "Standard Ammo"
+    },
+    {
+        PrintName = "Perk",
+        Slot = "go_perk",
     },
     {
         PrintName = "Charm",
