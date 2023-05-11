@@ -11,18 +11,10 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     local inflictor = dmginfo:GetInflictor()
     if IsValid(inflictor) and inflictor:GetClass() == "npc_grenade_frag" and (not dmginfo:IsExplosionDamage()) then
         bonus.increase = bonus.increase + 0.25
-        local dmg
-        if inflictor:GetClass() == "npc_grenade_frag" then
-            dmg = 150
-        else
-            dmg = 450
-        end
-
-        local rad = 150
         local e = EffectData()
         e:SetOrigin(inflictor:GetPos())
         util.Effect("Explosion", e)
-        util.BlastDamage(inflictor, ply, inflictor:GetPos(), rad, dmg)
+        util.BlastDamage(inflictor, ply, inflictor:GetPos(), 150, 150)
         npc:Horde_AddDebuffBuildup(HORDE.Status_Stun, 500, ply, npc:GetPos())
         inflictor:Remove()
     end

@@ -17,7 +17,7 @@ SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Sonar"
 SWEP.Trivia_Country = "Combine"
 SWEP.Trivia_Year = 2010
-SWEP.Primary.MaxAmmo = 7
+SWEP.Primary.MaxAmmo = 5
 SWEP.ForceDefaultAmmo = 0
 
 SWEP.Slot = 4

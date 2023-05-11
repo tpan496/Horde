@@ -17,7 +17,7 @@ SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Composition B"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1968
-SWEP.Primary.MaxAmmo = 7
+SWEP.Primary.MaxAmmo = 5
 
 SWEP.Slot = 4
 
