@@ -10,7 +10,7 @@ PERK.Hooks.Horde_PostOnPlayerHeal = function(ply, healinfo)
     if healer:IsPlayer() and healer:Horde_GetPerk("medic_purify") then
         for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
             if debuff == HORDE.Status_Bleeding or debuff == HORDE.Status_Break or debuff == HORDE.Status_Necrosis then
-                ply:Horde_ReduceDebuffBuildup(debuff, healinfo:GetHealAmount() * 2.5)
+                ply:Horde_ReduceDebuffBuildup(debuff, healinfo:GetHealAmount() * 5)
             end
         end
     end

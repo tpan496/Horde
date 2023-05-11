@@ -4,7 +4,7 @@ if (CLIENT) then
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
 	killicon.Add("arccw_horde_rpg7", "vgui/hud/arccw_horde_rpg7", color_white)
-    killicon.Add("obj_vj_rpg_rocket", "vgui/hud/arccw_horde_rpg7", color_white)
+    killicon.Add("horde_projectile_rpg", "vgui/hud/arccw_horde_rpg7", color_white)
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
@@ -14,8 +14,8 @@ SWEP.AdminOnly = false
 SWEP.PrintName = "RPG7"
 SWEP.TrueName = "Ruchnoy Protivotankoviy Granatomyot"
 SWEP.Trivia_Class = "Rocket Launcher"
-SWEP.Trivia_Desc = "Designed by the Soviet Union."
-SWEP.Trivia_Manufacturer = "???"
+SWEP.Trivia_Desc = "A portable, reusable, unguided, shoulder-launched, anti-tank, rocket-propelled grenade launcher."
+SWEP.Trivia_Manufacturer = "Bazalt and Degtyarev plant."
 SWEP.Trivia_Calibre = "Rockets"
 SWEP.Trivia_Mechanism = "Explosive"
 SWEP.Trivia_Country = "Soviet Union"
@@ -40,7 +40,7 @@ SWEP.DamageMin = 500 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 0
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "obj_vj_rpg_rocket" -- entity to fire, if any
+SWEP.ShootEntity = "horde_projectile_rpg" -- entity to fire, if any
 SWEP.MuzzleVelocity = 2000 -- projectile or phys bullet muzzle velocity
 
 SWEP.CanFireUnderwater = false
@@ -90,7 +90,7 @@ SWEP.DistantShootSound = "vj_weapons/rpg/rpg_fire_far.wav"
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.90
+SWEP.SpeedMult = 0.92
 SWEP.SightedSpeedMult = 0.65
 SWEP.SightTime = 0.2
 
@@ -131,7 +131,17 @@ SWEP.AttachmentElements = {
 
 SWEP.ExtraSightDist = 5
 
-SWEP.Attachments = {}
+SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
+SWEP.Attachments = {
+    {
+        PrintName = "Ammo",
+        Slot = "horde_ammo"
+    },
+    {
+        PrintName = "Perk",
+        Slot = "go_perk"
+    },
+}
 
 SWEP.Animations = {
     ["idle"] = {

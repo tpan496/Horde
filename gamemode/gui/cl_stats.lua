@@ -495,17 +495,20 @@ function PANEL:Init()
         draw_resistances(1250, {[HORDE.DMG_FIRE] = 1.25, [HORDE.DMG_COLD] = 0.5, [HORDE.DMG_LIGHTNING] = 0.75, [HORDE.DMG_BLAST] = 1.25})
         
         draw.SimpleText("Hulk", 'Heading', 50, 1350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Extremely dangerous enemy with high health. Rages when health drops below 50%.", 'Content', 100, 1400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Dangerous enemy with high health. Rages when health drops below 50%.", 'Content', 100, 1400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Yeti", 'Heading', 50, 1450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Hulks that are experimented with dangerous mutations.", 'Content', 100, 1500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(1450, {[HORDE.DMG_FIRE] = 1.25, [HORDE.DMG_COLD] = 0.5})
 
         draw.SimpleText("Lesion", 'Heading', 50, 1550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Extremely dangerous enemy with high health and agility. Rages periodically or when provoked.", 'Content', 100, 1600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Dangerous enemy with high health and agility. Rages periodically or when provoked.", 'Content', 100, 1600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("Bosses", 'LargeTitle', 50, 1700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Plauge Elite", 'Heading', 50, 1650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Dangerous enemy with high health. Can fire devastating energy balls and summon minions.", 'Content', 100, 1700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("Alpha Gonome", 'Heading', 50, 1750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Bosses", 'LargeTitle', 50, 1750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+        draw.SimpleText("Alpha Gonome", 'Heading', 50, 1800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         local next_pos = write_paragraph({
             "An aged gonome that gained increased endurance and power.",
             "Corruption Aura: Inflicts Bleeding to players nearby.",

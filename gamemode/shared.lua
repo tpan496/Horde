@@ -16,10 +16,13 @@ function GM:Initialize()
         name = "arccw_horde_nade_molotov"
     })
     game.AddAmmoType({
-        name = "arccw_go_nade_frag"
+        name = "arccw_nade_m67"
     })
     game.AddAmmoType({
-        name = "arccw_nade_medic"
+        name = "arccw_horde_m67"
+    })
+    game.AddAmmoType({
+        name = "arccw_nade_medic_ubgl"
     })
     game.AddAmmoType({
         name = "arccw_nade_knife"
@@ -28,7 +31,19 @@ function GM:Initialize()
         name = "arccw_horde_nade_stun"
     })
     game.AddAmmoType({
-        name = "arccw_go_nade_kunai",
+        name = "arccw_horde_nade_nanobot",
+    })
+    game.AddAmmoType({
+        name = "arccw_horde_nade_hemo",
+    })
+    game.AddAmmoType({
+        name = "arccw_horde_nade_shrapnel",
+    })
+    game.AddAmmoType({
+        name = "arccw_horde_nade_sonar",
+    })
+    game.AddAmmoType({
+        name = "arccw_horde_nade_emp",
     })
     if SERVER then
         HORDE.NPCS = list.Get("NPC")

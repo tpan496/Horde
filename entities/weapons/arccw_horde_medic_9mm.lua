@@ -9,7 +9,7 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "Medic 9mm (Horde)"
+SWEP.PrintName = "Medic 9mm"
 SWEP.Trivia_Class = "Pistol"
 SWEP.Trivia_Desc = "Standard issue pistol."
 

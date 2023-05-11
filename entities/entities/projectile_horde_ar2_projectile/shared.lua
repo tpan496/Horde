@@ -41,7 +41,7 @@ function ENT:Initialize()
         phys:EnableGravity(false)
     end
 
-    timer.Simple(2, function() if IsValid(self) then self:DeathEffects() end end)
+    timer.Simple(1.5, function() if IsValid(self) then self:DeathEffects() end end)
 
 	self:DrawShadow(false)
 	self:ResetSequence("idle")
@@ -63,33 +63,7 @@ function ENT:SetupDataTables()
 end
 
 function ENT:OnBounce(data, phys)
-	local myPos = self:GetPos()
-	local owner = self:GetOwner()
-	local newVel = phys:GetVelocity():GetNormal()
-	local lastVel = math.max(newVel:Length(), math.max(data.OurOldVelocity:Length(), data.Speed)) -- Get the last velocity and speed
-	-- phys:SetVelocity(newVel * lastVel * 0.985) -- Sometimes this could get the combine ball stuck in certain brushes, disabling it just because it looks better without it tbh
 
-	if !IsValid(owner) then return end
-	local closestDist = 1024
-	local target = NULL
-	for _, v in ipairs(ents.FindInSphere(myPos, 1024)) do
-		if v == owner then continue end
-		if (!v:IsNPC() && !v:IsPlayer()) then continue end
-		if owner:IsNPC() && owner:CheckRelationship(v) == D_LI then continue end
-		local dist = v:GetPos():Distance(myPos)
-		if dist < closestDist && dist > 20 then
-			closestDist = dist
-			target = v
-		end
-	end
-	
-	if IsValid(target) then
-		local targetPos = target:GetPos() + target:OBBCenter()
-		local norm = (targetPos - myPos):GetNormalized()
-		if self:GetForward():DotProduct(norm) < 0.75 then -- Lowered the visual range from 0.95, too accurate
-			phys:SetVelocity(norm * lastVel)
-		end
-	end
 end
 
 function ENT:PhysicsCollide(data, phys)
@@ -100,7 +74,7 @@ function ENT:PhysicsCollide(data, phys)
 		dmg:SetDamageType(DMG_GENERIC)
 		dmg:SetAttacker(self.Owner)
 		dmg:SetInflictor(self)
-		dmg:SetDamage(40)
+		dmg:SetDamage(35)
 		dmg:SetDamagePosition(self:GetPos())
 		hitEnt:TakeDamageInfo(dmg)
     end

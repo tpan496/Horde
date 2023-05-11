@@ -36,7 +36,7 @@ SWEP.Charging = 0
 SWEP.ChargingTimer = 0
 
 SWEP.Charged = 0
-SWEP.Delay = 0.5
+SWEP.Delay = 0.4
 SWEP.DrainInterval = 0.1
 SWEP.LastDrain = CurTime()
 SWEP.BaseDamage = 20
@@ -109,7 +109,7 @@ function SWEP:Punch(charged)
 	self:EmitSound( SwingSound )
 
 	self:UpdateNextIdle()
-	self:SetNextMeleeAttack( CurTime() + 0.2 )
+	self:SetNextMeleeAttack( CurTime() + 0.1 )
 
 	self:SetNextPrimaryFire( CurTime() + self.Delay )
 end

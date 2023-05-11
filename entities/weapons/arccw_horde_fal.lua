@@ -62,7 +62,7 @@ SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 0.1 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 400 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 75
+SWEP.MoveDispersion = 120
 
 SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses
 
@@ -149,6 +149,7 @@ SWEP.AttachmentElements = {
 
 SWEP.ExtraSightDist = 5
 
+SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
     {
         PrintName = "Optic",
@@ -210,11 +211,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo",
+        DefaultAttName = "Standard Ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk",
     },
     {
         PrintName = "Camouflage",

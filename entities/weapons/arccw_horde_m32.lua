@@ -34,7 +34,7 @@ SWEP.DamageMin = 20 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 2
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "arccw_he_round" -- entity to fire, if any
+SWEP.ShootEntity = "horde_projectile_he_round" -- entity to fire, if any
 SWEP.MuzzleVelocity = 100000 -- projectile or phys bullet muzzle velocity
 -- IN M/S
 
@@ -55,7 +55,7 @@ SWEP.RecoilSide = 1
 SWEP.VisualRecoilMult = 1
 SWEP.RecoilRise = 2
 
-SWEP.Delay = 60 / 200 -- 60 / RPM.
+SWEP.Delay = 60 / 240 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -136,6 +136,7 @@ SWEP.AttachmentElements = {
 
 SWEP.ExtraSightDist = 5
 
+SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
     {
         PrintName = "Charms",
@@ -149,8 +150,8 @@ SWEP.Attachments = {
         },
     },
     {
-        PrintName = "Grenade Type",
-        Slot = "ammo_kf1grenade"
+        PrintName = "Ammo",
+        Slot = "horde_ammo"
     },
     {
         PrintName = "Perk",

@@ -19,7 +19,7 @@ PERK.Hooks.EntityRemoved = function(ent)
     if SERVER and IsValid(owner)
             and owner:IsPlayer() and owner:Horde_GetPerk("demolition_frag_cluster") then
         local dmg = exp[ent:GetClass()]
-        local rad = 200
+        local rad = 150
         for i = 1, 3 do
             local prop = ents.Create("prop_physics")
             prop:SetModel("models/Combine_Helicopter/helicopter_bomb01.mdl")
@@ -29,7 +29,7 @@ PERK.Hooks.EntityRemoved = function(ent)
             prop:SetCollisionGroup(COLLISION_GROUP_WEAPON)
             prop:Spawn()
             prop:Activate()
-            timer.Simple(0, function() prop:GetPhysicsObject():AddVelocity(VectorRand() * 300 + Vector(0, 0, 200)) end)
+            timer.Simple(0, function() prop:GetPhysicsObject():AddVelocity(VectorRand() * 200 + Vector(0, 0, 150)) end)
             timer.Simple(0.5 + i * 0.1, function() if IsValid(prop) then
                 local e = EffectData()
                 e:SetOrigin(prop:GetPos())

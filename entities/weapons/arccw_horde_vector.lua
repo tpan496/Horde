@@ -342,17 +342,17 @@ function SWEP:ChangeFiremode(pred)
 
         for _, ent in pairs(ents.FindInSphere(tr.HitPos, 100)) do
             if ent:IsPlayer() then
-                local healinfo = HealInfo:New({amount=10, healer=self.Owner})
+                local healinfo = HealInfo:New({amount=12, healer=self.Owner})
                 HORDE:OnPlayerHeal(ent, healinfo)
             elseif ent:GetClass() == "npc_vj_horde_antlion" then
-                local healinfo = HealInfo:New({amount=10, healer=self.Owner})
+                local healinfo = HealInfo:New({amount=12, healer=self.Owner})
                 HORDE:OnAntlionHeal(ent, healinfo)
             elseif ent:IsNPC() then
                 local dmg = DamageInfo()
                 dmg:SetDamage(25)
                 dmg:SetDamageType(DMG_NERVEGAS)
                 dmg:SetAttacker(self.Owner)
-                dmg:SetInflictor(self.Horde_Wpn_Owner)
+                dmg:SetInflictor(self)
                 dmg:SetDamagePosition(tr.HitPos)
                 ent:TakeDamageInfo(dmg)
             end
