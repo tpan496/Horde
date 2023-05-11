@@ -1,7 +1,7 @@
 PERK.PrintName = "Exsanguinate"
 PERK.Description =
 [[20% increased Bleeding buildup.
-Recover health neary Bleeding enemies.
+Recover 5 health per second while near an enemy with Bleeding.
 Immune to Bleeding.]]
 PERK.Icon = "materials/perks/samurai/exsanguinate.png"
 PERK.Params = {
@@ -19,7 +19,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "samurai_exsanguinate" then
       local id = ply:SteamID()
       timer.Create("Horde_Exsanguinate" .. id, 1, 0, function ()
-          if not ply:IsValid() or not ply:Alive() or not ply:Horde_GetPerk("samurai_exsanguinate") then timer.Remove("Horde_Superfluidity" .. id) return end
+          if not ply:IsValid() or not ply:Alive() or not ply:Horde_GetPerk("samurai_exsanguinate") then timer.Remove("Horde_Exsanguinate" .. id) return end
           for _, ent in pairs(ents.FindInSphere(ply:GetPos(), 300)) do
               if ent:Horde_HasDebuff(HORDE.Status_Bleeding) then
                 HORDE:SelfHeal(ply, 5)
