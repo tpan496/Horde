@@ -65,21 +65,20 @@ function ENT:Explode()
         attacker = self:GetOwner()
     end
 
-    for i = 1, 10 do
-        timer.Simple(i * 0.05, function ()
-            for _, e in pairs(ents.FindInSphere(self:GetPos(), 200)) do
-                if IsValid(e) and HORDE:IsEnemy(e) then
-                    local dmginfo = DamageInfo()
-                    dmginfo:SetDamage(15)
-                    dmginfo:SetDamageType(DMG_SHOCK)
-                    dmginfo:SetAttacker(attacker)
-                    dmginfo:SetInflictor(self)
-                    dmginfo:SetDamagePosition(e:GetPos())
-                    e:TakeDamageInfo(dmginfo)
-                end
+    for _, e in pairs(ents.FindInSphere(self:GetPos(), 175)) do
+        if IsValid(e) and HORDE:IsEnemy(e) then
+            for i = 1, 20 do
+                local dmginfo = DamageInfo()
+                dmginfo:SetDamage(8)
+                dmginfo:SetDamageType(DMG_SHOCK)
+                dmginfo:SetAttacker(attacker)
+                dmginfo:SetInflictor(self)
+                dmginfo:SetDamagePosition(e:GetPos())
+                e:TakeDamageInfo(dmginfo)
             end
-        end)
+        end
     end
+
 
     local ed = EffectData()
     ed:SetOrigin(self:GetPos())

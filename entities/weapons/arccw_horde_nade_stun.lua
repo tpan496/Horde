@@ -17,7 +17,7 @@ SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Magnesium/Ammonium Nitrate Mix"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1995
-SWEP.Primary.MaxAmmo = 7
+SWEP.Primary.MaxAmmo = 5
 SWEP.ForceDefaultAmmo = 0
 
 SWEP.Slot = 4

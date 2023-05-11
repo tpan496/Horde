@@ -40,7 +40,7 @@ function entmeta:Horde_AddEffect_MedicGrenade(ent)
             HORDE:OnAntlionHeal(ent, healinfo)
         elseif ent:IsValid() and ent.Owner:IsValid() and ent.Inflictor:IsValid() and self:IsNPC() and (not self:GetNWEntity("HordeOwner"):IsValid()) then
             local d = DamageInfo()
-            d:SetDamage(15)
+            d:SetDamage(25)
             d:SetAttacker(ent.Owner)
             d:SetInflictor(ent.Inflictor)
             d:SetDamageType(DMG_NERVEGAS)

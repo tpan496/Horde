@@ -70,7 +70,7 @@ function ENT:Explode()
     end
 
     local dmginfo = DamageInfo()
-    dmginfo:SetDamage(150)
+    dmginfo:SetDamage(165)
     dmginfo:SetDamageType(DMG_SLASH)
     dmginfo:SetAttacker(attacker)
     dmginfo:SetInflictor(self)

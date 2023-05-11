@@ -522,7 +522,7 @@ function HORDE:GetDefaultItemsData()
     {Heavy=true}, 40, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("MG",         "M240",          "arccw_horde_m240",     3000, 10, "M240 Bravo.\nFires 7.62mm NATO ammunition.\nEquipped by U.S. Armed Forces.",
     {Heavy=true}, 50, -1, nil, nil, {Heavy=3}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("MG",         "GAU-19",         "arccw_horde_gau",     3500, 15, "GAU-19 rotary heavy machine gun.\nFires .50 BMG catridge at 1,300 rounds per minute.\n\nHold RMB to rev.",
+    HORDE:CreateItem("MG",         "GAU-19",         "arccw_horde_gau",     3500, 14, "GAU-19 rotary heavy machine gun.\nFires .50 BMG catridge at 1,300 rounds per minute.\n\nHold RMB to rev.",
     {Heavy=true}, 50, -1, nil, nil, {Heavy=5}, nil, {HORDE.DMG_BALLISTIC})
 
     -- Class specific grenades
