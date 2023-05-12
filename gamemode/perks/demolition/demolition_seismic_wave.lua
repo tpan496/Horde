@@ -4,7 +4,7 @@ Delayed explosion deals {1} explosion damage as Physical damage.
 Only activates when damage is greater than {2}.]]
 PERK.Icon = "materials/perks/seismic_wave.png"
 PERK.Params = {
-    [1] = {value = 0.2, percent = true},
+    [1] = {value = 0.25, percent = true},
     [2] = {value = 100},
 }
 
