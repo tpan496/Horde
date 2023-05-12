@@ -38,6 +38,7 @@ end
 
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
+        self:GetPhysicsObject():SetDamping(5, 5)
         if self.Detonated then return end
         if data.Speed > 75 then
             self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
@@ -90,9 +91,9 @@ function ENT:Detonate(impact)
         end
 
         if impact then
-            util.BlastDamage(self, attacker, self:GetPos(), 200, 250)
+            util.BlastDamage(self, attacker, self:GetPos(), 200, 280)
         else
-            util.BlastDamage(self, attacker, self:GetPos(), 200, 200)
+            util.BlastDamage(self, attacker, self:GetPos(), 200, 225)
         end
 
         self:Remove()

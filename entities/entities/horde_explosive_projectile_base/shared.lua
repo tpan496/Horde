@@ -21,11 +21,13 @@ ENT.ArmDistance = 150 -- Safety distance
 ENT.Decal = "Scorch"
 AddCSLuaFile()
 
-if SERVER then
 
 function ENT:CustomInitialize()
     return
 end
+
+
+if SERVER then
 
 function ENT:Initialize()
     self:CustomInitialize()
@@ -47,6 +49,10 @@ function ENT:Initialize()
     self.ArmDistanceSqr = self.ArmDistance * self.ArmDistance
 end
 
+else
+function ENT:Initialize()
+    self:CustomInitialize()
+end
 end
 
 function ENT:CustomOnThink()

@@ -3,10 +3,10 @@ ENT.PrintName 			= "Javelin Round"
 ENT.Model = "models/weapons/w_missile_launch.mdl"
 ENT.LifeTime = 10 -- Time to removal
 ENT.EnableGravity = false
-ENT.ProjectileDamage = 1100 -- Projectile/explosion damage
+ENT.ProjectileDamage = 1150 -- Projectile/explosion damage
 ENT.ProjectileUnarmedDamageType = DMG_CLUB -- Damage type when hitting something unarmed
 ENT.ProjectileExplosionDamageType = DMG_BLAST -- Explosion damage type
-ENT.ProjectileDamageRadius = 150 -- Explosion radius
+ENT.ProjectileDamageRadius = 200 -- Explosion radius
 ENT.ArmDistance = 0 -- Safety distance
 ENT.Decal = "Scorch"
 
@@ -15,9 +15,11 @@ ENT.Ticks = 0
 AddCSLuaFile()
 
 function ENT:CustomInitialize()
-    ParticleEffectAttach("vj_rpg1_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	ParticleEffectAttach("vj_rpg2_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	
+	if CLIENT then
+    	ParticleEffectAttach("vj_rpg1_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+		ParticleEffectAttach("vj_rpg2_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+		return
+	end
 	self.StartLight1 = ents.Create("light_dynamic")
 	self.StartLight1:SetKeyValue("brightness", "1")
 	self.StartLight1:SetKeyValue("distance", "200")

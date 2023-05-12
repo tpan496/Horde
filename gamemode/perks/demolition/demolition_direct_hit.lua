@@ -1,6 +1,6 @@
 PERK.PrintName = "Direct Hit"
 PERK.Description = [[{1} increased Blast damage against enemies close to explosions.
-{2} incraesed Blunt damage.]]
+{2} increased Blunt damage.]]
 PERK.Icon = "materials/perks/direct_hit.png"
 PERK.Params = {
     [1] = {value = 0.2, percent = true},

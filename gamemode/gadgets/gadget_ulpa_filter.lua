@@ -8,7 +8,7 @@ GADGET.Cooldown = 0
 GADGET.Active = false
 GADGET.Params = {
     [1] = {value = 0.2, percent = true},
-    [2] = {value = 0.75, percent = true},
+    [2] = {value = 0.25, percent = true},
 }
 GADGET.Hooks = {}
 
