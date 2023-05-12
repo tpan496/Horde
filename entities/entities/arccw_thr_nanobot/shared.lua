@@ -47,7 +47,6 @@ function ENT:Initialize()
         if phys:IsValid() then
             phys:Wake()
             phys:SetBuoyancyRatio(0)
-            phys:SetDamping(0.5, 0.5)
         end
 
         self.SpawnTime = CurTime()
@@ -57,6 +56,7 @@ end
 
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
+        self:GetPhysicsObject():SetDamping(5, 5)
         if data.Speed > 75 then
             self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
         elseif data.Speed > 25 then

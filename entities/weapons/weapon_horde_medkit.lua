@@ -26,7 +26,7 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
 
 SWEP.HealAmount = 20 -- Maximum heal amount per use
-SWEP.MaxAmmo = 100 -- Maxumum ammo
+SWEP.MaxAmmo = 90 -- Maxumum ammo
 
 local HealSound = Sound( "HealthKit.Touch" )
 local DenySound = Sound( "WallHealth.Deny" )

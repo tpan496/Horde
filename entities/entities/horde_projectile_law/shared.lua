@@ -15,9 +15,11 @@ ENT.Ticks = 0
 AddCSLuaFile()
 
 function ENT:CustomInitialize()
-    ParticleEffectAttach("vj_rpg1_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	ParticleEffectAttach("vj_rpg2_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	
+    if CLIENT then
+    	ParticleEffectAttach("vj_rpg1_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+		ParticleEffectAttach("vj_rpg2_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+		return
+	end
 	self.StartLight1 = ents.Create("light_dynamic")
 	self.StartLight1:SetKeyValue("brightness", "1")
 	self.StartLight1:SetKeyValue("distance", "200")

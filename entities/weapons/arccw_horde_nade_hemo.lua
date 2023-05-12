@@ -4,7 +4,7 @@ if CLIENT then
     killicon.Add("arccw_horde_nade_hemo", "arccw/weaponicons/arccw_horde_nade_hemo", Color(0, 0, 0, 255))
     killicon.Add("arccw_thr_hemo", "arccw/weaponicons/arccw_horde_nade_hemo", Color(0, 0, 0, 255))
 end
-SWEP.Base = "arccw_base_nade"
+SWEP.Base = "arccw_horde_base_nade"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -17,7 +17,7 @@ SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Condensed Blood Plasma"
 SWEP.Trivia_Country = "Combine"
 SWEP.Trivia_Year = 2010
-SWEP.Primary.MaxAmmo = 5
+SWEP.Primary.MaxAmmo = 9
 SWEP.ForceDefaultAmmo = 0
 
 SWEP.Slot = 4

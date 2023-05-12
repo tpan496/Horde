@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminSpawnable = false
 
 ENT.Model = "models/weapons/arccw_go/w_eq_incendiarygrenade_thrown.mdl"
-ENT.FuseTime = 3
+ENT.FuseTime = 1.5
 ENT.ArmTime = 0
 ENT.ImpactFuse = false
 ENT.Armed = true
@@ -27,7 +27,6 @@ function ENT:Initialize()
         if phys:IsValid() then
             phys:Wake()
             phys:SetBuoyancyRatio(0)
-            phys:SetDamping(0.5, 0.5)
         end
 
         self.SpawnTime = CurTime()
@@ -41,6 +40,7 @@ end
 
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
+        self:GetPhysicsObject():SetDamping(5, 5)
         if data.Speed > 75 then
             self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
         elseif data.Speed > 25 then
@@ -65,7 +65,7 @@ function ENT:Explode()
         attacker = self:GetOwner()
     end
 
-    for _, e in pairs(ents.FindInSphere(self:GetPos(), 175)) do
+    for _, e in pairs(ents.FindInSphere(self:GetPos(), 200)) do
         if IsValid(e) and HORDE:IsEnemy(e) then
             for i = 1, 20 do
                 local dmginfo = DamageInfo()

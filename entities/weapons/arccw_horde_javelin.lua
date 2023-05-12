@@ -219,7 +219,15 @@ function SWEP:Hook_ShouldNotSight()
     return true
 end
 
-SWEP.LockDuration = 2
+SWEP.LockDuration = 1.5
+sound.Add({
+    name = "JAVELIN_LOCK",
+    channel = 16,
+    volume = 1.0,
+    sound = "horde/weapons/javelin/locking.ogg"
+})
+SWEP.LockSound = Sound("JAVELIN_LOCK")
+
 function SWEP:Hook_Think()
     if self.Owner:KeyDown(IN_ATTACK2) then
         self.Owner:SetFOV(25, 0)
@@ -241,15 +249,13 @@ function SWEP:Hook_Think()
             self.trdistance = trdistance
         end
 
-        if SERVER then
-            if self.LastLockSound <= CurTime() then
-                if IsValid(self:GetLocked_Target()) then
-                    self.LastLockSound = CurTime() + 0.2
-                    self:EmitSound("horde/weapons/javelin/locking.ogg")
-                elseif IsValid(self.LockingTarget) then
-                    self.LastLockSound = CurTime() + 0.5
-                    self:EmitSound("horde/weapons/javelin/locking.ogg")
-                end
+        if CLIENT and self.LastLockSound <= CurTime() then
+            if IsValid(self:GetLocked_Target()) then
+                self.LastLockSound = CurTime() + 0.2
+                self:EmitSound(self.LockSound)
+            elseif IsValid(self.LockingTarget) then
+                self.LastLockSound = CurTime() + 0.5
+                self:EmitSound(self.LockSound)
             end
         end
 		
