@@ -395,6 +395,7 @@ LANGUAGE["Perk_assault_base"] = [[
 Cложность: ЛЁГКАЯ
 
 На {1} увеличена скорость передвижения. ({2} за каждый уровень, до {3}).
+{5} increased Ballistic damage. ({6} per level, up to {7}).
 
 Вы получаете адреналин, когда убиваете врага.
 Адреналин увеличивает урон и скорость на {4}.]]
@@ -402,6 +403,8 @@ Cложность: ЛЁГКАЯ
 LANGUAGE["Perk_heavy_base"] = [[
 Класс "Тяжеловес" это класс танка, обеспечивающий сильную огневую мощь подавления.
 Cложность: ЛЁГКАЯ
+
+{6} increased maximum armor. ({7} per level, up to {8}).
 
 Регенерирует {1} брони за секунду.
 Регенерирует до {2} брони. ({3} + {4} за каждый уровень, до {5})]]
@@ -418,6 +421,7 @@ LANGUAGE["Perk_demolition_base"] = [[
 Класс "Подрывник" - это класс контроля толпы, который также может наносить высокий урон по одной цели.
 Cложность: СРЕДНЯЯ
 
+{7} increased Blast damage. ({8} per level, up to {9}).
 На {1} повышена устойчивость ко взрыву. ({2} + {3} за каждый уровень, до {4}).
 
 Создается {5} осколочная граната каждые {6} секунд, если у вас её нету.]]
@@ -663,7 +667,7 @@ LANGUAGE["Perk_heavy_liquid_armor"] = [[
   На {2} меньше полученного физического урона.]]
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[Реактивная броня]]
-LANGUAGE["Perk_heavy_reactive_armor"] = [[
+--[[LANGUAGE["Perk_heavy_reactive_armor"] = [[
 Пока у вас есть хотя-бы {1} брони:
   Иммунитет к урону от огня и взрыва.]]
 
@@ -734,10 +738,11 @@ LANGUAGE["Perk_demolition_frag_cluster"] = [[
 LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[Вооружение]]
 LANGUAGE["Perk_Title_demolition_direct_hit"] = [[Прямое попадание]]
 LANGUAGE["Perk_demolition_direct_hit"] = [[
-На {1} увеличен урон от взрыва против врагов, близких к взрывам.]]
+На {1} увеличен урон от взрыва против врагов, близких к взрывам.
+На {1} увеличен тупой урон в ближнем бою.]]
 
 LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[Сейсмическая волна]]
-LANGUAGE["Perk_demolition_seismic_wave"] = [[
+--[[LANGUAGE["Perk_demolition_seismic_wave"] = [[
 Разрывные снаряды создают дополнительный отложенный взрыв при детонации.
 Отложенный взрыв наносит {1} урона от взрыва как физический урон.]]
 
@@ -754,15 +759,15 @@ LANGUAGE["Perk_demolition_knockout"] = [[
 
 LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[Разрушение]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Боеголовка под давлением]]
-LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
+--[[LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
 На {1} увеличен урон от взрыва против элитных врагов.
 Взрывы наносят от {2} до {3} урона от текущего здоровья
 врагов в качестве дополнительного урона от взрыва.]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Цепная реакция]]
-LANGUAGE["Perk_demolition_chain_reaction"] = [[
+--[[LANGUAGE["Perk_demolition_chain_reaction"] = [[
 Враги, которых вы убили, имеют {1} шанс взорваться, нанося
-{2} урона от их максимального здоровья в качестве урона от взрыва.]]
+{2} урона от их максимального здоровья в качестве урона от взрыва.]]--
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[Тактики]]
@@ -922,7 +927,7 @@ LANGUAGE["Perk_warden_restock"] = [[
 Время восстановления запасов у сторожевых башен уменьшено на {1}.]]
 
 LANGUAGE["Perk_Title_warden_energize"] = [[Возбуждать]]
-LANGUAGE["Perk_warden_energize"] = [[
+--[[LANGUAGE["Perk_warden_energize"] = [[
 Аура добавляет {1} базового урона к атакам.]]
 
 LANGUAGE["Perk_Title_Warden_Tier_3"] = [[Охрана]]
@@ -963,7 +968,7 @@ LANGUAGE["Perk_cremator_positron_array"] = [[
 Вы впитываете {1} получаемого урона от огня в качестве здоровья.]]
 
 LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[Энтропийный щит]]
-LANGUAGE["Perk_cremator_entropy_shield"] = [[
+--[[LANGUAGE["Perk_cremator_entropy_shield"] = [[
 Вы получаете щит, который сводит на нет урон, наносимый врагами.
 Щит взрывается при ударе и перезаряжается через {1} секунд.
 Взрыв наносит {2} урона от огня.]]
@@ -1984,8 +1989,8 @@ LANGUAGE["Item_Desc_Stun Grenade"] = [[
 Время перезарядки оглушения составляет 10 секунд.
 ]]
 
-LANGUAGE["Item_M67 Grenade"] = [[Граната М67]]
-LANGUAGE["Item_Desc_M67 Grenade"] = [[
+LANGUAGE["Item_M67 Frag Grenade"] = [[Граната М67]]
+LANGUAGE["Item_Desc_M67 Frag Grenade"] = [[
 Осколочно-фугасная граната М67.
 Военный класс, наносит крупный урон от взрыва.
 ]]
@@ -2669,6 +2674,7 @@ LANGUAGE["Gadget_gadget_cortex"] = [[Кора головного мозга]]
 LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
 За каждого врага рядом с вами получите 1 стак Адреналина.
 Элитные враги предоставляют 2 стака.
+Добавляет {1} максимальный стак адреналина.
 ]]
 
 LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[Нейроусилитель]]
@@ -2692,7 +2698,7 @@ LANGUAGE["Gadget_Desc_gadget_agility_booster"] = [[
 
 -- Heavy Gadgets
 LANGUAGE["Gadget_gadget_energy_shield"] = [[Энергетический Щит]]
-LANGUAGE["Gadget_Desc_gadget_energy_shield"] = [[
+--[[LANGUAGE["Gadget_Desc_gadget_energy_shield"] = [[
 Временно даёт 25 ед. брони.
 ]]
 
@@ -2757,7 +2763,7 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_death_mark"] = [[Чёрная Метка]]
-LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
+--[[LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
 Ставит метку на выбранном враге.
 Отмеченный враг получает на 15% больше урона.
 Отмеченный враг взрывается при смерти, нанося урон, основанный на его здоровье.

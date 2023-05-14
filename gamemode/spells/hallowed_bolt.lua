@@ -4,7 +4,7 @@ SPELL.Mind            = {40}
 SPELL.Price           = 1500
 SPELL.ChargeTime      = {1}
 SPELL.ChargeRelease   = nil
-SPELL.Cooldown        = 12
+SPELL.Cooldown        = 15
 SPELL.Slot            = HORDE.Spell_Slot_Reload
 SPELL.DamageType      = nil
 SPELL.Icon            = "spells/hallowed_bolt.png"
@@ -101,7 +101,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 
     local bonus = {increase = 0, more = 1}
 	hook.Run("Horde_OnPlayerSpellDamage", ply, bonus)
-	local base_damage = (300 + math.floor(100 * math.pow(level, 1.2))) * bonus.more * (1 + bonus.increase)
+	local base_damage = (300 + math.floor(80 * math.pow(level, 1.2))) * bonus.more * (1 + bonus.increase)
 
 	local tr = ply:GetEyeTrace()
 	local param = {}

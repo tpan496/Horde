@@ -1,33 +1,33 @@
 PERK.PrintName = "Seismic Wave"
-PERK.Description = [[Explosive projectiles generate an extra delayed explosion on detonation.
-Delayed explosion deals {1} explosion damage as Physical damage.]]
+PERK.Description = [[Blast damage generates a delayed explosion.
+Delayed explosion deals {1} explosion damage as Physical damage.
+Only activates when damage is greater than {2}.]]
 PERK.Icon = "materials/perks/seismic_wave.png"
 PERK.Params = {
-    [1] = {value = 0.3, percent = true},
+    [1] = {value = 0.25, percent = true},
+    [2] = {value = 100},
 }
 
-local exp = {obj_vj_law_rocket = 200, obj_vj_rpg_rocket = 100, arccw_he_round = 75, env_explosion = 50, rpg_missile = 50, horde_sticky_bomb = 75}
 PERK.Hooks = {}
 
-PERK.Hooks.EntityRemoved = function(ent)
-    local owner = ent.Owner
-    if SERVER and IsValid(ent) and exp[ent:GetClass()] and IsValid(owner) and owner:IsPlayer() and owner:Horde_GetPerk("demolition_seismic_wave") then
-        local dmg = exp[ent:GetClass()]
-        local pos = ent:GetPos()
-        local attacker = owner
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
+    if not ply:Horde_GetPerk("demolition_seismic_wave") then return end
+    if HORDE:IsBlastDamage(dmginfo) and dmginfo:GetDamage() >= 100 then
+        local dmg = dmginfo:GetDamage() / 4
+        local pos = npc:GetPos()
         timer.Simple(0.5, function()
-            if !IsValid(attacker) then return end
+            if !IsValid(ply) then return end
             local bpos = pos + VectorRand()
             local d = DamageInfo()
-            d:SetAttacker(attacker)
-            d:SetInflictor(attacker)
+            d:SetAttacker(ply)
+            d:SetInflictor(ply)
             d:SetDamageType(DMG_SONIC)
             d:SetDamage(dmg)
-            util.BlastDamageInfo(d, bpos, dmg * 2)
+            util.BlastDamageInfo(d, bpos, math.min(250, dmg * 2))
             local e = EffectData()
                 e:SetNormal(Vector(0,0,1))
                 e:SetOrigin(bpos)
-                e:SetRadius(dmg * 2)
+                e:SetRadius(math.min(250, dmg * 2))
             util.Effect("seismic_wave", e, true, true)
         end)
     end

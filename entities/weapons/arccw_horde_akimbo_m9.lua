@@ -227,14 +227,14 @@ SWEP.Attachments = {
     {
         PrintName = "Akimbotest",
         DefaultAttName = "No LH",
-        Slot = "akimbotest",
+        Slot = "akimbom9",
         Bone = "tag_view",
         Offset = {
             vpos = Vector(0, 0, 0),
             vang = Angle(0, 0, 0),
         },
         Hidden = true,
-        Installed = "mw2_akimbo_m9",
+        Installed = "horde_akimbo_m9",
     },
 }
 
@@ -251,6 +251,13 @@ SWEP.Hook_TranslateAnimation = function(wep, anim)
     elseif wep.Attachments[8].Installed then
         return anim .. "_akimbo_right"
     end
+end
+
+function SWEP:Hook_OnDeploy()
+    timer.Simple(0, function ()
+        if !IsValid(self) then return end
+        self:Attach(9, "horde_akimbo_m9")
+    end)
 end
 
 SWEP.Animations = {

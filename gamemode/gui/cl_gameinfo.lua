@@ -17,6 +17,7 @@ surface.CreateFont("SmallInfo", { font = font, size = 20 * font_scale, extended 
 surface.CreateFont("Horde_Ready", { font = font, size = ScreenScale(5) * font_scale, extended = true })
 surface.CreateFont("Horde_Cd", { font = bold_font, size = ScreenScale(8) * font_scale, extended = true })
 surface.CreateFont("Horde_Wave_Banner", { font = bold_font, size = ScreenScale(15) * font_scale, extended = true })
+surface.CreateFont("Horde_Javeline", { font = "Arial", size = ScreenScale(8), extended = true })
 
 local width = ScreenScale(100)
 local height = ScreenScale(15)

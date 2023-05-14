@@ -94,7 +94,8 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
     if ply.Horde_Floating_Chaos and ply.Horde_Floating_Chaos:IsValid() then
         local pos = ply.Horde_Floating_Chaos:GetPos()
         local max_targets = 3 + ply.Horde_Floating_Chaos.Horde_Spell_Level
-        for _, target in pairs(ents.FindInSphere(ply.Horde_Floating_Chaos:GetPos(), 1000)) do
+        local d = 1000 + (charge_stage - 1) * 250
+        for _, target in pairs(ents.FindInSphere(ply.Horde_Floating_Chaos:GetPos(), d - 50)) do
             if HORDE:IsEnemy(target) and max_targets > 0 then
                 local target_pos = target:GetPos() + target:OBBCenter()
                 local d2 = target_pos - pos

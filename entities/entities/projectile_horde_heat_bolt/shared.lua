@@ -31,11 +31,8 @@ function ENT:Initialize()
     end
 
     self.SpawnTime = CurTime()
-
-    timer.Simple(0.1, function()
-        if !IsValid(self) then return end
-        self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
-    end)
+    self.HitEntitites = {}
+    self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 end
 
 function ENT:Think()
@@ -44,8 +41,10 @@ function ENT:Think()
     end
 end
 
-function ENT:Detonate(hitpos)
+function ENT:Detonate(hitpos, hitent)
     if !self:IsValid() or self.Removing then return end
+    if self.HitEntitites[hitent] then return end
+    self.HitEntitites[hitent] = true
 
     local attacker = self
 
@@ -53,39 +52,48 @@ function ENT:Detonate(hitpos)
         attacker = self.Owner
     end
 
-    self:FireBullets({
-        Attacker = attacker,
-        Damage = 150,
-        Tracer = 0,
-        Distance = 20000,
-        HullSize = 2,
-        Dir = (hitpos - self:GetPos()),
-        Src = self:GetPos(),
-        Callback = function(att, tr, dmg)
-            if self.Inflictor:GetCurrentFiremode().Mode == 2 then
-                dmg:SetDamageType(DMG_BULLET)
-            else
-                dmg:SetDamageType(DMG_BURN)
+    if self.Inflictor:GetCurrentFiremode().Mode == 2 then
+        self:FireBullets({
+            Attacker = attacker,
+            Inflictor = attacker,
+            Damage = 300,
+            Tracer = 0,
+            Distance = 400,
+            HullSize = 2,
+            Dir = (hitpos - self:GetPos()),
+            Src = self:GetPos(),
+            Callback = function(att, tr, dmg)
+                dmg:SetAttacker(attacker)
+                dmg:SetInflictor(attacker)
+    
+                if tr.HitGroup == HITGROUP_HEAD then
+                    sound.Play("weapons/crossbow/bolt_skewer1.wav", hitpos)
+                    dmg:ScaleDamage(1.5)
+                end
+    
+                util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
             end
-            
-            dmg:SetAttacker(self.Owner)
-            dmg:SetInflictor(self)
-
-            if tr.HitGroup == HITGROUP_HEAD then
-                sound.Play("weapons/crossbow/bolt_skewer1.wav", hitpos)
-                dmg:ScaleDamage(1.5)
-            end
-
-            util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
+        })
+        self.Removing = true
+        self:Remove()
+    else
+        if HORDE:IsEnemy(hitent) then
+            local dmg = DamageInfo()
+            dmg:SetDamage(300)
+            dmg:SetAttacker(attacker)
+            dmg:SetInflictor(attacker)
+            dmg:SetDamagePosition(self:GetPos())
+            dmg:SetDamageType(DMG_GENERIC)
+            hitent:TakeDamageInfo(dmg)
         end
-    })
-    self.Removing = true
-    self:Remove()
+        self.Removing = true
+        self:Remove()
+    end
 end
 
 function ENT:PhysicsCollide(colData, collider)
     if !self:IsValid() or self.Removing then return end
-    self:Detonate(colData.HitPos)
+    self:Detonate(colData.HitPos, colData.HitEntity)
 end
 
 end

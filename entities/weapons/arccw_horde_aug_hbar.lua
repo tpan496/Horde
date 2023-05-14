@@ -29,22 +29,27 @@ SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "000000"
 
-SWEP.Damage = 46
-SWEP.DamageMin = 43
+SWEP.Damage = 28 * 1.25
+SWEP.DamageMin = 21 * 1.25
 SWEP.Range = 1400 * 0.025  -- GAME UNITS * 0.025 = METRES
 
 SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 50 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 63
-SWEP.ReducedClipSize = 21
+SWEP.Primary.ClipSize = 40 -- DefaultClip is automatically set.
+SWEP.ExtendedClipSize = 40
+SWEP.ReducedClipSize = 40
 
-SWEP.Delay = 0.087 -- 60 / RPM.
+SWEP.Recoil = 0.45 * 1.2
+SWEP.RecoilSide = 0.4
+SWEP.RecoilRise = 1
+SWEP.RecoilPunch = 2.5
+
+SWEP.Delay = 60 / 689 -- 60 / RPM.
 
 SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
 SWEP.NPCWeight = 100
 
-SWEP.AccuracyMOA = 1.6 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 500 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 700 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 250
 
 SWEP.Primary.Ammo = "smg1" -- what ammo type the gun uses
@@ -58,9 +63,10 @@ SWEP.ShootMechSound =       ArcCW_MW2_Mech
 SWEP.ShootDrySound =        "weapons/fesiugmw2/fire/dryfire_rifle.wav"
 SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/m240_sil.wav"
 
-SWEP.SpeedMult = 0.875
+SWEP.SpeedMult = 0.9
 SWEP.SightedSpeedMult = 0.35
 SWEP.SightTime = 0.350
+SWEP.ShootSpeedMult = 0.8
 
 SWEP.BarrelLength = 32
 
@@ -135,11 +141,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo",
+        DefaultAttName = "Standard Ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",
@@ -185,6 +192,8 @@ SWEP.AttachmentElements = {
 }
 
 SWEP.Bipod_Integral = true
+SWEP.BipodDispersion = 0.5
+SWEP.BipodRecoil = 0.5
 
 SWEP.Animations = {
     ["idle"] = {

@@ -75,5 +75,5 @@ function ENT:OnRemove()
             self.Pulse:Fire( "kill", "", 0 )
         end
     end
-    util.BlastDamage(self, self.Owner, self:GetPos(), 150, 175)
+    util.BlastDamage(self, self.Owner, self:GetPos(), 150, 200)
 end

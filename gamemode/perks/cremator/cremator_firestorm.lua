@@ -6,9 +6,8 @@ PERK.Params = {
 }
 
 PERK.Hooks = {}
-PERK.Hooks.PostEntityTakeDamage = function (ent, dmginfo, took)
-    local attacker = dmginfo:GetAttacker()
-    if took and ent:IsNPC() and attacker:IsPlayer() and attacker:Horde_GetPerk("cremator_firestorm") and HORDE:IsFireDamage(dmginfo) then
-        ent:Horde_AddBurst(dmginfo:GetDamage(), ent, attacker)
+PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
+    if ply:Horde_GetPerk("cremator_firestorm") and HORDE:IsFireDamage(dmginfo) then
+        npc:Horde_AddBurst(dmginfo:GetDamage(), npc, ply)
     end
 end

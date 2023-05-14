@@ -146,9 +146,12 @@ hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
 end)
 
 function HORDE:OnEnemyKilled(victim, killer, weapon)
-    if victim:IsNPC() and not victim:GetVar("horde_killed") then
+    if IsValid(victim) and victim:IsNPC() and not victim:GetVar("horde_killed") then
         victim:SetVar("horde_killed", true)
-        hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
+        if IsValid(killer) and killer:IsPlayer() then
+            hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
+        end
+        
         if victim.Horde_Gadget_On_Death then
             local gadget_box = ents.Create("horde_gadgetbox")
             gadget_box.Horde_Gadget = victim.Horde_Gadget_On_Death
@@ -206,7 +209,13 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
                 defer_reward = true
             end
             if not defer_reward then
-                killer:Horde_AddMoney(reward)
+                if IsValid(victim.Horde_Assist) and victim.Horde_Assist ~= killer then
+                    victim.Horde_Assist:Horde_AddMoney(reward * 0.1)
+                    victim.Horde_Assist:Horde_SyncEconomy()
+                    killer:Horde_AddMoney(reward * 0.9)
+                else
+                    killer:Horde_AddMoney(reward)
+                end
             end
 
             if victim:GetVar("is_elite") then
@@ -246,7 +255,6 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         end
 
         victim:Horde_SetMostRecentAttacker(nil)
-        --hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
     end
 end
 
@@ -313,6 +321,7 @@ hook.Add("PostEntityTakeDamage", "Horde_PostDamage", function (ent, dmg, took)
                     end
                 end
             end
+            if ent:Health() <= 0 then ent:Remove() return end
         elseif ent:IsPlayer() and dmg:GetAttacker():IsNPC() then
             local id = ent:SteamID()
             if not HORDE.player_damage_taken[id] then HORDE.player_damage_taken[id] = 0 end
@@ -547,7 +556,10 @@ function HORDE:SpawnEnemy(enemy, pos)
             local p = math.random()
             if p <= mut_prob then
                 local mut = HORDE.current_mutations[math.random(1, #HORDE.current_mutations)]
-                timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(mut) end)
+                timer.Simple(0.1, function()
+                    if !IsValid(spawned_enemy) then return end
+                    spawned_enemy:Horde_SetMutation(mut)
+                end)
             end
 
             if HORDE.difficulty >= 4 then
@@ -1000,11 +1012,13 @@ function HORDE:WaveStart()
     -- Get mutations
     HORDE.current_mutations = {}
     for _, mutation in pairs(HORDE.mutations_rand) do
+        if mutation == "shadow" then goto cont end
         if mutation.Wave and HORDE.current_wave >= mutation.Wave then
             table.insert(HORDE.current_mutations, mutation.ClassName)
         elseif not mutation.Wave then
             table.insert(HORDE.current_mutations, mutation.ClassName)
         end
+        ::cont::
     end
     
     -- Additional custom scaling

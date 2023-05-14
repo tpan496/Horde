@@ -31,6 +31,7 @@ function ENT:Initialize()
         self:SetCollisionBounds(Vector(-150,-150,-100), Vector(150,150,100))
         self:SetTrigger(true)
         self:UseTriggerBounds(true, 24)
+        self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 
         local phys = self:GetPhysicsObject()
         if phys:IsValid() then
@@ -46,11 +47,6 @@ function ENT:Initialize()
         if not self.BaseDamage then self.BaseDamage = 25 end
         self.BaseDamage = self.BaseDamage / 4
         self.DamageRadius = self:GetRadiusScale() * 150
-
-        timer.Simple(0.1, function()
-            if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
-        end)
     end
 
     local owner = self:GetOwner()
@@ -72,7 +68,7 @@ local function GetFireParticle()
 end
 
 function ENT:SetupDataTables()
-    self:NetworkVar( "Float", 1, "RadiusScale" )
+    self:NetworkVar( "Float", 0, "RadiusScale" )
 end
 
 function ENT:Think()

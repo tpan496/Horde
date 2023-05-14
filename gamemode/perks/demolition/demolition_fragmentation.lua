@@ -6,9 +6,10 @@ PERK.Params = {
 }
 
 PERK.Hooks = {}
+
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
-    if not ply:Horde_GetPerk("demolition_fragmentation")  then return end
+    if not ply:Horde_GetPerk("demolition_fragmentation") then return end
     if HORDE:IsBlastDamage(dmginfo) then
-        bonus.increase = bonus.increase + 0.20
+        bonus.increase = bonus.increase + 0.2
     end
 end

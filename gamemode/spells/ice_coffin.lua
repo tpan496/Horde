@@ -26,7 +26,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
     ply:SpectateEntity(p)
     ply:SetMoveType(MOVETYPE_NONE)
     ply:DrawViewModel(false)
-    ply.Horde_Has_Ice_Coffin = true
+    ply.Horde_Fake_Respawn = true
     ply.Horde_Invincible = true
 
     for i = 1, 6 do
@@ -42,7 +42,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
         ply:DrawViewModel(true)
         p:Remove()
         ply:Spawn()
-        ply.Horde_Has_Ice_Coffin = nil
+        ply.Horde_Fake_Respawn = nil
         ply:SetPos(ply_pos)
         ply:SetAngles(ply_angles)
         ply.Horde_Invincible = nil

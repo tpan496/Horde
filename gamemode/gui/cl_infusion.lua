@@ -213,25 +213,8 @@ function PANEL:SetData(item)
     end
 
     self.infusion_items = {}
-    --[[if not item.infusions then
-        item.infusions = {
-            HORDE.Infusion_Hemo,
-            HORDE.Infusion_Concussive,
-            HORDE.Infusion_Quality,
-            HORDE.Infusion_Septic,
-            HORDE.Infusion_Flaming,
-            HORDE.Infusion_Arctic,
-            HORDE.Infusion_Galvanizing,
-            HORDE.Infusion_Impaling,
-            HORDE.Infusion_Rejuvenating
-        }
-    end]]--
 
-    if self.item.category == "Explosive" or self.item.category == "Special" or self.item.category == "Equipment" or self.item.category == "Attachment" or self.item.category == "Gadget" then
-        item.infusions = {}
-    end
-
-    if not item.infusions then return end
+    if not item.infusions or table.IsEmpty(item.infusions) then return end
     
     for _, infusion in SortedPairsByValue(item.infusions) do
         --if MySelf:Horde_GetClass().infusions[infusion] then

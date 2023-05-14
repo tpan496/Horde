@@ -147,7 +147,7 @@ Decrease 1% damage taken for every 1 weight on the weapon.
 20% less weapon damage.
 ]],
 [HORDE.Infusion_Siphoning] = [[
-+1 health when you kill an enemy.
+25% increased leeching.
 
 20% less weapon damage.
 ]],
@@ -351,18 +351,17 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_ApplyFusionDamageTaken", function (
         bonus.less = bonus.less * (1 - 0.01 * HORDE.items[curr_weapon:GetClass()].weight)
     end
 end)
-
-hook.Add("Horde_OnNPCKilled", "Horde_ApplyFusionOnKill", function (victim, ply, wpn)
+--[[
+hook.Add("Horde_OnEnemyKilled", "Horde_ApplyFusionOnKill", function (victim, ply, wpn)
     if not ply.Horde_Infusions then return end
     local curr_weapon = HORDE:GetCurrentWeapon(ply)
-    if not curr_weapon:IsValid() or not wpn:IsValid() then return end
-    --if wpn:GetClass() ~= curr_weapon:GetClass() then return end
+    if not curr_weapon:IsValid() then return end
     local infusion = ply.Horde_Infusions[curr_weapon:GetClass()]
     if infusion == HORDE.Infusion_Siphoning then
         local healinfo = HealInfo:New({amount=1, healer=ply})
         HORDE:OnPlayerHeal(ply, healinfo)
     end
-end)
+end)]]--
 
 net.Receive("Horde_BuyInfusion", function (len, ply)
     if not ply:IsValid() or not ply:Alive() then return end

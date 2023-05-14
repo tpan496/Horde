@@ -291,6 +291,7 @@ The Assault class is an all-purpose fighter with high mobility and a focus on Ad
 Complexity: EASY
 
 {1} more movement speed. ({2} per level, up to {3}).
+{5} increased Ballistic damage. ({6} per level, up to {7}).
 
 Gain Adrenaline when you kill an enemy.
 Adrenaline increases damage and speed by {4}.]]
@@ -298,6 +299,8 @@ Adrenaline increases damage and speed by {4}.]]
 LANGUAGE["Perk_heavy_base"] = [[
 The Heavy class is a tank class that provides strong suppression firepower.
 Complexity: EASY
+
+{6} increased maximum armor. ({7} per level, up to {8}).
 
 Regenerate {1} armor per second.
 Regenerate up to {2} armor. ({3} + {4} per level, up to {5})]]
@@ -314,6 +317,7 @@ LANGUAGE["Perk_demolition_base"] = [[
 The Demolition class is a crowd-control class that can also provide high single target damage.
 Complexity: MEDIUM
 
+{7} increased Blast damage. ({8} per level, up to {9}).
 {1} increased Blast damage resistance. ({2} + {3} per level, up to {4}).
 
 Regenerate {5} frag grenade every {6} seconds, if you do not have one.]]
@@ -442,9 +446,9 @@ While you have at least {1} armor:
   {2} less Physical damage taken.]]
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[Reactive Armor]]
-LANGUAGE["Perk_heavy_reactive_armor"] = [[
-While you have at least {1} armor:
-  Immune to Fire and Blast damage.]]
+LANGUAGE["Perk_heavy_reactive_armor"] = [[Gain a reactive armor that negates critical damage taken.
+Activates on taking more than {1} damage and recharges after {2} seconds.
+Uses {3} of your maximum armor when triggered.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_4"] = [[Technology]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[Nanomachine]]
@@ -453,8 +457,8 @@ LANGUAGE["Perk_heavy_nanomachine"] = [[
 
 LANGUAGE["Perk_Title_heavy_ballistic_shock"] = [[Ballistic Shock]]
 LANGUAGE["Perk_heavy_ballistic_shock"] = [[
-Debuffs you apply have {1} increased effect.
-Debuffs you apply have {2} increased duration.]]
+{1} increased Ballistic damage.
+Debuffs you apply have {2} increased effect.]]
 
 -- Default Perks: Medic
 LANGUAGE["Perk_Title_Medic_Tier_1"] = [[Medicine]]
@@ -503,7 +507,7 @@ LANGUAGE["Perk_Title_demolition_frag_impact"] = [[Impact Grenade]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
 {1} increased Grenade damage on impact.
 Grenades explode on impact.
-Impact explosions increases Stun buildup.]]
+Grenade and SLAM explosions increase Stun buildup.]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[Cluster Grenade]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[
@@ -513,34 +517,32 @@ Mini-nades do {2} less damage.]]
 LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[Weaponry]]
 LANGUAGE["Perk_Title_demolition_direct_hit"] = [[Direct Hit]]
 LANGUAGE["Perk_demolition_direct_hit"] = [[
-{1} increased Blast damage against enemies close to explosions.]]
+{1} increased Blast damage against enemies close to explosions.
+{1} increased Blunt damage.]]
 
 LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[Seismic Wave]]
-LANGUAGE["Perk_demolition_seismic_wave"] = [[
-Explosive projectiles create an extra delayed explosion.
-Delayed explosion deals {1} explosion damage as Physical damage.]]
+LANGUAGE["Perk_demolition_seismic_wave"] = [[Blast damage generates a delayed explosion.
+Delayed explosion deals {1} explosion damage as Physical damage.
+Only activates when damage is greater than {2}.]]
 
-LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Approach]]
+LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Approach]] --
 LANGUAGE["Perk_Title_demolition_fragmentation"] = [[Fragmentation]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
 {1} increased Blast damage.]]
 
 LANGUAGE["Perk_Title_demolition_knockout"] = [[Knockout]]
-LANGUAGE["Perk_demolition_knockout"] = [[
-Blast damage increases Stun buildup.
+LANGUAGE["Perk_demolition_knockout"] = [[Blast damage increases Stun buildup.
 Enemies affected by Stun is paralyzed for {1} seconds.
 Stun cooldown is {2} seconds.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[Destruction]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Pressurized Warhead]]
-LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
-{1} increased Blast damage against elites.
-Explosions deal {2} to {3} of enemies' current health as extra Blast damage.]]
+LANGUAGE["Perk_demolition_pressurized_warhead"] = [[{1} increased Blast damage against elites.
+{2} more Blast and Blunt damage on headshot.]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Chain Reaction]]
-LANGUAGE["Perk_demolition_chain_reaction"] = [[
-Enemies you kill have {1} chance to explode,
-dealing {2} of their max health as Blast damage.]]
+LANGUAGE["Perk_demolition_chain_reaction"] = [[Explosions deals up to {1} of an enemy's current health as extra Blast damage.
+Damage increase is capped at {2}.]]
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[Tactics]]
@@ -649,12 +651,12 @@ Immune to Bleeding.]]
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[Technique]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[Bushido]]
 LANGUAGE["Perk_berserker_bushido"] = [[
-Melee headshots increases Stun buildup.
+{1} increased Slashing damage.
 {2} increased movement speed.]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[Savagery]]
 LANGUAGE["Perk_berserker_savagery"] = [[
-{1} increased Melee damage.
+{1} increased Blunt damage.
 {2} increased maximum health.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Parry]]
@@ -699,8 +701,8 @@ LANGUAGE["Perk_warden_restock"] = [[
 Watchtowers restock cooldown decreased by {1}.]]
 
 LANGUAGE["Perk_Title_warden_energize"] = [[Energize]]
-LANGUAGE["Perk_warden_energize"] = [[
-Aura adds {1} base damage to attacks.]]
+LANGUAGE["Perk_warden_energize"] =  [[Aura adds {1} base damage to attacks.
+Only applies to base damage that is at least {1}.]]
 
 LANGUAGE["Perk_Title_Warden_Tier_3"] = [[Escort]]
 LANGUAGE["Perk_Title_warden_rejection_pulse"] = [[Rejection Pulse]]
@@ -739,10 +741,9 @@ Immune to Fire damage.
 Absorb {1} of Fire damage taken as health.]]
 
 LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[Entropy Shield]]
-LANGUAGE["Perk_cremator_entropy_shield"] = [[
-Gain a shield that negates damage taken from enemies.
-Shield explodes on hit and recharges after {1} seconds.
-Explosion deals {2} Fire damage.]]
+LANGUAGE["Perk_cremator_entropy_shield"] = [[Gain an Entropy Shield that reduces damage taken on hit.
+Provides {1} damage resistance and deals Fire damage around you.
+Lasts for {2} seconds and recharges in {3} seconds.]]
 
 LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[Heat Manipulation]]
 LANGUAGE["Perk_Title_cremator_hyperthermia"] = [[Hyperthermia]]
@@ -1151,7 +1152,8 @@ LANGUAGE["Item_SLAM"] = [[SLAM]]
 LANGUAGE["Item_Desc_SLAM"] = [[
 Selectable Lightweight Attack Munition.
 RMB to detonate. Attach to wall to active laser mode.
-]]
+
+You can plant at most 4 active SLAM.]]
 
 LANGUAGE["Item_Incendiary Grenade"] = [[Incendiary Grenade]]
 LANGUAGE["Item_Desc_Incendiary Grenade"] = [[
@@ -1175,7 +1177,9 @@ Shoots incendiary grenades the erupt into flames on impact.
 LANGUAGE["Item_Heat Crossbow"] = [[Heat Crossbow]]
 LANGUAGE["Item_Desc_Heat Crossbow"] = [[
 Improvised sniper weapon.
-Shoots scorching rebars.
+Has two firemodes (Ballistic/Impact).
+
+Deals 300% headshot damage.
 ]]
 
 LANGUAGE["Item_Turret"] = [[Turret]]
@@ -1262,7 +1266,7 @@ LANGUAGE["Item_Desc_MP7A1 Medic PDW"] = [[
 A modified version of MP7A1 for medical purposes.
 
 Press B or ZOOM to fire healing darts.
-Healing dart recharges every 1 second.
+Healing dart heals 10 health and has a 1 second cooldown.
 ]]
 
 LANGUAGE["Item_Vector Medic PDW"] = [[Vector Medic PDW]]
@@ -1271,7 +1275,7 @@ KRISS Vector Gen I equipped with a medical dart launcher.
 Uses an unconventional blowback system that results in its high firerate.
 
 Press B or ZOOM to fire healing darts.
-Healing dart recharges every 1.5 seconds.
+Healing dart heals 12 health and has a 1.5 second cooldown.
 ]]
 
 LANGUAGE["Item_Chainsaw"] = [[Chainsaw]]
@@ -1480,7 +1484,7 @@ For each 1% health missing, increase your damage by 0.8%.
 -- Heavy Gadgets
 LANGUAGE["Gadget_gadget_energy_shield"] = [[Energy Shield]]
 LANGUAGE["Gadget_Desc_energy_shield"] = [[
-Temporarily gain 25 armor.
+Gain 15 armor, up to maximum armor regen limit.
 ]]
 
 LANGUAGE["Gadget_gadget_hardening_injection"] = [[Hardening Injection]]
@@ -1542,7 +1546,7 @@ Stuns enemy on hit.
 LANGUAGE["Gadget_death_mark"] = [[Death Mark]]
 LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
 Places a mark on the targeted enemy.
-Marked enemy takes 15% more damage.
+Marked enemy takes 15% increased damage.
 Marked enemy explodes on death, dealing damage based on its health.
 The mark lasts for 10 seconds.
 You can only mark 1 enemy at a time.

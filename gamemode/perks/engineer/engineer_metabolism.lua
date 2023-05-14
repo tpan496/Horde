@@ -11,14 +11,14 @@ PERK.Params = {
 
 PERK.Hooks = {}
 
-PERK.Hooks.PostEntityTakeDamage = function (ent, dmg, took)
-    local attacker = dmg:GetAttacker()
-    local inflictor = dmg:GetInflictor()
-    if not attacker:IsValid() or not inflictor:IsValid() then return end
-    if took and ent:IsNPC() and attacker:IsPlayer() and (inflictor:GetNWEntity("HordeOwner"):IsPlayer() or (ent.Horde_Has_Parasite and ent.Horde_Has_Parasite:IsPlayer())) and attacker:Horde_GetPerk("engineer_metabolism") then
+PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmginfo)
+    if ply:Horde_GetPerk("engineer_metabolism") then
+        local inflictor = dmginfo:GetInflictor()
         if inflictor.Horde_Debuff_Active and inflictor.Horde_Debuff_Active[HORDE.Status_Decay] then return end
-        local leech = math.min(20, dmg:GetDamage() * 0.1)
-        inflictor:SetHealth(math.min(inflictor:GetMaxHealth(), leech + inflictor:Health()))
+        if (inflictor:IsNPC() and inflictor:GetNWEntity("HordeOwner"):IsPlayer()) or (npc.Horde_Has_Parasite and npc.Horde_Has_Parasite:IsPlayer()) then
+            local leech = math.min(20, dmginfo:GetDamage() * 0.1)
+            inflictor:SetHealth(math.min(inflictor:GetMaxHealth(), leech + inflictor:Health()))
+        end
     end
 end
 

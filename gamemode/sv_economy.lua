@@ -1,5 +1,5 @@
 concommand.Add("horde_drop_money", function (ply, cmd, args)
-    ply:Horde_DropMoney()
+    ply:Horde_DropMoney(args[1])
 end)
 
 concommand.Add("horde_drop_weapon", function (ply, cmd, args)
@@ -33,6 +33,16 @@ function plymeta:Horde_SetMaxHealth(base)
         hook.Run("Horde_OnSetMaxHealth", self, bonus)
         self:SetMaxHealth(bonus.add + base * bonus.more * (1 + bonus.increase))
         self:SetHealth(self:GetMaxHealth())
+    end)
+end
+
+function plymeta:Horde_SetMaxArmor(base)
+    timer.Simple(0, function ()
+        if not self:IsValid() then return end
+        if not base then base = 100 end
+        local bonus = {increase = 0, more = 1, add = 0}
+        hook.Run("Horde_OnSetMaxArmor", self, bonus)
+        self:SetMaxArmor(bonus.add + base * bonus.more * (1 + bonus.increase))
     end)
 end
 
@@ -193,14 +203,17 @@ function plymeta:Horde_GetDropEntities()
     return self.Horde_drop_entities
 end
 
-function plymeta:Horde_DropMoney()
-    if self:Horde_GetMoney() >= 50 and self:Alive() then
+function plymeta:Horde_DropMoney(amount)
+    if not amount then amount = 50 end
+	amount = math.floor(tonumber(amount)) -- ensure that unholy amounts of money are not being dropped
+	if not amount or amount < 50 then amount = 50 end 
+    if self:Horde_GetMoney() >= amount and self:Alive() then
         local res = hook.Run("Horde_PlayerDropMoney", self)
         if res then
             self:Horde_SyncEconomy()
             return
         end
-        self:Horde_AddMoney(-50)
+        self:Horde_AddMoney(-amount)
         local money = ents.Create("horde_money")
         local pos = self:GetPos()
         local dir = (self:GetEyeTrace().HitPos - pos)
@@ -208,11 +221,13 @@ function plymeta:Horde_DropMoney()
         local drop_pos = pos + dir * 50
         drop_pos.z = pos.z + 15
         money:SetPos(drop_pos)
-        money:DropToFloor()
+        --money:DropToFloor() -- DropToFloor() causes money to fall through dispacements and slopes
         money:Spawn()
+		money:SetMoney(amount)
         self:Horde_SyncEconomy()
     end
 end
+
 
 function plymeta:Horde_GetMaxWeight()
     return self.Horde_max_weight
@@ -250,25 +265,20 @@ function plymeta:Horde_RecalcWeight()
 end
 
 hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
-    if ply.Horde_Has_Ice_Coffin == true then return end
+    if ply.Horde_Fake_Respawn == true then return end
     hook.Run("Horde_ResetStatus", ply)
     net.Start("Horde_ClearStatus")
     net.Send(ply)
     ply:SetCustomCollisionCheck(true)
     HORDE.refresh_living_players = true
 
-    --[[if not ply.killed then
-        ply:KillSilent()
-        timer.Simple(10, function ()
-            ply.killed = true
-            ply:Spawn()
-        end)
-    end]]--
-
     if HORDE.start_game and HORDE.current_break_time <= 0 then
         if ply:IsValid() then
-            ply:KillSilent()
-            HORDE:SendNotification("You will respawn next wave.", 0, ply)
+            local ret = hook.Run("Horde_OnPlayerShouldRespawnDuringWave")
+            if not ret then
+                ply:KillSilent()
+                HORDE:SendNotification("You will respawn next wave.", 0, ply)
+            end
         end
     end
 
@@ -612,7 +622,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         net.WriteUInt(1, 3)
                     net.Send(ply)
                 end
-                ply:SetArmor(item.entity_properties.armor)
+                ply:SetArmor(ply:GetMaxArmor() * item.entity_properties.armor / 100)
                 ply:Horde_AddMoney(-price)
                 ply:Horde_AddSkullTokens(-skull_tokens)
                 ply:Horde_SyncEconomy()
@@ -854,8 +864,16 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
     
     local price = HORDE.items[class].ammo_price * count
     if ply:Horde_GetMoney() >= price then
-        ply:Horde_AddMoney(-price)
         local wpn = ply:GetWeapon(class)
+        if wpn.Primary and wpn.Primary.MaxAmmo then
+            if count + ply:GetAmmoCount(wpn:GetPrimaryAmmoType()) > wpn.Primary.MaxAmmo then
+                count = wpn.Primary.MaxAmmo - ply:GetAmmoCount(wpn:GetPrimaryAmmoType())
+            end
+            if wpn.Primary.MaxAmmo <= ply:GetAmmoCount(wpn:GetPrimaryAmmoType()) then
+                return
+            end
+        end
+        ply:Horde_AddMoney(-price)
         HORDE:GiveAmmo(ply, wpn, count)
         ply:Horde_SyncEconomy()
     end

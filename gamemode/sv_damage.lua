@@ -12,6 +12,7 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     if dmginfo:GetDamageCustom() > 0 then return end
     if dmginfo:GetDamage() <= 0 then return end
     if not npc:IsValid() then return end
+    if npc:Health() <= 0 then npc:Remove() return end
 
     local attacker = dmginfo:GetAttacker()
     if not IsValid(attacker) then return end
@@ -32,6 +33,8 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     local more = 1
     local base_add = 0
     local post_add = 0
+    --dmginfo:SetDamage(1000)
+    --npc:Horde_AddDebuffBuildup(HORDE.Status_Stun, dmginfo:GetDamage() * 10, ply, dmginfo:GetDamagePosition())
 
     -- Apply bonus
     local bonus = {increase=increase, more=more, base_add=base_add, post_add=post_add}
@@ -111,6 +114,14 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     end
 
     hook.Run("Horde_OnPlayerDamagePost", ply, npc, bonus, hitgroup, dmginfo)
+    
+    if not npc.Horde_Assist then
+        npc.Horde_Assist = ply
+    elseif ply ~= npc.Horde_Hit then
+        npc.Horde_Assist = npc.Horde_Hit
+    end
+
+    npc.Horde_Hit = ply
 end
 
 function entmeta:TakeDamageOverTime(attacker, dmg, dmgtype, interval, duration)
@@ -247,7 +258,8 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     
     -- Apply bonus
     local bonus = {resistance=0, less=1, evasion=0, block=0}
-    hook.Run("Horde_OnPlayerDamageTaken", ply, dmg, bonus)
+    local ret = hook.Run("Horde_OnPlayerDamageTaken", ply, dmg, bonus)
+    if ret then return end
     if bonus.evasion > 0 then
         local evade = math.random()
         if evade <= bonus.evasion then
@@ -424,10 +436,4 @@ hook.Add("ScaleNPCDamage", "Horde_BossHeadshotDamage", function (npc, hitgroup, 
     if npc:IsValid() and npc:Horde_GetBossProperties() and hitgroup == HITGROUP_HEAD then
         dmg:ScaleDamage(0.70)
     end
-end)
-
-hook.Add("OnNPCKilled", "Horde_OnNPCKilledHook", function (victim, killer, wpn)
-    if not killer:IsPlayer() then return end
-    if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
-    hook.Run("Horde_OnNPCKilled", victim, killer, wpn)
 end)

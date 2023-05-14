@@ -1,22 +1,27 @@
 PERK.PrintName = "Ballistic Shock"
-PERK.Description = "Debuffs you apply have {1} increased effect.\nDebuffs you apply have {2} increased duration."
+PERK.Description = "{1} increased Ballistic damage.\nDebuffs you apply have {2} increased effect."
 PERK.Icon = "materials/perks/ballistic_shock.png"
 PERK.Params = {
-    [1] = {value = 0.5, percent = true},
-    [2] = {value = 1, percent = true},
+    [1] = {value = 0.15, percent = true},
+    [2] = {value = 0.5, percent = true},
 }
 
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "heavy_ballistic_shock" then
         ply:Horde_SetApplyDebuffMore(1.5)
-        ply:Horde_SetApplyDebuffDuration(ply:Horde_GetApplyDebuffDuration() * 2)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "heavy_ballistic_shock" then
         ply:Horde_SetApplyDebuffMore(1)
-        ply:Horde_SetApplyDebuffDuration(ply:Horde_GetApplyDebuffDuration() / 2)
+    end
+end
+
+PERK.Hooks.Horde_OnPlayerDamage = function(ply, npc, bonus, hitgroup, dmg)
+    if not ply:Horde_GetPerk("heavy_ballistic_shock") then return end
+    if HORDE:IsBallisticDamage(dmg) then
+        bonus.increase = bonus.increase + 0.15
     end
 end
