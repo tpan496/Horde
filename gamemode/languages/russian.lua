@@ -2826,7 +2826,7 @@ LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
 На 25% увеличена скорость передвижения.
 ]]
 
-LANGUAGE["Gadget_gadget_flash"] = [[Вспышка]]
+LANGUAGE["Gadget_gadget_flash"] = [[Флэш]]
 LANGUAGE["Gadget_Desc_gadget_flash"] = [[
 Бросается вперед, нанося {1} рубящего урона всем врагам на пути.
 Обеспечивает короткую рамку неуязвимости.
