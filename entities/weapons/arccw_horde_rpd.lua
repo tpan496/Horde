@@ -27,11 +27,10 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/arccw/fesiugmw2_2/c_rpd_1.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 40
-SWEP.DamageMin = 40
-SWEP.RangeMin = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Damage = 42
+SWEP.DamageMin = 33
 SWEP.Range = 2000 * 0.025  -- GAME UNITS * 0.025 = METRES
-SWEP.Penetration = 7
+SWEP.Penetration = 9
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
@@ -42,11 +41,12 @@ SWEP.ExtendedClipSize = 200
 SWEP.ReducedClipSize = 50
 
 SWEP.VisualRecoilMult = 0
-SWEP.Recoil = 0.45
-SWEP.RecoilSide = 0.45
-SWEP.RecoilRise = 0
+SWEP.Recoil = 0.4
+SWEP.RecoilSide = 0.2
+SWEP.RecoilRise = 0.5
+SWEP.RecoilPunch = 2.5
 
-SWEP.Delay = 0.085 -- 60 / RPM.
+SWEP.Delay = 60 / 650 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -60,9 +60,9 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
 SWEP.NPCWeight = 100
 
-SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.AccuracyMOA = 4 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 600 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 150
+SWEP.MoveDispersion = 250
 
 SWEP.Primary.Ammo = "smg1" -- what ammo type the gun uses
 
@@ -82,9 +82,13 @@ SWEP.ShellRotateAngle = Angle(0, 90, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.875
+SWEP.SpeedMult = 0.9
 SWEP.SightedSpeedMult = 0.35
-SWEP.SightTime = 0.25
+SWEP.SightTime = 0.425
+SWEP.ShootSpeedMult = 0.75
+SWEP.Bipod_Integral = true
+SWEP.BipodDispersion = 0.5
+SWEP.BipodRecoil = 0.5
 
 SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
     -- [0] = "bulletchamber",
@@ -208,11 +212,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo",
+        DefaultAttName = "Standard Ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",

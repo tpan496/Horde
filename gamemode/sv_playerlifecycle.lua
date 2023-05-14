@@ -627,7 +627,7 @@ HORDE.VoteChangeMap = function (ply)
 end
 
 hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
-    if ply.Horde_Has_Ice_Coffin == true then return end
+    if ply.Horde_Fake_Respawn == true then return end
     if ply:IsValid() then
         ply:SetCollisionGroup(15)
         ply:SetCanZoom(false)
@@ -795,6 +795,8 @@ function HORDE:CheckAlivePlayers()
             -- ply:ScreenFade(SCREENFADE.OUT, Color(0,0,0), 6, 2)
             -- ply:Freeze(true)
         end
+        local ret = hook.Run("Horde_ShouldContinueGameWhenAllPlayersAreDead")
+        if ret then return end
         HORDE:GameEnd("DEFEAT")
     end
 end

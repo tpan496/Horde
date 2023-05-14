@@ -40,6 +40,7 @@ function plymeta:Horde_ApplyPerksForClass()
     end
 
     self:Horde_SetMaxHealth()
+    self:Horde_SetMaxArmor()
     if self:Horde_GetSpellWeapon() then
         self:Horde_RecalcAndSetMaxMind()
     else
@@ -83,6 +84,7 @@ net.Receive("Horde_PerkChoice", function(len, ply)
     net.Broadcast()
 
     ply:Horde_SetMaxHealth()
+    ply:Horde_SetMaxArmor()
     if ply:Horde_GetSpellWeapon() then
         ply:Horde_RecalcAndSetMaxMind()
     else

@@ -18,7 +18,7 @@ function EFFECT:Init(data)
 			else
 				p:SetColor(0,100,255)
 			end
-            p:SetDieTime(1.8)
+            p:SetDieTime(1)
 			p:SetStartAlpha(100)
 			p:SetEndAlpha(0)
 			p:SetStartSize(math.Rand(0.8, 1.5))
@@ -34,7 +34,7 @@ function EFFECT:Init(data)
 
 		for i = 1, 2 do
 			local p = self.Emitter:Add("particles/smokey", Startpos)
-			p:SetDieTime(2)
+			p:SetDieTime(1.5)
 			p:SetStartAlpha(50)
 			p:SetEndAlpha(0)
 			p:SetStartSize(math.Rand(2, 4))

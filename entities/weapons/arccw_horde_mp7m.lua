@@ -443,6 +443,7 @@ function SWEP:ChangeFiremode(pred)
     ply:EmitSound("horde/weapons/mp7m/heal.ogg", 125, 100, 1, CHAN_AUTO)
 
     self:SetNextSecondaryFire(CurTime() + 1)
+    self:SetNextPrimaryFire(CurTime() + 0.25)
     return true
 end
 

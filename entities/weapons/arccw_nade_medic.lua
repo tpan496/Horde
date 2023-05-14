@@ -13,6 +13,8 @@ SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Medic Grenade MKI"
 SWEP.Trivia_Country = "Britain"
 SWEP.Trivia_Year = 2000
+SWEP.Primary.MaxAmmo = 9
+SWEP.ForceDefaultAmmo = 0
 
 SWEP.Slot = 4
 

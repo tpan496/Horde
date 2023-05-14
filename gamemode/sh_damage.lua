@@ -83,7 +83,7 @@ function HORDE:GetDamageType(dmginfo)
 end
 
 function HORDE:IsBallisticDamage(dmginfo)
-    return dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_SNIPER) or dmginfo:IsDamageType(DMG_BUCKSHOT)
+    return dmginfo:IsDamageType(DMG_BULLET + DMG_SNIPER + DMG_BUCKSHOT)
 end
 
 function HORDE:IsBluntDamage(dmginfo)
@@ -103,7 +103,7 @@ function HORDE:IsPhysicalDamage(dmginfo)
 end
 
 function HORDE:IsFireDamage(dmginfo)
-    return dmginfo:IsDamageType(DMG_BURN) or dmginfo:IsDamageType(DMG_SLOWBURN) or dmginfo:IsDamageType(DMG_PLASMA)
+    return dmginfo:IsDamageType(DMG_BURN + DMG_SLOWBURN + DMG_PLASMA)
 end
 
 function HORDE:IsColdDamage(dmginfo)
@@ -111,15 +111,15 @@ function HORDE:IsColdDamage(dmginfo)
 end
 
 function HORDE:IsLightningDamage(dmginfo)
-    return dmginfo:IsDamageType(DMG_SHOCK) or dmginfo:IsDamageType(DMG_ENERGYBEAM)
+    return dmginfo:IsDamageType(DMG_SHOCK + DMG_ENERGYBEAM)
 end
 
 function HORDE:IsPoisonDamage(dmginfo)
-    return dmginfo:IsDamageType(DMG_NERVEGAS) or dmginfo:IsDamageType(DMG_ACID) or dmginfo:IsDamageType(DMG_POISON) or dmginfo:IsDamageType(DMG_PARALYZE)
+    return dmginfo:IsDamageType(DMG_NERVEGAS + DMG_ACID + DMG_POISON + DMG_PARALYZE)
 end
 
 function HORDE:IsBlastDamage(dmginfo)
-    return dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsDamageType(DMG_MISSILEDEFENSE)
+    return dmginfo:IsDamageType(DMG_BLAST)
 end
 
 -- Weapon types

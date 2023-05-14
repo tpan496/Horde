@@ -100,7 +100,7 @@ function ENT:FlashBang()
             k:SetDSP( 37, false )
 
         elseif k:IsNPC() then
-            k:Horde_AddDebuffBuildup(HORDE.Status_Stun, 100, attacker, k:GetPos())
+            k:Horde_AddDebuffBuildup(HORDE.Status_Stun, 200, attacker, k:GetPos())
         end
     end
 end

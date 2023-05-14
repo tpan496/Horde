@@ -1,24 +1,17 @@
 PERK.PrintName = "Chain Reaction"
-PERK.Description = [[Enemies you kill have {1} chance to explode,
-dealing {2} of their health as Blast damage.]]
+PERK.Description = [[Explosions deals up to {1} of an enemy's current health as extra Blast damage.
+Damage increase is capped at {2}.]]
 PERK.Icon = "materials/perks/chain_reaction.png"
 PERK.Params = {
-    [1] = {value = 0.30, percent = true},
-    [2] = {value = 0.50, percent = true},
+    [1] = {value = 0.08, percent = true},
+    [2] = {value = 5000}
 }
 
 PERK.Hooks = {}
-PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, inflictor)
-    if not victim:IsValid() or not victim:IsNPC() or not killer:IsPlayer() then return end
-    if not killer:Horde_GetPerk("demolition_chain_reaction") then return end
-    if inflictor:IsNPC() then return end -- Prevent infinite chains
-    local p = math.random()
-    if p <= 0.30 then
-        local dmg = victim:GetMaxHealth() * 0.50
-        local rad = 150
-        local e = EffectData()
-        e:SetOrigin(victim:GetPos())
-        util.Effect("Explosion", e)
-        util.BlastDamage(victim, killer, victim:GetPos(), rad, dmg)
+
+PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
+    if not ply:Horde_GetPerk("demolition_chain_reaction") then return end
+    if HORDE:IsBlastDamage(dmginfo) then
+        bonus.post_add = math.min(5000, npc:Health() * math.min(0.08, dmginfo:GetDamage() / 5000))
     end
 end

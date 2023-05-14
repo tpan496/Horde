@@ -1,5 +1,6 @@
 PERK.PrintName = "Energize"
-PERK.Description = "Aura adds {1} base damage to attacks."
+PERK.Description = [[Aura adds {1} base damage to attacks.
+Only applies to base damage that is at least {1}.]]
 PERK.Icon = "materials/perks/energize.png"
 PERK.Params = {
     [1] = {value = 8},

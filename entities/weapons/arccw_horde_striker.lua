@@ -51,10 +51,13 @@ SWEP.RecoilSide = 2
 
 SWEP.ShotgunReload = true
 
-SWEP.Delay = 0.17 -- 60 / RPM.
+SWEP.Delay = 60 / 350 -- 60 / RPM.
 SWEP.Num = 6 -- number of shots per trigger pull.
 SWEP.RunawayBurst = false
 SWEP.Firemodes = {
+    {
+        Mode = 2,
+    },
     {
         Mode = 1,
     },
@@ -66,9 +69,9 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_shotgun"
 SWEP.NPCWeight = 125
 
-SWEP.AccuracyMOA = 100 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.AccuracyMOA = 125 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 300 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 150
+SWEP.MoveDispersion = 175
 
 SWEP.Primary.Ammo = "buckshot" -- what ammo type the gun uses
 
@@ -212,11 +215,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_shotgun"
+        Slot = "go_ammo",
+        DefaultAttName = "Buckshot Shells"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",

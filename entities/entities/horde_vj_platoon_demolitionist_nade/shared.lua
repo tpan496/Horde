@@ -25,7 +25,7 @@ function ENT:Initialize()
         if phys:IsValid() then
             phys:Wake()
             phys:SetBuoyancyRatio(0)
-            phys:SetMass(100)
+            phys:SetMass(1)
         end
 
         self.SpawnTime = CurTime()
@@ -80,7 +80,7 @@ function ENT:Detonate()
         if self.Owner:IsValid() then
             attacker = self.Owner
         end
-        util.BlastDamage(self, attacker, self:GetPos(), 100, 150)
+        util.BlastDamage(self, attacker, self:GetPos(), 150, 100)
         local dmg = 50
         local rad = 200
         for i = 1, 3 do

@@ -35,7 +35,7 @@ SWEP.WorldModelOffset = {
 SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 42
-SWEP.DamageMin = 32
+SWEP.DamageMin = 26
 SWEP.Range = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 7
 SWEP.DamageType = DMG_BULLET
@@ -49,10 +49,11 @@ SWEP.ReducedClipSize = 15
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4
-SWEP.RecoilSide = 0.7
+SWEP.RecoilSide = 0.3
 SWEP.RecoilRise = 0.3
+SWEP.RecoilPunch = 2.5
 
-SWEP.Delay = 0.079 -- 60 / RPM.
+SWEP.Delay = 60 / 750 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -69,9 +70,9 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
 SWEP.NPCWeight = 150
 
-SWEP.AccuracyMOA = 2.5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 500 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 150
+SWEP.MoveDispersion = 200
 
 SWEP.Primary.Ammo = "smg1" -- what ammo type the gun uses
 
@@ -210,11 +211,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo",
+        DefaultAttName = "Standard Ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",

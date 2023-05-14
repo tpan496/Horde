@@ -49,8 +49,8 @@ SWEP.ExtendedClipSize = 8
 SWEP.ReducedClipSize = 8
 
 SWEP.VisualRecoilMult = 0
-SWEP.Recoil = 2
-SWEP.RecoilSide = 2
+SWEP.Recoil = 1.5
+SWEP.RecoilSide = 1
 
 SWEP.ShotgunReload = true
 SWEP.ManualAction = true
@@ -70,9 +70,9 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_shotgun"
 SWEP.NPCWeight = 100
 
-SWEP.AccuracyMOA = 0.1 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.AccuracyMOA = 1 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 50 -- inaccuracy added by moving. Applies in sights as well! Walking speed is considered as "maximum".
+SWEP.MoveDispersion = 250 -- inaccuracy added by moving. Applies in sights as well! Walking speed is considered as "maximum".
 SWEP.SightsDispersion = 0 -- dispersion that remains even in sights
 
 SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses
@@ -84,11 +84,10 @@ SWEP.ShootSound =			"weapons/fesiugmw2/fire/shot_w1200.wav"
 --SWEP.DistantShootSound =	"weapons/fesiugmw2/fire_distant/shot_ranger.wav"
 SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/shot_sil.wav"
 
-SWEP.MuzzleEffect = "muzzleflash_m3"
-SWEP.ShellModel = "models/shells/shell_12gauge.mdl"
+SWEP.MuzzleEffect = "muzzleflash_6"
+SWEP.ShellModel = "models/shells/shell_338mag.mdl"
 SWEP.ShellPitch = 100
-SWEP.ShellSounds = ArcCW.ShotgunShellSoundsTable
-SWEP.ShellScale = 1
+SWEP.ShellScale = 1.5
 SWEP.ShellRotateAngle = Angle(0, 90, 0)
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
@@ -133,6 +132,9 @@ SWEP.BarrelOffsetSighted = Vector(0, 0, -1)
 SWEP.BarrelOffsetHip = Vector(2, 0, -2)
 
 SWEP.ExtraSightDist = 5
+
+SWEP.ManualAction = true
+SWEP.NoLastCycle = true -- do not cycle on last shot
 
 SWEP.AttachmentElements = {
     ["nors"] = {
@@ -198,11 +200,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_shotgun"
+        Slot = "go_ammo",
+        DefaultAttName = "Standard Ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Akimbotest",
@@ -292,7 +295,7 @@ SWEP.Animations = {
     ["cycle"] = {
         Source = "rechamber",
         Time = 35/45,
-		MinProgress = 0.85,
+		MinProgress = 0.65,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_m1887_reload_lift_v1.wav", 	t = 0/30},
 						{s = "weapons/fesiugmw2/foley/wpfoly_m1887_reload_open_v1.wav", 	t = 6/30},
@@ -302,7 +305,7 @@ SWEP.Animations = {
     ["cycle_iron"] = {
         Source = "rechamber_ads",
         Time = 35/45,
-		MinProgress = 0.85,
+		MinProgress = 0.65,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_m1887_reload_lift_v1.wav", 	t = 0/30},
 						{s = "weapons/fesiugmw2/foley/wpfoly_m1887_reload_open_v1.wav", 	t = 6/30},
@@ -415,28 +418,3 @@ SWEP.Animations = {
 					},
     },
 }
-
- -- Super fucky temp!
- -- S H U T  U P    A N D   K E E P  T H E M   P I N N E D  D O W N  
-
--- notverycreativenowarewe
-local nvcnaw = 4
-
- -- hipfire
- -- maximum accuracy
-    SWEP.Inaccuracy_Hip_Max_Stand	= nvcnaw
-    SWEP.Inaccuracy_Hip_Max_Duck	= nvcnaw
-    SWEP.Inaccuracy_Hip_Max_Prone	= nvcnaw
- -- minimum accuracy
-    SWEP.Inaccuracy_Hip_Min_Stand   = nvcnaw
-    SWEP.Inaccuracy_Hip_Min_Duck    = nvcnaw
-    SWEP.Inaccuracy_Hip_Min_Prone   = nvcnaw
-
- -- sighted fire
- -- yeah
-    SWEP.Inaccuracy_ADS = 5.5
-
- -- inaccuracy when you're... i don't remember
-SWEP.Inaccuracy_Add_ADS			= 0
-SWEP.Inaccuracy_Add_Hip			= 0
-SWEP.Inaccuracy_Add_Move		= 0.1

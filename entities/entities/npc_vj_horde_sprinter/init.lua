@@ -49,4 +49,8 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	end
 end
 
+function ENT:Draw()
+	render.DrawWireframeBox(self:GetPos(), Angle( 0, 0, 0 ), self:OBBMins(), self:OBBMaxs(), Color( 255, 255, 255 ), true )
+end
+
 VJ.AddNPC("Sprinter","npc_vj_horde_sprinter", "Zombies")

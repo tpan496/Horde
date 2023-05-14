@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture" "arccw/weaponicons/arccw_horde_nade_sonar"
+	"$translucent" 1
+}

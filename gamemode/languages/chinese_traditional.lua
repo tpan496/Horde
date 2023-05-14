@@ -305,6 +305,7 @@ LANGUAGE["Perk_assault_base"] = [[
 難度：簡單
 
 提升 {1} 移動速度。（每級提升 {2}，最多至 {3}）。
+提升 {7} 子彈傷害。 （每級提升 {8}，最多至 {9}）。
 
 殺死敵人後獲得「腎上腺素」狀態。通過技能的選擇，「腎上腺素」可以進行堆疊。
 「腎上腺素」提升 {4} 移動速度和輸出。]]
@@ -312,6 +313,8 @@ LANGUAGE["Perk_assault_base"] = [[
 LANGUAGE["Perk_heavy_base"] = [[
 重裝兵擁有高超的護甲防禦機制，同時能使用重武器對敵人造成火力壓制。
 難度：簡單
+
+提升 {6} 最大護甲值。（每級提升 {7}， 最多至 {8}）。
 
 每秒恢復 {1} 點護甲。
 護甲回復上限為 {2}。（基礎{3} + 每級提升 {4}，最多至 {5}）。]]
@@ -328,9 +331,10 @@ LANGUAGE["Perk_demolition_base"] = [[
 爆破兵擁有強大的範圍性輸出。根據技能的選擇，爆破兵也能提供超群的單體輸出能力。
 難度：中等
 
+提升 {7} 爆炸傷害。 （每級提升 {8}，最多至 {9}）。
 提升 {1} 爆炸傷害抗性。（基礎 {2} + 每級提升 {3}，最多至 {4}）。
 
-在沒有高爆手榴彈的前提下，每 {5} 秒獲得 {6} 個高爆手榴彈。]]
+在沒有高爆手榴彈的前提下，每 {6} 秒獲得 {5} 個高爆手榴彈。]]
 
 LANGUAGE["Perk_ghost_base"] = [[
 幻影是一個圍繞著精準度和「迷彩」機制的職業。使用恰當的話，幻影可以提供無以匹敵的單體輸出。
@@ -457,8 +461,9 @@ LANGUAGE["Perk_heavy_liquid_armor"] = [[
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[反應裝甲]]
 LANGUAGE["Perk_heavy_reactive_armor"] = [[
-護甲值至少有 {1} 的前提下：
-  免疫火焰，爆炸傷害。]]
+獲得一個能抵消傷害的反應裝甲。
+裝甲在受到至少 {1} 傷害後激活，在 {2} 秒後重置。
+激活會消耗 {3} 當前護甲值。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_4"] = [[先進科技]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[納米機器]]
@@ -529,12 +534,14 @@ LANGUAGE["Perk_demolition_frag_cluster"] = [[
 LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[武器]]
 LANGUAGE["Perk_Title_demolition_direct_hit"] = [[精確打擊]]
 LANGUAGE["Perk_demolition_direct_hit"] = [[
-提升 {1} 起爆點附近敵人的爆炸傷害。]]
+提升 {1} 起爆點附近敵人的爆炸傷害。
+提升 {1} 鈍器傷害。]]
 
 LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[震蕩波]]
 LANGUAGE["Perk_demolition_seismic_wave"] = [[
-爆炸類發射物在引爆後產生額外的衝擊波。
-衝擊波造成原本爆炸傷害 {1} 的物理傷害。]]
+爆炸傷害產生額外的震蕩波。
+震蕩波造成原本爆炸傷害 {1} 的物理傷害。
+產生震蕩波需要超過 {2} 爆炸傷害。]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[爆破途徑]]
 LANGUAGE["Perk_Title_demolition_fragmentation"] = [[破片]]
@@ -551,12 +558,12 @@ LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[毀滅]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[高壓彈頭]]
 LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
 提升 {1} 對精英敵人造成的爆炸傷害。
-對敵人造成 {2} 當前生命值的額外爆炸傷害。]]
+{2} 更多對頭部造成的爆炸和鈍器傷害。。]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[連鎖反應]]
 LANGUAGE["Perk_demolition_chain_reaction"] = [[
-擊殺的敵人有 {1} 機率爆炸。
-爆炸傷害為最大生命值的 {2}。]]
+對敵人造成 {1} 當前生命值的額外爆炸傷害。
+額外爆炸傷害最高為 {2}。]]
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[策略]]
@@ -717,7 +724,8 @@ LANGUAGE["Perk_warden_restock"] = [[
 
 LANGUAGE["Perk_Title_warden_energize"] = [[充能]]
 LANGUAGE["Perk_warden_energize"] = [[
-光環提供 +{1} 額外基礎傷害。]]
+光環提供 +{1} 額外傷害。
+激活此效果需要至少 {1} 基礎傷害。]]
 
 LANGUAGE["Perk_Title_Warden_Tier_3"] = [[護送]]
 LANGUAGE["Perk_Title_warden_rejection_pulse"] = [[排斥力場]]
@@ -756,7 +764,7 @@ LANGUAGE["Perk_cremator_positron_array"] = [[
 吸收 {1} 受到的火焰傷害為生命值。]]
 
 LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[熵護盾]]
-LANGUAGE["Perk_cremator_entropy_shield"] = [[
+--[[LANGUAGE["Perk_cremator_entropy_shield"] = [[
 獲得一個能抵消一次傷害的護盾。
 護盾被擊中後爆炸，在 {1} 秒後重生。
 護盾爆炸造成 {2} 火焰傷害。]]

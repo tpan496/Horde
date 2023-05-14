@@ -4,13 +4,13 @@ PERK.Description = [[
 Melee attacks remove Nemesis mutation from enemies.]]
 PERK.Icon = "materials/perks/psycho/disembowel.png"
 PERK.Params = {
-    [1] = {value = 0.25, percent = true},
+    [1] = {value = 0.4, percent = true},
 }
 PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnPlayerCritical = function (ply, npc, bonus, hitgroup, dmginfo, crit_bonus)
     if ply:Horde_GetPerk("psycho_disembowel") then
-        bonus.increase = bonus.increase + 0.25
+        bonus.increase = bonus.increase + 0.4
     end
 end
 

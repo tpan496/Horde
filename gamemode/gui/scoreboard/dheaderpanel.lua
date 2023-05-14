@@ -47,7 +47,7 @@ function PANEL:PerformLayout()
     self.ClassPanel:SetPaintBackground(false)
 	self.ClassPanel:SetMouseInputEnabled(false)
 
-	self.m_ClassLabel:AlignLeft(w * 0.22)
+	self.m_ClassLabel:AlignLeft(w * 0.25)
 	self.m_ClassLabel:CenterVertical()
     self.m_ClassLabel:SizeToContents()
 
@@ -55,15 +55,15 @@ function PANEL:PerformLayout()
 	self.m_PerksLabel:CenterVertical()
     self.m_PerksLabel:SizeToContents()
 
-    self.m_GadgetLabel:AlignRight(w * 0.4)
+    self.m_GadgetLabel:AlignLeft(w * 0.54)
 	self.m_GadgetLabel:CenterVertical()
     self.m_GadgetLabel:SizeToContents()
 
-    self.m_MoneyLabel:AlignRight(w * 0.3)
+    self.m_MoneyLabel:AlignRight(w * 0.26)
 	self.m_MoneyLabel:CenterVertical()
     self.m_MoneyLabel:SizeToContents()
 
-    self.m_KillsLabel:AlignRight(w * 0.2, 0)
+    self.m_KillsLabel:AlignRight(w * 0.18, 0)
 	self.m_KillsLabel:CenterVertical()
     self.m_KillsLabel:SizeToContents()
 

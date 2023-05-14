@@ -3,7 +3,7 @@ if CLIENT then
     SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_go_nade_molotov")
     killicon.Add("arccw_horde_fire", "arccw/weaponicons/arccw_go_nade_molotov", Color(0, 0, 0, 255))
 end
-SWEP.Base = "arccw_base_nade"
+SWEP.Base = "arccw_horde_base_nade"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -16,6 +16,8 @@ SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Gasoline + Dish Soap"
 SWEP.Trivia_Country = "Finland"
 SWEP.Trivia_Year = 1939
+SWEP.Primary.MaxAmmo = 9
+SWEP.ForceDefaultAmmo = 0
 
 SWEP.Slot = 4
 

@@ -5,10 +5,16 @@ function entmeta:Horde_AddWeaken(inflictor, duration, more)
     timer.Create("Horde_RemoveWeaken" .. self:GetCreationID(), duration, 1, function ()
         self:Horde_RemoveWeaken()
     end)
-    if not self.Horde_Weaken then
-        hook.Run("Horde_PostEnemyDebuffApply", self, inflictor, HORDE.Status_Weaken, self:GetPos())
+
+    if self:IsPlayer() then
+        self:Horde_SyncStatus(HORDE.Status_Weaken, 100)
+        self.Horde_Weaken = math.max(1, 1 * more)
+    else
+        if not self.Horde_Weaken then
+            hook.Run("Horde_PostEnemyDebuffApply", self, inflictor, HORDE.Status_Weaken, self:GetPos())
+        end
+        self.Horde_Weaken = math.max(1, 1 * more)
     end
-    self.Horde_Weaken = math.max(1, 1 * more)
 end
 
 function entmeta:Horde_GetWeaken()
@@ -18,6 +24,10 @@ end
 function entmeta:Horde_RemoveWeaken()
     if not self:IsValid() then return end
     self.Horde_Weaken = nil
+    if self:IsPlayer() then
+        self:Horde_SyncStatus(HORDE.Status_Weaken, 0)
+        return
+    end
 end
 
 hook.Add("EntityTakeDamage", "Horde_WeakenDamageTaken", function(target, dmg)

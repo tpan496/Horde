@@ -170,7 +170,7 @@ function HORDE:GetDefaultClassesData()
             [1] = {title = "Grenade", choices = {"demolition_frag_impact", "demolition_frag_cluster"}},
             [2] = {title = "Weaponry", choices = {"demolition_direct_hit", "demolition_seismic_wave"}},
             [3] = {title = "Approach", choices = {"demolition_fragmentation", "demolition_knockout"}},
-            [4] = {title = "Destruction", choices = {"demolition_pressurized_warhead", "demolition_chain_reaction"}},
+            [4] = {title = "Destruction", choices = {"demolition_chain_reaction", "demolition_pressurized_warhead"}},
         },
         4,nil,nil,nil,
         {HORDE.Class_Demolition}
@@ -236,8 +236,8 @@ function HORDE:GetDefaultClassesData()
         "warden_base",
         {
             [1] = {title = "Sustain", choices = {"warden_bulwark", "warden_vitality"}},
-            [2] = {title = "Resource Utilization", choices = {"warden_restock", "warden_energize"}},
-            [3] = {title = "Escort", choices = {"warden_rejection_pulse", "warden_inoculation"}},
+            [2] = {title = "Resource Utilization", choices = {"warden_restock", "warden_inoculation"}},
+            [3] = {title = "Escort", choices = {"warden_rejection_pulse", "warden_energize"}},
             [4] = {title = "Coverage", choices = {"warden_ex_machina", "warden_resonance_cascade"}},
         },
         8,nil,nil,nil,

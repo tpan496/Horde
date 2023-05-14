@@ -21,15 +21,15 @@ SWEP.Spawnable = true
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/v_m79.mdl"
-SWEP.WorldModel = "models/horde/weapons/w_m79.mdl"
-SWEP.MirrorVMWM = false
+SWEP.WorldModel = "models/horde/weapons/v_m79.mdl"
+SWEP.MirrorVMWM = true
 --SWEP.WorldModelOffset = {
 --    pos        =    Vector(-8, 5, -8),
 --    ang        =    Angle(-6, 0, 180),
 --    bone    =    "ValveBiped.Bip01_R_Hand",
 --}
 SWEP.WorldModelOffset = {
-    pos        =    Vector(12.5, 1, 2),
+    pos        =    Vector(0, 5, -7),
     ang        =    Angle(-10, 2.5, 180),
     bone    =    "ValveBiped.Bip01_R_Hand",
 }
@@ -40,7 +40,7 @@ SWEP.DamageMin = 20 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 20
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "arccw_he_round" -- entity to fire, if any
+SWEP.ShootEntity = "horde_projectile_he_round" -- entity to fire, if any
 SWEP.MuzzleVelocity = 100000 -- projectile or phys bullet muzzle velocity
 -- IN M/S
 
@@ -139,6 +139,7 @@ SWEP.AttachmentElements = {
 
 SWEP.ExtraSightDist = 5
 
+SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
     {
         PrintName = "Charms",
@@ -152,12 +153,12 @@ SWEP.Attachments = {
         },
     },
     {
-        PrintName = "Grenade Type",
-        Slot = "ammo_kf1grenade"
+        PrintName = "Ammo",
+        Slot = "horde_ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
 }
 
