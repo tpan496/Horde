@@ -6,7 +6,7 @@ PERK.Params = {
     [2] = {value = 0.25, percent = true},
 }
 
-local exp = {npc_grenade_frag = 100, npc_satchel = 100, npc_tripmine = 100, arccw_thr_go_frag = 200}
+local exp = {npc_grenade_frag = 100, npc_satchel = 100, npc_tripmine = 100, arccw_thr_go_frag = 200, arccw_thr_horde_m67 = 100}
 PERK.Hooks = {}
 PERK.Hooks.EntityRemoved = function(ent)
     if !IsValid(ent) then return end

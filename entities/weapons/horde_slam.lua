@@ -3,7 +3,7 @@ SWEP.Spawnable				= true
 SWEP.AdminSpawnable			= true
 
 SWEP.Primary.Ammo = "slam"
---SWEP.Primary.MaxAmmo = 10
+--SWEP.Primary.MaxAmmo = 9
 SWEP.Primary.Delay = 1.25
 SWEP.Primary.Automatic = false
 SWEP.Primary.DefaultClip = 1
