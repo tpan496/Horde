@@ -43,8 +43,8 @@ hook.Add("Horde_ShouldCollide", "Horde_Phasing_Collide", function (ent1, ent2)
         npc = ent1
     end
 
-    if npc:IsNPC() then
-        if ply:Horde_GetPhasing() then
+    if IsValid(npc) and npc:IsNPC() then
+        if IsValid(ply) and ply:Horde_GetPhasing() then
             hook.Run("Horde_OnPhasingCollide", ply, npc)
             return false
         else

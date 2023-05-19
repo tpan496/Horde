@@ -9,7 +9,7 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "MP5K Medic"
+SWEP.PrintName = "MP5K Medic PDW"
 SWEP.Trivia_Class = "Sub Machine Gun"
 SWEP.Trivia_Desc = "Fully automatic, close range."
 

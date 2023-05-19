@@ -29,7 +29,12 @@ SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/c_gau.mdl"
 SWEP.MirrorVMWM = false
-SWEP.WorldModel = "models/weapons/w_mach_m249para.mdl"
+SWEP.WorldModel = "models/horde/weapons/w_gau.mdl"
+SWEP.WorldModelOffset = {
+    pos = Vector(0, 5, -35),
+    ang = Angle(0, 0, 0),
+    scale = 1,
+}
 SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "100000"

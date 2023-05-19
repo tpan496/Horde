@@ -9,7 +9,7 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "Vector (Horde)"
+SWEP.PrintName = "Vector Medic PDW"
 SWEP.Trivia_Class = "Sub Machine Gun"
 SWEP.Trivia_Desc = "Fully automatic, high fire rate."
 
@@ -74,7 +74,7 @@ SWEP.Primary.Ammo = "pistol" -- what ammo type the gun uses
 SWEP.ShootVol = 110 -- volume of shoot sound
 SWEP.ShootPitch = 110 -- pitch of shoot sound
 
-SWEP.ShootSound =			"weapons/fesiugmw2/fire/kriss.wav"
+SWEP.ShootSound =			"horde/weapons/vector/kriss1.ogg"
 SWEP.ShootMechSound =       ArcCW_MW2_Mech
 --SWEP.DistantShootSound =	"weapons/fesiugmw2/fire_distant/kriss.wav"
 SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/mp5_sil.wav"
@@ -228,6 +228,7 @@ SWEP.Attachments = {
         DefaultAttName = "None",
         Slot = "mw2_wepcamo",
         FreeSlot = true,
+        InstalledEles = {"wepcamo-blackout"},
     },
 	{
         PrintName = "Charm",
