@@ -79,6 +79,6 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 		dir:Normalize()
 		dir = dir + VectorRand() * 0.03
 		dir:Normalize()
-		phy:ApplyForceCenter(dir * 1000)
+		phy:ApplyForceCenter(dir * 4000)
 	end
 end
