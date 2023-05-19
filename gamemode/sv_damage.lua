@@ -12,7 +12,7 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     if dmginfo:GetDamageCustom() > 0 then return end
     if dmginfo:GetDamage() <= 0 then return end
     if not npc:IsValid() then return end
-    if npc:Health() <= 0 then npc:Remove() return end
+    if GetConVar("horde_corpse_cleanup"):GetInt() == 1 and npc:Health() <= 0 then npc:Remove() return end
 
     local attacker = dmginfo:GetAttacker()
     if not IsValid(attacker) then return end
