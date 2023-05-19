@@ -5,10 +5,10 @@ if CLIENT then
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - GSO (SMGs)" -- edit this if you like
+SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "MP9N"
+SWEP.PrintName = "MP9N Medic PDW"
 SWEP.Trivia_Class = "PDW"
 SWEP.Trivia_Desc = "9mm machine pistol developed from the Steyr TMP, with side-folding stock."
 SWEP.Trivia_Manufacturer = "Brugger and Thomet"

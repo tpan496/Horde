@@ -8,7 +8,6 @@ SWEP.Primary.Delay = 1.25
 SWEP.Primary.Automatic = false
 SWEP.Primary.DefaultClip = 1
 SWEP.Primary.ClipSize = -1
-SWEP.FiresUnderwater = false
 
 SWEP.HoldType = "slam"
 SWEP.ViewModel = "models/weapons/c_slam.mdl"
