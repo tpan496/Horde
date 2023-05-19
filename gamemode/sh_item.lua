@@ -160,7 +160,7 @@ function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_cortex", 2500, 1, {Assault=true}, {Assault=10})
     HORDE:CreateGadgetItem("gadget_neuro_amplifier", 3000, 2, {Assault=true}, {Assault=15})
     HORDE:CreateGadgetItem("gadget_ouroboros", 3000, 3, {Assault=true}, {Assault=20})
-    --HORDE:CreateGadgetItem("gadget_hyperdrive", 3000, 2, {Assault=true}, {Assault=25})
+    --HORDE:CreateGadgetItem("gadget_hyperdrive", 3250, 1, {Assault=true}, {Assault=25})
 
     HORDE:CreateGadgetItem("gadget_life_diffuser", 2000, 1, {Medic=true}, {Medic=5}, {HORDE.DMG_POISON})
     HORDE:CreateGadgetItem("gadget_projectile_launcher_heal", 2500, 2, {Medic=true}, {Medic=10}, {HORDE.DMG_POISON})
