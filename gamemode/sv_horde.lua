@@ -53,6 +53,14 @@ function entmeta:Horde_GetBossProperties()
     return self.horde_boss_properties
 end
 
+function entmeta:Horde_SetElite()
+    self.Horde_Elite = true
+end
+
+function entmeta:Horde_IsElite()
+    return self.Horde_Elite
+end
+
 hook.Add("InitPostEntity", "Horde_Init", function()
     HORDE.ai_nodes = {}
     local horde_nodes = {}
@@ -218,7 +226,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
                 end
             end
 
-            if victim:GetVar("is_elite") then
+            if victim:Horde_IsElite() then
                 if not HORDE.player_elite_kills[killer:SteamID()] then HORDE.player_elite_kills[killer:SteamID()] = 0 end
                 HORDE.player_elite_kills[killer:SteamID()] = HORDE.player_elite_kills[killer:SteamID()] + 1
             end
@@ -457,7 +465,7 @@ function HORDE:SpawnEnemy(enemy, pos)
 
     -- Health settings
     if enemy.is_elite and enemy.is_elite == true then
-        spawned_enemy:SetVar("is_elite", true)
+        spawned_enemy:Horde_SetElite()
         local scale
         local add
         if enemy.boss_properties and enemy.boss_properties.is_boss == true then
