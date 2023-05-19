@@ -11,8 +11,9 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     if CLIENT then return end
     if ply:Horde_GetGadget() ~= "gadget_energy_shield" or (not ply.Horde_ArmorRegenMax) then return end
     ply:EmitSound("horde/gadgets/energy_shield_on.ogg")
-    if ply:Armor() > ply.Horde_ArmorRegenMax then
+    local amax = ply.Horde_ArmorRegenMax * ply:GetMaxArmor()
+    if ply:Armor() > amax then
         return
     end
-    ply:SetArmor(math.min(ply.Horde_ArmorRegenMax, ply:Armor() + 15))
+    ply:SetArmor(math.min(amax, ply:Armor() + 15))
 end

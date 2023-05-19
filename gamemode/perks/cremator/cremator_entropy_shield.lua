@@ -64,7 +64,7 @@ PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
             effectdata:SetEntity(ply)
             util.Effect("horde_blaster_flame_explosion", effectdata )
             local id = ply:SteamID()
-            ply:ScreenFade( SCREENFADE.IN, Color( 255, 165, 0, 100 ), 2.5, 0)
+            ply:ScreenFade( SCREENFADE.IN, Color( 255, 165, 0, 50 ), 2.5, 0)
             timer.Create("Horde_RecoverEntropyShield" .. id, 3, 1, function ()
                 if IsValid(ply) then
                     ply.Horde_Entropy_Shield_Activated = nil

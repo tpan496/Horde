@@ -52,13 +52,34 @@ end
 
 function GM:PlayerLoadout(ply) return true end
 
+if CLIENT then
+    AllowSandbox = false -- removed local so you can use this variable anywhere, if it's needed then add it back 
+
+    net.Receive("Horde_SyncSBox", function()
+        AllowSandbox = net.ReadBool()
+    end)
+end
+
 local function CheckAllowHook(hook_name)
-    if GetConVar("horde_enable_sandbox"):GetBool() then
+    if AllowSandbox then
         hook.Call(hook_name)
         return true
     else
         return false
     end
+end
+
+if SERVER then
+util.AddNetworkString("Horde_SyncSBox")
+net.Start("Horde_SyncSBox")
+    local EnableSBox = false
+    if(GetConVar("horde_enable_sandbox"):GetInt() == 0) then -- read serverside's ConVar and broadcast to all clients
+        EnableSBox = false
+    else
+        EnableSBox = true
+    end
+    net.WriteBool( EnableSBox )
+net.Broadcast()
 end
 
 local function CheckAllowFeature()

@@ -219,7 +219,7 @@ function SWEP:Hook_ShouldNotSight()
     return true
 end
 
-SWEP.LockDuration = 1.5
+SWEP.LockDuration = 1.25
 sound.Add({
     name = "JAVELIN_LOCK",
     channel = 16,
@@ -235,12 +235,10 @@ function SWEP:Hook_Think()
         self.Scoped = true
         self.SpeedMult = 0.5
 
-        local tr = util.TraceHull({
+        local tr = util.TraceLine({
             start = self.Owner:GetShootPos(),
             endpos = self.Owner:GetShootPos() + self:GetOwner():GetAimVector() * 10000,
             filter = {self, self.Owner},
-            mins = Vector(-16, -16, -8),
-            maxs = Vector(16, 16, 8),
             mask = MASK_SHOT_HULL
         })
         if CLIENT then
@@ -266,7 +264,9 @@ function SWEP:Hook_Think()
                     self.LockStart = CurTime()
                 else
                     if self.LockStart + self.LockDuration <= CurTime() then
-                        self:SetLocked_Target(ent)
+                        if SERVER then
+                            self:SetLocked_Target(ent)
+                        end
                     end
                 end
                 self.LockingTarget = ent
@@ -354,12 +354,15 @@ function SWEP:Hook_DrawHUD()
             surface.SetDrawColor( Color( 255, 0,0, 255 ) )
             surface.DrawLine( 0, pos.y, ScrW(), pos.y )
             surface.DrawLine( pos.x, 0, pos.x, ScrH() )
+            surface.DrawCircle(pos.x, pos.y, 25)
         elseif IsValid(self.LockingTarget) then
             local pos = self.LockingTarget:GetPos() + self.LockingTarget:OBBCenter()
             pos = pos:ToScreen()
             surface.SetDrawColor( Color( 0, 255,0, 255 ) )
-            surface.DrawLine( 0, pos.y, ScrW(), pos.y )
-            surface.DrawLine( pos.x, 0, pos.x, ScrH() )
+            --surface.DrawLine( 0, pos.y, ScrW(), pos.y )
+            --surface.DrawLine( pos.x, 0, pos.x, ScrH() )
+            surface.DrawCircle(pos.x, pos.y, 25)
+            surface.DrawCircle(pos.x, pos.y, 20)
         end
 
         surface.SetDrawColor( Color( 0, 255,0, 255 ) )
