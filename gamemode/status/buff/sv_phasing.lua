@@ -10,8 +10,8 @@ function plymeta:Horde_AddPhasing(duration, callback)
 
     if self.Horde_Phasing then return end
 
-    self:CollisionRulesChanged()
     self.Horde_Phasing = true
+    self:CollisionRulesChanged()
     --[[net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Phasing, 8)
         net.WriteUInt(1, 8)
