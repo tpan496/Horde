@@ -1,6 +1,6 @@
 UnlitGeneric
 {
-	$basetexture	vgui\hud\horde_reactive_mine
+	$basetexture	vgui\hud\horde_hopper_mine
 	$translucent	1
 	$distancealpha	1
 

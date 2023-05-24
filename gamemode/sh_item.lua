@@ -552,7 +552,9 @@ function HORDE:GetDefaultItemsData()
     {Demolition=true}, 40, 0, nil, "items/hl2/weapon_slam.png", nil, nil, {HORDE.DMG_BLAST})
     HORDE:CreateItem("Explosive",  "Resistance RPG", "weapon_rpg",         1500,  5, "Laser-guided rocket propulsion device.",
     {Demolition=true, Survivor=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
-    --HORDE:CreateItem("Explosive",  "Reactive Mine",  "horde_reactive_mine",  2000,  5, "Combine reactive mines that explode when enemies come in proximity.\nYou can plant at most 5 reactive mines.",
+    --HORDE:CreateItem("Explosive",  "Hopper Mine",  "horde_hopper_mine",  2000,  5, "Combine reactive mines that explode when enemies come in proximity.\nYou can plant at most 5 reactive mines.",
+    --{Demolition=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
+    --HORDE:CreateItem("Explosive",  "Static Mine",  "horde_static_mine",  2000,  5, "Combine reactive mines that hovers in air.\nExplode when enemies come in proximity.\nYou can plant at most 5 reactive mines.",
     --{Demolition=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "M79 GL",         "arccw_horde_m79",    2000,  6, "M79 Grenade Launcher.\nShoots 40x46mm grenades the explodes on impact.",
     {Demolition=true, Survivor=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
@@ -566,7 +568,7 @@ function HORDE:GetDefaultItemsData()
     {Demolition=true}, 15, -1, nil, nil, {Demolition=4}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "FGM-148 JAVELIN",        "arccw_horde_javelin",   3500,  10, "FGM-148 Javelin.\nFires guided shells that requires lock-on.",
     {Demolition=true}, 15, -1, nil, nil, {Demolition=5}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
-    --HORDE:CreateItem("Explosive",  "Thermite",       "arccw_horde_nade_incendiary",        1500,   1, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
+    --HORDE:CreateItem("Explosive",  "Thermite",       "arccw_horde_nade_incendiary",   1500,   1, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
     --{Cremator=true}, 100, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE})
     
 

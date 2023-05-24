@@ -1,4 +1,4 @@
-SWEP.PrintName = "Reactive Mine"
+SWEP.PrintName = "Static Mine"
 SWEP.HoldType = "slam"
 SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
@@ -13,14 +13,14 @@ SWEP.ViewModelBoneMods = {
 	["Detonator"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 }
 SWEP.VElements = {
-	["element_name"] = { type = "Model", model = "models/props_combine/combine_mine01.mdl", bone = "Slam_base", rel = "", pos = Vector(0.493, -61.729, 24.197), angle = Angle(-16.667, -5.557, -105.556), size = Vector(0.533, 0.533, 0.533), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["element_name"] = { type = "Model", model = "models/roller_spikes.mdl", bone = "Slam_base", rel = "", pos = Vector(0.493, -61.729, 24.197), angle = Angle(-16.667, -5.557, -105.556), size = Vector(0.533, 0.533, 0.533), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 SWEP.WElements = {
-	["element_name"] = { type = "Model", model = "models/props_combine/combine_mine01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.469, 4.443, 1.48), angle = Angle(7.777, 3.332, 180), size = Vector(0.596, 0.596, 0.596), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["element_name"] = { type = "Model", model = "models/roller_spikes.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.469, 4.443, 1.48), angle = Angle(7.777, 3.332, 180), size = Vector(0.596, 0.596, 0.596), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.Delay = 0.5
-SWEP.Primary.Ammo = "horde_reactive_mine"
+SWEP.Primary.Ammo = "horde_mine"
 --SWEP.Primary.MaxAmmo = 9
 SWEP.Primary.Automatic = false
 SWEP.Primary.DefaultClip = 1
@@ -32,28 +32,28 @@ SWEP.Secondary.Ammo		    = "none"
 SWEP.Secondary.Delay = 0.5
 
 if (CLIENT) then
-	SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/horde_reactive_mine")
+	SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/horde_static_mine")
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
-	killicon.Add("horde_reactive_mine", "vgui/hud/horde_reactive_mine", color_white)
-    killicon.Add("horde_reactive_mine_mine", "vgui/hud/horde_reactive_mine", color_white)
+	killicon.Add("horde_static_mine", "vgui/hud/horde_static_mine", color_white)
+    killicon.Add("horde_mine_static", "vgui/hud/horde_static_mine", color_white)
 end
 
 function SWEP:PrimaryAttack()
     if CLIENT then return end
-	if (self.Owner:GetAmmoCount("horde_reactive_mine") > 0 and self:GetNextPrimaryFire() <= CurTime()) then
+	if (self.Owner:GetAmmoCount("horde_mine") > 0 and self:GetNextPrimaryFire() <= CurTime()) then
 		self.Weapon:SendWeaponAnim( ACT_SLAM_THROW_THROW )
 		self:SetNextPrimaryFire(CurTime() + self.Delay)
 		self:SetNextSecondaryFire(CurTime() + self.Delay)
 
-		if not self.Owner.Horde_Reactive_Mines then
-			self.Owner.Horde_Reactive_Mines = HORDE.Queue:Create()
+		if not self.Owner.Horde_Static_Mines then
+			self.Owner.Horde_Static_Mines = HORDE.Queue:Create()
 		end
 
-		if self.Owner.Horde_Reactive_Mines:size() >= 5 then
-			local s = self.Owner.Horde_Reactive_Mines:pop()
-			while !IsValid(s) and self.Owner.Horde_Reactive_Mines:size() > 0 do
-				s = self.Owner.Horde_Reactive_Mines:pop()
+		if self.Owner.Horde_Static_Mines:size() >= 5 then
+			local s = self.Owner.Horde_Static_Mines:pop()
+			while !IsValid(s) and self.Owner.Horde_Static_Mines:size() > 0 do
+				s = self.Owner.Horde_Static_Mines:pop()
 			end
 			if IsValid(s) then
 				s:Remove()
@@ -63,7 +63,7 @@ function SWEP:PrimaryAttack()
 		timer.Simple(0.5, function ()
 			local owner = self.Owner
 			if !IsValid(owner) then return end
-			local ent = ents.Create("horde_reactive_mine_mine")
+			local ent = ents.Create("horde_mine_static")
 			local pos = owner:GetPos()
 			ent.Horde_Owner = owner
 			local src = owner:GetShootPos()
@@ -76,7 +76,7 @@ function SWEP:PrimaryAttack()
 				phys:SetVelocity(throw)
 				phys:SetDamping(1,1)
 			end
-			self.Owner.Horde_Reactive_Mines:push(ent)
+			self.Owner.Horde_Static_Mines:push(ent)
 
 			self.Weapon:SendWeaponAnim( ACT_SLAM_DETONATOR_THROW_DRAW )
 			self:TakePrimaryAmmo(1)
@@ -86,34 +86,46 @@ end
 
 function SWEP:SecondaryAttack()
     if CLIENT then return end
-	if (self.Owner:GetAmmoCount("horde_reactive_mine") > 0 and self:GetNextSecondaryFire() <= CurTime()) then
-		if not self.Owner.Horde_Reactive_Mines then
-			self.Owner.Horde_Reactive_Mines = HORDE.Queue:Create()
+	if (self.Owner:GetAmmoCount("horde_mine") > 0 and self:GetNextSecondaryFire() <= CurTime()) then
+		if not self.Owner.Horde_Static_Mines then
+			self.Owner.Horde_Static_Mines = HORDE.Queue:Create()
 		end
 
 		self.Weapon:SendWeaponAnim( ACT_SLAM_THROW_THROW2 )
 		self:SetNextPrimaryFire(CurTime() + self.Delay)
 		self:SetNextSecondaryFire(CurTime() + self.Delay)
 
-		local ent = ents.Create("horde_reactive_mine_mine")
+		local ent = ents.Create("horde_mine_static")
 		local pos = self.Owner:GetPos()
+		local owner = self.Owner
+		local src = owner:GetShootPos()
+		local ang = owner:GetAimVector()
+		local throw = ang * 100
 		local drop_pos = pos
 		drop_pos.z = pos.z + 15
-		ent:SetPos(drop_pos)
+		ent:SetPos(src)
 		ent.Horde_Owner = self.Owner
+		ent.Horde_Static_Mine_Quickstop = true
 		ent:Spawn()
 
-		if self.Owner.Horde_Reactive_Mines:size() >= 5 then
-			local s = self.Owner.Horde_Reactive_Mines:pop()
-			while !IsValid(s) and self.Owner.Horde_Reactive_Mines:size() > 0 do
-				s = self.Owner.Horde_Reactive_Mines:pop()
+		local phys = ent:GetPhysicsObject()
+		if (IsValid(phys)) then
+			phys:SetVelocity(throw)
+			phys:SetDamping(1,1)
+		end
+
+
+		if self.Owner.Horde_Static_Mines:size() >= 5 then
+			local s = self.Owner.Horde_Static_Mines:pop()
+			while !IsValid(s) and self.Owner.Horde_Static_Mines:size() > 0 do
+				s = self.Owner.Horde_Static_Mines:pop()
 			end
 			if IsValid(s) then
 				s:Remove()
 			end
 		end
 
-		self.Owner.Horde_Reactive_Mines:push(ent)
+		self.Owner.Horde_Static_Mines:push(ent)
 		self:TakePrimaryAmmo(1)
 
 		timer.Simple(0.5, function ()
