@@ -10,7 +10,7 @@ ENT.AdminSpawnable = false
 ENT.Model = "models/weapons/arccw_go/w_eq_incendiarygrenade_thrown.mdl"
 ENT.FuseTime = 2
 ENT.ArmTime = 0
-ENT.FireTime = 5.5
+ENT.FireTime = 10
 ENT.ImpactFuse = false
 
 ENT.Armed = false
@@ -31,7 +31,7 @@ function entmeta:Horde_AddEffect_FireGrenade(ent)
     timer.Create("Horde_FireGrenadeEffect" .. id, 0.5, 0, function ()
         if not self:IsValid() then timer.Remove("Horde_FireGrenadeEffect" .. id) return end
         local d = DamageInfo()
-        d:SetDamage(30)
+        d:SetDamage(20)
         d:SetAttacker(ent.Owner)
         d:SetInflictor(ent)
         d:SetDamageType(DMG_BURN)
@@ -89,6 +89,7 @@ end
 
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
+        self:GetPhysicsObject():SetDamping(2,2)
         if data.Speed > 75 then
             self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
         elseif data.Speed > 25 then
@@ -161,7 +162,7 @@ function ENT:Think()
                         self.Light.b = 0
                     end
                     self.Light.Brightness = 8
-                    self.Light.Size = 256
+                    self.Light.Size = 350
                     self.Light.DieTime = CurTime() + self.FireTime
                 end
             else
@@ -174,19 +175,20 @@ function ENT:Think()
             if !IsValid(emitter) then return end
 
             if self.Ticks % 5 == 0 then
-                local fire = emitter:Add("particles/smokey", self:GetPos())
-                fire:SetVelocity( (VectorRand() * 25) + (self:GetAngles():Up() * 300) )
+                local p = VectorRand() * 100
+                p.z = 0
+                local fire = emitter:Add("particles/smokey", self:GetPos() + p)
+                --fire:SetVelocity( (VectorRand() * 25) + (self:GetAngles():Up() * 300) )
                 fire:SetGravity( Vector(0, 0, 1500) )
                 fire:SetDieTime( math.Rand(0.5, 1) )
-                fire:SetStartAlpha( 255 )
+                fire:SetStartAlpha( 100 )
                 fire:SetEndAlpha( 0 )
                 fire:SetStartSize( 10 )
-                fire:SetEndSize( 150 )
+                fire:SetEndSize( 250 )
                 fire:SetRoll( math.Rand(-180, 180) )
                 fire:SetRollDelta( math.Rand(-0.2,0.2) )
                 fire:SetColor( 255, 255, 255 )
                 fire:SetAirResistance( 150 )
-                fire:SetPos( self:GetPos() )
                 fire:SetLighting( false )
                 fire:SetCollide(true)
                 fire:SetBounce(0.75)
