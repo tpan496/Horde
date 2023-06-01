@@ -25,7 +25,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if !SERVER then return end
 
-ENT.Model = {"models/weapons/w_missile_launch.mdl"} -- The models it should spawn with | Picks a random one from the table
+ENT.Model = {"models/items/AR2_Grenade.mdl"} -- The models it should spawn with | Picks a random one from the table
 /*ENT.DoesRadiusDamage = true -- Should it do a blast damage when it hits something?
 ENT.RadiusDamageRadius = 10 -- How far the damage go? The farther away it's from its enemy, the less damage it will do | Counted in world units
 ENT.RadiusDamage = 10 -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
@@ -47,7 +47,7 @@ function ENT:CustomOnInitialize()
 	self:SetColor(Color(255,255,255,0))
 	util.SpriteTrail(self, 0, self.TracerColor, false, self.TracerWidth, self.TracerWidth, 0.1, 1/(8+8)*0.5, "VJ_Base/sprites/vj_trial1.vmt")
 
-	timer.Simple(5, function ()
+	timer.Simple(4, function ()
 		if !IsValid(self) then return end
 		self:Remove()
 	end)

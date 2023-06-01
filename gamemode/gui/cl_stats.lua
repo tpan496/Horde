@@ -505,7 +505,7 @@ function PANEL:Init()
         return start_pos
     end
     local enemies_text_panel = vgui.Create("DPanel", description_panel)
-    enemies_text_panel:SetSize(self:GetParent():GetWide(), 4000)
+    enemies_text_panel:SetSize(self:GetParent():GetWide(), 5000)
     enemies_text_panel:SetVisible(false)
     enemies_text_panel.Paint = function ()
         draw.SimpleText("Regular Enemies", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)

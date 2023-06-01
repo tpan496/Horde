@@ -17,7 +17,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     for _, ent in pairs(npcs) do
         if ent:IsNPC() and (not ent:GetNWEntity("HordeOwner"):IsPlayer()) then
             ply:Horde_AddAdrenalineStack()
-            if ent:GetVar("is_elite") then ply:Horde_AddAdrenalineStack() end
+            if ent:Horde_IsElite() then ply:Horde_AddAdrenalineStack() end
         end
     end
 end

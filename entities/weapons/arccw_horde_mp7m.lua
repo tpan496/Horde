@@ -8,7 +8,7 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "MP7A1 Medic"
+SWEP.PrintName = "MP7A1 Medic PDW"
 SWEP.Trivia_Class = "PDW"
 SWEP.Trivia_Desc = "Lightweight personal defense weapon once slated to replace the 9mm pistol as the NATO standard weapon for units that didn't need to carry full rifles."
 SWEP.Trivia_Manufacturer = "Heckler und Koch"

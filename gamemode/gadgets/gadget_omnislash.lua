@@ -12,6 +12,26 @@ GADGET.Params = {
 }
 GADGET.Hooks = {}
 
+local function SpawnPlayer(ply, ply_pos, ply_angles, armor)
+    if !IsValid(ply) then return end
+    if ply:GetNoDraw() == false then return end
+    local health = ply:Health()
+    ply:UnSpectate()
+    ply:DrawViewModel(true)
+    ply:Spawn()
+    ply.Horde_Fake_Respawn = nil
+    ply:SetPos(ply_pos)
+    ply:SetAngles(ply_angles)
+    ply:SetNoTarget(false)
+    ply.Horde_Invincible = nil
+    ply:SetNoDraw(false)
+    ply:DrawWorldModel(true)
+    timer.Simple(0, function ()
+        ply:SetHealth(health)
+        ply:SetArmor(armor)
+    end)
+end
+
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     if CLIENT then return end
     if ply:Horde_GetGadget() ~= "gadget_omnislash" then return end
@@ -36,13 +56,15 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         ply:SetNoTarget(true)
         ply:SetMoveType(MOVETYPE_NONE)
         ply:DrawViewModel(false)
+        ply.Horde_In_Omni = true
         ply.Horde_Fake_Respawn = true
         ply.Horde_Invincible = true
+        local armor = ply:Armor()
 
         local p = ent:GetPos()
         for i = 1, 10 do
             timer.Simple(i*0.25, function ()
-                if not ply.Horde_Fake_Respawn then return end
+                if not ply.Horde_In_Omni then return end
                 if !IsValid(ent) then
                     for _, e in pairs(ents.FindInSphere(p, 200)) do
                         if HORDE:IsEnemy(e) then
@@ -50,6 +72,13 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
                             ply:SpectateEntity(ent)
                             break
                         end
+                    end
+
+                    if !IsValid(ent) then
+                        ply.Horde_In_Omni = nil
+                        timer.Simple(0.5, function ()
+                            SpawnPlayer(ply, ply_pos, ply_angles, armor)
+                        end)
                     end
                 end
                 local dmg = DamageInfo()
@@ -66,43 +95,17 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
                     util.Effect("horde_omnislash_effect", ed, true, true)
                     p = ent:GetPos()
                 else
+                    ply.Horde_In_Omni = nil
                     timer.Simple(0.5, function ()
-                        if !IsValid(ply) then return end
-                        local health = ply:Health()
-                        ply:UnSpectate()
-                        ply:DrawViewModel(true)
-                        ply:Spawn()
-                        ply.Horde_Fake_Respawn = nil
-                        ply:SetPos(ply_pos)
-                        ply:SetAngles(ply_angles)
-                        ply:SetNoTarget(false)
-                        ply.Horde_Invincible = nil
-                        ply:SetNoDraw(false)
-                        ply:DrawWorldModel(true)
-                        timer.Simple(0, function ()
-                            ply:SetHealth(health)
-                        end)
+                        SpawnPlayer(ply, ply_pos, ply_angles, armor)
                     end)
                     return
                 end
 
                 if i == 10 then
+                    ply.Horde_In_Omni = nil
                     timer.Simple(0.5, function ()
-                        if !IsValid(ply) then return end
-                        local health = ply:Health()
-                        ply:UnSpectate()
-                        ply:DrawViewModel(true)
-                        ply:Spawn()
-                        ply.Horde_Fake_Respawn = nil
-                        ply:SetPos(ply_pos)
-                        ply:SetAngles(ply_angles)
-                        ply:SetNoTarget(false)
-                        ply.Horde_Invincible = nil
-                        ply:SetNoDraw(false)
-                        ply:DrawWorldModel(true)
-                        timer.Simple(0, function ()
-                            ply:SetHealth(health)
-                        end)
+                        SpawnPlayer(ply, ply_pos, ply_angles, armor)
                     end)
                 end
             end)

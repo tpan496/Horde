@@ -48,6 +48,8 @@ ENT.WeaponSpread = 1.35
 ENT.Weapon_FiringDistanceFar = 1500
 ENT.WeaponReload_FindCover = false
 ENT.Horde_Plague_Soldier = true
+ENT.CallForHelp = false
+ENT.CanInvestigate = false
 
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",

@@ -31,10 +31,12 @@ function ENT:CustomInitialize()
 	self.StartLight1:Activate()
 	self.StartLight1:Fire("TurnOn", "", 0)
 	self:DeleteOnRemove(self.StartLight1)
+	self.CanExplode = nil
 
 	timer.Simple(0.25, function ()
 		if !IsValid(self) then return end
 		self.Homing = true
+		self.CanExplode = true
 	end)
 end
 
@@ -69,9 +71,14 @@ function ENT:CustomOnThink()
 		local phys = self:GetPhysicsObject()
 		if (!IsValid( phys )) then self:Remove() return end
 		phys:ApplyForceCenter(self:GetForward() * 500)
+	else
+		local phys = self:GetPhysicsObject()
+		if (!IsValid( phys )) then self:Remove() return end
+		phys:ApplyForceCenter(self:GetForward() * 500)
 	end
 end
 
 function ENT:CustomOnPreDetonate(data)
-	if not HORDE:IsEnemy(data.HitEntity) then return true end
+	if not self.CanExplode then return true end
+	--if not HORDE:IsEnemy(data.HitEntity) then return true end
 end

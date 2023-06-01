@@ -19,7 +19,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
         mask = MASK_SHOT_HULL
     })
     if !IsValid(tr.Entity) or not HORDE:IsEnemy(tr.Entity) then return true end
-    if tr.Entity:GetVar("is_elite") then return true end
+    if tr.Entity:Horde_IsElite() then return true end
 
     if ply.Horde_drop_entities["npc_vj_horde_spectre"] and ply.Horde_drop_entities["npc_vj_horde_spectre"] >= (ply.Horde_Spectre_Max_Count) then
         return true
