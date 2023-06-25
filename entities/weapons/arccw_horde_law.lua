@@ -21,7 +21,7 @@ SWEP.Trivia_Mechanism = "Explosive"
 SWEP.Trivia_Country = "United States"
 SWEP.Trivia_Year = 1963
 
-SWEP.Slot = 3
+SWEP.Slot = 4
 
 if GetConVar("arccw_truenames"):GetBool() then
     SWEP.PrintName = SWEP.TrueName

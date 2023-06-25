@@ -13,12 +13,11 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Bat"
 SWEP.Trivia_Class = "Melee Weapon"
-SWEP.Trivia_Desc = "Baseball bat."
-SWEP.Trivia_Manufacturer = "James May"
-SWEP.Trivia_Calibre = "N/A"
+SWEP.Trivia_Desc = "LOUISVILLE FUCKIN' SLUGGER!"
+SWEP.Trivia_Manufacturer = "Otero"
 SWEP.Trivia_Mechanism = "Blunt Weapon"
-SWEP.Trivia_Country = "???"
-SWEP.Trivia_Year = 2004
+SWEP.Trivia_Country = "UK"
+SWEP.Trivia_Year = 2016
 
 SWEP.Slot = 0
 
@@ -29,7 +28,7 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/horde/weapons/c_bat.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-15, 8, -10),
+    pos = Vector(-12, 8, -10),
     ang = Angle(20, 0, 180),
     scale = 1,
 }

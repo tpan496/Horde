@@ -1,20 +1,20 @@
 if not ArcCWInstalled then return end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - MW2"
+SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "L86 LSW"
 SWEP.Trivia_Class = "Light Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, large magazines."
+SWEP.Trivia_Desc = "Dosh! Grab it while you can, lads."
 
 if CLIENT then
-SWEP.Trivia_Manufacturer = "FN Herstal"
+SWEP.Trivia_Manufacturer = "Royal Small Arms Factory"
 SWEP.Trivia_Calibre = "5.56x45mm NATO"
-SWEP.Trivia_Mechanism = "Gas-Operated"
-SWEP.Trivia_Country = "Austria"
-SWEP.Trivia_Year = 1978
+SWEP.Trivia_Mechanism = "Gas-Operated, Rotating Bolt"
+SWEP.Trivia_Country = "UK"
+SWEP.Trivia_Year = 1994
 end
 
 SWEP.Slot = 2
@@ -22,8 +22,12 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2/c_sa80_lmg_5.mdl"
-SWEP.MirrorVMWM = false
-SWEP.WorldModel = "models/weapons/w_rif_aug.mdl"
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(-9, 3, -5),
+    ang = Angle(-10, 0, 180),
+    scale = 1.25
+}
 SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "100000"
@@ -61,7 +65,7 @@ SWEP.Firemodes = {
     },
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = {"weapon_ar2"}
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 3 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -195,7 +199,7 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(-1.9, -1, 0.67),
+            vpos = Vector(-1.9, -0.9, 0.67),
             vang = Angle(0, 0, 90),
             wpos = Vector(15.625, -0.253, -6.298),
             wang = Angle(-8.829, -0.556, 90)

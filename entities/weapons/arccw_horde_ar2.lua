@@ -14,9 +14,9 @@ SWEP.Trivia_Class = "Energy Rifle"
 SWEP.Trivia_Desc = "Dark Energy powered assault rifle manufactured by the Combine. The OSIPR is essentially a Combine variant of current assault rifles, commonly issued to Overwatch Soldiers and Overwatch Elites."
 SWEP.Trivia_Manufacturer = "Combine"
 SWEP.Trivia_Calibre = "Dark Energy"
-SWEP.Trivia_Mechanism = "humper and Capsules"
+SWEP.Trivia_Mechanism = "Humper and Capsules"
 SWEP.Trivia_Country = "Combine"
-SWEP.Trivia_Year = 2007
+SWEP.Trivia_Year = 2004
 
 SWEP.Slot = 2
 

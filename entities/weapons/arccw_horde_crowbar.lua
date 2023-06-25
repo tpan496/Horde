@@ -15,9 +15,7 @@ SWEP.PrintName = "Crowbar"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Crowbar."
 SWEP.Trivia_Manufacturer = "James May"
-SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Blunt Weapon"
-SWEP.Trivia_Country = "???"
 SWEP.Trivia_Year = 2004
 
 SWEP.Slot = 0
@@ -75,7 +73,7 @@ SWEP.Firemodes = {
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "melee2"
+SWEP.HoldtypeActive = "melee"
 
 SWEP.Primary.ClipSize = -1
 

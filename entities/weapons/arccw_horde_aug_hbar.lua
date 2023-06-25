@@ -45,7 +45,7 @@ SWEP.RecoilPunch = 2.5
 
 SWEP.Delay = 60 / 689 -- 60 / RPM.
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = {"weapon_ar2"}
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.

@@ -21,14 +21,14 @@ SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 2005
 end
 
-SWEP.Slot = 2
+SWEP.Slot = 3
 
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_aa12_1.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(0, 3, -8),
+    pos = Vector(-7, 3, -7),
     ang = Angle(-10, 0, 180),
     scale = 1.25
 }

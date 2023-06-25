@@ -12,10 +12,9 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Chainsaw"
 SWEP.Trivia_Class = "Melee Weapon"
-SWEP.Trivia_Desc = "Brrrrrrrrrrrrrrrr"
+SWEP.Trivia_Desc = "Fun fact: the Chainsaw was invented to assist women during labor!"
 SWEP.Trivia_Manufacturer = "Top Gear"
-SWEP.Trivia_Calibre = "N/A"
-SWEP.Trivia_Mechanism = "Sharp Edge"
+SWEP.Trivia_Mechanism = "Centrifugal Clutch"
 SWEP.Trivia_Country = "Britain"
 SWEP.Trivia_Year = 1949
 

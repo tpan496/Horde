@@ -4,31 +4,31 @@ if CLIENT then
     killicon.Add("arccw_horde_barret", "arccw/weaponicons/arccw_horde_barret", Color(0, 0, 0, 255))
 end
 SWEP.Base = "arccw_mw2_abase"
-SWEP.Spawnable = false
+SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "Barrett .50cal (Horde)"
-SWEP.Trivia_Class = "Sniper Rifle"
-SWEP.Trivia_Desc = "Semi-automatic (single fire)"
+SWEP.PrintName = "Barrett AMR"
+SWEP.Trivia_Class = "AntiMaterial Rifle"
+SWEP.Trivia_Desc = "Antimaterial Rifle that deals massive internal damage to targets both big and small."
 
 if CLIENT then
 SWEP.Trivia_Manufacturer = "Barrett Firearms Manufacturing"
 SWEP.Trivia_Calibre = ".50 BMG"
 SWEP.Trivia_Mechanism = "Recoil-Operated"
 SWEP.Trivia_Country = "USA"
-SWEP.Trivia_Year = 1980
+SWEP.Trivia_Year = 1982
 end
 
-SWEP.Slot = 2
+SWEP.Slot = 4
 
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2/c_barrett_1.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(0, 5, -8),
+    pos = Vector(-6, 4.5, -7.5),
     ang = Angle(-10, 0, 180),
     scale = 1.25
 }
@@ -73,7 +73,7 @@ SWEP.ShootSound =			"weapons/fesiugmw2/fire/barrett.wav"
 --SWEP.DistantShootSound =	"weapons/fesiugmw2/fire_distant/cheytac_mp.wav"
 SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/sniper_sil.wav"
 
-SWEP.MuzzleEffect = "muzzleflash_6"
+SWEP.MuzzleEffect = "muzzleflash_m82"
 SWEP.ShellModel = "models/shells/shell_338mag.mdl"
 SWEP.ShellPitch = 80
 SWEP.ShellScale = 1.5
@@ -153,7 +153,7 @@ SWEP.Attachments = {
         Slot = "muzzle",
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(33, 0, 1.6),
+            vpos = Vector(36, 0, 2.2),
             vang = Angle(0, 0, 0),
             wpos = Vector(26.648, 0.782, -8.042),
             wang = Angle(-9.79, 0, 180)

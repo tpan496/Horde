@@ -10,14 +10,13 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "Machete"
+SWEP.PrintName = "SP-8 Survival Machete"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "A Machete that can cut shit."
-SWEP.Trivia_Manufacturer = "ArcTech"
-SWEP.Trivia_Calibre = "N/A"
+SWEP.Trivia_Manufacturer = "Ontario Knife Company"
 SWEP.Trivia_Mechanism = "Sharp Edge"
-SWEP.Trivia_Country = "???"
-SWEP.Trivia_Year = 1000
+SWEP.Trivia_Country = "USA"
+SWEP.Trivia_Year = 2009
 
 SWEP.Slot = 0
 
@@ -82,7 +81,7 @@ SWEP.Firemodes = {
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "melee2"
+SWEP.HoldtypeActive = "knife"
 
 SWEP.Primary.ClipSize = -1
 

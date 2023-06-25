@@ -63,7 +63,7 @@ SWEP.Firemodes = {
     }
 }
 SWEP.PrintName = "Tau Cannon"
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Horde"
 SWEP.Spawnable= true
 SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false

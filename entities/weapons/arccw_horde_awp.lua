@@ -4,7 +4,7 @@ if CLIENT then
     killicon.Add("arccw_horde_awp", "arccw/weaponicons/arccw_go_awp", Color(0, 0, 0, 255))
 end
 SWEP.Base = "arccw_base"
-SWEP.Spawnable = false -- this obviously has to be set to true
+SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
@@ -14,7 +14,7 @@ SWEP.Trivia_Desc = "The Arctic Warfare Super Magnum is a cold-weather sniper rif
 SWEP.Trivia_Manufacturer = "Accuracy International"
 SWEP.Trivia_Calibre = ".338 Lapua Magnum"
 SWEP.Trivia_Mechanism = "Bolt-Action"
-SWEP.Trivia_Country = "United Kingdom"
+SWEP.Trivia_Country = "UK"
 SWEP.Trivia_Year = 1996
 
 SWEP.Slot = 2

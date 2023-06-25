@@ -13,15 +13,13 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Heat Blaster"
 SWEP.TrueName = "Heat Blaster"
-SWEP.Trivia_Class = "Heat Blaster"
+SWEP.Trivia_Class = "Defoliant Projector"
 SWEP.Trivia_Desc = "Launches concentrated heat projectiles that explode on impact."
-SWEP.Trivia_Manufacturer = "???"
-SWEP.Trivia_Calibre = "Grenade"
-SWEP.Trivia_Mechanism = "Projectile Launcher"
-SWEP.Trivia_Country = "???"
+SWEP.Trivia_Calibre = "25mm Incendiary Grenade"
+SWEP.Trivia_Mechanism = "Gas-operated?"
 SWEP.Trivia_Year = 2015
 
-SWEP.Slot = 3
+SWEP.Slot = 4
 
 SWEP.Spawnable = true
 

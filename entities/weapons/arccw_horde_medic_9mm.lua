@@ -1,7 +1,7 @@
 if not ArcCWInstalled then return end
 if CLIENT then
     SWEP.WepSelectIcon = Material("items/weapon_medic_9mm.png")
-    killicon.AddAlias("arccw_horde_medic_9mm", "weapon_9mm")
+    killicon.AddAlias("arccw_horde_medic_9mm", "weapon_pistol")
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
@@ -11,13 +11,12 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Medic 9mm"
 SWEP.Trivia_Class = "Pistol"
-SWEP.Trivia_Desc = "Standard issue pistol."
+SWEP.Trivia_Desc = "Stand still, or I'll stick it where the sun don't bloody shine."
 
-SWEP.Trivia_Manufacturer = "Combine"
+SWEP.Trivia_Manufacturer = "Combine Overwatch"
 SWEP.Trivia_Calibre = "9mm"
-SWEP.Trivia_Mechanism = "Semi-Auto"
-SWEP.Trivia_Country = "Combine"
-SWEP.Trivia_Year = 2007
+SWEP.Trivia_Mechanism = "Short Recoil"
+SWEP.Trivia_Year = 2003
 
 SWEP.Slot = 1
 
@@ -86,8 +85,8 @@ SWEP.SightedSpeedMult = 0.8
 SWEP.SightTime = 0.125
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.5, -11, 3.2),
-    Ang = Angle(0, 0, 2),
+    Pos = Vector(-5.8, -11, 2.95),
+    Ang = Angle(0.7, -1.3, 2),
     ViewModelFOV = 65,
     Magnification = 1,
 }

@@ -9,12 +9,12 @@ SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "MP40"
-SWEP.Trivia_Class = "PDW"
+SWEP.Trivia_Class = "Submachine Gun"
 SWEP.Trivia_Desc = "A submachine gun chambered for the 9×19mm Parabellum cartridge."
-SWEP.Trivia_Manufacturer = "Nazi Germany"
+SWEP.Trivia_Manufacturer = "Erma Werke - Erfurter Maschinenfabrik"
 SWEP.Trivia_Calibre = "9×19mm"
-SWEP.Trivia_Mechanism = "Gas-Operated"
-SWEP.Trivia_Country = "Germany"
+SWEP.Trivia_Mechanism = "Open-bolt"
+SWEP.Trivia_Country = "Nazi Germany"
 SWEP.Trivia_Year = 1940
 
 SWEP.Slot = 2
@@ -22,6 +22,7 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/vj_weapons/c_mp40.mdl"
+SWEP.MirrorVMWM = true
 SWEP.WorldModel = "models/vj_weapons/w_mp40.mdl"
 SWEP.ViewModelFOV = 60
 
@@ -96,8 +97,8 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.25
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-4.4, -7, 1.4),
-    Ang = Angle(1, 0, 0),
+    Pos = Vector(-4.4, -7, 1.8),
+    Ang = Angle(0.55, -0.1, 0),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false

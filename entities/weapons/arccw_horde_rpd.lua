@@ -11,7 +11,15 @@ SWEP.CamAttachment = 3
 
 SWEP.PrintName = "RPD"
 SWEP.Trivia_Class = "Light Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, large magazines."
+SWEP.Trivia_Desc = "Fully automatic, large magazines. Effective at medium to long range."
+
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Bazalt and Degtyarev plant."
+    SWEP.Trivia_Calibre = "7.62X39mm M43"
+    SWEP.Trivia_Mechanism = "Gas operated long stroke piston, flapper locking, open bolt"
+    SWEP.Trivia_Country = "Soviet Union"
+    SWEP.Trivia_Year = 1960
+    end
 
 SWEP.Slot = 2
 

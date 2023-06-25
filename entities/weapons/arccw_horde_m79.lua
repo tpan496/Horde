@@ -6,14 +6,14 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "M79"
 SWEP.Trivia_Class = "Grenade Launcher"
-SWEP.Trivia_Desc = "A break-action type grenade launcher."
+SWEP.Trivia_Desc = "A break-action type grenade launcher. Fires low-pressure grenades with high explosive radius, but middling damage."
 SWEP.Trivia_Manufacturer = "Springfield Armory"
 SWEP.Trivia_Calibre = "40mm"
 SWEP.Trivia_Mechanism = "Break-Action"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1961
 
-SWEP.Slot = 3
+SWEP.Slot = 4
 
 SWEP.Spawnable = true
 
@@ -29,7 +29,7 @@ SWEP.MirrorVMWM = true
 --    bone    =    "ValveBiped.Bip01_R_Hand",
 --}
 SWEP.WorldModelOffset = {
-    pos        =    Vector(0, 5, -7),
+    pos        =    Vector(-7.5, 5, -7),
     ang        =    Angle(-10, 2.5, 180),
     bone    =    "ValveBiped.Bip01_R_Hand",
 }

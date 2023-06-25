@@ -11,7 +11,7 @@ SWEP.CamAttachment = 3
 
 SWEP.PrintName = "ACR Medic Grenadier"
 SWEP.Trivia_Class = "Assault Rifle"
-SWEP.Trivia_Desc = "Fully automatic, all purpose weapon."
+SWEP.Trivia_Desc = "Oi'm troyin' to 'eal you, not shag you!"
 
 SWEP.Slot = 2
 

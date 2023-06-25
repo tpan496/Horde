@@ -15,7 +15,6 @@ SWEP.PrintName = "Katana"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Japanese Sword."
 SWEP.Trivia_Manufacturer = "Arasaki"
-SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Slashing Weapon"
 SWEP.Trivia_Country = "Japan"
 SWEP.Trivia_Year = 2020

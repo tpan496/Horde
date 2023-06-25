@@ -14,19 +14,26 @@ SWEP.CamAttachment = 3
 
 SWEP.PrintName = "M1873 Winchester LAR"
 SWEP.Trivia_Class = "Rifle"
-SWEP.Trivia_Desc = "Lever-action."
+SWEP.Trivia_Desc = "Run-of-the-mill lever-action Mare's Leg. Don't ask why it loads shotgun shells."
 
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Winchester"
+    SWEP.Trivia_Calibre = ".44-40"
+    SWEP.Trivia_Mechanism = "Lever-action"
+    SWEP.Trivia_Country = "USA"
+    SWEP.Trivia_Year = 2009
+    end
 SWEP.Slot = 2
 
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_m1887_1.mdl"
-SWEP.WorldModel = "models/weapons/w_annabelle.mdl"
-SWEP.MirrorVMWM = false
+SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
+SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(16, 0, -3.3),
-    ang = Angle(-12, 180, 180),
-    scale = 1
+    pos = Vector(-4, 3, -6),
+    ang = Angle(-10, 0, 180),
+    scale = 1.125
 }
 --SWEP.WorldModelOffset = {
 --    pos = Vector(-4, 3, -6),

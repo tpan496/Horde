@@ -13,15 +13,22 @@ SWEP.PrintName = "FN FAL (Horde)"
 SWEP.Trivia_Class = "Assault Rifle"
 SWEP.Trivia_Desc = "A battle rifle designed by Belgian small arms designer Dieudonné Saive and manufactured by FN Herstal (or simply known as FN)."
 
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "FN Herstal"
+    SWEP.Trivia_Calibre = "7.62X51mm NATO"
+    SWEP.Trivia_Mechanism = "Short-stroke Gas Piston, closed tilting breechblock"
+    SWEP.Trivia_Country = "Belgium"
+    SWEP.Trivia_Year = 2009
+    end
 SWEP.Slot = 2
 
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_fal.mdl"
 SWEP.WorldModel = "models/weapons/w_rif_galil.mdl"
-SWEP.MirrorVMWM = false
+SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(15, 1, 3.5),
+    pos = Vector(-4, 3, -5),
     ang = Angle(-10, 0, 180),
     scale = 1
 }
@@ -198,8 +205,8 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(12.5, -1, 2.25),
-            vang = Angle(0, 0, 90),
+            vpos = Vector(17, -0.5, 1.4),
+            vang = Angle(0, 0, 110),
             wpos = Vector(15.625, -0.253, -6.298),
             wang = Angle(-8.829, -0.556, 90)
         },

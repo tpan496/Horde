@@ -11,7 +11,15 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "TMP"
 SWEP.Trivia_Class = "Machine Pistol"
-SWEP.Trivia_Desc = "Fully automatic, close range."
+SWEP.Trivia_Desc = "Fully automatic, close range. Suppressor included."
+
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Steyr Mannlicher"
+    SWEP.Trivia_Calibre = "9x19mm Parabellum"
+    SWEP.Trivia_Mechanism = "Short recoil, locking rotating barrel, delayed blowback"
+    SWEP.Trivia_Country = "Austria"
+    SWEP.Trivia_Year = 2001
+    end
 
 SWEP.Slot = 2
 
@@ -59,7 +67,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = {"weapon_smg1"}
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 30 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -193,7 +201,7 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(0, -1.1, 1.4),
+            vpos = Vector(0, -0.9, 1.3),
             vang = Angle(0, 0, 90),
         },
     },
@@ -204,11 +212,11 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",

@@ -11,7 +11,15 @@ SWEP.CamAttachment = 3
 
 SWEP.PrintName = "M16A4"
 SWEP.Trivia_Class = "Assault Rifle"
-SWEP.Trivia_Desc = "3 round burst."
+SWEP.Trivia_Desc = "3 round burst Assault Rifle with an integrated Grenade Launcher."
+
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Colt, KAC"
+    SWEP.Trivia_Calibre = "5.56x45mm NATO"
+    SWEP.Trivia_Mechanism = "Direct Impingement"
+    SWEP.Trivia_Country = "USA"
+    SWEP.Trivia_Year = 2009
+    end
 
 SWEP.Slot = 2
 
@@ -225,7 +233,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo"
     },
     {
         PrintName = "Perk",

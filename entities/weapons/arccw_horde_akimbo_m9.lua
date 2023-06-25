@@ -5,13 +5,13 @@ if CLIENT then
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - MW2"
+SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "M9"
 SWEP.Trivia_Class = "Handgun"
-SWEP.Trivia_Desc = "Semi-automatic (single fire)"
+SWEP.Trivia_Desc = "Semi auto, light recoil. Make sure to aim for the head."
 
 SWEP.Slot = 1
 
@@ -98,7 +98,7 @@ SWEP.IronSightStruct = {
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "revolver"
+SWEP.HoldtypeActive = "duel"
 SWEP.HoldtypeSights = "revolver"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
@@ -334,7 +334,7 @@ SWEP.Animations = {
     ["reload"] = {
         Source = "reload",
         Time = 51/30,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 9/24},
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	t = 27/24},
@@ -348,7 +348,7 @@ SWEP.Animations = {
     ["reload_empty"] = {
         Source = "reload_empty",
         Time = 60/30,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 9/24},
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	t = 27/24},
@@ -514,7 +514,7 @@ SWEP.Animations = {
         Source = "reload_akimbo_right",
         Time = 70/40,
         MinProgress = 1.2,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 4/40},
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	t = 39/40},
@@ -524,7 +524,7 @@ SWEP.Animations = {
         Source = "reload_empty_akimbo_right",
         Time = 89/40,
         MinProgress = 1.2,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 4/40},
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	t = 45/40},

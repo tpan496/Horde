@@ -1,23 +1,22 @@
 if not ArcCWInstalled then return end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - MW2"
+SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Double Barrel"
 SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "Break Action Shotgun."
+SWEP.Trivia_Desc = "Engraved Lupara."
 
 if CLIENT then
-SWEP.Trivia_Manufacturer = "Franchi"
 SWEP.Trivia_Calibre = "12 Gauge"
-SWEP.Trivia_Mechanism = "Gas-Operated"
+SWEP.Trivia_Mechanism = "Break-Action"
 SWEP.Trivia_Country = "Italy"
-SWEP.Trivia_Year = 1979
+SWEP.Trivia_Year = 2009
 end
 
-SWEP.Slot = 2
+SWEP.Slot = 3
 
 SWEP.UseHands = true
 

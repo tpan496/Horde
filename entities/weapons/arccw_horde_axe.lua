@@ -14,9 +14,7 @@ SWEP.PrintName = "Fireaxe"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "A Fireaxe, used by the Firemen."
 SWEP.Trivia_Manufacturer = "Top Gear"
-SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Sharp Edge"
-SWEP.Trivia_Country = "???"
 SWEP.Trivia_Year = 1900
 
 SWEP.Slot = 0
@@ -29,7 +27,7 @@ SWEP.ViewModel = "models/horde/weapons/c_fireaxe.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_fireaxe.mdl"
 SWEP.ViewModelFOV = 45
 SWEP.WorldModelOffset = {
-    pos        =    Vector(-20, 6, -20),
+    pos        =    Vector(-18, 6, -20),
     ang        =    Angle(-60, 50, 110),
     bone    =    "ValveBiped.Bip01_R_Hand",
 }

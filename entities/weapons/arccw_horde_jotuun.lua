@@ -14,11 +14,10 @@ SWEP.AdminOnly = false
 SWEP.PrintName = "Jötunn"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Spiked mace with ice-related abilities."
-SWEP.Trivia_Manufacturer = "Jötunn"
-SWEP.Trivia_Calibre = "N/A"
+SWEP.Trivia_Manufacturer = "Frost Giants"
 SWEP.Trivia_Mechanism = "Blunt Weapon"
-SWEP.Trivia_Country = "???"
-SWEP.Trivia_Year = 0
+SWEP.Trivia_Country = "Old Scandinavia"
+SWEP.Trivia_Year = 1200
 
 SWEP.Slot = 0
 

@@ -11,7 +11,7 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "TAR-21"
 SWEP.Trivia_Class = "Assault Rifle"
-SWEP.Trivia_Desc = "Fully automatic, all purpose weapon."
+SWEP.Trivia_Desc = "Standard-issue service rifle of the IDF."
 
 if CLIENT then
 SWEP.Trivia_Manufacturer = "Israel Weapon Industries"
@@ -198,7 +198,7 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(-4.5, -0.7, 1.25),
+            vpos = Vector(4, -0.8, 0.8),
             vang = Angle(0, 0, 90),
             wpos = Vector(15.625, -0.253, -6.298),
             wang = Angle(-8.829, -0.556, 90)

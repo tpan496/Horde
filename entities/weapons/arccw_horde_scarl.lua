@@ -16,6 +16,14 @@ SWEP.PrintName = "SCAR-L"
 SWEP.Trivia_Class = "Assault Rifle"
 SWEP.Trivia_Desc = "SCAR light variant, chambered in 5.56x45mm NATO."
 
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "FN Herstal"
+    SWEP.Trivia_Calibre = "5.56x45mm NATO"
+    SWEP.Trivia_Mechanism = "Short-stroke Gas Piston, rotating bolt"
+    SWEP.Trivia_Country = "Belgium"
+    SWEP.Trivia_Year = 2004
+    end
+
 SWEP.Slot = 2
 
 SWEP.UseHands = true

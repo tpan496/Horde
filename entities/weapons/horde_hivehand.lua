@@ -39,7 +39,7 @@ sound = { "horde/weapons/hornet/ag_hornethit1.wav",
 } )
 
 SWEP.PrintName = "Hivehand"
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Horde"
 SWEP.Spawnable= true
 SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false

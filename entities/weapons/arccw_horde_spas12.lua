@@ -11,7 +11,14 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "SPAS-12"
 SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "Pump action."
+SWEP.Trivia_Desc = "Iconic assault shotgun. Pump-action only."
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Franchi"
+    SWEP.Trivia_Calibre = "12 Gauge"
+    SWEP.Trivia_Mechanism = "Pump-action, Gas-Operated"
+    SWEP.Trivia_Country = "Italy"
+    SWEP.Trivia_Year = 1979
+    end
 
 SWEP.Slot = 2
 

@@ -5,19 +5,20 @@ if CLIENT then
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "Arccw - Horde" -- edit this if you like
+SWEP.Category = "ArcCw - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Pump-Action"
+SWEP.TrueName = "Pump-Action"
 SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "A standard 12-gauge shotgun."
-SWEP.Trivia_Manufacturer = "Resistance"
+SWEP.Trivia_Desc = "A standard 12-gauge shotgun. Isn't double-barreled unfortunately :("
+SWEP.Trivia_Manufacturer = "Franchi"
 SWEP.Trivia_Calibre = "12 Gauge"
 SWEP.Trivia_Mechanism = "Pump-Action"
-SWEP.Trivia_Country = "Resistance"
-SWEP.Trivia_Year = 2007
+SWEP.Trivia_Country = "Italy"
+SWEP.Trivia_Year = 1979
 
-SWEP.Slot = 2
+SWEP.Slot = 3
 
 SWEP.UseHands = true
 

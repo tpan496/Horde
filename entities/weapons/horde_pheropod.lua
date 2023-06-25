@@ -42,7 +42,7 @@ SWEP.Weight = 2
 
 SWEP.DrawCrosshair = false
 
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Horde"
 
 SWEP.DrawAmmo = true
 

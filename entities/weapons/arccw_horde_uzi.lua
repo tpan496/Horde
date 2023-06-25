@@ -11,7 +11,15 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Mini-Uzi"
 SWEP.Trivia_Class = "Sub Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, close range."
+SWEP.Trivia_Desc = "New Look, Same Great Gun!"
+
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "IWI"
+    SWEP.Trivia_Calibre = "9x19mm Parabellum"
+    SWEP.Trivia_Mechanism = "Blowback, Open Bolt"
+    SWEP.Trivia_Country = "Israel"
+    SWEP.Trivia_Year = 2007
+    end
 
 SWEP.Slot = 2
 
@@ -20,7 +28,7 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2/c_miniuzi_2a.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-9, 3, -3.5),
+    pos = Vector(-9, 4, -4),
     ang = Angle(-7, 0, 180),
     scale = 1.25
 }
@@ -73,7 +81,7 @@ SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound =			"weapons/fesiugmw2/fire/miniuzi.wav"
 --SWEP.DistantShootSound =	"weapons/fesiugmw2/fire_distant/miniuzi.wav"
-SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/usp45_sil.wav"
+SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/p90_sil.wav"
 
 SWEP.MuzzleEffect = "muzzleflash_smg"
 SWEP.ShellModel = "models/shells/shell_9mm.mdl"
@@ -93,15 +101,15 @@ SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
 }
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-3.21, -2.254, -0.044),
-    Ang = Angle(1.900, 0, 0),
+    Pos = Vector(-3.21, -2.254, 0.45),
+    Ang = Angle(0.05, 0, 0),
     ViewModelFOV = 65 / 1.18,
     Magnification = 1.18,
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "revolver"
-SWEP.HoldtypeSights = "revolver"
+SWEP.HoldtypeActive = "pistol"
+SWEP.HoldtypeSights = "pistol"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
 

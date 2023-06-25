@@ -15,7 +15,6 @@ SWEP.PrintName = "Inferno"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Curved sword imbued with fire energy."
 SWEP.Trivia_Manufacturer = "Horzine"
-SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Slashing Weapon"
 SWEP.Trivia_Country = "U.K."
 SWEP.Trivia_Year = 2020
@@ -86,7 +85,7 @@ function SWEP:GetCurrentFiremode()
 end
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "melee2"
+SWEP.HoldtypeActive = "melee"
 
 SWEP.Primary.ClipSize = -1
 

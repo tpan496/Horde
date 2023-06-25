@@ -21,7 +21,7 @@ SWEP.Trivia_Mechanism = "Explosive"
 SWEP.Trivia_Country = "Soviet Union"
 SWEP.Trivia_Year = 1958
 
-SWEP.Slot = 3
+SWEP.Slot = 4
 
 SWEP.Spawnable = true
 
@@ -30,8 +30,8 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/vj_weapons/c_rpg7.mdl"
 SWEP.WorldModel = "models/vj_weapons/w_ins_rpg7.mdl"
 SWEP.WorldModelOffset = {
-    pos = Vector(0, 0, -7),
-    ang = Angle(0, 0, 0),
+    pos = Vector(9, 0, -6),
+    ang = Angle(0, 0, 180),
 }
 SWEP.ViewModelFOV = 60
 
@@ -108,8 +108,8 @@ SWEP.IronSightStruct = {
 }
 
 SWEP.HoldtypeHolstered = "rpg"
-SWEP.HoldtypeActive = "rpg"
-SWEP.HoldtypeSights = "rpg"
+SWEP.HoldtypeActive = "smg"
+SWEP.HoldtypeSights = "smg"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
 

@@ -11,8 +11,15 @@ SWEP.CamAttachment = 3
 
 SWEP.PrintName = "MG4"
 SWEP.Trivia_Class = "Light Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, large magazines."
+SWEP.Trivia_Desc = "Robust light machine gun sacrifices mobility for stability. High caliber sustained fire will neutralize targets at long ranges."
 
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Heckler and Koch."
+    SWEP.Trivia_Calibre = "5.56x45mm NATO"
+    SWEP.Trivia_Mechanism = "Gas-operated"
+    SWEP.Trivia_Country = "Germany"
+    SWEP.Trivia_Year = 2001
+    end
 SWEP.Slot = 2
 
 SWEP.UseHands = true

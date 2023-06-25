@@ -9,15 +9,15 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "357 (Horde)"
-SWEP.Trivia_Class = "Pistol"
+SWEP.PrintName = ".357 (Horde)"
+SWEP.Trivia_Class = "Magnum Pistol"
 SWEP.Trivia_Desc = "Black Mesa standard issue."
 
-SWEP.Trivia_Manufacturer = "Black Mesa"
+SWEP.Trivia_Manufacturer = "Colt"
 SWEP.Trivia_Calibre = ".357 Magnum"
 SWEP.Trivia_Mechanism = "Double-Action"
-SWEP.Trivia_Country = "Black Mesa"
-SWEP.Trivia_Year = 2000
+SWEP.Trivia_Country = "USA"
+SWEP.Trivia_Year = 1998
 
 SWEP.Slot = 1
 
@@ -84,14 +84,14 @@ SWEP.SightedSpeedMult = 0.8
 SWEP.SightTime = 0.125
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-4.7, -10, 0.5),
-    Ang = Angle(0, 0, 2),
+    Pos = Vector(-4.69, -10, 0.6),
+    Ang = Angle(0.3, -0.25, 1.3),
     ViewModelFOV = 65,
     Magnification = 1,
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "pistol"
+SWEP.HoldtypeActive = "revolver"
 SWEP.HoldtypeSights = "revolver"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL

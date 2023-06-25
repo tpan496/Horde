@@ -7,7 +7,15 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "M200 Intervention"
 SWEP.Trivia_Class = "Sniper Rifle"
-SWEP.Trivia_Desc = "American bolt-action sniper rifle"
+SWEP.Trivia_Desc = "American bolt-action sniper rifle."
+
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "CheyTac USA"
+    SWEP.Trivia_Calibre = ".375 Cheyenne Tactical"
+    SWEP.Trivia_Mechanism = "Bolt-Action"
+    SWEP.Trivia_Country = "USA"
+    SWEP.Trivia_Year = 2009
+    end
 
 SWEP.Slot = 2
 

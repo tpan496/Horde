@@ -10,7 +10,7 @@ SWEP.Trivia_Class = "Shotgun"
 SWEP.Trivia_Desc = "Fires incendiary pellets."
 
 if CLIENT then
-SWEP.Trivia_Manufacturer = "M1887 Trench Gun"
+SWEP.Trivia_Manufacturer = "Winchester"
 SWEP.Trivia_Calibre = "12 Gauge"
 SWEP.Trivia_Mechanism = "Pump-Action"
 SWEP.Trivia_Country = "USA"
@@ -22,7 +22,12 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2/c_winchester.mdl"
-SWEP.MirrorVMWM = false
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(-3, 3, -6),
+    ang = Angle(-10, 0, 180),
+    scale = 1.125
+}
 SWEP.WorldModel = "models/weapons/w_shot_m3super90.mdl"
 SWEP.ViewModelFOV = 65
 
@@ -183,7 +188,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_shotgun"
+        Slot = "go_ammo"
     },
     {
         PrintName = "Perk",

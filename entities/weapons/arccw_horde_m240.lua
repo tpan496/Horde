@@ -10,8 +10,16 @@ SWEP.AdminOnly = false
 SWEP.CamAttachment = 3
 
 SWEP.PrintName = "M240"
-SWEP.Trivia_Class = "Light Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, large magazines."
+SWEP.Trivia_Class = "General Purpose Machine Gun"
+SWEP.Trivia_Desc = "Signature GPMG of American vehicle gunners and soldiers alike."
+
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "FN Herstal"
+    SWEP.Trivia_Calibre = "7.62x51mm NATO"
+    SWEP.Trivia_Mechanism = "Gas-Operated long-stroke piston, open bolt"
+    SWEP.Trivia_Country = "Belgium"
+    SWEP.Trivia_Year = 1977
+    end
 
 SWEP.Slot = 2
 
