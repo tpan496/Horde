@@ -11,8 +11,12 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "G17"
 SWEP.Trivia_Class = "Handgun"
-SWEP.Trivia_Desc = "Semi auto, light recoil. Make sure to aim for the head."
-
+SWEP.Trivia_Desc = "Black Mesa and H.E.C.U. standard issue. No full auto unfortunately."
+SWEP.Trivia_Manufacturer = "Glock Ges.m.b.H."
+SWEP.Trivia_Calibre = "9x19mm Parabellum"
+SWEP.Trivia_Mechanism = "Short recoil, tilting barrel"
+SWEP.Trivia_Country = "Austria"
+SWEP.Trivia_Year = 2009
 SWEP.Slot = 1
 
 SWEP.UseHands = true

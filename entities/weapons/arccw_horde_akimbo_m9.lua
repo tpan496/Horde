@@ -9,10 +9,14 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "M9"
+SWEP.PrintName = "92SB"
 SWEP.Trivia_Class = "Handgun"
-SWEP.Trivia_Desc = "Semi auto, light recoil. Make sure to aim for the head."
-
+SWEP.Trivia_Desc = "To whoever is reading this: this is not an M9."
+SWEP.Trivia_Manufacturer = "Beretta"
+SWEP.Trivia_Calibre = "9x19mm Parabellum"
+SWEP.Trivia_Mechanism = "Short recoil"
+SWEP.Trivia_Country = "Italy"
+SWEP.Trivia_Year = 1991
 SWEP.Slot = 1
 
 SWEP.UseHands = true

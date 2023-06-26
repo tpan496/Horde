@@ -11,8 +11,12 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Desert Eagle"
 SWEP.Trivia_Class = "Handgun"
-SWEP.Trivia_Desc = ".50 Caliber hand cannon with high headshot damage. Hope you can master the monstrous spread and muzzle climb on the damn thing."
-
+SWEP.Trivia_Desc = ".50 Caliber hand cannon which operates not unlike full-size automatic rifles. Hope you can master the monstrous spread and muzzle climb on the damn thing."
+SWEP.Trivia_Manufacturer = "Magnum Research, IMI"
+SWEP.Trivia_Calibre = ".50 Action Express"
+SWEP.Trivia_Mechanism = "Gas-Operated, closed rotating bolt"
+SWEP.Trivia_Country = "USA, Israel"
+SWEP.Trivia_Year = 1995
 SWEP.Slot = 1
 
 SWEP.UseHands = true
