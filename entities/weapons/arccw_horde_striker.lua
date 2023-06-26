@@ -19,7 +19,7 @@ SWEP.Trivia_Mechanism = "Rotating Cylinder"
 SWEP.Trivia_Country = "South Africa, USA"
 SWEP.Trivia_Year = 1993
 
-SWEP.Slot = 2
+SWEP.Slot = 3
 
 SWEP.UseHands = true
 

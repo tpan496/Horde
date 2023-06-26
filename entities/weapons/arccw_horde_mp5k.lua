@@ -11,7 +11,12 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "MP5K Medic PDW"
 SWEP.Trivia_Class = "Sub Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, close range."
+SWEP.Trivia_Desc = "Combat Medic variant of the venerable MP5K PDW designed for special forces units across the globe."
+SWEP.Trivia_Manufacturer = "Heckler und Koch"
+SWEP.Trivia_Calibre = "9x19mm Parabellum"
+SWEP.Trivia_Mechanism = "Roller-Delayed Blowback"
+SWEP.Trivia_Country = "Germany"
+SWEP.Trivia_Year = 2009
 
 SWEP.Slot = 2
 

@@ -9,11 +9,11 @@ SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "M249 SAW"
-SWEP.Trivia_Class = "Squad Assault Weapon"
+SWEP.Trivia_Class = "Squad Automatic Weapon"
 SWEP.Trivia_Desc = "US main light machine gun used by the Army and Marine Corps for laying down suppressive fire."
-SWEP.Trivia_Manufacturer = "FN USA"
+SWEP.Trivia_Manufacturer = "FN Herstal"
 SWEP.Trivia_Calibre = "5.56x45mm NATO"
-SWEP.Trivia_Mechanism = "Gas-Operated Rotating Bolt"
+SWEP.Trivia_Mechanism = "Long-stroke Gas Piston, Rotating Bolt"
 SWEP.Trivia_Country = "Belgium"
 SWEP.Trivia_Year = 1976
 

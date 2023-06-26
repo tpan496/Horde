@@ -11,12 +11,11 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Apollo"
 SWEP.Trivia_Class = "Energy Rifle"
-SWEP.Trivia_Desc = "Fires energy orb that incinerates targets on contact."
-SWEP.Trivia_Manufacturer = "Combine"
+SWEP.Trivia_Desc = "Fires energy orba that incinerate targets on contact."
+SWEP.Trivia_Manufacturer = "Combine Overwatch"
 SWEP.Trivia_Calibre = "Dark Energy"
-SWEP.Trivia_Mechanism = "humper and Capsules"
-SWEP.Trivia_Country = "Combine"
-SWEP.Trivia_Year = 2007
+SWEP.Trivia_Mechanism = "Humper and Capsules"
+SWEP.Trivia_Year = 2020
 
 SWEP.Slot = 2
 

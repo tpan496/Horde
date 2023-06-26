@@ -20,7 +20,7 @@ SWEP.Purpose = "Heals minions."
 SWEP.WorldModel = ""
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Horde"
 SWEP.HoldType = "pistol"
 
 SWEP.Primary.Automatic		= true

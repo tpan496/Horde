@@ -13,9 +13,9 @@ SWEP.Trivia_Class = "Assault Rifle"
 SWEP.Trivia_Desc = "A low-recoil, highly controllable rifle designed for the Israeli Defense Force."
 SWEP.Trivia_Manufacturer = "Israeli Weapon Industries"
 SWEP.Trivia_Calibre = "5.56x45mm NATO"
-SWEP.Trivia_Mechanism = ""
+SWEP.Trivia_Mechanism = "Gas-operated, rotating bolt"
 SWEP.Trivia_Country = "Israel"
-SWEP.Trivia_Year = 1993
+SWEP.Trivia_Year = 2008
 
 SWEP.Slot = 2
 

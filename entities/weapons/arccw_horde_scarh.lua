@@ -15,7 +15,7 @@ SWEP.Trivia_Class = "Battle Rifle"
 SWEP.Trivia_Desc = "High-class battle rifle designed to serve the needs of special forces in modern warfare."
 SWEP.Trivia_Manufacturer = "Fabrique National Herstale"
 SWEP.Trivia_Calibre = "7.62x51mm NATO"
-SWEP.Trivia_Mechanism = "Gas-Operated Rotating Bolt"
+SWEP.Trivia_Mechanism = "Gas-Operated, Rotating Bolt"
 SWEP.Trivia_Country = "Belgium"
 SWEP.Trivia_Year = 2009
 

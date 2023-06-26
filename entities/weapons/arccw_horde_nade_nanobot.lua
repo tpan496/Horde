@@ -11,11 +11,9 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Nanobot Grenade"
 SWEP.Trivia_Class = "Hand Grenade"
-SWEP.Trivia_Desc = "."
-SWEP.Trivia_Manufacturer = "Combine"
-SWEP.Trivia_Calibre = "N/A"
-SWEP.Trivia_Mechanism = "Nanobot"
-SWEP.Trivia_Country = "Combine"
+SWEP.Trivia_Desc = "Specialized maintenance device that also serves as an antibiotic dispenser."
+SWEP.Trivia_Manufacturer = "Combine Overwatch"
+SWEP.Trivia_Mechanism = "Nanomachines""
 SWEP.Trivia_Year = 2010
 SWEP.Primary.MaxAmmo = 9
 SWEP.ForceDefaultAmmo = 0

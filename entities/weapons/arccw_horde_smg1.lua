@@ -10,7 +10,7 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "SMG-1"
 SWEP.Trivia_Class = "Submachine Gun"
-SWEP.Trivia_Desc = "A compact, fully automatic firearm."
+SWEP.Trivia_Desc = "A compact, fully automatic firearm for Civil Protection and Overwatch fireteams."
 SWEP.Trivia_Manufacturer = "Combine Overwatch"
 SWEP.Trivia_Calibre = "4.6x30mm"
 SWEP.Trivia_Mechanism = "Short-stroke Gas Piston"

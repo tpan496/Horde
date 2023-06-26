@@ -13,11 +13,11 @@ SWEP.Trivia_Class = "Shotgun"
 SWEP.Trivia_Desc = "Semi-Automatic tube-fed shotgun used by the US military and various tactical units around the world. The 1998 testing prototypes were named 'XM1014', but after it was accepted into US service, the X was dropped."
 SWEP.Trivia_Manufacturer = "Benelli Armi SpA"
 SWEP.Trivia_Calibre = "12 Gauge"
-SWEP.Trivia_Mechanism = "Gas-Operated Rotating Bolt"
+SWEP.Trivia_Mechanism = "Gas-Operated, Rotating Bolt"
 SWEP.Trivia_Country = "Italy"
 SWEP.Trivia_Year = 1998
 
-SWEP.Slot = 2
+SWEP.Slot = 3
 
 SWEP.UseHands = true
 
