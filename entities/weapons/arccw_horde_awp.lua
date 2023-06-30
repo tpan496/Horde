@@ -53,7 +53,7 @@ SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
         Mode = 1,
-        PrintName = "FIRE"
+        PrintName = "Bolt-Action"
     },
     {
         Mode = 0
@@ -96,8 +96,8 @@ SWEP.SightedSpeedMult = 0.50
 SWEP.SightTime = 0.25
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-4.9109, -8.573, 1.80253),
-    Ang = Angle(0.060123, 0.26674, -0.55),
+    Pos = Vector(-4.9, -8.573, 1.80253),
+    Ang = Angle(-0, 0.26674, -0.55),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false

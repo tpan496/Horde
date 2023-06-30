@@ -11,9 +11,9 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "GAU-2B/A"
+SWEP.PrintName = "M134"
 SWEP.Trivia_Class = "Minigun"
-SWEP.Trivia_Desc = "Six-barrel rotary heavy machine gun."
+SWEP.Trivia_Desc = "''With its armor piercing 30 caliber bullets, the Chain Gun is capable of literally cutting opponents in two. Packed with all the punch you need in close combat fighting the Chain Gun delivers unparallelled reliability and functionality.''"
 
 if CLIENT then
 SWEP.Trivia_Manufacturer = "General Dynamics"

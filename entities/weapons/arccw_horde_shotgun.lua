@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCw - Horde" -- edit this if you like
+SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Pump-Action"
@@ -33,11 +33,11 @@ SWEP.WorldModelOffset = {
 
 SWEP.DefaultBodygroups = "000000000000"
 
-SWEP.Damage = 8
+SWEP.Damage = 12
 SWEP.DamageMin = 4 -- damage done at maximum range
-SWEP.Num = 6
-SWEP.Range = 31 -- in METRES
-SWEP.Penetration = 1
+SWEP.Num = 7
+SWEP.Range = 32 -- in METRES
+SWEP.Penetration = 2
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 SWEP.ChamberSize = 0 -- how many rounds can be chambered.
@@ -99,8 +99,8 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.30
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-9, -5, 4.3),
-    Ang = Angle(0, 0.05, 0),
+    Pos = Vector(-9, -5, 4.4),
+    Ang = Angle(-0.5, 0, 0),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false

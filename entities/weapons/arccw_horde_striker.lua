@@ -11,7 +11,7 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Striker (Horde)"
 SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "Semi-automatic (single fire) StreetSweeper"
+SWEP.Trivia_Desc = "StreetSweeper for the urban jungle"
 
 SWEP.Trivia_Manufacturer = "Armsel, Cobray"
 SWEP.Trivia_Calibre = "12 Gauge"

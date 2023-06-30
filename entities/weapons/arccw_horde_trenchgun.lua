@@ -188,7 +188,8 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "go_ammo"
+        Slot = "go_ammo",
+        DefaultAttName = "Dragon's Breath Shells"
     },
     {
         PrintName = "Perk",

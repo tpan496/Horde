@@ -28,8 +28,8 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/horde/weapons/c_katana.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-15, 7, -5),
-    ang = Angle(-10, 0, 180),
+    pos = Vector(-11, 6, -13),
+    ang = Angle(20, 0, 180),
 }
 SWEP.WorldModel = "models/horde/weapons/c_katana.mdl"
 SWEP.ViewModelFOV = 60

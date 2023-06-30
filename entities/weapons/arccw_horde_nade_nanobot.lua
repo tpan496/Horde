@@ -1,4 +1,4 @@
-if not ArcCWInstalled then return end
+    if not ArcCWInstalled then return end
 if CLIENT then
     SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_horde_nade_nanobot")
     killicon.Add("arccw_horde_nade_nanobot", "arccw/weaponicons/arccw_horde_nade_nanobot", Color(0, 0, 0, 255))
@@ -13,7 +13,7 @@ SWEP.PrintName = "Nanobot Grenade"
 SWEP.Trivia_Class = "Hand Grenade"
 SWEP.Trivia_Desc = "Specialized maintenance device that also serves as an antibiotic dispenser."
 SWEP.Trivia_Manufacturer = "Combine Overwatch"
-SWEP.Trivia_Mechanism = "Nanomachines""
+SWEP.Trivia_Mechanism = "Nanomachines"
 SWEP.Trivia_Year = 2010
 SWEP.Primary.MaxAmmo = 9
 SWEP.ForceDefaultAmmo = 0

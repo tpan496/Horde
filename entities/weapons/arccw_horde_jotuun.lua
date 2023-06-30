@@ -29,8 +29,8 @@ SWEP.ViewModel = "models/horde/weapons/c_mace.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_mace.mdl"
 SWEP.ViewModelFOV = 40
 SWEP.WorldModelOffset = {
-    pos = Vector(-4, 10, -5),
-    ang = Angle(90, 0, 180),
+    pos = Vector(-11, 21, -2),
+    ang = Angle(100, 30, 180),
     scale = 2
 }
 

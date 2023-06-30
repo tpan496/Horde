@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - GSO (SGs)" -- edit this if you like
+SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "M1014"
@@ -90,8 +90,8 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.2
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-4.30635, -5, 2.8417),
-    Ang = Angle(0, 0.05, 0),
+    Pos = Vector(-4.3, -5, 2.8417),
+    Ang = Angle(0.03, 0, 0),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false

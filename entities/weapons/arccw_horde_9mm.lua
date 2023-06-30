@@ -27,11 +27,11 @@ SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 8
+SWEP.Damage = 10
 SWEP.DamageMin = 5
-SWEP.RangeMin = 12.5
-SWEP.Range = 31.25
-SWEP.Penetration = 2
+SWEP.RangeMin = 15
+SWEP.Range = 30
+SWEP.Penetration = 5
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
@@ -57,7 +57,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_pistol"}
+SWEP.NPCWeaponType = "weapon_pistol"
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 0 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -94,7 +94,7 @@ SWEP.IronSightStruct = {
 SWEP.HoldType = "pistol"
 SWEP.HoldtypeHolstered = "normal"
 SWEP.HoldtypeActive = "pistol"
-SWEP.HoldtypeSights = "revolver"
+SWEP.HoldtypeSights = "pistol"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
 

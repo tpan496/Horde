@@ -32,7 +32,7 @@ SWEP.Damage = 25
 SWEP.DamageMin = 20
 SWEP.RangeMin = 500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Range = 1250 * 0.025  -- GAME UNITS * 0.025 = METRES
-SWEP.Penetration = 4
+SWEP.Penetration = 6
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
@@ -43,8 +43,8 @@ SWEP.ExtendedClipSize = 6
 SWEP.ReducedClipSize = 6
 
 SWEP.Recoil = 1.5
-SWEP.RecoilSide = 1.25
-SWEP.RecoilRise = 0.1
+SWEP.RecoilSide = 1.5
+SWEP.RecoilRise = 0.3
 SWEP.RecoilPunch = 1
 
 SWEP.Delay = 120 / 300 -- 30 / RPM.
@@ -61,9 +61,9 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_357"
 SWEP.NPCWeight = 150
 
-SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.AccuracyMOA = 6 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 250 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 50
+SWEP.MoveDispersion = 60
 
 SWEP.Primary.Ammo = "357" -- what ammo type the gun uses
 

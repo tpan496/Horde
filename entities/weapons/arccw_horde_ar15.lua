@@ -9,12 +9,12 @@ SWEP.Category = "ArcCW - Horde" -- edit this if you like
 
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "AR-15"
-SWEP.Trivia_Class = "Semi-Automatic Rifle"
-SWEP.Trivia_Desc = "A civilian version of the M4. Created by Eugene Stoner and sold originally by Armalite, it has since become the basis for the most popular rifles in the world. Semi-auto only!"
+SWEP.PrintName = "SP1"
+SWEP.Trivia_Class = "Semi-Automatic Carbine"
+SWEP.Trivia_Desc = "A civilian version of the CAR-15. Created by Eugene Stoner and sold originally by Armalite, it has since become the basis for the most popular rifles in the world. Semi-auto only!"
 SWEP.Trivia_Manufacturer = "Colt"
 SWEP.Trivia_Calibre = "5.56x45mm NATO"
-SWEP.Trivia_Mechanism = "Gas-Operated"
+SWEP.Trivia_Mechanism = "Direct Impingement"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1959
 

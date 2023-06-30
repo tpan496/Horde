@@ -67,7 +67,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_smg1"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 30 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -182,7 +182,7 @@ SWEP.Attachments = {
             wang = Angle(-9.79, 0, 180)
         },
 		VMScale = Vector(1, 1, 1),
-        Installed = "go_supp_tgpa",
+        Installed = "go_supp_osprey",
     },
     {
         PrintName = "Underbarrel",

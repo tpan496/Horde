@@ -10,7 +10,7 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "SCAR-H"
+SWEP.PrintName = "SCAR 17S"
 SWEP.Trivia_Class = "Battle Rifle"
 SWEP.Trivia_Desc = "High-class battle rifle designed to serve the needs of special forces in modern warfare."
 SWEP.Trivia_Manufacturer = "Fabrique National Herstale"

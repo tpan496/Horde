@@ -28,7 +28,7 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/horde/weapons/c_zweihander.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-15, 10, -8),
+    pos = Vector(-13, 10, -8),
     ang = Angle(-10, 0, 180),
 }
 SWEP.WorldModel = "models/horde/weapons/c_zweihander.mdl"

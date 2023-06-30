@@ -10,7 +10,7 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "SMG-1"
 SWEP.Trivia_Class = "Submachine Gun"
-SWEP.Trivia_Desc = "A compact, fully automatic firearm for Civil Protection and Overwatch fireteams."
+SWEP.Trivia_Desc = "A compact, fully automatic PDW for Civil Protection and Overwatch fireteams."
 SWEP.Trivia_Manufacturer = "Combine Overwatch"
 SWEP.Trivia_Calibre = "4.6x30mm"
 SWEP.Trivia_Mechanism = "Short-stroke Gas Piston"
@@ -26,10 +26,10 @@ SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "000000000000"
 
-SWEP.Damage = 6
+SWEP.Damage = 8
 SWEP.DamageMin = 4 -- damage done at maximum range
-SWEP.Range = 31.25 -- in METRES
-SWEP.Penetration = 1
+SWEP.Range = 32 -- in METRES
+SWEP.Penetration = 4
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 SWEP.MuzzleVelocity = 1050 -- projectile or phys bullet muzzle velocity
