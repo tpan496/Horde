@@ -15,9 +15,9 @@ SWEP.PrintName = "RPG7"
 SWEP.TrueName = "Ruchnoy Protivotankoviy Granatomyot"
 SWEP.Trivia_Class = "Rocket Launcher"
 SWEP.Trivia_Desc = "A portable, reusable, unguided, shoulder-launched, anti-tank, rocket-propelled grenade launcher."
-SWEP.Trivia_Manufacturer = "Bazalt and Degtyarev plant."
-SWEP.Trivia_Calibre = "Rockets"
-SWEP.Trivia_Mechanism = "Explosive"
+SWEP.Trivia_Manufacturer = "Bazalt and Degtyarev Plant."
+SWEP.Trivia_Calibre = "85mm HEAT Warheads"
+SWEP.Trivia_Mechanism = "Piezoelectric Fuze, rocket propulsion system"
 SWEP.Trivia_Country = "Soviet Union"
 SWEP.Trivia_Year = 1958
 
@@ -76,8 +76,8 @@ SWEP.MoveDispersion = 250
 
 SWEP.Primary.Ammo = "RPG_Round" -- what ammo type the gun uses
 
-SWEP.ShootVol = 100 -- volume of shoot sound
-SWEP.ShootPitch = 100 -- pitch of shoot sound
+SWEP.ShootVol = 150 -- volume of shoot sound
+SWEP.ShootPitch = 85 -- pitch of shoot sound
 
 SWEP.ShootSound = "vj_weapons/rpg/rpg_fire.wav"
 SWEP.ShootSoundSilenced = "vj_weapons/rpg/rpg_fire_far.wav"
@@ -86,9 +86,8 @@ SWEP.DistantShootSound = "vj_weapons/rpg/rpg_fire_far.wav"
 --SWEP.MuzzleEffect = "muzzleflash_pistol"
 --SWEP.ShellModel = "models/shells/shell_9mm.mdl"
 --SWEP.ShellScale = 1
-
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
-SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
+SWEP.CaseEffectAttachment = 2  -- which attachment to put the case effect on
 
 SWEP.SpeedMult = 0.92
 SWEP.SightedSpeedMult = 0.65
@@ -102,9 +101,9 @@ SWEP.ProceduralIronFire = false
 SWEP.CaseBones = {}
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-3, 0, 2),
-    Ang = Angle(-0, 0, 0),
-    Magnification = 1.3,
+    Pos = Vector(-2.7, 0, 1.76),
+    Ang = Angle(0.05, 0.08, 0),
+    Magnification = 1.5,
 }
 
 SWEP.HoldtypeHolstered = "rpg"

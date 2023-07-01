@@ -16,9 +16,9 @@ SWEP.TrueName = "M72 Light Anti-Armor Weapon"
 SWEP.Trivia_Class = "Rocket Launcher"
 SWEP.Trivia_Desc = "Portable one-shot 66-mm unguided anti-tank weapon."
 SWEP.Trivia_Manufacturer = "NAMMO Defense Systems"
-SWEP.Trivia_Calibre = "Rockets"
-SWEP.Trivia_Mechanism = "Explosive"
-SWEP.Trivia_Country = "United States"
+SWEP.Trivia_Calibre = "66mm HEAT Rockets"
+SWEP.Trivia_Mechanism = "Point-initiated, base-detonated"
+SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1963
 
 SWEP.Slot = 4
@@ -147,7 +147,7 @@ SWEP.IronSightStruct = {
 }
 
 SWEP.HoldtypeHolstered = "rpg"
-SWEP.HoldtypeActive = "rpg"
+SWEP.HoldtypeActive = "smg"
 SWEP.HoldtypeSights = "rpg"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL

@@ -574,21 +574,21 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Special",    "Welder",         "horde_welder",         100,  2, "Engineering welder.\nDamages enemies and heals minions.",
     {Engineer=true}, 50, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, nil, {"Engineer"})
-    HORDE:CreateItem("Special",    "Manhack",        "npc_manhack",          1000,  4, "Manhack that regenerates on death.\nManhack deals its health as damage to enemies.\nManhack dies on impact.",
+    HORDE:CreateItem("Special",    "Manhack",        "npc_manhack",          900,  4, "Manhack that regenerates on death.\nManhack deals its health as damage to enemies.\nManhack dies on impact.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/npc_manhack.png", nil, nil, {HORDE.DMG_SLASH})
-    HORDE:CreateItem("Special",    "Turret",         "npc_turret_floor",    900,  4, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
+    HORDE:CreateItem("Special",    "Turret",         "npc_turret_floor",    1000,  4, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/npc_turret_floor.png", nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Shotgun Turret", "npc_vj_horde_shotgun_turret",   1150,  4, "Combine shotgun turret.\n\nFires in a shotgun pattern.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/shotgun_turret.png", nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Special",    "Rocket Turret",  "npc_vj_horde_rocket_turret",    2250,  4, "Aperture Science rocket turret.\n\nShoots mini-missiles that deal Blast damage.\nCovers all angles.",
+    HORDE:CreateItem("Special",    "Rocket Turret",  "npc_vj_horde_rocket_turret",    1750,  4, "Aperture Science rocket turret.\n\nShoots mini-missiles that deal Blast damage.\nCovers all angles.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/rocket_turret.png", nil, nil, {HORDE.DMG_BLAST})
     HORDE:CreateItem("Special",    "Laser Turret",  "npc_vj_horde_laser_turret",    1750,  5, "Aperture Science laser turret.\n\nFires tracing laser at the enemy.\nCovers all angles.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/laser_turret.png", {Engineer=5}, nil, {HORDE.DMG_BLAST})
-    HORDE:CreateItem("Special",    "Sniper Turret",  "npc_vj_horde_sniper_turret",   2250,  5, "Combine heavy sniper turret.\n\nCovers a long range and deals heavy damage, but with limited sight.\nAims for the head if possible.",
+    HORDE:CreateItem("Special",    "Sniper Turret",  "npc_vj_horde_sniper_turret",   1750,  5, "Combine heavy sniper turret.\n\nCovers a long range and deals heavy damage, but with limited sight.\nAims for the head if possible.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/sniper_turret.png", {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Special",    "Vortigaunt",     "npc_vj_horde_vortigaunt",  1500,  5, "Xen Vortigaunts that can conjure concentrated shock energy blasts.\nThe energy blasts have long range and deal splash damage.",
+    HORDE:CreateItem("Special",    "Vortigaunt",     "npc_vj_horde_vortigaunt",  1350,  5, "Xen Vortigaunts that can conjure concentrated shock energy blasts.\nThe energy blasts have long range and deal splash damage.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_vortigaunt.png", {Engineer=2}, nil, {HORDE.DMG_LIGHTNING})
-    HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   1750, 9, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
+    HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   2250, 9, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=1}, "items/npc_combat_bot.png", {Engineer=3}, nil, {HORDE.DMG_BLUNT})
 
     HORDE:CreateItem("Special",    "Hivehand",       "horde_hivehand",       1500,  6, "Organic weapon used by Xen soldiers.\nHas infinite ammo.\nPrimary fire generates homing ricocheting shots.\nSecondary fire rapidly unloads the entire weapon.",
@@ -925,7 +925,7 @@ HORDE.GetArcCWAttachments = function ()
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_usp"})
     HORDE:CreateItem("Attachment", "[USP] 30-Round .45",   "go_usp_mag_30",  160,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_usp"})
-    HORDE:CreateItem("Attachment", "[Glock] 31-Round 9mm",   "go_glock_mag_28",  200,  0, "",
+    HORDE:CreateItem("Attachment", "[Glock] 31-Round 9mm",   "go_glock_mag_28",  150,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_glock"})
     HORDE:CreateItem("Attachment", "[P250] 21-Round .357",   "go_p250_mag_21",  120,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_p250"})
@@ -1034,7 +1034,7 @@ HORDE.GetArcCWAttachments = function ()
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_usp"})
     HORDE:CreateItem("Attachment", "[USP] Short Slide",  "go_usp_slide_short",  80,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_usp"})
-    HORDE:CreateItem("Attachment", "[Glock] Auto Slide",   "go_glock_slide_auto",   250,  0, "",
+    HORDE:CreateItem("Attachment", "[Glock] Auto Slide",   "go_glock_slide_auto",   200,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_glock"})
     HORDE:CreateItem("Attachment", "[Glock] Short Slide",  "go_glock_slide_short",  80,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_glock"})
