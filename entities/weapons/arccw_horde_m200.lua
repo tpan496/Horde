@@ -7,7 +7,7 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "M200 Intervention"
 SWEP.Trivia_Class = "Sniper Rifle"
-SWEP.Trivia_Desc = "American bolt-action sniper rifle."
+SWEP.Trivia_Desc = "American bolt-action sniper rifle designed for next-gen warfare. Hasn't seen much use outside of minor use by NATO special forces units."
 
 if CLIENT then
     SWEP.Trivia_Manufacturer = "CheyTac USA"
@@ -40,6 +40,8 @@ SWEP.Primary.ClipSize = 5 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 10
 SWEP.ReducedClipSize = 3
 
+SWEP.PhysBulletMuzzleVelocity = 1000
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 2
 SWEP.RecoilSide = 2
@@ -64,7 +66,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_crossbow"}
+SWEP.NPCWeaponType = "weapon_crossbow"
 SWEP.NPCWeight = 100
 
 SWEP.ManualAction = true

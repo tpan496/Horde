@@ -44,7 +44,9 @@ SWEP.ShootEntity = nil -- entity to fire, if any
 SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 50 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 50
-SWEP.ReducedClipSize = 15
+SWEP.ReducedClipSize = 25
+
+SWEP.PhysBulletMuzzleVelocity = 250
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.28
@@ -62,7 +64,7 @@ SWEP.Firemodes = {
     },
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_smg1"
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.

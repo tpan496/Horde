@@ -64,14 +64,15 @@ SWEP.Delay = 60 / 600 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
-        Mode = 2,
+        Mode = 1,
+        PrintName = "Break-Action"
     },
     {
         Mode = 0
     }
 }
 
-SWEP.NPCWeaponType = "weapon_pistol"
+SWEP.NPCWeaponType = "weapon_rpg"
 SWEP.NPCWeight = 75
 
 SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -88,8 +89,7 @@ SWEP.ShootSoundSilenced = nil
 SWEP.DistantShootSound = nil
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"
-SWEP.ShellModel = "models/shells/shell_9mm.mdl"
-SWEP.ShellScale = 1
+
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
@@ -107,8 +107,8 @@ SWEP.ProceduralIronFire = false
 SWEP.CaseBones = {}
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-3.5, 0, 0.5),
-    Ang = Angle(-0, 0, 0),
+    Pos = Vector(-3.8, 0, 3),
+    Ang = Angle(-4.7, 0, 0),
     Magnification = 1.3,
 }
 
@@ -194,7 +194,7 @@ SWEP.Animations = {
     ["reload"] = {
         Source = "reload",
         Time = 2,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         FrameRate = 30,
         LHIK = true,
         LHIKIn = 0.5,

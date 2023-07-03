@@ -47,6 +47,8 @@ SWEP.Primary.ClipSize = 30 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 45
 SWEP.ReducedClipSize = 15
 
+SWEP.PhysBulletMuzzleVelocity = 850
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4
 SWEP.RecoilSide = 0.3
@@ -67,7 +69,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_ar2"
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.

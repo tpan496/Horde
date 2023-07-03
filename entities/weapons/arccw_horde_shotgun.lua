@@ -10,13 +10,12 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Pump-Action"
 SWEP.TrueName = "Pump-Action"
-SWEP.Trivia_Class = "Shotgun"
+SWEP.Trivia_Class = "Combat Shotgun"
 SWEP.Trivia_Desc = "A standard 12-gauge shotgun. Isn't double-barreled unfortunately :("
-SWEP.Trivia_Manufacturer = "Franchi"
+SWEP.Trivia_Manufacturer = "Combine Overwatch"
 SWEP.Trivia_Calibre = "12 Gauge"
 SWEP.Trivia_Mechanism = "Pump-Action"
-SWEP.Trivia_Country = "Italy"
-SWEP.Trivia_Year = 1979
+SWEP.Trivia_Year = 2003
 
 SWEP.Slot = 3
 

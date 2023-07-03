@@ -27,7 +27,7 @@ SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 10
+SWEP.Damage = 9
 SWEP.DamageMin = 5
 SWEP.RangeMin = 15
 SWEP.Range = 30
@@ -40,6 +40,8 @@ SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 18 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 18
 SWEP.ReducedClipSize = 18
+
+SWEP.PhysBulletMuzzleVelocity = 400
 
 SWEP.Recoil = 0.400
 SWEP.RecoilSide = 0.125

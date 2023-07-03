@@ -14,7 +14,7 @@ SWEP.Trivia_Class = "Energy Rifle"
 SWEP.Trivia_Desc = "Fires energy orba that incinerate targets on contact."
 SWEP.Trivia_Manufacturer = "Combine Overwatch"
 SWEP.Trivia_Calibre = "Dark Energy"
-SWEP.Trivia_Mechanism = "Humper and Capsules"
+SWEP.Trivia_Mechanism = "Thumper and Capsules, blowback"
 SWEP.Trivia_Year = 2020
 
 SWEP.Slot = 2

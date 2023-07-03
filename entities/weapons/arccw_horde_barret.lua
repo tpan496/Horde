@@ -38,7 +38,7 @@ SWEP.Damage = 850
 SWEP.DamageMin = 850
 SWEP.Range = 4000 -- in METRES
 SWEP.Penetration = 22
-
+SWEP.PhysBulletMuzzleVelocity = 1200
 SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 5 -- DefaultClip is automatically set.
 

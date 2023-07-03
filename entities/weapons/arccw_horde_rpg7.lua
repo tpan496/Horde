@@ -30,8 +30,8 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/vj_weapons/c_rpg7.mdl"
 SWEP.WorldModel = "models/vj_weapons/w_ins_rpg7.mdl"
 SWEP.WorldModelOffset = {
-    pos = Vector(9, 0, -6),
-    ang = Angle(0, 0, 180),
+    pos = Vector(9, 1, -5),
+    ang = Angle(-10, 0, 180),
 }
 SWEP.ViewModelFOV = 60
 

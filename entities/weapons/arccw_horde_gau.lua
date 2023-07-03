@@ -51,6 +51,8 @@ SWEP.Primary.ClipSize = 150 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 150
 SWEP.ReducedClipSize = 150
 
+SWEP.PhysBulletMuzzleVelocity = 1200
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.8
 SWEP.RecoilSide = 0.5
@@ -67,7 +69,7 @@ SWEP.Firemodes = {
     },
 }
 
-SWEP.NPCWeaponType = "weapon_ar2"
+SWEP.NPCWeaponType = "weapon_rpg"
 SWEP.NPCWeight = 150
 SWEP.CanBash = true
 

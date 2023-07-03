@@ -14,7 +14,7 @@ SWEP.Trivia_Class = "Energy Rifle"
 SWEP.Trivia_Desc = "Dark Energy powered assault rifle manufactured by the Combine. The OSIPR is essentially a Combine variant of current assault rifles, commonly issued to Overwatch Soldiers and Overwatch Elites."
 SWEP.Trivia_Manufacturer = "Combine"
 SWEP.Trivia_Calibre = "Dark Energy"
-SWEP.Trivia_Mechanism = "Humper and Capsules"
+SWEP.Trivia_Mechanism = "Thumper and Capsules, blowback"
 SWEP.Trivia_Country = "Combine"
 SWEP.Trivia_Year = 2004
 
@@ -22,8 +22,13 @@ SWEP.Slot = 2
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/v_irifle.mdl"
+SWEP.ViewModel = "models/weapons/c_irifle.mdl"
 SWEP.WorldModel = "models/weapons/w_irifle.mdl"
+SWEP.WorldModelOffset = {
+    pos = Vector(0, 0, 0),
+    ang = Angle(0, 0, 0),
+    scale = 1
+}
 SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 49
@@ -104,7 +109,7 @@ SWEP.ProceduralIronFire = false
 SWEP.CaseBones = {}
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-3, -4, 0.5),
+    Pos = Vector(-3, -4, -0.5),
     Ang = Angle(5, 0, 0),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight

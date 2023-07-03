@@ -46,7 +46,9 @@ SWEP.ShootEntity = nil -- entity to fire, if any
 SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 30 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 30
-SWEP.ReducedClipSize = 30
+SWEP.ReducedClipSize = 15
+
+SWEP.PhysBulletMuzzleVelocity = 420
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4

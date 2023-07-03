@@ -1,8 +1,8 @@
 if not ArcCWInstalled then return end
 if CLIENT then
     SWEP.WepSelectIcon = Material("items/hl2/weapon_stunstick.png")
-    SWEP.DrawWeaponInfoBox	= false
-    SWEP.BounceWeaponIcon = false
+    SWEP.DrawWeaponInfoBox	= true
+    SWEP.BounceWeaponIcon = true
     killicon.AddAlias("arccw_horde_stunstick", "weapon_stunstick")
 end
 
