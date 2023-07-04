@@ -1086,7 +1086,7 @@ HORDE.GetArcCWAttachments = function ()
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "Padded Stock",    "go_g3_stock_padded",  120,  0, "",
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
-    ("Attachment", "[AKM] Skeleton stock",    "go_ak_stock_skeleton",  100,  0, "",
+    HORDE:CreateItem("Attachment", "[AKM] Skeleton stock",    "go_ak_stock_skeleton",  100,  0, "",
     {Assault = true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "[AKM] RPK stock",    "go_ak_stock_heavy",  120,  0, "",
     {Assault = true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
