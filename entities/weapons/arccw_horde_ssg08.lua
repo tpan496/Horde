@@ -286,7 +286,7 @@ SWEP.Attachments = {
         Slot = "muzzle",
         Bone = "v_weapon.ssg08_parent",
         Offset = {
-            vpos = Vector(0.2, -2.3, 27),
+            vpos = Vector(0.2, -2.25, 27),
             vang = Angle(90, 0, -90),
         },
         InstalledEles = {"fh_none"},

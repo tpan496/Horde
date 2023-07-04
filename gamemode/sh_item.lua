@@ -906,9 +906,9 @@ HORDE.GetArcCWAttachments = function ()
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_scarh"})
     HORDE:CreateItem("Attachment", "[G3] 315mm Kurz Barrel",   "go_g3_barrel_short",  80,  0, "",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_g3"})
-    HORDE:CreateItem("Attachment", "[G3] 640mm Whisper Barrel",   "go_scar_barrel_sd",  200,  0, "",
+    HORDE:CreateItem("Attachment", "[G3] 640mm Whisper Barrel",   "go_g3_barrel_sd",  200,  0, "",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_Horde_g3"})
-    HORDE:CreateItem("Attachment", "[G3] 650mm SG1 Barrel",   "go_scar_barrel_long",  200,  0, "",
+    HORDE:CreateItem("Attachment", "[G3] 650mm SG1 Barrel",   "go_g3_barrel_long",  200,  0, "",
     {Medic=false, Assault=false, Heavy=false, Demolition=false, Survivor=false, Ghost=true, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_Horde_g3"})
 
     HORDE:CreateItem("Attachment", "[M249] 330mm Para Barrel",   "go_m249_barrel_short",  90,  0, "",
@@ -976,10 +976,12 @@ HORDE.GetArcCWAttachments = function ()
     HORDE:CreateItem("Attachment", "[M1014] 7-Round",   "go_m1014_mag_7",  100,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_m1014"})
 
+    HORDE:CreateItem("Attachment", "[Galil] 30-Round 7.62mm Poly",   "go_ace_mag_30_762",  125,  0, "",
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_ace"})
     HORDE:CreateItem("Attachment", "[Galil] 40-Round 7.62mm Poly",   "go_ace_mag_40_762",  150,  0, "",
     {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_ace"})
     HORDE:CreateItem("Attachment", "[AUG] 32-Round 9mm Mag",   "go_aug_ammo_9mm",  120,  0, "",
-    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_ak47"})
+    {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_aug"})
     HORDE:CreateItem("Attachment", "[AKM] 10-Round 7.62mm Poly",   "go_ak_mag_10",  50,  0, "",
     {Assault=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_ak47"})
     HORDE:CreateItem("Attachment", "[AKM] 10-Round 7.62mm Steel",   "go_ak_mag_10_steel",  50,  0, "",
@@ -1017,7 +1019,9 @@ HORDE.GetArcCWAttachments = function ()
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_scarh"})
     HORDE:CreateItem("Attachment", "[G3] 10-Round 7.62mm Steel",   "go_g3_mag_10",  70,  0, "",
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_g3"})
-    HORDE:CreateItem("Attachment", "[G3] 30-Round 5.56mm STANAG",   "go_g3_mag_30_556",  100,  0, "",
+    HORDE:CreateItem("Attachment", "[G3] 20-Round 5.56mm STANAG",   "go_g3_mag_20_556",  100,  0, "",
+    {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_g3"})
+    HORDE:CreateItem("Attachment", "[G3] 30-Round 5.56mm STANAG",   "go_g3_mag_30_556",  130,  0, "",
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_g3"})
     HORDE:CreateItem("Attachment", "[G3] 30-Round 7.62mm Steel",   "go_g3_mag_30",  130,  0, "",
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_g3"})
@@ -1082,11 +1086,17 @@ HORDE.GetArcCWAttachments = function ()
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "Padded Stock",    "go_g3_stock_padded",  120,  0, "",
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    ("Attachment", "[AKM] Skeleton stock",    "go_ak_stock_skeleton",  100,  0, "",
+    {Assault = true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    HORDE:CreateItem("Attachment", "[AKM] RPK stock",    "go_ak_stock_heavy",  120,  0, "",
+    {Assault = true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "[M4A1] M16 stock",    "go_m4_stock_m16",  120,  0, "",
     {Assault = true, Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "Sniper Stock",    "go_scar_stock_sniper",  120,  0, "",
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
     HORDE:CreateItem("Attachment", "[Mag7] Longsword Stock",    "go_mag7_stock_heavy",  120,  0, "",
+    {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
+    HORDE:CreateItem("Attachment", "[Nova] Sport-TAC Stock",    "go_nova_stock_sport",  120,  0, "",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Stock"})
 
     -- Muzzle
