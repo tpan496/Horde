@@ -84,13 +84,9 @@ function SWEP:NPCAbleToShoot()
 	local owner = self:GetOwner()
 	if IsValid(owner) && owner:IsNPC() then
 		local ene = owner:GetEnemy()
-		if (owner.IsVJBaseSNPC_Human && IsValid(ene) && owner:IsAbleToShootWeapon(true, true) == false) or (self.NPC_StandingOnly == true && owner:IsMoving()) then
-			return false
-		end
-		if owner:GetActivity() != nil && ((owner.IsVJBaseSNPC_Human == true && owner.DoingWeaponAttack == true && (/*(owner.CurrentWeaponAnimation == owner:GetSequenceActivity(owner:GetSequence())) or*/ (owner.CurrentWeaponAnimation == owner:GetActivity()) or (owner:GetActivity() == owner:TranslateToWeaponAnim(owner.CurrentWeaponAnimation)) or (!owner.DoingWeaponAttack_Standing))) or (!owner.IsVJBaseSNPC_Human)) then
+		if owner:GetActivity() != nil && ((owner.DoingWeaponAttack == true && ((owner.CurrentWeaponAnimation == owner:GetActivity()) or (owner:GetActivity() == owner:TranslateToWeaponAnim(owner.CurrentWeaponAnimation)) or (!owner.DoingWeaponAttack_Standing)))) then
 			-- For VJ Humans only, ammo check
-			if owner.IsVJBaseSNPC_Human && owner.AllowWeaponReloading == true && self:Clip1() <= 0 then -- No ammo!
-				if owner.VJ_IsBeingControlled == true then owner.VJ_TheController:PrintMessage(HUD_PRINTCENTER, "Press R to reload!") end
+			if owner.AllowWeaponReloading == true && self:Clip1() <= 0 then -- No ammo!
 				if self.IsMeleeWeapon == false && self.HasDryFireSound == true && CurTime() > self.NextNPCDrySoundT then
 					local sdtbl = VJ_PICK(self.DryFireSound)
 					if sdtbl != false then owner:EmitSound(sdtbl, 80, math.random(self.DryFireSoundPitch.a, self.DryFireSoundPitch.b)) end
@@ -114,8 +110,6 @@ function SWEP:NPCShoot_Primary()
 	local ene = owner:GetEnemy()
 	if !owner.VJ_IsBeingControlled && (!IsValid(ene) or (!owner:Visible(ene))) then return end
 	if owner.IsVJBaseSNPC == true then
-		//owner.Weapon_TimeSinceLastShot = CurTime()
-		//owner.NextWeaponAttackAimPoseParametersReset = CurTime() + 1
 		owner:DoPoseParameterLooking()
 	end
 	
@@ -177,6 +171,6 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 		dir:Normalize()
 		dir = dir + VectorRand() * 0.02
 		dir:Normalize()
-		phy:ApplyForceCenter(dir * 1250)
+		phy:ApplyForceCenter(dir * 4250)
 	end
 end

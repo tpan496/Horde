@@ -45,13 +45,18 @@ include("gui/cl_3d2d.lua")
 include("gui/cl_subclassbutton.lua")
 include("gui/cl_perkbutton.lua")
 include("gui/cl_leaderboard.lua")
-include("gui/npcinfo/sh_npcinfo.lua")
-include("gui/npcinfo/cl_npcinfo.lua")
 
 include("status/sh_mind.lua")
 include("gui/scoreboard/dpingmeter.lua")
 include("gui/scoreboard/dheaderpanel.lua")
 include("gui/scoreboard/dplayerline.lua")
+
+include("arccw/attachments/horde_akimbo_deagle.lua")
+include("arccw/attachments/horde_akimbo_m9.lua")
+include("arccw/attachments/horde_akimbo_glock.lua")
+include("arccw/attachments/horde_ubgl_medic.lua")
+include("arccw/attachments/horde_ammo_ap.lua")
+include("arccw/attachments/horde_ammo_sabot.lua")
 
 -- Some users report severe lag with halo
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
@@ -247,6 +252,20 @@ net.Receive("Horde_HighlightEntities", function (len, ply)
     else
         hook.Remove("PreDrawHalos", "Horde_AddEnemyHalos")
         hook.Remove("PreDrawHalos", "Horde_AddAmmoBoxHalos")
+    end
+end)
+
+net.Receive("Horde_HighlightSonar", function (len, ply)
+    local entity = net.ReadEntity()
+    local highlight = net.ReadBool()
+    local idx = entity:EntIndex()
+    if highlight == true then
+        hook.Add("PreDrawHalos", "Horde_SonarHalo" .. idx, function()
+            if !entity:IsValid() then hook.Remove("PreDrawHalos", "Horde_SonarHalo" .. idx) end
+            halo.Add({entity}, Color(255, 255, 255), 5, 5, 1, true, true)
+        end)
+    else
+        hook.Remove("PreDrawHalos", "Horde_SonarHalo" .. idx)
     end
 end)
 

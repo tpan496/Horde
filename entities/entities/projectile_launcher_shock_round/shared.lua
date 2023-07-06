@@ -45,12 +45,6 @@ function ENT:Attack()
     util.Effect("StunstickImpact", effectdata)
     self:EmitSound("weapons/stunstick/stunstick_impact1.wav", 125, 100, 1, CHAN_AUTO)
 
-    local attacker = self
-
-    if self.Owner:IsValid() then
-        attacker = self.Owner
-    end
-
     local dmg = DamageInfo()
 	dmg:SetAttacker(self.Owner)
 	dmg:SetInflictor(self)

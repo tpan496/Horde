@@ -1,8 +1,8 @@
 if not ArcCWInstalled then return end
 if CLIENT then
     SWEP.WepSelectIcon = Material("items/hl2/weapon_crossbow.png")
-    killicon.AddAlias("arccw_horde_heat_crossbow", "weapon_crossbow")
-    killicon.AddAlias("projectile_horde_heat_bolt", "weapon_crossbow")
+    killicon.AddAlias("arccw_horde_heat_crossbow", "crossbow_bolt")
+    killicon.AddAlias("projectile_horde_heat_bolt", "crossbow_bolt")
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
@@ -27,11 +27,11 @@ SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/c_crossbow.mdl"
 SWEP.WorldModel = "models/weapons/w_crossbow.mdl"
-SWEP.MirrorVMWM = true
+SWEP.MirrorVMWM = false
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 150
-SWEP.DamageMin = 150 -- damage done at maximum range
+SWEP.Damage = 300
+SWEP.DamageMin = 300 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 20
 SWEP.DamageType = DMG_BULLET
@@ -64,7 +64,7 @@ SWEP.Firemodes = {
     },
     {
         Mode = 3,
-        PrintName = "Heat Mode"
+        PrintName = "Impact Mode"
     },
 }
 
@@ -131,16 +131,14 @@ SWEP.CustomizeAng = Angle(12.149, 30.547, 0)
 SWEP.SprintPos = Vector(5, 0, 0)
 SWEP.SprintAng = Angle(0, 25, 0)
 
-SWEP.AttachmentElements = {
-
-}
-
 SWEP.ExtraSightDist = 5
+
+SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 
 SWEP.Attachments = {
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
 }
 
@@ -153,7 +151,7 @@ SWEP.Animations = {
     ["idle_empty"] = {
         Source = "idle_empty",
         Time = 10,
-        TPAnim = ACT_HL2MP_IDLE_CROSSBOW,
+        TPAnim = ACT_CROSSBOW_DRAW_UNLOADED,
     },
     ["draw"] = {
         Source = "draw",
@@ -171,13 +169,12 @@ SWEP.Animations = {
     ["fire_empty"] = {
         Source = "fire",
         Time = 0.5,
-        ShellEjectAt = 0,
-        RestoreAmmo = 0,
+        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_CROSSBOW,
     },
     ["fire_iron"] = {
         Source = "fire",
         Time = 0.5,
-        ShellEjectAt = 0,
+        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_CROSSBOW,
     },
     ["reload"] = {
         Source = "reload",

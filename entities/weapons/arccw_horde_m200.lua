@@ -22,8 +22,8 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 750
-SWEP.DamageMin = 750
+SWEP.Damage = 725
+SWEP.DamageMin = 725
 SWEP.Range = 4000 * 0.025 -- in METRES
 SWEP.Penetration = 22
 
@@ -37,8 +37,12 @@ SWEP.Recoil = 2
 SWEP.RecoilSide = 2
 
 SWEP.AccuracyMOA = 0.04 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 500 -- inaccuracy added by hip firing.
+SWEP.HipDispersion = 800 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 200
+
+
+SWEP.ManualAction = true
+SWEP.NoLastCycle = true -- do not cycle on last shot
 
 SWEP.Delay = 60 / 400 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
@@ -76,7 +80,7 @@ SWEP.ShellRotateAngle = Angle(0, 90, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 1
+SWEP.SpeedMult = 0.95
 SWEP.SightedSpeedMult = 0.40
 SWEP.SightTime = 0.4 / 1.15
 
@@ -135,7 +139,10 @@ SWEP.BarrelLength = 50
 
 SWEP.ExtraSightDist = 5
 SWEP.Bipod_Integral = true
+SWEP.BipodDispersion = 0.5
+SWEP.BipodRecoil = 0.5
 
+SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
     {
         PrintName = "Optic",
@@ -177,11 +184,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo",
+        DefaultAttName = "Standard Ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk",
     },
     {
         PrintName = "Camouflage",
@@ -286,3 +294,10 @@ SWEP.Animations = {
         LHIKOut = 0.5,
     },
 }
+
+function SWEP:Hook_OnDeploy()
+    timer.Simple(0, function ()
+        if !IsValid(self) then return end
+        self:Attach(1, "optic_cheytacscope")
+    end)
+end

@@ -27,8 +27,8 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "000000000000"
 
-SWEP.Damage = 300
-SWEP.DamageMin = 300 -- damage done at maximum range
+SWEP.Damage = 550
+SWEP.DamageMin = 550 -- damage done at maximum range
 SWEP.Range = 150 -- in METRES
 SWEP.Penetration = 30
 SWEP.DamageType = DMG_BULLET
@@ -64,7 +64,7 @@ SWEP.NPCWeaponType = "weapon_crossbow"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 0.06 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 500 -- inaccuracy added by hip firing.
+SWEP.HipDispersion = 800 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 25
 
 SWEP.Primary.Ammo = "SniperPenetratedRound" -- what ammo type the gun uses
@@ -91,7 +91,7 @@ SWEP.ShellRotateAngle = Angle(0, 180, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.90
+SWEP.SpeedMult = 0.9
 SWEP.SightedSpeedMult = 0.50
 SWEP.SightTime = 0.25
 
@@ -442,3 +442,10 @@ sound.Add({
     volume = 1.0,
     sound = "arccw_go/awp/awp_boltback.wav"
 })
+
+function SWEP:Hook_OnDeploy()
+    timer.Simple(0, function ()
+        if !IsValid(self) then return end
+        self:Attach(1, "go_optic_awp")
+    end)
+end

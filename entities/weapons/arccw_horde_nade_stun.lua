@@ -1,4 +1,10 @@
-SWEP.Base = "arccw_base_nade"
+if not ArcCWInstalled then return end
+if CLIENT then
+    SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_horde_nade_stun")
+    killicon.Add("arccw_horde_nade_stun", "arccw/weaponicons/arccw_horde_nade_stun", Color(0, 0, 0, 255))
+    killicon.Add("arccw_thr_stun", "arccw/weaponicons/arccw_horde_nade_stun", Color(0, 0, 0, 255))
+end
+SWEP.Base = "arccw_horde_base_nade"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -11,6 +17,8 @@ SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Magnesium/Ammonium Nitrate Mix"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1995
+SWEP.Primary.MaxAmmo = 9
+SWEP.ForceDefaultAmmo = 0
 
 SWEP.Slot = 4
 
@@ -41,7 +49,7 @@ SWEP.TTTWeaponType = "weapon_ttt_confgrenade"
 SWEP.NPCWeaponType = "weapon_grenade"
 SWEP.NPCWeight = 50
 
-SWEP.PullPinTime = 0.25
+SWEP.PullPinTime = 0.5
 
 SWEP.Animations = {
     ["draw"] = {
@@ -50,7 +58,7 @@ SWEP.Animations = {
     },
     ["pre_throw"] = {
         Source = "pullpin",
-        Time = 0.25,
+        Time = 0.5,
     },
     ["throw"] = {
         Source = "throw",

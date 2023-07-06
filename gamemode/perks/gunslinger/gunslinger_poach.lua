@@ -16,7 +16,7 @@ PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if not victim.Horde_Has_Hunter_Mark:Horde_GetPerk("gunslinger_poach") then return end
     local p = math.random()
     local run = nil
-    if victim:GetVar("is_elite") then
+    if victim:Horde_IsElite() then
         if p <= 0.5 then
             run = true
         end

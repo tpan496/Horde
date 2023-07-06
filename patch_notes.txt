@@ -1,43 +1,90 @@
-Major Update 1.2.0
+Major Update 1.2.1
 
--- Objective Mode Support
-    - Horde now has objective mode entities. See the FGD for more info.
-    - Holdout: Players have to hold an area for a certain amount of time.
-    - Payload: Players have to deliver items to certain areas.
-    - Escape: Only triggered on the last wave. A player needs to escape to win the round.
-        - Example holdout/escape map: hr_aversion. I will probably make more given time.
+-- Assist
+Added a simple assist reward.
 
--- Spell System Rework:
-    - Horde has its own unique spell system that supports adding custom spells through lua.
-    - horde_spell_weapon_base: a weapon base I created for spell weapons. If you want to make spell weapons, use this as base.
-    - Spell Forge: Artificer/Necromancer/Warlock now have access to the Spell Forge.
+-- Class Grenades
+Each class now has its own unique grenade that complements its playstyle.
+Grenades have an ammo limit of 6 in total.
 
--- Class Rework:
-    - Artificer/Necromancer/Warlock have been reworked.
+< Assasult: Stun Grenade (arccw_horde_nade_stun)
+< Heavy: Shrapnel Grenade (arccw_horde_nade_shrapnel)
+< Ghost: Sonar Grenade (arccw_horde_nade_sonar)
+< Demolition: M67 Frag Grenade (arccw_horde_m67)
+< Medic: Medic Grenade (arccw_nade_medic)
+< Engineer: Nanobot Grenade (arccw_horde_nade_nanobot)
+< Berserker: Hemo Grenade (arccw_horde_nade_hemo)
+< Warden: EMP Grenade (arccw_horde_nade_emp)
+< Cremator: Molotov (arccw_horde_nade_molotov)
 
--- Item Changes:
-    - Shotgun Turret, Sniper Turret, Laser Turret (Engineer)
-    - Watchtower Interceptor, Watchtower Guardian, Watchtower Beacon (Warden)
-    - Chainsaw (rework), Jotuun, Zweihander (Berserker)
-    - M200 Intervention (reworked, Ghost)
-    - RPD (Heavy)
-    - Crowbar, Stunstick (reworked into ArcCW base)
-    - Apollo (Cremator)
-    - OSPIR (Assault)
-    - Medic-specific weapons reworked. They now show locked on targets for healing.
-    - Double Barrel: Added fire mode that allows you to perform double shot.
-    - Throwing Knives -> Kunai (Reworked)
-    - Gluon gun buff
-    - Fixed 3rd person views for most weapons
-    - M16M203 buffed
-    - FNFAL/G3 balance
-    - Inferno Blade: Now deals Slashing + Fire damage when activated, thus allowing melee perks to activate
+-- Assault Class Changes:
+Item Changes:
+    < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
+    < Reworked Weapon: FAMAS (arccw_horde_famas)
+    < Reworked Weapon: Galil (arccw_horde_ace)
+    < Reworked Weapon: M4A1 (arccw_horde_m4)
+    < Reworked Weapon: AK47 (arccw_horde_ak47)
+    < Reworked Weapon: SG556 (arccw_horde_sg556)
+    < Reworked Weapon: AUG (arccw_horde_aug)
 
--- New Scoreboard by Crash
+-- Heavy Class Changes
+Perk Changes:
+    < Added maximum armor bonus passive.
+    < Ballistic Shock effect changed.
+    < Reactive Armor perk effect changed.
 
--- Perk Changes:
-    - Entropy Shield: increased cooldown
-    - Foresight: increased cooldown
-    - Several bug fixes by 1337Ghost
+Item Changes:
+    < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
+    < Weapons with visible Bipods will now have Bipods by default.
+    < Energy Shield gadget effect changed.
+    < ULPA Filter gadget effect changed.
+    < New Gadget: Armor Fusion (gadget_armor_fusion)
 
-Note: Objective mode is fairly new, so I am expecting bugs here and there. If you find any please put them in #debugging section.
+-- Demolition Class Changes
+Perk changes:
+    < Reduced Blast resistance passive
+    < Added Blast damage bonus passive
+    < Pressurized Warhead / Chain Reaction effects changed
+
+Weapon changes:
+    < All default config demolition weapons now have arm distance and headshot detection.
+    < Added two new attachments for explosive projectile weapons.
+    < Rebalanced weapon damage values.
+    < New Weapon: FGM-148 Javelin (arccw_horde_javelin)
+
+-- Medic Class Changes:
+Item Changes:
+    < New Weapon: MP9 Medic (arccw_horde_mp9m)
+    < New Weapon: MP5K Medic (arccw_horde_mp5k)
+    < New Weapon: ACR Medic (arccw_horde_medic_acr)
+    < New Gadget: Aegis (gadget_aegis)
+
+-- Ghost Class Changes:
+Item Changes:
+    < Slightly reduced damage of Barrett and M200.
+    < Increased price and damage of AWP.
+    < Increased damage of heat crossbow.
+    < Automatic weapons have been removed from Ghost weapon pool.
+    < Dual pistols off-hand damage have been fixed.
+    < New Weapon: SSG08 (arccw_horde_ssg08)
+
+-- Warden Class Changes:
+Perk Changes:
+    < Energize and Inoculation have switched slots.
+    < Energize now only applies to damage instance at least 8.
+
+Item Changes:
+    < Fixed Double Barrel dealing too much damage as intended and added back knockback boost.
+    < Reworked Weapon: SPAS12 (arccw_horde_spas12)
+
+-- Cremator Class Changes:
+Perk Changes:
+    < Reduced passive Fire damage resistance.
+    < Entropy Shield effect changed.
+
+Item Changes:
+    < Increased price of some weapons.
+
+-- Berserker Class Changes:
+Item Changes:
+    < New Gadget: Omnislash (gadget_omnislash)

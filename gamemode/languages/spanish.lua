@@ -167,51 +167,67 @@ Sin bonus.]]
 LANGUAGE["Perk_assault_base"] = [[
 La clase Asalto es un luchador de todo-tipo con gran movilidad y concentrado en cargas de Adrenalina.
 Complejidad: FÁCIL
+
 {1} mas velocidad de movimiento. ({2} por nivel, hasta {3}).
+{5} daño Balístico aumentado. ({6} por nivel, hasta {7}).
+
 Ganas Adrenalina cuando asesinas a un enemigo.
 Adrenalina aumenta el daño y velocidad un {4}.]]
 
 LANGUAGE["Perk_heavy_base"] = [[
 La clase Pesado es una clase de resistencia que provee una fuerte potencia de fuego.
 Complejidad: FÁCIL
+
+{6} armadura máxima aumentada. ({7} por nivel, hasta {8}).
+
 Regenera {1} de armadura por segundo.
 Regenera hasta {2} armadura. ({3} + {4} por nivel, hasta {5})]]
 
 LANGUAGE["Perk_medic_base"] = [[
 La clase Médico es una clase de soporte duradera que se basa en curar y mejorar aliados.
 Complejidad: MEDIA
+
 Amplifica la curación un {1}. ({2} por nivel, hasta {3}).
 Regenera {4} de vida por segundo.]]
 
 LANGUAGE["Perk_demolition_base"] = [[
 La clase Demolición es una clase de control de masas que también proporciona gran daño a un objetivo único.
 Complejidad: MEDIA
+
+{7} daño de Explosión aumentado. ({8} por nivel, hasta {9}).
 {1} de daño Explosivo incrementado. ({2} + {3} por nivel, hasta {4}).
+
 Regenera {5} granada de fragmentación cada {6} segundos, si no tienes una.]]
 
 LANGUAGE["Perk_ghost_base"] = [[
 La clase Tirador está concentrado en acabar jefes enemigos usando Camuflaje.
 Complejidad: ALTA
+
 {1} mas de daño a la cabeza. ({2} por nivel, hasta {3}).
+
 Agácgate para activar Camuflaje, otorgando {4} de evasión.
 Atacar o Correr REMUEVE Camuflaje.]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 La clase Ingeniero es una clase centrada en esbirros que realizan daño a través esbirros.
 Complejidad: MEDIA
+
 {1} daño de esbirro aumentado. ({2} por nivel, hasta {3}).
 Torretas tienen {4} vida base y realiza {5} daño base.]]
 
 LANGUAGE["Perk_berserker_base"] = [[
 La clase Berserker es una class centrado en cuerpo a cuerpo que puede ser utilizado tanto a la ofensiva como a la defensiva.
 Complejidad: ALTA
+
 {1} daño Cortante y Golpeante aumentado. ({2} por nivel, hasta {3}).
 {4} resistencia al daño Global aumentada. ({5} por nivel, hasta {6}).
+
 Desvío Aeréo: Salta para reducir daño Físico recibido un {7}.]]
 
 LANGUAGE["Perk_warden_base"] = [[
 El Guardián es una clase soporte que usa sus efectos de aura y estructuras para mejorar a los aliados.
 Complejidad: MEDIA
+
 {1} radio del Aura del Guardián aumentado. ({2} por nivel, hasta {3}).
 Los jugadores cercanos son afectados por el Aura del Guardián.
 Aura del Guardián bloquea {4} de daño.]]
@@ -219,7 +235,9 @@ Aura del Guardián bloquea {4} de daño.]]
 LANGUAGE["Perk_cremator_base"] = [[
 El Quemador construye su ofensiva y defensiva en torno al daño de Fuego.
 Complejidad: FÁCIL
+
 {1} resistencia al daño de Fuego aumentado. ({2} + {3} por nivel, hasta {4}).
+
 Ataques tienen {5} chance de Incendiar enemigos.
 La duración base de Incendiar es {6} e inflige daño a lo largo del tiempo en función del daño por golpe.
 El daño de Fuego tiene {7} chance de Incendiar.]]
@@ -303,7 +321,7 @@ Mientras tengas por lo menos {1} de armadura:
   {2} menos de daño Físico recibido.]]
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[Armadura Reactiva]]
-LANGUAGE["Perk_heavy_reactive_armor"] = [[
+--[[LANGUAGE["Perk_heavy_reactive_armor"] = [[
 Mientras tengas al menos {1} de armadura:
   Inmune al daño de Fuego y Explosivo.]]
 
@@ -374,10 +392,11 @@ Mini-granadas infligen {2} menos daño.]]
 LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[Arsenal]]
 LANGUAGE["Perk_Title_demolition_direct_hit"] = [[Golpe Directo]]
 LANGUAGE["Perk_demolition_direct_hit"] = [[
-{1} daño Explosivo contra enemigos contra enemigos cercanos a las explosiones aumentado.]]
+{1} daño Explosivo contra enemigos contra enemigos cercanos a las explosiones aumentado.
+Aumenta un {1} el daño Golpeante.]]
 
 LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[Onda sísmica]]
-LANGUAGE["Perk_demolition_seismic_wave"] = [[
+--[[LANGUAGE["Perk_demolition_seismic_wave"] = [[
 Proyecties explosivos crean una explosión atrasada adicional.
 Explosión atrasada realiza {1} daño de explosión como daño Físico.]]
 
@@ -394,14 +413,14 @@ Enfriamiento del Aturdimiento son {2} segundos.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[Destrucción]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Ojiva Presurizada]]
-LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
+--[[LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
 {1} de daño Explosivo incrementado contra élites.
 Explosiones infligen de {2} a {3} de la vida actual de los enemigos como daño adicional.]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Reacción en Cadena]]
-LANGUAGE["Perk_demolition_chain_reaction"] = [[
+--[[LANGUAGE["Perk_demolition_chain_reaction"] = [[
 Enemigos que asesines tienen {1} de chance de explotar,
-haciendo {2} de su vida maxima como daño Explosivo.]]
+haciendo {2} de su vida maxima como daño Explosivo.]]--
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[Tácticas]]
@@ -560,7 +579,7 @@ LANGUAGE["Perk_warden_restock"] = [[
 El enfriamiento del reabastecimiento de los Watchtowers se disminuye un {1}.]]
 
 LANGUAGE["Perk_Title_warden_energize"] = [[Energizar]]
-LANGUAGE["Perk_warden_energize"] = [[
+--[[LANGUAGE["Perk_warden_energize"] = [[
 El Aura agrega {1} de daño base a los ataques.]]
 
 LANGUAGE["Perk_Title_Warden_Tier_3"] = [[Escolta]]
@@ -600,7 +619,7 @@ Inmune al daño de Fuego.
 Absorbes {1} del daño de Fuego recibido como vida.]]
 
 LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[Escudo de Entropía]]
-LANGUAGE["Perk_cremator_entropy_shield"] = [[
+--[[LANGUAGE["Perk_cremator_entropy_shield"] = [[
 Obtienes un escudo que niega el daño recibido de enemigos.
 El escudo explota al ser golpeado y se recarga después de {1} segundos.
 Explosión inflige {2} de daño de Fuego.]]

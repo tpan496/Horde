@@ -147,7 +147,7 @@ if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_r
 		if killer:IsPlayer() and killer:IsValid() and killer:Horde_GetClass() then
 			local class_name = killer:Horde_GetCurrentSubclass()
 			if killer:Horde_GetLevel(class_name) >= HORDE.max_level then return end
-			if victim:GetVar("is_elite") then
+			if victim:Horde_IsElite() then
 				killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + 2)
 				local p = math.random()
 				if p < 0.01 or (p < 0.1 and killer:Horde_GetGadget() == "gadget_corporate_mindset") then

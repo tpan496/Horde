@@ -217,11 +217,11 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Skin",
@@ -232,16 +232,16 @@ SWEP.Attachments = {
 		DefaultAttIcon = Material("entities/acwatt_deagle_mw2.png", "smooth")
     },
     {
-        PrintName = "Akimbotest",
+        PrintName = "Akimbo",
         DefaultAttName = "No LH",
-        Slot = "akimbotest",
+        Slot = "akimbodeagle",
         Bone = "tag_view",
         Offset = {
             vpos = Vector(0, 0, 0),
             vang = Angle(0, 0, 0),
         },
         Hidden = true,
-        Installed = "mw2_akimbo_deagle",
+        Installed = "horde_akimbo_deagle",
     },
     {
         PrintName = "Charm",
@@ -270,6 +270,13 @@ SWEP.Hook_TranslateAnimation = function(wep, anim)
     elseif wep.Attachments[9].Installed then
         return anim .. "_akimbo_right"
     end
+end
+
+function SWEP:Hook_OnDeploy()
+    timer.Simple(0, function ()
+        if !IsValid(self) then return end
+        self:Attach(9, "horde_akimbo_deagle")
+    end)
 end
 
 SWEP.Animations = {

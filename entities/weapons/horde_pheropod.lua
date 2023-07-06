@@ -46,7 +46,7 @@ SWEP.Category = "ArcCW - Horde"
 
 SWEP.DrawAmmo = true
 
-SWEP.Primary.MaxAmmo = 100
+SWEP.Primary.MaxAmmo = 90
 SWEP.Primary.ClipSize = -1
 
 if ( CLIENT ) then

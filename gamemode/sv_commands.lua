@@ -420,7 +420,7 @@ concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
     -- Health settings
     local horde_players_count = player_count or table.Count(player.GetAll())
     if enemy.is_elite and enemy.is_elite == true then
-        spawned_enemy:SetVar("is_elite", true)
+        spawned_enemy:Horde_SetElite()
         local scale
         local add
         if enemy.boss_properties and enemy.boss_properties.is_boss == true then

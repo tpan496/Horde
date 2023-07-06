@@ -163,7 +163,7 @@ PERK.Hooks.HUDPaint = function()
 			--end
 		end
 
-		draw.DrawText("N i g h t V i s i o n", "ChatFont",
+		draw.DrawText("T a c t i c a l V i s i o n", "ChatFont",
 		ScrW() / 2, ScrH() - 50, nv_color(), TEXT_ALIGN_CENTER)
 	end
 end

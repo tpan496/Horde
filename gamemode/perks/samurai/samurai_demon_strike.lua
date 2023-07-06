@@ -19,7 +19,7 @@ end
 
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("samurai_demon_strike") then return end
-    if HORDE:IsMeleeDamage(dmginfo) then
+    if HORDE:IsMeleeDamage(dmginfo) and npc:Horde_HasDebuff(HORDE.Status_Bleeding) then
         bonus.increase = bonus.increase + 0.3
     end
 end

@@ -29,14 +29,19 @@ SWEP.UseHands = true
 
 SWEP.ViewModel = "models/horde/weapons/c_gau.mdl"
 SWEP.MirrorVMWM = false
-SWEP.WorldModel = "models/weapons/w_mach_m249para.mdl"
+SWEP.WorldModel = "models/horde/weapons/w_gau.mdl"
+SWEP.WorldModelOffset = {
+    pos = Vector(0, 5, -35),
+    ang = Angle(0, 0, 0),
+    scale = 1,
+}
 SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "100000"
 
 SWEP.Damage = 37
 SWEP.DamageMin = 33
-SWEP.Range = 1400 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Range = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 7
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -145,7 +150,12 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo",
+        DefaultAttName = "Standard Ammo"
+    },
+    {
+        PrintName = "Perk",
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",

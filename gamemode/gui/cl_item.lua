@@ -235,9 +235,10 @@ function PANEL:Paint()
             self.price_panel:SetText("Owned")
             self.weight_panel_text:SetTextColor(HORDE.color_crimson)
             self.weight_panel_icon:SetImageColor(HORDE.color_crimson)
-            if self.item.category == "Attachment" or self.item.category == "Gadget" or self.item.category == "Equipment" or self.item.category == "Explosive" or self.item.category == "Special" then
-            else
+            if self.item.infusions and !table.IsEmpty(self.item.infusions) then
                 self.infusion_btn:SetVisible(true)
+            else
+                self.infusion_btn:SetVisible(false)
             end
 
             local infusion = MySelf:Horde_GetInfusion(self.item.class)

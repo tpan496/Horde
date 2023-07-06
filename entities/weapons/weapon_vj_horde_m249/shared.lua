@@ -61,13 +61,19 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	bullet:Activate()
 	bullet:Spawn()
 	bullet.DirectDamage = 6
+	if self.Owner.Weaken then
+		bullet.Weaken = true
+	elseif self.Owner.Hinder then
+		bullet.Hinder = true
+	end
+	
 	
 	local phy = bullet:GetPhysicsObject()
 	if phy:IsValid() then
 		dir:Normalize()
 		dir = dir + VectorRand() * 0.03
 		dir:Normalize()
-		phy:ApplyForceCenter(dir * 1000)
+		phy:ApplyForceCenter(dir * 4000)
 	end
 end
 

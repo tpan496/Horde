@@ -9,7 +9,7 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "Vector (Horde)"
+SWEP.PrintName = "Vector Medic PDW"
 SWEP.Trivia_Class = "Sub Machine Gun"
 SWEP.Trivia_Desc = "Fully automatic, high fire rate."
 
@@ -74,7 +74,7 @@ SWEP.Primary.Ammo = "pistol" -- what ammo type the gun uses
 SWEP.ShootVol = 110 -- volume of shoot sound
 SWEP.ShootPitch = 110 -- pitch of shoot sound
 
-SWEP.ShootSound =			"weapons/fesiugmw2/fire/kriss.wav"
+SWEP.ShootSound =			"horde/weapons/vector/kriss1.ogg"
 SWEP.ShootMechSound =       ArcCW_MW2_Mech
 --SWEP.DistantShootSound =	"weapons/fesiugmw2/fire_distant/kriss.wav"
 SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/mp5_sil.wav"
@@ -228,6 +228,7 @@ SWEP.Attachments = {
         DefaultAttName = "None",
         Slot = "mw2_wepcamo",
         FreeSlot = true,
+        InstalledEles = {"wepcamo-blackout"},
     },
 	{
         PrintName = "Charm",
@@ -342,17 +343,17 @@ function SWEP:ChangeFiremode(pred)
 
         for _, ent in pairs(ents.FindInSphere(tr.HitPos, 100)) do
             if ent:IsPlayer() then
-                local healinfo = HealInfo:New({amount=10, healer=self.Owner})
+                local healinfo = HealInfo:New({amount=12, healer=self.Owner})
                 HORDE:OnPlayerHeal(ent, healinfo)
             elseif ent:GetClass() == "npc_vj_horde_antlion" then
-                local healinfo = HealInfo:New({amount=10, healer=self.Owner})
+                local healinfo = HealInfo:New({amount=12, healer=self.Owner})
                 HORDE:OnAntlionHeal(ent, healinfo)
             elseif ent:IsNPC() then
                 local dmg = DamageInfo()
                 dmg:SetDamage(25)
                 dmg:SetDamageType(DMG_NERVEGAS)
                 dmg:SetAttacker(self.Owner)
-                dmg:SetInflictor(self.Horde_Wpn_Owner)
+                dmg:SetInflictor(self)
                 dmg:SetDamagePosition(tr.HitPos)
                 ent:TakeDamageInfo(dmg)
             end

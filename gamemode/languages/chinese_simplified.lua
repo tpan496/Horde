@@ -326,6 +326,7 @@ LANGUAGE["Perk_assault_base"] = [[
 复杂度: 简单
 
 {1} 更多移速。（每级提升 {2}，最多至 {3}）。
+提升 {7} 子弹伤害。（每级提升 {8}，最多至 {9}）。
 
 杀死敌人后获得“肾上腺素”状态。通过技能的选择，“肾上腺素”可以进行堆叠。
 “肾上腺素”提升 {4} 移速和输出。]]
@@ -333,6 +334,8 @@ LANGUAGE["Perk_assault_base"] = [[
 LANGUAGE["Perk_heavy_base"] = [[
 重装兵拥有高超的护甲防御机制，同时能使用重武器对敌人造成火力压制。
 复杂度: 简单
+
+提升 {6} 最大护甲值。（每级提升 {7}， 最多至 {8}）。
 
 每秒恢复 {1} 点护甲。
 护甲回复上限为 {2}。（基础{3} + 每级提升 {4}，最多至 {5}）。]]
@@ -349,9 +352,10 @@ LANGUAGE["Perk_demolition_base"] = [[
 爆破兵拥有强大的范围性输出。根据技能的选择，爆破兵也能提供超群的单体输出能力。
 复杂度: 中等
 
+提升 {7} 爆炸伤害。（每级提升 {8}，最多至 {9}）。
 提升 {1} 爆炸伤害抗性。（基础 {2} + 每级提升 {3}，最多至 {4}）。
 
-在没有高爆手雷的前提下，每 {5} 秒获得 {6} 个高爆手雷。]]
+在没有高爆手雷的前提下，每 {6} 秒获得 {5} 个高爆手雷。]]
 
 LANGUAGE["Perk_ghost_base"] = [[
 幻影是一个围绕着精准度和“迷彩”机制的职业。使用恰当的话，幻影可以提供无以匹敌的单体输出。
@@ -476,8 +480,9 @@ LANGUAGE["Perk_heavy_liquid_armor"] = [[
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[反应装甲]]
 LANGUAGE["Perk_heavy_reactive_armor"] = [[
-护甲值至少有 {1} 的前提下：
-  免疫火焰，爆炸伤害。]]
+获得一个能抵消伤害的反应装甲。
+装甲在受到至少 {1} 伤害后激活，在 {2} 秒后重置。
+激活会消耗 {3} 当前护甲值。]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_4"] = [[先进科技]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[纳米机器]]
@@ -549,12 +554,14 @@ LANGUAGE["Perk_demolition_frag_cluster"] = [[
 LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[武器]]
 LANGUAGE["Perk_Title_demolition_direct_hit"] = [[精确打击]]
 LANGUAGE["Perk_demolition_direct_hit"] = [[
-提升 {1} 起爆点附近敌人的爆炸伤害。]]
+提升 {1} 起爆点附近敌人的爆炸伤害。
+提升 {1} 钝器伤害。]]
 
 LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[震荡波]]
 LANGUAGE["Perk_demolition_seismic_wave"] = [[
-爆炸类发射物在引爆后产生额外的冲击波。
-冲击波造成原本爆炸伤害 {1} 的物理伤害。]]
+爆炸伤害产生额外的震荡波。
+震荡波造成原本爆炸伤害 {1} 的物理伤害。
+产生震荡波需要超过 {2} 爆炸伤害。]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[爆破途径]]
 LANGUAGE["Perk_Title_demolition_fragmentation"] = [[破片]]
@@ -571,12 +578,12 @@ LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[毁灭]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[高压弹头]]
 LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
 提升 {1} 对精英敌人造成的爆炸伤害。
-对敌人造成 {2} 当前生命值的额外爆炸伤害。]]
+{2} 更多对头部造成的爆炸和钝器伤害。]]
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[连锁反应]]
 LANGUAGE["Perk_demolition_chain_reaction"] = [[
-击杀的敌人有 {1} 概率爆炸。
-爆炸伤害为最大生命值的 {2}。]]
+对敌人造成 {1} 当前生命值的额外爆炸伤害。
+额外爆炸伤害最高为 {2}。]]
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[策略]]
@@ -735,7 +742,8 @@ LANGUAGE["Perk_warden_restock"] = [[
 
 LANGUAGE["Perk_Title_warden_energize"] = [[充能]]
 LANGUAGE["Perk_warden_energize"] = [[
-光环提供 +{1} 额外基础伤害。]]
+光环提供 +{1} 额外伤害。
+激活此效果需要至少 {1} 基础伤害。]]
 
 LANGUAGE["Perk_Title_Warden_Tier_3"] = [[护送]]
 LANGUAGE["Perk_Title_warden_rejection_pulse"] = [[排斥力场]]
@@ -776,9 +784,9 @@ LANGUAGE["Perk_cremator_positron_array"] = [[
 
 LANGUAGE["Perk_Title_cremator_entropy_shield"] = [[熵护盾]]
 LANGUAGE["Perk_cremator_entropy_shield"] = [[
-获得一个能抵消一次伤害的护盾。
-护盾被击中后爆炸，在 {1} 秒后重生。
-护盾爆炸造成 {2} 火焰伤害。]]
+受到伤害时，激活能够减少伤害的护盾。
+护盾提供 {1} 伤害抗性，持续 {2} 秒。
+护盾在 {3} 秒后可以被再次激活。]]
 
 LANGUAGE["Perk_Title_Cremator_Tier_3"] = [[热量操控]]
 LANGUAGE["Perk_Title_cremator_hyperthermia"] = [[超高温]]
@@ -1481,6 +1489,33 @@ LANGUAGE["Item_Desc_Stun Grenade"] = [[
 对范围内敌人造成小额爆炸伤害和眩晕。
 ]]
 
+LANGUAGE["Item_Sonar Grenade"] = [[声纳手雷]]
+LANGUAGE["Item_Desc_Sonar Grenade"] = [[
+声纳手雷。
+持续标记范围内的敌人。
+被标记的敌人会受到 10% 更多爆头伤害。
+]]
+
+LANGUAGE["Item_Nanobot Grenade"] = [[纳米机器手雷]]
+LANGUAGE["Item_Desc_Nanobot Grenade"] = [[
+纳米机器手雷。
+能够治疗玩家以及玩家的召唤物。
+对于召唤物的治疗量更多。
+]]
+
+LANGUAGE["Item_Hemo Grenade"] = [[血浆弹]]
+LANGUAGE["Item_Desc_Hemo Grenade"] = [[
+用血浆制成的手雷。
+对范围内敌人造成利器伤害。
+]]
+
+LANGUAGE["Item_EMP Grenade"] = [[电磁脉冲手雷]]
+LANGUAGE["Item_Desc_EMP Grenade"] = [[
+电磁脉冲手雷。
+对范围内敌人造成快速的雷电伤害。
+不会对玩家本身造成伤害。
+]]
+
 LANGUAGE["Item_Resistance RPG"] = [[反抗军RPG]]
 LANGUAGE["Item_Desc_Resistance RPG"] = [[
 反抗军粗制火箭筒。
@@ -1807,7 +1842,8 @@ LANGUAGE["Gadget_gadget_ouroboros"] = [[咬尾蛇]]
 -- Heavy Gadgets
 LANGUAGE["Gadget_gadget_energy_shield"] = [[能量盾]]
 LANGUAGE["Gadget_Desc_energy_shield"] = [[
-暂时获得额外 25 点护甲。
+获得额外 15 点护甲。
+上限为当前最高护甲自动回复值。
 ]]
 
 LANGUAGE["Gadget_gadget_exoskeleton"] = [[外骨骼]]

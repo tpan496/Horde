@@ -23,7 +23,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         ply.Horde_In_Flash = nil
         ply.Horde_Invincible = nil
         ply:SetLocalVelocity(Vector(0,0,0))
-        ply:Horde_RemovePhasing()
+        --ply:Horde_RemovePhasing() -- sv_phasing.lua already does that
     end)
     timer.Simple(0, function() ply:SetLocalVelocity(vel) end)
 end
@@ -48,5 +48,6 @@ end
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply.Horde_Invincible  then return end
-    bonus.resistance = bonus.resistance + 1.00
+    dmginfo:SetDamage(0)
+    return true
 end
