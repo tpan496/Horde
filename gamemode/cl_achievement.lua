@@ -7,7 +7,7 @@ local path
 local strm
 
 hook.Add("InitPostEntity", "Horde_PlayerInitAchievements", function()
-    EXPECTED_HEADER = util.SHA256("HordeAchievements" .. MySelf:SteamID())
+    EXPECTED_HEADER = util.SHA256("HordeAchievements" .. LocalPlayer():SteamID())
     HORDE:CheckUpdate()
 end)
 
