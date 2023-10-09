@@ -1,0 +1,8 @@
+"Sprite"
+{
+	$basetexture 	"particle/beam_electrical_2"
+	$additive 		1
+	$spriterendermode 	5
+	$overbrightfactor 	0
+	$color 		"[1 0.3 0]"
+}

@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-"$basetexture" "models\horde\v_hgun\hive_chrome"
-"$envmap" "env_cubemap"
-"$envmaptint" "[ 1 0.5 0 ]"
-}

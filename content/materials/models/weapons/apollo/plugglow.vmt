@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" 				"models\weapons\apollo\c_ordinalrifle_d"
-	"$bumpmap"					"models\weapons\apollo\c_ordinalrifle_n"
-	"$selfillum" "1"
-}

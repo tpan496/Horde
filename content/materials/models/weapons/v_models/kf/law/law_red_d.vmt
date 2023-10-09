@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-"$basetexture" "models/weapons/v_models/kf/law/law_red_d"
-$translucent 1
-$selfillum 1
-	$nocull 1
-	$model 1
-}

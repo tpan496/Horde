@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/weapons/v_grenade/handle"
+	"$bumpmap" "models/weapons/v_grenade/handle_normal"
+	"$color2" "[1.196 0.0022 0.168]"
+}

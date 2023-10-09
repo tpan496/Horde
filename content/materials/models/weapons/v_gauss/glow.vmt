@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-"$basetexture" "models\weapons\v_gauss\glow"
-"$model" "1"
-"$selfillum" "1"
-}

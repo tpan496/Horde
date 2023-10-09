@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	$basetexture 		"particle/particle_electrical_arc"
+	$additive 			1
+	$translucent 		1
+//	$vertexcolor		1
+//	$vertexalpha 		1
+}

@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "models/horde/antimatter_shield/wall"
- 	"$model" 1
-	"$nocull" "1"
-	"$additive" "1"
-	"$translucent" "true"
-}

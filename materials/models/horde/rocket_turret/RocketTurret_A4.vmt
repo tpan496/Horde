@@ -1,0 +1,18 @@
+
+"VertexLitGeneric"
+{
+	$baseTexture "models\horde\rocket_turret\rocketturret_a"
+
+	$surfaceprop "metal"
+
+	$phong "1"
+	$phongboost "2"
+	$phongexponent "10"
+	$phongfresnelranges "[.1 5 1]"
+	$basemapalphaphongmask "1"
+
+	$rimlight "1"
+	$rimlightexponent "0.2"
+	$rimlightboost "3"
+	$phongalbedotint "1"
+}

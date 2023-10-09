@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 				"models\weapons\apollo\c_ordinalrifle_d"
+	"$bumpmap"					"models\weapons\apollo\c_ordinalrifle_n"
+	"$surfaceprop" "metal"
+	"$selfillum" "0"
+
+	"360?$color2" "[ 0.8 0.8 0.8 ]"
+
+// -- From here down is new stuff which will only be applied if $phong is set to 1 --
+	"$phong" "1"
+	"$phongexponent" "31"
+	"$phongboost"	"2"
+	"$phongfresnelranges"	"[.1 0.4 3]"
+
+}
