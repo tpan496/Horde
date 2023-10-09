@@ -300,8 +300,10 @@ function HORDE:GameEnd(status)
                 GetConVar("horde_difficulty"):SetInt(2)
             elseif chosen_diff == "NIGHTMARE" then
                 GetConVar("horde_difficulty"):SetInt(3)
-            else
+            elseif chosen_diff == "APOCALYPSE" then
                 GetConVar("horde_difficulty"):SetInt(4)
+            else
+                GetConVar("horde_difficulty"):SetInt(1)
             end
 
             timer.Simple(0, function() RunConsoleCommand("changelevel", chosen_map) end)
