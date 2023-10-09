@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+"$basetexture" "models/weapons/v_models/kf/chainsaw/chain"
+"$translucent" 1
+}

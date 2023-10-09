@@ -1,9 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models\weapons\javelin\body"
-	"$bumpmap" "models\weapons\javelin\body_n"
-	"$surfaceprop" "Metal"
-	"$nocull" "0"
-	"$halflambert" "1"
-
-}

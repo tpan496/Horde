@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\w_models\w_eq_grenades\m67_grenade_01"
+	"$phong" "1"
+	"$phongboost" "1"
+	"$phongfresnelranges" "[ .8 .8 1]"
+	"$phongexponent" 6
+
+	"$basemapalphaphongmask" "1"
+
+	"$phongdisablehalflambert" "1"
+                "$color2" "[0.5 0.5 2]"
+}

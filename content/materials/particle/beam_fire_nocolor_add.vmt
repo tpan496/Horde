@@ -1,7 +1,0 @@
-"Sprite"
-{
-	"$basetexture" "particle/beam_fire_nocolor"
-	"$additive" "1"
-	"$spriterendermode" 5
-	$overbrightfactor 1.2
-}

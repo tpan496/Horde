@@ -1,9 +1,0 @@
-"UnlitGeneric"
-{
-"$spriteorientation" "vp_parallel"
-"$spriteorigin" "[ 0.50 0.50 ]"
-"$basetexture" "vgui\hud\arccw_horde_scarl"
-"$translucent" "1"
-"$ignorez" "1"
-"$additive" "1"
-}

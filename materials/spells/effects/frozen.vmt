@@ -1,0 +1,43 @@
+"vertexlitgeneric"	//shader
+{
+//texture paths
+	"$baseTexture" 			"spells/effects/frozen_baset"
+	"$bumpmap" 			"spells/effects/frozen_bump"
+
+//env values
+	"$envmap" 			"env_cubemap"
+	"$normalmapalphaenvmapmask" 	"1"
+	"$envmaptint" 			"[ .41 .41 .5 ]"
+//	"$envmapconstrast" 		"1"
+	"$surfaceprop" 			"ice"
+
+//illumination values
+	"$halflambert" 			"1"
+
+//misc. status
+	"$model" 				"1"
+
+//phong values (expected "phong 1")
+	"$phong" 			"1"
+	"$phongexponent" 			"4"
+	"$phongboost"			"16"
+	"$phongfresnelranges"		"[0.6 1.1 2.1]" //"[.45 .90 .135]"
+	"$phongalbedotint" 			"1"
+
+	"$rimlight"			"1"
+	"$rimlightexponent"			"32"
+	"$rimlightboost"			".4"
+	"$rimmask"			"1"
+
+//phong texture paths
+//	"$phongwarptexture"  		"models/weapons/vapor/phnwarp"
+	"$phongexponenttexture" 		"spells/effects/frozen_phong"
+//	"$lightwarptexture"			"spells/effects/frozen_lgtwarp"  //"models/weapons/vapor/lgtwarp"
+
+	"Proxies"
+	{
+	}
+}
+
+// Inside the fantasy,
+// It seams so real to me.
