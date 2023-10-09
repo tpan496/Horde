@@ -47,10 +47,6 @@ function ENT:CustomOnInitialize()
 end
 
 function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
-    if hitgroup == HITGROUP_HEAD then
-        self.HasDeathRagdoll = true
-        return
-    end
     local e = EffectData()
         e:SetOrigin(self:GetPos())
     util.Effect("exploder_explosion", e, true, true)
