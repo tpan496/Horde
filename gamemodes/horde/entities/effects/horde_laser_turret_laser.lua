@@ -23,9 +23,10 @@ function EFFECT:Think()
     return true
 end
 
+local laserMat = Material( "effects/laser1" )
 function EFFECT:Render()
     self.Length = ( self.StartPos - self.EndPos ):Length()
     local texcoord = self.texcoord
-    render.SetMaterial( Material( "effects/laser1" ) )
+    render.SetMaterial( laserMat )
     render.DrawBeam( self.StartPos, self.EndPos, 10, texcoord, texcoord + self.Length / 1024, Color( 255, 0, 0, math.Clamp( self.Alpha, 0, 255 ) ) )
 end

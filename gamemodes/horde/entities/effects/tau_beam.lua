@@ -22,9 +22,10 @@ end
 return true
 end
 
+local mat = Material( "effects/tau_beam" )
 function EFFECT:Render()
-self.Length = ( self.StartPos - self.EndPos ):Length()
-local texcoord = self.texcoord
-render.SetMaterial( Material( "effects/tau_beam" ) )
-render.DrawBeam( self.StartPos, self.EndPos, 5, texcoord, texcoord + self.Length / 1024, Color( 255, 255, 255, math.Clamp( self.Alpha, 0, 255 ) ) )
+    self.Length = ( self.StartPos - self.EndPos ):Length()
+    local texcoord = self.texcoord
+    render.SetMaterial( mat )
+    render.DrawBeam( self.StartPos, self.EndPos, 5, texcoord, texcoord + self.Length / 1024, Color( 255, 255, 255, math.Clamp( self.Alpha, 0, 255 ) ) )
 end
