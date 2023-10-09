@@ -66,7 +66,7 @@ LANGUAGE["Scoreboard_Class"] = "Class"
 LANGUAGE["Scoreboard_Perks"] = "Perks"
 LANGUAGE["Scoreboard_Gadget"] = "Gadget"
 LANGUAGE["Scoreboard_Money"] = "Money"
-LANGUAGE["Scoreboard_Kill"] = "Kill"
+LANGUAGE["Scoreboard_Kill"] = "Kills"
 LANGUAGE["Scoreboard_Death"] = "Death"
 LANGUAGE["Scoreboard_Ping"] = "Ping"
 
