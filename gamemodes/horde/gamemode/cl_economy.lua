@@ -22,6 +22,8 @@ end
 
 net.Receive("Horde_SyncEconomy", function(length)
     local ply = net.ReadEntity()
+    if not IsValid( ply ) then return end
+
     local prev_money = ply.Horde_money or 0
     ply.Horde_money = net.ReadInt(32)
     if MySelf == ply then
