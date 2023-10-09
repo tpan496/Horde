@@ -358,6 +358,8 @@ function ENT:DrawTranslucent()
     self:Draw()
 end
 
+local mat = Material("sprites/orangeflare1")
+
 function ENT:Draw()
     if CLIENT then
         self:DrawModel()
@@ -367,10 +369,10 @@ function ENT:Draw()
         cam.Start3D() -- Start the 3D function so we can draw onto the screen.
             
             if self.has_burner then
-                render.SetMaterial( Material("sprites/orangeflare1") ) -- Tell render what material we want, in this case the flash from the gravgun
+                render.SetMaterial( mat ) -- Tell render what material we want, in this case the flash from the gravgun
                 render.DrawSprite( self:GetPos(), math.random(400, 500), math.random(400, 500), Color(0, 130, 255) ) -- Draw the sprite in the middle of the map, at 16x16 in it's original colour with full alpha.
             else
-                render.SetMaterial( Material("sprites/orangeflare1") ) -- Tell render what material we want, in this case the flash from the gravgun
+                render.SetMaterial( mat ) -- Tell render what material we want, in this case the flash from the gravgun
                 render.DrawSprite( self:GetPos(), math.random(400, 500), math.random(400, 500), Color(255, 255, 255) ) -- Draw the sprite in the middle of the map, at 16x16 in it's original colour with full alpha.
             end
         cam.End3D()

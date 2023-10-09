@@ -28,10 +28,11 @@ function EFFECT:Think()
     return true
 end
 
+local mat = Material( "effects/zbeam4" )
 function EFFECT:Render()
     self.Length = ( self.StartPos - self.EndPos ):Length()
     local texcoord = self.texcoord
-    render.SetMaterial( Material( "effects/zbeam4" ) )
+    render.SetMaterial( mat )
     if self.has_burner then
         render.DrawBeam( self.StartPos, self.EndPos, 10, texcoord, texcoord + self.Length / 1024, Color( 0, 150, 255, math.Clamp( self.Alpha, 0, 255 ) ) )
     else

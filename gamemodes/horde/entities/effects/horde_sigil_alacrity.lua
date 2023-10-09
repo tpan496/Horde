@@ -1,3 +1,5 @@
+local mat = Material("spells/sigil_of_alacrity.png", "mips smooth")
+
 function EFFECT:Init(ed)
 
     local vOrig = ed:GetOrigin()
@@ -12,7 +14,6 @@ function EFFECT:Init(ed)
 
     local ringstart = vOrig + normal * 10
     local particle
-    local mat = Material("spells/sigil_of_alacrity.png", "mips smooth")
     --for i=1, 20 do
         particle = emitter2:Add(mat, ringstart)
         particle:SetDieTime(self.duration)

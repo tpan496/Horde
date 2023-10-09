@@ -1,8 +1,7 @@
+local mat = Material("status/gadget/aegis.png", "mips smooth")
+
 function EFFECT:Init(data)	
 	local Hitpos = data:GetOrigin()
-
-	local mat = Material("status/gadget/aegis.png", "mips smooth")
-	print(Hitpos)
 
 	self.Emitter = ParticleEmitter(Hitpos)
 	local p = self.Emitter:Add(mat, Hitpos)

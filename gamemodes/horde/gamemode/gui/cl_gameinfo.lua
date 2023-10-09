@@ -43,6 +43,7 @@ corner_panel:SetSize(width, height)
 corner_panel:SetPos(ScreenScale(6), ScreenScale(6))
 corner_panel.Paint = function () end
 timer.Simple(5, function ()
+    local ammoMaterial = Material("materials/ammo.png", "mips smooth")
     corner_panel.Paint = function ()
         if GetConVarNumber("horde_enable_client_gui") == 0 then return end
         draw.RoundedBox(10, 0, 0, width - height - ScreenScale(2), height, Color(40,40,40,200))
@@ -60,8 +61,7 @@ timer.Simple(5, function ()
             draw.RoundedBox(10, width - height, height * (1 - ammobox_refresh_count / HORDE.ammobox_refresh_interval), height, height * (ammobox_refresh_count / HORDE.ammobox_refresh_interval), HORDE.color_crimson_dark)
         end
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-        local mat = Material("materials/ammo.png", "mips smooth")
-        surface.SetMaterial(mat) -- Use our cached material
+        surface.SetMaterial(ammoMaterial) -- Use our cached material
         surface.DrawTexturedRect(width - height + ScreenScale(2), ScreenScale(2), ScreenScale(10), ScreenScale(10))
     end
 end)
