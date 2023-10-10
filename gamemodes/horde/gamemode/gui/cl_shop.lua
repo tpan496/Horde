@@ -296,9 +296,6 @@ function PANEL:Init()
 
     createBtn("Class/Perks", ClassTab, RIGHT)
 
-    print( "AttDebug: ", ( ArcCWInstalled and not table.IsEmpty(attachments) and GetConVar("horde_arccw_attinv_free"):GetInt() == 0 ) )
-    print( ArcCWInstalled, not table.IsEmpty(attachments), GetConVar("horde_arccw_attinv_free"):GetInt() == 0 )
-
     -- ArcCW Attachment Tab
     if ArcCWInstalled and not table.IsEmpty(attachments) and GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
         self.AttachmentTab = vgui.Create("DPanel", self)
