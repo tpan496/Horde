@@ -11,6 +11,9 @@ local player_GetAll = player.GetAll
 
 local server_name = GetHostName()
 local map_name = game.GetMap()
+
+local color_black_alpha120 = Color(0,0,0,120)
+
 -- EasyLabel
 function HORDE:EasyLabel(parent, text, font, textcolor)
 	local ELpanel = vgui.Create("DLabel", parent)
