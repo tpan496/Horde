@@ -107,12 +107,13 @@ function Shop(ply)
     if ply:Alive() then
         local res = hook.Run("Horde_OnPlayerOpenShop", ply)
         if res ~= true then
-            if HORDE.has_buy_zone and (not ply:Horde_GetInBuyZone()) then
+            if HORDE.current_break_time <= 0 then
+                HORDE:SendNotification("You cannot shop after a wave has started.", 1, ply)
                 return
             end
 
-            if HORDE.current_break_time <= 0 then
-                HORDE:SendNotification("You cannot shop after a wave has started.", 1, ply)
+            if HORDE.has_buy_zone and (not ply:Horde_GetInBuyZone()) then
+                HORDE:SendNotification("You are not in a buyzone, you can find buyzones usually indicated by green.", 1, ply)
                 return
             end
         end
