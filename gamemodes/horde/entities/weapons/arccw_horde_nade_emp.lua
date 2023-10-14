@@ -70,13 +70,13 @@ SWEP.Animations = {
 }
 
 function SWEP:Initialize()
-    if CLIENT then
-        local vm = self.Owner:GetViewModel()
-        vm:SetColor(Color(255, 0, 0))
-        vm:SetMaterial("Debug/hsv")
+    if CLIENT and LocalPlayer() == self:GetOwner() then
+        local vm = self:GetOwner():GetViewModel()
+        vm:SetColor( Color( 255, 0, 0 ) )
+        vm:SetMaterial( "Debug/hsv" )
     end
 end
 
-SWEP.BodyMaterial	 	= 'models/horde/grenade/emp_grenade'
+SWEP.BodyMaterial = "models/horde/grenade/emp_grenade"
 
 SWEP.VMMaterial = SWEP.BodyMaterial
