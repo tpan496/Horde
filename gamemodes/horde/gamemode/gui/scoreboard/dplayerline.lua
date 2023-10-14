@@ -279,7 +279,7 @@ function PANEL:Paint()
 end
 
 function PANEL:SetPlayer(pl)
-	if not IsValid( ply ) then
+	if not IsValid( pl ) then
 		ErrorNoHaltWithStack( "DPlayerLine: Invalid Player Object!" )
 	end
 
