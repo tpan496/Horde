@@ -172,22 +172,22 @@ function PANEL:Paint()
 	local mul = 0.5
 	local pl = self:GetPlayer()
 
-	if IsValid( pl ) then
-		col = Color(40,40,40,200)
-		if not pl:Alive() then
-			col = Color(100, 0, 0, 200)
-		end
+	if not IsValid( pl ) then return end
 
-		if self.Hovered then
-			mul = 2
-		end
-
-		colTemp.r = col.r * mul
-		colTemp.g = col.g * mul
-		colTemp.b = col.b * mul
-
-		draw_RoundedBox(0, 0, 0, wide , tall , colTemp)
+	col = Color(40,40,40,200)
+    if not pl:Alive() then
+        col = Color(100, 0, 0, 200)
     end
+
+    if self.Hovered then
+        mul = 2
+    end
+
+    colTemp.r = col.r * mul
+    colTemp.g = col.g * mul
+    colTemp.b = col.b * mul
+
+    draw_RoundedBox(0, 0, 0, wide , tall , colTemp)
 
     local subclass_name = HORDE.Class_Survivor
     if pl:Horde_GetCurrentSubclass() then subclass_name = pl:Horde_GetCurrentSubclass() end
@@ -279,6 +279,10 @@ function PANEL:Paint()
 end
 
 function PANEL:SetPlayer(pl)
+	if not IsValid( ply ) then
+		ErrorNoHaltWithStack( "DPlayerLine: Invalid Player Object!" )
+	end
+
 	self.m_Player = pl or NULL
 
 	self.m_Avatar:SetPlayer(pl)
