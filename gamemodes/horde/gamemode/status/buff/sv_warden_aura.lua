@@ -69,7 +69,8 @@ function plymeta:Horde_GetEnableWardenAuraBuffBonus()
 end
 
 function plymeta:Horde_AddWardenAuraEffects(provider)
-    if not provider or not IsValid( provider ) or not provider:Alive() then return end
+    if not provider or not IsValid( provider ) or not self:Alive() then return end
+
     if HORDE:IsWatchTower(provider) then
         self.Horde_WardenAuraProvider = provider:GetNWEntity("HordeOwner")
     else
