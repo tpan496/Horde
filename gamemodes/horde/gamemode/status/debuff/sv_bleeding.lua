@@ -52,10 +52,12 @@ function entmeta:Horde_AddBleedingEffect(inflictor)
             sound.Play("player/pl_pain5.wav", self:GetPos())
 
             for bone = 1, bones-1 do
-                local p, angle = self:GetBonePosition(bone)
-                local e = EffectData()
-                e:SetOrigin(p)
-                util.Effect( "horde_status_bleeding", e, true, true )
+                local p = self:GetBonePosition(bone)
+                if p then
+                    local e = EffectData()
+                    e:SetOrigin(p)
+                    util.Effect( "horde_status_bleeding", e, true, true )
+                end
             end
         end)
     end
