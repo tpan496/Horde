@@ -1395,9 +1395,7 @@ function HORDE:Direct()
 end
 
 timer.Create("Horde_Main", director_interval, 0, function ()
-    local status, err = pcall(function() HORDE:Direct() end)
-
-    if not status then
-        print(err)
-    end
+    ProtectedCall( function()
+        HORDE:Direct()
+    end )
 end)
