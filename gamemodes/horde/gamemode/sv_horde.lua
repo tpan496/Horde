@@ -178,7 +178,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             end
         end
 
-        if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
+        if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 20 then
             net.Start("Horde_HighlightEntities")
             net.WriteUInt(HORDE.render_highlight_enemies, 3)
             net.Broadcast()
