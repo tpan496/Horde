@@ -264,6 +264,11 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
 
         victim:Horde_SetMostRecentAttacker(nil)
     end
+
+    if HORDE.total_enemies_this_wave <= 0 and HORDE.alive_enemies_this_wave <= 0 then
+        HORDE:WaveEnd()
+        hook.Run("HordeWaveEnd", HORDE.current_wave)
+    end
 end
 
 hook.Add("OnNPCKilled", "Horde_EnemyKilled", function(victim, killer, weapon)
