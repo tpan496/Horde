@@ -24,7 +24,7 @@ CreateConVar("horde_director_interval", 5, nil, "Game director execution interva
 CreateConVar("horde_max_enemies_alive_base", 20, nil, "Maximum number of living enemies (base).")
 CreateConVar("horde_max_enemies_alive_scale_factor", 5, nil, "Scale factor of the maximum number of living enemies for multiplayer.")
 CreateConVar("horde_max_enemies_alive_max", 50, nil, "Maximum number of maximum living enemies.")
-CreateConVar("horde_corpse_cleanup", 0, nil, "Remove corpses.")
+CreateConVar("horde_corpse_cleanup", 1, nil, "Remove corpses.")
 
 CreateConVar("horde_base_walkspeed", 180, nil, "Base walkspeed.")
 CreateConVar("horde_base_runspeed", 220, nil, "Base runspeed.")
