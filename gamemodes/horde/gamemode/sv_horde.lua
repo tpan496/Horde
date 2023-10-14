@@ -1231,7 +1231,7 @@ function HORDE:WaveEnd()
         -- Minion life recovery
         if HORDE.player_drop_entities[ply:SteamID()] then
             for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-                if ent:IsNPC() then
+                if IsValid( ent ) and ent:IsNPC() then
                     ent:SetHealth(ent:GetMaxHealth())
                 end
             end
