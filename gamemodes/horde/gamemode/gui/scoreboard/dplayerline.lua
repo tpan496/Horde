@@ -109,7 +109,7 @@ end
 function PANEL:RefreshPlayer()
 
 	local pl = self:GetPlayer()
-
+    if not IsValid( pl ) then return end
 
 	local subclass_name = HORDE.Class_Survivor
     if pl:Horde_GetCurrentSubclass() then
