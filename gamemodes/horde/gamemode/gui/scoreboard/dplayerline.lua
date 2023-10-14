@@ -1,7 +1,5 @@
 
-local P_meta = FindMetaTable("Panel")
 local P_Player = FindMetaTable("Player")
-local P_IsValid = P_meta.IsValid
 
 local PANEL = {}
 
@@ -174,7 +172,7 @@ function PANEL:Paint()
 	local mul = 0.5
 	local pl = self:GetPlayer()
 
-	if P_IsValid then
+	if IsValid( pl ) then
 		col = Color(40,40,40,200)
 		if not pl:Alive() then
 			col = Color(100, 0, 0, 200)
