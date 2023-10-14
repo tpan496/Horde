@@ -25,7 +25,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
         ent:Spawn()
         ent:GetPhysicsObject():ApplyForceCenter( force )
     end
-    
+
     local ar = ply:EyeAngles()
     if charge_stage == 1 then
         SpawnProjectile(ply:EyePos() + (ar:Forward() * 5), ar, ar:Forward() * 3000)

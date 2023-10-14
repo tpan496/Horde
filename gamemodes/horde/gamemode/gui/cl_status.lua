@@ -44,13 +44,13 @@ local function DrawStatus(status, stack, displacement)
     if status < HORDE.Status_Armor_Survivor or status >= HORDE.Status_ExpDisabled then
         if HORDE:IsSkillStatus(status) then
             draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
-    
+
             mat = Material(HORDE.Status_Icon[status], "mips smooth")
-    
+
             surface.SetMaterial(mat)
             surface.SetDrawColor(color_white)
             surface.DrawTexturedRect(ScreenScale(1 + displacement), ScreenScale(5/4), ScreenScale(13), ScreenScale(13))
-    
+
             local cd = MySelf:Horde_GetPerkInternalCooldown()
             if cd > 0 then
                 draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
@@ -299,7 +299,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
     local colhp = Color(255, 255, 255, 255)
     local airgap = ScreenScale(6)
-    
+
     local icon_x = airgap + ScreenScale(34)
     local icon_y = ScrH() - airgap - ScreenScale(31)
     if GetConVarNumber("horde_enable_health_gui") == 1 then
@@ -352,14 +352,14 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
             vhp = 0
             varmor = 0
         end
-        
+
 
         local icon_s = ScreenScale(15)
 
         surface.SetMaterial(hp)
         surface.SetDrawColor(colhp)
         surface.DrawTexturedRect(icon_x, icon_y, icon_s, icon_s)
-        
+
         if use_mind then
             surface.SetMaterial(mind)
             draw.SimpleText(tostring(math.Round(vmind)), font, icon_x + icon_s + ScreenScale(1), icon_y + ScreenScale(14), color_white)
@@ -367,7 +367,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
             surface.SetMaterial(armor)
             draw.SimpleText(tostring(math.Round(varmor)), font, icon_x + icon_s + ScreenScale(1), icon_y + ScreenScale(14), color_white)
         end
-        
+
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(icon_x, icon_y + ScreenScale(14), icon_s, icon_s)
 
@@ -382,7 +382,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
         if wpn and wpn:IsValid() then
             if wpn.Base == "horde_spell_weapon_base" then
                 draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-                
+
                 -- Spell Icons
                 surface.SetDrawColor(Color(255,255,255))
                 surface.DrawOutlinedRect(ScrW() - ScreenScale(81), icon_y + ScreenScale(8), ScreenScale(15), ScreenScale(15), 2)
@@ -394,7 +394,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
                 draw.SimpleText("RMB", "Horde_SpellButton", ScrW() - ScreenScale(56), icon_y + ScreenScale(27), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                 draw.SimpleText("F", "Horde_SpellButton", ScrW() - ScreenScale(37), icon_y + ScreenScale(27), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                 draw.SimpleText("R", "Horde_SpellButton", ScrW() - ScreenScale(19), icon_y + ScreenScale(27), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                
+
                 if MySelf:Horde_GetPrimarySpell() then
                     local spell = MySelf:Horde_GetPrimarySpell()
                     surface.SetMaterial(Material(spell.Icon, "mips smooth"))

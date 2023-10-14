@@ -45,7 +45,7 @@ function ENT:Initialize()
 	-- Misc Functions
 	//ParticleEffectAttach("smoke_burning_engine_01", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 	//ParticleEffectAttach("fire_jet_01_flame", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	
+
 	//self.Entity:Ignite( 120, 40 )
 	self.StartGlow1 = ents.Create( "env_sprite" )
 	self.StartGlow1:SetKeyValue( "rendercolor","255 255 255" )
@@ -147,8 +147,8 @@ function ENT:CustomOnPhysicsCollide(data, phys)
         end
     end
 	self:OnCollideSoundCode()
-	if self.PaintDecalOnDeath == true && VJ_PICK(self.DecalTbl_DeathDecals) != false && self.AlreadyPaintedDeathDecal == false then 
-		self.AlreadyPaintedDeathDecal = true 
+	if self.PaintDecalOnDeath == true && VJ_PICK(self.DecalTbl_DeathDecals) != false && self.AlreadyPaintedDeathDecal == false then
+		self.AlreadyPaintedDeathDecal = true
 		util.Decal(VJ_PICK(self.DecalTbl_DeathDecals), data.HitPos + data.HitNormal, data.HitPos - data.HitNormal)
 	end
 	if self.ShakeWorldOnDeath == true then util.ScreenShake(data.HitPos, self.ShakeWorldOnDeathAmplitude, self.ShakeWorldOnDeathFrequency, 1, self.ShakeWorldOnDeathRadius) end

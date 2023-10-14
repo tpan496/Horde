@@ -230,7 +230,7 @@ SWEP.Attachments = {
     },
 }
 
-SWEP.Animations = { 
+SWEP.Animations = {
     ["idle"] = {
         Source = "idle",
         Time = 2/30,

@@ -24,7 +24,7 @@ function entmeta:Horde_AddBreakEffect(duration, inflictor)
             e:SetOrigin(p)
             util.Effect( "horde_status_break", e, true, true )
         end
-        
+
         local dmg = DamageInfo()
         if inflictor and inflictor:IsValid() then
             dmg:SetAttacker(inflictor)

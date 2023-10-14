@@ -315,9 +315,9 @@ function PANEL:Paint()
                 end
                 return
             end
-            
+
             if GetConVar("horde_enable_shop_icons"):GetInt() == 0 then return end
-            
+
             if self.item.shop_icon then
                 surface.SetMaterial(Material(self.item.shop_icon, "mips smooth"))
                 surface.SetDrawColor(255, 255, 255, 255)

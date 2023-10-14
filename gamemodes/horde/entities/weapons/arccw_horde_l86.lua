@@ -237,13 +237,13 @@ SWEP.Attachments = {
 
 SWEP.Hook_TranslateAnimation = function(wep, anim)
 	local attached = wep.Attachments[3].Installed
-	
+
 	-- m203 is 1, masterkey is 2, fgrip is 3
 	local attthing
 		if 		attached 							then attthing = 3
 		else 											 attthing = 0
 	end
-	
+
     if attthing == 3 then
         return anim .. "_fgrip"
     end

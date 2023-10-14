@@ -8,7 +8,7 @@ function PANEL:Init()
     end
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
 
-    local close_btn = vgui.Create("DButton", self) 
+    local close_btn = vgui.Create("DButton", self)
     close_btn:SetFont("marlett")
     close_btn:SetText("r")
     close_btn.Paint = function() end
@@ -122,7 +122,7 @@ function PANEL:Init()
                 else
                     surface.SetDrawColor(color_white)
                 end
-                
+
                 surface.DrawTexturedRect(w - h - 10, 0, h, h)
             else
                 surface.SetDrawColor(0,0,0,0)
@@ -219,7 +219,7 @@ function PANEL:Init()
             else
                 spell.cmp = spell.Price or 0
             end
-            
+
             table.insert(spells[spell.Slot], spell)
             ::cont::
         end
@@ -233,7 +233,7 @@ function PANEL:Init()
                 return a.cmp < b.cmp
             end
         end
-        
+
         table.sort(spells[HORDE.Spell_Slot_LMB], f)
         table.sort(spells[HORDE.Spell_Slot_RMB], f)
         table.sort(spells[HORDE.Spell_Slot_Utility], f)
@@ -266,7 +266,7 @@ function PANEL:Init()
                 ::cont::
             end
         end
-        
+
 
         if table.IsEmpty(items) then goto cont end
 
@@ -289,7 +289,7 @@ function PANEL:Init()
                 return a.cmp < b.cmp
             end
         end)
-        
+
         local ShopCategoryTab = vgui.Create("DPanel", self)
         ShopCategoryTab.Paint = function () end
         local DScrollPanel = vgui.Create("DScrollPanel", ShopCategoryTab)
@@ -364,7 +364,7 @@ function PANEL:ReloadSpells(spells, container, description_panel)
         ShopCategoryTabLayout:SetBorder(8)
         ShopCategoryTabLayout:SetSpaceX(8)
         ShopCategoryTabLayout:SetSpaceY(8)
-        
+
         if spells[spell_slot] then
             for _, spell in pairs(spells[spell_slot]) do
                 local model = vgui.Create("HordeShopSpellItem")
@@ -390,7 +390,7 @@ local weight_mat = Material("weight.png", "mips smooth")
 function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
-    -- Entire 
+    -- Entire
     if ScrH() < 1080 then
         draw.RoundedBox(0, 0, 0, w, h, Color(40,40,40))
     else
@@ -403,7 +403,7 @@ function PANEL:Paint(w, h)
     surface.SetMaterial(weight_mat)
     surface.SetDrawColor(Color(255,255,255))
     surface.DrawTexturedRect(self:GetWide() - 60, 14, 20, 20)
-    
+
     local text2 = translate.Get("Shop_Cash") .. ": " .. tostring(MySelf:Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(MySelf:Horde_GetSkullTokens())
     text = text2 .. '       ' .. weight_text
     draw.SimpleText(text, 'Heading', self:GetWide() - 60, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)

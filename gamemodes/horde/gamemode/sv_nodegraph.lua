@@ -56,7 +56,7 @@ function ParseFile()
         if nodetype == 4 then
             goto cont
         end
-        
+
         local node = {
             pos = v,
             yaw = yaw,

@@ -169,11 +169,11 @@ function SWEP:RaiseAntlion()
 
 	if self.Weapon:Clip1() < 40 then return end
 	self:TakePrimaryAmmo(40)
-	
+
 	self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 	self.SecondaryCharging = 1
 	self.SecondaryChargingTimer = CurTime() + 1
-	
+
 	local ply = self.Owner
 	local ent = ents.Create("npc_vj_horde_antlion")
 	local pos = ply:GetPos()

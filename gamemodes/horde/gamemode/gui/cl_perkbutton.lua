@@ -73,7 +73,7 @@ function PANEL:SetData(classname, perk_level, choice, subclass)
     else
         perk_choice = HORDE.classes[classname].perks[perk_level].choices[choice]
     end
-    
+
     if not perk_choice then error("Could not find choice! class: " .. classname .. ", level: " .. perk_level .. ", choice: " .. choice) return end
     self.info = {class = classname, perk_level = perk_level, choice = choice}
 
@@ -107,7 +107,7 @@ function PANEL:SetData(classname, perk_level, choice, subclass)
     local title = perk.PrintName or "Unnamed Perk"
     local loc_title = translate.Get("Perk_Title_" .. perk_choice) or title
     self.title:SetText(loc_title)
-    
+
     local text = perk.Description .. "\n"
     local loc_desc = translate.Get("Perk_" .. perk_choice) or text
     if perk.Params then

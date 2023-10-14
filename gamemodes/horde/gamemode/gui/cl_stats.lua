@@ -77,7 +77,7 @@ function PANEL:Init()
         draw.SimpleText('Complete maps on 10 waves to earn achievements!', 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText([[
         *Notes: Achievements are disabled in sandbox mode.
-        
+
         To achieve the special Horde Completion achievement, you need:
           - Default Config Enabled
           - Default Settings:
@@ -86,7 +86,7 @@ function PANEL:Init()
             - Base Walk Speed <= 180
             - Base Run Speed <= 220]], 'Content', 50, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
-    
+
     local function firstToUpper(str)
         return (str:gsub("^%l", string.upper))
     end
@@ -137,7 +137,7 @@ function PANEL:Init()
     for map, stats in pairs(HORDE.achievements_map) do
         achievements[map] = HORDE:GetMapAchievements(map)
     end
-    
+
     self.map_btns = {}
     self.create_map_btn = function (map)
         local map_btn = vgui.Create("DButton", maps_panel)
@@ -238,7 +238,7 @@ function PANEL:Init()
         end
         self.create_map_btn(map)
     end
-    
+
     local learn_panel = vgui.Create("DPanel", self)
     learn_panel:SetPos(0, 50)
     learn_panel:SetSize(self:GetWide(), self:GetTall() - 50)
@@ -265,7 +265,7 @@ function PANEL:Init()
         -- Class Grenades
         Each class now has its own unique grenade that complements its playstyle.
         Grenades have an ammo limit of 6 in total.
-        
+
         < Assasult: Stun Grenade (arccw_horde_nade_stun)
         < Heavy: Shrapnel Grenade (arccw_horde_nade_shrapnel)
         < Ghost: Sonar Grenade (arccw_horde_nade_sonar)
@@ -275,7 +275,7 @@ function PANEL:Init()
         < Berserker: Hemo Grenade (arccw_horde_nade_hemo)
         < Warden: EMP Grenade (arccw_horde_nade_emp)
         < Cremator: Molotov (arccw_horde_nade_molotov)
-        
+
         -- Assault Class Changes:
         Item Changes:
             < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
@@ -285,39 +285,39 @@ function PANEL:Init()
             < Reworked Weapon: AK47 (arccw_horde_ak47)
             < Reworked Weapon: SG556 (arccw_horde_sg556)
             < Reworked Weapon: AUG (arccw_horde_aug)
-        
+
         -- Heavy Class Changes
         Perk Changes:
             < Added maximum armor bonus passive.
             < Ballistic Shock effect changed.
             < Reactive Armor perk effect changed.
-        
+
         Item Changes:
             < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
             < Weapons with visible Bipods will now have Bipods by default.
             < Energy Shield gadget effect changed.
             < ULPA Filter gadget effect changed.
             < New Gadget: Armor Fusion (gadget_armor_fusion)
-        
+
         -- Demolition Class Changes
         Perk changes:
             < Reduced Blast resistance passive
             < Added Blast damage bonus passive
             < Pressurized Warhead / Chain Reaction effects changed
-        
+
         Weapon changes:
             < All default config demolition weapons now have arm distance and headshot detection.
             < Added two new attachments for explosive projectile weapons.
             < Rebalanced weapon damage values.
             < New Weapon: FGM-148 Javelin (arccw_horde_javelin)
-        
+
         -- Medic Class Changes:
         Item Changes:
             < New Weapon: MP9 Medic (arccw_horde_mp9m)
             < New Weapon: MP5K Medic (arccw_horde_mp5k)
             < New Weapon: ACR Medic (arccw_horde_medic_acr)
             < New Gadget: Aegis (gadget_aegis)
-        
+
         -- Ghost Class Changes:
         Item Changes:
             < Slightly reduced damage of Barrett and M200.
@@ -326,24 +326,24 @@ function PANEL:Init()
             < Automatic weapons have been removed from Ghost weapon pool.
             < Dual pistols off-hand damage have been fixed.
             < New Weapon: SSG08 (arccw_horde_ssg08)
-        
+
         -- Warden Class Changes:
         Perk Changes:
             < Energize and Inoculation have switched slots.
             < Energize now only applies to damage instance at least 8.
-        
+
         Item Changes:
             < Fixed Double Barrel dealing too much damage as intended and added back knockback boost.
             < Reworked Weapon: SPAS12 (arccw_horde_spas12)
-        
+
         -- Cremator Class Changes:
         Perk Changes:
             < Reduced passive Fire damage resistance.
             < Entropy Shield effect changed.
-        
+
         Item Changes:
             < Increased price of some weapons.
-        
+
         -- Berserker Class Changes:
         Item Changes:
             < New Gadget: Omnislash (gadget_omnislash)]]
@@ -493,7 +493,7 @@ function PANEL:Init()
             elseif value > 1 then
                 draw.SimpleText("x" .. tostring(value), 'Content', start_pos + 40, pos, Color(255,255,255), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
             end
-            
+
             start_pos = start_pos + 90
         end
     end
@@ -525,7 +525,7 @@ function PANEL:Init()
         draw.SimpleText("Exploder", 'Heading', 50, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Explodes on death, dealing Poison damage. Does not explode when decapitated. Weak to headshots.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(750, {[HORDE.DMG_POISON] = 0.5, [HORDE.DMG_FIRE] = 1.5, [HORDE.DMG_BLAST] = 1.5})
-        
+
         draw.SimpleText("Vomitter", 'Heading', 50, 850, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Ranged attackers that spits flesh at enemies. Inflicts Bleeding.", 'Content', 100, 900, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Scorcher", 'Heading', 50, 950, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -535,15 +535,15 @@ function PANEL:Init()
         draw.SimpleText("Screecher", 'Heading', 50, 1050, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Emits screaming shockwaves when approached. Deals Lightning damage.", 'Content', 100, 1100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(1050, {[HORDE.DMG_LIGHTNING] = 0.5, [HORDE.DMG_BLAST] = 1.25})
-        
+
         draw.SimpleText("Blight", 'Heading', 50, 1150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Increases Necrosis buildup to nearby players when shot in the torso. Weak to headshots.", 'Content', 100, 1200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(1150, {[HORDE.DMG_LIGHTNING] = 1.5})
-        
+
         draw.SimpleText("Weeper", 'Heading', 50, 1250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Emits growling shockwaves when approached. Deals Cold damage.", 'Content', 100, 1300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(1250, {[HORDE.DMG_FIRE] = 1.25, [HORDE.DMG_COLD] = 0.5, [HORDE.DMG_LIGHTNING] = 0.75, [HORDE.DMG_BLAST] = 1.25})
-        
+
         draw.SimpleText("Hulk", 'Heading', 50, 1350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Dangerous enemy with high health. Rages when health drops below 50%.", 'Content', 100, 1400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Yeti", 'Heading', 50, 1450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
@@ -744,7 +744,7 @@ function PANEL:Init()
         draw.SimpleText("Armor:", 'Heading', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Evasion:", 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Block:", 'Heading', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        
+
 
         draw.SimpleText(tostring(HORDE:GetStat("speed") * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 100, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(tostring(MySelf:Health()) .. " / " .. tostring(MySelf:GetMaxHealth()), 'Heading', self:GetWide() / 3 - 10, 150, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
@@ -788,7 +788,7 @@ function PANEL:Init()
                 surface.DrawTexturedRect(50, 375 + y, 40, 40)
             end
             draw.SimpleText(perk.PrintName, 'Heading', 100, 400 + y, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-            
+
             y = y + 50
             ::cont::
         end
@@ -866,7 +866,7 @@ function PANEL:Init()
         draw.SimpleText("Lightning Resistance:", 'Heading', 100, 480, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Poison Resistance:", 'Heading', 100, 530, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Blast Resistance:", 'Heading', 100, 580, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-    
+
         draw.SimpleText(tostring(HORDE:GetStat(HORDE.DMG_FIRE) * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 380, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(tostring(HORDE:GetStat(HORDE.DMG_COLD) * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 430, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(tostring(HORDE:GetStat(HORDE.DMG_LIGHTNING) * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 480, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
@@ -917,7 +917,7 @@ function PANEL:Init()
         draw.SimpleText("Shock Immunity:", 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Break Immunity:", 'Heading', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.SimpleText("Necrosis Immunity:", 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        
+
         draw.SimpleText(GetImmune(HORDE.Status_Bleeding), 'Heading', self:GetWide() / 3 - 50, 100, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(GetImmune(HORDE.Status_Ignite), 'Heading', self:GetWide() / 3 - 50, 150, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(GetImmune(HORDE.Status_Frostbite), 'Heading', self:GetWide() / 3 - 50, 200, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
@@ -1067,13 +1067,13 @@ function PANEL:Init()
     close_btn.DoClick = function() HORDE:ToggleStats() end
 
     if HORDE.has_new_update then
-        learn_btn:DoClick() 
+        learn_btn:DoClick()
     end
 end
 
 function PANEL:Paint(w, h)
     --Derma_DrawBackgroundBlur(self)
-    -- Entire 
+    -- Entire
     if ScrW() < 1400 then
         draw.RoundedBox(0, 0, 0, w, h, Color(40,40,40))
     else

@@ -40,7 +40,7 @@ function ENT:Initialize()
     self.SpawnTime = CurTime()
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
-    
+
     self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
     self.ExplodeTimer = CurTime() + 2
     self.StartTime = CurTime()
@@ -73,7 +73,7 @@ function ENT:PhysicsCollide(colData, collider)
     sound.Play("horde/antlion/bile.ogg", pos, 100, math.random(90, 110))
 
     if not self.Owner then self.Owner = self end
-    
+
     local dmg = DamageInfo()
     dmg:SetDamage(self.BaseDamage)
     dmg:SetDamageType(DMG_NERVEGAS)
@@ -82,7 +82,7 @@ function ENT:PhysicsCollide(colData, collider)
     else
         dmg:SetAttacker(Entity(0))
     end
-    
+
     dmg:SetInflictor(self)
     dmg:SetDamagePosition(pos)
     dmg:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)

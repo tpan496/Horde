@@ -40,7 +40,7 @@ function ENT:Initialize()
     self.SpawnTime = CurTime()
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
-    
+
     self:SetCollisionGroup(COLLISION_GROUP_WORLD)
 
     self.ExplodeTimer = CurTime() + 3 + self.Horde_Spell_Level

@@ -183,8 +183,8 @@ LANGUAGE["Infusion_Description_Quicksilver"] = [[
 Увеличивает/уменьшает урон от оружия в зависимости от доступного веса игрока.
 
 <= 15% веса -> увеличение урона на 30%
-<= 30% веса -> увеличение урона на 25% 
-<= 40% веса -> увеличение урона на 15% 
+<= 30% веса -> увеличение урона на 25%
+<= 40% веса -> увеличение урона на 15%
 >40% веса -> 25% уменьшения урона
 ]]
 
@@ -196,7 +196,7 @@ LANGUAGE["Infusion_Description_Titanium"] = [[
 На 25% меньше урона от оружия.
 ]]
 
-LANGUAGE["Infusion_Description_Siphoning"] = [[ 
+LANGUAGE["Infusion_Description_Siphoning"] = [[
 +1 здоровья, когда вы убиваете врага.
 
 На 25% меньше урона от оружия.
@@ -771,7 +771,7 @@ LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
 
 LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Цепная реакция]]
 LANGUAGE["Perk_demolition_chain_reaction"] = [[
-Взрывы наносят до {1} от текущего здоровья врага, 
+Взрывы наносят до {1} от текущего здоровья врага,
 как дополнительный урон от взрыва.
 Увеличение урона ограничено до 5000.]
 
@@ -847,7 +847,7 @@ LANGUAGE["Perk_engineer_metabolism"] = [[
 LANGUAGE["Perk_Title_Engineer_Tier_3"] = [[Манипуляция]]
 LANGUAGE["Perk_Title_engineer_antimatter_shield"] = [[Антивещественный щит]]
 LANGUAGE["Perk_engineer_antimatter_shield"] = [[
-Нажмите Shift+E, чтобы активировать щит на наведенного миньона. 
+Нажмите Shift+E, чтобы активировать щит на наведенного миньона.
 Щит поглощает урон до {1} от здоровья миньона.
 Щит взрывается при истощении и имеет время перезарядки {2} секунды.]]
 
@@ -935,7 +935,7 @@ LANGUAGE["Perk_warden_restock"] = [[
 LANGUAGE["Perk_Title_warden_energize"] = [[Возбуждать]]
 LANGUAGE["Perk_warden_energize"] = [[
 Аура добавляет {1} базового урона к атакам.
-Применяется только к базовому урону, 
+Применяется только к базовому урону,
 который составляет не менее {1} единиц.]]
 
 LANGUAGE["Perk_Title_Warden_Tier_3"] = [[Охрана]]
@@ -1105,7 +1105,7 @@ LANGUAGE["Perk_specops_peace_walker"] = [[
 На {1} уменьшена перезарядка дымовой занавесы/сигнальной ракеты.
 Пока в тактическом режиме:
   На {2} увеличен баллистический урон.]]
-  
+
 -- Default Perks: Artificer
 LANGUAGE["Perk_Title_Artificer_Tier_1"] = [[Внутренняя сила]]
 LANGUAGE["Perk_Title_artificer_solar_flux"] = [[Солнечный поток]]
@@ -1172,7 +1172,7 @@ LANGUAGE["Perk_necromancer_withering_prescence"] = [[
 LANGUAGE["Perk_Title_necromancer_hollow_essence"] = [[Сущность пустоты]]
 LANGUAGE["Perk_necromancer_hollow_essence"] = [[
 +{1} к максимальным живым призракам.
-]] 
+]]
 
 LANGUAGE["Perk_Title_Necromancer_Tier_2"] = [[Восстановление]]
 LANGUAGE["Perk_Title_necromancer_energy_siphon"] = [[Сифон энергии]]
@@ -1414,7 +1414,7 @@ LANGUAGE["Perk_carcass_twin_heart"] = [[
 LANGUAGE["Perk_Title_carcass_aas_perfume"] = [[Аромат ААС]]
 LANGUAGE["Perk_carcass_aas_perfume"] = [[
 Прибавляет +{1} к максимальному количеству Гипертрофических стаков.
-Нажмите на R, чтобы стрелять спорами, которые обеспечивают Гипертрофией 
+Нажмите на R, чтобы стрелять спорами, которые обеспечивают Гипертрофией
 игроков по области. Эффект длится в течение {2} сек. и имеет перезарядку {3} сек.]]
 
 -- Default Perks: Hatcher
@@ -1739,7 +1739,7 @@ LANGUAGE["Item_Desc_MP7A1 Medic PDW"] = [[
 LANGUAGE["Item_Vector Medic PDW"] = [[Медицинский Vector PDW]]
 LANGUAGE["Item_Desc_Vector Medic PDW"] = [[
 KRISS Vector Gen I оснащен средством запуска исцеляющих дротиков.
-Использует нетрадиционную систему обратной отдачи, 
+Использует нетрадиционную систему обратной отдачи,
 которая обеспечивает высокую скорость стрельбы.
 Нажмите B или ZOOM для стрельбы лечащими дротиками.
 Лечащий дротик исцеляет 12 единиц здоровья и имеет полтора секундную перезарядку.
@@ -2240,7 +2240,7 @@ LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
 
 LANGUAGE["Item_Watchtower Type-Interceptor"] = [[Сторожевая башня - Истребитель-перехватчик]]
 LANGUAGE["Item_Desc_Watchtower Type-Interceptor"] = [[
-Сторожевая башня, которая стреляет постоянными лазерными 
+Сторожевая башня, которая стреляет постоянными лазерными
 лучами в сторожевые башни поблизости.
 Лазерный луч наносит огненный урон.
 (Класс сущности: horde_watchtower_interceptor)
@@ -2311,7 +2311,7 @@ LANGUAGE["Item_Desc_Carcass Biosystem"] = [[
 Усовершенствованная боевая биосистема,
 которая полностью портит внешний вид своего пользователя.
 Оставляет после себя неприятный запах.
-  
+
 ЛКМ: Удар
 Удерживайте для мощного удара, который нанесёт повышенный урон по области.
 ]]
@@ -2557,7 +2557,7 @@ LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
 
 LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Корпоративное Мышление]]
 LANGUAGE["Gadget_Desc_gadget_corporate_mindset"] = [[
-"Устаналивать цели. Иметь десятилетний план. Вкладывать. 
+"Устаналивать цели. Иметь десятилетний план. Вкладывать.
 Просыпаться рано. Мышление генерального директора."
 Значительно увеличивает шанс выпадения жетонов черепа.
 ]]
@@ -2684,7 +2684,7 @@ LANGUAGE["Gadget_Desc_gadget_ulpa_filter"] = [[
 
 LANGUAGE["Gadget_gadget_armor_fusion"] = [[Сплавление брони]]
 LANGUAGE["Gadget_Desc_gadget_armor_fusion"] = [[
-При переключении истощает ваше здоровье и восстанавливает броню 
+При переключении истощает ваше здоровье и восстанавливает броню
 вплоть до 50% от вашей максимальной брони.
 ]]
 
@@ -2770,7 +2770,7 @@ LANGUAGE["Gadget_Desc_gadget_nitrous_propellor"] = [[
 LANGUAGE["Gadget_gadget_ied"] = [[СВУ]]
 LANGUAGE["Gadget_Desc_gadget_ied"] = [[
 Бросает на землю Самодельное Взрывное Устройство.
-Самодельное взрывное устройство взрывается, 
+Самодельное взрывное устройство взрывается,
 когда враг оказывается в пределах досягаемости.
 У вас есть 5 зарядов СВУ.
 СВУ перезаряжается после детонации.

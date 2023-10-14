@@ -77,7 +77,7 @@ PERK.Hooks.PlayerButtonDown = function (ply, key)
                 ply.Horde_Pneumatic_Leg_Ready = nil
                 ply.Horde_Pneumatic_Leg_Leaping = true
                 sound.Play("horde/player/pneumatic_legs.ogg", ply:GetPos())
-                
+
                 local id = ply:SteamID()
                 timer.Remove("Horde_PneumaticLeg" .. id)
                 timer.Create("Horde_PneumaticLeg" .. id, 5, 1, function ()

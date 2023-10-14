@@ -15,9 +15,9 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
         if e:IsValid() and e:IsNPC() then
             pos = e:GetPos()
         end
-    
+
         sound.Play("horde/weapons/solar_seal/hallowed_bolt_hit.ogg", pos, 100, math.random(90, 110), 1)
-    
+
         for i = 1,10 do
             local LT = ents.Create("info_target")
             LT:SetKeyValue("targetname","bolt_target_" .. ply:Name().. "_" .. tostring(i))
@@ -26,7 +26,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
             LT:SetPos(Vector(pos.x + f, pos.y + g, -500))
             LT:Fire("kill","",0.5)
             LT:Spawn()
-    
+
             if i == 5 then
                 for _, ent in pairs(ents.FindInSphere(pos, 125)) do
                     if HORDE:IsEnemy(ent) then
@@ -56,7 +56,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
                 end)
             end
         end
-    
+
         local tr = util.TraceLine({
             start = pos,
             endpos = pos + Vector(0,0,1) * 10000,
@@ -64,14 +64,14 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
                 return ent:IsWorld()
             end,
         })
-        
+
         local z_max = 100
         if tr.Hit then
             z_max = tr.HitPos.z
         else
             z_max = 500
         end
-    
+
         timer.Simple(0.1, function ()
             for i = 1,10 do
                 local LA = ents.Create("env_laser")

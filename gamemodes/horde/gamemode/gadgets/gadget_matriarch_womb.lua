@@ -13,7 +13,7 @@ GADGET.Hooks = {}
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     if CLIENT then return end
     if ply:Horde_GetGadget() ~= "gadget_matriarch_womb" then return end
-    
+
     local ent = ents.Create("npc_vj_horde_headcrab")
     ent:SetPos(ply:GetPos() + ply:GetForward() * 50 + Vector(0,0,1) * 10)
     ent:Spawn()

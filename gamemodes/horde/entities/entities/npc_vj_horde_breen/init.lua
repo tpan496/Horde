@@ -53,7 +53,7 @@ ENT.RangeUseAttachmentForPosID = "hand_right" -- The attachment used on the rang
 ENT.RangeAttackPos_Up = 20 -- Up/Down spawning position for range attack
 ENT.RangeAttackPos_Forward = 10 -- Forward/ Backward spawning position for range attack
 ENT.RangeAttackPos_Right = 10 -- Right/Left spawning position for range attack
--- Miscellaneous ---------------------------------------------------------------------------------------------------------------------------------------------	
+-- Miscellaneous ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.AnimTbl_IdleStand = {"Idle1","Idle2"} -- The idle animation when AI is enabled
 
 	-- ====== Flinching Code ====== --
@@ -288,7 +288,7 @@ function ENT:MultipleMeleeAttacks()
 		self.MeleeAttackDamage = 30
 		self.MeleeAttackDamageDistance = 120
 		self.MeleeAttackDamageType = DMG_SLASH
-			
+
 		if self.Breen_Cooldown <= CurTime() then
 			sound.Play("vo/Citadel/br_laugh01.wav", self:GetPos(), 100, 50)
 			self.Breen_Cooldown = CurTime() + math.random(30,60)

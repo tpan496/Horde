@@ -97,7 +97,7 @@ function ENT:OnBounce(data, phys)
 			target = v
 		end
 	end
-	
+
 	if IsValid(target) then
 		local targetPos = target:GetPos() + target:OBBCenter()
 		local norm = (targetPos - myPos):GetNormalized()

@@ -36,7 +36,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
         end
         phys:ApplyForceCenter(velocity)
     end
-    
+
     SpawnProjectile(ply:EyePos() + (ply:GetAimVector() * 16), ply:EyeAngles(), ply:GetAimVector(), p)
 
     if charge_stage <= 2 then

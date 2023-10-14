@@ -206,7 +206,7 @@ end
 function plymeta:Horde_DropMoney(amount)
     if not amount then amount = 50 end
 	amount = math.floor(tonumber(amount)) -- ensure that unholy amounts of money are not being dropped
-	if not amount or amount < 50 then amount = 50 end 
+	if not amount or amount < 50 then amount = 50 end
     if self:Horde_GetMoney() >= amount and self:Alive() then
         local res = hook.Run("Horde_PlayerDropMoney", self)
         if res then
@@ -314,14 +314,14 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     if ply:Alive() and not (HORDE.start_game and HORDE.current_break_time <= 0) then
         HORDE:GiveStarterWeapons(ply)
     end
-    
+
     if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
         net.Start("Horde_SyncStatus")
             net.WriteUInt(HORDE.Status_ExpDisabled, 8)
             net.WriteUInt(1, 8)
         net.Send(ply)
     end
-    
+
     if not HORDE.has_buy_zone then
         net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanBuy, 8)
@@ -401,7 +401,7 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
         if (item.whitelist and (not item.whitelist[ply:Horde_GetClass().name])) then
             return false
         end
-        
+
         if item.starter_classes then
             if (item.class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() ~= "Necromancer") or
                (item.class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() ~= "Artificer") or
@@ -497,7 +497,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
 
                 -- Prevent players from purchasing turrets if they have the manhack skill.
                 if item.class == "npc_turret_floor" and ply:Horde_GetPerk("engineer_manhack") then return end
-                
+
                 ply:Horde_AddMoney(-price)
                 ply:Horde_AddSkullTokens(-skull_tokens)
                 ply:Horde_AddWeight(-item.weight)
@@ -534,14 +534,14 @@ net.Receive("Horde_BuyItem", function (len, ply)
                         ent:AddRelationship("npc_vj_horde_shadow_hulk D_LI 99")
                         ent:AddRelationship("npc_vj_horde_headcrab D_LI 99")
                         ent:AddRelationship("npc_vj_horde_antlion D_LI 99")
-    
+
                         ent.VJFriendly = false
                     end)
                     local npc_info = list.Get("NPC")[ent:GetClass()]
                     if not npc_info then
                         print("[HORDE] NPC does not exist in ", list.Get("NPC"))
                     end
-                    
+
                     local wpns = npc_info["Weapons"]
                     if wpns then
                         local wpn = wpns[math.random(#wpns)]
@@ -612,7 +612,7 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     end
                 end
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_ARMOR then
-                
+
                 if item.class == "armor100" or item.class == "armor150" then
                     if ply:Armor() >= ply:GetMaxArmor() then return end
                 else
@@ -680,7 +680,7 @@ function HORDE:DropTurret(ent)
         filter = ent,
         collisiongroup =  COLLISION_GROUP_WORLD
     })
-    
+
     if IsValid(tr.Entity) or tr.HitWorld then
         local dist_sqr = turret_pos:DistToSqr(tr.HitPos)
         -- If you drop turrets from somewhere too high, they will just fall over.
@@ -702,7 +702,7 @@ hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
         else
             ent:SetAngles(Angle(0, a.y, 0))
         end
-        
+
         HORDE:DropTurret(ent)
 
         if ent:GetClass() == "npc_vj_horde_rocket_turret" || ent:GetClass() == "npc_vj_horde_laser_turret" then
@@ -861,7 +861,7 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         HORDE:SendNotification("You don't have this weapon!", 0, ply)
         return
     end
-    
+
     local price = HORDE.items[class].ammo_price * count
     if ply:Horde_GetMoney() >= price then
         local wpn = ply:GetWeapon(class)
@@ -886,7 +886,7 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         HORDE:SendNotification("You don't have this weapon!", 0, ply)
         return
     end
-    
+
     local price = HORDE.items[class].secondary_ammo_price
     if ply:Horde_GetMoney() >= price then
         ply:Horde_AddMoney(-price)

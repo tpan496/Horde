@@ -19,7 +19,7 @@ function PANEL:Init()
 end
 
 local function AddPlayer(ply)
-    
+
 end
 
 function PANEL:SetData()
@@ -65,7 +65,7 @@ function PANEL:SetData()
             surface.SetMaterial(mat)
             surface.SetDrawColor(HORDE.Rank_Colors[rank])
             surface.DrawTexturedRect(ScreenScale(2), ScreenScale(1.5), ScreenScale(12), ScreenScale(12))
-            
+
             if rank == HORDE.Rank_Master then
                 draw.SimpleText(rank_level, "Horde_LeaderRank", 0, ScreenScale(3), HORDE.Rank_Colors[rank], TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
             else
@@ -80,8 +80,8 @@ function PANEL:SetData()
                 end
             end
         end
-        
-        
+
+
         local label = vgui.Create("DLabel", panel)
         label:SetText(ply.name)
         label:SetFont("Info")
@@ -94,7 +94,7 @@ function PANEL:SetData()
 end
 
 function PANEL:Paint()
-    
+
 end
 
 function HORDE:ShowLeaderboardThenFadeOut()

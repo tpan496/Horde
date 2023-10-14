@@ -16,7 +16,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         ply:Horde_AddReactiveArmor()
     end
 end
- 
+
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "heavy_reactive_armor" then
         ply:Horde_SetReactiveArmorEnabled(nil)

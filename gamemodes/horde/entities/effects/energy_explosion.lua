@@ -2,7 +2,7 @@ function EFFECT:Init(ed)
 
     local vOrig = ed:GetOrigin()
     self.Emitter = ParticleEmitter(vOrig)
-    
+
     for i=1,24 do
         local smoke = self.Emitter:Add("particle/particle_smokegrenade", vOrig)
         if (smoke) then
@@ -114,7 +114,7 @@ function EFFECT:Init(ed)
             flash:SetStartAlpha(255)
             flash:SetEndSize(240)
             flash:SetEndAlpha(0)
-            flash:SetGravity(Vector(0,0,0))		
+            flash:SetGravity(Vector(0,0,0))
         end
 
         local quake = self.Emitter:Add("effects/splashwake3", vOrig)
@@ -128,7 +128,7 @@ function EFFECT:Init(ed)
             quake:SetStartAlpha(200)
             quake:SetEndSize(270)
             quake:SetEndAlpha(0)
-            quake:SetGravity(Vector(0,0,0))		
+            quake:SetGravity(Vector(0,0,0))
         end
 
         local wave = self.Emitter:Add("sprites/heatwave", vOrig)

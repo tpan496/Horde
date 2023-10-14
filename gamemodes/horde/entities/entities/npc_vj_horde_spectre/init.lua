@@ -207,7 +207,7 @@ function ENT:DoEntityRelationshipCheck()
 						end
 					end
 				end
-				
+
 				if vPlayer then
 					entFri = true
 					self:AddEntityRelationship(v, D_LI, 99)
@@ -294,7 +294,7 @@ function ENT:DoEntityRelationshipCheck()
 						self.TakingCoverT = CurTime() + 0.2
 					end
 				end
-				
+
 				-- HasOnPlayerSight system, used to do certain actions when it sees the player
 				if self.HasOnPlayerSight == true && v:Alive() &&(CurTime() > self.OnPlayerSightNextT) && (vDistanceToMy < self.OnPlayerSightDistance) && self:Visible(v) && (mySDir:Dot((v:GetPos() - myPos):GetNormalized()) > mySAng) then
 					-- 0 = Run it every time | 1 = Run it only when friendly to player | 2 = Run it only when enemy to player

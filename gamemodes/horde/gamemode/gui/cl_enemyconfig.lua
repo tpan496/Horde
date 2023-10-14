@@ -176,7 +176,7 @@ function PANEL:Init()
 
             local end_wave_editor = vgui.Create("DCheckBoxLabel", panel)
             local unlimited_enemies_spawn_editor = vgui.Create("DCheckBoxLabel", panel)
-            
+
             end_wave_editor:SetText("End wave after defeated")
             end_wave_editor:SetPos(100 + 50, 23)
             end_wave_editor:SetTextColor(color_black)
@@ -351,7 +351,7 @@ function PANEL:Init()
     local model_editor = create_property_editor("model override", 35, basic_modifier_panel)
     local spawn_limit_editor = create_property_editor("spawn limit", 35, basic_modifier_panel)
     local color_editor = create_property_editor("color", 130, basic_modifier_panel)
-    
+
     local elite_editor = create_property_editor("is elite", 35, elite_modifier_panel)
     local boss_editors = create_property_editor("is boss", 140, elite_modifier_panel)
 
@@ -425,7 +425,7 @@ function PANEL:Init()
         if gadget_drop_editor:GetText() and gadget_drop_editor:GetText() ~= "" then
             gadget_drop.drop_rate = math.max(0, tonumber(gadget_drop_editor:GetText()) or 0)
         end
-        
+
         if gadget_drop.gadget and gadget_drop.gadget ~= "" and gadget_drop.drop_rate and gadget_drop.drop_rate > 0 then
         else
             gadget_drop = nil
@@ -477,12 +477,12 @@ function PANEL:Init()
     wave_start_box:SetPos(0,10)
     wave_start_box:SetSize(50,30)
     wave_start_box:SetSortItems(false)
-    
+
     local to_label = vgui.Create("DLabel", boxes_pane)
     to_label:SetText("to")
     to_label:SetTextColor(Color(0,0,0))
     to_label:SetPos(65,15)
-    
+
     local wave_end_box = vgui.Create("DComboBox", boxes_pane)
     wave_end_box:SetPos(85,10)
     wave_end_box:SetSize(50,30)
@@ -525,7 +525,7 @@ function PANEL:Init()
         if gadget_drop_editor:GetText() and gadget_drop_editor:GetText() ~= "" then
             gadget_drop.drop_rate = math.max(0, tonumber(gadget_drop_editor:GetText()) or 0)
         end
-        
+
         if gadget_drop.gadget and gadget_drop.gadget ~= "" and gadget_drop.drop_rate and gadget_drop.drop_rate > 0 then
         else
             gadget_drop = nil
@@ -534,7 +534,7 @@ function PANEL:Init()
         local start_wave = tonumber(wave_start_box:GetText())
         local end_wave = tonumber(wave_end_box:GetText())
         if start_wave > end_wave then return end
-        
+
         for i = start_wave, end_wave do
             HORDE:CreateEnemy(
                 name_editor:GetText(),

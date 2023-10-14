@@ -177,7 +177,7 @@ function PANEL:Paint()
         elseif not self.level_satisfy then
             self.buy_btn:SetTextColor(Color(200,200,200))
             self.buy_btn:SetText("Rank Requirement(s) Not Met")
-            
+
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
                 surface.DrawRect(0, 0, self:GetWide(), 200)

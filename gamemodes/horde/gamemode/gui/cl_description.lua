@@ -456,7 +456,7 @@ function PANEL:SetData(item)
             self.subclass_layout:SetSpaceY(8)
             for _, v in pairs(self.subclass_layout:GetChildren()) do v:Remove() end
         end
-        
+
         local cur_panel = self.subclass_layout:Add("DIconLayout")
         cur_panel:SetSpaceX(4)
         cur_panel:SetSize(self:GetWide() - 8, 82)
@@ -571,7 +571,7 @@ function PANEL:Paint()
             elseif not self.level_satisfy then
                 self.buy_btn:SetTextColor(Color(200,200,200))
                 self.buy_btn:SetText("Rank Requirement(s) Not Met")
-                
+
                 self.buy_btn.Paint = function ()
                     surface.SetDrawColor(HORDE.color_crimson_dark)
                     surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -632,7 +632,7 @@ function PANEL:Paint()
                 end
                 self.upgrade_btn:SetVisible(false)
             end
-            
+
             draw.DrawText(multlinetext(self.loc_desc, self:GetWide() - 128, "Content"), "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             local w, h
             if string.sub(self.loc_desc,-1) == "\n" then
@@ -662,7 +662,7 @@ function PANEL:Paint()
             end
             draw.DrawText("Mind Cost: ", "Content", 50, 160 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             draw.DrawText(mc, "Content", 175, 160 + h, Color(200, 200, 200), TEXT_ALIGN_LEFT)
-            
+
             surface.SetMaterial(mind_icon)
             surface.SetDrawColor(color_white)
             surface.DrawTexturedRect(175 + surface.GetTextSize(mc) + 5, 157 + h, 25, 25)
@@ -902,7 +902,7 @@ function PANEL:Paint()
             self.ammo_secondary_btn:SetVisible(false)
             self.current_ammo_panel:SetVisible(false)
             self.upgrade_btn:SetVisible(false)
-            
+
             return
         end
 
@@ -996,7 +996,7 @@ function PANEL:Paint()
         elseif not self.level_satisfy then
             self.buy_btn:SetTextColor(Color(200,200,200))
             self.buy_btn:SetText("Rank Requirement(s) Not Met")
-            
+
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
                 surface.DrawRect(0, 0, self:GetWide(), 200)

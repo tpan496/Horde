@@ -149,10 +149,10 @@ function ENT:CustomAttack()
             bullet.AmmoType = "Ar2"
             self:VJ_ACT_PLAYACTIVITY({"attack3"},true,false,true)
             bullet.Callback = function ( attacker, tr, dmginfo )
-            end		
-            if self.Ammo <= 0 then 
+            end
+            if self.Ammo <= 0 then
                 self.fire = false
-                return 
+                return
                 self:Reload()
             end
             self:FireBullets(bullet)
@@ -170,14 +170,14 @@ function ENT:Reload()
     end)
 end
 function ENT:CustomRangeAttackCode()
-	self.DisableDefaultRangeAttackCode = true 
+	self.DisableDefaultRangeAttackCode = true
 
 	local tracedata = {}
 	tracedata.start = self:GetAttachment(self:LookupAttachment("muzzle")).Pos
-	tracedata.endpos = self:GetEnemy():GetPos()+self:GetEnemy():OBBCenter() 
+	tracedata.endpos = self:GetEnemy():GetPos()+self:GetEnemy():OBBCenter()
 	tracedata.filter = self
 	local GuardGunTrace = util.TraceLine(tracedata)
-		
+
 		local effectdata = EffectData()
 		effectdata:SetEntity(self)
 		effectdata:SetOrigin(GuardGunTrace.HitPos)
@@ -190,7 +190,7 @@ function ENT:CustomRangeAttackCode()
 				fx1:SetOrigin(GuardGunTrace.HitPos)
 				util.Effect("cguard_cannon_fire",fx1)
 				util.Effect("cguard_cannon_mzlflash",fx1)
-				
+
                 local dmg = DamageInfo()
                 dmg:SetAttacker(self)
                 dmg:SetInflictor(self)
@@ -208,7 +208,7 @@ function ENT:CustomRangeAttackCode()
 end
 ---------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(TheProjectile)
-	return (self:GetEnemy():GetPos() + self:LocalToWorld(Vector(math.random(-100,200) , math.random(-100,200),math.random(100,200))))*20 
+	return (self:GetEnemy():GetPos() + self:LocalToWorld(Vector(math.random(-100,200) , math.random(-100,200),math.random(100,200))))*20
 end
 
 ENT.BreathSoundPitch1 = 100
@@ -269,7 +269,7 @@ function ENT:CustomOnKilled(dmginfo,hitgroup)
     VJ_STOPSOUND(self.LoopSound2)
     timer.Remove( "fire")
 
-		
+
 	util.BlastDamage(self,self,self:GetPos(),400,100)
 	util.ScreenShake(self:GetPos(),100,200,1,3000)
     local effectdata = EffectData()
@@ -325,7 +325,7 @@ end
 
 function EFFECT:Render( )
 if self.StartPos == nil then return end
-local intrplt 
+local intrplt
 local invintrplt = (self.BeamLife - CurTime())/3
 intrplt = math.Clamp(1 - invintrplt,0,1)
 
@@ -412,7 +412,7 @@ for i=0,20 do
 			particle:SetColor(255,255,255,255)
 		end
 end
-return false 
+return false
 end
 return true
 end

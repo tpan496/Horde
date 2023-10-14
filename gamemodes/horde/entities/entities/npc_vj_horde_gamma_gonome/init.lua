@@ -277,7 +277,7 @@ function ENT:Horde_SpawnIce(right)
         else
             v2 = vel:Length() * (vel:GetNormal() * 0.7 - right_vec:GetNormal() * 0.3)
         end
-        
+
         phys:SetVelocity(v2)
         projectile:SetAngles(v2:GetNormal():Angle())
     end
@@ -308,7 +308,7 @@ function ENT:CustomOnThink()
                     self:ColdAttack(2, -self:GetForward() * i * 100)
                     self:ColdAttack(2, self:GetRight() * i * 100)
                     self:ColdAttack(2, -self:GetRight() * i * 100)
-                    
+
                     local k1 = self:GetForward() + self:GetRight()
                     k1:Normalize()
                     local k2 = self:GetForward() - self:GetRight()

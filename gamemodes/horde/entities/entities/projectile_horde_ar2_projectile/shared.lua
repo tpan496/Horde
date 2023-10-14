@@ -83,7 +83,7 @@ function ENT:PhysicsCollide(data, phys)
 		self:Remove()
 		return
 	end
-	
+
 	self:OnBounce(data,phys)
 
 	local dataF = EffectData()

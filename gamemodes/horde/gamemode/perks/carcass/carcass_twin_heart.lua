@@ -31,7 +31,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
             if ply.TwinHeartToggleOn == true then return end
 
             if ply.Horde_TwinHeartStack >= ply:GetMaxHealth() * 0.3 then return end
-            
+
             ply.Horde_TwinHeartStack = math.min(ply:GetMaxHealth() * 0.3, ply.Horde_TwinHeartStack + 1)
             net.Start("Horde_SyncStatus")
                 net.WriteUInt(HORDE.Status_Twin_Heart, 8)

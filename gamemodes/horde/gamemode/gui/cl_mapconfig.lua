@@ -103,7 +103,7 @@ function PANEL:Init()
     whitelist_list_tab:SetPos(0, 40)
     whitelist_list_tab:SetSize(self:GetWide() / 4, self:GetTall() - 40 - 3)
     whitelist_list_tab:SetBackgroundColor(HORDE.color_none)
-    
+
     local whitelist_list = vgui.Create("DListView", whitelist_list_tab)
     whitelist_list:DockMargin(10, 10, 10, 10)
     whitelist_list:Dock(FILL)
@@ -153,7 +153,7 @@ function PANEL:Init()
     blacklist_editor:DockMargin(10,10,10,10)
     blacklist_editor:SetTall(30)
     blacklist_editor:SetTextColor(color_black)
-    
+
     local blacklist_eg_label = vgui.Create("DLabel", blacklist_tab)
     blacklist_eg_label:Dock(TOP)
     blacklist_eg_label:DockMargin(10,0,10,0)
@@ -198,7 +198,7 @@ function PANEL:Init()
     blacklist_list_tab:SetPos(self:GetWide() / 2, 40)
     blacklist_list_tab:SetSize(self:GetWide() / 4, self:GetTall() - 40 - 3)
     blacklist_list_tab:SetBackgroundColor(HORDE.color_none)
-    
+
     local blacklist_list = vgui.Create("DListView", blacklist_list_tab)
     blacklist_list:DockMargin(10, 10, 10, 10)
     blacklist_list:Dock(FILL)

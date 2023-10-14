@@ -71,7 +71,7 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:SecondaryAttack()
-	
+
 end
 
 function SWEP:UpdateNextIdle()
@@ -340,7 +340,7 @@ function SWEP:DoTrace( endpos )
 		trace.endpos = trace.start + (self.Owner:GetAimVector() * 14096) --14096 is length modifier.
 		if(endpos) then trace.endpos = (endpos - self.Tr.HitNormal * 7) end
 		trace.filter = { self.Owner, self.Weapon }
-		
+
 	self.Tr = nil
 	self.Tr = util.TraceLine( trace )
 end
@@ -361,7 +361,7 @@ function SWEP:StartAttack()
         end)
 		ply.Horde_Bio_Thruster_Stack = math.min(5, ply.Horde_Bio_Thruster_Stack + 1)
 		ply:Horde_SyncStatus(HORDE.Status_Bio_Thruster, ply.Horde_Bio_Thruster_Stack)
-	
+
 		local dir = ply:GetAimVector()
 		dir:Normalize()
 
@@ -373,7 +373,7 @@ function SWEP:StartAttack()
 		end
 		local vel = dir * force
 		ply:SetLocalVelocity(vel)
-		
+
 		ply:SetHealth(ply:Health() - ply:GetMaxHealth() * 0.05 * ply.Horde_Bio_Thruster_Stack)
 		if ply:Health() <= 0 then
 			ply:Kill()
@@ -391,24 +391,24 @@ function SWEP:StartAttack()
 	local gunPos = self.Owner:GetShootPos() -- Start of distance trace.
 	local disTrace = self.Owner:GetEyeTrace() -- Store all results of a trace in disTrace.
 	local hitPos = disTrace.HitPos -- Stores Hit Position of disTrace.
-	
+
 	-- Calculate Distance
 	-- Thanks to rgovostes for this code.
 	local x = (gunPos.x - hitPos.x)^2;
 	local y = (gunPos.y - hitPos.y)^2;
 	local z = (gunPos.z - hitPos.z)^2;
 	local distance = math.sqrt(x + y + z);
-	
+
 	-- Only latches if distance is less than distance CVAR, or CVAR negative
 	local distanceCvar = 1000
 	inRange = false
 	if distanceCvar < 0 or distance <= distanceCvar then
 		inRange = true
 	end
-	
+
 	if inRange then
 		if (SERVER) then
-			
+
 			if (!self.Horde_Intestine) then -- If the beam does not exist, draw the beam.
 				-- grapple_beam
 				self.Horde_Intestine = ents.Create( "horde_intestine" )
@@ -416,29 +416,29 @@ function SWEP:StartAttack()
 					self.Horde_Intestine.Owner = self.Owner
 				self.Horde_Intestine:Spawn()
 			end
-			
+
 			self.Horde_Intestine:SetParent( self.Owner )
 			self.Horde_Intestine:SetOwner( self.Owner )
-		
+
 		end
-		
+
 		self:DoTrace()
 		self.speed = 10000 -- Rope latch speed. Was 3000.
 		self.startTime = CurTime()
 		self.endTime = CurTime() + self.speed
 		self.dtt = -1
-		
+
 		if (SERVER && self.Horde_Intestine) then
 			if self.Tr.Entity:IsNPC() then
 				self.Horde_Intestine:GetTable():SetEndPos( self.Tr.HitPos + self.Tr.Entity:OBBCenter() )
 			else
 				self.Horde_Intestine:GetTable():SetEndPos( self.Tr.HitPos )
 			end
-			
+
 		end
-		
+
 		self:UpdateAttack()
-		
+
 		self.Weapon:EmitSound( sndPowerDown )
 	else
 		-- Play a sound
@@ -450,9 +450,9 @@ function SWEP:UpdateAttack()
 	if !self.Owner then return end
 	if self.Owner:Horde_GetPerk("carcass_bio_thruster") then return end
 	if !(self.Owner:Horde_GetPerk("carcass_grappendix")) then return end
-	
+
 	self.Owner:LagCompensation( true )
-	
+
 	if (!intestine_endpos) then
 		intestine_endpos = self.Tr.HitPos
 		if self.Tr.Entity:IsNPC() then
@@ -464,11 +464,11 @@ function SWEP:UpdateAttack()
 			target_pos = self.Tr.HitPos
 		end
 	end
-	
+
 	if (SERVER && self.Horde_Intestine) then
 		self.Horde_Intestine:GetTable():SetEndPos( intestine_endpos )
-	end	
-	
+	end
+
 	if ( self.Tr.Entity:IsValid() ) then
 		intestine_endpos = self.Tr.Entity:GetPos()
 		if self.Tr.Entity:IsNPC() then
@@ -483,7 +483,7 @@ function SWEP:UpdateAttack()
 			end
 		end
 	end
-	
+
 	local vVel, Distance
 	if pull == true then
 		vVel = ((self.Owner:GetPos() + self.Owner:OBBCenter()) - self.Tr.Entity:GetPos())
@@ -492,7 +492,7 @@ function SWEP:UpdateAttack()
 		vVel = (intestine_endpos - self.Owner:GetPos())
 		Distance = intestine_endpos:Distance(self.Owner:GetPos())
 	end
-	
+
 	local et = (self.startTime + (Distance/self.speed))
 	if(self.dtt != 0) then
 		self.dtt = (et - CurTime()) / (et - self.startTime)
@@ -501,7 +501,7 @@ function SWEP:UpdateAttack()
 		self.Weapon:EmitSound( sndPowerUp )
 		self.dtt = 0
 	end
-	
+
 	if(self.dtt == 0) then
 		local zVel = self.Owner:GetVelocity().z
 		vVel = vVel:GetNormalized()*(math.Clamp(Distance,0,7))
@@ -518,7 +518,7 @@ function SWEP:UpdateAttack()
 		end
 		end
 	end
-	
+
 	intestine_endpos = nil
 
 	if self.LastDrain <= CurTime() then
@@ -529,19 +529,19 @@ function SWEP:UpdateAttack()
 		end
 		self.LastDrain = CurTime() + self.DrainInterval
 	end
-	
+
 	self.Owner:LagCompensation( false )
-	
+
 end
 
 function SWEP:EndAttack( shutdownsound )
-	
+
 	if ( CLIENT ) then return end
 	if ( !self.Horde_Intestine ) then return end
-	
+
 	self.Horde_Intestine:Remove()
 	self.Horde_Intestine = nil
-	
+
 end
 
 function SWEP:Think()
@@ -578,7 +578,7 @@ function SWEP:Think()
 			self:Punch(0)
 		end
     end
-	
+
 	if SERVER and self.Charging == 1 then
 		self:SetNextPrimaryFire( CurTime() + self.Delay )
 	end
@@ -595,17 +595,17 @@ function SWEP:Think()
 	end
 
 	if ( self.Owner:KeyPressed( IN_ATTACK2 ) ) then
-	
+
 		self:StartAttack()
-		
+
 	elseif ( self.Owner:KeyDown( IN_ATTACK2 ) && inRange ) then
-	
+
 		self:UpdateAttack()
-		
+
 	elseif ( self.Owner:KeyReleased( IN_ATTACK2 ) && inRange ) then
-	
+
 		self:EndAttack( true )
-	
+
 	end
 
 	if SERVER then

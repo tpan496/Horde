@@ -244,7 +244,7 @@ SWEP.Attachments = {
 
 SWEP.Hook_TranslateAnimation = function(wep, anim)
 	local attached = wep.Attachments[3].Installed
-	
+
 	-- m203 is 1, masterkey is 2, fgrip is 3
 	local attthing
 		if 		attached == "mw2_ubgl_m203" 		then attthing = 1
@@ -252,7 +252,7 @@ SWEP.Hook_TranslateAnimation = function(wep, anim)
 		elseif 	attached 							then attthing = 3
 		else 											 attthing = 0
 	end
-	
+
 	-- when entering ubgl
 	if anim == "enter_ubgl" then
 		if attthing == 1 then
@@ -267,16 +267,16 @@ SWEP.Hook_TranslateAnimation = function(wep, anim)
 			return "switch2_gun_masterkey"
 		end
 	end
-	
+
     if attthing == 1 and wep:GetInUBGL() then
         return "alt_" .. anim .. "_m203"
-		
+
 	elseif attthing == 2 and wep:GetInUBGL() then
         return "alt_" .. anim .. "_masterkey"
-		
+
     elseif attthing == 3 then
         return anim .. "_fgrip"
-		
+
     end
 end
 

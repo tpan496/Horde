@@ -25,7 +25,7 @@ function EFFECT:Init(ed)
     emitter2:Finish()
 
     self.StartTime = CurTime() + self.duration
-    
+
     --end
 end
 

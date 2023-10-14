@@ -74,7 +74,7 @@ function ENT:PhysicsCollide( data )
     dmg:SetDamagePosition(data.HitPos)
 
     data.HitEntity:TakeDamageInfo( dmg )
-    
+
     if SERVER then
         if data.HitEntity:IsNPC() || data.HitEntity:IsPlayer() then
             self:Remove()

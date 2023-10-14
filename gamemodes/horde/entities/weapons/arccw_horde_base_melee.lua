@@ -78,7 +78,7 @@ function SWEP:MeleeAttack(melee2)
     if SERVER and IsValid(tr.Entity) and (tr.Entity:IsNPC() or tr.Entity:IsPlayer() or tr.Entity:Health() > 0) then
         local attacker = self:GetOwner()
         if !IsValid(attacker) then attacker = self end
-        
+
         self:FireBullets({
             Attacker = attacker,
             Inflictor = self,

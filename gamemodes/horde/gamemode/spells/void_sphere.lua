@@ -17,7 +17,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
         ent:SetOwner(ply)
         ent:SetPos(pos)
         ent:SetAngles(angles)
-        
+
         local level = ply:Horde_GetSpellUpgrade("void_sphere")
         ent:SetCharged(charge_stage - 1)
         ent:SetSpellLevel(level)
@@ -25,7 +25,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
         ent:Spawn()
         ent:GetPhysicsObject():ApplyForceCenter( force )
     end
-    
+
     local ar = ply:EyeAngles()
     if charge_stage == 1 then
         SpawnProjectile(ply:EyePos() + (ar:Forward() * 16), ar, ar:Forward() * 1000)

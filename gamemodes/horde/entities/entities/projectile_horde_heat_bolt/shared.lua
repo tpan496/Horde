@@ -65,12 +65,12 @@ function ENT:Detonate(hitpos, hitent)
             Callback = function(att, tr, dmg)
                 dmg:SetAttacker(attacker)
                 dmg:SetInflictor(attacker)
-    
+
                 if tr.HitGroup == HITGROUP_HEAD then
                     sound.Play("weapons/crossbow/bolt_skewer1.wav", hitpos)
                     dmg:ScaleDamage(1.5)
                 end
-    
+
                 util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
             end
         })

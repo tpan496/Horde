@@ -138,7 +138,7 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
                     ent:TakeDamageInfo(dmg)
                 end
             end
-            
+
             if not ent:Horde_IsElite() then
                 local p = math.random()
                 if p <= 0.3 then

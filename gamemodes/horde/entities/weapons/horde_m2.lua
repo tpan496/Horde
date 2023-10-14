@@ -87,7 +87,7 @@ function SWEP:PrimaryAttack()
             dmg:SetDamageType(DMG_BURN)
             dmg:SetDamage(8)
             util.BlastDamageInfo(dmg, trace.HitPos, 128)
-            
+
             if (SERVER) and trace.Hit then
                 local firefx = EffectData()
                 firefx:SetOrigin(trace.HitPos)

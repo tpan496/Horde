@@ -274,25 +274,25 @@ function SWEP:UpdateBonePositions(vm)
             allbones = {}
             for i=0, vm:GetBoneCount() do
                 local bonename = vm:GetBoneName(i)
-                if (self.ViewModelBoneMods[bonename]) then 
+                if (self.ViewModelBoneMods[bonename]) then
                     allbones[bonename] = self.ViewModelBoneMods[bonename]
                 else
-                    allbones[bonename] = { 
+                    allbones[bonename] = {
                         scale = Vector(1,1,1),
                         pos = Vector(0,0,0),
                         angle = Angle(0,0,0)
                     }
                 end
             end
-            
+
             loopthrough = allbones
         end
         // !! ----------- !! //
-        
+
         for k, v in pairs( loopthrough ) do
             local bone = vm:LookupBone(k)
             if (!bone) then continue end
-            
+
             // !! WORKAROUND !! //
             local s = Vector(v.scale.x,v.scale.y,v.scale.z)
             local p = Vector(v.pos.x,v.pos.y,v.pos.z)
@@ -305,10 +305,10 @@ function SWEP:UpdateBonePositions(vm)
                     cur = vm:GetBoneParent(cur)
                 end
             end
-            
+
             s = s * ms
             // !! ----------- !! //
-            
+
             if vm:GetManipulateBoneScale(bone) != s then
                 vm:ManipulateBoneScale( bone, s )
             end
@@ -325,14 +325,14 @@ function SWEP:UpdateBonePositions(vm)
 end
 
 function SWEP:ResetBonePositions(vm)
-		
+
     if (!vm:GetBoneCount()) then return end
     for i=0, vm:GetBoneCount() do
         vm:ManipulateBoneScale( i, Vector(1, 1, 1) )
         vm:ManipulateBoneAngles( i, Angle(0, 0, 0) )
         vm:ManipulateBonePosition( i, Vector(0, 0, 0) )
     end
-    
+
 end
 
 function SWEP:Think()

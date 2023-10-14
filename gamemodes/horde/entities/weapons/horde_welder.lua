@@ -64,24 +64,24 @@ SWEP.WElements = {
 function SWEP:Initialize()
 	self:SetHoldType(self.HoldType)
 	self:SetWeaponHoldType(self.HoldType)
-	
+
 	if CLIENT then
-	
+
 		-- Create a new table for every weapon instance
 		self.VElements = table.FullCopy( self.VElements )
 		self.WElements = table.FullCopy( self.WElements )
 		self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
         self:SetWeaponHoldType( self.HoldType )
-		
+
 		self:CreateModels(self.VElements) -- create viewmodels
 		self:CreateModels(self.WElements) -- create worldmodels
-		
+
 		-- init view model bone build function
 		if IsValid(self.Owner) then
 			local vm = self.Owner:GetViewModel()
 			if IsValid(vm) then
 				self:ResetBonePositions(vm)
-				
+
 				-- Init viewmodel visibility
 				if (self.ShowViewModel == nil or self.ShowViewModel) then
 					vm:SetColor(Color(255,255,255,255))
@@ -90,11 +90,11 @@ function SWEP:Initialize()
 					vm:SetColor(Color(255,255,255,1))
 					-- ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
 					-- however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
-					vm:SetMaterial("Debug/hsv")			
+					vm:SetMaterial("Debug/hsv")
 				end
 			end
 		end
-		
+
 	end
 end
 
@@ -103,16 +103,16 @@ if CLIENT then
 
 	SWEP.vRenderOrder = nil
 	function SWEP:ViewModelDrawn()
-		
+
 		local vm = self.Owner:GetViewModel()
 		if !IsValid(vm) then return end
-		
+
 		if (!self.VElements) then return end
-		
+
 		self:UpdateBonePositions(vm)
 
 		if (!self.vRenderOrder) then
-			
+
 			-- we build a render order because sprites need to be drawn after models
 			self.vRenderOrder = {}
 
@@ -123,24 +123,24 @@ if CLIENT then
 					table.insert(self.vRenderOrder, k)
 				end
 			end
-			
+
 		end
 
 		for k, name in ipairs( self.vRenderOrder ) do
-		
+
 			local v = self.VElements[name]
 			if (!v) then self.vRenderOrder = nil break end
 			if (v.hide) then continue end
-			
+
 			local model = v.modelEnt
 			local sprite = v.spriteMaterial
-			
+
 			if (!v.bone) then continue end
-			
+
 			local pos, ang = self:GetBoneOrientation( self.VElements, v, vm )
-			
+
 			if (!pos) then continue end
-			
+
 			if (v.type == "Model" and IsValid(model)) then
 
 				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
@@ -153,17 +153,17 @@ if CLIENT then
 				local matrix = Matrix()
 				matrix:Scale(v.size)
 				model:EnableMatrix( "RenderMultiply", matrix )
-				
+
 				if (v.material == "") then
 					model:SetMaterial("")
 				elseif (model:GetMaterial() != v.material) then
 					model:SetMaterial( v.material )
 				end
-				
+
 				if (v.skin and v.skin != model:GetSkin()) then
 					model:SetSkin(v.skin)
 				end
-				
+
 				if (v.bodygroup) then
 					for k, v in pairs( v.bodygroup ) do
 						if (model:GetBodygroup(k) != v) then
@@ -171,21 +171,21 @@ if CLIENT then
 						end
 					end
 				end
-				
+
 				if (v.surpresslightning) then
 					render.SuppressEngineLighting(true)
 				end
-				
+
 				render.SetColorModulation(v.color.r/255, v.color.g/255, v.color.b/255)
 				render.SetBlend(v.color.a/255)
 				model:DrawModel()
 				render.SetBlend(1)
 				render.SetColorModulation(1, 1, 1)
-				
+
 				if (v.surpresslightning) then
 					render.SuppressEngineLighting(false)
 				end
-				
+
 			elseif (v.type == "Sprite" and sprite) then
 				local fade = math.abs(math.sin(CurTime() * math.Rand(3.549,3.55)))
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
@@ -195,33 +195,33 @@ if CLIENT then
 				else
 					render.DrawSprite(drawpos, v.size.x, v.size.y, v.color)
 				end
-				
+
 			elseif (v.type == "Quad" and v.draw_func) then
-				
+
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 				ang:RotateAroundAxis(ang:Up(), v.angle.y)
 				ang:RotateAroundAxis(ang:Right(), v.angle.p)
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-				
+
 				cam.Start3D2D(drawpos, ang, v.size)
 					v.draw_func( self )
 				cam.End3D2D()
 
 			end
-			
+
 		end
-		
+
 	end
 
 	SWEP.wRenderOrder = nil
 	function SWEP:DrawWorldModel()
-		
+
 		if (self.ShowWorldModel == nil or self.ShowWorldModel) then
 			self:DrawModel()
 		end
-		
+
 		if (!self.WElements) then return end
-		
+
 		if (!self.wRenderOrder) then
 
 			self.wRenderOrder = {}
@@ -235,33 +235,33 @@ if CLIENT then
 			end
 
 		end
-		
+
 		if (IsValid(self.Owner)) then
 			bone_ent = self.Owner
 		else
 			-- when the weapon is dropped
 			bone_ent = self
 		end
-		
+
 		for k, name in pairs( self.wRenderOrder ) do
-		
+
 			local v = self.WElements[name]
 			if (!v) then self.wRenderOrder = nil break end
 			if (v.hide) then continue end
-			
+
 			local pos, ang
-			
+
 			if (v.bone) then
 				pos, ang = self:GetBoneOrientation( self.WElements, v, bone_ent )
 			else
 				pos, ang = self:GetBoneOrientation( self.WElements, v, bone_ent, "ValveBiped.Bip01_R_Hand" )
 			end
-			
+
 			if (!pos) then continue end
-			
+
 			local model = v.modelEnt
 			local sprite = v.spriteMaterial
-			
+
 			if (v.type == "Model" and IsValid(model)) then
 
 				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
@@ -274,17 +274,17 @@ if CLIENT then
 				local matrix = Matrix()
 				matrix:Scale(v.size)
 				model:EnableMatrix( "RenderMultiply", matrix )
-				
+
 				if (v.material == "") then
 					model:SetMaterial("")
 				elseif (model:GetMaterial() != v.material) then
 					model:SetMaterial( v.material )
 				end
-				
+
 				if (v.skin and v.skin != model:GetSkin()) then
 					model:SetSkin(v.skin)
 				end
-				
+
 				if (v.bodygroup) then
 					for k, v in pairs( v.bodygroup ) do
 						if (model:GetBodygroup(k) != v) then
@@ -292,82 +292,82 @@ if CLIENT then
 						end
 					end
 				end
-				
+
 				if (v.surpresslightning) then
 					render.SuppressEngineLighting(true)
 				end
-				
+
 				render.SetColorModulation(v.color.r/255, v.color.g/255, v.color.b/255)
 				render.SetBlend(v.color.a/255)
 				model:DrawModel()
 				render.SetBlend(1)
 				render.SetColorModulation(1, 1, 1)
-				
+
 				if (v.surpresslightning) then
 					render.SuppressEngineLighting(false)
 				end
-				
+
 			elseif (v.type == "Sprite" and sprite) then
-				
+
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 				render.SetMaterial(sprite)
 				render.DrawSprite(drawpos, v.size.x, v.size.y, v.color)
-				
+
 			elseif (v.type == "Quad" and v.draw_func) then
-				
+
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 				ang:RotateAroundAxis(ang:Up(), v.angle.y)
 				ang:RotateAroundAxis(ang:Right(), v.angle.p)
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-				
+
 				cam.Start3D2D(drawpos, ang, v.size)
 					v.draw_func( self )
 				cam.End3D2D()
 
 			end
-			
+
 		end
-		
+
 	end
 
 	function SWEP:GetBoneOrientation( basetab, tab, ent, bone_override )
-		
+
 		local bone, pos, ang
 		if (tab.rel and tab.rel != "") then
-			
+
 			local v = basetab[tab.rel]
-			
+
 			if (!v) then return end
-			
+
 
 			pos, ang = self:GetBoneOrientation( basetab, v, ent )
-			
+
 			if (!pos) then return end
-			
+
 			pos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 			ang:RotateAroundAxis(ang:Up(), v.angle.y)
 			ang:RotateAroundAxis(ang:Right(), v.angle.p)
 			ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-				
+
 		else
-		
+
 			bone = ent:LookupBone(bone_override or tab.bone)
 
 			if (!bone) then return end
-			
+
 			pos, ang = Vector(0,0,0), Angle(0,0,0)
 			local m = ent:GetBoneMatrix(bone)
 			if (m) then
 				pos, ang = m:GetTranslation(), m:GetAngles()
 			end
-			
-			if (IsValid(self.Owner) and self.Owner:IsPlayer() and 
+
+			if (IsValid(self.Owner) and self.Owner:IsPlayer() and
 				ent == self.Owner:GetViewModel() and self.ViewModelFlip) then
 				ang.r = -ang.r -- Fixes mirrored models
 			end
-		
+
 		end
-		
+
 		return pos, ang
 	end
 
@@ -376,9 +376,9 @@ if CLIENT then
 		if (!tab) then return end
 
 		for k, v in pairs( tab ) do
-			if (v.type == "Model" and v.model and v.model != "" and (!IsValid(v.modelEnt) or v.createdModel != v.model) and 
+			if (v.type == "Model" and v.model and v.model != "" and (!IsValid(v.modelEnt) or v.createdModel != v.model) and
 					string.find(v.model, ".mdl") and file.Exists (v.model, "GAME") ) then
-				
+
 				v.modelEnt = ClientsideModel(v.model, RENDER_GROUP_VIEW_MODEL_OPAQUE)
 				if (IsValid(v.modelEnt)) then
 					v.modelEnt:SetPos(self:GetPos())
@@ -389,10 +389,10 @@ if CLIENT then
 				else
 					v.modelEnt = nil
 				end
-				
-			elseif (v.type == "Sprite" and v.sprite and v.sprite != "" and (!v.spriteMaterial or v.createdSprite != v.sprite) 
+
+			elseif (v.type == "Sprite" and v.sprite and v.sprite != "" and (!v.spriteMaterial or v.createdSprite != v.sprite)
 				and file.Exists ("materials/"..v.sprite..".vmt", "GAME")) then
-				
+
 				local name = v.sprite.."-"
 				local params = { ["$basetexture"] = v.sprite }
 				-- make sure we create a unique name based on the selected options
@@ -408,21 +408,21 @@ if CLIENT then
 
 				v.createdSprite = v.sprite
 				v.spriteMaterial = CreateMaterial(name,"UnlitGeneric",params)
-				
+
 			end
 		end
-		
+
 	end
-	
+
 	local allbones
 	local hasGarryFixedBoneScalingYet = false
 
 	function SWEP:UpdateBonePositions(vm)
-		
+
 		if self.ViewModelBoneMods then
-			
+
 			if (!vm:GetBoneCount()) then return end
-			
+
 			-- !! WORKAROUND !! --
 			-- We need to check all model names :/
 			local loopthrough = self.ViewModelBoneMods
@@ -430,25 +430,25 @@ if CLIENT then
 				allbones = {}
 				for i=0, vm:GetBoneCount() do
 					local bonename = vm:GetBoneName(i)
-					if (self.ViewModelBoneMods[bonename]) then 
+					if (self.ViewModelBoneMods[bonename]) then
 						allbones[bonename] = self.ViewModelBoneMods[bonename]
 					else
-						allbones[bonename] = { 
+						allbones[bonename] = {
 							scale = Vector(1,1,1),
 							pos = Vector(0,0,0),
 							angle = Angle(0,0,0)
 						}
 					end
 				end
-				
+
 				loopthrough = allbones
 			end
 			-- !! ----------- !! --
-			
+
 			for k, v in pairs( loopthrough ) do
 				local bone = vm:LookupBone(k)
 				if (!bone) then continue end
-				
+
 				-- !! WORKAROUND !! --
 				local s = Vector(v.scale.x,v.scale.y,v.scale.z)
 				local p = Vector(v.pos.x,v.pos.y,v.pos.z)
@@ -461,10 +461,10 @@ if CLIENT then
 						cur = vm:GetBoneParent(cur)
 					end
 				end
-				
+
 				s = s * ms
 				-- !! ----------- !! --
-				
+
 				if vm:GetManipulateBoneScale(bone) != s then
 					vm:ManipulateBoneScale( bone, s )
 				end
@@ -478,25 +478,25 @@ if CLIENT then
 		else
 			self:ResetBonePositions(vm)
 		end
-		   
+
 	end
-	 
+
 	function SWEP:ResetBonePositions(vm)
-		
+
 		if (!vm:GetBoneCount()) then return end
 		for i=0, vm:GetBoneCount() do
 			vm:ManipulateBoneScale( i, Vector(1, 1, 1) )
 			vm:ManipulateBoneAngles( i, Angle(0, 0, 0) )
 			vm:ManipulateBonePosition( i, Vector(0, 0, 0) )
 		end
-		
+
 	end
 
 
 	function table.FullCopy( tab )
 
 		if (!tab) then return nil end
-		
+
 		local res = {}
 		for k, v in pairs( tab ) do
 			if (type(v) == "table") then
@@ -509,11 +509,11 @@ if CLIENT then
 				res[k] = v
 			end
 		end
-		
+
 		return res
-		
+
 	end
-	
+
 end
 ----------------------------------------------------
 
@@ -528,7 +528,7 @@ if SERVER then
 			return false
 		end
 	end
-	
+
 	StuffToFixTable["DoDamage"] = function(Welder, ent, trace)
 
 		Welder:FireBullets({
@@ -564,7 +564,7 @@ if SERVER then
 			return false
 		end
 	end
-	
+
 	StuffToFixTable["alydus_destructablefortification"] = function(Welder, ent, trace)
 		if alydusDestructableFortificationExtension and GetConVar("alydus_defaultfortificationhealth") then
 			local defaultHealth = GetConVar("alydus_defaultfortificationhealth"):GetInt()
@@ -677,7 +677,7 @@ if SERVER then
 			ent:EmitSound("carStools/tune.wav", 100, math.random(80, 150))
 			return true
 		end
-		
+
 		return false
 	end
 
@@ -784,16 +784,16 @@ function SWEP:PrimaryAttack()
 						else
 							success = StuffToFixTable[exceptionContinue(Trace.Entity)](self, Trace.Entity, Trace)
 						end
-	
+
 						if success == true then
 							if IsValid(vm) and vm:LookupBone(bone) then
 								local atch = vm:GetBoneMatrix(vm:LookupBone(bone))
 								local pos, ang = vm:GetBonePosition(vm:LookupBone(bone)), vm:GetBoneMatrix(vm:LookupBone(bone)):GetAngles()
-	
+
 								--[[local effectData = EffectData()
 								effectData:SetOrigin(pos)
 								util.Effect("MuzzleFlash", effectData, true, true)]]--
-	
+
 								local effectData = EffectData()
 								effectData:SetOrigin(pos)
 								effectData:SetNormal(pos:GetNormalized())
@@ -811,7 +811,7 @@ function SWEP:PrimaryAttack()
 			end
 	end
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-	
+
 	self.Weapon:SendWeaponAnim( ACT_VM_DRYFIRE )
 
 	return false
@@ -825,7 +825,7 @@ function SWEP:Holster()
 	if SERVER then
 		if !IsValid(self.Owner) then return end
 	end
-	
+
 	if CLIENT and IsValid(self.Owner) then
 		local vm = self.Owner:GetViewModel()
 		if IsValid(vm) then
@@ -859,7 +859,7 @@ function SWEP:Think()
 		if not (pl:GetActiveWeapon():GetClass() == "weapon_tf2_welder") then return end
 		local tr = util.GetPlayerTrace(pl, pl:GetAimVector())
 		local trace = util.TraceLine( tr )
-		
+
 		if IsValid( trace.Entity ) && ((( trace.Entity:GetClass():find("prop_physics") or trace.Entity:GetClass():find("prop_dynamic") or trace.Entity:GetClass():find("func_breakable") or trace.Entity:GetClass():find("func_physbox")) and trace.Entity:Health() > 0) or trace.Entity:GetClass():find("gmod_sent_vehicle_fphysics_base") or  ( trace.Entity:GetClass():find("lunasflightschool") or trace.Entity:GetClass():find("lfs_") ) and not trace.Entity:GetClass():find("lfs_vehicle_spammer")) then
 			self.VElements["v_sprite2"].color = Color(25, 255, 25, 255)
 		else
@@ -872,7 +872,7 @@ function SWEP:Think()
 		local tr = util.GetPlayerTrace(pl, pl:GetAimVector())
 		local trace = util.TraceLine( tr )
 		if not IsReallyValid(trace) then return end
-		
+
 		if ( IsValid( trace.Entity ) && ( trace.Entity:GetClass():find("prop_physics") or trace.Entity:GetClass():find("prop_dynamic") or trace.Entity:GetClass():find("func_breakable") or trace.Entity:GetClass():find("func_physbox")) ) then
 			pl:SetNWInt("WelderHealth", trace.Entity:Health())
 		elseif ( IsValid( trace.Entity ) && trace.Entity:GetClass():find("gmod_sent_vehicle_fphysics_base") ) then
@@ -884,7 +884,7 @@ function SWEP:Think()
 end
 
 if CLIENT then
-	
+
 	local TipColor = Color( 250, 250, 200, 255 )
 
 surface.CreateFont( "WelderFont_Arial", {
@@ -914,64 +914,64 @@ surface.CreateFont( "WelderFont_Arial", {
 			endpos = LocalPlayer():GetShootPos() + LocalPlayer():GetAimVector() * 75,
 			filter = LocalPlayer()
 		} )
-		
+
 		if (!trace.Hit) then return end
 		if (!trace.HitNonWorld) then return end
 		if !(((trace.Entity:GetClass():find("prop_physics") or trace.Entity:GetClass():find("prop_dynamic") or trace.Entity:GetClass():find("func_breakable") or trace.Entity:GetClass():find("func_physbox")) and trace.Entity:Health() > 0) or trace.Entity:GetClass():find("gmod_sent_vehicle_fphysics_base") or trace.Entity:GetClass():find("lunasflightschool") or trace.Entity:GetClass():find("lfs_")) then return end
 		if trace.Entity:GetClass():find("lfs_vehicle_spammer") then return end
 		if (trace.Entity:IsPlayer()) then return end
-		
+
 		local health = LocalPlayer():GetNWInt("WelderHealth") or 0
 		local text = "Health: "..health
-	
+
 		local pos = (trace.Entity:GetPos()):ToScreen()
-		
+
 		local outline = Color( 200, 25, 25, 255 )
 		local tipcol = Color( TipColor.r, TipColor.g, TipColor.b, 255 )
-		
+
 		local x = 0
 		local y = 0
 		local padding = 10
 		local offset = 50
-		
+
 		surface.SetFont( "TF2" )
 		local w, h = surface.GetTextSize( text )
-		
-		x = pos.x - w 
-		y = pos.y - h 
-		
+
+		x = pos.x - w
+		y = pos.y - h
+
 		x = x - offset
 		y = y - offset
 
 		draw.RoundedBox( 8, x-padding-2, y-padding-2, w+padding*2+4, h+padding*2+4, outline )
-		
-		
+
+
 		local verts = {}
 		verts[1] = { x=x+w/1.5-2, y=y+h+2 }
 		verts[2] = { x=x+w+2, y=y+h/2-1 }
 		verts[3] = { x=pos.x-offset/2+2, y=pos.y-offset/2+2 }
-		
+
 		draw.NoTexture()
 		surface.SetDrawColor( outline )
 		surface.DrawPoly( verts )
-		
-		
+
+
 		draw.RoundedBox( 8, x-padding, y-padding, w+padding*2, h+padding*2, tipcol )
-		
+
 		local verts = {}
 		verts[1] = { x=x+w/1.5, y=y+h }
 		verts[2] = { x=x+w, y=y+h/2 }
 		verts[3] = { x=pos.x-offset/2, y=pos.y-offset/2 }
-		
+
 		draw.NoTexture()
 		surface.SetDrawColor( tipcol.r, tipcol.g, tipcol.b, tipcol.a )
 		surface.DrawPoly( verts )
-		
+
 		draw.DrawText( text, "TF2", x + w/2, y, outline, TEXT_ALIGN_CENTER )
 	end
-	
+
 	hook.Add("HUDPaint", "WelderWorldTip", DrawHealthTip)
-	
+
 end
 
 function SWEP:DrawRotatingCrosshair(x,y,time,length,gap) -- it was spinning, but now it doesnt spin

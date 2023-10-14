@@ -39,7 +39,7 @@ function ENT:Initialize()
     self.Removing = false
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
-    
+
     self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
     self.ExplodeTimer = CurTime() + 60
 

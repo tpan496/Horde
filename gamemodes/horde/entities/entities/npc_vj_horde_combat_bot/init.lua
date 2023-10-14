@@ -47,7 +47,7 @@ ENT.MeleeAttackKnockBack_Forward1 = 100 -- How far it will push you forward | Fi
 ENT.MeleeAttackKnockBack_Forward2 = 130 -- How far it will push you forward | Second in math.random
 ENT.MeleeAttackKnockBack_Up1 = 250 -- How far it will push you up | First in math.random
 ENT.MeleeAttackKnockBack_Up2 = 260 -- How far it will push you up | Second in math.random
--- Miscellaneous ---------------------------------------------------------------------------------------------------------------------------------------------	
+-- Miscellaneous ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.AnimTbl_IdleStand = {ACT_IDLE} -- The idle animation when AI is enabled
 ENT.AnimTbl_Walk = {ACT_WALK} -- Set the walking animations | Put multiple to let the base pick a random animation when it moves
 ENT.AnimTbl_Run = {ACT_RUN} -- Set the running animations | Put multiple to let the base pick a random animation when it moves

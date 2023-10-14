@@ -126,7 +126,7 @@ hook.Add("InitPostEntity", "Horde_Init", function()
 end)
 
 hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
-    if HORDE.found_horde_nodes then return end 
+    if HORDE.found_horde_nodes then return end
     if ent:GetClass() == "info_player_teamspawn" then
         local valid = true
         for k,v in pairs(HORDE.ai_nodes) do
@@ -159,7 +159,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
         if IsValid(killer) and killer:IsPlayer() then
             hook.Run("Horde_OnEnemyKilled", victim, killer, weapon)
         end
-        
+
         if victim.Horde_Gadget_On_Death then
             local gadget_box = ents.Create("horde_gadgetbox")
             gadget_box.Horde_Gadget = victim.Horde_Gadget_On_Death
@@ -177,13 +177,13 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
                 HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
             end
         end
-        
+
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
             net.Start("Horde_HighlightEntities")
             net.WriteUInt(HORDE.render_highlight_enemies, 3)
             net.Broadcast()
         end
-        
+
         if not HORDE.horde_has_active_objective then
             if HORDE.endless == 1 then
                 if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
@@ -199,7 +199,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
                 end
             end
         end
-        
+
         local boss_properties = victim:Horde_GetBossProperties()
         local defer_reward = false
         local reward = 0
@@ -209,7 +209,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             if victim:GetVar("reward_scale") then
                 scale = victim:GetVar("reward_scale")
             end
-            
+
             reward = HORDE.kill_reward_base * scale
             hook.Run("Horde_OnGivePlayerReward", killer, reward)
             if boss_properties and boss_properties.is_boss then
@@ -1028,13 +1028,13 @@ function HORDE:WaveStart()
         end
         ::cont::
     end
-    
+
     -- Additional custom scaling
     if GetConVar("horde_total_enemies_scaling"):GetInt() > 1 then
         HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave * GetConVar("horde_total_enemies_scaling"):GetInt()
     end
 
-    
+
     HORDE.total_enemies_this_wave_fixed = HORDE.total_enemies_this_wave
     local max_enemies_alive_base = GetConVarNumber("horde_max_enemies_alive_base")
     local scale = GetConVarNumber("horde_max_enemies_alive_scale_factor")
@@ -1244,7 +1244,7 @@ function HORDE:WaveEnd()
         if GetConVar("horde_enable_rank"):GetInt() == 1 then
             HORDE:SaveRank(ply)
         end
-        
+
         ply:Horde_SyncExp()
         HORDE:TryAddTopTen(ply)
     end
@@ -1294,7 +1294,7 @@ function HORDE:Direct()
             total_player = total_player + 1
         end
 
-        if total_player > 0 and total_player == ready_count then 
+        if total_player > 0 and total_player == ready_count then
             HORDE.start_game = true
         else
             HORDE:BroadcastPlayersReadyMessage(tostring(ready_count) .. "/" .. tostring(total_player))
@@ -1337,7 +1337,7 @@ function HORDE:Direct()
         net.WriteInt(horde_ammobox_refresh_timer, 8)
         net.Broadcast()
     end
-    
+
     -- Check enemy
     local enemies = HORDE:ScanEnemies()
     HORDE:RemoveDistantEnemies(enemies)
@@ -1377,7 +1377,7 @@ function HORDE:Direct()
                 HORDE:SpawnEnemies(enemies, valid_nodes)
             end
         end
-        
+
         -- Spawn ammoboxes
         if horde_ammobox_refresh_timer <= 0 then
             if HORDE.ammobox_nodes and not (table.IsEmpty(HORDE.ammobox_nodes)) then

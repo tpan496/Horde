@@ -111,7 +111,7 @@ function PANEL:Init()
             editor_panel:DockPadding(0, 5, 0, 5)
             editor_panel:SetSize(300, height/3-5)
             editor_panel.Paint = function() end
-            
+
             local weapon_editor = vgui.Create("DComboBox", editor_panel)
             weapon_editor:SetSize(200, height/3)
             weapon_editor:DockPadding(10, 10, 10, 10)
@@ -212,7 +212,7 @@ function PANEL:Init()
             hor_label:SetTextColor(Color(0,0,0))
             hor_label:DockMargin(5, 0, 5, 0)
             hor_label:Dock(LEFT)
-            
+
             local hor_editor = vgui.Create("DTextEntry", drop_editors)
             hor_editor:SetSize(25, height/3)
             hor_editor:DockMargin(5, 0, 5, 0)
@@ -649,7 +649,7 @@ function PANEL:Init()
                 elseif type == "gadget_entity" then
                     class_type = HORDE.ENTITY_PROPERTY_GADGET
                 end
-                
+
                 entity_properties.type = class_type
                 break
             end
@@ -827,7 +827,7 @@ function PANEL:Init()
     settings_tab:SetPos(0, 40)
     settings_tab:SetSize(self:GetWide() / 2, self:GetTall() - 40 - 3)
     settings_tab:SetBackgroundColor(HORDE.color_none)
-    
+
     local item_list = vgui.Create("DListView", settings_tab)
     item_list:DockMargin(10, 10, 10, 10)
     item_list:Dock(FILL)
@@ -885,7 +885,7 @@ function PANEL:Init()
                     checkbox:SetChecked(false)
                 end
             end
-    
+
             if class_type == HORDE.ENTITY_PROPERTY_WPN then
                 class_editor.weapon_editor:SetVisible(true)
                 class_editor.weapon_editor:SetValue(item.class)

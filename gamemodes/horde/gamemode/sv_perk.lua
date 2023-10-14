@@ -28,7 +28,7 @@ function plymeta:Horde_ApplyPerksForClass()
 
     self.Horde_PerkChoices = self.Horde_PerkChoices or {}
     self.Horde_PerkChoices[class] = self.Horde_PerkChoices[class] or {}
-    
+
     for perk_level, v in pairs(perks) do
         if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then goto cont end
         local c = math.min(2, math.max(1, self.Horde_PerkChoices[class][perk_level] or 1))
@@ -91,7 +91,7 @@ net.Receive("Horde_PerkChoice", function(len, ply)
         ply:Horde_SetMaxMind(0)
         ply:Horde_SetMind(0)
     end
-    
+
 
     if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(level) then return end
 

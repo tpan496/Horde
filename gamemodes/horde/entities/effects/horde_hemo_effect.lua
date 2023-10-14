@@ -1,4 +1,4 @@
-function EFFECT:Init(data)	
+function EFFECT:Init(data)
 	local Startpos = data:GetStart()
 	local Hitpos = data:GetOrigin()
 

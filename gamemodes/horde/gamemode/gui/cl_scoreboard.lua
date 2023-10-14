@@ -119,9 +119,9 @@ function scoreboard:show()
         panel:SetPlayer(pl)
         panel:Dock(TOP)
         panel:DockMargin(ScrollPanel:GetWide() * 0.01, 2, ScrollPanel:GetWide() * 0.01, 2)
-    
+
         PlayerPanels[pl] = panel
-    
+
         return panel
     end
 

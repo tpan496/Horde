@@ -561,7 +561,7 @@ end
 
 
  -- Super fucky temp!
- -- S H U T  U P    A N D   K E E P  T H E M   P I N N E D  D O W N  
+ -- S H U T  U P    A N D   K E E P  T H E M   P I N N E D  D O W N
 
 -- notverycreativenowarewe
 local nvcnaw = 7

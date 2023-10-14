@@ -276,7 +276,7 @@ if SERVER then
     end
 
     SyncClasses()
-    
+
     net.Receive("Horde_SetClassData", function (len, ply)
         if not ply:IsSuperAdmin() then return end
         HORDE.classes = net.ReadTable()
@@ -298,7 +298,7 @@ if SERVER then
         ply:Horde_ApplyPerksForClass()
         ply:Horde_SyncEconomy()
     end)
-    
+
     net.Receive("Horde_UnlockSubclass", function (len, ply)
         local subclass_name = net.ReadString()
         local subclass = HORDE.subclasses[subclass_name]
@@ -314,7 +314,7 @@ if SERVER then
             ply:Horde_AddSkullTokens(-cost)
             ply:Horde_SetSubclassUnlocked(subclass_name, true)
             ply:Horde_SyncEconomy()
-            
+
             HORDE:SendNotification("You unlocked " .. subclass.PrintName .. " subclass.", 0, ply)
         end
     end)
@@ -491,7 +491,7 @@ function HORDE:SaveSubclassUnlocks(ply)
         f:WriteULong(HORDE.subclass_name_to_crc[subclass_name])
         f:WriteBool(status)
     end
-    
+
     f:Close()
 end
 

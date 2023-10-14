@@ -64,7 +64,7 @@ PERK.Hooks.PlayerSwitchFlashlight = function (ply, switchOn)
             net.WriteUInt(HORDE.Status_Frenzy_Mode, 8)
             net.WriteUInt(0, 8)
         net.Send(ply)
-        ply.Horde_In_Frenzy_Mode = nil 
+        ply.Horde_In_Frenzy_Mode = nil
         ply:ScreenFade(SCREENFADE.PURGE, Color(200, 112, 121, 0), 0.1, 0.1)
     end
 end

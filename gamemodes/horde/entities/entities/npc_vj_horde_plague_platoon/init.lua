@@ -42,7 +42,7 @@ function ENT:CustomOnInitialize()
 			self.MiniBoss1:SetMaxHealth(self:GetMaxHealth() * 0.3)
 			self.MiniBoss1:SetHealth(self.MiniBoss1:GetMaxHealth())
 		end)
-		
+
 		self.MiniBoss1.DisableCritical = true
 
 		self.MiniBoss2 = ents.Create("npc_vj_horde_platoon_berserker")

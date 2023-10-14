@@ -59,7 +59,7 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
                 -- Cap bullshit physics damage that can sometimes occur
                 dmg:SetDamage(math.min(dmg:GetDamage(),20))
             end
-            
+
             if HORDE.endless == 1 then
                 dmg:ScaleDamage(difficulty_damage_multiplier[HORDE.difficulty] * HORDE.endless_damage_multiplier)
             else
@@ -83,7 +83,7 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             if dmg:GetAttacker():GetClass() == "npc_headcrab_poison" then
                 dmg:SetDamage(math.min(dmg:GetDamage(), difficulty_poison_headcrab_damage[HORDE.difficulty]))
             end
-            
+
             if target:GetClass() == "npc_turret_floor" then
                 dmg:SetDamageForce(Vector(0,0,0))
                 target:SetHealth(target:Health() - dmg:GetDamage())

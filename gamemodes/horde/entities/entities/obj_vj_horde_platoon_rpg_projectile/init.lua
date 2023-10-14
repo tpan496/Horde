@@ -62,7 +62,7 @@ function ENT:CustomOnInitialize()
 	//ParticleEffectAttach("vj_rpg2_smoke2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 	//ParticleEffectAttach("rocket_smoke", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 	//ParticleEffectAttach("smoke_burning_engine_01", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	
+
 	/*self.StartLight1 = ents.Create("light_dynamic")
 	self.StartLight1:SetKeyValue("brightness", "1")
 	self.StartLight1:SetKeyValue("distance", "200")
@@ -81,7 +81,7 @@ local defAngle = Angle(0, 0, 0)
 function ENT:DeathEffects(data, phys)
 	util.ScreenShake(data.HitPos, 16, 200, 1, 3000)
 	ParticleEffect("vj_explosion3", self:GetPos(), defAngle, nil)
-	
+
 	local effectData = EffectData()
 	effectData:SetOrigin(data.HitPos)
 	//effectData:SetScale(500)

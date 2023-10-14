@@ -179,7 +179,7 @@ local function Render(bdepth, bskybox)
             surface.SetDrawColor(HORDE.Rank_Colors[rank])
             local pos = - 64 - len - 20
             surface.DrawTexturedRect(pos, -64 / 2, 64, 64)
-            
+
             if rank == HORDE.Rank_Master then
                 draw.SimpleText(rank_level, "Trebuchet24", pos - 5, -32 + 15, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                 draw.SimpleText(loc_class, "Icon", len + 8, 0, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -235,7 +235,7 @@ local function Render(bdepth, bskybox)
         local render_ang = EyeAngles()
         render_ang:RotateAroundAxis(render_ang:Right(),90)
         render_ang:RotateAroundAxis(-render_ang:Up(),90)
-        
+
         for id, param in pairs(hold_zones) do
             cam.IgnoreZ(true)
             cam.Start3D2D(param.IndicatorPos, render_ang, 0.35)

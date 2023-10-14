@@ -18,7 +18,7 @@ PERK.Hooks.Horde_OnSpellFire = function (ply, wpn, stage, spell)
         local o = ply:GetPos() + Vector(0,0,24)
         util.BlastDamageInfo(dmg, o, r)
 
-        
+
         local e = EffectData()
             e:SetOrigin(o)
             e:SetRadius(r)

@@ -114,7 +114,7 @@ function SWEP:SecondaryAttack()
 		elseif ent:GetClass() == "npc_vj_horde_antlion" then
 			HORDE:OnAntlionHeal(ent, healinfo)
 		end
-        
+
 		ent:EmitSound( HealSound )
 
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )

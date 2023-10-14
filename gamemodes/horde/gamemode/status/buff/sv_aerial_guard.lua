@@ -52,7 +52,7 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_AerialGuardDamageTaken", function (
         else
             e:SetOrigin(ply:GetPos() + Vector(0,0,30))
         end
-            
+
         util.Effect("horde_aerial_parry", e, true, true)
         if not silent then
             sound.Play("horde/gadgets/guard" .. tostring(math.random(1,2)) ..".ogg", ply:GetPos(), 125, 100, 1, CHAN_AUTO)

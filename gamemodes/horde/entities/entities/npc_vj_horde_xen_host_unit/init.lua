@@ -153,7 +153,7 @@ function ENT:CustomOnThink_AIEnabled()
 			bCrab:SetOwner(self)
 			self.Gonarch_NumBabies = self.Gonarch_NumBabies + 1
 		end
-		
+
 
 		self.Gonarch_NextBirthT = CurTime() + 15
 	end

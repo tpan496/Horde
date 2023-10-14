@@ -9,7 +9,7 @@ SWEP.Instructions = "Controls are like a regular weapon."
 SWEP.Category = "VJ Base"
 	-- Client Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
-SWEP.Slot = 2 -- Which weapon slot you want your SWEP to be in? (1 2 3 4 5 6) 
+SWEP.Slot = 2 -- Which weapon slot you want your SWEP to be in? (1 2 3 4 5 6)
 SWEP.SlotPos = 4 -- Which part of that slot do you want the SWEP to be in? (1 2 3 4 5 6)
 SWEP.UseHands = true
 end
@@ -112,7 +112,7 @@ function SWEP:NPCShoot_Primary()
 	if owner.IsVJBaseSNPC == true then
 		owner:DoPoseParameterLooking()
 	end
-	
+
 	-- Secondary Fire
 	if self.NPC_HasSecondaryFire == true && owner.CanUseSecondaryOnWeaponAttack && !self.NPC_SecondaryFirePerforming && CurTime() > self.NPC_SecondaryFireNextT && ene:GetPos():Distance(owner:GetPos()) <= self.NPC_SecondaryFireDistance then
 		if math.random(1, self.NPC_SecondaryFireChance) == 1 then
@@ -137,7 +137,7 @@ function SWEP:NPCShoot_Primary()
 			self.NPC_SecondaryFireNextT = CurTime() + math.Rand(self.NPC_SecondaryFireNext.a, self.NPC_SecondaryFireNext.b)
 		end
 	end
-	
+
 	-- Primary Fire
 	timer.Simple(self.NPC_TimeUntilFire, function()
 		if IsValid(self) && IsValid(owner) && self:NPCAbleToShoot() == true && CurTime() > self.NPC_NextPrimaryFireT then
@@ -164,7 +164,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	bullet.TracerWidth = 20
 	bullet:Spawn()
 	bullet.DirectDamage = 8
-	
+
 	local phy = bullet:GetPhysicsObject()
 	if phy:IsValid() then
 		local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())

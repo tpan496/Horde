@@ -23,7 +23,7 @@ function ENT:Initialize()
 
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     self:SetColor(Color(0,0,0,0))
-	
+
 	self.delayRemove = CurTime() + 60
 	if self:GetScale() > 1 then self.deploy = CurTime() +0.2 end
 
@@ -101,7 +101,7 @@ function ENT:PhysicsCollide(data, physobj)
         self:GetPhysicsObject():EnableMotion(false)
         self:EmitSound("npc/stalker/laser_burn.wav")
     end
-    
+
     timer.Simple(1, function ()
         if !IsValid(self) or !IsValid(self.entOwner) then return end
         if IsValid(ent) && (ent:IsPlayer() || ent:IsNPC()) then

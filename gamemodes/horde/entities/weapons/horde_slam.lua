@@ -43,7 +43,7 @@ function SWEP:PrimaryAttack()
 		if not self.Owner.Horde_Slams then
 			self.Owner.Horde_Slams = HORDE.Queue:Create()
 		end
-		
+
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 		self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
         --self.Owner:SetAmmo(math.min(10, self.Owner:GetAmmoCount("slam")), "slam")

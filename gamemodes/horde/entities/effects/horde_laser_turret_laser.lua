@@ -10,7 +10,7 @@ function EFFECT:Init( data )
     self.Alpha = 255
     self.FlashA = 255
 end
-    
+
 function EFFECT:Think()
     self.StartPos = self:GetTracerShootPos( self.Position, self.WeaponEnt, self.Attachment )
     self.FlashA = self.FlashA - 1000 * FrameTime()

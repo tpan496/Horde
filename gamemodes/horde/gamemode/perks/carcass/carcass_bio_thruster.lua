@@ -20,7 +20,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         net.Start("Horde_SyncStatus")
 			net.WriteUInt(HORDE.Status_Bio_Thruster, 8)
 			net.WriteUInt(ply.Horde_Bio_Thruster_Stack, 8)
-		net.Send(ply) 
+		net.Send(ply)
         timer.Create("Horde_BioThrusterDegen" .. id, 3, 0, function ()
             if !ply:IsValid() then timer.Remove("Horde_BioThrusterDegen" .. id) end
             if !ply:Alive() then return end

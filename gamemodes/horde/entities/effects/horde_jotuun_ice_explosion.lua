@@ -58,27 +58,27 @@ function EFFECT:Init(effectdata)
 
 	emitter:Finish() emitter = nil collectgarbage("step", 64)
 	emitter2:Finish() emitter2 = nil collectgarbage("step", 64)
-    
+
     if CLIENT then return end
     for i = 1, math.random(5,10) do
 		local debris = ents.Create("base_gmodentity")
 		local mat = "debris/debris" .. tostring(math.random(1, 4))
-		
+
 		debris:SetPos(self:GetPos())
 		debris:SetAngles(VectorRand():Angle())
 		debris:SetModel("models/props_junk/rock001a.mdl")
 		debris:SetCollisionGroup(COLLISION_GROUP_WORLD)
 		debris:PhysicsInit(SOLID_VPHYSICS)
         debris:SetModelScale(1)
-		
+
 		local physobj = debris:GetPhysicsObject()
 		local force = 1000
-		
+
 		physobj:AddVelocity(Vector(math.random(-force, force), math.random(-force, force), math.random(-force, force)))
 		physobj:AddAngleVelocity(Vector(math.random(-force, force), math.random(-force, force), math.random(-force, force)))
-		
+
 		timer.Simple(3, function()
-		
+
 			if IsValid(debris) then
 				local effect = EffectData()
 				local debrisPos = debris:GetPos()

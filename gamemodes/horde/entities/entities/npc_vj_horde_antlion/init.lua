@@ -39,7 +39,7 @@ ENT.FootStepTimeWalk = 0.4
 ENT.HasLeapAttack = false
 ENT.AnimTbl_LeapAttack = {ACT_JUMP}
 ENT.StopLeapAttackAfterFirstHit = true
-ENT.LeapAttackAnimationDelay = 0 
+ENT.LeapAttackAnimationDelay = 0
 ENT.LeapDistance = 2000 -- The distance of the leap, for example if it is set to 500, when the SNPC is 500 Unit away, it will jump
 ENT.LeapToMeleeDistance = 10 -- How close does it have to be until it uses melee?
 ENT.TimeUntilLeapAttackDamage = 1 -- How much time until it runs the leap damage code?
@@ -101,7 +101,7 @@ function ENT:CustomOnInitialize()
 	self.LastPulse = CurTime()
 	self.Owner = self:GetNWEntity("HordeOwner")
 	self:Follow(self.Owner)
-	self.level = self.properties.level 
+	self.level = self.properties.level
 	self:SetMaxHealth(self.Base_Health + self.level * 5)
 	self:SetModelScale(0.5)
 	self:SetHealth(self:GetMaxHealth())

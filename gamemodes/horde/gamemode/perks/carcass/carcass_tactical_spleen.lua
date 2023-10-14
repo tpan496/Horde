@@ -16,7 +16,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         ply:Horde_AddTacticalSpleen()
     end
 end
- 
+
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "carcass_tactical_spleen" then
         ply:Horde_SetTacticalSpleenEnabled(nil)

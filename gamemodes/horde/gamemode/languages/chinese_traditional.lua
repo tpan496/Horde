@@ -195,8 +195,8 @@ LANGUAGE["Infusion_Description_Quicksilver"] = [[
 玩家身上的裝備越少，傷害提升越高。
 
 <= 15% 負重 -> 30% 傷害提升
-<= 30% 負重 -> 25% 傷害提升 
-<= 40% 負重 -> 15% 傷害提升 
+<= 30% 負重 -> 25% 傷害提升
+<= 40% 負重 -> 15% 傷害提升
   >40% 負重 -> 25% 傷害減少
 ]]
 LANGUAGE["Infusion_Description_Titanium"] = [[

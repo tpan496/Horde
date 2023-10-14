@@ -69,7 +69,7 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
             end
         })
     end
-    
+
     local level = ply:Horde_GetSpellUpgrade("solar_storm")
     local bonus = {increase = 0, more = 1}
 	hook.Run("Horde_OnPlayerSpellDamage", ply, bonus)

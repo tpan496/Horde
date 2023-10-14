@@ -144,7 +144,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
 
         if self.Horde_Debuff_Buildup[debuff] < threshold then return end
     end
-    
+
     if HORDE.Status_Trigger_Sounds[debuff] then
         sound.Play(HORDE.Status_Trigger_Sounds[debuff], self:GetPos())
     end
@@ -158,7 +158,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
             end
             return
         end
-        
+
         local duration = 5 + HORDE.difficulty_status_duration_bonus[HORDE.difficulty]
         local str = "Horde_Remove_" .. tostring(debuff) .. "_" .. self:SteamID()
         timer.Remove(str)
@@ -256,7 +256,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
         self.Horde_Debuff_Active[debuff] = true
 
         hook.Run("Horde_PostEnemyDebuffApply", self, inflictor, debuff, pos)
-    end 
+    end
 end
 
 function entmeta:Horde_RemoveDebuff(debuff)

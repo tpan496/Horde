@@ -79,7 +79,7 @@ function PANEL:DoClick()
                 "No", function() end
             )
     end
-    
+
     --[[MySelf.Horde_PerkChoices = MySelf.Horde_PerkChoices or {}
     MySelf.Horde_PerkChoices[self.info.class] = MySelf.Horde_PerkChoices[self.info.class] or {}
     MySelf.Horde_PerkChoices[self.info.class][self.info.perk_level] = self.info.choice

@@ -10,7 +10,7 @@ function EFFECT:Init(data)
 	local radius = data:GetRadius()
 	local Emitter = ParticleEmitter(self.Pos)
 	if Emitter == nil then return end
-	
+
 	-- Fire
 	for _ = 1, 3 do
 		local EffectCode = Emitter:Add("particles/flamelet1",self.Pos)

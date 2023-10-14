@@ -93,7 +93,7 @@ function ENT:Detonate(data)
                         data.HitEntity:TakeDamageInfo(dmg)
                     end
                 end
-                
+
                 if data.HitEntity:IsNPC() and HORDE:IsEnemy(data.HitEntity) then
                     data.HitEntity:Horde_SetIgniteDamage(2)
                 end
