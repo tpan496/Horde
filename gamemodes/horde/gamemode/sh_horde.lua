@@ -38,7 +38,7 @@ CreateConVar("horde_perk_start_wave", 1, FCVAR_REPLICATED, "The wave when Tier 1
 CreateConVar("horde_perk_scaling", 2, FCVAR_REPLICATED, "The multiplier to the level for which wave it is unlocked. e.g. at 1.5, perk level 4 is unlocked at start_wave + 6.", 0)
 
 CreateConVar("horde_enable_starter", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Enables starter weapons.")
-CreateConVar("horde_arccw_attinv_free", 1, FCVAR_REPLICATED, "Free ArcCW attachments.")
+CreateConVar("horde_arccw_attinv_free", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Free ArcCW attachments.")
 
 CreateConVar("horde_ready_countdown_ratio", 0.5, nil, "Ratio of players required to start the 60 second countdown (0-1).")
 
