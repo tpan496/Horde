@@ -15,7 +15,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         ply:Horde_AddForesight()
     end
 end
- 
+
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "samurai_foresight" then
         ply:Horde_SetForesightEnabled(nil)

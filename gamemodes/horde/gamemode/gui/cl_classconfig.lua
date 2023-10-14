@@ -181,7 +181,7 @@ function PANEL:Init()
 
         local icon = nil
         if icon_editor:GetValue() ~= "" then icon = icon_editor:GetValue() end
-        
+
         local base_perk = nil
         if perks0_editor:GetValue() ~= "" then base_perk = perks0_editor:GetValue() end
 
@@ -205,7 +205,7 @@ function PANEL:Init()
 
         local perk3title = nil
         if perks3_editors.editor_title:GetValue() ~= "" then perk3title = perks3_editors.editor_title:GetValue() end
-    
+
         local perk3l = nil
         if perks3_editors.editor_left:GetValue() ~= "" then perk3l = perks3_editors.editor_left:GetValue() end
 
@@ -214,13 +214,13 @@ function PANEL:Init()
 
         local perk4title = nil
         if perks4_editors.editor_title:GetValue() ~= "" then perk4title = perks4_editors.editor_title:GetValue() end
-    
+
         local perk4l = nil
         if perks4_editors.editor_left:GetValue() ~= "" then perk4l = perks4_editors.editor_left:GetValue() end
 
         local perk4r = nil
         if perks4_editors.editor_right:GetValue() ~= "" then perk4r = perks4_editors.editor_right:GetValue() end
-        
+
         if name and HORDE.classes[name] then
             HORDE.classes[name].display_name = display_name_editor:GetValue()
             HORDE.classes[name].extra_description = description_editor:GetValue()

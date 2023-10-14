@@ -39,7 +39,7 @@ SPELL.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
         else
             e:SetOrigin(ply:GetPos() + Vector(0,0,30))
         end
-            
+
         util.Effect("horde_static_guard", e, true, true)
         if dmginfo:GetAttacker() then
             local ent = dmginfo:GetAttacker()

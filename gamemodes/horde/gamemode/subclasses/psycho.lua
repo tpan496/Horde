@@ -11,4 +11,4 @@ SUBCLASS.Perks = {
     [2] = {title = "Sadism", choices = {"psycho_bloodbath", "psycho_disembowel"}},
     [3] = {title = "Fatality", choices = {"psycho_skewering", "psycho_brutality"}},
     [4] = {title = "Psychosis", choices = {"psycho_grudge", "psycho_bestial_wrath"}},
-} -- Required 
+} -- Required

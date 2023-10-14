@@ -9,7 +9,7 @@ SWEP.Instructions = "Controls are like a regular weapon."
 SWEP.Category = "VJ Base"
 	-- Client Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
-	SWEP.Slot = 3 -- Which weapon slot you want your SWEP to be in? (1 2 3 4 5 6) 
+	SWEP.Slot = 3 -- Which weapon slot you want your SWEP to be in? (1 2 3 4 5 6)
 	SWEP.SlotPos = 4 -- Which part of that slot do you want the SWEP to be in? (1 2 3 4 5 6)
 	SWEP.UseHands = true
 end
@@ -74,7 +74,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 		bullet:Activate()
 		bullet:Spawn()
 		bullet.DirectDamage = 4
-		
+
 		local phy = bullet:GetPhysicsObject()
 		if phy:IsValid() then
 			local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
@@ -84,7 +84,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 			phy:ApplyForceCenter(dir * 4000)
 		end
 	end
-	
+
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ function SWEP:CustomOnSecondaryAttack()
 	self.Primary.TakeAmmo = 1
 	self.NextIdle_PrimaryAttack = 0.8
 	self.AnimTbl_PrimaryFire = {ACT_VM_PRIMARYATTACK}
-	
+
 	self:SetNextSecondaryFire(CurTime() + 1)
 	return false
 end

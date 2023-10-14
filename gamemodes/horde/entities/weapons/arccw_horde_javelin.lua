@@ -243,7 +243,7 @@ function SWEP:Hook_Think()
         })
         if CLIENT then
             local trdistanceraw = tostring( self.Owner:GetPos( ):Distance( tr.HitPos ) )
-		    local trdistance =  math.Clamp( math.Round( trdistanceraw ), 0, 10000 )  
+		    local trdistance =  math.Clamp( math.Round( trdistanceraw ), 0, 10000 )
             self.trdistance = trdistance
         end
 
@@ -256,7 +256,7 @@ function SWEP:Hook_Think()
                 self:EmitSound(self.LockSound)
             end
         end
-		
+
 		if( tr.Hit ) then
 			local ent = tr.Entity
 			if IsValid(ent) and ent:IsNPC() and (not ent:IsPlayer()) and (not ent:GetNWEntity("HordeOwner"):IsValid()) then
@@ -395,14 +395,14 @@ function SWEP:Hook_DrawHUD()
             DrawJavelinIcon("TOP", ScrW() * 0.79, ScrH() * 0.3, Color(0, 255, 0))
             DrawJavelinIcon("DIR", ScrW() * 0.79, ScrH() * 0.5, Color( 13, 173, 13, 50 ))
         end
-		
+
 		DrawJavelinIcon("WFOV", ScrW() * 0.4, ScrH() * 0.15, Color(0, 255, 0))
 		DrawJavelinIcon("HANG\nFIRE", ScrW() * 0.43, ScrH() * 0.85, Color( 13, 173, 13, 50 ))
 		DrawJavelinIcon("NFOW", ScrW() * 0.6, ScrH() * 0.15, Color( 13, 173, 13, 50 ))
         DrawJavelinIcon("DAY",  ScrW() * 0.3, ScrH() * 0.15, Color( 13, 173, 13, 50 ))
         DrawJavelinIcon("NIGHT",ScrW() * 0.2075, ScrH() * 0.3, Color( 13, 173, 13, 50 ))
         DrawJavelinIcon("BCU",  ScrW() * 0.3, ScrH() * 0.85, Color(0, 255, 0))
-        
+
         if self:Clip1() > 0 then
             DrawJavelinIcon("EMPTY", ScrW() * 0.7, ScrH() * 0.85, Color(100, 0, 0))
             DrawJavelinIcon("READY", ScrW() * 0.6, ScrH() * 0.85, Color(0, 255, 0))
@@ -411,9 +411,9 @@ function SWEP:Hook_DrawHUD()
             DrawJavelinIcon("READY", ScrW() * 0.6, ScrH() * 0.85, Color( 13, 173, 13, 50 ))
         end
 
-        if( LocalPlayer():FlashlightIsOn() ) then 
+        if( LocalPlayer():FlashlightIsOn() ) then
             DrawJavelinIcon("FLIR", ScrW() * 0.79, ScrH() * 0.7, Color( 13, 173, 13, 50 ))
-		else 
+		else
             DrawJavelinIcon("FLIR", ScrW() * 0.79, ScrH() * 0.7, Color( 13, 173, 13, 50 ))
 		end
 	end
@@ -426,7 +426,7 @@ function SWEP:Hook_PostFireRocket(rocket)
     else
         RealVelocity = self:GetOwner():GetAimVector() * 500 + Vector(0,0,1) * 500
     end
-    
+
     rocket.CurVel = RealVelocity -- for non-physical projectiles that move themselves
 
     if !rocket.NoPhys and rocket:GetPhysicsObject():IsValid() then

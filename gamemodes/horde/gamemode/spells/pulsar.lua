@@ -19,10 +19,10 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 		maxs = Vector( 10, 10, 10 ),
 		mask = MASK_SHOT_HULL
 	})
-	
+
 	local ent = ents.Create("projectile_horde_pulsar")
     ent:SetOwner(ply)
-	
+
 	local level = ply:Horde_GetSpellUpgrade("pulsar")
 	ent:SetSpellLevel(level)
 	ent:SetSpellBaseDamages({math.floor(150 + math.pow(level, 1.2) * 50)})

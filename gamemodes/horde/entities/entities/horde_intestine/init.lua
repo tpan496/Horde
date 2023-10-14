@@ -13,7 +13,7 @@ function ENT:Initialize()
 
 	self.Entity:DrawShadow( false )
 	self.Entity:SetSolid( SOLID_NONE )
-	
+
 end
 
 function ENT:Think()

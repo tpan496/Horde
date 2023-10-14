@@ -23,7 +23,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
     timer.Simple(0.5, function ()
         if not ply:IsValid() then return end
         local dmginfo = HORDE:DamageInfo(50, DMG_REMOVENORAGDOLL, ply, wpn)
-        
+
         local hit = nil
         HORDE:ApplyDamageInRadius(pos, 300, dmginfo, function (ent)
             HORDE:SelfHeal(ply, 5)

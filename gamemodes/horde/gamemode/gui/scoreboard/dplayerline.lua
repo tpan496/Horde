@@ -112,7 +112,7 @@ function PANEL:RefreshPlayer()
 
 
 	local subclass_name = HORDE.Class_Survivor
-    if pl:Horde_GetCurrentSubclass() then 
+    if pl:Horde_GetCurrentSubclass() then
 		subclass_name = pl:Horde_GetCurrentSubclass()
 	end
 
@@ -136,7 +136,7 @@ function PANEL:RefreshPlayer()
 	self.m_MoneyLabel:SizeToContents()
 	self.m_MoneyLabel:SetText(pl:Horde_GetMoney().."$")
 	self.m_MoneyLabel:SetColor( color )
-	
+
 	self.m_KillsLabel:SizeToContents()
 	self.m_KillsLabel:SetText(pl:Frags())
 	self.m_KillsLabel:SetColor( color )
@@ -181,11 +181,11 @@ function PANEL:Paint()
 		if self.Hovered then
 			mul = 2
 		end
-	
+
 		colTemp.r = col.r * mul
 		colTemp.g = col.g * mul
 		colTemp.b = col.b * mul
-		
+
 		draw_RoundedBox(0, 0, 0, wide , tall , colTemp)
     end
 
@@ -211,7 +211,7 @@ function PANEL:Paint()
         surface.DrawTexturedRect(wide * 0.215, 2, 38, 38)
         if rank == HORDE.Rank_Master then
             draw.SimpleText(rank_level, "Trebuchet18", wide * 0.2075, 12, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            
+
         else
             if rank_level > 0 then
                 local star = Material("star.png", "mips smooth")
@@ -223,20 +223,20 @@ function PANEL:Paint()
             	end
         	end
         end
-		
+
     end
 
 	local x = wide * 0.36
 	for perk_level, v in SortedPairs(perks) do
 		local color = color_white
-		if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then 
+		if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then
 			color = Color(150,150,150)
 		end
 
 		if not pl.Horde_PerkChoices then
 			break
 		end
-		if (not subclass_name) or (not perk_level) or (not v.choices) then 
+		if (not subclass_name) or (not perk_level) or (not v.choices) then
 			break
 		end
 
@@ -257,7 +257,7 @@ function PANEL:Paint()
 			surface.DrawTexturedRect(x, 2, 35, 35)
 		end
 		x = x + 40
-		
+
 	end
 
     if gadget then

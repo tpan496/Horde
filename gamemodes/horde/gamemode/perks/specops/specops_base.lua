@@ -90,7 +90,7 @@ local function nv_posvisible(pos)
 	if pos.x > ScrW() - 50 then return false end
 	if pos.y < 50 then return false end
 	if pos.y > ScrH() - 50 then return false end
-	
+
 	return true
 end
 
@@ -109,7 +109,7 @@ local function nv_cansee(ent)
 	if trace.Hit then
 		return false
 	end
-	
+
 	return true
 end
 
@@ -148,11 +148,11 @@ PERK.Hooks.HUDPaint = function()
     if not ply.Horde_StatusTable then return end
 	if ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then
 		surface.SetDrawColor(Color(nv_color().r,nv_color().g,nv_color().b,math.random(255)))
-		
+
 		for k, v in pairs(nv_ents()) do
 			--if nv_cansee(v) then
 				local pos = nv_center(v):ToScreen()
-				
+
 				if nv_posvisible(pos) then
                     surface.DrawCircle(pos.x, pos.y, 30)
 					--surface.DrawLine(pos.x, 0, pos.x, ScrH())

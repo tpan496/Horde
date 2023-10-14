@@ -547,7 +547,7 @@ function HORDE:PlayerInit(ply)
         end
         total_player = total_player + 1
     end
-    
+
     if total_player > 0 and total_player == ready_count then
         HORDE.start_game = true
     end
@@ -581,7 +581,7 @@ hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
     end
 
     if not ply:IsValid() then return end
-    
+
     -- Remove all the entities he owns
     if HORDE.player_drop_entities[ply:SteamID()] then
         for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do

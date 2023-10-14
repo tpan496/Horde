@@ -59,14 +59,14 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
     hook.Run("Horde_OnPlayerHeal", ply, healinfo)
     hook.Run("Horde_PostOnPlayerHeal", ply, healinfo)
     if (ply:GetMaxHealth() <= ply:Health()) and (healinfo:GetOverHealPercentage() <= 0) then return end
-    
+
     local healer = healinfo:GetHealer()
     if healer:IsPlayer() and healer:IsValid() then
         local heal_mult = 1
         local curr_weapon = HORDE:GetCurrentWeapon(healer)
         if curr_weapon and curr_weapon:IsValid() and ply.Horde_Infusions then
             local infusion = ply.Horde_Infusions[curr_weapon:GetClass()]
-            
+
             if infusion and infusion == HORDE.Infusion_Rejuvenating then
                 heal_mult = 1.25
             end

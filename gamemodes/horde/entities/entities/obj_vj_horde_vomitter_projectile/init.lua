@@ -64,8 +64,8 @@ function ENT:CustomOnPhysicsCollide(data, phys)
 		end
 	end
 	self:OnCollideSoundCode()
-	if self.PaintDecalOnDeath == true && VJ_PICK(self.DecalTbl_DeathDecals) != false && self.AlreadyPaintedDeathDecal == false then 
-		self.AlreadyPaintedDeathDecal = true 
+	if self.PaintDecalOnDeath == true && VJ_PICK(self.DecalTbl_DeathDecals) != false && self.AlreadyPaintedDeathDecal == false then
+		self.AlreadyPaintedDeathDecal = true
 		util.Decal(VJ_PICK(self.DecalTbl_DeathDecals), data.HitPos + data.HitNormal, data.HitPos - data.HitNormal)
 	end
 	self:SetDeathVariablesTrue(data, phys, true)

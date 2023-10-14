@@ -9,7 +9,7 @@ SWEP.Instructions				= "Controls are like a regular weapon."
 SWEP.Category					= "VJ Base"
 	-- Client Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
-SWEP.Slot						= 2 -- Which weapon slot you want your SWEP to be in? (1 2 3 4 5 6) 
+SWEP.Slot						= 2 -- Which weapon slot you want your SWEP to be in? (1 2 3 4 5 6)
 SWEP.SlotPos					= 4 -- Which part of that slot do you want the SWEP to be in? (1 2 3 4 5 6)
 SWEP.UseHands					= true
 end
@@ -66,8 +66,8 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	elseif self.Owner.Hinder then
 		bullet.Hinder = true
 	end
-	
-	
+
+
 	local phy = bullet:GetPhysicsObject()
 	if phy:IsValid() then
 		dir:Normalize()

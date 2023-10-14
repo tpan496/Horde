@@ -67,7 +67,7 @@ function ENT:PhysicsCollide(data, physobj)
         if data.HitEntity:IsWorld() then
             self:SetMoveType(MOVETYPE_NONE)
         end
-        
+
     end
 end
 

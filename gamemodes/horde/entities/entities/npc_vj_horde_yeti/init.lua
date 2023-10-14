@@ -89,7 +89,7 @@ function ENT:CustomOnThink()
 						dmg:SetDamagePosition(ent:GetPos())
 					end
 				end
-	
+
 				self.NextTick = CurTime() + 0.5
 				local e = EffectData()
 					e:SetOrigin(self:GetPos())

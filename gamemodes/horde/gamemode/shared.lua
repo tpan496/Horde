@@ -56,7 +56,7 @@ end
 function GM:PlayerLoadout(ply) return true end
 
 if CLIENT then
-    AllowSandbox = false -- removed local so you can use this variable anywhere, if it's needed then add it back 
+    AllowSandbox = false -- removed local so you can use this variable anywhere, if it's needed then add it back
 
     net.Receive("Horde_SyncSBox", function()
         AllowSandbox = net.ReadBool()

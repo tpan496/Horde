@@ -1,7 +1,7 @@
 PERK.PrintName = "Samurai Base"
 PERK.Description =
 [[COMPLEXITY: HIGH
-    
+
 Inflicts Bleeding buildup by {1} of base Melee damage. ({2} + {3} per level, up to {4}).
 {5} increased Global damage resistance. ({6} per level, up to {7}).
 
@@ -65,7 +65,7 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
         max_charges = max_charges + 1
     end
     ply:Horde_SetPerkCharges(ply:Horde_GetPerkCharges() - 1)
-    
+
     timer.Remove("Horde_Demonstomp_Charge_recovery" .. id)
     timer.Create("Horde_Demonstomp_Charge_recovery" .. id, 3, 0, function ()
         if !ply:IsValid() or (not ply:Horde_GetPerk("samurai_base")) then timer.Remove("Horde_Demonstomp_Charge_recovery" .. id) return end

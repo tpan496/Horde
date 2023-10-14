@@ -144,7 +144,7 @@ end
 function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_detoxifier", 1500, 0, nil, {Medic=4})
     HORDE:CreateGadgetItem("gadget_heat_plating", 1500, 0, nil, {Cremator=4})
-    HORDE:CreateGadgetItem("gadget_arctic_plating", 1500, 0, nil) 
+    HORDE:CreateGadgetItem("gadget_arctic_plating", 1500, 0, nil)
     HORDE:CreateGadgetItem("gadget_shock_plating", 1500, 0, nil, {Warden=4})
     HORDE:CreateGadgetItem("gadget_blast_plating", 1500, 0, nil, {Demolition=4})
     HORDE:CreateGadgetItem("gadget_diamond_plating", 1750, 0, nil, {Berserker=3,Heavy=3})
@@ -305,7 +305,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_tavor"].infusions = ballistic_infusions_rifles
     HORDE.items["arccw_horde_scarl"].infusions = ballistic_infusions_rifles
     HORDE.items["arccw_horde_ar2"].infusions = ballistic_infusions_rifles
-    
+
     local ballistic_infusions_sniper_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_winchester"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
     HORDE.items["arccw_horde_m200"].infusions = ballistic_infusions_sniper_rifles
@@ -320,7 +320,7 @@ function HORDE:GetDefaultItemInfusions()
 
     HORDE.items["arccw_horde_medic_rifle"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_m16m203"].infusions = ballistic_infusions_rifles
-  
+
     local ballistic_infusions_mg_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Titanium, HORDE.Infusion_Siphoning}
     -- MG
     HORDE.items["arccw_horde_negev"].infusions = ballistic_infusions_mg_rifles
@@ -498,7 +498,7 @@ function HORDE:GetDefaultItemsData()
     {Ghost=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3500, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
     {Ghost=true}, 50, -1, nil, nil, {Ghost=5}, nil, {HORDE.DMG_BALLISTIC})
-    
+
     HORDE:CreateItem("Rifle",      "Apollo",         "arccw_horde_apollo",  3000, 8, "Apollo incineration rifle.\nFires energy pellets that melt down enemies.",
     {Cremator=true}, 50, -1, nil, nil, {Cremator=5}, nil, {HORDE.DMG_FIRE})
 
@@ -570,7 +570,7 @@ function HORDE:GetDefaultItemsData()
     {Demolition=true}, 15, -1, nil, nil, {Demolition=5}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     --HORDE:CreateItem("Explosive",  "Thermite",       "arccw_horde_nade_incendiary",   1500,   1, "Generates a pool of fire after some delay.\nSets everything on fire within its effect.",
     --{Cremator=true}, 100, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE})
-    
+
 
     HORDE:CreateItem("Special",    "Welder",         "horde_welder",         100,  2, "Engineering welder.\nDamages enemies and heals minions.",
     {Engineer=true}, 50, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, nil, {"Engineer"})
@@ -595,7 +595,7 @@ function HORDE:GetDefaultItemsData()
     {Engineer=true}, 2, -1, nil, nil, {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Spore Launcher", "horde_spore_launcher",2500,  7, "Improvised biological weapon.\nShoots out acidic projectiles that explodes after a short delay.\nHeals players and damages enemies.",
     {Medic=true, Survivor=true}, 40, -1, nil, nil, {Medic=2, Survivor=2}, nil, {HORDE.DMG_POISON})
-    
+
     HORDE:CreateItem("Special",    "Watchtower",      "horde_watchtower",        800,  1, "A watchtower that provides resupply.\nGenerates 1 ammobox every 30 seconds.\n(Entity Class: horde_watchtower)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png")
     HORDE:CreateItem("Special",    "Watchtower MKII",  "horde_watchtower_mk2",  1000,  2, "A watchtower that provides resupply.\nGenerates 1 health vial every 30 seconds.\n(Entity Class: horde_watchtower_mk2)",
@@ -608,7 +608,7 @@ function HORDE:GetDefaultItemsData()
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png", {Warden=4}, nil, {HORDE.DMG_BLAST})
     HORDE:CreateItem("Special",    "Watchtower Type-Guardian",  "horde_watchtower_guardian", 2000,  4, "A watchtower that provides armor regeneration in an area.\nArmor regeneration does not stack with itself.\n(Entity Class: horde_watchtower_guardian)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png", {Warden=5}, nil, nil)
-    
+
     HORDE:CreateItem("Special",    "Heat Crossbow",  "arccw_horde_heat_crossbow", 1750,  4, "Improvised sniper weapon.\nHas two firemodes (Ballistic/Impact).\n\nDeals 300% headshot damage.",
     {Survivor=true, Ghost=true}, 2, -1, nil, "items/hl2/weapon_crossbow.png", nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",            2500,  8, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
@@ -641,7 +641,7 @@ function HORDE:GetDefaultItemsData()
     [[Only usable by Carcass subclass!
     Advanced combat biosystem that completely screws up the appearance of its user.
     Leaves behind an unpleasant stench.
-    
+
     LMB: Punch.
     Hold for a charged punch that deals increased damage in an area.]],
     {Heavy=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_PHYSICAL}, nil, {"Carcass"}, true)
@@ -649,7 +649,7 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Special",    "Pheropod",   "horde_pheropod",   0,  11,
     [[Only usable by Hatcher subclass!
     Pheropods that can hatch and control alien Antlions.
-    
+
     LMB: Throw Pod
     Throws a Pheropod at the target, forcing the Antlions to perform range attacks at the target.
     Pods can also heal Antlion for 5% health.
@@ -698,7 +698,7 @@ function HORDE:GetDefaultItemsData()
     {Cremator=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=100}, "items/armor_cremator.png", {Cremator=30}, 1)
     HORDE:CreateItem("Equipment", "Battle Vest", "armor_berserker", 1000, 0, "Distinguished Berserker armor.\n\nFills up 100% of your armor bar.\nProvides 8% increased Slashing/Blunt damage resistance.",
     {Berserker=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_ARMOR, armor=100}, "items/armor_berserker.png", {Berserker=30}, 1)
-    
+
 
     HORDE:GetDefaultGadgets()
     HORDE:GetDefaultItemInfusions()
@@ -757,13 +757,13 @@ HORDE.GetArcCWAttachments = function ()
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
     HORDE:CreateItem("Attachment", "PM-II (7x)",   "go_optic_schmidt",  130,  0, "RDS",
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
-    
+
     HORDE:CreateItem("Attachment", "LPVO (8x)",   "go_optic_ssr",  140,  0, "RDS",
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
-    
+
     HORDE:CreateItem("Attachment", "Arctic Warfare (10x)",   "go_optic_awp",  140,  0, "RDS",
     {Ghost=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Optic"})
-    
+
     -- Underbarrel
     HORDE:CreateItem("Attachment", "Pistol Foregrip",   "go_nova_stock_pistol",  90,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Underbarrel"})
@@ -920,7 +920,7 @@ HORDE.GetArcCWAttachments = function ()
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_tec9"})
     HORDE:CreateItem("Attachment", "[Tec-9] 32-Round 9mm",   "go_tec9_mag_32",  80,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_tec9"})
-    
+
     HORDE:CreateItem("Attachment", "[MP9] 15-Round 9mm",   "go_mp9_mag_15",  90,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_mp9m"})
     HORDE:CreateItem("Attachment", "[MAC10] 16-Round .45 Ingram",   "go_mac10_mag_16",  90,  0, "",

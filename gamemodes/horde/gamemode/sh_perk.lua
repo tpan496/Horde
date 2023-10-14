@@ -165,15 +165,15 @@ local function Horde_LoadPerks()
             if PERK.Ignore then goto cont end
             PERK.ClassName = string.lower(PERK.ClassName or string.Explode(".", f)[1])
             PERK.SortOrder = PERK.SortOrder or 0
-    
+
             hook.Run("Horde_OnLoadPerk", PERK)
-    
+
             HORDE.perks[PERK.ClassName] = PERK
-    
+
             for k, v in pairs(PERK.Hooks or {}) do
                 hook.Add(k, "horde_perk_" .. PERK.ClassName, v)
             end
-    
+
             if dev then print("[Horde] Loaded perk '" .. PERK.ClassName .. "'.") end
             ::cont::
         end
@@ -191,13 +191,13 @@ if game.SinglePlayer() then
             ply:ConCommand("horde_use_perk_skill")
         end
     end)
-    
+
     hook.Add("PlayerButtonDown", "Horde_UseKeyAndShift2", function(ply, key)
         if (key == KEY_LSHIFT) then
             ply.Horde_In_LShift = true
         end
     end)
-    
+
     hook.Add("PlayerButtonUp", "Horde_UseKeyAndShift3", function(ply, key)
         if (key == KEY_LSHIFT) then
             ply.Horde_In_LShift = nil

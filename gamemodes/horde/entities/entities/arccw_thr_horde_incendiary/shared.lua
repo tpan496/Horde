@@ -228,7 +228,7 @@ function ENT:Think()
                 else
                     fire:SetColor( 255, 255, 255 )
                 end
-                
+
                 fire:SetAirResistance( 50 )
                 fire:SetPos( self:GetPos() )
                 fire:SetLighting( false )
@@ -367,7 +367,7 @@ function ENT:Draw()
         if !self:GetArmed() then return end
 
         cam.Start3D() -- Start the 3D function so we can draw onto the screen.
-            
+
             if self.has_burner then
                 render.SetMaterial( mat ) -- Tell render what material we want, in this case the flash from the gravgun
                 render.DrawSprite( self:GetPos(), math.random(400, 500), math.random(400, 500), Color(0, 130, 255) ) -- Draw the sprite in the middle of the map, at 16x16 in it's original colour with full alpha.

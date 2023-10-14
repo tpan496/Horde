@@ -338,7 +338,7 @@ SWEP.Animations = {
 						{s = "weapons/fesiugmw2/unofficial/scarl/magout.wav", 	t = 10/30},
 						{s = "weapons/fesiugmw2/unofficial/scarl/magin.wav", 	t = 40/30},
 						{s = "weapons/fesiugmw2/unofficial/scarl/chamber.wav",		t = 54/30},
-						{s = "weapons/fesiugmw2/unofficial/scarl/chamberforward.wav",		t = 62/30},						
+						{s = "weapons/fesiugmw2/unofficial/scarl/chamberforward.wav",		t = 62/30},
 					},
         LHIK = true,
         LHIKIn = 0.5,

@@ -337,7 +337,7 @@ function ENT:MultipleRangeAttacks()
 				start = start + 150
 			end
 		end)
-		
+
 		self.Garg_NextStompAttackT = CurTime() + 5
 	else
 		self.Garg_AttackType = -1

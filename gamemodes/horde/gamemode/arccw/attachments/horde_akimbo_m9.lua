@@ -156,7 +156,7 @@ att.UBGL_Fire = function(wep, ubgl)
 
 
     wep:SetClip2(wep:Clip2() - 1)
-    
+
     if wep:Clip2() > 0 then
         wep:DoLHIKAnimation("fire", 6/30)
     else

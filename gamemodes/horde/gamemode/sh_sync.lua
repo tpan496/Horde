@@ -98,7 +98,7 @@ function HORDE:SyncToLocal()
 			::cont::
 		end
 	strm:Close()
-	
+
 	HORDE:PlayNotification("Sucessfully synced local data from server.")
 end
 

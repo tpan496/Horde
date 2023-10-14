@@ -57,7 +57,7 @@ function EFFECT:Init(ed)
             flash:SetStartAlpha(radius / 1.2)
             flash:SetEndSize(180)
             flash:SetEndAlpha(0)
-            flash:SetGravity(Vector(0,0,0))		
+            flash:SetGravity(Vector(0,0,0))
         end
 
         local quake = self.Emitter:Add("effects/splashwake3", vOrig)
@@ -71,7 +71,7 @@ function EFFECT:Init(ed)
             quake:SetStartAlpha(200)
             quake:SetEndSize(radius * 1.2)
             quake:SetEndAlpha(0)
-            quake:SetGravity(Vector(0,0,0))		
+            quake:SetGravity(Vector(0,0,0))
         end
 
         local wave = self.Emitter:Add("sprites/heatwave", vOrig)

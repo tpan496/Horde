@@ -47,7 +47,7 @@ hook.Add("PlayerTick", "Horde_HealthRegen", function(ply, mv)
     else
         ply:Horde_AddHealthRegen()
     end
-    
+
     if ply:Horde_GetHealthRegen() == 1 and CurTime() >= ply.Horde_HealthRegenCurTime + 1 then
         ply:SetHealth(math.min(ply:Health() + ply:GetMaxHealth() * ply:Horde_GetHealthRegenPercentage(), ply:GetMaxHealth()))
         ply.Horde_HealthRegenCurTime = CurTime()

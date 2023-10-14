@@ -83,7 +83,7 @@ function SWEP:NegativeBurst()
 	end)
 
 	hook.Run("Horde_OnNetherRelicPostCast", self.Owner, self, 30)
-    
+
 
 	timer.Create("UniqueName1", self.Delay * (1 - 0.08 * self.Owner:Horde_GetIntensityStack()), 1, function() if IsValid(self) then
 		self.Weapon:DefaultReload( ACT_VM_DRAW )
@@ -131,7 +131,7 @@ function SWEP:NetherMine(charged)
 			if ply.Horde_Nether_Mines[1] and ply.Horde_Nether_Mines[1]:IsValid() then
 				ply.Horde_Nether_Mines[1]:Remove()
 			end
-			
+
 			table.remove(ply.Horde_Nether_Mines, 1)
 		end
 	end
@@ -142,7 +142,7 @@ function SWEP:NetherMine(charged)
 	else
 		self.Owner:EmitSound("horde/weapons/nether_relic/solar_orb_charged_launch.ogg", 100, math.random(90, 110))
 	end
-	
+
 	local properties = {dirac_sea = false, coalesce = false, charged = charged, level = self.Owner:Horde_GetUpgrade("horde_astral_relic")}
 	hook.Run("Horde_OnNetherMineLaunch", self.Owner, properties)
 
@@ -156,7 +156,7 @@ function SWEP:NetherMine(charged)
 		speed = 500
 		spread = 0.2
 	end
-	
+
 	for i = 1, total do
 		local ent = ents.Create("projectile_horde_Nether_Mine")
 		ent:SetOwner(self.Owner)
@@ -181,7 +181,7 @@ function SWEP:NetherMine(charged)
 			local spread_xy = spread_x * p + spread_y * p2
 			velocity = velocity + spread_xy
 		end
-		
+
 		velocity:Normalize()
 		velocity = velocity * speed
 		phys:ApplyForceCenter(velocity)
@@ -205,7 +205,7 @@ function SWEP:NetherMine(charged)
 	ply:Horde_SyncStatus(HORDE.Status_Nether_Mine, table.Count(ply.Horde_Nether_Mines))
 
 	hook.Run("Horde_OnNetherRelicPostCast", self.Owner, self, 5)
-	
+
 	timer.Create("UniqueName1", self.Delay * (0.5 - 0.08 * self.Owner:Horde_GetIntensityStack()), 1, function() if IsValid(self) then
             self.Weapon:DefaultReload( ACT_VM_DRAW )
             self.Weapon:SendWeaponAnim(ACT_VM_DRAW)

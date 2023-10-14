@@ -39,7 +39,7 @@ function ENT:CustomOnInitialize()
     self.SpawnTime = CurTime()
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
-    
+
     self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
     self.ExplodeTimer = CurTime() + 2
 
@@ -48,12 +48,12 @@ function ENT:CustomOnInitialize()
     elseif self:GetCharged() == 2 then
         self.ExplodeTimer = self.ExplodeTimer + 0.6
     end
-    
+
     self:SetMaterial("spells/effects/frozen")
     self:SetModelScale(3)
     self.StartTime = CurTime()
     end
-    
+
     ParticleEffectAttach("ice_arrow_trail_3", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 

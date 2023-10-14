@@ -323,7 +323,7 @@ function HORDE:GetDefaultEnemiesData ()
     {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song21.mp3", music_duration=84}, "regenerator")
     HORDE:CreateEnemy("Plague Platoon","npc_vj_horde_plague_platoon",     1,    10, true,  1, 1, 10, 1, nil, nil, nil,
     {is_boss=true, end_wave=true, unlimited_enemies_spawn=true, enemies_spawn_threshold=0.5, music="music/hl1_song24.mp3", music_duration=84}, "none")
-    
+
     HORDE:NormalizeEnemiesWeight()
 
     print("[HORDE] - Loaded default enemy config.")

@@ -9,7 +9,7 @@ function PANEL:Init()
     end
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
 
-    local close_btn = vgui.Create("DButton", self) 
+    local close_btn = vgui.Create("DButton", self)
     close_btn:SetFont("marlett")
     close_btn:SetText("r")
     close_btn.Paint = function() end
@@ -116,7 +116,7 @@ function PANEL:Init()
                 else
                     surface.SetDrawColor(color_white)
                 end
-                
+
                 surface.DrawTexturedRect(w - h - 10, 0, h, h)
             else
                 surface.SetDrawColor(0,0,0,0)
@@ -267,7 +267,7 @@ function PANEL:Init()
         end
 
         ::cont::
-    end    
+    end
 
     -- Class tab
     local ClassTab = vgui.Create("DPanel", self)
@@ -328,7 +328,7 @@ function PANEL:ReloadAttachments(attachments, container, description_panel)
         ShopCategoryTabLayout:SetBorder(8)
         ShopCategoryTabLayout:SetSpaceX(8)
         ShopCategoryTabLayout:SetSpaceY(8)
-        
+
         if attachments[attachment_category] then
             for _, item in pairs(attachments[attachment_category]) do
                 if item.entity_properties.arccw_attachment_wpn then
@@ -359,7 +359,7 @@ local weight_mat = Material("weight.png", "mips smooth")
 function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
-    -- Entire 
+    -- Entire
     if ScrH() < 1080 then
         draw.RoundedBox(0, 0, 0, w, h, Color(40,40,40))
     else
@@ -372,7 +372,7 @@ function PANEL:Paint(w, h)
     surface.SetMaterial(weight_mat)
     surface.SetDrawColor(Color(255,255,255))
     surface.DrawTexturedRect(self:GetWide() - 60, 14, 20, 20)
-    
+
     local text2 = translate.Get("Shop_Cash") .. ": " .. tostring(MySelf:Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(MySelf:Horde_GetSkullTokens())
     text = text2 .. '       ' .. weight_text
     draw.SimpleText(text, 'Heading', self:GetWide() - 60, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)

@@ -5,7 +5,7 @@ ENT.TouchedEntities = {}
 ENT.Removing = nil
 
 function ENT:Horde_SetAuraRadius(radius)
-    
+
 end
 
 function ENT:Initialize()

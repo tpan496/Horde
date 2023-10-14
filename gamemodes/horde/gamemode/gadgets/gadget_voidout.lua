@@ -14,7 +14,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     if ply:Horde_GetGadget() ~= "gadget_voidout" then return end
 
     local ent = util.TraceLine(util.GetPlayerTrace(ply)).Entity
-    
+
     if ent:IsValid() then
         if ent:GetPos():DistToSqr(ply:GetPos()) > 640000 then
             return true

@@ -67,7 +67,7 @@ hook.Add("PlayerTick", "Horde_ArmorRegen", function(ply, mv)
     else
         ply:Horde_AddArmorRegen()
     end
-    
+
     if ply:Horde_GetArmorRegen() == 1 and CurTime() >= ply.Horde_ArmorRegenCurTime + 1 then
         ply:SetArmor(math.min(ply:Armor() + ply:Horde_GetArmorRegenAmount(), ply:GetMaxArmor() * ply:Horde_GetArmorRegenMax()))
         ply.Horde_ArmorRegenCurTime = CurTime()

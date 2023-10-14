@@ -138,21 +138,21 @@ Convert 75% weapon damage into Slashing damage.
 
 Weapon deals only Slashing damage.
 
-Weapon damage increases Bleeding buildup. 
+Weapon damage increases Bleeding buildup.
 ]]
 LANGUAGE["Infusion_Description_Concussive"] = [[
 Convert 75% weapon damage into Blunt damage.
 
 Weapon deals only Blunt damage.
 
-Weapon damage increases Stun buildup. 
+Weapon damage increases Stun buildup.
 ]]
 LANGUAGE["Infusion_Description_Septic"] = [[
 Convert 75% weapon damage into Poison damage.
 
 Weapon deals only Poison damage.
 
-Weapon damage increases Break buildup. 
+Weapon damage increases Break buildup.
 ]]
 LANGUAGE["Infusion_Description_Flaming"] = [[
 Convert 75% weapon damage into Fire damage.
@@ -166,14 +166,14 @@ Convert 75% weapon damage into Cold damage.
 
 Weapon deals only Cold damage.
 
-Weapon damage increases Frostbite buildup. 
+Weapon damage increases Frostbite buildup.
 ]]
 LANGUAGE["Infusion_Description_Galvanizing"] = [[
 Convert 75% weapon damage into Lightning damage.
 
 Weapon deals only Lightning damage.
 
-Weapon damage increases Shock buildup. 
+Weapon damage increases Shock buildup.
 ]]
 LANGUAGE["Infusion_Description_Quality"] = [[
 20% increased weapon damage.
@@ -195,8 +195,8 @@ LANGUAGE["Infusion_Description_Quicksilver"] = [[
 Increases/decreases weapon damage based on player's available weight.
 
 <= 15% weight -> 30% damage increase
-<= 30% weight -> 25% damage increase 
-<= 40% weight -> 15% damage increase 
+<= 30% weight -> 25% damage increase
+<= 40% weight -> 15% damage increase
 >40% weight -> 25% damage decrease
 ]]
 LANGUAGE["Infusion_Description_Titanium"] = [[

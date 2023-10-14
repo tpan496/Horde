@@ -44,7 +44,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         maxs = Vector(16, 16, 8),
         mask = MASK_SHOT_HULL
     })
-    
+
     local ent = tr.Entity
     if HORDE:IsEnemy(ent) then
         local ply_pos = ply:GetPos()

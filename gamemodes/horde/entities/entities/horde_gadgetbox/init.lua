@@ -33,7 +33,7 @@ function ENT:StartTouch(entity)
     and self.Horde_Gadget then
         local weight = HORDE.items[self.Horde_Gadget].weight
         if entity:Horde_GetWeight() < weight then return end
-        
+
         local given_ammo = false
         entity:Horde_SetGadget(self.Horde_Gadget)
         entity:Horde_SyncEconomy()

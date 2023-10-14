@@ -118,7 +118,7 @@ function ENT:CustomOnThink_AIEnabled()
 		ParticleEffect("aurora_shockwave_debris", self:GetPos(), defAng, nil)
 		ParticleEffect("aurora_shockwave", self:GetPos(), defAng, nil)
 		self:EmitSound("horde/plague_elite/summon.ogg")
-		
+
 		if (!IsValid(self.MiniBoss1)) then
 			self.MiniBoss1 = ents.Create("npc_vj_horde_plague_soldier")
 			self.MiniBoss1:SetPos(self:GetPos() + self:GetRight()*45)
@@ -126,7 +126,7 @@ function ENT:CustomOnThink_AIEnabled()
 			self.MiniBoss1:Spawn()
 			self.MiniBoss1:SetOwner(self)
 		end
-		
+
 		if (!IsValid(self.MiniBoss2)) then
 			self.MiniBoss2 = ents.Create("npc_vj_horde_zombine")
 			self.MiniBoss2:SetPos(self:GetPos() + self:GetRight()*-45)
@@ -134,7 +134,7 @@ function ENT:CustomOnThink_AIEnabled()
 			self.MiniBoss2:Spawn()
 			self.MiniBoss2:SetOwner(self)
 		end
-		
+
 		self.ZBoss_NextMiniBossSpawnT = CurTime() + 15
 	end
 end

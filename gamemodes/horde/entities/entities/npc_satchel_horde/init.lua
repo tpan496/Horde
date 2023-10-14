@@ -55,7 +55,7 @@ function ENT:Detonate()
             ent:PassiveDetonate()
         end
     end
-    
+
     self:Remove()
 end
 

@@ -184,13 +184,13 @@ function ENT:MultipleRangeAttacks()
 						fire:SetPos(pos)
 						fire:Spawn()
 					end
-	
+
 					HORDE:ApplyDebuffInRadius(HORDE.Status_Shock, pos, 200, 10, self)
-	
+
 					ParticleEffect("Weapon_Combine_Ion_Cannon_Explosion", pos, Angle(0,0,0), nil)
-	
+
 					sound.Play("ambient/explosions/explode_5.ogg", pos, 100, math.random(90, 110))
-					
+
 					self:VJ_ACT_PLAYACTIVITY("run")
 					self.Horde_Blasting = nil
 					--self:RangeAttackCode_DoFinishTimers()
@@ -208,7 +208,7 @@ function ENT:CustomOnThink()
 		if self.Combat_Mode > 1 then
 			self.Combat_Mode = 0
 		end
-		
+
 		if self.Combat_Mode == 0 then
 			self:DisableShield()
 			self.HasRangeAttack = true

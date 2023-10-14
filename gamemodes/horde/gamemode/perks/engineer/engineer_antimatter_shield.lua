@@ -42,7 +42,7 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
     if not ply:Horde_GetPerk("engineer_antimatter_shield") then return end
 
     local ent = util.TraceLine(util.GetPlayerTrace(ply)).Entity
-    
+
     if ent:IsValid() then
         if ent:GetPos():DistToSqr(ply:GetPos()) > 250000 then
             return true

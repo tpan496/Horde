@@ -53,7 +53,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink_AIEnabled()
 	local ene = self:GetEnemy()
-	
+
 	-- Pull out the grenade
 	if self.Zombine_GrenadeOut == false && ((self.VJ_IsBeingControlled == true && self.VJ_TheController:KeyDown(IN_JUMP)) or (self.VJ_IsBeingControlled == false)) then
 		if self.VJ_IsBeingControlled == true then
@@ -63,7 +63,7 @@ function ENT:CustomOnThink_AIEnabled()
 			self:Zombine_CreateGrenade()
 		end
 	end
-	
+
 	-- Animation Control
 	-- Has grenade
 	if IsValid(self.Zombine_Grenade) == true then

@@ -12,7 +12,7 @@ function plymeta:Horde_AddHypertrophyStack(override_max)
             self.Horde_HypertrophyStack = self.Horde_HypertrophyStack + 1
         end
     end
-    
+
     self.Horde_HypertrophyStackAdded = true
 
     timer.Remove("Horde_HypertrophyTracker" .. self:SteamID())
@@ -33,7 +33,7 @@ function plymeta:Horde_RemoveHypertrophyStack()
     if self.Horde_HypertrophyStackAdded then return end
     self.Horde_HypertrophyStack = math.max(0, self.Horde_HypertrophyStack - 1)
     self:Horde_SetHealthRegenPercentage(self:Horde_GetHealthRegenPercentage() - 0.02)
-    
+
     net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Hypertrophy, 8)
         net.WriteUInt(self.Horde_HypertrophyStack, 8)

@@ -43,7 +43,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
                 local acc = math.max(500 * 1.05 - dir:Length(), 0 ) * 0.03
                 acc = math.Round( acc )
                 acc = acc * acc
-        
+
                 local phys = ent:GetPhysicsObject()
                 if ( IsValid( phys ) ) then
                     local velo = ( dir * acc )

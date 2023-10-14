@@ -30,7 +30,7 @@ function HORDE:GetNextMaps()
         table.insert(map_list, map)
         ::cont::
     end
-    
+
     return map_list
 end
 
@@ -89,7 +89,7 @@ end
 if SERVER then
     HORDE:GetMapWhitelist()
     HORDE:GetMapBlacklist()
-    
+
     net.Receive("Horde_SetMapsWhitelistData", function(len, ply)
         if not ply:IsSuperAdmin() then return end
         HORDE.map_whitelist = net.ReadTable()

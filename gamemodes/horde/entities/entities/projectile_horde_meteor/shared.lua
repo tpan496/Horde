@@ -96,7 +96,7 @@ function ENT:Detonate()
     for i = 1, math.random(5,10) do
 		local debris = ents.Create("base_gmodentity")
 		local mat = "debris/debris" .. tostring(math.random(1, 4))
-		
+
 		debris:SetPos(self:GetPos())
 		debris:SetAngles(VectorRand():Angle())
 		debris:SetModel("models/props_junk/rock001a.mdl")
@@ -106,14 +106,14 @@ function ENT:Detonate()
         if self:GetCharged() == 3 then
             debris:Ignite(999)
         end
-        
-		
+
+
 		local physobj = debris:GetPhysicsObject()
 		local force = 1000
-		
+
 		physobj:AddVelocity(Vector(math.random(-force, force), math.random(-force, force), math.random(-force, force)))
 		physobj:AddAngleVelocity(Vector(math.random(-force, force), math.random(-force, force), math.random(-force, force)))
-		
+
 		timer.Simple(3, function()
 			if IsValid(debris) then
 				local effect = EffectData()

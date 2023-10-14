@@ -69,7 +69,7 @@ function ENT:CustomOnInitialize()
     self.SpawnTime = CurTime()
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
-    
+
     self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
     self.ExplodeTimer = CurTime() + 0.4
 
@@ -182,7 +182,7 @@ function ENT:Detonate(hitpos, ent)
                     if HORDE:IsEnemy(tr.Entity) then
                         tr.Entity:TakeDamageOverTime(self.Owner, self:GetSpellBaseDamage(1) / 8, DMG_GENERIC, 0.2, 1)
                     end
-                    
+
                 elseif self:GetCharged() == 4 then
                     for _, e in pairs(ents.FindInSphere(hitpos, 150 * 1.25 * radius_mult)) do
                         e:TakeDamageOverTime(self.Owner, self:GetSpellBaseDamage(1) / 6, DMG_GENERIC, 0.2, 1)
@@ -228,7 +228,7 @@ function ENT:PhysicsCollide(colData, collider)
         else
             ParticleEffect("solar_orb_explode", pos, Angle(0,0,0), self.Owner)
         end
-        
+
         sound.Play("horde/weapons/solar_seal/solar_orb_hit.ogg", pos, 80, math.random(70, 90))
     elseif self:GetCharged() == 1 then
         sound.Play("horde/weapons/solar_seal/solar_orb_charged_1_hit.ogg", pos, 100, math.random(90, 110))
@@ -243,7 +243,7 @@ function ENT:PhysicsCollide(colData, collider)
         else
             ParticleEffect("solar_orb_charged_2_explode", pos, Angle(0,0,0), self.Owner)
         end
-        
+
         sound.Play("horde/weapons/solar_seal/solar_orb_charged_2_hit.ogg", pos, 100, math.random(90, 110))
     elseif self:GetCharged() >= 3 then
         if self:GetCharged() == 3 then

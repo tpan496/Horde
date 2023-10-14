@@ -41,7 +41,7 @@ function PANEL:SetData(class, description_panel)
     if self.subclass.PrintName == MySelf:Horde_GetCurrentSubclass() then
         self.is_current_class = true
     end
-    
+
     if self.is_current_class then
         self.bg_color = Color(110,110,110)
     else
@@ -83,11 +83,11 @@ function PANEL:Paint()
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
         local level = MySelf:Horde_GetLevel(self.subclass.PrintName)
         local rank, rank_level = HORDE:LevelToRank(level)
-        
+
         if self.mat then
             surface.SetMaterial(self.mat)
         end
-        
+
         surface.SetDrawColor(HORDE.Rank_Colors[rank])
         local star = Material("star.png", "mips smooth")
         if ScrW() <= 1280 then

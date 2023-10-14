@@ -55,7 +55,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
                 ent:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 50, ply)
             end
         end
-        
+
         if (SERVER) then
             local firefx = EffectData()
             firefx:SetOrigin(trace.HitPos)

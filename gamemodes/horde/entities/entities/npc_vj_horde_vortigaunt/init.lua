@@ -43,7 +43,7 @@ ENT.FootStepTimeRun = 0.4 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.5 -- Next foot step sound when it is walking
 ENT.FootStepSoundLevel = 60
 ENT.RunAwayOnUnknownDamage = false -- Should run away on damage
- 
+
 	-- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {"npc/vort/vort_foot1.wav","npc/vort/vort_foot2.wav","npc/vort/vort_foot3.wav","npc/vort/vort_foot4.wav"}
@@ -168,7 +168,7 @@ function ENT:CustomRangeAttackCode()
 		energy:Activate()
 		energy:Fire("Start","",0.3)
 		energy:Fire("Kill","",1.5)
-		
+
 		energy = ents.Create("info_particle_system")
 		energy:SetKeyValue("effect_name","vortigaunt_hand_glow")
 		energy:SetPos(self:GetAttachment(self:LookupAttachment("leftclaw")).Pos)

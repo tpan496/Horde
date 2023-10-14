@@ -1,7 +1,7 @@
 GADGET.PrintName = "Hyperfusion"
 GADGET.Description =
 [[Each weapon infusion now grants an active ability:
-- Hemo: 
+- Hemo:
 - Flaming: Gain a burning aura that deals Fire damage around you.
 - Arctic: Deals Cold damage to enemies that attack you.
 - Galvanizing: Enemies explode on death, dealing Lightning damage based on their health.

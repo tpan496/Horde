@@ -103,7 +103,7 @@ function ENT:PhysicsCollide(data, phys)
 		dmg:SetInflictor(self)
 		dmg:SetDamage(50)
 		dmg:SetDamagePosition(self:GetPos())
-		
+
 
 		self:FireBullets({
 			Attacker = owner,

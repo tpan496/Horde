@@ -59,7 +59,7 @@ function ENT:PhysicsCollide(data, physobj)
                     dmg:SetDamageType(DMG_SLASH)
                     dmg:SetAttacker(self.Owner)
                     dmg:SetInflictor(self)
-    
+
                     if (not tr.Entity:IsValid()) or (not tr.Entity:IsNPC()) then
                         if data.HitEntity:IsNPC() then
                             data.HitEntity:TakeDamageInfo(dmg)

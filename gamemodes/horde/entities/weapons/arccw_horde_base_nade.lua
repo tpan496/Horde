@@ -49,7 +49,7 @@ function SWEP:FireRocket(ent, vel, ang, dontinheritvel)
     else
         RealVelocity = (!dontinheritvel and self:GetOwner():GetAbsVelocity() or Vector(0, 0, 0)) + ang:Forward() * vel
     end
-    
+
     rocket.CurVel = RealVelocity -- for non-physical projectiles that move themselves
 
     rocket:Spawn()
@@ -123,7 +123,7 @@ function SWEP:Throw()
             else
                 rocket = self:FireRocket(self:GetBuff_Override("Override_ShootEntity", self.ShootEntity), force / ArcCW.HUToM)
             end
-            
+
             if !rocket then return end
 
             if ft then

@@ -12,7 +12,7 @@ function EFFECT:Think()
         if not self.emitter then
             self.emitter = ParticleEmitter(pos)
         end
-        
+
         if self.emitter then
             local smoke = self.emitter:Add("particles/smokey", pos)
             smoke:SetGravity( Vector(0, 0, 1500) )

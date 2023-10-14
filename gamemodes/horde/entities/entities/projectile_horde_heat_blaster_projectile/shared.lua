@@ -96,7 +96,7 @@ function ENT:Initialize()
 end
 
 function ENT:Think()
-    
+
     if SERVER and CurTime() - self.SpawnTime >= self.FuseTime then
         self:Remove()
     end
@@ -148,8 +148,8 @@ function ENT:PhysicsCollide(data, collider)
 	util.Effect("horde_blaster_flame_explosion", effectdata )
 
     self:EmitSound("horde/weapons/blaster/fire_explosion.ogg")
-	
-	
+
+
 	--ParticleEffect("vj_explosion1", self:GetPos(), Angle(0,0,0), nil)
 
 	local expLight = ents.Create("light_dynamic")
@@ -186,7 +186,7 @@ function ENT:Think()
         else
             particle:SetStartSize(math.Rand(5, 15))
         end
-        
+
         particle:SetEndSize(0)
         particle:SetRoll(math.Rand(0, 360))
         particle:SetRollDelta(math.Rand(-30, 30))

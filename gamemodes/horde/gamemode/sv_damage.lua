@@ -114,7 +114,7 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     end
 
     hook.Run("Horde_OnPlayerDamagePost", ply, npc, bonus, hitgroup, dmginfo)
-    
+
     if not npc.Horde_Assist then
         npc.Horde_Assist = ply
     elseif ply ~= npc.Horde_Hit then
@@ -197,9 +197,9 @@ function HORDE:TakeDamage(victim, damage, dmgtype, attacker, inflictor, damage_c
     else
         dmginfo:SetInflictor(Entity(0))
     end
-    
+
     dmginfo:SetDamagePosition(victim:GetPos())
-    
+
     if dmgtype then
         dmginfo:SetDamageType(dmgtype)
     else
@@ -250,12 +250,12 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
 
     -- Prevent damage from skill explosions (e.g. Rip and Tear, Chain Reaction, Kamikaze)
     if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end
-    
+
     -- Prevent minion from damaging players
     if HORDE:IsPlayerMinion(dmg:GetInflictor()) or HORDE:IsPlayerMinion(dmg:GetAttacker()) then return true end
-    
+
     if dmg:GetDamage() <= 0.5 then return true end
-    
+
     -- Apply bonus
     local bonus = {resistance=0, less=1, evasion=0, block=0}
     local ret = hook.Run("Horde_OnPlayerDamageTaken", ply, dmg, bonus)

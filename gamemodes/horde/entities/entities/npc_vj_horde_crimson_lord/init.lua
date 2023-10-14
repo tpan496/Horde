@@ -6,8 +6,8 @@ include('autorun/vj_controls.lua')
 ENT.Model = {"models/barnacle.mdl"}
 ENT.StartHealth = 500
 ENT.HullType = HULL_MEDIUM
-ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"} 
-ENT.MovementType = VJ_MOVETYPE_STATIONARY 
+ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
+ENT.MovementType = VJ_MOVETYPE_STATIONARY
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 local function shuffle(tbl)
@@ -69,7 +69,7 @@ local function ParseNodes()
         if nodetype == 4 then
             goto cont
         end
-        
+
         local node = {
             pos = v,
             yaw = yaw,

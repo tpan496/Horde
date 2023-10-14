@@ -6,7 +6,7 @@ Quickdraw effect lasts for {2} seconds.]]
 PERK.Icon = "materials/perks/gunslinger/quickdraw.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},
-    [2] = {value = 3}, 
+    [2] = {value = 3},
 }
 PERK.Hooks = {}
 

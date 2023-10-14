@@ -62,7 +62,7 @@ function Ready(ply)
         HORDE:SendNotification("You can't get ready when you are dead!", 1, ply)
         return
     end
-    
+
     HORDE.player_ready[ply] = 1
     local ready_count = 0
     local total_player = 0
@@ -72,7 +72,7 @@ function Ready(ply)
         end
         total_player = total_player + 1
     end
-    
+
     if ready_count >= total_player then
         HORDE.start_game = true
         HORDE.current_break_time = math.min(HORDE.current_break_time, 10)
@@ -110,7 +110,7 @@ function Shop(ply)
             if HORDE.has_buy_zone and (not ply:Horde_GetInBuyZone()) then
                 return
             end
-    
+
             if HORDE.current_break_time <= 0 then
                 HORDE:SendNotification("You cannot shop after a wave has started.", 1, ply)
                 return
@@ -195,11 +195,11 @@ end
 hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     if not ply:IsValid() then return end
     local text = {}
-	
+
     for str in string.gmatch(string.lower(input), "([^".."%s".."]+)") do -- splits and lowercases the input string
        table.insert(text, str)
     end
-	
+
     if text[1] == "!help" then
         ply:PrintMessage(HUD_PRINTTALK, "'!ready' - Get ready")
         ply:PrintMessage(HUD_PRINTTALK, "'!shop' - Open shop")

@@ -130,7 +130,7 @@ function ENT:Think()
                 fire:SetColor( 0, 135, 255 )
             else
                 fire:SetColor( 255, 255, 255 )
-            end 
+            end
             fire:SetAirResistance( 150 )
             local pos = VectorRand() * math.random(20,100)
             pos.z = 0

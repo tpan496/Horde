@@ -9,7 +9,7 @@ ENT.Model = {"models/combine_turrets/ground_turret.mdl"} -- The game will pick a
 ENT.StartHealth = 400
 ENT.SightDistance = 8000
 ENT.HullType = HULL_HUMAN
-ENT.MovementType = VJ_MOVETYPE_STATIONARY 
+ENT.MovementType = VJ_MOVETYPE_STATIONARY
 ENT.SightAngle = 180 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
 ENT.LastSeenEnemyTimeUntilReset = 60 -- Time until it resets its enemy if its current enemy is not visible
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ ENT.BloodColor = "Oil" -- The blood type, this will determine what it should use
 ENT.HasBloodDecal = false
 ENT.PlayerFriendly = true -- Makes the SNPC friendly to the player and HL2 Resistance
 ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
--- Miscellaneous ---------------------------------------------------------------------------------------------------------------------------------------------	
+-- Miscellaneous ---------------------------------------------------------------------------------------------------------------------------------------------
 -- ====== Other Variables ====== --
 ENT.RunAwayOnUnknownDamage = false -- Should run away on damage
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
@@ -107,10 +107,10 @@ function ENT:CustomRangeAttackCode()
 		util.ParticleTracerEx("HelicopterTracer", gunPos, tr.HitPos, true, self:EntIndex(), -1)
 	end
 	self:FireBullets(bullet)
-	
+
 	VJ_EmitSound(self, {"npc/sniper/sniper1.wav"}, 90, self:VJ_DecideSoundPitch(100, 110))
 	VJ_EmitSound(self, {"npc/sniper/sniper1.wav"}, 140, self:VJ_DecideSoundPitch(100, 110))
-	
+
 	local muz = ents.Create("env_sprite_oriented")
 	muz:SetKeyValue("model","vj_hl/sprites/muzzleflash3.vmt")
 	if self.Sentry_Type == 1 then
@@ -132,7 +132,7 @@ function ENT:CustomRangeAttackCode()
 	muz:Spawn()
 	muz:Activate()
 	muz:Fire("Kill","",0.08)
-	
+
 	local muzzleLight = ents.Create("light_dynamic")
 	muzzleLight:SetKeyValue("brightness", "4")
 	muzzleLight:SetKeyValue("distance", "120")

@@ -63,7 +63,7 @@ function PANEL:add_infusion(infusion, price)
         if has_infusion then
             draw.SimpleText("INFUSED", "Item", (self.infusion_scroll:GetWide() - 20) / 2 - 50, 10, HORDE.color_crimson, TEXT_ALIGN_CENTER, TEXT_ALIGN_RIGHT)
         else
-            draw.SimpleText(tostring(price) .. "$", "Item", (self.infusion_scroll:GetWide() - 20) / 2 - 30, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_RIGHT) 
+            draw.SimpleText(tostring(price) .. "$", "Item", (self.infusion_scroll:GetWide() - 20) / 2 - 30, 10, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_RIGHT)
         end
 
         surface.SetDrawColor(HORDE.Infusion_Colors[infusion])
@@ -112,7 +112,7 @@ function PANEL:Init()
     else
         self.infusion_scroll:SetSize(ScrW() / 1.25 / 2, ScrH() / 1.5 / 2)
     end
-    
+
     self.infusion_scroll.Paint = function () end
 
     self.infusion_layout = vgui.Create("DIconLayout", self.infusion_scroll)
@@ -192,7 +192,7 @@ function PANEL:SetData(item)
     else
         self.infusion_scroll:SetSize(ScrW() / 1.25 / 2, ScrH() / 1.5 / 2)
     end
-    
+
     self.infusion_scroll.Paint = function () end
     self.infusion_layout:Clear()
     self.infusion_layout:Remove()
@@ -215,7 +215,7 @@ function PANEL:SetData(item)
     self.infusion_items = {}
 
     if not item.infusions or table.IsEmpty(item.infusions) then return end
-    
+
     for _, infusion in SortedPairsByValue(item.infusions) do
         --if MySelf:Horde_GetClass().infusions[infusion] then
             self:add_infusion(infusion, 100 + item.price / 5)

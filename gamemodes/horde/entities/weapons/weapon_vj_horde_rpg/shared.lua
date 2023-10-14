@@ -9,7 +9,7 @@ SWEP.Instructions				= "Controls are like a regular weapon."
 SWEP.Category					= "VJ Base"
 	-- Client Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
-SWEP.Slot						= 4 -- Which weapon slot you want your SWEP to be in? (1 2 3 4 5 6) 
+SWEP.Slot						= 4 -- Which weapon slot you want your SWEP to be in? (1 2 3 4 5 6)
 SWEP.SlotPos					= 4 -- Which part of that slot do you want the SWEP to be in? (1 2 3 4 5 6)
 SWEP.UseHands					= true
 end
@@ -60,7 +60,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	proj:SetOwner(owner)
 	proj:Activate()
 	proj:Spawn()
-	
+
 	local phys = proj:GetPhysicsObject()
 	if IsValid(phys) then
 		if owner:IsPlayer() then
@@ -69,7 +69,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 			phys:SetVelocity(owner:CalculateProjectile("Line", self:GetNW2Vector("VJ_CurBulletPos"), owner:GetEnemy():GetPos() + owner:GetEnemy():OBBCenter(), 2500))
 		end
 	end
-	
+
 	self:SetBodygroup(1, 1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

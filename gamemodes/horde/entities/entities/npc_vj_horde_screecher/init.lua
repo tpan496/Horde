@@ -72,7 +72,7 @@ function ENT:ShockAttack(delay)
 				ent:Horde_AddDebuffBuildup(HORDE.Status_Shock, 4, self)
 			end
 		end
-		
+
 		local e = EffectData()
 			e:SetOrigin(self:GetPos())
 			e:SetNormal(Vector(0,0,1))

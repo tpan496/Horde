@@ -55,7 +55,7 @@ if CLIENT then
     killicon.Add( "horde_spore", "vgui/hud/horde_spore_launcher", Color( 255, 255, 255, 255 ) )
     killicon.Add( "horde_spore_alt", "vgui/hud/horde_spore_launcher", Color( 255, 255, 255, 255 ) )
 end
-    
+
 SWEP.PrintName = "Spore Launcher"
 SWEP.Category = "Horde"
 SWEP.Spawnable= true
@@ -105,7 +105,7 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Force = 1000
-    
+
 SWEP.ActivePos = Vector(0, -2, 0)
 SWEP.ActiveAng = Angle(0, 0, 0)
 
@@ -114,7 +114,7 @@ function SWEP:Initialize()
     self.Idle = 0
     self.IdleTimer = CurTime() + 1
 end
-    
+
 function SWEP:DrawHUD()
     if CLIENT then
         local x, y
@@ -243,7 +243,7 @@ self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -3, 0, 0 ) )
 end
 end
 end
-    
+
 function SWEP:Reload()
     if self.Reloading == 0 and self.Weapon:Clip1() < self.Primary.ClipSize and self.Weapon:Ammo1() > 0 then
         self.Weapon:SendWeaponAnim( ACT_SHOTGUN_RELOAD_START )
@@ -255,7 +255,7 @@ function SWEP:Reload()
         self.Idle = 1
     end
 end
-    
+
 function SWEP:Think()
     if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
         if self.Recoil == 1 and self.RecoilTimer <= CurTime() then

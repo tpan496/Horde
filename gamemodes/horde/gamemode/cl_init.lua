@@ -76,7 +76,7 @@ function HORDE:ToggleShop()
             HORDE.ShopGUI = vgui.Create("HordeSpellForge")
             HORDE.ShopGUI:SetVisible(false)
         end
-    
+
         if HORDE.ShopGUI:IsVisible() then
             HORDE.ShopGUI:Hide()
             gui.EnableScreenClicker(false)
@@ -185,7 +185,7 @@ function HORDE:ToggleMapConfig()
         HORDE.MapConfigGUI = vgui.Create("HordeMapConfig")
         HORDE.MapConfigGUI:SetVisible(false)
     end
-    
+
     if HORDE.MapConfigGUI:IsVisible() then
         HORDE.MapConfigGUI:Hide()
         gui.EnableScreenClicker(false)
