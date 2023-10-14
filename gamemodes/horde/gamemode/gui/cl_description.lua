@@ -721,7 +721,7 @@ function PANEL:Paint()
             local icon = nil
             local description = ""
             local atttbl = ArcCW.AttachmentTable[self.item.class]
-            if atttbl.Description then
+            if atttbl and atttbl.Description then
                 description = multlinetext(ArcCW.AttachmentTable[self.item.class].Description, self:GetWide() - 64, "Item")
                 -- TODO: This should take two parameters. Second one seems useless?
                 local pros, cons = ArcCW:GetProsCons(nil, atttbl, nil)
@@ -736,7 +736,8 @@ function PANEL:Paint()
                 end
                 description = description .. "\n\nEquip by Pressing C."
             end
-            if atttbl.Icon then
+
+            if atttbl and atttbl.Icon then
                 icon = ArcCW.AttachmentTable[self.item.class].Icon
                 draw.DrawText(self.item.name, "Title", self:GetWide() / 2 - 64, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
                 draw.DrawText(description, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
