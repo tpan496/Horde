@@ -618,8 +618,8 @@ end)
 
 HORDE.VoteChangeMap = function (ply)
     HORDE.player_vote_map_change[ply] = 1
-    if table.Count(HORDE.player_vote_map_change) == table.Count(player.GetAll()) then
-        HORDE:SendNotification("All players want to change map! Initiating map vote...", 0)
+    if table.Count(HORDE.player_vote_map_change) >= player.GetCount() * 0.66 then
+        HORDE:SendNotification("RTV Vote passed! Initiating map vote...", 0)
         timer.Simple(1, function ()
             HORDE:GameEnd("Change Map")
         end)
