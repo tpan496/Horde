@@ -64,7 +64,7 @@ SWEP.NoLastCycle = true -- do not cycle on last shot
 
 SWEP.Primary.Ammo = "SniperPenetratedRound" -- what ammo type the gun uses
 
-SWEP.ShootVol = 140 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound =			"weapons/fesiugmw2/fire/cheytac_mp.wav"

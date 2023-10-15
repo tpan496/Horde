@@ -71,7 +71,7 @@ SWEP.MoveDispersion = 175
 
 SWEP.Primary.Ammo = "pistol" -- what ammo type the gun uses
 
-SWEP.ShootVol = 110 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 110 -- pitch of shoot sound
 
 SWEP.ShootSound =			"horde/weapons/vector/kriss1.ogg"

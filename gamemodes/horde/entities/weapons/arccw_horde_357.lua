@@ -67,7 +67,7 @@ SWEP.MoveDispersion = 50
 
 SWEP.Primary.Ammo = "357" -- what ammo type the gun uses
 
-SWEP.ShootVol = 120 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound =			{"weapons/357/357_fire2.wav", "weapons/357/357_fire3.wav"}
