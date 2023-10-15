@@ -624,7 +624,7 @@ HORDE.VoteChangeMap = function (ply)
             HORDE:GameEnd("Change Map")
         end)
     else
-        HORDE:SendNotification(ply:GetName() .. " wants to change the map. (" .. tostring(table.Count(HORDE.player_vote_map_change)) .. "/" .. tostring(table.Count(player.GetAll())) .. ")", 0)
+        HORDE:SendNotification(ply:GetName() .. " wants to change the map. (" .. tostring(table.Count(HORDE.player_vote_map_change)) .. "/" .. tostring(player.GetCount() * 0.66) .. ")", 0)
     end
 end
 
