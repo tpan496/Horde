@@ -79,7 +79,6 @@ function HORDE:ToggleShop()
 
         if HORDE.ShopGUI:IsVisible() then
             HORDE.ShopGUI:Hide()
-            gui.EnableScreenClicker(false)
         else
             HORDE.ShopGUI:Remove()
             if HORDE.StatsGUI then
@@ -87,7 +86,7 @@ function HORDE:ToggleShop()
             end
             HORDE.ShopGUI = vgui.Create("HordeSpellForge")
             HORDE.ShopGUI:Show()
-            gui.EnableScreenClicker(true)
+            HORDE.ShopGUI:MakePopup()
         end
         return
     end
@@ -98,7 +97,6 @@ function HORDE:ToggleShop()
 
     if HORDE.ShopGUI:IsVisible() then
         HORDE.ShopGUI:Hide()
-        gui.EnableScreenClicker(false)
     else
         HORDE.ShopGUI:Remove()
         if HORDE.StatsGUI then
@@ -106,7 +104,7 @@ function HORDE:ToggleShop()
         end
         HORDE.ShopGUI = vgui.Create("HordeShop")
         HORDE.ShopGUI:Show()
-        gui.EnableScreenClicker(true)
+        HORDE.ShopGUI:MakePopup()
     end
 end
 
@@ -118,7 +116,6 @@ function HORDE:ToggleStats()
 
     if HORDE.StatsGUI:IsVisible() then
         HORDE.StatsGUI:Hide()
-        gui.EnableScreenClicker(false)
         timer.Remove("Horde_PollStats")
     else
         if HORDE.ShopGUI then
@@ -127,7 +124,7 @@ function HORDE:ToggleStats()
         HORDE.StatsGUI:Remove()
         HORDE.StatsGUI = vgui.Create("HordeStats")
         HORDE.StatsGUI:Show()
-        gui.EnableScreenClicker(true)
+        HORDE.StatsGUI:MakePopup()
         HORDE:GetStats()
         timer.Create("Horde_PollStats", 1, 0, function ()
             HORDE:GetStats()
@@ -143,10 +140,9 @@ function HORDE:ToggleItemConfig()
 
     if HORDE.ItemConfigGUI:IsVisible() then
         HORDE.ItemConfigGUI:Hide()
-        gui.EnableScreenClicker(false)
     else
         HORDE.ItemConfigGUI:Show()
-        gui.EnableScreenClicker(true)
+        HORDE.ItemConfigGUI:MakePopup()
     end
 end
 
@@ -158,10 +154,9 @@ function HORDE:ToggleEnemyConfig()
 
     if HORDE.EnemyConfigGUI:IsVisible() then
         HORDE.EnemyConfigGUI:Hide()
-        gui.EnableScreenClicker(false)
     else
         HORDE.EnemyConfigGUI:Show()
-        gui.EnableScreenClicker(true)
+        HORDE.EnemyConfigGUI:MakePopup()
     end
 end
 
@@ -173,10 +168,9 @@ function HORDE:ToggleClassConfig()
 
     if HORDE.ClassConfigGUI:IsVisible() then
         HORDE.ClassConfigGUI:Hide()
-        gui.EnableScreenClicker(false)
     else
         HORDE.ClassConfigGUI:Show()
-        gui.EnableScreenClicker(true)
+        HORDE.ClassConfigGUI:MakePopup()
     end
 end
 
@@ -188,10 +182,9 @@ function HORDE:ToggleMapConfig()
 
     if HORDE.MapConfigGUI:IsVisible() then
         HORDE.MapConfigGUI:Hide()
-        gui.EnableScreenClicker(false)
     else
         HORDE.MapConfigGUI:Show()
-        gui.EnableScreenClicker(true)
+        HORDE.MapConfigGUI:MakePopup()
     end
 end
 
@@ -203,10 +196,9 @@ function HORDE:ToggleConfigMenu()
 
     if HORDE.ConfigMenuGUI:IsVisible() then
         HORDE.ConfigMenuGUI:Hide()
-        gui.EnableScreenClicker(false)
     else
         HORDE.ConfigMenuGUI:Show()
-        gui.EnableScreenClicker(true)
+        HORDE.ConfigMenuGUI:MakePopup()
     end
 end
 
