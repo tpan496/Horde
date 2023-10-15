@@ -71,7 +71,7 @@ SWEP.MoveDispersion = 10
 SWEP.Primary.Ammo = "SniperPenetratedRound" -- what ammo type the gun uses
 SWEP.MagID = "ssg08" -- the magazine pool this gun draws from
 
-SWEP.ShootVol = 120 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "arccw_go/ssg08/ssg08_01.wav"

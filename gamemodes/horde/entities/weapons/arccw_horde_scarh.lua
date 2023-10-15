@@ -68,7 +68,7 @@ SWEP.MoveDispersion = 100
 SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses
 SWEP.MagID = "stanag" -- the magazine pool this gun draws from
 
-SWEP.ShootVol = 120 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.FirstShootSound = "arccw_go/scar20/scar20_01.wav"

@@ -74,7 +74,7 @@ SWEP.MoveDispersion = 250
 
 SWEP.Primary.Ammo = "SMG1_Grenade" -- what ammo type the gun uses
 
-SWEP.ShootVol = 100 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "horde/weapons/blaster/launch.ogg"

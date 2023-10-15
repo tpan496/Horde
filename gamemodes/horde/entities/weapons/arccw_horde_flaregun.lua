@@ -71,7 +71,7 @@ SWEP.MoveDispersion = 250
 
 SWEP.Primary.Ammo = "357" -- what ammo type the gun uses
 
-SWEP.ShootVol = 100 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "vj_weapons/flare/fire.wav"

@@ -77,7 +77,7 @@ SWEP.MoveDispersion = 250
 
 SWEP.Primary.Ammo = "AlyxGun" -- what ammo type the gun uses
 
-SWEP.ShootVol = 110 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 105 -- pitch of shoot sound
 
 SWEP.ShootSound =			"horde/weapons/gau/gaufire.wav"

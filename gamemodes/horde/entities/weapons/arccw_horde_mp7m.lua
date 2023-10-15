@@ -66,7 +66,7 @@ SWEP.MoveDispersion = 75
 SWEP.Primary.Ammo = "smg1" -- what ammo type the gun uses
 SWEP.MagID = "mp7" -- the magazine pool this gun draws from
 
-SWEP.ShootVol = 110 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.FirstShootSound = "arccw_go/mp7/mp7_01.wav"
