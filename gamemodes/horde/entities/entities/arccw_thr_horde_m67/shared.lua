@@ -10,7 +10,7 @@ ENT.Model = "models/weapons/arccw_go/w_eq_fraggrenade_thrown.mdl"
 ENT.FuseTime = 3.5
 ENT.ArmTime = 0
 ENT.ImpactFuse = false
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
 
 AddCSLuaFile()
 

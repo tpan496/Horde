@@ -38,7 +38,7 @@ function ENT:Initialize()
 
         timer.Simple(0, function()
             if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+            self:SetCollisionGroup(COLLISION_GROUP_PLAYER_MOVEMENT)
         end)
     end
 
