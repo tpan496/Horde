@@ -28,7 +28,7 @@ function ENT:StartTouch(entity)
             if wpn.Primary and wpn.Primary.MaxAmmo and wpn.Primary.MaxAmmo <= ply:GetAmmoCount(wpn:GetPrimaryAmmoType()) then
                 goto cont
             end
-            local given = HORDE:GiveAmmo(entity, wpn, 1)
+            local given = HORDE:GiveAmmo(entity, wpn, 1.5)
             given_ammo = given_ammo or given
             ::cont::
         end

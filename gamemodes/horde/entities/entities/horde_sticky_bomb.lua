@@ -13,7 +13,7 @@ if SERVER then
     self:SetMoveType( MOVETYPE_VPHYSICS )
     self:SetSolid( SOLID_VPHYSICS )
     self:PhysicsInit( SOLID_VPHYSICS )
-    self:SetCollisionGroup( COLLISION_GROUP_PROJECTILE )
+    self:SetCollisionGroup( COLLISION_GROUP_PLAYER_MOVEMENT )
     self:DrawShadow( false )
     local trail = ents.Create( "info_particle_system" )
     trail:SetParent( self )
@@ -60,7 +60,7 @@ function ENT:PhysicsCollide(coldata, collider)
         -- Fixes horde_sticky_bomb[362]: Changing collision rules within a callback is likely to cause crashes! spam
         timer.Simple( 0, function()
             if IsValid( self ) then
-                self:SetCollisionGroup( COLLISION_GROUP_NONE )
+                self:SetCollisionGroup( COLLISION_GROUP_PLAYER_MOVEMENT )
             end
         end )
 
