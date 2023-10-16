@@ -50,7 +50,7 @@ SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "Grenade"
 SWEP.Primary.TakeAmmo = 1
 SWEP.Primary.Delay = 0.6
-SWEP.Primary.Force = 800
+SWEP.Primary.Force = 1200
 
 SWEP.ReloadSound = Sound("horde/weapons/sticky_launcher/stickybomblauncher_reload.wav")
 
@@ -177,8 +177,8 @@ function SWEP:PrimaryAttack()
         self.Idle = 0
         self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
         self.Recoil = 1
-        self.RecoilTimer = CurTime() + 0.2
-        self.Owner:SetEyeAngles(self.Owner:EyeAngles() + Angle(-3, 0, 0))
+        self.RecoilTimer = CurTime() + 0.1
+        self.Owner:SetEyeAngles(self.Owner:EyeAngles() + Angle(-1.5, 0, 0))
     end
 end
 
