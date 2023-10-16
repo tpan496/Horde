@@ -7,8 +7,8 @@ ENT.Information 		= "An explosive projectile is an entity that has physical coll
 ENT.Spawnable 			= false
 
 ENT.Model = "models/items/ar2_grenade.mdl"
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
 ENT.Removing = nil
 
 ENT.LifeTime = 10 -- Time to removal
@@ -44,7 +44,7 @@ function ENT:Initialize()
 
     self.SpawnTime = CurTime()
 
-    self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+    self:SetCollisionGroup(COLLISION_GROUP_PLAYER_MOVEMENT)
     self.StartPos = self:GetPos()
     self.ArmDistanceSqr = self.ArmDistance * self.ArmDistance
 end
