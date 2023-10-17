@@ -35,7 +35,7 @@ SWEP.WorldModelOffset = {
     ang = Angle(-10, 0, 180)
 }
 
-SWEP.FuseTime = 1.25
+SWEP.FuseTime = 1.55
 
 SWEP.Throwing = true
 
