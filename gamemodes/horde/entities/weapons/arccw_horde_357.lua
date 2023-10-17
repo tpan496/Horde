@@ -42,12 +42,12 @@ SWEP.Primary.ClipSize = 6 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 6
 SWEP.ReducedClipSize = 6
 
-SWEP.Recoil = 1.5
-SWEP.RecoilSide = 1.25
+SWEP.Recoil = 1
+SWEP.RecoilSide = 0.75
 SWEP.RecoilRise = 0.1
 SWEP.RecoilPunch = 1
 
-SWEP.Delay = 120 / 300 -- 30 / RPM.
+SWEP.Delay = 120 / 450 -- 30 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -62,8 +62,8 @@ SWEP.NPCWeaponType = "weapon_357"
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 250 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 50
+SWEP.HipDispersion = 120 -- inaccuracy added by hip firing.
+SWEP.MoveDispersion = 100
 
 SWEP.Primary.Ammo = "357" -- what ammo type the gun uses
 
@@ -81,7 +81,7 @@ SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
 SWEP.SpeedMult = 1
 SWEP.SightedSpeedMult = 0.8
-SWEP.SightTime = 0.125
+SWEP.SightTime = 0.05
 
 SWEP.IronSightStruct = {
     Pos = Vector(-4.7, -10, 0.5),
