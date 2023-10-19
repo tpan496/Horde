@@ -13,8 +13,8 @@ ENT.Model = "models/props_lab/bigrock.mdl"
 ENT.Models = {"models/props_wasteland/rockgranite03b.mdl"}
 ENT.Ticks = 0
 ENT.FuseTime = 5
-ENT.CollisionGroup = COLLISION_GROUP_PASSABLE_DOOR
-ENT.CollisionGroupType = COLLISION_GROUP_PASSABLE_DOOR
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
 ENT.Removing = nil
 
 if SERVER then
@@ -24,7 +24,7 @@ function ENT:CustomOnInitialize()
     self:SetMoveType( MOVETYPE_VPHYSICS )
     self:SetSolid( SOLID_VPHYSICS )
     self:PhysicsInit( SOLID_VPHYSICS )
-    self:SetCollisionGroup( COLLISION_GROUP_PASSABLE_DOOR )
+    self:SetCollisionGroup( COLLISION_GROUP_PLAYER_MOVEMENT )
     self:DrawShadow( false )
     local a = Angle(0,0,0)
     a:Random()
