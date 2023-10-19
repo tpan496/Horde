@@ -11,8 +11,8 @@ AddCSLuaFile()
 
 ENT.Model = "models/items/ar2_grenade.mdl"
 ENT.Ticks = 0
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
 ENT.Removing = nil
 ENT.StartPos = nil
 ENT.PlaySoundTimer = 0
@@ -70,7 +70,7 @@ function ENT:CustomOnInitialize()
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
 
-    self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+    self:SetCollisionGroup(COLLISION_GROUP_PLAYER_MOVEMENT)
     self.ExplodeTimer = CurTime() + 0.4
 
     if self:GetCharged() == 1 then
