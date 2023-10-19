@@ -67,16 +67,25 @@ function ENT:Think()
         dmg:SetInflictor(self)
         dmg:SetDamageType(DMG_SHOCK)
         dmg:SetDamage(100)
-        for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
-            if ent:IsValid() and ent:IsNPC() and ent:Health() > 0 and not HORDE:IsPlayerMinion(ent) then
-                dmg:SetDamagePosition(ent:GetPos() + ent:OBBCenter())
-                self:EmitSound("npc/vort/attack_shoot.wav")
-                ent:TakeDamageInfo(dmg)
-                util.ParticleTracerEx("vortigaunt_beam", self:GetPos(), ent:GetPos() + ent:OBBCenter(), true, self:EntIndex(), -1)
-                util.ParticleTracerEx("vortigaunt_beam_b", self:GetPos(), ent:GetPos() + ent:OBBCenter(), true, self:EntIndex(), -1)
-                break
+        local pos = self:GetPos()
+        local targets = ents.FindInSphere(pos, 200)
+        local nearest = nil 
+        local nearestDist = math.huge
+        for _, ent in pairs(targets) do
+            local dist = ent:GetPos():DistToSqr(pos)
+            if ent:IsNPC() and ent:Health() > 0 and not HORDE:IsPlayerMinion(ent) and dist < nearestDist then
+                nearest = ent
+                nearestDist = dist
             end
         end
-        self.Horde_NextShockAttack = CurTime()
+        if nearest then
+            local target = nearest
+            dmg:SetDamagePosition(target:GetPos() + target:OBBCenter())
+            self:EmitSound("npc/vort/attack_shoot.wav")
+            target:TakeDamageInfo(dmg)
+            util.ParticleTracerEx("vortigaunt_beam", self:GetPos(), target:GetPos() + target:OBBCenter(), true, self:EntIndex(), -1)
+            util.ParticleTracerEx("vortigaunt_beam_b", self:GetPos(), target:GetPos() + target:OBBCenter(), true, self:EntIndex(), -1)
+            self.Horde_NextShockAttack = CurTime()
+        end
     end
 end
