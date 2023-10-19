@@ -1054,7 +1054,7 @@ function PANEL:Init()
         end
     end
     discord_btn.DoClick = function ()
-        gui.OpenURL("https://discord.gg/NevEgfAPSN")
+        gui.OpenURL("https://discord.gg/npc")
     end
 
     local close_btn = vgui.Create("DButton", self)
