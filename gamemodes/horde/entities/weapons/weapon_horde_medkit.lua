@@ -30,7 +30,6 @@ SWEP.MaxAmmo = 100 -- Maxumum ammo
 
 local HealSound = Sound( "HealthKit.Touch" )
 local DenySound = Sound( "WallHealth.Deny" )
-
 function SWEP:Initialize()
 
 	self:SetHoldType( "slam" )
@@ -43,54 +42,56 @@ function SWEP:Initialize()
 
 end
 
+
 function SWEP:PrimaryAttack()
 
 	if ( CLIENT ) then return end
 
-	if ( self.Owner:IsPlayer() ) then
-		self.Owner:LagCompensation( true )
+	if ( self:GetOwner():IsPlayer() ) then
+		self:GetOwner():LagCompensation( true )
 	end
 
 	local tr = util.TraceLine( {
-		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 100,
-		filter = self.Owner
+		start = self:GetOwner():GetShootPos(),
+		endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 100,
+		filter = self:GetOwner()
 	} )
 
-	if ( self.Owner:IsPlayer() ) then
-		self.Owner:LagCompensation( false )
+	if ( self:GetOwner():IsPlayer() ) then
+		self:GetOwner():LagCompensation( false )
 	end
 
 	local ent = tr.Entity
 
-	local need = self.HealAmount
-	if ( IsValid( ent ) ) then need = self.HealAmount end
+	if not ent:IsValid() then self:HealFail(ent) return end
 
-	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() or ent:GetClass() == "npc_vj_horde_antlion") ) then
+	local maxhealth,health = ent:GetMaxHealth(),ent:Health()
+
+	if self:GetOwner():Horde_GetPerk("medic_painkillers") then
+		maxhealth = maxhealth*1.20
+	end
+
+	if health >= maxhealth then self:HealFail(ent) return end
+
+	local need = self.HealAmount
+	
+	if need > 0 then
+		need = math.min(maxhealth - health,need)
+	end
+
+	if ( self:Clip1() >= need && need > 0 && ( ent:IsPlayer() or ent:GetClass() == "npc_vj_horde_antlion")) then
 
 		self:TakePrimaryAmmo( need )
 
-        local healinfo = HealInfo:New({amount=need, healer=self.Owner})
+        local healinfo = HealInfo:New({amount=need, healer=self:GetOwner()})
 		if ent:IsPlayer() then
 			HORDE:OnPlayerHeal(ent, healinfo)
 		else
             HORDE:OnAntlionHeal(ent, healinfo)
 		end
-		ent:EmitSound( HealSound )
-
-		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-
-		self:SetNextPrimaryFire( CurTime() + self:SequenceDuration() + 0.5 )
-		self.Owner:SetAnimation( PLAYER_ATTACK1 )
-
-		-- Even though the viewmodel has looping IDLE anim at all times, we need this to make fire animation work in multiplayer
-		timer.Create( "weapon_idle" .. self:EntIndex(), self:SequenceDuration(), 1, function() if ( IsValid( self ) ) then self:SendWeaponAnim( ACT_VM_IDLE ) end end )
-
+		self:HealSuccess(ent)
 	else
-
-		self.Owner:EmitSound( DenySound )
-		self:SetNextPrimaryFire( CurTime() + 1 )
-
+		self:HealFail(ent)
 	end
 
 end
@@ -99,38 +100,59 @@ function SWEP:SecondaryAttack()
 
 	if ( CLIENT ) then return end
 
-	local ent = self.Owner
+	local ent = self:GetOwner()
+
+	local maxhealth,health = ent:GetMaxHealth(),ent:Health()
+
+	if self:GetOwner():Horde_GetPerk("medic_painkillers") then
+		maxhealth = maxhealth*1.20
+	end
+
+	if health >= maxhealth then self:HealFail(ent) return end
 
 	local need = self.HealAmount
-	if ( IsValid( ent ) ) then need = self.HealAmount end
+
+	if need > 0 then
+	need = math.min(maxhealth - health,need)
+	end
 
 	if ( IsValid( ent ) && self:Clip1() >= need) then
 
 		self:TakePrimaryAmmo( need )
 
-        local healinfo = HealInfo:New({amount=need, healer=self.Owner})
-		if ent:IsPlayer() then
-			HORDE:OnPlayerHeal(ent, healinfo)
-		elseif ent:GetClass() == "npc_vj_horde_antlion" then
-			HORDE:OnAntlionHeal(ent, healinfo)
-		end
+        local healinfo = HealInfo:New({amount=need, healer=self:GetOwner()})
 
-		ent:EmitSound( HealSound )
+		HORDE:OnPlayerHeal(ent, healinfo)
 
-		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-
-		self:SetNextSecondaryFire( CurTime() + self:SequenceDuration() + 0.5 )
-		self.Owner:SetAnimation( PLAYER_ATTACK1 )
-
-		timer.Create( "weapon_idle" .. self:EntIndex(), self:SequenceDuration(), 1, function() if ( IsValid( self ) ) then self:SendWeaponAnim( ACT_VM_IDLE ) end end )
-
+		self:HealSuccess(ent)
 	else
-
-		ent:EmitSound( DenySound )
-		self:SetNextSecondaryFire( CurTime() + 1 )
-
+		self:HealFail(ent)
 	end
 
+end
+
+function SWEP:HealSuccess(ent)
+
+	self:GetOwner():EmitSound( HealSound )
+
+	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
+	local endtime = CurTime() + self:SequenceDuration()
+	endtime = endtime + 0.5
+	self:SetNextPrimaryFire( endtime )
+	self:SetNextSecondaryFire( endtime )
+	self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
+	
+	timer.Create( "weapon_idle" .. self:EntIndex(), self:SequenceDuration(), 1, function() if ( IsValid( self ) ) then self:SendWeaponAnim( ACT_VM_IDLE ) end end )
+
+end
+
+function SWEP:HealFail(ent)
+
+	self:GetOwner():EmitSound( DenySound )
+
+	local endtime = CurTime() + 1
+	self:SetNextPrimaryFire( endtime )
+	self:SetNextSecondaryFire( endtime )
 end
 
 function SWEP:OnRemove()
