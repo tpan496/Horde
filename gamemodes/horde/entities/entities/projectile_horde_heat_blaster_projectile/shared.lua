@@ -12,8 +12,8 @@ AddCSLuaFile()
 ENT.Model = "models/items/ar2_grenade.mdl"
 ENT.Ticks = 0
 ENT.FuseTime = 10
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
 ENT.Removing = nil
 ENT.Horde_Charged = 0
 function ENT:Draw()
