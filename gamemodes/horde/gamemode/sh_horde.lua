@@ -20,7 +20,6 @@ CreateConVar("horde_external_lua_config", "", nil, "Name of external config to l
 --CreateConVar("horde_starter_weapon_1", "", FCVAR_ARCHIVE, "Starter weapon 1.")
 --CreateConVar("horde_starter_weapon_2", "", FCVAR_ARCHIVE, "Starter weapon 2.")
 
-CreateConVar("horde_director_interval", 5, nil, "Game director execution interval in seconds. Decreasing this increases spawn rate.")
 CreateConVar("horde_max_enemies_alive_base", 20, nil, "Maximum number of living enemies (base).")
 CreateConVar("horde_max_enemies_alive_scale_factor", 5, nil, "Scale factor of the maximum number of living enemies for multiplayer.")
 CreateConVar("horde_max_enemies_alive_max", 50, nil, "Maximum number of maximum living enemies.")
