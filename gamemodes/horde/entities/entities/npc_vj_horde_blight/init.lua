@@ -77,7 +77,14 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
         util.Effect("blight_mini_explosion", e, true, true)
         for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
 			if ent:IsPlayer() then
-				ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 8, self)
+				local Trace = util.TraceLine({
+		                    start = self:WorldSpaceCenter(),
+		                    endpos = ent:WorldSpaceCenter(),
+				    mask = MASK_SOLID_BRUSHONLY
+		                })
+				if not Trace.HitWorld() then
+					ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 8, self)
+				end
 			end
 		end
     end
