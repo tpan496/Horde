@@ -732,6 +732,7 @@ function SWEP:Reload()
 	self:SetNextPrimaryFire(CurTime() + 1)
 	timer.Simple(1, function ()
 		if !IsValid(self.Weapon) then return end
+        if !IsValid(self.Owner) then return end
 		self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
 		local ammo = self.Owner:GetAmmoCount(self.Primary.Ammo)
 		local clip = math.min(self.Primary.ClipSize, ammo + self:Clip1())
