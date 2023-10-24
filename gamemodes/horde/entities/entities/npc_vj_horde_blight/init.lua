@@ -82,7 +82,7 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 		                    endpos = ent:WorldSpaceCenter(),
 				    mask = MASK_SOLID_BRUSHONLY
 		                })
-				if not Trace.HitWorld() then
+				if not Trace.HitWorld then
 					ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 8, self)
 				end
 			end
