@@ -28,13 +28,13 @@ end
 
 function PANEL:Init()
 
-    self.m_AvatarPanel = vgui.Create("DPanel", self)
-    self.m_AvatarPanel:SetText(" ")
+	self.m_AvatarPanel = vgui.Create("DPanel", self)
+	self.m_AvatarPanel:SetText(" ")
 	self.m_AvatarPanel:SetSize(32, 32 )
 	self.m_AvatarPanel:Center()
 	self.m_AvatarPanel:SetPaintBackground(false)
 
-    self.m_Avatar = vgui.Create("AvatarImage", self.m_AvatarPanel)
+	self.m_Avatar = vgui.Create("AvatarImage", self.m_AvatarPanel)
 	self.m_Avatar:SetSize(32, 32)
 	self.m_Avatar:SetVisible(false)
 	self.m_Avatar:SetMouseInputEnabled(false)
@@ -52,7 +52,7 @@ function PANEL:Init()
 	self.m_Mute = vgui.Create("DImageButton", self)
 	self.m_Mute.DoClick = MuteDoClick
 
-    self:InvalidateLayout()
+	self:InvalidateLayout()
 end
 
 function PANEL:Think()
@@ -66,10 +66,10 @@ function PANEL:PerformLayout()
 
 	self:SetSize(self:GetWide(), 40)
 
-    local w = self:GetWide()
+	local w = self:GetWide()
 	local h = self:GetTall()
 
-    self.m_AvatarPanel:AlignLeft(w * 0.015)
+	self.m_AvatarPanel:AlignLeft(w * 0.015)
 	self.m_AvatarPanel:CenterVertical()
 
 	self.m_PlayerLabel:SizeToContents()
@@ -109,14 +109,14 @@ end
 function PANEL:RefreshPlayer()
 
 	local pl = self:GetPlayer()
-    if not IsValid( pl ) then return end
+	if not IsValid( pl ) then return end
 
 	local subclass_name = HORDE.Class_Survivor
-    if pl:Horde_GetCurrentSubclass() then
+	if pl:Horde_GetCurrentSubclass() then
 		subclass_name = pl:Horde_GetCurrentSubclass()
 	end
 
-    local subclass = HORDE.subclasses[subclass_name]
+	local subclass = HORDE.subclasses[subclass_name]
 
 	local class = translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName
 
@@ -175,56 +175,56 @@ function PANEL:Paint()
 	if not IsValid( pl ) then return end
 
 	col = Color(40,40,40,200)
-    if not pl:Alive() then
-        col = Color(100, 0, 0, 200)
-    end
+	if not pl:Alive() then
+		col = Color(100, 0, 0, 200)
+	end
 
-    if self.Hovered then
-        mul = 2
-    end
+	if self.Hovered then
+		mul = 2
+	end
 
-    colTemp.r = col.r * mul
-    colTemp.g = col.g * mul
-    colTemp.b = col.b * mul
+	colTemp.r = col.r * mul
+	colTemp.g = col.g * mul
+	colTemp.b = col.b * mul
 
-    draw_RoundedBox(0, 0, 0, wide , tall , colTemp)
+	draw_RoundedBox(0, 0, 0, wide , tall , colTemp)
 
-    local subclass_name = HORDE.Class_Survivor
-    if pl:Horde_GetCurrentSubclass() then subclass_name = pl:Horde_GetCurrentSubclass() end
+	local subclass_name = HORDE.Class_Survivor
+	if pl:Horde_GetCurrentSubclass() then subclass_name = pl:Horde_GetCurrentSubclass() end
 
-    local perks
-    if HORDE.classes[subclass_name] then
-        perks = HORDE.classes[subclass_name].perks
-    else
-        perks = HORDE.subclasses[subclass_name].Perks
-    end
+	local perks
+	if HORDE.classes[subclass_name] then
+		perks = HORDE.classes[subclass_name].perks
+	else
+		perks = HORDE.subclasses[subclass_name].Perks
+	end
 
-    local gadget = pl:Horde_GetGadget()
+	local gadget = pl:Horde_GetGadget()
 
-    local subclass = HORDE.subclasses[subclass_name]
-    if subclass then
-        local mat = Material(subclass.Icon, "mips smooth")
-        local rank = pl:Horde_GetRank(subclass.PrintName)
-        local rank_level = pl:Horde_GetRankLevel(subclass.PrintName)
-        surface.SetMaterial(mat) -- Use our cached material
-        surface.SetDrawColor(HORDE.Rank_Colors[rank])
-        surface.DrawTexturedRect(wide * 0.215, 2, 38, 38)
-        if rank == HORDE.Rank_Master then
-            draw.SimpleText(rank_level, "Trebuchet18", wide * 0.2075, 12, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	local subclass = HORDE.subclasses[subclass_name]
+	if subclass then
+		local mat = Material(subclass.Icon, "mips smooth")
+		local rank = pl:Horde_GetRank(subclass.PrintName)
+		local rank_level = pl:Horde_GetRankLevel(subclass.PrintName)
+		surface.SetMaterial(mat) -- Use our cached material
+		surface.SetDrawColor(HORDE.Rank_Colors[rank])
+		surface.DrawTexturedRect(wide * 0.215, 2, 38, 38)
+		if rank == HORDE.Rank_Master then
+			draw.SimpleText(rank_level, "Trebuchet18", wide * 0.2075, 12, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-        else
-            if rank_level > 0 then
-                local star = Material("star.png", "mips smooth")
-                surface.SetMaterial(star)
-                local y_pos = 26
-                for i = 0, rank_level - 1 do
-                    surface.DrawTexturedRect(wide * 0.2075, y_pos, 10, 10)
-                    y_pos = y_pos - 7
-            	end
-        	end
-        end
+		else
+			if rank_level > 0 then
+				local star = Material("star.png", "mips smooth")
+				surface.SetMaterial(star)
+				local y_pos = 26
+				for i = 0, rank_level - 1 do
+					surface.DrawTexturedRect(wide * 0.2075, y_pos, 10, 10)
+					y_pos = y_pos - 7
+				end
+			end
+		end
 
-    end
+	end
 
 	local x = wide * 0.36
 	for perk_level, v in SortedPairs(perks) do
@@ -260,20 +260,20 @@ function PANEL:Paint()
 
 	end
 
-    if gadget then
-        local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
-        surface.SetMaterial(mat) -- Use our cached material
-        if HORDE.gadgets[gadget].Active then
-            if HORDE.gadgets[gadget].Once then
-                surface.SetDrawColor(HORDE.color_gadget_once)
-            else
-                surface.SetDrawColor(HORDE.color_gadget_active)
-            end
-        else
-            surface.SetDrawColor(color_white)
-        end
-        surface.DrawTexturedRect(wide * 0.526, -2, 90, 45)
-    end
+	if gadget then
+		local mat = Material(HORDE.gadgets[gadget].Icon, "mips smooth")
+		surface.SetMaterial(mat) -- Use our cached material
+		if HORDE.gadgets[gadget].Active then
+			if HORDE.gadgets[gadget].Once then
+				surface.SetDrawColor(HORDE.color_gadget_once)
+			else
+				surface.SetDrawColor(HORDE.color_gadget_active)
+			end
+		else
+			surface.SetDrawColor(color_white)
+		end
+		surface.DrawTexturedRect(wide * 0.526, -2, 90, 45)
+	end
 
 	return true
 end
@@ -298,4 +298,30 @@ function PANEL:GetPlayer()
 	return self.m_Player
 end
 
-vgui.Register("DPlayerLine", PANEL, "Panel")
+function PANEL:DoClick()
+	self.m_Player:ShowProfile()
+end
+
+-- submenu with mute, copy steamid, copy name, copy steamid64, copy profile url
+function PANEL:DoRightClick()
+	self.SubMenu = DermaMenu()
+	local subMenu = self.SubMenu
+	subMenu:AddOption( "Copy SteamID", function() SetClipboardText( self:GetPlayer():SteamID() ) end )
+	subMenu:AddOption( "Copy SteamID64", function() SetClipboardText( self:GetPlayer():SteamID64() ) end )
+	subMenu:AddOption( "Copy Name", function() SetClipboardText( self:GetPlayer():Name() ) end )
+	subMenu:AddOption( "Copy Profile URL", function() SetClipboardText( "https://steamcommunity.com/profiles/" .. self:GetPlayer():SteamID64() ) end )
+	subMenu:AddSpacer()
+	subMenu:AddOption( "Mute", function()
+		local muted = self:GetPlayer():IsMuted()
+		self:GetPlayer():SetMuted( not muted )
+		if not  muted then
+			self.m_Avatar:SetAlpha( 100 )
+		else
+			self.m_Avatar:SetAlpha( 255 )
+		end
+	end )
+
+	subMenu:Open()
+end
+
+vgui.Register( "DPlayerLine", PANEL, "DButton" )

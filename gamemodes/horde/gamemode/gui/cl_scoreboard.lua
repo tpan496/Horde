@@ -145,7 +145,12 @@ function scoreboard:show()
     end
 
     function scoreboard:hide()
-		-- This is where you hide the scoreboard, such as with Base:Remove()
+		-- This is where you hide the scoreboard, such as with Base:Remove()`
+        for _, panel in pairs( PlayerPanels ) do
+            if panel.SubMenu then
+                panel.SubMenu:Remove()
+            end
+        end
         gui.EnableScreenClicker(false)
         board:Remove()
         title:Remove()
