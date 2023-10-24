@@ -61,5 +61,6 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     timer.Simple(20, function()
         if not ent:IsValid() then return end
         ent:TakeDamage(ent:GetMaxHealth() + 1, Entity(0), Entity(0))
+        SafeRemoveEntityDelayed(ent, 1)
     end)
 end
