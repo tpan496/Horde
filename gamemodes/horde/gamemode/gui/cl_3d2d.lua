@@ -39,7 +39,9 @@ end)
 
 net.Receive("Horde_SyncHoldProgress", function ()
     local zone_id = net.ReadUInt(4)
-    hold_zones[zone_id].Progress = net.ReadUInt(8)
+    local zone = hold_zones[zone_id]
+    if not zone then return end
+    zone.Progress = net.ReadUInt(8)
 end)
 
 local obj_mat = Material("status/objective.png")
