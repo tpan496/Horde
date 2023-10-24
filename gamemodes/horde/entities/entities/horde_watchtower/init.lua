@@ -69,7 +69,7 @@ end
 hook.Add("PlayerUse", "PickUpWatchtower", function(ply, ent)
 	if not HORDE:IsWatchTower(ent) then return end
 	if not ent:GetNWEntity("HordeOwner"):IsValid() then return end
-	if not ent:GetNWEntity("HordeOwner") == ply then return false end
+	if ent:GetNWEntity("HordeOwner") ~= ply then return false end
 	if not ent.Horde_WatchtowerPickupCd then
 		ent.Horde_WatchtowerPickupCd = CurTime() + 0.5
 	else
