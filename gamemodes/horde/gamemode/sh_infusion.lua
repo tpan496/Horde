@@ -334,6 +334,7 @@ hook.Add("Horde_OnPlayerDamagePre", "Horde_ApplyFusion", function (ply, npc, bon
     if not ply.Horde_Infusions then return end
     local inflictor = dmginfo:GetInflictor()
     local curr_weapon = HORDE:GetCurrentWeapon(inflictor)
+    if not IsValid(curr_weapon) then return end
     local infusion = ply.Horde_Infusions[curr_weapon:GetClass()]
     if not infusion then return end
     npc.hitgroup = hitgroup
