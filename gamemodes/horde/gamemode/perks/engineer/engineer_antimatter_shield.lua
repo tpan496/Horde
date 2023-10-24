@@ -74,6 +74,7 @@ PERK.Hooks.Horde_OnMinionDamageTaken = function(target, dmg)
         if health > 0 then
             target:Horde_SetShieldHealth(health - dmg:GetDamage())
             if target:Horde_GetShieldHealth() <= 0 then
+                local antimatterDmg = target.Horde_Has_Antimatter_Shield
                 target.Horde_Has_Antimatter_Shield = nil
                 net.Start("Horde_Antimatter_Shield_Remove")
                     net.WriteEntity(target)
@@ -87,9 +88,10 @@ PERK.Hooks.Horde_OnMinionDamageTaken = function(target, dmg)
                         dd:SetAttacker(target)
                         dd:SetInflictor(target)
                         dd:SetDamageType(DMG_CRUSH)
-                        dd:SetDamage(target.Horde_Has_Antimatter_Shield)
+
+                        dd:SetDamage(antimatterDmg)
                     if target:GetNWEntity("HordeOwner"):Horde_GetGadget() == "gadget_voidout" then
-                        dd:SetDamage(target.Horde_Has_Antimatter_Shield * 2)
+                        dd:SetDamage(antimatterDmg * 2)
                     end
                     util.BlastDamageInfo(dd, target:GetPos(), 200)
                 end
