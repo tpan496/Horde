@@ -74,6 +74,7 @@ PERK.Hooks.Horde_OnMinionDamageTaken = function(target, dmg)
         if health > 0 then
             target:Horde_SetShieldHealth(health - dmg:GetDamage())
             if target:Horde_GetShieldHealth() <= 0 then
+                target.Horde_Has_Antimatter_Shield = nil
                 net.Start("Horde_Antimatter_Shield_Remove")
                     net.WriteEntity(target)
                 net.Broadcast()
@@ -92,8 +93,6 @@ PERK.Hooks.Horde_OnMinionDamageTaken = function(target, dmg)
                     end
                     util.BlastDamageInfo(dd, target:GetPos(), 200)
                 end
-
-                target.Horde_Has_Antimatter_Shield = nil
             end
             return true
         end
