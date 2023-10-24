@@ -39,7 +39,8 @@ function ENT:CustomOnInitialize()
         phys:EnableGravity(false)
     end
 
-    timer.Simple(0, function ()
+    timer.Simple(0, function()
+        if not IsValid( self ) then return end
         if self:GetCharged() >= 2 then
             self:Ignite(999)
             if self:GetCharged() == 2 then
