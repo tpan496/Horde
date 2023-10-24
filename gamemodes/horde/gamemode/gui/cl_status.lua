@@ -622,11 +622,13 @@ function HORDE:PlayMoneyNotification(diff, money)
 end
 
 -- Override health, armor and ammo
-function ArcCW:ShouldDrawHUDElement(ele)
-    if ele == "CHudHealth" then return false end
-    if ele == "CHudBattery" then return false end
-    if ele == "CHudAmmo" then return false end
-    return true
+if ArcCW then
+    function ArcCW:ShouldDrawHUDElement(ele)
+        if ele == "CHudHealth" then return false end
+        if ele == "CHudBattery" then return false end
+        if ele == "CHudAmmo" then return false end
+        return true
+    end
 end
 
 if CLIENT then
