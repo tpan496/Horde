@@ -41,9 +41,7 @@ function scoreboard:show()
 	title:AlignTop( ScrH() * 0.15 )
     --title:SetPos(ScrW()/2 - 1000 / 2, ScrH()/5 - 50)
 	title:CenterHorizontal()
-
     function title:Paint(w, h)
-
 		draw.RoundedBoxEx(8,0,0,w,h * 0.135, Color(30,30,30,150), true, true, false,false)
         draw_SimpleText("Horde - " .. map_name .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "Title", 10, 12, HORDE.color_crimson_dim, TEXT_ALIGN_LEFT)
         draw_SimpleText(server_name, "Title", width - 10, 12, HORDE.color_crimson_dim, TEXT_ALIGN_RIGHT)
@@ -61,7 +59,7 @@ function scoreboard:show()
 	board:CenterHorizontal()
     --board:SetPos(ScrW()/2-(1000/2), ScrH()/5)
     function board:Paint(w, h)
-        --draw.RoundedBox(0, 0, 0, w, h, Color(255,255,255, 100))
+        draw.RoundedBox(0, 0, 0, w, h, Color(30,30,30,150))
     end
 
     local ScrollPanel = board:Add("DScrollPanel")
@@ -136,10 +134,49 @@ function scoreboard:show()
         CreatePlayerPanel(ply)
     end
 
-    local function GetPlayerPanel(pl)
-        for _, panel in pairs(PlayerPanels) do
-            if panel:IsValid() and panel:GetPlayer() == pl then
-                return panel
+    if outfitter and outfitter.GUIOpen then
+        local outfitterButton = vgui.Create( "DButton" )
+        scoreboard.OutfitterButton = outfitterButton
+        outfitterButton:SetText( "Outfitter" )
+        outfitterButton:SetSize( 200, 40 )
+        outfitterButton:SetPos( 5, ScrH() / 2 + 25 )
+        outfitterButton:SetTextColor( Color( 255, 255, 255 ) )
+
+        function outfitterButton:DoClick()
+            outfitter.GUIOpen()
+        end
+
+        function outfitterButton:Paint( w, h )
+            if self:IsHovered() then
+                draw_RoundedBox( 8, 0, 0, w, h, Color( 30, 30, 30, 255 ) )
+            else
+                draw_RoundedBox( 8, 0, 0, w, h, Color( 40, 40, 40, 255 ) )
+            end
+        end
+    end
+
+    if hook.GetTable().HUDPaint and hook.GetTable().HUDPaint["SimpleTP.HUDPaint"] then
+        local thirdPerson = vgui.Create( "DButton" )
+        scoreboard.ThirdPerson = thirdPerson
+        thirdPerson:SetText( "Third Person" )
+        thirdPerson:SetSize( 200, 40 )
+        thirdPerson:SetPos( 5, ScrH() / 2 - 25 )
+        thirdPerson:SetTextColor( Color( 255, 255, 255 ) )
+
+        function thirdPerson:DoClick()
+            -- Weird global from Simple Third Person
+            local frame = vgui.Create( "DFrame" )
+            BuildMenu( frame )
+            frame:SetSize( 300, 200 )
+            frame:Center()
+            frame:MakePopup()
+        end
+
+        function thirdPerson:Paint( w, h )
+            if self:IsHovered() then
+                draw_RoundedBox( 8, 0, 0, w, h, Color( 30, 30, 30, 255 ) )
+            else
+                draw_RoundedBox( 8, 0, 0, w, h, Color( 40, 40, 40, 255 ) )
             end
         end
     end
@@ -154,6 +191,13 @@ function scoreboard:show()
         gui.EnableScreenClicker(false)
         board:Remove()
         title:Remove()
+        if IsValid(self.ThirdPerson) then
+            self.ThirdPerson:Remove()
+        end
+
+        if IsValid(self.OutfitterButton) then
+            self.OutfitterButton:Remove()
+        end
         hook.Remove("KeyPress", "Horde_Scoreboard_Mouse")
 	end
 
