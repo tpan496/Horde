@@ -34,6 +34,7 @@ end
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_ReactiveArmorDamage", function (ply, dmginfo, bonus, silent)
     if silent then return end
+    if ply.TakingReactiveArmorDamage then return end
     if ply:IsValid() and ply:Horde_GetReactiveArmorEnabled() and ply:Horde_GetReactiveArmor() == 1 and dmginfo:GetAttacker() ~= ply then
         bonus.resistance = 1
         local dmg = DamageInfo()
@@ -41,7 +42,11 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_ReactiveArmorDamage", function (ply
         dmg:SetInflictor(ply)
         dmg:SetDamageType(DMG_BLAST)
         dmg:SetDamage(100)
+
+        ply.TakingReactiveArmorDamage = true
         util.BlastDamageInfo(dmg, ply:GetPos(), 150)
+        ply.TakingReactiveArmorDamage = nil
+
         local effectdata = EffectData()
         effectdata:SetOrigin( ply:GetPos() )
         util.Effect("Explosion", effectdata)
