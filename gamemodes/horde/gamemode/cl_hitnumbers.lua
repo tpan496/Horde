@@ -52,6 +52,8 @@ local function spawnIndicator(type, text, col, icon, pos, vel, ttl)
 	table.insert(indicators, ind)
 end
 
+local UpOffset = Vector(0,0,15)
+
 -- Called when an indicator should be created for this player.
 net.Receive("Horde_HitnumbersSpawn", function()
 	if not GetConVar("horde_display_damage"):GetBool() then return end
@@ -76,7 +78,7 @@ net.Receive("Horde_HitnumbersSpawn", function()
     local col = HORDE.DMG_COLOR[horde_type]
     local icon = Material(HORDE.DMG_TYPE_ICON[horde_type], "mips smooth")
 
-    spawnIndicator(0, tostring(dmg), col, icon, pos, VectorRand(), ttl)
+    spawnIndicator(0, tostring(dmg), col, icon, pos+UpOffset, VectorRand(), ttl)
 end)
 
 net.Receive("Horde_HitnumbersDebuffSpawn", function()
