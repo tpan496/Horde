@@ -1003,7 +1003,16 @@ function HORDE:WaveStart()
     end
 
     local current_wave = ((HORDE.current_wave - 1) % HORDE.max_max_waves) + 1
-    horde_players_count = table.Count(player.GetAll())
+
+    local countablePlayerCount = 0
+    for _, ply in ipairs( player.GetAll() ) do
+        local result = hook.Run("Horde_ShouldCountPlayer", ply)
+        if result ~= false then
+            countablePlayerCount = countablePlayerCount + 1
+        end
+    end
+    horde_players_count = countablePlayerCount
+
     horde_current_enemies_list = table.Copy(HORDE.enemies_normalized[current_wave])
     local difficulty_coefficient = HORDE.difficulty * 0.05
 
