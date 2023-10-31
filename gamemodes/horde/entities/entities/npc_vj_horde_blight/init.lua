@@ -83,7 +83,7 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 				    mask = MASK_SOLID_BRUSHONLY
 		                })
 				if not Trace.HitWorld then
-					ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 8, self)
+					ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 5, self)
 				end
 			end
 		end
