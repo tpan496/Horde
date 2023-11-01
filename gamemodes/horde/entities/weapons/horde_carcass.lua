@@ -30,7 +30,7 @@ SWEP.Secondary.Ammo = "none"
 
 SWEP.DrawAmmo = false
 
-SWEP.HitDistance = 75
+SWEP.HitDistance = 90
 
 SWEP.Charging = 0
 SWEP.ChargingTimer = 0
@@ -167,7 +167,7 @@ function SWEP:DealDamage()
             Damage = self.BaseDamage,
             Tracer = -1,
 			HullSize = 10,
-            Distance = 75,
+            Distance = SWEP.HitDistance,
             Dir = tr.HitPos - self:GetOwner():GetShootPos(),
             Src = self:GetOwner():GetShootPos(),
             Callback = function(att, trb, dmginfo)
