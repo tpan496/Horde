@@ -167,7 +167,7 @@ function SWEP:DealDamage()
             Damage = self.BaseDamage,
             Tracer = -1,
 			HullSize = 10,
-            Distance = SWEP.HitDistance,
+            Distance = self.HitDistance,
             Dir = tr.HitPos - self:GetOwner():GetShootPos(),
             Src = self:GetOwner():GetShootPos(),
             Callback = function(att, trb, dmginfo)
