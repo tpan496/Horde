@@ -161,10 +161,12 @@ HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM", "NIGHTMARE", "APOCALYPSE"}
 
 -- ArcCW Attachments
 if ArcCWInstalled then
-    if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
-        RunConsoleCommand("arccw_attinv_free", "0")
-    else
-        RunConsoleCommand("arccw_attinv_free", "1")
+    if SERVER then
+        if GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
+            RunConsoleCommand("arccw_attinv_free", "0")
+        else
+            RunConsoleCommand("arccw_attinv_free", "1")
+        end
     end
 
     -- Disable perks that messes up with Horde's own system.
