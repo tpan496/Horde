@@ -297,7 +297,7 @@ function PANEL:Init()
     createBtn("Class/Perks", ClassTab, RIGHT)
 
     -- ArcCW Attachment Tab
-    if ArcCWInstalled and not table.IsEmpty(attachments) and GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
+    if ArcCWInstalled and not table.IsEmpty(attachments) and not GetGlobal2Bool("horde_arccw_attinv_free") then
         self.AttachmentTab = vgui.Create("DPanel", self)
         self.AttachmentTab.Paint = function () end
         self.AttachmentTabLayout = vgui.Create("DCategoryList", self.AttachmentTab)
