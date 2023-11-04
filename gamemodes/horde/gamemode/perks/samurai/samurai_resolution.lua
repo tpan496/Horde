@@ -18,7 +18,7 @@ end
 
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "samurai_resolution" then
-        ply:Horde_SetMaxWeight(7)
+        ply:Horde_SetMaxWeight(8)
     end
 end
 

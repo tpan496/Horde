@@ -86,9 +86,9 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
     end
     local vel
     if ply:IsOnGround() then
-        vel = dir * 1000
+        vel = dir * 2000
     else
-        vel = dir * 500
+        vel = dir * 1000
     end
     ply:SetLocalVelocity(vel)
     ply.Horde_In_Quickstep = true
@@ -98,7 +98,7 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
         local dmginfo = DamageInfo()
         dmginfo:SetAttacker(ply)
         dmginfo:SetInflictor(ply)
-        dmginfo:SetDamage(50)
+        dmginfo:SetDamage(75)
         dmginfo:SetDamageType(DMG_CRUSH)
         HORDE:ApplyDamageInRadius(ply:GetPos(), 150, dmginfo, function (ent)
             HORDE:SelfHeal(ply, 5)
