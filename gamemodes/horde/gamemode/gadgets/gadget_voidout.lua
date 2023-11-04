@@ -39,6 +39,7 @@ end
 
 GADGET.Hooks.Horde_OnMinionDamageTaken = function(target, dmg)
     if CLIENT then return end
+    if target.VoidShieldExplosionActive then return end
     if target:IsNPC() and target.Horde_Has_Void_Shield then
         net.Start("Horde_Void_Shield_Remove")
             net.WriteEntity(target)
@@ -49,11 +50,14 @@ GADGET.Hooks.Horde_OnMinionDamageTaken = function(target, dmg)
         util.Effect("antimatter_explosion", effectdata)
         if target:GetNWEntity("HordeOwner"):IsValid() then
             local dd = DamageInfo()
-                dd:SetAttacker(target)
-                dd:SetInflictor(target)
-                dd:SetDamageType(DMG_REMOVENORAGDOLL)
-                dd:SetDamage(target.Horde_Has_Void_Shield)
+            dd:SetAttacker(target)
+            dd:SetInflictor(target)
+            dd:SetDamageType(DMG_REMOVENORAGDOLL)
+            dd:SetDamage(target.Horde_Has_Void_Shield)
+
+            target.VoidShieldExplosionActive = true
             util.BlastDamageInfo(dd, target:GetPos(), 200)
+            target.VoidShieldExplosionActive = nil
         end
 
         target.Horde_Has_Void_Shield = nil
