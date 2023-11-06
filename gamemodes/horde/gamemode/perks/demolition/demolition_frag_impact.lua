@@ -15,7 +15,7 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
         e:SetOrigin(inflictor:GetPos())
         util.Effect("Explosion", e)
         util.BlastDamage(inflictor, ply, inflictor:GetPos(), 150, 150)
-        npc:Horde_AddDebuffBuildup(HORDE.Status_Stun, 500, ply, npc:GetPos())
+        npc:Horde_AddDebuffBuildup(HORDE.Status_Stun, 200, ply, npc:GetPos())
         inflictor:Remove()
     end
 end
