@@ -53,11 +53,11 @@ end
 function rings.RenderRings( zones, col )
 
 	rings.StartStencils()
-	
+
 	rings.RenderSphere( zones )
 
-	rings.CamRendering( LocalPlayer():EyeAngles():Forward(), col )
-	
+	rings.DrawRings( LocalPlayer():EyeAngles():Forward(), col )
+
 	render.SetStencilEnable( false )
 end
 
