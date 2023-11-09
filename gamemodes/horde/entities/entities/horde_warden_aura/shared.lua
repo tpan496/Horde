@@ -1,2 +1,2 @@
-ENT.Type = "brush"
-ENT.Base = "base_brush"
+ENT.Type = "anim"
+ENT.Base = "base_anim"
