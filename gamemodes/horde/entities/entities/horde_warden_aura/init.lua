@@ -1,4 +1,5 @@
 AddCSLuaFile("shared.lua")
+AddCSLuaFile("cl_init.lua")
 include("shared.lua")
 ENT.CleanupPriority = 2
 ENT.TouchedEntities = {}
