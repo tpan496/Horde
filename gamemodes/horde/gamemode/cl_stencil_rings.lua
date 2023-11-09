@@ -56,7 +56,7 @@ function rings.RenderRings( zones, col )
 	
 	rings.RenderSphere( zones )
 
-	rings.CamRendering( LocalPlayer():EyeAngles():Forward(), col )
+	rings.DrawRings( LocalPlayer():EyeAngles():Forward(), col )
 	
 	render.SetStencilEnable( false )
 end
