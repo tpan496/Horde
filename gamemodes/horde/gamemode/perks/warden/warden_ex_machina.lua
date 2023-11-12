@@ -8,15 +8,17 @@ PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "warden_ex_machina" then
         if not HORDE.player_drop_entities[ply:SteamID()] then return end
-        for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()])  do
-            if HORDE:IsWatchTower(ent) then
-                ent:Horde_AddWardenAura()
+        timer.Simple( 0 , function()
+            for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()])  do
+                if HORDE:IsWatchTower(ent) then
+                    ent:Horde_AddWardenAura()
+                end
             end
-        end
 
-        if ply.Horde_Extra_Watchtower and ply.Horde_Extra_Watchtower:IsValid() then
-            ply.Horde_Extra_Watchtower:Horde_AddWardenAura()
-        end
+            if ply.Horde_Extra_Watchtower and ply.Horde_Extra_Watchtower:IsValid() then
+                ply.Horde_Extra_Watchtower:Horde_AddWardenAura()
+            end
+        end )
    end
 end
 
