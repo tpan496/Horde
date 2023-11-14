@@ -62,8 +62,8 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         local armor = ply:Armor()
 
         local p = ent:GetPos()
-        for i = 1, 10 do
-            timer.Simple(i*0.25, function ()
+        for i = 1, 15 do
+            timer.Simple(i*0.1, function ()
                 if not ply.Horde_In_Omni then return end
                 if !IsValid(ent) then
                     for _, e in pairs(ents.FindInSphere(p, 200)) do
@@ -85,7 +85,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
                 dmg:SetAttacker(ply)
                 dmg:SetInflictor(ply)
                 dmg:SetDamageType(DMG_SLASH)
-                dmg:SetDamage(50)
+                dmg:SetDamage(100)
                 if IsValid(ent) then
                     dmg:SetDamagePosition(ent:GetPos())
                     ent:TakeDamageInfo(dmg)
@@ -102,7 +102,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
                     return
                 end
 
-                if i == 10 then
+                if i == 15 then
                     ply.Horde_In_Omni = nil
                     timer.Simple(0.5, function ()
                         SpawnPlayer(ply, ply_pos, ply_angles, armor)
