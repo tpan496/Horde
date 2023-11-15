@@ -1,19 +1,25 @@
 local colmask = Color(0,0,0,0)
 local render_DrawSphere = render.DrawSphere
-
+local table_insert = table.insert
 rings = rings or {}
 
-local List = {}
+local Lists = {}
 local col = Color(255,255,255,255)
 
 function rings.SetColor(color) --this does not work for multiple colours right now
 	col = color
 end
 
-function rings.Add(ent, outer, thickness, Detail, ringcolor)
-	t = { pos = ent:GetPos(), inner_r = math.max(outer - thickness,0), outer_r = outer, detail = Detail}
-
-	table.insert( List, t )
+function rings.AddSet(tbl, col)
+	local set = { zones = {}, color = col }
+	for _ , ring in ipairs(tbl) do
+		local t = { pos = ring[1]:GetPos(), 
+		inner_r = math.max(ring[2] - ring[3],0), 
+		outer_r = ring[2], 
+		detail = ring[4] }
+		table_insert( set.zones , t )
+	end
+	table_insert( Lists , set )
 end
 
 function rings.RenderSphere( tbl )
@@ -42,29 +48,31 @@ function rings.StartStencils()
 	render.SetColorMaterial()
 end
 
-function rings.DrawRings( cam_normal, Color )
-
-	local cam_pos = EyePos( LocalPlayer() )
+function rings.DrawRings( zones )
+	local cam_normal = LocalPlayer():EyeAngles():Forward()
+	local cam_pos = EyePos()
 	render.SetStencilCompareFunction( STENCIL_EQUAL )
 	render.SetStencilReferenceValue( 1 )
-	render.DrawQuadEasy(cam_pos + cam_normal*10, -cam_normal, 100, 200, Color, 0)
+	render.DrawQuadEasy(cam_pos + cam_normal*10, -cam_normal, 100, 200, zones.color, 0)
 end
 
-function rings.RenderRings( zones, col )
-
+function rings.RenderRings( zones )
 	rings.StartStencils()
 
-	rings.RenderSphere( zones )
+	rings.RenderSphere( zones.zones )
 
-	rings.DrawRings( LocalPlayer():EyeAngles():Forward(), col )
+	rings.DrawRings( zones )
 
 	render.SetStencilEnable( false )
 end
 
 hook.Add("PostDrawOpaqueRenderables","RenderRings",function()
-	List = {}
+	Lists = {}
 	hook.Run("PreDrawRings")
 
-	if #List == 0 then end
-	rings.RenderRings(List, col)
+	if #Lists == 0 then return end
+	for _,set in pairs(Lists) do
+		if #set.zones == 0 then continue end
+		rings.RenderRings(set)
+	end
 end)
