@@ -154,7 +154,9 @@ function ENT:CustomOnPhysicsCollide(data, phys)
 	util.ScreenShake(myPos, 20, 150, 1, 500)
 
     local dmg = DamageInfo()
-    dmg:SetAttacker(self.Owner)
+    if IsValid( self.Owner ) then
+        dmg:SetAttacker(self.Owner)
+    end
     dmg:SetInflictor(self)
     dmg:SetDamageType(DMG_GENERIC)
     dmg:SetDamage(60)
