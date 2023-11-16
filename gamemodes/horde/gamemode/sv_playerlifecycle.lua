@@ -302,7 +302,9 @@ function HORDE:GameEnd(status)
                 GetConVar("horde_difficulty"):SetInt(3)
             elseif chosen_diff == "APOCALYPSE" then
                 GetConVar("horde_difficulty"):SetInt(4)
-            else
+            elseif chosen_diff == "HELL" then
+		GetConVar("horde_difficulty"):SetInt(5)
+	    else
                 GetConVar("horde_difficulty"):SetInt(1)
             end
 

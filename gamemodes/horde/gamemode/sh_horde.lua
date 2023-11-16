@@ -157,7 +157,7 @@ HORDE.player_kills_weapon = {}
 HORDE.render_highlight_disable = 0
 HORDE.render_highlight_enemies = 1
 HORDE.render_highlight_ammoboxes = 2
-HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM", "NIGHTMARE", "APOCALYPSE"}
+HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM", "NIGHTMARE", "APOCALYPSE", "HELL"}
 
 -- ArcCW Attachments
 if ArcCWInstalled then

@@ -368,6 +368,7 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     self.create_diff_panel("REALISM")
     self.create_diff_panel("NIGHTMARE")
     self.create_diff_panel("APOCALYPSE")
+    self.create_diff_panel("HELL")
 end
 
 function PANEL:Paint(w, h)
