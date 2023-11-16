@@ -578,7 +578,7 @@ function HORDE:SpawnEnemy(enemy, pos)
 
             if HORDE.difficulty >= 4 then
                 p = math.random()
-                if p <= 0.25 then
+                if p <= HORDE.difficulty_mutation_probability[HORDE.difficulty] then
                     local mut = HORDE.current_mutations[math.random(1, #HORDE.current_mutations)]
                     timer.Simple(0.2, function() spawned_enemy:Horde_SetMutation(mut) end)
                 end
