@@ -1391,7 +1391,7 @@ function HORDE:Direct()
         end
 
         -- Spawn ammoboxes
-        if horde_ammobox_refresh_timer <= 0 then
+        if horde_ammobox_refresh_timer <= 0 and #valid_nodes > 0 then
             if HORDE.ammobox_nodes and not (table.IsEmpty(HORDE.ammobox_nodes)) then
                 HORDE:SpawnAmmoboxes(HORDE.ammobox_nodes)
             else
