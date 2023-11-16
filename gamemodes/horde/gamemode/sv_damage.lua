@@ -166,7 +166,7 @@ function HORDE:DamageInfo(damage, dmgtype, attacker, inflictor, damage_custom)
     local dmginfo = DamageInfo()
     dmginfo:SetAttacker(attacker)
 
-    if inflictor then
+    if IsValid(inflictor) then
         dmginfo:SetInflictor(inflictor)
     else
         dmginfo:SetInflictor(attacker)
