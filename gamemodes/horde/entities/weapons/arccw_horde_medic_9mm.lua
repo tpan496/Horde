@@ -28,9 +28,9 @@ SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 7
-SWEP.DamageMin = 5
-SWEP.RangeMin = 12.5
+SWEP.Damage = 9
+SWEP.DamageMin = 6
+SWEP.RangeMin = 15
 SWEP.Range = 31.25
 SWEP.Penetration = 2
 SWEP.DamageType = DMG_BULLET
@@ -45,7 +45,7 @@ SWEP.ReducedClipSize = 18
 SWEP.Recoil = 0.400
 SWEP.RecoilSide = 0.125
 SWEP.RecoilRise = 0.1
-SWEP.RecoilPunch = 2.5
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 0.08 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
