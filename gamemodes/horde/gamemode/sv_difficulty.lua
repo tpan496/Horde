@@ -18,11 +18,11 @@ local difficulty_hell = 5
 -- Multipliers
 local difficulty_damage_multiplier = {1, 1.25, 1.5, 1.7, 1.9, 2}
 local difficulty_enemy_count_multiplier = {1, 1.3, 1.5, 1.6, 1.7, 1.5}
-HORDE.difficulty_reward_base_multiplier = {1, 0.8, 0.6, 0.5, 0.4, 0.45}
+HORDE.difficulty_reward_base_multiplier = {1, 0.8, 0.6, 0.5, 0.4, 0.3}
 HORDE.difficulty_health_multiplier = {1, 1.25, 1.5, 1.5, 1.5, 2}
-local difficulty_start_money_multiplier = {1, 0.9, 0.8, 0.75, 0.6, 0.8}
+local difficulty_start_money_multiplier = {1, 0.9, 0.8, 0.75, 0.6, 0.6}
 local difficulty_spawn_radiuis_multiplier = {1, 0.75, 0.5, 0.5, 0.4, 0.4}
-local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25, 1.25, 1.3, 1.5}
+local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25, 1.25, 1.3, 1.75}
 local difficulty_poison_headcrab_damage = {50, 60, 75, 75, 75, 75}
 HORDE.difficulty_status_duration_bonus = {0, 1, 2, 3, 4, 5}
 HORDE.difficulty_break_health_left = {0.20, 0.15, 0.10, 0.10, 0.05, 0.10}
