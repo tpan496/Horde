@@ -125,7 +125,7 @@ end
 
 function SWEP:PrimaryAttack()
     if self.Reloading == 1 then
-        self.Reloading = 2
+        self.Reloading = 0
     else
         if !( self.Reloading == 0 ) then return end
         if self.Weapon:Clip1() <= 0 and self.Weapon:Ammo1() <= 0 then
