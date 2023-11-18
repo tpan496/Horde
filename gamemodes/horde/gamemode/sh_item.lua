@@ -496,7 +496,7 @@ function HORDE:GetDefaultItemsData()
     {Ghost=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "M200",           "arccw_horde_m200",    3250, 9, "CheyTec M200 Intervention.\nAmerican bolt-action sniper rifle.",
     {Ghost=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3500, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
+    HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3750, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
     {Ghost=true}, 50, -1, nil, nil, {Ghost=5}, nil, {HORDE.DMG_BALLISTIC})
 
     HORDE:CreateItem("Rifle",      "Apollo",         "arccw_horde_apollo",  3000, 8, "Apollo incineration rifle.\nFires energy pellets that melt down enemies.",

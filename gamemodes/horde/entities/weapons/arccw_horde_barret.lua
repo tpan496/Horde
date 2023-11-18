@@ -34,8 +34,8 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 850
-SWEP.DamageMin = 850
+SWEP.Damage = 1000
+SWEP.DamageMin = 1000
 SWEP.Range = 4000 -- in METRES
 SWEP.Penetration = 22
 
@@ -43,14 +43,14 @@ SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 5 -- DefaultClip is automatically set.
 
 SWEP.VisualRecoilMult = 0
-SWEP.Recoil = 2
-SWEP.RecoilSide = 5
+SWEP.Recoil = 0.75
+SWEP.RecoilSide = 0
 
 SWEP.AccuracyMOA = 0.01 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 800 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 100
 
-SWEP.Delay = 1.25 -- 60 / RPM.
+SWEP.Delay = 1 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
