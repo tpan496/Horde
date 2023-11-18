@@ -30,7 +30,7 @@ CreateConVar("horde_base_runspeed", 220, nil, "Base runspeed.")
 
 CreateConVar("horde_difficulty", 0, nil, "Difficulty.")
 CreateConVar("horde_disable_difficulty_voting", 0, nil, "Disable difficulty voting.")
-CreateConVar("horde_endless", 0, nil, "Endless.")
+CreateConVar("horde_endless", 0, FCVAR_ARCHIVE, "Endless.")
 CreateConVar("horde_total_enemies_scaling", 0, nil, "Forces the gamemode to multiply maximum enemy count by this.")
 
 CreateConVar("horde_perk_start_wave", 1, FCVAR_REPLICATED, "The wave when Tier 1 perks are active.")
