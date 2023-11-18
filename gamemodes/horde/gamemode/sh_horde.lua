@@ -2,7 +2,7 @@ CreateConVar("horde_default_enemy_config", 1, nil, "Use default enemy wave confi
 CreateConVar("horde_default_item_config", 1, nil, "Use default item config settings.")
 CreateConVar("horde_default_class_config", 1, nil, "Use default class config settings.")
 CreateConVar("horde_max_wave", 10, nil, "Max waves.")
-CreateConVar("horde_break_time", 60, nil, "Break time between waves.")
+CreateConVar("horde_break_time", 90, FCVAR_ARCHIVE, "Break time between waves.")
 CreateConVar("horde_enable_shop", 1, FCVAR_REPLICATED, "Enables shop menu or not.")
 CreateConVar("horde_enable_shop_icons", 1, FCVAR_ARCHIVE + FCVAR_REPLICATED, "Enables shop menu icons or not.")
 CreateConVar("horde_enable_perk", 1, FCVAR_REPLICATED, "Enables perks or not.")
