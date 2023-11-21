@@ -124,12 +124,13 @@ function Shop(ply)
                 return
             end
 
-            if HORDE.has_buy_zone and (not ply:Horde_GetInBuyZone()) or not isNearBeacon then
+            if HORDE.has_buy_zone and ( not ply:Horde_GetInBuyZone() and not isNearBeacon ) then
                 HORDE:SendNotification("You are not in a buyzone, you can find buyzones usually indicated by green.", 1, ply)
                 return
             end
         end
     end
+
     ply:Horde_RecalcWeight()
     net.Start("Horde_ToggleShop")
     net.Send(ply)
