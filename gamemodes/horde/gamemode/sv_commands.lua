@@ -43,7 +43,7 @@ function HORDE:BroadcastGameResultMessage(status, wave)
     net.Broadcast()
 end
 
-function Start(ply)
+local function Start(ply)
     if ply:IsAdmin() then
         if not HORDE.start_game then
             HORDE.start_game = true
@@ -89,7 +89,7 @@ function Ready(ply)
     HORDE:BroadcastPlayersReadyMessage(tostring(ready_count) .. "/" .. tostring(total_player))
 end
 
-function End(ply)
+local function End(ply)
     if not ply:IsAdmin() then
         HORDE:SendNotificationDenyAccess(ply)
         return
@@ -102,7 +102,7 @@ end
 local function nearBeacon(ply)
     local beacons = ents.FindByClass("horde_watchtower_beacon")
     if #beacons == 0 then return false end
-    for i,v in pairs(beacons) do
+    for _, v in pairs(beacons) do
         if v:GetPos():Distance(ply:GetPos()) <=  150 then
             return true
         end
@@ -116,15 +116,15 @@ function Shop(ply)
     end
 
     if ply:Alive() then
-	local IsNearBeacon = nearBeacon(ply)
+        local isNearBeacon = nearBeacon(ply)
         local res = hook.Run("Horde_OnPlayerOpenShop", ply)
         if res ~= true then
-            if HORDE.current_break_time <= 0 and not IsNearBeacon then
+            if HORDE.current_break_time <= 0 and not isNearBeacon then
                 HORDE:SendNotification("You cannot shop after a wave has started.", 1, ply)
                 return
             end
 
-            if HORDE.has_buy_zone and (not ply:Horde_GetInBuyZone()) or not IsNearBeacon then
+            if HORDE.has_buy_zone and (not ply:Horde_GetInBuyZone()) or not isNearBeacon then
                 HORDE:SendNotification("You are not in a buyzone, you can find buyzones usually indicated by green.", 1, ply)
                 return
             end
@@ -135,7 +135,7 @@ function Shop(ply)
     net.Send(ply)
 end
 
-function ItemConfig(ply)
+local function ItemConfig(ply)
     if HORDE.start_game then
         HORDE:SendNotification("You cannot open config after a game has started.", 1, ply)
         return
@@ -148,7 +148,7 @@ function ItemConfig(ply)
     end
 end
 
-function EnemyConfig(ply)
+local function EnemyConfig(ply)
     if HORDE.start_game then
         HORDE:SendNotification("You cannot open config after a game has started.", 1, ply)
         return
@@ -163,7 +163,7 @@ function EnemyConfig(ply)
     end
 end
 
-function ClassConfig(ply)
+local function ClassConfig(ply)
     if HORDE.start_game then
         HORDE:SendNotification("You cannot open config after a game has started.", 1, ply)
         return
@@ -176,7 +176,7 @@ function ClassConfig(ply)
     end
 end
 
-function MapConfig(ply)
+local function MapConfig(ply)
     if HORDE.start_game then
         HORDE:SendNotification("You cannot open config after a game has started.", 1, ply)
         return
@@ -310,7 +310,7 @@ concommand.Add("horde_testing_give_money", function (ply, cmd, args)
         return
     end
 
-	local amount = math.floor(tonumber(args[1]))
+    local amount = math.floor(tonumber(args[1]))
 
     if (ply:Horde_GetMoney() + amount) < 0 then
         ply:Horde_AddMoney(-(ply:Horde_GetMoney()))
