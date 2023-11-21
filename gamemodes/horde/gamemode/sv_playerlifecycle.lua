@@ -638,12 +638,6 @@ hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
         ply:ConCommand([[mat_colorcorrection 1]])
         ply:ConCommand([[cl_showhints 0]])
         ply:SetMoveType(MOVETYPE_WALK)
-
-        local beacons = ents.FindByClass("horde_watchtower_beacon")
-        if beacons and #beacons > 0 then
-            local i = math.random(1, #beacons)
-            ply:SetPos(beacons[i]:GetPos() + Vector(0,0,24))
-        end
     end
 end)
 
