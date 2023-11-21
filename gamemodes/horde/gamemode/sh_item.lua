@@ -600,14 +600,14 @@ function HORDE:GetDefaultItemsData()
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png")
     HORDE:CreateItem("Special",    "Watchtower MKII",  "horde_watchtower_mk2",  1000,  2, "A watchtower that provides resupply.\nGenerates 1 health vial every 30 seconds.\n(Entity Class: horde_watchtower_mk2)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png")
-    HORDE:CreateItem("Special",    "Watchtower Type-Beacon",  "horde_watchtower_beacon", 1000,  3, "A watchtower that acts as a spawn point and shop.\nProvides additional lighting.\n(Entity Class: horde_watchtower_beacon)",
-    {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=1}, "items/horde_watchtower.png", nil, nil, nil)
     HORDE:CreateItem("Special",    "Watchtower MKIII", "horde_watchtower_mk3",   1500,  3, "A watchtower that deters enemies.\nShocks 1 nearby enemy every 1 second.\nDoes 100 Lightning damage.\n(Entity Class: horde_watchtower_mk3)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png", {Warden=3}, nil, {HORDE.DMG_LIGHTNING})
     HORDE:CreateItem("Special",    "Watchtower Type-Interceptor",  "horde_watchtower_interceptor",   2000,  3, "A watchtower that fires constant laser beams to nearby watchtowers.\nThe laser beam deals Fire damage.\n(Entity Class: horde_watchtower_interceptor)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png", {Warden=4}, nil, {HORDE.DMG_BLAST})
     HORDE:CreateItem("Special",    "Watchtower Type-Guardian",  "horde_watchtower_guardian", 2000,  4, "A watchtower that provides armor regeneration in an area.\nArmor regeneration does not stack with itself.\n(Entity Class: horde_watchtower_guardian)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png", {Warden=5}, nil, nil)
+    HORDE:CreateItem("Special",    "Watchtower Type-Beacon",  "horde_watchtower_beacon", 3500,  5, "A watchtower that acts as a shop during waves.\nProvides additional lighting.\n(Entity Class: horde_watchtower_beacon)",
+    {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=1}, "items/horde_watchtower.png", nil, nil, nil)
 
     HORDE:CreateItem("Special",    "Heat Crossbow",  "arccw_horde_heat_crossbow", 1750,  4, "Improvised sniper weapon.\nHas two firemodes (Ballistic/Impact).\n\nDeals 300% headshot damage.",
     {Survivor=true, Ghost=true}, 2, -1, nil, "items/hl2/weapon_crossbow.png", nil, nil, {HORDE.DMG_BALLISTIC})
