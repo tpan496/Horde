@@ -230,7 +230,13 @@ function PANEL:Init()
         local class_icon = vgui.Create("DPanel", panel)
         class_icon:SetPos(w/2 - 80 - icon_s/2, player_panel_h/2 - icon_s/2)
         class_icon:SetSize(icon_s, icon_s)
+
         local subclass = HORDE.subclasses[ply:Horde_GetCurrentSubclass()]
+        if not subclass then
+            class_icon.Paint = function() return end
+            return panel
+        end
+
         local mat = Material(subclass.Icon, "mips smooth")
         class_icon.Paint = function ()
             if not ply:Horde_GetClass() then return end
