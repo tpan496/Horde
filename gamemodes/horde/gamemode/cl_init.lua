@@ -437,3 +437,10 @@ killicon.AddAlias("npc_vj_horde_shotgun_turret", "npc_turret_floor")
 killicon.AddAlias("npc_vj_horde_sniper_turret", "npc_turret_floor")
 killicon.Add("npc_vj_horde_antlion", "vgui/hud/antlion", Color(0, 0, 0, 255))
 killicon.AddAlias("projectile_horde_antlion_bile", "npc_vj_horde_antlion")
+
+gameevent.Listen( "player_spawn" )
+hook.Add( "player_spawn", "FlashWindowOnRespawn", function( data )
+    if Player( data.userid ) ~= LocalPlayer() then return end
+    if system.HasFocus() then return end
+    system.FlashWindow()
+end )
