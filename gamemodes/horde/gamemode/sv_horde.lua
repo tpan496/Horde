@@ -424,12 +424,12 @@ local function isSuitableSpawn( vec )
         endpos = vec,
         mins = mins,
         maxs = maxs,
-        mask = MASK_SHOT,
+        mask = MASK_NPCSOLID,
     } )
 
     if trace.Hit then
-        debugoverlay.Box( vec, mins, maxs, 20, Color( 255, 0, 0, 0 ) )
-        debugoverlay.Text( vec, tostring( trace.Entity ), 20, false )
+        debugoverlay.Box( vec, mins, maxs, 1, Color( 255, 0, 0, 0 ) )
+        debugoverlay.Text( vec, tostring( trace.Entity ), 1, false )
         return false
     end
 
@@ -441,12 +441,12 @@ local function isSuitableSpawn( vec )
     } )
 
     if not groundTrace.Hit then
-        debugoverlay.Line( line1, line2, 20, Color( 255, 0, 0 ), true )
-        debugoverlay.Text( vec, "No ground", 20, false )
+        debugoverlay.Line( line1, line2, 1, Color( 255, 0, 0 ), true )
+        debugoverlay.Text( vec, "No ground", 1, false )
         return false
     end
 
-    debugoverlay.Box( vec, mins, maxs, 20, Color( 0, 255, 0, 0 ) )
+    debugoverlay.Box( vec, mins, maxs, 1, Color( 0, 255, 0, 0 ) )
     return true
 end
 
@@ -687,25 +687,37 @@ function HORDE:RemoveDistantEnemies(enemies)
     end
 end
 
-function HORDE:GetValidNodes(enemies)
+local maxZDistanceCvar = GetConVar( "horde_max_spawn_z_distance" )
+function HORDE:GetValidNodes( enemies )
     local valid_nodes = {}
-    local invalid_nodes = {}
+
     if HORDE.spawn_distribution == HORDE.SPAWN_UNIFORM then
-        for _, node in pairs(HORDE.ai_nodes) do
-            table.insert(valid_nodes, node["pos"])
+        for _, node in pairs( HORDE.ai_nodes ) do
+            table.insert( valid_nodes, node["pos"] )
         end
         return valid_nodes
     end
 
-    for _, node in pairs(HORDE.ai_nodes) do
-        local valid = false
-        local z_dist
-        local within_z = false
+    local spawnPoints = {}
+    for _, node in pairs( HORDE.ai_nodes ) do
+        local vec = node["pos"]
+        for _ = 1, math.random( 3, 5 ) do
+            local r2 = 75 * math.sqrt( math.random() )
+            local theta2 = 2 * math.pi * math.random()
+            local x2 = r2 * math.cos( theta2 )
+            local y2 = r2 * math.sin( theta2 )
 
-        for _, ply in pairs(player.GetAll()) do
+            local point = vec + Vector( x2, y2, 0 )
+            table.insert( spawnPoints, point )
+        end
+    end
+
+    for _, nodePos in ipairs( spawnPoints ) do
+        local valid = false
+        for _, ply in pairs( player.GetAll() ) do
             if ply:Alive() then
-                local dist = node["pos"]:Distance(ply:GetPos())
-                z_dist = math.abs(node["pos"].z - ply:GetPos().z)
+                local dist = nodePos:Distance( ply:GetPos() )
+                local z_dist = math.abs( nodePos.z - ply:GetPos().z )
 
                 if dist <= HORDE.min_spawn_distance then
                     valid = false
@@ -714,48 +726,30 @@ function HORDE:GetValidNodes(enemies)
                     valid = true
                 end
 
-                if z_dist < GetConVarNumber("horde_max_spawn_z_distance") then
-                    within_z = true
+                if z_dist > maxZDistanceCvar:GetInt() then
+                    valid = false
                 end
             end
         end
 
-        if within_z == false then
-            valid = false
-        end
-
         if not valid then
-            if HORDE.found_horde_nodes then
-                table.insert(invalid_nodes, node["pos"])
-            end
-            goto cont
+            continue
         end
 
-        for _, enemy in pairs(enemies) do
-            local dist = node["pos"]:Distance(enemy:GetPos())
+        for _, enemy in pairs( enemies ) do
+            local dist = nodePos:Distance( enemy:GetPos() )
             if dist <= HORDE.spawn_radius then
-                valid = false
-                break
+                continue
             end
         end
 
-        if not isSuitableSpawn(node["pos"]) then
-            valid = false
+        if not isSuitableSpawn( nodePos ) then
+            continue
         end
 
-        if valid then
-            table.insert(valid_nodes, node["pos"])
-        elseif HORDE.found_horde_nodes then
-            table.insert(invalid_nodes, node["pos"])
-        end
-
-        ::cont::
+        table.insert( valid_nodes, nodePos )
     end
 
-    -- Add some noise to spawn
-    if HORDE.found_horde_nodes and (HORDE.spawn_distribution == HORDE.SPAWN_PROXIMITY_NOISY or (#valid_nodes <= 0 and #invalid_nodes > 0)) then
-        table.insert(valid_nodes, invalid_nodes[math.random(#invalid_nodes)])
-    end
     return valid_nodes
 end
 
