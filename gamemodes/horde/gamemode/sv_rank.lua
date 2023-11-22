@@ -158,11 +158,7 @@ if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_r
 				killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + (2*ExpMulti) )
 				local p = math.random()
 				if p < 0.01 or (p < 0.1 and killer:Horde_GetGadget() == "gadget_corporate_mindset") then
-					-- Drop a skull token
-					local ent = ents.Create("horde_skull_token")
-					ent:SetPos(killer:GetPos())
-					ent.Owner = killer
-					ent:Spawn()
+                    ent:Horde_AddSkullTokens(1)
 				end
 			else
 				killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + (1*ExpMulti) )
