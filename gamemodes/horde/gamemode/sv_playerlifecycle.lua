@@ -46,8 +46,53 @@ function HORDE:GiveStarterWeapons(ply)
     end
 end
 
+local function setNextMapDifficulty()
+    local chosen_diff = HORDE.difficulty
+    local chosen_diff_count = 0
+
+    local diff_collect = {}
+    for _, diff in ipairs(HORDE.difficulty_text) do
+        diff_collect[diff] = 0
+    end
+
+    for ply, diff_voted in pairs(diff_votes) do
+        for diff, count in pairs(diff_collect) do
+            if diff == diff_voted then
+                diff_collect[diff] = count + 1
+            end
+        end
+    end
+
+    for diff, count in pairs(diff_collect) do
+        if count > chosen_diff_count then
+            chosen_diff = diff
+            chosen_diff_count = count
+        end
+    end
+
+    if chosen_diff == "NORMAL" then
+        GetConVar("horde_difficulty"):SetInt(0)
+    elseif chosen_diff == "HARD" then
+        GetConVar("horde_difficulty"):SetInt(1)
+    elseif chosen_diff == "REALISM" then
+        GetConVar("horde_difficulty"):SetInt(2)
+    elseif chosen_diff == "NIGHTMARE" then
+        GetConVar("horde_difficulty"):SetInt(3)
+    elseif chosen_diff == "APOCALYPSE" then
+        GetConVar("horde_difficulty"):SetInt(4)
+    elseif chosen_diff == "HELL" then
+        GetConVar("horde_difficulty"):SetInt(5)
+    else
+        GetConVar("horde_difficulty"):SetInt(1)
+    end
+end
+
 hook.Add( "MapVote_RTVStart", "Horde_MapVote_RTVStarted", function()
     HORDE:GameEnd("Change Map")
+end)
+
+hook.Add( "MapVote_ChangeMap", "Horde_MapVote_ChangeMap", function(map)
+    setNextMapDifficulty()
 end)
 
 function HORDE:GameEnd(status)
@@ -278,44 +323,7 @@ function HORDE:GameEnd(status)
                 end
             end
 
-            local chosen_diff = HORDE.difficulty
-            local chosen_diff_count = 0
-
-            local diff_collect = {}
-            for _, diff in ipairs(HORDE.difficulty_text) do
-                diff_collect[diff] = 0
-            end
-
-            for ply, diff_voted in pairs(diff_votes) do
-                for diff, count in pairs(diff_collect) do
-                    if diff == diff_voted then
-                        diff_collect[diff] = count + 1
-                    end
-                end
-            end
-
-            for diff, count in pairs(diff_collect) do
-                if count > chosen_diff_count then
-                    chosen_diff = diff
-                    chosen_diff_count = count
-                end
-            end
-
-            if chosen_diff == "NORMAL" then
-                GetConVar("horde_difficulty"):SetInt(0)
-            elseif chosen_diff == "HARD" then
-                GetConVar("horde_difficulty"):SetInt(1)
-            elseif chosen_diff == "REALISM" then
-                GetConVar("horde_difficulty"):SetInt(2)
-            elseif chosen_diff == "NIGHTMARE" then
-                GetConVar("horde_difficulty"):SetInt(3)
-            elseif chosen_diff == "APOCALYPSE" then
-                GetConVar("horde_difficulty"):SetInt(4)
-            elseif chosen_diff == "HELL" then
-		GetConVar("horde_difficulty"):SetInt(5)
-	    else
-                GetConVar("horde_difficulty"):SetInt(1)
-            end
+            setNextMapDifficulty()
 
             timer.Simple(0, function() RunConsoleCommand("changelevel", chosen_map) end)
         end
@@ -766,14 +774,14 @@ hook.Add("KeyPress", "PlayerChangeSpectate", function(ply, key)
         ply:SetObserverMode(OBS_MODE_ROAMING)
         return
     end
-	if (key == IN_JUMP) then
-		if ply:GetObserverMode() == OBS_MODE_ROAMING then
+    if (key == IN_JUMP) then
+        if ply:GetObserverMode() == OBS_MODE_ROAMING then
             ply:SetObserverMode(OBS_MODE_CHASE)
             ply:Horde_SpectateNextPlayer()
         else
             ply:SetObserverMode(OBS_MODE_ROAMING)
         end
-	end
+    end
 
     if (key == IN_ATTACK) and ply:GetObserverMode() == OBS_MODE_CHASE then
         ply:Horde_SpectateNextPlayer()
