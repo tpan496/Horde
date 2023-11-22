@@ -46,6 +46,10 @@ function HORDE:GiveStarterWeapons(ply)
     end
 end
 
+hook.Add( "MapVote_RTVStart", "Horde_MapVote_RTVStarted", function()
+    HORDE:GameEnd("Change Map")
+end)
+
 function HORDE:GameEnd(status)
     if HORDE.game_end then return end
     timer.Simple(HORDE.vote_remaining_time + 3, function ()

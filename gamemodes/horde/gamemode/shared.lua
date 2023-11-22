@@ -143,7 +143,10 @@ end
 
 function GM:ShowTeam(ply) ConfigMenu(ply) end
 
-function GM:ShowSpare1(ply) Shop(ply) end
+function GM:ShowSpare1(ply)
+    if MapVote and MapVote.state and MapVote.state.isInProgress then return end
+    Shop(ply)
+end
 
 function GM:ShowSpare2(ply) Ready(ply) end
 

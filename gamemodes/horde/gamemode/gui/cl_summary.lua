@@ -130,7 +130,8 @@ function PANEL:Init()
 
     local votemap_btn = vgui.Create("DButton", self)
     local votemap_hovered = false
-    votemap_btn:SetText(translate.Get("Game_Vote_Map"))
+    local buttonName = MapVote and "Difficulty vote" or translate.Get("Game_Vote_Map")
+    votemap_btn:SetText(buttonName)
     votemap_btn:SetTextColor(Color(255,255,255))
     votemap_btn:SetFont("Title")
     votemap_btn:SetSize(250, 50)
@@ -242,6 +243,8 @@ function PANEL:Init()
 
     self.map_btns = {}
     self.create_map_panel = function (map)
+        if MapVote then return end
+
         local vote_btn = vgui.Create("DButton", votemap_panel)
         local vote_btn_hovered = false
         vote_btn:DockMargin(10, 5, 10, 5)
