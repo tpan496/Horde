@@ -14,6 +14,7 @@ SPELL.Description     = [[Fires a neutron beam at the target. The beam penetrate
 SPELL.Fire            = function (ply, wpn, charge_stage)
 	ply:EmitSound("horde/weapons/nether_relic/nether_star_launch.ogg", 100, math.random(90, 110))
 	local function Hitscan(damage, spread, dir, src, ignore, max_scan)
+        if not IsValid( wpn ) then return end
 		local tr2
         wpn:FireBullets({
             Attacker = ply,
