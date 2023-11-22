@@ -77,7 +77,7 @@ function HORDE:GameEnd(status)
     end
 
     HORDE.game_end = true
-    if not player.GetHumans() or player.GetCount() < 1 then
+    if player.GetCount() < 1 then
         map_list = HORDE:GetNextMaps()
 
         if not map_list then
@@ -242,6 +242,11 @@ function HORDE:GameEnd(status)
         ::cont::
     end
 
+    if _G.MapVote then
+        MapVote.Start()
+        return
+    end
+
     timer.Create("Horde_MapVoteCountdown", 1, 0, function ()
         if HORDE.vote_remaining_time <= 0 then
             timer.Remove("Horde_MapVoteCountdown")
@@ -318,6 +323,7 @@ function HORDE:GameEnd(status)
 end
 
 net.Receive("Horde_Votemap", function (len, ply)
+    if _G.MapVote then return end
     map_votes[ply] = net.ReadString()
 
     local map_collect = {}
@@ -619,6 +625,7 @@ net.Receive("Horde_Votediff", function (len, ply)
 end)
 
 HORDE.VoteChangeMap = function (ply)
+    if _G.MapVote then return end
     HORDE.player_vote_map_change[ply] = 1
     if table.Count(HORDE.player_vote_map_change) >= math.floor(player.GetCount() * 0.66) then
         HORDE:SendNotification("RTV Vote passed! Initiating map vote...", 0)

@@ -243,7 +243,7 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         ply:DropWeapon()
     elseif text[1] == "!throwmoney" then
         ply:Horde_DropMoney(text[2])
-    elseif text[1] == "!rtv" then
+    elseif text[1] == "!rtv" and not _G.MapVote then
         HORDE.VoteChangeMap(ply)
     elseif text[1] == "!stats" then
         StatsMenu(ply)
