@@ -414,8 +414,45 @@ function HORDE:HardResetEnemies()
     HORDE.spawned_enemies_count = {}
 end
 
+local mins = Vector( -30, -30, 0 )
+local maxs = Vector( 30, 30, 100 )
+
+local function isSuitableSpawn( vec )
+    if not util.IsInWorld( vec ) then return false end
+    local trace = util.TraceHull( {
+        start = vec,
+        endpos = vec,
+        mins = mins,
+        maxs = maxs,
+        mask = MASK_SHOT,
+    } )
+
+    if trace.Hit then
+        debugoverlay.Box( vec, mins, maxs, 20, Color( 255, 0, 0, 0 ) )
+        debugoverlay.Text( vec, tostring( trace.Entity ), 20, false )
+        return false
+    end
+
+    local line1 = vec + Vector( 0, 0, 5 )
+    local line2 = vec + Vector( 0, 0, -65 )
+    local groundTrace = util.TraceLine( {
+        start = line1,
+        endpos = line2,
+    } )
+
+    if not groundTrace.Hit then
+        debugoverlay.Line( line1, line2, 20, Color( 255, 0, 0 ), true )
+        debugoverlay.Text( vec, "No ground", 20, false )
+        return false
+    end
+
+    debugoverlay.Box( vec, mins, maxs, 20, Color( 0, 255, 0, 0 ) )
+    return true
+end
+
 -- Spawns a Horde enemy at the give position.
 -- The enemy is tracked by Horde.
+HORDE.NPCS = list.Get("NPC")
 function HORDE:SpawnEnemy(enemy, pos)
     local npc_info = HORDE.NPCS[enemy.class]
     if not npc_info then
@@ -700,6 +737,10 @@ function HORDE:GetValidNodes(enemies)
                 valid = false
                 break
             end
+        end
+
+        if not isSuitableSpawn(node["pos"]) then
+            valid = false
         end
 
         if valid then
