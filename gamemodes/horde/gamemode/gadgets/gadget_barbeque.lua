@@ -15,7 +15,7 @@ GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     if killer:Horde_GetGadget() ~= "gadget_barbeque" then return end
 
     local health = victim:GetMaxHealth()
-    for _ = 1, math.min( health / 200, 5 ) do
+    for _ = 1, math.min( health / 200, 10 ) do
         local ent = ents.Create("horde_edible_gib")
         local pos = victim:GetPos()
         local drop_pos = pos
