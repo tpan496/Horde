@@ -415,25 +415,27 @@ function HORDE:HardResetEnemies()
 end
 
 local mins = Vector( -30, -30, 0 )
-local maxs = Vector( 30, 30, 100 )
+local maxs = Vector( 30, 30, 80 )
+local heightOffset = Vector( 0, 0, 5 )
 
 local function isSuitableSpawn( vec )
     if not util.IsInWorld( vec ) then return false end
+
     local trace = util.TraceHull( {
-        start = vec,
-        endpos = vec,
+        start = vec + heightOffset,
+        endpos = vec + heightOffset,
         mins = mins,
         maxs = maxs,
         mask = MASK_NPCSOLID,
     } )
 
     if trace.Hit then
-        debugoverlay.Box( vec, mins, maxs, 1, Color( 255, 0, 0, 0 ) )
+        debugoverlay.Box( vec + heightOffset, mins, maxs, 1, Color( 255, 0, 0, 0 ) )
         debugoverlay.Text( vec, tostring( trace.Entity ), 1, false )
         return false
     end
 
-    local line1 = vec + Vector( 0, 0, 5 )
+    local line1 = vec + heightOffset
     local line2 = vec + Vector( 0, 0, -65 )
     local groundTrace = util.TraceLine( {
         start = line1,
