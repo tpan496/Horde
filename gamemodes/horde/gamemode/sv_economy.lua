@@ -228,6 +228,31 @@ function plymeta:Horde_DropMoney(amount)
     end
 end
 
+function plymeta:Horde_PayPlayer(plyToPay, amount)
+    if not plyToPay or not amount then return end
+    if not self.nextPayTime then self.nextPayTime = CurTime() end
+    if self.nextPayTime and CurTime() < self.nextPayTime then self:ChatPrint("Please wait before using !pay again.") return end
+    local plyToPay = tostring(plyToPay)
+    local amount = tonumber(amount)
+    local plyForMoney
+    local allPlys = player.GetAll()
+    for _,v in ipairs(allPlys) do
+        local findString = string.find(string.lower(v:GetName()), string.lower(plyToPay))
+        if findString then
+            plyForMoney = v
+        end
+    end
+    if plyForMoney == nil then self:ChatPrint("Invalid player.") return end
+    if plyForMoney:SteamID() == self:SteamID() then return end -- Not that this really matters but it'd be a bit silly 
+    local amount = math.floor(amount)
+    if not amount or amount <= 0 or self:Horde_GetMoney() < amount then return end
+    self:Horde_AddMoney(-amount)
+    self:Horde_SyncEconomy()
+    plyForMoney:Horde_AddMoney(amount)
+    plyForMoney:Horde_SyncEconomy()
+    plyForMoney:ChatPrint(self:GetName().." has given you "..amount.."$")
+    self.nextPayTime = CurTime() + 5
+end
 
 function plymeta:Horde_GetMaxWeight()
     return self.Horde_max_weight

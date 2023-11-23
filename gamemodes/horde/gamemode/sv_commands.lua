@@ -251,6 +251,8 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         HORDE:SyncToLocal(ply)
     elseif text == "!sync_to_server" then
         HORDE:SyncToServer(ply)]]--
+    elseif text[1] == "!pay" then
+        ply:Horde_PayPlayer(text[2], text[3])
     end
 end)
 
