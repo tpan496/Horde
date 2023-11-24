@@ -46,14 +46,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     })
     
     local ent = tr.Entity
-	
-	if not ent:IsValid() then
-	ply:EmitSound("items/suitchargeno1.wav")
-	ply:Horde_SetGadgetCooldown(1)
-	return end
-	
     if HORDE:IsEnemy(ent) then
-		ply:Horde_SetGadgetCooldown(15)
         local ply_pos = ply:GetPos()
         local ply_angles = ply:GetAngles()
         ply:Spectate(OBS_MODE_CHASE)
