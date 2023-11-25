@@ -50,13 +50,6 @@ end
 function plymeta:Horde_GetMindRegenTick()
     return self.Horde_MindRegenTick
 end
-hook.Add("Horde_PlayerMoveBonus", "Horde_ChargingPenalty", function (ply, bonus_walk, bonus_run)
-    if ply.Horde_SpellCharging then
-        bonus_run.more = bonus_run.more * 0.64
-        bonus_walk.more = bonus_walk.more * 0.8
-        ply:SetJumpPower(100)
-    end
-end)
 
 hook.Add("PlayerTick", "Horde_MindRegen", function (ply)
     if SERVER then
