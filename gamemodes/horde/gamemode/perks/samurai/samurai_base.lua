@@ -34,6 +34,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         HORDE:CheckDemonStompCharges(ply)
 
         hook.Add("Horde_PlayerMoveBonus", "Horde_SamuraiSpeed", function (ply, bonus_walk, bonus_run)
+            if not ply:Horde_GetPerk("samurai_base") then return end
             bonus_run.more = bonus_run.more * 1.4
             bonus_walk.more = bonus_walk.more * 1.4 
         end)
