@@ -7,7 +7,11 @@ Inflicts Bleeding buildup by {1} of base Melee damage. ({2} + {3} per level, up 
 
 SHIFT+E to activate Quickstep.
 Dashes torwards the input direction.
-Provides 100% evasion during Quickstep.]]
+Provides 100% evasion during Quickstep.
+Removes two thirds of current building for all active debuffs.
+
+Samurai's get a ninja speed boost of 40%.
+]]
 PERK.Icon = "materials/subclasses/samurai.png"
 PERK.Params = {
     [1] = {percent = true, base = 0.1, level = 0.01, max = 0.35, classname = "Samurai"},
@@ -28,6 +32,11 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         net.Send(ply)
 
         HORDE:CheckDemonStompCharges(ply)
+
+        hook.Add("Horde_PlayerMoveBonus", "Horde_SamuraiSpeed", function (ply, bonus_walk, bonus_run)
+            bonus_run.more = bonus_run.more * 1.4
+            bonus_walk.more = bonus_walk.more * 1.4 
+        end)
     end
 end
 
@@ -38,6 +47,7 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
             net.WriteUInt(0, 3)
         net.Send(ply)
         ply:Horde_SetPerkCharges(0)
+        hook.Remove("Horde_PlayerMoveBonus", "Horde_SamuraiSpeed")
     end
 end
 
@@ -48,6 +58,11 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
     end
 
     if ply:Horde_GetSpamPerkCooldown() > CurTime() then return true end
+
+    for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
+        ply:Horde_ReduceDebuffBuildup(debuff, buildup*0.67)
+    end
+    
     ply:Horde_SetSpamPerkCooldown(CurTime() + 0.25)
     local id = ply:SteamID()
 
