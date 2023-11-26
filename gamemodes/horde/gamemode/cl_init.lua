@@ -57,6 +57,7 @@ include("arccw/attachments/horde_akimbo_deagle.lua")
 include("arccw/attachments/horde_akimbo_m9.lua")
 include("arccw/attachments/horde_akimbo_glock.lua")
 include("arccw/attachments/horde_ubgl_medic.lua")
+include("arccw/attachments/horde_ubgl_m203.lua")
 include("arccw/attachments/horde_ammo_ap.lua")
 include("arccw/attachments/horde_ammo_sabot.lua")
 

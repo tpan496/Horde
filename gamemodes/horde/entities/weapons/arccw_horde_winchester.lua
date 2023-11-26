@@ -10,7 +10,6 @@ SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
-SWEP.CamAttachment = 3
 
 SWEP.PrintName = "M1873 Winchester LAR"
 SWEP.Trivia_Class = "Rifle"
@@ -184,7 +183,6 @@ SWEP.Attachments = {
             vmin = Vector(6, 0, 0.5),
             vmax = Vector(12, 0, 0.5),
         },
-        MergeSlots = {7},
     },
     {
         PrintName = "Tactical",
