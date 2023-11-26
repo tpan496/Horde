@@ -345,7 +345,7 @@ end
 
 function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_horde_knife",    100,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
-    nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH}, nil, {"Berserker", "Samurai"})
+    nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH}, nil, {"Berserker", "Samurai", "Cyborg Ninja"})
     HORDE:CreateItem("Melee",      "Crowbar",        "arccw_horde_crowbar", 1000,  3, "A trusty crowbar.\nEasy to use.",
     nil, 10, -1, nil, "items/hl2/weapon_crowbar.png", nil, nil, {HORDE.DMG_BLUNT})
     HORDE:CreateItem("Melee",      "Machete",        "arccw_horde_machete", 1000,  3, "A large machete.\nEasy to use.",
@@ -412,7 +412,7 @@ function HORDE:GetDefaultItemsData()
     {Ghost=true}, 5, -1, nil, nil, {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
 
     HORDE:CreateItem("SMG",        "SMG1",           "arccw_horde_smg1",   100, 3, "A compact, fully automatic firearm.",
-    {Assault=true, Heavy=true}, 5, -1, nil, "items/hl2/weapon_smg1.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Assault", "Heavy", "SpecOps"})
+    {Assault=true, Heavy=true}, 5, -1, nil, "items/hl2/weapon_smg1.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Assault", "SpecOps", "Reverend", "Heavy", "Juggernaut"})
     HORDE:CreateItem("SMG",        "TMP",            "arccw_horde_tmp",   1000, 3, "Steyr TMP.\nA select-fire 9×19mm Parabellum caliber machine pistol.",
     {Medic=true, Assault=true, Heavy=true, Survivor=true, Cremator=true}, 8, -1, nil, nil, {Survivor=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "UZI",            "arccw_horde_uzi",   1250, 3, "UZI Submachine Gun.\nDesigned by Captain (later Major) Uziel Gal of the IDF following the 1948 Arab–Israeli War.",
@@ -544,7 +544,7 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Explosive",  "Hemo Grenade",   "arccw_horde_nade_hemo",          100,  0, "A grenade that deals Slashing damage in the area.\nIncreases Bleeding buildup.",
     {Berserker=true}, 100, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Explosive",  "EMP Grenade",   "arccw_horde_nade_emp",  100,  0, "A grenade that deals rapid Lightning damage in the area.\nYou are safe from the EMP blast.",
-    {Warden=true}, 100, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE})
+    {Warden=true}, 100, -1, nil, nil, nil, nil, {HORDE.DMG_LIGHTNING})
     HORDE:CreateItem("Explosive",  "Molotov",   "arccw_horde_nade_molotov",            100,  0, "Generates a pool of fire on impact.\nSets everything on fire within its effect.",
     {Cremator=true}, 100, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE})
 
@@ -670,8 +670,8 @@ function HORDE:GetDefaultItemsData()
         - Immune to Poison damage and Break.]],
     {Medic=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH, HORDE.DMG_POISON}, nil, {"Hatcher"}, true)
 
-    HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   1, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
-    nil, 10, -1, nil, "items/weapon_medkit.png", nil, nil, nil, nil, {"Medic"})
+    HORDE:CreateItem("Equipment",  "Medkit",         "weapon_horde_medkit",      50,   0, "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
+    nil, 10, -1, nil, "items/weapon_medkit.png", nil, nil, nil, nil, {"Survivor", "Psycho", "Assault", "SpecOps", "Reverend", "Heavy", "Carcass", "Juggernaut", "Medic", "Hatcher", "Demolition", "Warlock", "Ghost", "Gunslinger", "Engineer", "Necromancer", "Berserker", "Samurai", "Cyborg Ninja", "Warden", "Cremator", "Artificer"})
     HORDE:CreateItem("Equipment",  "Health Vial",    "item_healthvial",    15,   0, "A capsule filled with sticky green liquid.\nHeals instantly when picked up.",
     {Medic=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=5}, nil)
     HORDE:CreateItem("Equipment", "Kevlar Armor Battery", "item_battery", 160, 0, "Armor battery.\nEach one provides 15 armor. Personal use only.",
