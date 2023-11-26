@@ -4,13 +4,12 @@ PERK.Description =
 
 Inflicts Bleeding buildup by {1} of base Melee damage. ({2} + {3} per level, up to {4}).
 {5} increased Global damage resistance. ({6} per level, up to {7}).
+Increase speed by {8}.
 
 SHIFT+E to activate Quickstep.
 Dashes torwards the input direction.
 Provides 100% evasion during Quickstep.
-Removes two thirds of current building for all active debuffs.
-
-Samurai's get a ninja speed boost of 40%.
+Removes two thirds of current debuff buildup for all active debuffs.
 ]]
 PERK.Icon = "materials/subclasses/samurai.png"
 PERK.Params = {
@@ -21,6 +20,7 @@ PERK.Params = {
     [5] = {percent = true, base = 0, level = 0.01, max = 0.25, classname = "Samurai"},
     [6] = {value = 0.01, percent = true},
     [7] = {value = 0.25, percent = true},
+    [8] = {value = 0.4, percent = true},
 }
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
@@ -32,14 +32,14 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         net.Send(ply)
 
         HORDE:CheckDemonStompCharges(ply)
-
-        hook.Add("Horde_PlayerMoveBonus", "Horde_SamuraiSpeed", function (ply, bonus_walk, bonus_run)
-            if not ply:Horde_GetPerk("samurai_base") then return end
-            bonus_run.more = bonus_run.more * 1.4
-            bonus_walk.more = bonus_walk.more * 1.4 
-        end)
     end
 end
+
+hook.Add("Horde_PlayerMoveBonus", "Horde_SamuraiSpeed", function (ply, bonus_walk, bonus_run)
+    if not ply:Horde_GetPerk("samurai_base") then return end
+    bonus_walk.increase = bonus_walk.increase + 0.4
+    bonus_run.increase = bonus_run.increase + 0.4
+end)
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "samurai_base" then
@@ -48,7 +48,6 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
             net.WriteUInt(0, 3)
         net.Send(ply)
         ply:Horde_SetPerkCharges(0)
-        hook.Remove("Horde_PlayerMoveBonus", "Horde_SamuraiSpeed")
     end
 end
 
