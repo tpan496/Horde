@@ -1,5 +1,5 @@
 MUTATION.PrintName = "Charged"
-MUTATION.Description = "Damage dealt is converted to Lightning damage.\nOnly randomly occurs starting from wave 6."
+MUTATION.Description = "Builds up Shock on hit depending on amount of damage dealt.\nOnly randomly occurs starting from wave 6."
 MUTATION.Wave = 6
 
 MUTATION.Hooks = {}
@@ -21,7 +21,9 @@ end
 
 MUTATION.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
     if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_HasMutation("charged") then
-        dmg:SetDamageType(DMG_SHOCK)
+        if not HORDE:IsLightningDamage(dmg) then 
+        ply:Horde_AddDebuffBuildup(HORDE.Status_Shock, dmg:GetDamage() * 2)
+        end
     end
 end
 
