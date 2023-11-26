@@ -76,7 +76,10 @@ SWEP.Animations = {
 
 function SWEP:Initialize()
     if CLIENT then
-        local vm = self.Owner:GetViewModel()
+        local owner = self:GetOwner()
+        if not IsValid(owner) then return end
+
+        local vm = owner:GetViewModel()
         if not IsValid(vm) then return end
         vm:SetColor(Color(255, 0, 0))
         vm:SetMaterial("Debug/hsv")
