@@ -278,10 +278,3 @@ SWEP.Animations = {
         LHIKOut = 0.5,
     },
 }
-
-function SWEP:Hook_OnDeploy()
-    timer.Simple(0, function ()
-        if !IsValid(self) then return end
-        self:Attach(1, "optic_m82scope")
-    end)
-end

@@ -87,8 +87,6 @@ SWEP.Reloading = 0
 SWEP.ReloadingTimer = CurTime()
 SWEP.Idle = 0
 SWEP.IdleTimer = CurTime()
-SWEP.Recoil = 0
-SWEP.RecoilTimer = CurTime()
 
 SWEP.Primary.Sound = Sound( "Weapon_HLOF_Spore_Launcher.Single" )
 SWEP.Primary.ClipSize = 5
@@ -140,8 +138,6 @@ self.Reloading = 0
 self.ReloadingTimer = CurTime()
 self.Idle = 0
 self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-self.Recoil = 0
-self.RecoilTimer = CurTime()
 return true
 end
 
@@ -150,8 +146,6 @@ self.Reloading = 0
 self.ReloadingTimer = CurTime()
 self.Idle = 0
 self.IdleTimer = CurTime()
-self.Recoil = 0
-self.RecoilTimer = CurTime()
 return true
 end
 
@@ -196,11 +190,6 @@ self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 self.Idle = 0
 self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
-self.Recoil = 1
-self.RecoilTimer = CurTime() + 0.2
-self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -3, 0, 0 ) )
-end
 end
 end
 
@@ -236,11 +225,6 @@ self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 self.Idle = 0
 self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
-self.Recoil = 1
-self.RecoilTimer = CurTime() + 0.2
-self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -3, 0, 0 ) )
-end
 end
 end
 
@@ -257,14 +241,6 @@ function SWEP:Reload()
 end
 
 function SWEP:Think()
-    if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
-        if self.Recoil == 1 and self.RecoilTimer <= CurTime() then
-            self.Recoil = 0
-        end
-        if self.Recoil == 1 then
-            self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( 0.23, 0, 0 ) )
-        end
-    end
 
     if self.Reloading > 0 or self.IdleTimer > CurTime() then
         self.Owner:GetViewModel():SetPlaybackRate(1.5)

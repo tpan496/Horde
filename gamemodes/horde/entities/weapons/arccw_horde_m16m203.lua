@@ -7,7 +7,7 @@ SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
-SWEP.CamAttachment = 3
+--SWEP.CamAttachment = 3
 
 SWEP.PrintName = "M16A4"
 SWEP.Trivia_Class = "Assault Rifle"
@@ -147,7 +147,7 @@ SWEP.AttachmentElements = {
     ["wepcamo-blackout"]        = { VMSkin = 10 },
     ["wepcamo-bushdweller"]     = { VMSkin = 11 },
     ["wepcamo-thunderstorm"]    = { VMSkin = 12 },
-            ["mw2_ubgl_m203"] = {
+            ["horde_ubgl_m203"] = {
                 VMBodygroups = {{ind = 2, bg = 1}},
             },
             ["mw2_ubgl_masterkey"] = {
@@ -191,7 +191,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Underbarrel",
-        Slot = {"foregrip", "ubgl", "bipod",--[[] "foregrip_mw2exclusive",]] "mw2_ubgl"},
+        Slot = {"foregrip", "bipod",--[[] "foregrip_mw2exclusive",]] "horde_ubgl_m203"},
         Bone = "tag_weapon",
         Offset = {
             vpos = Vector(18.427, 0, -1.04),
@@ -205,7 +205,7 @@ SWEP.Attachments = {
             wmin = Vector(20.996, -0.991, -3.837),
             wmax = Vector(13.661, -0.078, -3.837),
         },
-        Installed = "mw2_ubgl_m203",
+        Installed = "horde_ubgl_m203",
     },
     {
         PrintName = "Tactical",
@@ -258,7 +258,7 @@ SWEP.Hook_TranslateAnimation = function(wep, anim)
 
 	-- m203 is 1, masterkey is 2, fgrip is 3
 	local attthing
-		if 		attached == "mw2_ubgl_m203" 		then attthing = 1
+		if 		attached == "horde_ubgl_m203" 		then attthing = 1
 		elseif 	attached == "mw2_ubgl_masterkey" 	then attthing = 2
 		else 											 attthing = 0
 	end
