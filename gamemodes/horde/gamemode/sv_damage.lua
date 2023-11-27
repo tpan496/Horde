@@ -218,7 +218,7 @@ hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginf
     if not HORDE:IsEnemy(target) then return end
 
     if attacker:GetClass() == "entityflame" then
-        if target:Horde_GetMostRecentFireAttacker() then
+        if IsValid( target:Horde_GetMostRecentFireAttacker() ) then
             dmginfo:SetAttacker(target:Horde_GetMostRecentFireAttacker())
         end
     elseif HORDE:IsPlayerMinion(attacker) then
