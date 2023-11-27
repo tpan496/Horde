@@ -755,6 +755,8 @@ function PANEL:Init()
         draw.SimpleText("Perks", 'Heading', 50, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         local y = 50
         local class = MySelf:Horde_GetCurrentSubclass()
+        if not class then return end
+
         mat = Material(HORDE.subclasses[class].Icon, "mips smooth")
         surface.SetMaterial(mat)
         surface.SetDrawColor(color_white)
@@ -772,8 +774,10 @@ function PANEL:Init()
         for perk_level, v in SortedPairs(perks) do
             if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then goto cont end
             if not MySelf.Horde_PerkChoices then break end
+
             local choice = v.choices[MySelf.Horde_PerkChoices[class][perk_level] or 1]
             if not choice then error("Invalid choice in perk level " .. perk_level .. " for " .. class .. "!") return end
+
             local perk = HORDE.perks[choice]
             local icon = perk.Icon
             if icon then
