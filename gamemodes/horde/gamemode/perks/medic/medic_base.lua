@@ -31,7 +31,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "medic_base" then
         ply:Horde_SetHealthRegenPercentage(0.01)
     end
-    if perk == "medic_base" and ply == LocalPlayer() then
+    if CLIENT and perk == "medic_base" and ply == LocalPlayer() then
         hook.Add( "PreDrawHalos", "MedicHealthOutlines", function()
             for _, user in ipairs( player.GetAll() ) do
                 if user:Alive() and not user:IsDormant() then
