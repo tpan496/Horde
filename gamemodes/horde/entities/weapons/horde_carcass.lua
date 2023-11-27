@@ -354,7 +354,10 @@ function SWEP:StartAttack()
 		local id = ply:SteamID()
 		timer.Remove("Horde_BioThrusterDegen" .. id)
 		timer.Create("Horde_BioThrusterDegen" .. id, 3, 0, function ()
-			if !ply:IsValid() then timer.Remove("Horde_BioThrusterDegen" .. id) end
+			if !ply:IsValid() then
+                timer.Remove("Horde_BioThrusterDegen" .. id)
+                return
+            end
             if !ply:Alive() then return end
             ply.Horde_Bio_Thruster_Stack = math.max(0, ply.Horde_Bio_Thruster_Stack - 1)
 			ply:Horde_SyncStatus(HORDE.Status_Bio_Thruster, ply.Horde_Bio_Thruster_Stack)
