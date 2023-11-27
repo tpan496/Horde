@@ -22,7 +22,7 @@ function plymeta:Horde_ApplyPerksForClass()
 
     if subclass and subclass.ParentClass then
         self:Horde_SetPerk(subclass.BasePerk)
-    else
+    elseif self:Horde_GetClass() then
         self:Horde_SetPerk(self:Horde_GetClass().base_perk)
     end
 
