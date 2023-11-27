@@ -237,9 +237,11 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     elseif text[1] == "!mapconfig" then
         MapConfig(ply)
     elseif text[1] == "!drop" then
-        if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon().Base == "horde_spell_weapon_base" then
+        local Wep = ply:GetActiveWeapon()
+        if Wep and Wep:IsValid() and Wep.Base == "horde_spell_weapon_base" then
             return
         end
+        Wep.newlyGainedWep = nil
         ply:DropWeapon()
     elseif text[1] == "!throwmoney" then
         ply:Horde_DropMoney(text[2])
