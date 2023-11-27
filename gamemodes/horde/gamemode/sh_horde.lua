@@ -58,7 +58,11 @@ CreateConVar("horde_enable_health_gui", 1, FCVAR_ARCHIVE, "Enables health UI.")
 CreateConVar("horde_enable_ammo_gui", 1, FCVAR_ARCHIVE, "Enables ammo UI.")
 
 CreateConVar("horde_enable_class_models", 1, FCVAR_ARCHIVE, "Enables ammo UI.")
-CreateClientConVar("horde_disable_default_gadget_use_key", 0, FCVAR_ARCHIVE, "Disable default key bind for active gadgets.")
+
+if CLIENT then
+    CreateClientConVar("horde_disable_default_gadget_use_key", 0, FCVAR_ARCHIVE, "Disable default key bind for active gadgets.")
+    CreateClientConVar("horde_pickup_weapons", "1", true, true, "Allows the pickup of dropped weapons when walking over them.")
+end
 
 if SERVER then
 util.AddNetworkString("Horde_SideNotification")
