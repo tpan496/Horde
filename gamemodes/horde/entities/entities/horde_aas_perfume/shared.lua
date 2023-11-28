@@ -128,6 +128,14 @@ function ENT:Think()
                 ent:Horde_AddHypertrophyStack(true)
             end
         end
+		
+        local dmg = DamageInfo()
+        dmg:SetAttacker(self.Owner)
+        dmg:SetInflictor(self)
+        dmg:SetDamageType(DMG_NERVEGAS)
+        dmg:SetDamage(50)
+        dmg:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
+        util.BlastDamageInfo(dmg, self:GetPos(), 200)
 
         if self:WaterLevel() > 2 then self:Remove() return end
 

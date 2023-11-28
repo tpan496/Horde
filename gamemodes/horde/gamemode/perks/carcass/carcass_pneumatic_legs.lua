@@ -2,7 +2,7 @@ PERK.PrintName = "Pneumatic Legs"
 PERK.Description =
 [[Adds {1} maximum Hypertrophy stacks.
 Press SPACE in air to descend, dealing area Physical damage based on your speed.
-{2} reduced fall damage taken.]]
+Gain immunity to fall damage.]]
 PERK.Icon = "materials/perks/carcass/pneumatic_legs.png"
 PERK.Params = {
     [1] = {value = 1},
@@ -27,8 +27,8 @@ end
 
 PERK.Hooks.Horde_GetFallDamage = function(ply, speed, bonus)
     if ply:Horde_GetPerk("carcass_pneumatic_legs") then
-        bonus.less = bonus.less * 0.1
-        local dmg = math.max(0, math.ceil(0.2418 * speed - 141.75)) * 2
+        bonus.less = bonus.less * 0
+        local dmg = math.max(0, math.ceil(0.2418 * speed - 141.75)) * 4
         if dmg < 10 then return end
         local dmginfo = DamageInfo()
         dmginfo:SetAttacker(ply)

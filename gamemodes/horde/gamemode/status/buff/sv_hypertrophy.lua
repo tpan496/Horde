@@ -72,8 +72,8 @@ function plymeta:Horde_SetHypertrophyEnabled(enabled)
 end
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_HypertrophyStackDamage", function (ply, dmginfo, bonus)
-    if ply:Horde_GetHypertrophyStack() > 0 and HORDE:IsPhysicalDamage(dmginfo) then
-        bonus.less = bonus.less * (1 - ply:Horde_GetHypertrophyStack() * 0.05)
+    if ply:Horde_GetHypertrophyStack() > 0 then
+	   bonus.resistance = bonus.resistance + (ply:Horde_GetHypertrophyStack() * 0.05)
     end
 end)
 

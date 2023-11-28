@@ -7,7 +7,7 @@ Complexity: HIGH
 
 {4} chance to gain Hypertrophy when you hit an enemy ({5} chance on headshot).
 100% chance to gain Hypertrophy when you are hit.
-Hypertrophy reduces Physical damage taken by {6}.
+Hypertrophy reduces damage taken by {6}.
 Hypertrophy provides 2% health regen per second.
 
 Equipped with Carcass Biosystem.
@@ -16,9 +16,9 @@ LMB: Punch
 Hold for a charged punch that deals increased damage in an area.]]
 PERK.Icon = "materials/subclasses/carcass.png"
 PERK.Params = {
-    [1] = {percent = true, base = 0, level = 0.02, max = 0.5, classname = "Carcass"},
-    [2] = {value = 0.01, percent = true},
-    [3] = {value = 0.25, percent = true},
+    [1] = {percent = true, base = 0.25, level = 0.02, max = 0.75, classname = "Carcass"},
+    [2] = {value = 0.02, percent = true},
+    [3] = {value = 0.75, percent = true},
     [4] = {value = 0.5, percent = true},
     [5] = {value = 0.75, percent = true},
     [6] = {value = 0.05, percent = true},
@@ -42,7 +42,7 @@ end
 
 PERK.Hooks.Horde_OnSetMaxHealth = function(ply, bonus)
     if SERVER and ply:Horde_GetPerk("carcass_base") then
-        bonus.increase = bonus.increase + ply:Horde_GetPerkLevelBonus("carcass_base")
+        bonus.increase = bonus.increase + 0.25 + ply:Horde_GetPerkLevelBonus("carcass_base")
     end
 end
 
