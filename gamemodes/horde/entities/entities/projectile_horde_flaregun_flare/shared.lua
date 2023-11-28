@@ -78,7 +78,7 @@ function ENT:Detonate(data)
 	if IsValid(data.HitEntity) && (data.HitEntity:IsNPC() or data.HitEntity:IsPlayer()) && !self.Removing then
 		self:FireBullets({
 			Attacker = self.Owner,
-			Damage = 45,
+			Damage = 50,
 			Tracer = 0,
 			Distance = 200,
 			Dir = (data.HitPos - self:GetPos()),

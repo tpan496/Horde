@@ -350,14 +350,17 @@ function SWEP:StartAttack()
 	if SERVER and ply:Horde_GetPerk("carcass_bio_thruster") then
 		if not ply:IsValid() then return end
 		if self.LastThrust > CurTime() then return end
+		
+        if (ply:Health() <= (ply:GetMaxHealth() * 0.05 * math.max(1, ply.Horde_Bio_Thruster_Stack))) then
+		self.LastThrust = CurTime() + self.ThrustInterval
+		ply:EmitSound( sndTooFar )
+		return end
+		
 		self.LastThrust = CurTime() + self.ThrustInterval
 		local id = ply:SteamID()
 		timer.Remove("Horde_BioThrusterDegen" .. id)
 		timer.Create("Horde_BioThrusterDegen" .. id, 3, 0, function ()
-			if !ply:IsValid() then
-                timer.Remove("Horde_BioThrusterDegen" .. id)
-                return
-            end
+			if !ply:IsValid() then timer.Remove("Horde_BioThrusterDegen" .. id) end
             if !ply:Alive() then return end
             ply.Horde_Bio_Thruster_Stack = math.max(0, ply.Horde_Bio_Thruster_Stack - 1)
 			ply:Horde_SyncStatus(HORDE.Status_Bio_Thruster, ply.Horde_Bio_Thruster_Stack)
@@ -377,10 +380,7 @@ function SWEP:StartAttack()
 		local vel = dir * force
 		ply:SetLocalVelocity(vel)
 
-		ply:SetHealth(ply:Health() - ply:GetMaxHealth() * 0.05 * ply.Horde_Bio_Thruster_Stack)
-		if ply:Health() <= 0 then
-			ply:Kill()
-		end
+		ply:SetHealth(math.max(1,ply:Health() - ply:GetMaxHealth() * 0.05 * ply.Horde_Bio_Thruster_Stack))
 		ply:EmitSound("horde/player/carcass/biothruster" .. math.random(1,2) .. ".ogg")
 		ply:EmitSound("horde/player/carcass/pain.ogg")
 		return
@@ -441,8 +441,12 @@ function SWEP:StartAttack()
 		end
 
 		self:UpdateAttack()
-
+        --hacky fix for the grappendix sound
+        if self.Owner:Health() <= 1 then
+        self.Weapon:EmitSound( sndTooFar )
+        else
 		self.Weapon:EmitSound( sndPowerDown )
+        end
 	else
 		-- Play a sound
 		self.Weapon:EmitSound( sndTooFar )
@@ -525,9 +529,11 @@ function SWEP:UpdateAttack()
 	intestine_endpos = nil
 
 	if self.LastDrain <= CurTime() then
-		self.Owner:SetHealth(self.Owner:Health() - self.Owner:GetMaxHealth() * 0.01)
-		if self.Owner:Health() <= 0 then
-			self.Owner:Kill()
+        self.Owner:SetHealth(math.max(1,self.Owner:Health() - self.Owner:GetMaxHealth() * 0.01))
+        if self.Owner:Health() <= 1 then
+            self:EndAttack( true )
+            --hacky workaround to make the weapon think it couldn't successfully find a trace to achieve the effect of forcibly stopping a grapple
+			inRange = false
 			return
 		end
 		self.LastDrain = CurTime() + self.DrainInterval

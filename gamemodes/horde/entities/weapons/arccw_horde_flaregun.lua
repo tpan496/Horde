@@ -49,12 +49,13 @@ SWEP.Primary.ClipSize = 1 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 1
 SWEP.ReducedClipSize = 1
 
-SWEP.Recoil = 5
-SWEP.RecoilSide = 1
-SWEP.VisualRecoilMult = 1
-SWEP.RecoilRise = 1
+SWEP.Recoil = 0
+SWEP.RecoilSide = 0
+SWEP.VisualRecoilMult = 0
+SWEP.RecoilRise = 0
+SWEP.RecoilPunch = 0
 
-SWEP.Delay = 60 / 100 -- 60 / RPM.
+SWEP.Delay = 0.75 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -65,9 +66,9 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 250
+SWEP.AccuracyMOA = 0 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 0 -- inaccuracy added by hip firing.
+SWEP.MoveDispersion = 0
 
 SWEP.Primary.Ammo = "357" -- what ammo type the gun uses
 
@@ -157,8 +158,16 @@ SWEP.Animations = {
     },
     ["reload_empty"] = {
         Source = "reload",
-        Time = 0.75,
+        Time = 0.5,
         Checkpoints = {16, 30},
         FrameRate = 30,
     },
 }
+
+function SWEP:Hook_PostFireRocket(rocket)
+    if self.Owner:IsValid() and self.Owner:GetAmmoCount("357") > 0 then
+    --set clip1 to 2 to make the weapon have 1 ammo left after shooting
+    self:SetClip1(2)
+	self:GetOwner():SetAmmo(self.Owner:GetAmmoCount("357") - 1, "357")
+    end
+end

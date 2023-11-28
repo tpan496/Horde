@@ -377,8 +377,8 @@ function HORDE:GetDefaultItemsData()
     {Medic=true}, 2, -1, nil, "items/weapon_medic_9mm.png", nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON}, nil, {"Medic"})
     HORDE:CreateItem("Pistol",     "357",            "arccw_horde_357",        100,  2, "Colt python magnum pistol.\nUsed by Black Mesa security guards.",
     {Ghost=true}, 3, -1, nil, "items/hl2/weapon_357.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Ghost", "Gunslinger"})
-    HORDE:CreateItem("Pistol",     "Flare Gun",      "arccw_horde_flaregun",   100,  4, "Orion Safety Flare Gun.\nIgnites enemies and deals Fire damage.",
-    {Cremator=true}, 3, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE}, nil, {"Cremator"})
+    HORDE:CreateItem("Pistol",     "Flare Gun",      "arccw_horde_flaregun",   100,  2, "Orion Safety Flare Gun.\nIgnites enemies and deals Fire damage.",
+    {Cremator=true}, 1, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE}, nil, {"Cremator"})
     HORDE:CreateItem("Pistol",     "Glock",          "arccw_go_glock",    750,  2, "Glock 18.\nSemi-automatic pistols manufactured in Austrian.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "USP",            "arccw_go_usp",      750,  2, "Universelle Selbstladepistole.\nA semi-automatic pistol developed in Germany by H&K.",
