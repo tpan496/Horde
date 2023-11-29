@@ -262,6 +262,12 @@ function SWEP:TwinHeart()
 		ply.TwinHeartToggleOn = false
 		return
 	end
+	
+	if ply.TwinHeartToggleOn then
+	ply:EmitSound("items/suitchargeno1.wav")
+	else
+	ply:EmitSound("buttons/combine_button5.wav")
+	end
 
 	ply.TwinHeartToggleOn = !ply.TwinHeartToggleOn
 end
@@ -351,7 +357,7 @@ function SWEP:StartAttack()
 		if not ply:IsValid() then return end
 		if self.LastThrust > CurTime() then return end
 		
-        if (ply:Health() <= (ply:GetMaxHealth() * 0.05 * math.max(1, ply.Horde_Bio_Thruster_Stack))) then
+       if (ply:Health() <= (ply:GetMaxHealth() * 0.05 * math.max(1, ply.Horde_Bio_Thruster_Stack))) then
 		self.LastThrust = CurTime() + self.ThrustInterval
 		ply:EmitSound( sndTooFar )
 		return end
@@ -442,14 +448,13 @@ function SWEP:StartAttack()
 
 		self:UpdateAttack()
         --hacky fix for the grappendix sound
-        if self.Owner:Health() <= 1 then
-        self.Weapon:EmitSound( sndTooFar )
-        else
-		self.Weapon:EmitSound( sndPowerDown )
-        end
+        if self:GetOwner():Health() <= 1 then
+        self:GetOwner():EmitSound( sndTooFar )
+		return end
+
 	else
 		-- Play a sound
-		self.Weapon:EmitSound( sndTooFar )
+		self:GetOwner():EmitSound( sndTooFar )
 	end
 end
 
@@ -505,7 +510,7 @@ function SWEP:UpdateAttack()
 		self.dtt = (et - CurTime()) / (et - self.startTime)
 	end
 	if(self.dtt < 0) then
-		self.Weapon:EmitSound( sndPowerUp )
+		self:GetOwner():EmitSound( sndPowerUp )
 		self.dtt = 0
 	end
 
@@ -530,7 +535,7 @@ function SWEP:UpdateAttack()
 
 	if self.LastDrain <= CurTime() then
         self.Owner:SetHealth(math.max(1,self.Owner:Health() - self.Owner:GetMaxHealth() * 0.01))
-        if self.Owner:Health() <= 1 then
+		if self.Owner:Health() <= 1 then
             self:EndAttack( true )
             --hacky workaround to make the weapon think it couldn't successfully find a trace to achieve the effect of forcibly stopping a grapple
 			inRange = false
@@ -621,18 +626,21 @@ function SWEP:Think()
 		local ply = self.Owner
 		if ply.TwinHeartToggleOn and self.LastTransfer <= CurTime() then
 			if ply.TwinHeartToggleOn == true then
-				if ply.Horde_TwinHeartStack <= 0 then
+			
+				
+				if ply.Horde_TwinHeartStack <= 0 or ply:Horde_HasDebuff(HORDE.Status_Decay) then
 					ply.TwinHeartToggleOn = false
+					ply:EmitSound("items/suitchargeno1.wav")
 					return
 				end
-				sound.Play("items/medshot4.wav", ply:GetPos())
+				if ply:Health() < ply:GetMaxHealth() then
 				ply.Horde_TwinHeartStack = math.max(0, ply.Horde_TwinHeartStack - 1)
 				ply:Horde_SyncStatus(HORDE.Status_Twin_Heart, ply.Horde_TwinHeartStack)
-				local healinfo = HealInfo:New({amount = ply:GetMaxHealth() * 0.01, healer=self.Owner})
 				local id = ply:SteamID()
 				--timer.Remove("Horde_TwinHeartStacking" .. id)
-				HORDE:OnPlayerHeal(ply, healinfo)
+				HORDE:SelfHeal(ply, ply:GetMaxHealth() * 0.01)
 				self.LastTransfer = CurTime() + self.TransferInterval
+				end
 			end
 		end
 	end

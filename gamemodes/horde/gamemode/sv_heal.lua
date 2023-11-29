@@ -86,7 +86,9 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
         healer:Horde_AddHealAmount(healinfo:GetHealAmount())
         return
     end
+    if ply:GetInfoNum("horde_heal_flash", 1) == 1 then
     ply:ScreenFade(SCREENFADE.IN, Color(50, 200, 50, 10), 0.3, 0)
+    end
     if healer ~= ply then
         healer:Horde_AddMoney(math.min(healinfo:GetHealAmount()*0.75))
         healer:Horde_SyncEconomy()
