@@ -344,7 +344,7 @@ function HORDE:GetDefaultItemInfusions()
 end
 
 function HORDE:GetDefaultItemsData()
-    HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_horde_knife",    100,  2, "A reliable bayonet.\nRMB to deal a heavy slash.",
+    HORDE:CreateItem("Melee",      "Combat Knife",   "arccw_horde_knife",    100,  0, "A reliable bayonet.\nRMB to deal a heavy slash.",
     nil, 10, -1, nil, nil, nil, nil, {HORDE.DMG_SLASH}, nil, {"Berserker", "Samurai", "Cyborg Ninja"})
     HORDE:CreateItem("Melee",      "Crowbar",        "arccw_horde_crowbar", 1000,  3, "A trusty crowbar.\nEasy to use.",
     nil, 10, -1, nil, "items/hl2/weapon_crowbar.png", nil, nil, {HORDE.DMG_BLUNT})
