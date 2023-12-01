@@ -1,8 +1,8 @@
 GADGET.PrintName = "Berserker Armor"
 GADGET.Description = "25% increased damage.\n25% increased Global damage resistance.\n25% increased movespeed."
 GADGET.Icon = "items/gadgets/berserk_armor.png"
-GADGET.Duration = 8
-GADGET.Cooldown = 30
+GADGET.Duration = 10
+GADGET.Cooldown = 20
 GADGET.Active = true
 GADGET.Params = {
     [1] = {value = 0.25, percent = true},
@@ -18,7 +18,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     sound.Play("horde/gadgets/berserk_in.ogg", ply:GetPos())
     ply.Horde_HasGuts = true
     ply:ScreenFade(SCREENFADE.IN, Color(200, 50, 50, 50), 0.1, 8)
-    timer.Simple(8, function()
+    timer.Simple(10, function()
         if ply:IsValid() then ply.Horde_HasGuts = nil end
     end)
 end

@@ -2,7 +2,7 @@ GADGET.PrintName = "Hardening Injection"
 GADGET.Description = "50% reduced movement speed.\n25% increased Global damage resistance.\n25% increased Physical damage resistance."
 GADGET.Icon = "items/gadgets/hardening_injection.png"
 GADGET.Duration = 5
-GADGET.Cooldown = 25
+GADGET.Cooldown = 15
 GADGET.Active = true
 GADGET.Params = {
 }

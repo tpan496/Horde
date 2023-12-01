@@ -171,7 +171,7 @@ function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_energy_shield", 2000, 1, {Heavy=true}, {Heavy=5})
     HORDE:CreateGadgetItem("gadget_hardening_injection", 2500, 1, {Heavy=true}, {Heavy=10})
     HORDE:CreateGadgetItem("gadget_exoskeleton", 2750, 3, {Heavy=true}, {Heavy=15})
-    HORDE:CreateGadgetItem("gadget_ulpa_filter", 3000, 2, {Heavy=true}, {Heavy=20})
+    HORDE:CreateGadgetItem("gadget_ulpa_filter", 3000, 1, {Heavy=true}, {Heavy=20})
     HORDE:CreateGadgetItem("gadget_armor_fusion",    3000, 2, {Heavy=true}, {Heavy=25})
 
     HORDE:CreateGadgetItem("gadget_proximity_defense", 2000, 1, {Demolition=true}, {Demolition=5})

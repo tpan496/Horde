@@ -1,7 +1,7 @@
 GADGET.PrintName = "ULPA Filter"
 GADGET.Description =
-[[{1} increased maximum armor.
-{2} reduced buildups from all sources while you have armor.]]
+[[25% increased maximum armor.
+50% less debuff buildup.]]
 GADGET.Icon = "items/gadgets/ulpa_filter.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
@@ -14,9 +14,7 @@ GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus, inflictor)
     if ply:Horde_GetGadget() ~= "gadget_ulpa_filter" then return end
-    if ply:Armor() > 0 then
-        bonus.less = bonus.less * 0.75
-    end
+        bonus.less = bonus.less * 0.5
 end
 
 GADGET.Hooks.Horde_OnSetGadget = function (ply, gadget)
@@ -33,6 +31,6 @@ end
 
 GADGET.Hooks.Horde_OnSetMaxArmor = function (ply, bonus)
     if SERVER and ply:Horde_GetGadget() == "gadget_ulpa_filter" then
-        bonus.increase = bonus.increase + 0.2
+        bonus.increase = bonus.increase + 0.25
     end
 end
