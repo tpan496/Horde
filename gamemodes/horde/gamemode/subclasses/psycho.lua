@@ -8,7 +8,7 @@ Hybrid fighter focused on critical hits.]] -- Required
 SUBCLASS.BasePerk = "psycho_base"
 SUBCLASS.Perks = {
     [1] = {title = "Violence", choices = {"psycho_ferocity", "psycho_savor"}},
-    [2] = {title = "Sadism", choices = {"psycho_bloodbath", "psycho_disembowel"}},
-    [3] = {title = "Fatality", choices = {"psycho_skewering", "psycho_brutality"}},
+    [2] = {title = "Sadism", choices = {"psycho_bloodbath", "psycho_brutality"}},
+    [3] = {title = "Fatality", choices = {"psycho_skewering", "psycho_disembowel"}},
     [4] = {title = "Psychosis", choices = {"psycho_grudge", "psycho_bestial_wrath"}},
 } -- Required
