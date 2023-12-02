@@ -213,10 +213,9 @@
 			"name"		"horde_arccw_attinv_free"
 			"text"		"(ArcCW Only) Free Attachments"
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 			"singleplayer" ""
 		}
 	}
 	
 }
-
