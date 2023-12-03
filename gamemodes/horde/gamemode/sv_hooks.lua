@@ -19,3 +19,8 @@ end)
 hook.Add("HordeBossSpawn", "Horde_BossSpawn", function (enemy)
     return
 end)
+
+-- Remove tinnitus
+hook.Add( "OnDamagedByExplosion", "HordeDisableTinnitus", function()
+    return true
+end)
