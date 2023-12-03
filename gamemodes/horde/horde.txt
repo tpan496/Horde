@@ -85,7 +85,7 @@
 			"name"		"horde_break_time"
 			"text"		"Break time between waves (>10)"
 			"type"		"Numeric"
-			"default"	"60"
+			"default"	"90"
 			"singleplayer" ""
 		}
 		11
