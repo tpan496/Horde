@@ -414,13 +414,13 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("SMG",        "SMG1",           "arccw_horde_smg1",   100, 3, "A compact, fully automatic firearm.",
     {Assault=true, Heavy=true}, 5, -1, nil, "items/hl2/weapon_smg1.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Assault", "SpecOps", "Reverend", "Heavy", "Juggernaut"})
     HORDE:CreateItem("SMG",        "TMP",            "arccw_horde_tmp",   1000, 3, "Steyr TMP.\nA select-fire 9×19mm Parabellum caliber machine pistol.",
-    {Medic=true, Assault=true, Heavy=true, Survivor=true, Cremator=true}, 8, -1, nil, nil, {Survivor=2}, nil, {HORDE.DMG_BALLISTIC})
+    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, {Survivor=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "UZI",            "arccw_horde_uzi",   1250, 3, "UZI Submachine Gun.\nDesigned by Captain (later Major) Uziel Gal of the IDF following the 1948 Arab–Israeli War.",
-    {Medic=true, Assault=true, Heavy=true, Survivor=true, Cremator=true}, 8, -1, nil, nil, {Survivor=3}, nil, {HORDE.DMG_BALLISTIC})
+    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, {Survivor=3}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "MP40",           "arccw_horde_mp40",  1250, 3, "Maschinenpistole 40.\nDeveloped in Nazi Germany and used extensively by the Axis powers during World War II.",
-    {Medic=true, Assault=true, Heavy=true, Survivor=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "Mac10",          "arccw_go_mac10",    1500, 4, "Military Armament Corporation Model 10.\nBoasts a high rate of fire,\nwith poor spread accuracy and high recoil as trade-offs.",
-    {Medic=true, Assault=true, Heavy=true, Survivor=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "MP5",            "arccw_go_mp5",      1500, 4, "Heckler & Koch MP5.\nOften imitated but never equaled,\nthe MP5 is perhaps the most versatile SMG in the world.",
     {Medic=true, Assault=true, Heavy=true, Survivor=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "UMP45",          "arccw_go_ump",      1500, 4, "KM UMP45.\nA lighter and cheaper successor to the MP5.",
@@ -572,8 +572,8 @@ function HORDE:GetDefaultItemsData()
     --{Cremator=true}, 100, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE})
 
 
-    HORDE:CreateItem("Special",    "Welder",         "horde_welder",         100,  2, "Engineering welder.\nDamages enemies and heals minions.",
-    {Engineer=true}, 50, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, nil, {"Engineer"})
+    HORDE:CreateItem("Special",    "Welder",         "horde_welder",         100,  1, "Engineering welder.\nDamages enemies and heals minions.",
+    {Engineer=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, nil, {"Engineer"})
     HORDE:CreateItem("Special",    "Manhack",        "npc_manhack",          900,  3, "Manhack that regenerates on death.\nManhack deals its health as damage to enemies.\nManhack dies on impact.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/npc_manhack.png", nil, nil, {HORDE.DMG_SLASH})
     HORDE:CreateItem("Special",    "Turret",         "npc_turret_floor",    1000,  4, "Combine Overwatch turret.\n\nUsed to guard chocke points and vital areas.",
@@ -582,16 +582,16 @@ function HORDE:GetDefaultItemsData()
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/shotgun_turret.png", nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Rocket Turret",  "npc_vj_horde_rocket_turret",    1500,  4, "Aperture Science rocket turret.\n\nShoots mini-missiles that deal Blast damage.\nCovers all angles.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/rocket_turret.png", nil, nil, {HORDE.DMG_BLAST})
-    HORDE:CreateItem("Special",    "Laser Turret",  "npc_vj_horde_laser_turret",    1500,  5, "Aperture Science laser turret.\n\nFires tracing laser at the enemy.\nCovers all angles.",
+    HORDE:CreateItem("Special",    "Laser Turret",  "npc_vj_horde_laser_turret",    1500,  4, "Aperture Science laser turret.\n\nFires tracing laser at the enemy.\nCovers all angles.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/laser_turret.png", {Engineer=5}, nil, {HORDE.DMG_BLAST})
-    HORDE:CreateItem("Special",    "Sniper Turret",  "npc_vj_horde_sniper_turret",   1500,  5, "Combine heavy sniper turret.\n\nCovers a long range and deals heavy damage, but with limited sight.\nAims for the head if possible.",
+    HORDE:CreateItem("Special",    "Sniper Turret",  "npc_vj_horde_sniper_turret",   1500,  4, "Combine heavy sniper turret.\n\nCovers a long range and deals heavy damage, but with limited sight.\nAims for the head if possible.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=3}, "items/sniper_turret.png", {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Vortigaunt",     "npc_vj_horde_vortigaunt",  1750,  5, "Xen Vortigaunts that can conjure concentrated shock energy blasts.\nThe energy blasts have long range and deal splash damage.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_vortigaunt.png", {Engineer=2}, nil, {HORDE.DMG_LIGHTNING})
-    HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   2750, 9, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
+    HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   2750, 8, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=1}, "items/npc_combat_bot.png", {Engineer=3}, nil, {HORDE.DMG_BLUNT})
 
-    HORDE:CreateItem("Special",    "Hivehand",       "horde_hivehand",       2000,  6, "Organic weapon used by Xen soldiers.\nHas infinite ammo.\nPrimary fire generates homing ricocheting shots.\nSecondary fire rapidly unloads the entire weapon.",
+    HORDE:CreateItem("Special",    "Hivehand",       "horde_hivehand",       2000,  5, "Organic weapon used by Xen soldiers.\nHas infinite ammo.\nPrimary fire generates homing ricocheting shots.\nSecondary fire rapidly unloads the entire weapon.",
     {Engineer=true}, 2, -1, nil, nil, {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Spore Launcher", "horde_spore_launcher",2500,  7, "Improvised biological weapon.\nShoots out acidic projectiles that explodes after a short delay.\nHeals players and damages enemies.",
     {Medic=true, Survivor=true}, 40, -1, nil, nil, {Medic=2, Survivor=2}, nil, {HORDE.DMG_POISON})

@@ -16,7 +16,7 @@ function ENT:Initialize()
     self:SetMoveType( MOVETYPE_VPHYSICS )
     self:SetSolid( SOLID_VPHYSICS )
     self:PhysicsInit( SOLID_VPHYSICS )
-    self:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE )
+    self:SetCollisionGroup( COLLISION_GROUP_PLAYER_MOVEMENT )
     self:DrawShadow( false )
     self.SoundTimer = CurTime()
     self.RemoveTimer = CurTime() + 3

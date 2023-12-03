@@ -15,6 +15,9 @@ ENT.RadiusDamageType = DMG_CLUB -- Damage type
 --ENT.SoundTbl_Idle = {"npc/antlion/antlion_poisonball1.wav"}
 ENT.SoundTbl_OnCollide = {"physics/concrete/boulder_impact_hard1.wav","physics/concrete/boulder_impact_hard2.wav", "physics/concrete/boulder_impact_hard3.wav"}
 
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
+
 ENT.IdleSoundLevel = 200
 ENT.OnCollideSoundPitch1 = 150
 ENT.OnCollideSoundPitch1 = 140

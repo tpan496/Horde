@@ -27,8 +27,8 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/w_smg_tmp.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 21
-SWEP.DamageMin = 18
+SWEP.Damage = 25
+SWEP.DamageMin = 20
 SWEP.Range = 500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 4
 SWEP.DamageType = DMG_BULLET
@@ -204,11 +204,11 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",
