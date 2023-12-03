@@ -46,7 +46,7 @@ SWEP.RecoilSide = 0.550
 SWEP.RecoilRise = 0.1
 SWEP.RecoilPunch = 0.2
 
-SWEP.Delay = 60 / 550 -- 60 / RPM.
+SWEP.Delay = 0.23 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -283,7 +283,6 @@ SWEP.WorldModelOffset = {
 
 SWEP.MirrorVMWM = true
 
-SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
     {
         PrintName = "Optic",

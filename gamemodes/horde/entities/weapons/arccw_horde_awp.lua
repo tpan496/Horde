@@ -40,10 +40,9 @@ SWEP.Primary.ClipSize = 10 -- DefaultClip is automatically set.
 
 SWEP.PhysBulletMuzzleVelocity = 1400
 
-SWEP.Recoil = 3.300
-SWEP.RecoilSide = 0.550
-SWEP.RecoilRise = 0.1
-SWEP.RecoilPunch = 2.5
+SWEP.VisualRecoilMult = 0
+SWEP.Recoil = 0.5
+SWEP.RecoilSide = 0
 
 SWEP.ManualAction = true
 SWEP.NoLastCycle = true -- do not cycle on last shot
@@ -443,9 +442,3 @@ sound.Add({
     sound = "arccw_go/awp/awp_boltback.wav"
 })
 
-function SWEP:Hook_OnDeploy()
-    timer.Simple(0, function ()
-        if !IsValid(self) then return end
-        self:Attach(1, "go_optic_awp")
-    end)
-end

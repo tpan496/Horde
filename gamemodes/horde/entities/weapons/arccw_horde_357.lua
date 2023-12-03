@@ -28,8 +28,8 @@ SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_357.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 25
-SWEP.DamageMin = 20
+SWEP.Damage = 60
+SWEP.DamageMin = 50
 SWEP.RangeMin = 500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Range = 1250 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 4

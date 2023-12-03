@@ -11,7 +11,7 @@ ENT.FuseTime = 2
 ENT.ArmTime = 0
 ENT.ImpactFuse = false
 ENT.Armed = false
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
 
 ENT.NextEffect = CurTime()
 

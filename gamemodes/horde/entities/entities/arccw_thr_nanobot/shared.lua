@@ -21,7 +21,7 @@ ENT.TouchDamageTick = 0
 
 ENT.Ticks = 0
 ENT.TouchedEntities = {}
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
 
 AddCSLuaFile()
 

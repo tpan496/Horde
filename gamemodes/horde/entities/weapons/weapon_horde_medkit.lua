@@ -53,7 +53,7 @@ function SWEP:PrimaryAttack()
 
 	local tr = util.TraceLine( {
 		start = self:GetOwner():GetShootPos(),
-		endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 100,
+		endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 150,
 		filter = self:GetOwner()
 	} )
 
@@ -83,7 +83,7 @@ function SWEP:PrimaryAttack()
 
 		self:TakePrimaryAmmo( need )
 
-        local healinfo = HealInfo:New({amount=need, healer=self:GetOwner()})
+        local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.2, healer=self:GetOwner()})
 		if ent:IsPlayer() then
 			HORDE:OnPlayerHeal(ent, healinfo)
 		else
@@ -120,7 +120,7 @@ function SWEP:SecondaryAttack()
 
 		self:TakePrimaryAmmo( need )
 
-        local healinfo = HealInfo:New({amount=need, healer=self:GetOwner()})
+        local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.2, healer=self:GetOwner()})
 
 		HORDE:OnPlayerHeal(ent, healinfo)
 

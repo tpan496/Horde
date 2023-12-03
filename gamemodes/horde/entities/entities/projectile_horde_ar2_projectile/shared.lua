@@ -9,8 +9,8 @@ ENT.Spawnable 			= false
 AddCSLuaFile()
 
 ENT.Model = "models/effects/combineball.mdl"
-ENT.CollisionGroup = COLLISION_GROUP_PASSABLE_DOOR
-ENT.CollisionGroupType = COLLISION_GROUP_PASSABLE_DOOR
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
 ENT.Removing = nil
 ENT.StartPos = nil
 ENT.PlaySoundTimer = 0

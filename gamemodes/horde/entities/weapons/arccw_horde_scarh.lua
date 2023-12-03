@@ -29,8 +29,8 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "00000000000"
 
-SWEP.Damage = 74
-SWEP.DamageMin = 60 -- damage done at maximum range
+SWEP.Damage = 55
+SWEP.DamageMin = 40 -- damage done at maximum range
 SWEP.Range = 150 -- in METRES
 SWEP.Penetration = 23
 SWEP.DamageType = DMG_BULLET
@@ -47,9 +47,12 @@ SWEP.RecoilSide = 0.345
 SWEP.RecoilRise = 0.1
 SWEP.RecoilPunch = 0.2
 
-SWEP.Delay = 60 / 650 -- 60 / RPM.
+SWEP.Delay = 0.11 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
+     {
+        Mode = 2,
+    },
     {
         Mode = 1,
     },
@@ -319,7 +322,6 @@ SWEP.WorldModelOffset = {
 
 SWEP.MirrorVMWM = true
 
-SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
     {
         PrintName = "Optic",

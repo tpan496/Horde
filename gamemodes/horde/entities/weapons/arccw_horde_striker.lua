@@ -286,7 +286,7 @@ SWEP.Animations = {
     },
     ["sgreload_start"] = {
         Source = "reload_start",
-        Time = 43/40,
+        Time = 23/40,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_lift_v1.wav", 		t = 0},
@@ -297,7 +297,7 @@ SWEP.Animations = {
     },
     ["sgreload_insert"] = {
         Source = "reload_loop",
-        Time = 13/40,
+        Time = 8/40,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_shell_v1.wav", 		t = 3/40},

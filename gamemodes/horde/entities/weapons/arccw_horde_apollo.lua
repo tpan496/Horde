@@ -26,7 +26,7 @@ SWEP.ViewModel = "models/horde/weapons/c_apollo.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_apollo.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 55
+SWEP.Damage = 60
 SWEP.DamageMin = 42 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 10
@@ -45,8 +45,9 @@ SWEP.TracerCol = Color(255, 25, 25)
 SWEP.TracerWidth = 3
 
 SWEP.Recoil = 0.2
-SWEP.RecoilSide = 0.75
-SWEP.RecoilRise = 1
+SWEP.RecoilSide = 0.2
+SWEP.RecoilRise = 0.2
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 600 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
@@ -65,9 +66,9 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_ar2"
 SWEP.NPCWeight = 100
 
-SWEP.AccuracyMOA = 12 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 200 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 75
+SWEP.AccuracyMOA = 100 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 300 -- inaccuracy added by hip firing.
+SWEP.MoveDispersion = 0
 
 SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses
 SWEP.MagID = "type2" -- the magazine pool this gun draws from

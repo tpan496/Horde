@@ -11,7 +11,7 @@ ENT.FuseTime = 3
 ENT.ArmTime = 0
 ENT.ImpactFuse = false
 ENT.Armed = true
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
 
 AddCSLuaFile()
 

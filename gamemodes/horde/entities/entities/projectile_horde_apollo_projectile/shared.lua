@@ -9,8 +9,8 @@ ENT.Spawnable 			= false
 AddCSLuaFile()
 
 ENT.Model = "models/dav0r/hoverball.mdl"
-ENT.CollisionGroup = COLLISION_GROUP_PASSABLE_DOOR
-ENT.CollisionGroupType = COLLISION_GROUP_PASSABLE_DOOR
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
 ENT.Removing = nil
 ENT.StartPos = nil
 ENT.PlaySoundTimer = 0
@@ -101,14 +101,14 @@ function ENT:PhysicsCollide(data, phys)
 		dmg:SetDamageType(DMG_BURN)
 		dmg:SetAttacker(self.Owner)
 		dmg:SetInflictor(self)
-		dmg:SetDamage(50)
+		dmg:SetDamage(60)
 		dmg:SetDamagePosition(self:GetPos())
 
 
 		self:FireBullets({
 			Attacker = owner,
 			Inflitor = self,
-			Damage = 50,
+			Damage = 60,
 			Tracer = 0,
 			Distance = 4000,
 			Dir = data.HitPos - self:GetPos(),

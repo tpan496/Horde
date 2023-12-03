@@ -7,7 +7,6 @@ SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
-SWEP.CamAttachment = 3
 
 SWEP.PrintName = "FN FAL (Horde)"
 SWEP.Trivia_Class = "Assault Rifle"
@@ -27,8 +26,8 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 85
-SWEP.DamageMin = 80
+SWEP.Damage = 65
+SWEP.DamageMin = 55
 SWEP.RangeMin = 1000 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Range = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 7
@@ -46,9 +45,12 @@ SWEP.Recoil = 0.7
 SWEP.RecoilSide = 0.7
 SWEP.RecoilRise = 0.2
 
-SWEP.Delay = 60 / 600 -- 60 / RPM.
+SWEP.Delay = 0.15 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
+    {
+        Mode = 2,
+    },
     {
         Mode = 1,
     },
@@ -149,7 +151,6 @@ SWEP.AttachmentElements = {
 
 SWEP.ExtraSightDist = 5
 
-SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
     {
         PrintName = "Optic",

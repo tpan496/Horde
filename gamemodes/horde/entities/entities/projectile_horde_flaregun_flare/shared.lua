@@ -9,8 +9,8 @@ ENT.Spawnable 			= false
 AddCSLuaFile()
 
 ENT.Model = "models/crossbow_bolt.mdl"
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
 ENT.Removing = nil
 
 function ENT:Draw()
@@ -46,7 +46,7 @@ function ENT:Initialize()
 
         timer.Simple(0, function()
             if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+            self:SetCollisionGroup(COLLISION_GROUP_PLAYER_MOVEMENT)
         end)
 
         timer.Simple(2,function()

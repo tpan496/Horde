@@ -250,7 +250,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_p250"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_r8"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_deagle"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_mw2_m1911"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_m1911"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_anaconda"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_cz75"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_m9"].infusions = ballistic_infusions_light
@@ -376,8 +376,8 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Pistol",     "Medic 9mm",       "arccw_horde_medic_9mm", 75,  1, "Modified 9mm that provides ranged healing.\n\nPress B or ZOOM to fire healing darts.\nHealing dart recharges every 1 second.",
     {Medic=true}, 2, -1, nil, "items/weapon_medic_9mm.png", nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON}, nil, {"Medic"})
     HORDE:CreateItem("Pistol",     "357",            "arccw_horde_357",        100,  2, "Colt python magnum pistol.\nUsed by Black Mesa security guards.",
-    {Ghost=true}, 3, -1, nil, "items/hl2/weapon_357.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Ghost", "Gunslinger"})
-    HORDE:CreateItem("Pistol",     "Flare Gun",      "arccw_horde_flaregun",   100,  2, "Orion Safety Flare Gun.\nIgnites enemies and deals Fire damage.",
+    {Ghost=true}, 2, -1, nil, "items/hl2/weapon_357.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Ghost", "Gunslinger"})
+    HORDE:CreateItem("Pistol",     "Flare Gun",      "arccw_horde_flaregun",   100,  2, "Orion Safety Flare Gun.\nIgnites enemies and deals Fire damage. \nDraws from reserve ammo rather than reloading manually.",
     {Cremator=true}, 1, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE}, nil, {"Cremator"})
     HORDE:CreateItem("Pistol",     "Glock",          "arccw_go_glock",    750,  2, "Glock 18.\nSemi-automatic pistols manufactured in Austrian.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
@@ -389,7 +389,7 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "R8",             "arccw_go_r8",       750,  2, "R8 Revolver.\nDelivers a highly accurate and powerful round,\nbut at the expense of a lengthy trigger-pull.",
     {Survivor=true, Ghost=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "M1911",          "arccw_mw2_m1911",   750,  2, "Colt 1911.\nStandard-issue sidearm for the United States Armed Forces.",
+    HORDE:CreateItem("Pistol",     "M1911",          "arccw_horde_m1911",   750,  2, "Colt 1911.\nStandard-issue sidearm for the United States Armed Forces.",
     {Ghost=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "Deagle",         "arccw_go_deagle",   750,  2, "Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
     {Survivor=true, Ghost=true}, 5, -1, nil, nil, {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
@@ -438,8 +438,8 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("SMG",        "Vector Medic PDW","arccw_horde_vector",3000, 6, "KRISS Vector Gen I equipped with a medical dart launcher.\nUses an unconventional blowback system that results in its high firerate.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 12 health and has a 1.5 second cooldown.",
     {Medic=true}, 8, -1, nil, nil, {Medic=3}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
 
-    HORDE:CreateItem("Shotgun",    "Pump-Action",    "arccw_horde_shotgun",100, 3, "A standard 12-gauge shotgun.",
-    {Warden=true, Engineer=true, Cremator=true}, 6, -1, nil, "items/hl2/weapon_shotgun.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Warden"})
+    HORDE:CreateItem("Shotgun",    "Pump-Action",    "arccw_horde_shotgun",100, 2, "A standard 12-gauge shotgun.",
+    {Warden=true, Engineer=true, Cremator=true}, 2, -1, nil, "items/hl2/weapon_shotgun.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Warden"})
     HORDE:CreateItem("Shotgun",    "Nova",           "arccw_go_nova",     1000, 4, "Benelli Nova.\nItalian pump-action 12-gauge shotgun.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "M870",           "arccw_go_870",      1500, 4, "Remington 870 Shotgun.\nManufactured in the United States.",
@@ -486,7 +486,7 @@ function HORDE:GetDefaultItemsData()
     {Survivor=true, Ghost=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "SSG08",          "arccw_horde_ssg08",     2500, 6, "Steyr SSG 08.\nAustrian bolt-action sniper rifle developed and produced by Steyr Mannlicher.\nProvides unparalled mobility as a sniper rifle.",
     {Survivor=true, Ghost=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Rifle",      "SCAR-H",         "arccw_horde_scarh",       2500, 7, "FN SCAR-H.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
+    HORDE:CreateItem("Rifle",      "SCAR-H",         "arccw_horde_scarh",       2750, 7, "FN SCAR-H.\nAn assault rifle developed by Belgian manufacturer FN Herstal.",
     {Survivor=true,  Ghost=true}, 15, -1, nil, nil, {Ghost=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "G3",             "arccw_horde_g3",      3000, 8, "G3 Battle Rifle.\nA 7.62×51mm NATO, select-fire battle rifle developed by H&K.",
     {Ghost=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
@@ -556,7 +556,7 @@ function HORDE:GetDefaultItemsData()
     --{Demolition=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     --HORDE:CreateItem("Explosive",  "Static Mine",  "horde_static_mine",  2000,  5, "Combine reactive mines that hovers in air.\nExplode when enemies come in proximity.\nYou can plant at most 5 reactive mines.",
     --{Demolition=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
-    HORDE:CreateItem("Explosive",  "M79 GL",         "arccw_horde_m79",    2000,  6, "M79 Grenade Launcher.\nShoots 40x46mm grenades the explodes on impact.",
+    HORDE:CreateItem("Explosive",  "M79 GL",         "arccw_horde_m79",    1500,  5, "M79 Grenade Launcher.\nShoots 40x46mm grenades the explodes on impact.",
     {Demolition=true, Survivor=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "Sticky Launcher",  "horde_sticky_launcher", 2500,  7, "Sticky grenade launcher.\nLaunches grenades that stick to surfaces and entities.\n\nRMB to detonate.",
     {Demolition=true}, 50, -1, nil, nil, {Demolition=2}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
