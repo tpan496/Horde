@@ -1,186 +1,143 @@
 if not ArcCWInstalled then return end
-SWEP.Base = "arccw_mw2_abase"
-SWEP.Spawnable = true
-SWEP.Category = "ArcCW - Horde"
-SWEP.AdminOnly = false
-SWEP.WeaponCamBone = tag_camera
-
-SWEP.PrintName = "Trench Gun"
-SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "Fires incendiary pellets."
-
 if CLIENT then
-SWEP.Trivia_Manufacturer = "M1887 Trench Gun"
-SWEP.Trivia_Calibre = "12 Gauge"
-SWEP.Trivia_Mechanism = "Pump-Action"
-SWEP.Trivia_Country = "USA"
-SWEP.Trivia_Year = 1964
+    SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_kf1lever")
+    killicon.Add("arccw_horde_lever_fire", "arccw/weaponicons/arccw_kf1lever", Color(0, 0, 0, 255))
 end
+
+SWEP.Base = "arccw_base"
+SWEP.Spawnable = true -- this obviously has to be set to true
+SWEP.Category = "ArcCW - Horde (Custom)" -- edit this if you like
+SWEP.AdminOnly = false
+
+SWEP.PrintName = "Winchester Incendiary"
+SWEP.TrueName = "Winchester 1894 Incendiary"
+SWEP.Trivia_Class = "Rifle"
+SWEP.Trivia_Desc = "A lever action rifle that uses incendiary ammo."
+SWEP.Trivia_Manufacturer = "Winchester"
+SWEP.Trivia_Calibre = ".44 Magnum"
+SWEP.Trivia_Mechanism = "Lever-Action"
+SWEP.Trivia_Country = "USA"
+SWEP.Trivia_Year = 1894
 
 SWEP.Slot = 2
 
+if GetConVar("arccw_truenames"):GetBool() then
+    SWEP.PrintName = SWEP.TrueName
+end
+
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/arccw/fesiugmw2/c_winchester.mdl"
-SWEP.MirrorVMWM = false
-SWEP.WorldModel = "models/weapons/w_shot_m3super90.mdl"
-SWEP.ViewModelFOV = 65
+SWEP.ViewModel = "models/horde/weapons/c_kf_winchester.mdl"
+SWEP.WorldModel = "models/weapons/w_annabelle.mdl"
+SWEP.ViewModelFOV = 45
 
-SWEP.Damage = 30
-SWEP.DamageMin = 15
-SWEP.Range = 800 * 0.025  -- GAME UNITS * 0.025 = METRES
-SWEP.Penetration = 1
+SWEP.Damage = 200
+SWEP.DamageMin = 150 -- damage done at maximum range
+SWEP.Range = 50 -- in METRES
+SWEP.Penetration = 20
 SWEP.DamageType = DMG_BURN
 SWEP.ShootEntity = nil -- entity to fire, if any
+SWEP.MuzzleVelocity = 400 -- projectile or phys bullet muzzle velocity
+-- IN M/S
 
-
-SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 6 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 6
-SWEP.ReducedClipSize = 4
-
-SWEP.VisualRecoilMult = 0
-SWEP.Recoil = 2
-SWEP.RecoilSide = 2
-
+SWEP.CanFireUnderwater = false
 SWEP.ShotgunReload = true
-SWEP.ManualAction = true
 
-SWEP.Delay = 10/30 -- 60 / RPM.
-SWEP.Num = 10 -- number of shots per trigger pull.
-SWEP.RunawayBurst = false
+SWEP.TracerNum = 1 -- tracer every X
+SWEP.TracerCol = Color(255, 25, 25)
+SWEP.TracerWidth = 3
+
+SWEP.ChamberSize = 0 -- how many rounds can be chambered.
+SWEP.Primary.ClipSize = 10 -- DefaultClip is automatically set.
+SWEP.ExtendedClipSize = 15
+SWEP.ReducedClipSize = 7
+
+SWEP.Recoil = 1
+SWEP.RecoilSide = 1
+SWEP.VisualRecoilMult = 1
+SWEP.RecoilRise = 1
+SWEP.RecoilPunch = 0
+
+SWEP.Delay = 60 / 80 -- 60 / RPM.
+SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
+		PrintName = "LEVER",
         Mode = 1,
     },
     {
-        Mode = 0,
-    },
+        Mode = 0
+    }
 }
 
-SWEP.NPCWeaponType = "weapon_shotgun"
-SWEP.NPCWeight = 125
+SWEP.NPCWeaponType = "weapon_pistol"
+SWEP.NPCWeight = 75
 
-SWEP.AccuracyMOA = 80 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 350 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 100 -- inaccuracy added by moving. Applies in sights as well! Walking speed is considered as "maximum".
-SWEP.SightsDispersion = 0 -- dispersion that remains even in sights
+SWEP.AccuracyMOA = 0.05 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 5 -- inaccuracy added by hip firing.
+SWEP.MoveDispersion = 200
 
-SWEP.Primary.Ammo = "buckshot" -- what ammo type the gun uses
+SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses
 
-SWEP.ShootVol = 75 -- volume of shoot sound
+SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound =			"weapons/fesiugmw2/fire/shot_w1200.wav"
---SWEP.DistantShootSound =	"weapons/fesiugmw2/fire_distant/shot_w1200.wav"
-SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/shot_sil.wav"
+SWEP.ShootSound = "KF_winchester.Fire"
+SWEP.ShootSoundSilenced = "KF_mac10.Fire"
+SWEP.DistantShootSound = "KF_winchester.Fire"
 
-SWEP.MuzzleEffect = "muzzleflash_m3"
-SWEP.ShellModel = "models/shells/shell_12gauge.mdl"
-SWEP.ShellPitch = 100
-SWEP.ShellSounds = ArcCW.ShotgunShellSoundsTable
-SWEP.ShellScale = 1.5
-SWEP.ShellRotateAngle = Angle(0, 90, 0)
+SWEP.MuzzleEffect = "muzzleflash_pistol"
+SWEP.ShellModel = "models/shells/shell_338mag.mdl"
+SWEP.ShellScale = 1
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
+SWEP.SightTime = 0.175
+
 SWEP.SpeedMult = 1
 SWEP.SightedSpeedMult = 0.8
-SWEP.SightTime = 0.3
 
-SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
-    -- [0] = "bulletchamber",
-    -- [1] = "bullet1"
-}
+SWEP.BarrelLength = 18
+
+SWEP.ProceduralRegularFire = false
+SWEP.ProceduralIronFire = false
+
+SWEP.CaseBones = {}
+
+SWEP.ManualAction = true
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-2.82, -4.163, 1.1),
-    Ang = Angle(0.626, 0, 0),
-    ViewModelFOV = 65 / 1.18,
-    Magnification = 1.18,
+    Pos = Vector(-5, 0, 2),
+    Ang = Angle(-0.2, 0, 0),
+    Magnification = 1.3,
 }
 
-
-SWEP.HoldtypeHolstered = "passive"
+SWEP.HoldtypeHolstered = "normal"
 SWEP.HoldtypeActive = "shotgun"
 SWEP.HoldtypeSights = "ar2"
 
-SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN
+SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
 
-SWEP.ActivePos = Vector(-0.5, -3.75, 1)
+SWEP.ActivePos = Vector(-1, -5, 1.5)
 SWEP.ActiveAng = Angle(0, 0, 0)
 
-SWEP.CustomizePos = Vector(5.479, -5, -1.321)
-SWEP.CustomizeAng = Angle(18.2, 39.4, 14.8)
-
-SWEP.HolsterPos = Vector(3, 0, 0) + Vector(-0.5, -3.75, 1)
-SWEP.HolsterAng = Angle(-10, 25, 0)
-
-SWEP.SprintPos = Vector(-0.5, -3.75, 1)
-SWEP.SprintAng = Angle(0, 0, 0)
+SWEP.HolsterPos = Vector(-2, -7.145, -11.561)
+SWEP.HolsterAng = Angle(36.533, 0, 0)
 
 SWEP.BarrelOffsetSighted = Vector(0, 0, -1)
 SWEP.BarrelOffsetHip = Vector(2, 0, -2)
 
-SWEP.ExtraSightDist = 5
+SWEP.CustomizePos = Vector(12, -8, -4.897)
+SWEP.CustomizeAng = Angle(12.149, 30.547, 0)
 
 SWEP.AttachmentElements = {
-    ["nors"] = {
-        VMBodygroups = {{ind = 1, bg = 1}},
-        WMBodygroups = {},
-    },
+
 }
 
+SWEP.ExtraSightDist = 5
+
 SWEP.Attachments = {
-	{
-        PrintName = "Optic",
-        DefaultAttName = "Iron Sights",
-        Slot = "optic",
-        Bone = "tag_weapon",
-        Offset = {
-            vpos = Vector(1, 0, 1.8),
-            vang = Angle(0, 0, 0),
-            wang = Angle(-9.738, 0, 180)
-        },
-        InstalledEles = {"nors"},
-    },
-    {
-        PrintName = "Muzzle",
-        DefaultAttName = "Standard Muzzle",
-        Slot = "muzzle_shotgun",
-        Bone = "tag_weapon",
-        Offset = {
-            vpos = Vector(20, 0, 0.8950),
-            vang = Angle(0, 0, 0),
-            wpos = Vector(26.648, 0.782, -8.042),
-            wang = Angle(-9.79, 0, 180)
-        },
-		VMScale = Vector(1.25, 1.25, 1.25),
-    },
-    {
-        PrintName = "Underbarrel",
-        Slot = {"foregrip"},
-        Bone = "j_pump",
-        Offset = {
-            vpos = Vector(0, 0, -0.7),
-            vang = Angle(0, 0, 0),
-            wpos = Vector(14.329, 0.602, -4.453),
-            wang = Angle(-10.216, 0, 180)
-        },
-    },
-    {
-        PrintName = "Tactical",
-        Slot = "tac",
-        Bone = "tag_weapon",
-        Offset = {
-            vpos = Vector(20, 0, -1),
-            vang = Angle(0, 0, 0),
-            wpos = Vector(15.625, -0.253, -6.298),
-            wang = Angle(-8.829, -0.556, 90)
-        },
-		VMScale = Vector(1.25, 1.25, 1.25),
-    },
     {
         PrintName = "Ammo Type",
         Slot = "go_ammo"
@@ -190,106 +147,106 @@ SWEP.Attachments = {
         Slot = "go_perk"
     },
 	{
-        PrintName = "Charm",
+        PrintName = "Charms",
         Slot = "charm",
-        FreeSlot = true,
-        Bone = "tag_weapon",
+        Bone = "RepeatingRifle",
         Offset = {
-            vpos = Vector(1.5, -0.65, 0.1),
+            vpos = Vector(9, -0.4, 2),
             vang = Angle(0, 0, 0),
-            wpos = Vector(9.625, 1.5, -4),
-            wang = Angle(0, 0, 180)
+            wpos = Vector(22, 0.8, -6.5),
+            wang = Angle(-5, 0, 90)
         },
     },
 }
 
 SWEP.Animations = {
     ["idle"] = {
+    Source = "idle",
+    Time = 10,
+    },
+    ["enter_sight"] = {
         Source = "idle",
-        Time = 2/30,
-    },
-    ["enter_sprint"] = {
-        Source = "sprint_in",
-        Time = 10/30
-    },
-    ["idle_sprint"] = {
-        Source = "sprint_loop",
-        Time = 30/40
-    },
-    ["exit_sprint"] = {
-        Source = "sprint_out",
-        Time = 10/30
-    },
+        Time = 0,
+        },
+    ["idle_sights"] = {
+        Source = "idle",
+        Time = 0,
+        },
+        ["exit_sight"] = {
+            Source = "idle",
+            Time = 0,
+            },
     ["draw"] = {
-        Source = "pullout",
-        Time = 19/30,
-        SoundTable = {{s = "MW2Common.Deploy", 		t = 0}},
+        Source = "draw",
+        Time = 0.5,
+        SoundTable = {
+            {
+            s = "weapons/arccw/draw_secondary.wav",
+            t = 0
+            }
+        },
         LHIK = true,
         LHIKIn = 0,
-        LHIKOut = 0.9,
-    },
-    ["holster"] = {
-        Source = "putaway",
-        Time = 14/30,
-        LHIK = true,
-        LHIKIn = 0,
-        LHIKOut = 0.9,
+        LHIKOut = 0.25,
     },
     ["fire"] = {
-        Source = "fire",
-        Time = 10/30,
-		MinProgress = 10/30,
+        Source = "idle",
+        Time = 10,
     },
     ["fire_iron"] = {
-        Source = "fire_ads",
-        Time = 11/30,
-		MinProgress = 11/30,
+        Source = "idle",
+        Time = 10,
     },
-    ["cycle"] = {
-        Source = "rechamber",
-        Time = 15/30,
-        SoundTable = {{s = "weapons/fesiugmw2/foley/wpfoly_winchester_reload_pump_v1.wav", 		t = 2/30}},
-        ShellEjectAt = 2/30,
-		MinProgress = 0.333, -- how much time in seconds must pass before the animation can be cancelled
+	["cycle"] = {
+        Source = "shoot",
+        Time = 0.7,
+        ShellEjectAt = 0,
     },
     ["cycle_iron"] = {
-        Source = "rechamber_ads",
-        Time = 15/30,
-        SoundTable = {{s = "weapons/fesiugmw2/foley/wpfoly_winchester_reload_pump_v1.wav", 		t = 2/30}},
-        ShellEjectAt = 2/30,
-		MinProgress = 0.333, -- how much time in seconds must pass before the animation can be cancelled
+        Source = "shoot",
+        Time = 0.7,
+        ShellEjectAt = 0,
+    },
+    ["reload"] = {
+        Source = "reload",
+        Time = 2,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
+        FrameRate = 30,
+        LHIK = true,
+        LHIKIn = 0.5,
+        LHIKOut = 0.2,
     },
     ["sgreload_start"] = {
-        Source = "reload_start",
-        Time = 31/30,
+        Source = "start_reload",
+        Time = 0.5,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
-		RestoreAmmo = 1, -- only used by shotgun empty insert reload
-		-- it's modified, i'm sorry
-        SoundTable = {
-						{s = "weapons/fesiugmw2/foley/wpfoly_winchester_reload_lift_v1.wav", 	t = 0/30},
-						{s = "weapons/fesiugmw2/foley/wpfoly_winchester_reload_loop_v1.wav", 	t = 14/30},
-					},
+        RestoreAmmo = 1,
         LHIK = true,
         LHIKIn = 0.5,
         LHIKOut = 0,
     },
     ["sgreload_insert"] = {
-        Source = "reload_loop",
-        Time = 18/30,
+        Source = "insert",
+        Time = 0.7,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
-        SoundTable = {{s = "weapons/fesiugmw2/foley/wpfoly_winchester_reload_loop_v1.wav", 		t = 3/30}},
         TPAnimStartTime = 0.3,
         LHIK = true,
         LHIKIn = 0,
         LHIKOut = 0,
     },
     ["sgreload_finish"] = {
-        Source = "reload_finish",
-        Time = 22/30,
-        SoundTable = {{s = "weapons/fesiugmw2/foley/wpfoly_winchester_reload_pump_v1.wav", 		t = 8/30}},
+        Source = "reload_end",
+        Time = 0.7,
         LHIK = true,
         LHIKIn = 0,
-        LHIKOut = 0.8,
+        LHIKOut = 0.4,
+    },
+    ["sgreload_finish_empty"] = {
+        Source = "reload_end",
+        Time = 0.7,
+        LHIK = true,
+        LHIKIn = 0,
+        LHIKOut = 0.4,
     },
 }
 
@@ -559,28 +516,39 @@ function SWEP:PrimaryAttack()
     if shouldsupp then SuppressHostEvents(nil) end
 end
 
-
- -- Super fucky temp!
- -- S H U T  U P    A N D   K E E P  T H E M   P I N N E D  D O W N
-
--- notverycreativenowarewe
-local nvcnaw = 7
-
- -- hipfire
- -- maximum accuracy
-    SWEP.Inaccuracy_Hip_Max_Stand	= nvcnaw
-    SWEP.Inaccuracy_Hip_Max_Duck	= nvcnaw
-    SWEP.Inaccuracy_Hip_Max_Prone	= nvcnaw
- -- minimum accuracy
-    SWEP.Inaccuracy_Hip_Min_Stand   = nvcnaw
-    SWEP.Inaccuracy_Hip_Min_Duck    = nvcnaw
-    SWEP.Inaccuracy_Hip_Min_Prone   = nvcnaw
-
- -- sighted fire
- -- yeah
-    SWEP.Inaccuracy_ADS = 5.5
-
- -- inaccuracy when you're... i don't remember
-SWEP.Inaccuracy_Add_ADS			= 0
-SWEP.Inaccuracy_Add_Hip			= 0
-SWEP.Inaccuracy_Add_Move		= 0.1
+sound.Add({
+	name = 			"KF_winchester_pump",
+	channel = 		CHAN_STATIC,
+	volume = 		1.0,
+	sound = 			"weapons/kf_winchester/Rifle_Reload_242.wav"
+})
+sound.Add({
+	name = 			"KF_winchester_foley",
+	channel = 		CHAN_STATIC,
+	volume = 		1.0,
+	sound = 			"weapons/kf_winchester/Rifle_Reload_000.wav"
+})
+sound.Add({
+	name = 			"KF_winchester_bolt",
+	channel = 		CHAN_STATIC,
+	volume = 		1.0,
+	sound = 			{ "weapons/kf_winchester/winchester_pump_1.wav", "weapons/kf_winchester/winchester_pump_2.wav", "weapons/kf_winchester/winchester_pump_3.wav", "weapons/kf_winchester/winchester_pump_4.wav" }
+})
+sound.Add({
+	name = 			"KF_winchester_draw",
+	channel = 		CHAN_STATIC,
+	volume = 		1.0,
+	sound = 			"weapons/kf_winchester/Rifle_Pickup.wav"
+})
+sound.Add({
+	name = 			"KF_winchester_insert",
+	channel = 		CHAN_STATIC,
+	volume = 		1.0,
+	sound = 			{ "weapons/kf_winchester/Rifle_Reload_014.wav", "weapons/kf_winchester/Rifle_Reload_037.wav", "weapons/kf_winchester/Rifle_Reload_060.wav", "weapons/kf_winchester/Rifle_Reload_083.wav", "weapons/kf_winchester/Rifle_Reload_107.wav", "weapons/kf_winchester/Rifle_Reload_130.wav", "weapons/kf_winchester/Rifle_Reload_151.wav", "weapons/kf_winchester/Rifle_Reload_176.wav", "weapons/kf_winchester/Rifle_Reload_199.wav", "weapons/kf_winchester/Rifle_Reload_224.wav"}
+})
+sound.Add({
+	name = 			"KF_winchester.Fire",
+	channel = 		CHAN_WEAPON,
+	volume = 		1.0,
+	sound = 			{ "weapons/kf_winchester/Rifle_FireST1.wav", "weapons/kf_winchester/Rifle_FireST2.wav", "weapons/kf_winchester/Rifle_FireST3.wav", "weapons/kf_winchester/Rifle_FireST4.wav"}
+})

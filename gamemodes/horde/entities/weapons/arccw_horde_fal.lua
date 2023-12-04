@@ -26,7 +26,7 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 65
+SWEP.Damage = 70
 SWEP.DamageMin = 55
 SWEP.RangeMin = 1000 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Range = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
@@ -45,7 +45,7 @@ SWEP.Recoil = 0.7
 SWEP.RecoilSide = 0.7
 SWEP.RecoilRise = 0.2
 
-SWEP.Delay = 0.15 -- 60 / RPM.
+SWEP.Delay = 0.1 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {

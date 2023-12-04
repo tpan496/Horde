@@ -290,6 +290,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_trenchgun"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Flaming, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_spas12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_striker"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
+    HORDE.items["arccw_horde_hsg1"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_aa12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
 
     local ballistic_infusions_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
@@ -308,6 +309,7 @@ function HORDE:GetDefaultItemInfusions()
 
     local ballistic_infusions_sniper_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_winchester"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_horde_winchester_fire"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_m200"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_ssg08"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_awp"].infusions = ballistic_infusions_sniper_rifles
@@ -315,6 +317,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_g3"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_fal"].infusions = ballistic_infusions_sniper_rifles
     HORDE.items["arccw_horde_barret"].infusions = ballistic_infusions_sniper_rifles
+    HORDE.items["arccw_horde_m99"].infusions = ballistic_infusions_sniper_rifles
 
     HORDE.items["arccw_horde_heat_crossbow"].infusions = ballistic_infusions_sniper_rifles
 
@@ -456,6 +459,8 @@ function HORDE:GetDefaultItemsData()
     {Survivor=true, Warden=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "Striker",        "arccw_horde_striker", 2500, 8, "Armsel Striker.\nA 12-gauge shotgun with a revolving cylinder from South Africa.",
     {Warden=true}, 15, -1, nil, nil, {Warden=2}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Shotgun",    "HSG-1",           "arccw_horde_hsg1",  2750, 8, "Modified version of the Kel-Tec KSG. \nUses a box magazine instead of being tube-fed.",
+    {Warden=true}, 15, -1, nil, nil, {Warden=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "AA12",           "arccw_horde_aa12",  3000, 9, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
     {Warden=true}, 25, -1, nil, nil, {Warden=3}, nil, {HORDE.DMG_BALLISTIC})
 
@@ -498,7 +503,11 @@ function HORDE:GetDefaultItemsData()
     {Ghost=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3750, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
     {Ghost=true}, 50, -1, nil, nil, {Ghost=5}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Rifle",      "Barrett M99",    "arccw_horde_m99",  4000, 10, "Barrett M99. \nDeals a higher amount of damage than the Barrett AMR, but can only carry 1 round at a time.",
+    {Ghost=true}, 10, -1, nil, nil, {Ghost=5}, nil, {HORDE.DMG_BALLISTIC})
 
+    HORDE:CreateItem("Rifle",      "Winchester Incendiary",         "arccw_horde_winchester_fire",  2500, 7, "Winchester 1894. \nUses incendiary rounds.",
+    {Cremator=true}, 10, -1, nil, nil, {Ghost=1, Cremator=1}, nil, {HORDE.DMG_FIRE})
     HORDE:CreateItem("Rifle",      "Apollo",         "arccw_horde_apollo",  3000, 8, "Apollo incineration rifle.\nFires energy pellets that melt down enemies.",
     {Cremator=true}, 50, -1, nil, nil, {Cremator=5}, nil, {HORDE.DMG_FIRE})
 

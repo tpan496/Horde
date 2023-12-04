@@ -1,0 +1,6 @@
+"vertexlitgeneric"
+{
+"$basetexture" "models/weapons/v_models/kf/ksg/ksg_d"
+$selfillum 1
+$selfillumtint "[ 0 0.5 0 ]"
+}
