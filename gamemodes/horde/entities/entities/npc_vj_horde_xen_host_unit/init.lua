@@ -3,7 +3,7 @@ include('shared.lua')
 
 
 -- Core
-ENT.Model = {"models/horde/gonarch/gonarch.mdl"}
+ENT.Model = {"models/horde/gonarch_edit/gonarch.mdl"}
 ENT.StartHealth = 7000
 ENT.HullType = HULL_LARGE
 
