@@ -7,7 +7,7 @@ end
 
 -- Bubbles
 function EFFECT:Think()
-    if not self.entity or not self.entity:IsValid() then return true end
+    if not self.entity or not self.entity:IsValid() then return false end
     if self.entity:IsWeapon() then
         if not self.entity.Mjollner_Charged then if IsValid(self.emitter) then self.emitter:Finish() end return false end
     else
