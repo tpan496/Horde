@@ -7,7 +7,6 @@ SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
-SWEP.CamAttachment = 3
 
 SWEP.PrintName = "ACR Medic Grenadier"
 SWEP.Trivia_Class = "Assault Rifle"
@@ -239,7 +238,7 @@ SWEP.Hook_TranslateAnimation = function(wep, anim)
 
 	-- m203 is 1, masterkey is 2, fgrip is 3
 	local attthing
-		if 		attached == "mw2_ubgl_m203" 		then attthing = 1
+		if 		attached == "horde_ubgl_medic" 		then attthing = 1
 		elseif 	attached == "mw2_ubgl_masterkey" 	then attthing = 2
 		else 											 attthing = 0
 	end

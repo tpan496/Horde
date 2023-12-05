@@ -64,6 +64,7 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
     if healer:IsPlayer() and healer:IsValid() then
         local heal_mult = 1
         local curr_weapon = HORDE:GetCurrentWeapon(healer)
+		
         if curr_weapon and curr_weapon:IsValid() and ply.Horde_Infusions then
             local infusion = ply.Horde_Infusions[curr_weapon:GetClass()]
 
@@ -71,6 +72,16 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
                 heal_mult = 1.25
             end
         end
+		
+        if healer ~= ply and not HORDE:InBreak() and (ply:Health() < ply:GetMaxHealth()) then
+            healer:Horde_AddMoney(math.min(healinfo:GetHealAmount() * 0.75))
+            healer:Horde_SyncEconomy()
+            net.Start("Horde_RenderHealer")
+            net.WriteString(healer:GetName())
+            net.Send(ply)
+            healer:Horde_AddHealAmount(healinfo:GetHealAmount())
+        end
+		
         ply:SetHealth(math.min(ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), ply:Health() + heal_mult * healinfo:GetHealAmount()))
     else
         ply:SetHealth(math.min(ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage()), ply:Health() + healinfo:GetHealAmount()))
@@ -86,18 +97,9 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
         healer:Horde_AddHealAmount(healinfo:GetHealAmount())
         return
     end
-    if ply:GetInfoNum("horde_heal_flash", 1) == 1 then
-    ply:ScreenFade(SCREENFADE.IN, Color(50, 200, 50, 10), 0.3, 0)
-    end
-    if healer ~= ply then
-        healer:Horde_AddMoney(math.min(healinfo:GetHealAmount()*0.75))
-        healer:Horde_SyncEconomy()
-        net.Start("Horde_RenderHealer")
-            net.WriteString(healer:GetName())
-        net.Send(ply)
-
-        healer:Horde_AddHealAmount(healinfo:GetHealAmount())
-    end
+	if ply:GetInfoNum("horde_heal_flash", 1) == 1 then
+	    ply:ScreenFade(SCREENFADE.IN, Color(50, 200, 50, 10), 0.3, 0)
+	end
 end
 
 function HORDE:OnAntlionHeal(npc, healinfo, silent)

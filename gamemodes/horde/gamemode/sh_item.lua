@@ -292,6 +292,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_striker"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_hsg1"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
     HORDE.items["arccw_horde_aa12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
+    HORDE.items["arccw_horde_medic_shotgun"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
 
     local ballistic_infusions_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
     -- Rifles
@@ -440,6 +441,9 @@ function HORDE:GetDefaultItemsData()
     {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
     HORDE:CreateItem("SMG",        "Vector Medic PDW","arccw_horde_vector",3000, 6, "KRISS Vector Gen I equipped with a medical dart launcher.\nUses an unconventional blowback system that results in its high firerate.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 12 health and has a 1.5 second cooldown.",
     {Medic=true}, 8, -1, nil, nil, {Medic=3}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
+	
+    HORDE:CreateItem("Shotgun",    "Medic Shotgun",        "arccw_horde_medic_shotgun",  2500, 6, "Modified Winchester 1897.\nFires special darts that heal players on hit.",
+    {Medic=true}, 10, -1, nil, nil, {Medic=2}, nil, {HORDE.DMG_BALLISTIC})
 
     HORDE:CreateItem("Shotgun",    "Pump-Action",    "arccw_horde_shotgun",100, 2, "A standard 12-gauge shotgun.",
     {Warden=true, Engineer=true, Cremator=true}, 2, -1, nil, "items/hl2/weapon_shotgun.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Warden"})
@@ -514,7 +518,7 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Rifle",    "SSG08 Medic SR",   "arccw_horde_medic_rifle",  1500,   6, "A medic sniper rifle that shoots healing darts.\nDamages enemies and heals players.",
     {Medic=true}, 10, -1, nil, nil, {Medic=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",    "ACR Medic AR",     "arccw_horde_medic_acr",    3000, 8, "Remington Adaptive Combat Rifle.\nEquipped with healing dart and medic grenade launcher.\n\nPress USE+RELOAD to equip medic grenade launcher.\nPress B or ZOOM to fire healing dart.\nHealing dart heals 15 health and has a 1.5 second cooldown.",
-    {Medic=true}, 10, 50, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    {Medic=true}, 10, 10, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",    "M16 M203",         "arccw_horde_m16m203",2250,7, "M16A4 equipped with an M203 underbarrel grenade launcher.\nPress USE+RELOAD to equip M203.",
     {Assault=true, Demolition=true}, 10, 10, nil, nil, {Assault=2, Demolition=2}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_BLAST})
 
@@ -536,8 +540,8 @@ function HORDE:GetDefaultItemsData()
     {Heavy=true}, 50, -1, nil, nil, {Heavy=5}, nil, {HORDE.DMG_BALLISTIC})
 
     -- Class specific grenades
-    HORDE:CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",                    100,  0, "A standard frag grenade.\nGood for crowd control.",
-    {Survivor=true}, 100, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST})
+    HORDE:CreateItem("Explosive",  "Frag Grenade",   "weapon_frag",                    10,  0, "A standard frag grenade.\nGood for crowd control.",
+    {Survivor=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST})
     HORDE:CreateItem("Explosive",  "Stun Grenade",   "arccw_horde_nade_stun",          100,  0, "A grenade that deals minor damage and stuns enemy for 3 seconds.\nStun cooldown is 10 seconds.",
     {Assault=true}, 100, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST})
     HORDE:CreateItem("Explosive",  "Shrapnel Grenade",   "arccw_horde_nade_shrapnel",  100,  0, "A grenade that explodes into shrapnels, dealing Ballistic damage in an area.",

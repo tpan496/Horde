@@ -117,7 +117,7 @@ SWEP.HoldtypeHolstered = "normal"
 SWEP.HoldtypeActive = "shotgun"
 SWEP.HoldtypeSights = "ar2"
 
-SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
+SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN
 
 SWEP.ActivePos = Vector(-1, -5, 1.5)
 SWEP.ActiveAng = Angle(0, 0, 0)

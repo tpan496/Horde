@@ -455,7 +455,7 @@ hook.Add("Hook_BulletHit", "Horde_MedicRifleHeal", function(wpn, data)
         if SERVER then
             if (data.tr.Entity:IsPlayer()) then
                 data.Damage = 0
-                local healinfo = HealInfo:New({amount=50, healer=wpn:GetOwner()})
+                local healinfo = HealInfo:New({amount=60, healer=wpn:GetOwner()})
                 HORDE:OnPlayerHeal(data.tr.Entity, healinfo)
             end
         end
