@@ -31,8 +31,8 @@ SWEP.ViewModel = "models/horde/weapons/c_kf_m99.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_kf_m99.mdl"
 SWEP.ViewModelFOV = 45
 
-SWEP.Damage = 1250
-SWEP.DamageMin = 1250 -- damage done at maximum range
+SWEP.Damage = 1400
+SWEP.DamageMin = 1400 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 1000
 SWEP.DamageType = DMG_SNIPER
@@ -52,9 +52,9 @@ SWEP.ExtendedClipSize = 1
 SWEP.ReducedClipSize = 1
 
 SWEP.Recoil = 5
-SWEP.RecoilSide = 1
-SWEP.VisualRecoilMult = 1
-SWEP.RecoilRise = 2
+SWEP.RecoilSide = 5
+SWEP.VisualRecoilMult = 5
+SWEP.RecoilRise = 5
 SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 75 -- 60 / RPM.
@@ -81,7 +81,7 @@ SWEP.ShootVol = 500 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "KF_m99.Fire"
-SWEP.ShootSoundSilenced = "KF_mac10.Fire"
+SWEP.ShootSoundSilenced = "weapons/fesiugmw2/fire/sniper_sil.wav"
 SWEP.DistantShootSound = "KF_m99.Fire"
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"
@@ -135,7 +135,7 @@ SWEP.AttachmentElements = {
 SWEP.WorldModelOffset = {
     pos = Vector(0, 5, -8),
     ang = Angle(-10, 0, 180),
-    scale = 1.25
+    scale = 1
 }
 
 SWEP.ExtraSightDist = 5
@@ -230,6 +230,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload",
+        Mult = 0.75,
         Time = 2,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         FrameRate = 30,

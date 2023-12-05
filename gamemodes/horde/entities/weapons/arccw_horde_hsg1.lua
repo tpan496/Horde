@@ -57,10 +57,10 @@ SWEP.Primary.ClipSize = 12 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 14
 SWEP.ReducedClipSize = 8
 
-SWEP.Recoil = 1
-SWEP.RecoilSide = 1
-SWEP.VisualRecoilMult = 1
-SWEP.RecoilRise = 1
+SWEP.Recoil = 3
+SWEP.RecoilSide = 3
+SWEP.VisualRecoilMult = 3
+SWEP.RecoilRise = 3
 SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 60 -- 60 / RPM.
@@ -88,7 +88,7 @@ SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "KF_Ksg.Fire"
-SWEP.ShootSoundSilenced = "KF_mac10.Fire"
+SWEP.ShootSoundSilenced = "weapons/fesiugmw2/fire/shot_sil.wav"
 SWEP.DistantShootSound = "KF_Ksg.Fire"
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"

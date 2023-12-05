@@ -75,7 +75,7 @@ SWEP.NPCWeight = 75
 
 SWEP.AccuracyMOA = 0.05 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 5 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 200
+SWEP.MoveDispersion = 150
 
 SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses
 
@@ -83,7 +83,7 @@ SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "KF_winchester.Fire"
-SWEP.ShootSoundSilenced = "KF_mac10.Fire"
+SWEP.ShootSoundSilenced = "weapons/fesiugmw2/fire/sniper_sil.wav"
 SWEP.DistantShootSound = "KF_winchester.Fire"
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"

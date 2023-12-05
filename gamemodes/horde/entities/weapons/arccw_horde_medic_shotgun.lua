@@ -27,14 +27,9 @@ end
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/kf1/c_kf_trench.mdl"
+SWEP.ViewModel = "models/horde/weapons/c_kf_trench.mdl"
 SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
-SWEP.MirrorVMWM = true
-SWEP.WorldModelOffset = {
-    pos        =    Vector(-7, 0, -12),
-    ang        =    Angle(30, -2.5, 220),
-    bone    =    "ValveBiped.Bip01_R_Hand",
-}
+
 SWEP.ViewModelFOV = 45
 
 SWEP.Damage = 20
@@ -58,10 +53,10 @@ SWEP.Primary.ClipSize = 6 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 8
 SWEP.ReducedClipSize = 4
 
-SWEP.Recoil = 1
-SWEP.RecoilSide = 1
-SWEP.VisualRecoilMult = 1
-SWEP.RecoilRise = 1
+SWEP.Recoil = 3
+SWEP.RecoilSide = 2
+SWEP.VisualRecoilMult = 3
+SWEP.RecoilRise = 2
 SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 60 -- 60 / RPM.
@@ -89,7 +84,7 @@ SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "KF_trench.Fire"
-SWEP.ShootSoundSilenced = "KF_mac10.Fire"
+SWEP.ShootSoundSilenced = "weapons/fesiugmw2/fire/shot_sil.wav"
 SWEP.DistantShootSound = "KF_trench.Fire"
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"
@@ -101,7 +96,7 @@ SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
 SWEP.SightTime = 0.175
 
-SWEP.SpeedMult = 0.8
+SWEP.SpeedMult = 1
 SWEP.SightedSpeedMult = 0.8
 
 SWEP.BarrelLength = 18

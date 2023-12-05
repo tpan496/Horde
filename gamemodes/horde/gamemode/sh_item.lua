@@ -508,7 +508,7 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Rifle",      "Barrett AMR",    "arccw_horde_barret",  3750, 10, ".50 Cal Anti-Material Sniper Rifle.\nDoes huge amounts of ballistic damage.",
     {Ghost=true}, 50, -1, nil, nil, {Ghost=5}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "Barrett M99",    "arccw_horde_m99",  4000, 10, "Barrett M99. \nDeals a higher amount of damage than the Barrett AMR, but can only carry 1 round at a time.",
-    {Ghost=true}, 10, -1, nil, nil, {Ghost=5}, nil, {HORDE.DMG_BALLISTIC})
+    {Ghost=true}, 5, -1, nil, nil, {Ghost=5}, nil, {HORDE.DMG_BALLISTIC})
 
     HORDE:CreateItem("Rifle",      "Winchester Incendiary",         "arccw_horde_winchester_fire",  2500, 7, "Winchester 1894. \nUses incendiary rounds.",
     {Cremator=true}, 10, -1, nil, nil, {Ghost=1, Cremator=1}, nil, {HORDE.DMG_FIRE})
