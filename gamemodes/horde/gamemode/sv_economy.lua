@@ -251,7 +251,7 @@ function plymeta:Horde_PayPlayer(plyToPay, amount)
     plyForMoney:Horde_AddMoney(amount)
     plyForMoney:Horde_SyncEconomy()
     plyForMoney:ChatPrint(self:GetName().." has given you "..amount.."$")
-    self.nextPayTime = CurTime() + 5
+    self.nextPayTime = CurTime() + 1.5
 end
 
 function plymeta:Horde_GetMaxWeight()
