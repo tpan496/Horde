@@ -124,8 +124,11 @@ end
 ENT.Critical = nil
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	if HORDE:IsLightningDamage(dmginfo) or HORDE:IsBlastDamage(dmginfo) then
-		dmginfo:ScaleDamage(1.25)
+    if HORDE:IsLightningDamage(dmginfo) or HORDE:IsBlastDamage(dmginfo) then
+        dmginfo:ScaleDamage(1.25)
+    end
+    if HORDE:IsPhysicalDamage(dmginfo) then
+        dmginfo:ScaleDamage(0.75)
     end
 end
 
@@ -342,14 +345,6 @@ function ENT:MultipleRangeAttacks()
 	else
 		self.Garg_AttackType = -1
 		self.Garg_AbleToFlame = false
-	end
-end
-
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	if HORDE:IsPhysicalDamage(dmginfo) then
-		dmginfo:ScaleDamage(0.75)
-	elseif HORDE:IsBlastDamage(dmginfo) then
-		dmginfo:ScaleDamage(1.25)
 	end
 end
 
