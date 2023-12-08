@@ -28,10 +28,10 @@ SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 9
-SWEP.DamageMin = 6
+SWEP.Damage = 8
+SWEP.DamageMin = 5
 SWEP.RangeMin = 15
-SWEP.Range = 31.25
+SWEP.Range = 25
 SWEP.Penetration = 2
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
