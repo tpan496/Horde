@@ -3,7 +3,7 @@ include('shared.lua')
 
 
 -- Core
-ENT.Model = {"models/horde/kingpin/kingpin.mdl"}
+ENT.Model = {"models/horde/kingpin_custom/kingpin.mdl"}
 ENT.StartHealth = 7000
 ENT.HullType = HULL_MEDIUM_TALL
 
@@ -111,6 +111,7 @@ function ENT:CustomOnInitialize()
 	--self:SetShieldPower(100)
 	--self:ActivateShield()
 	self.NextChangeTime = CurTime() + 15
+	self:EmitSound("horde/kingpin/kingpin_alert.mp3", 3000, 100, 2, CHAN_STATIC)
 end
 
 function ENT:DisableShield()
@@ -171,7 +172,7 @@ function ENT:MultipleRangeAttacks()
 				timer.Simple(0.7, function ()
 					if !IsValid(self) then return end
 					local dmg = DamageInfo()
-					dmg:SetDamage(70)
+					dmg:SetDamage(60)
 					dmg:SetDamageType(DMG_SHOCK)
 					dmg:SetAttacker(self)
 					dmg:SetInflictor(self)

@@ -3,7 +3,7 @@ include('shared.lua')
 
 
 -- Core
-ENT.Model = {"models/horde/gargantua/gargantua.mdl"}
+ENT.Model = {"models/horde/gargantua_custom/gargantua.mdl"}
 ENT.StartHealth = 8000
 ENT.HullType = HULL_HUMAN
 
