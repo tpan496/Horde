@@ -1,0 +1,7 @@
+SDK_UnlitGeneric
+{
+	// original shader: basetexture
+	$model 1 
+	"$basetexture" "skybox/sky_fake_white"
+	"$nofog" 1
+}

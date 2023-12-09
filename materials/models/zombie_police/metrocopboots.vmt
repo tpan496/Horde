@@ -1,0 +1,21 @@
+"VertexLitGeneric"
+{
+$basetexture "models\Shared\black"
+$bumpmap "models\metrocop_shared\boots_n"
+$nocull 1
+
+$phong 1
+$phongboost ".25"
+$phongexponent 25
+$phongtint "[.85 .85 1]"
+$phongfresnelranges "[1 1 30]"
+$ambientocclusion 1
+$detail "models\Metrocop_shared\detail_leather"
+	$detailscale 4
+
+
+$rimlight "0"	
+$rimlightexponent "1"
+$rimlightboost "1"
+
+}

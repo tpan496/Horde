@@ -1,0 +1,78 @@
+// Choreo version 1
+actor "!Target1"
+{
+  channel "audio"
+  {
+  }
+  channel "gestures"
+  {
+    event gesture "g_cheer"
+    {
+      time 0.006944 3.640278
+      param "g_cheer"
+      event_ramp
+      {
+        0.4857 0.7895
+        2.8333 0.7566
+      }
+      absolutetags playback_time
+      {
+        "apex" 0.074768
+        "accent" 0.233648
+        "loop" 0.567900
+        "end" 0.669242
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.081633
+        "accent" 0.255102
+        "loop" 0.561224
+        "end" 0.663265
+      }
+      sequenceduration 3.300000
+    }
+    event gesture "hg_shake"
+    {
+      time 0.000000 3.744445
+      param "hg_shake"
+      event_ramp
+      {
+        0.5531 0.5658
+        1.0735 0.7697
+        2.6762 0.7632
+        3.0612 0.6250
+      }
+      absolutetags playback_time
+      {
+        "in" 0.064935
+        "apex" 0.107607
+        "extreme" 0.705128
+        "loop" 0.824578
+        "end" 0.834578
+        "out" 0.844578
+      }
+      absolutetags shifted_time
+      {
+        "in" 0.081633
+        "apex" 0.089744
+        "extreme" 0.705128
+        "loop" 0.897436
+        "end" 0.910256
+        "out" 0.938775
+      }
+      sequenceduration 2.633333
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "96"
+  "ExpressionTool" "100"
+  "RampTool" "98"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

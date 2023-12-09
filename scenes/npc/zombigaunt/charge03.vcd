@@ -1,0 +1,47 @@
+// Choreo version 1
+actor "!Target1"
+{
+  channel "audio"
+  {
+  }
+  channel "gestures"
+  {
+    event gesture "g_Accent_BothHands01"
+    {
+      time 0.000000 3.229167
+      param "g_Accent_BothHands01"
+      event_ramp
+      {
+        0.4408 1.0000
+        1.4980 1.0000
+      }
+      absolutetags playback_time
+      {
+        "apex" 0.141649
+        "accent" 0.239713
+        "loop" 0.490323
+        "end" 0.653764
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.166667
+        "accent" 0.282051
+        "loop" 0.576923
+        "end" 0.769231
+      }
+      sequenceduration 2.633333
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "96"
+  "ExpressionTool" "100"
+  "RampTool" "98"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+$basetexture "models\Zombie_police\eye"
+$bumpmap "models\Zombie_police\facemap_n"
+
+$phong "1"
+$phongboost ".35"
+$phongexponent "75"
+$phongtint "[1 1 2]"
+$phongfresnelranges "[1 1 10]"
+$ambientocclusion 1
+
+$envmap "env_cubemap"
+$normalmapalphaenvmapmask 1
+$envmaptint "[ .05 .05 .05 ]"
+$envmapconstrast "1"
+}

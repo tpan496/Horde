@@ -1,0 +1,42 @@
+// Choreo version 1
+actor "!Target1"
+{
+  channel "audio"
+  {
+  }
+  channel "gestures"
+  {
+    event gesture "gesture_reload_shotgun"
+    {
+      time 0.000000 3.000000
+      param "gesture_reload_shotgun"
+      absolutetags playback_time
+      {
+        "apex" 0.164352
+        "accent" 0.347222
+        "loop" 0.493056
+        "end" 0.706019
+      }
+      absolutetags shifted_time
+      {
+        "apex" 0.150685
+        "accent" 0.356164
+        "loop" 0.547945
+        "end" 0.780822
+      }
+      sequenceduration 2.466667
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "96"
+  "ExpressionTool" "100"
+  "RampTool" "98"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

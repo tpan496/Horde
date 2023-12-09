@@ -1,0 +1,21 @@
+"sdk_vertexlitgeneric"
+{
+
+$baseTexture	"Models/xenbie_classic/hl1crab"
+$bumpmap	"Models/xenbie_classic/hl1crab_normal"
+
+$phong	1
+$phongexponenttexture	"Models/headcrab_classic/hl1crab_exponent"
+$phongboost	4
+$phongfresnelranges	"[.3 2 5]"
+
+$envmap	env_cubemap
+$envmaptint	"[.05 .05 .05]"
+
+$rimlight 1
+$rimlightexponent 50
+$rimlightboost 0.2
+
+$nodecal 1
+
+}

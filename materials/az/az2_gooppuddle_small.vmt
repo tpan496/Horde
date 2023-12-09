@@ -1,0 +1,15 @@
+SDK_UnlitGeneric
+{
+	// Original shader: DecalDarkeningSpecularCubicEnvMap
+	"%tooltexture" "Decals/decalwastelandpuddle001a"
+	"$envmap" "environment maps/klab_01"
+	"$basetexture" "Az/az2_goopPuddle_small"
+	"$bumpmap" "Az/az2_goopPuddle_normal"
+	"$decal" 1
+	"$selfillum" 1
+	"$selfillummask" "Az/az2_goopPuddle_illmask"
+	"$decalscale" 0.25
+	"$envmaptint" "[ 0.70 0.70 0.70 ]"
+	"%keywords" "borealis"
+	"$translucent" 1
+}

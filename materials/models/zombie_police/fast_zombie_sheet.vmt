@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/Zombie_Fast/fast_zombie_sheet"
+	"$bumpmap" "models/zombie_fast/fast_zombie_sheet_normal"
+
+	"$phong" "1"
+	"$phongboost" "5"
+	"$phongexponent" 25
+	//"$phongexponenttexture" "Models/zombie_fast/fast_zombie_phong"
+	//"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.2 .6 10]"
+}

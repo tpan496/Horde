@@ -1,0 +1,8 @@
+SDK_VertexLitGeneric
+{
+	"$baseTexture" "Models/Effects/vol_lightmask02" 
+	"$nocull" 1	
+	"$additive" 1
+	"$translucent" 1
+	"$model" 1
+}

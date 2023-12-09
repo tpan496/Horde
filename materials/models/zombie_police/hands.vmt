@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+$baseTexture "models\Zombie_police\gloves"
+$bumpmap "models\Zombie_police\gloves_n"
+
+$phong 1
+$phongboost ".05"
+$phongexponent "10"
+$phongtint "[1 1 1.35]"
+$phongfresnelranges "[1 1 30]"
+$ambientocclusion 1
+
+$detail "models\Metrocop_shared\noise_detail_01"
+$detailscale 5
+
+
+$rimlight "1"	
+$rimlightexponent "1"
+$rimlightboost ".05"
+}

@@ -1,0 +1,18 @@
+SDK_VertexLitGeneric
+{
+	"$baseTexture" "Models/zombine_hev/mark4_bloody_sheet"
+	"$envmap" "env_cubemap"	
+	"$bumpmap" "Models/zombine_hev/gordon_sheet_normal"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapcontrast" 1
+	"$surfaceprop" "flesh"
+	"$model" 1
+	//"$selfillum" "1"
+	"$halflambert" 1
+	
+// -- From here down is new stuff which will only be applied if $phong is set to 1 --
+	"$phong" "1"
+	//"$phongexponenttexture" "models/Alyx/alyx_sheet_exponent"
+	"$phongboost"	"9"
+	"$phongfresnelranges"	"[0.04 0.4 1]"
+}

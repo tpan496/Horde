@@ -1,0 +1,22 @@
+"VertexLitGeneric"
+{
+$baseTexture "models\Zombie_police\metrocop_sheet"
+$bumpmap "models\Zombie_police\metrocop_sheet_n"
+
+$phong 1
+$phongboost "1"
+$phongexponenttexture "models\Zombie_police\metrocop_sheet_exp"
+$phongtint "[1 1 1.35]"
+$phongfresnelranges "[1 1 10]"
+$ambientocclusion 1
+
+
+$selfillum "1"
+
+\\$detail "models\Metropolice\Metrocop_shared\noise_detail_01"
+	\\$detailscale 5
+
+$rimlight "0"	
+$rimlightexponent "10"
+$rimlightboost ".45"
+}

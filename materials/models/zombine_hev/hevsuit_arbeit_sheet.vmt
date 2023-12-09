@@ -1,0 +1,6 @@
+SDK_VertexLitGeneric
+{
+	"$baseTexture" "Models\zombine_hev\hevsuit_arbeit_sheet"
+	"$bumpmap" "Models\zombine_hev\hevsuit_sheet_normal"
+	"$normalmapalphaenvmapmask" "Models\zombine_hev\hevsuit_sheet_specular"
+}

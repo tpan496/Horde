@@ -10,6 +10,18 @@ game.AddParticles("particles/xen_destroyer_unit.pcf")
 game.AddParticles("particles/xen_host_unit.pcf")
 game.AddParticles("particles/horde_mutation.pcf")
 
+game.AddParticles("particles/hunter_shield_impact.pcf")
+game.AddParticles("particles/hunter_projectile.pcf")
+game.AddParticles("particles/choreo_extract.pcf")
+game.AddParticles("particles/choreo_gman.pcf")
+game.AddParticles("particles/grenade_fx.pcf")
+game.AddParticles("particles/explosion_ep2.pcf")
+
+game.AddDecal("goosplat1", "decals/goosplat1")
+game.AddDecal("goosplat2", "az/az2_gooppuddle_small")
+game.AddDecal("goosplat3", "az/az2_gooppuddle2")
+game.AddDecal("blood8ez2", "decals/blood8ez2")
+
 PrecacheParticleSystem("xen_destroyer_flame")
 PrecacheParticleSystem("xen_host_spit")
 PrecacheParticleSystem("xen_host_spit_spawn")
@@ -66,3 +78,4 @@ PrecacheParticleSystem("neutron_beam")
 PrecacheParticleSystem("black_hole")
 PrecacheParticleSystem("supernova")
 PrecacheParticleSystem("supernova_explosion")
+

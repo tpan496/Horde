@@ -1,0 +1,7 @@
+SDK_UnlitGeneric
+{
+	// original shader: basetexture
+	$model 1 
+	"$basetexture" "lights/red001"
+	"$nofog" 1
+}

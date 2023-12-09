@@ -1,0 +1,19 @@
+
+"VertexLitGeneric"
+{
+$basetexture "models\Zombie_police\gasmask"
+$bumpmap "models\Metrocop_shared\normal"
+$nocull 1
+
+$phong "1"
+$phongboost ".75"
+$phongexponenttexture "models\Zombie_police\exponent"
+$phongtint "[1 1 1.35]"
+$halflambert 0
+$phongfresnelranges "[1 1 10]"
+$ambientocclusion 1
+
+$rimlight "1"	
+$rimlightexponent "1"
+$rimlightboost ".1"
+}

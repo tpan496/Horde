@@ -1,0 +1,8 @@
+ENT.Base 			= "npc_vj_creature_base"
+ENT.Type 			= "ai"
+ENT.PrintName 		= "Rebel Manhack"
+ENT.Author 			= "C0Mb0STR3Kx20"
+ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
+ENT.Purpose 		= "Spawn it and fight with it!"
+ENT.Instructions 	= "Click on the spawnicon to spawn it."
+ENT.Category		= "Entropy : Zero 2"
