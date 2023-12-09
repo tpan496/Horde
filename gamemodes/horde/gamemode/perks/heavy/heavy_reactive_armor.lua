@@ -1,5 +1,5 @@
 PERK.PrintName = "Reactive Armor"
-PERK.Description = [[Gain a reactive armor that negates critical damage taken.
+PERK.Description = [[Gain a reactive armor that negates damage taken.
 Activates on taking more than {1} damage and recharges after {2} seconds.
 Uses {3} of your armor when triggered.]]
 PERK.Icon = "materials/perks/reactive_armor.png"

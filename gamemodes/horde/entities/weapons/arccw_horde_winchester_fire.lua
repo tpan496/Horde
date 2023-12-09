@@ -108,7 +108,7 @@ SWEP.CaseBones = {}
 SWEP.ManualAction = true
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5, 0, 2),
+    Pos = Vector(-4.95, 1, 2),
     Ang = Angle(-0.2, 0, 0),
     Magnification = 1.3,
 }

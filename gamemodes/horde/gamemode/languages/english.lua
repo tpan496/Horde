@@ -362,9 +362,10 @@ LANGUAGE["Perk_cremator_base"] = [[
 The Cremator builds its offense and defense around Fire damage.
 Complexity: EASY
 
-{1} increased Fire damage resistance. ({2} + {3} per level, up to {4}).
-
+{8} increased Fire damage resistance.
 Attacks have {5} chance to Ignite enemies.
+{1} increased Ignite damage. ({3} per level, up to {4}).
+
 Ignite base duration is {6} and deals damage over time based on hit damage.
 Fire damage has {7} Ignite chance.]]
 
@@ -888,6 +889,7 @@ LANGUAGE["Item_Flare Gun"] = [[Flare Gun]]
 LANGUAGE["Item_Desc_Flare Gun"] = [[
 Orion Safety Flare Gun.
 Ignites enemies and deals Fire damage.
+Draws from reserve ammo rather than reloading manually.
 ]]
 
 LANGUAGE["Item_Anaconda"] = [[Anaconda]]
@@ -1447,7 +1449,7 @@ Greatly increases skull tokens drop chance.
 
 LANGUAGE["Gadget_gadget_vitality_booster"] = [[Vitality Booster]]
 LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
-+25 to maximum health.
++50 to maximum health.
 ]]
 
 LANGUAGE["Gadget_gadget_damage_booster"] = [[Damage Booster]]

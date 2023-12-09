@@ -133,11 +133,11 @@ function SWEP:Hook_PostBash(t)
         if t.melee2 then
             dmginfo:SetDamage(150)
 
-            for _, ent in pairs(ents.FindInSphere(tr.HitPos, 75)) do
+            for _, ent in pairs(ents.FindInSphere(tr.HitPos, 100)) do
                 if (HORDE:IsPlayerOrMinion(ent) == true) then
                 elseif ent:IsNPC() and ent ~= tr.Entity then
                     local dmg = DamageInfo()
-                    dmg:SetDamage(75)
+                    dmg:SetDamage(100)
                     dmg:SetDamageType(DMG_REMOVENORAGDOLL)
                     dmg:SetAttacker(self.Owner)
                     dmg:SetInflictor(self)
