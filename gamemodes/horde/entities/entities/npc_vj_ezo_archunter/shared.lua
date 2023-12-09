@@ -6,3 +6,5 @@ ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
 ENT.Purpose 		= "Spawn it and fight with it!"
 ENT.Instructions 	= "Common hunter with green eye"
 ENT.Category		= "Entropy : Zero"
+
+VJ.AddNPC( "Arctic Hunter", "npc_vj_ezo_archunter", "Entropy : Horde" )
