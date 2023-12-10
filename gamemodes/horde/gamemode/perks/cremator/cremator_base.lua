@@ -50,7 +50,7 @@ end
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     if not ply:Horde_GetPerk("cremator_base")  then return end
     if dmginfo:GetInflictor():GetClass() == "entityflame" then
-        bonus.increase = bonus.increase + (ply:Horde_GetPerkLevelBonus("cremator_base") * 8)
+        bonus.increase = bonus.increase + ply:Horde_GetPerkLevelBonus("cremator_base")
     end
 end
 
@@ -71,6 +71,6 @@ end
 
 PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
     if SERVER then
-        ply:Horde_SetPerkLevelBonus("cremator_base", math.min(0.5, 0.25 + 0.01 * ply:Horde_GetLevel(HORDE.Class_Cremator)))
+        ply:Horde_SetPerkLevelBonus("cremator_base", math.min(2, 0.08 * ply:Horde_GetLevel(HORDE.Class_Cremator)))
     end
 end

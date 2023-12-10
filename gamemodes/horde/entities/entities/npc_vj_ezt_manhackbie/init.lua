@@ -89,6 +89,9 @@ function ENT:CustomOnThink()
 		self.Manhack:SetMoveType(MOVETYPE_NONE)
 	    self.Manhack:SetSolid(SOLID_BBOX)
 		self.Manhack.Behavior = VJ_BEHAVIOR_PASSIVE_NATURE
+		self.Manhack.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
+		self.Manhack:AddRelationship("npc_headcrab_poison D_LI 99")
+		self.Manhack:AddRelationship("npc_headcrab_fast D_LI 99")
 		self.hasmanhack = true
 if  self.hasmanhack == true then
 self.AnimTbl_Run = {VJ_SequenceToActivity(self,"run_all_grenade")}

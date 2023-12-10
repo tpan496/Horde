@@ -47,6 +47,11 @@ function PANEL:Init()
     self.ammo_panel:DockMargin(5,2.5,5,2.5)
     self.ammo_panel:SetTall(50)
 
+    self.secondary_ammo_panel = vgui.Create("DPanel", self)
+    self.secondary_ammo_panel:Dock(BOTTOM)
+    self.secondary_ammo_panel:DockMargin(5,2.5,5,2.5)
+    self.secondary_ammo_panel:SetTall(50)
+
     self.ammo_one_btn = vgui.Create("DButton", self.ammo_panel)
     self.ammo_one_btn:Dock(LEFT)
     self.ammo_one_btn:DockMargin(0,0,2.5,0)
@@ -69,9 +74,9 @@ function PANEL:Init()
         surface.PlaySound("UI/buttonrollover.wav")
     end
 
-    self.ammo_secondary_btn = vgui.Create("DButton", self)
-    self.ammo_secondary_btn:Dock(BOTTOM)
-    self.ammo_secondary_btn:DockMargin(5,2.5,5,2.5)
+    self.ammo_secondary_btn = vgui.Create("DButton", self.secondary_ammo_panel)
+    self.ammo_secondary_btn:Dock(LEFT)
+    self.ammo_secondary_btn:DockMargin(0,0,2.5,0)
     self.ammo_secondary_btn:SetFont("Content")
     self.ammo_secondary_btn:SetTextColor(Color(0,0,0,0))
     self.ammo_secondary_btn:SetText("")
@@ -81,6 +86,18 @@ function PANEL:Init()
         surface.PlaySound("UI/buttonrollover.wav")
     end
 
+    self.ammo_secondary_ten_btn = vgui.Create("DButton", self.secondary_ammo_panel)
+    self.ammo_secondary_ten_btn:Dock(LEFT)
+    self.ammo_secondary_ten_btn:DockMargin(2.5,0,0,0)
+    self.ammo_secondary_ten_btn:SetFont("Content")
+    self.ammo_secondary_ten_btn:SetTextColor(Color(0,0,0,0))
+    self.ammo_secondary_ten_btn:SetText("")
+    self.ammo_secondary_ten_btn:SetTall(50)
+    self.ammo_secondary_ten_btn.Paint = function () end
+    self.ammo_secondary_ten_btn.OnCursorEntered = function ()
+        surface.PlaySound("UI/buttonrollover.wav")
+    end
+    
     self.upgrade_btn = vgui.Create("DButton", self)
     self.upgrade_btn:Dock(BOTTOM)
     self.upgrade_btn:DockMargin(5,2.5,5,2.5)
@@ -94,6 +111,7 @@ function PANEL:Init()
     end
 
     self.ammo_panel.Paint = function () end
+    self.secondary_ammo_panel.Paint = function() end
     self.ammo_one_btn.Paint = function () end
     self.ammo_ten_btn.Paint = function () end
 
@@ -123,7 +141,11 @@ function PANEL:Init()
     end
 
     function self.ammo_secondary_btn:DoClick()
-        self:GetParent():AmmoDoClick(-1)
+        self:GetParent():GetParent():AmmoDoClick(-1)
+    end
+
+    function self.ammo_secondary_ten_btn:DoClick()
+        self:GetParent():GetParent():AmmoDoClick(-10)
     end
 
     function self.upgrade_btn:DoClick()
@@ -214,12 +236,13 @@ function PANEL:AmmoDoClick(count)
         net.SendToServer()
         return
     end
-    if count == -1 then
+    if count <= -1 then
         -- Secondary ammo
         if self.item.secondary_ammo_price <= 0 or MySelf:Horde_GetMoney() < self.item.secondary_ammo_price then return end
         -- Buy the item
         net.Start("Horde_BuyItemAmmoSecondary")
         net.WriteString(self.item.class)
+        net.WriteUInt(-count, 4)
         net.SendToServer()
         return
     end
@@ -900,7 +923,7 @@ function PANEL:Paint()
             end
 
             self.ammo_panel:SetVisible(false)
-            self.ammo_secondary_btn:SetVisible(false)
+            self.secondary_ammo_panel:SetVisible(false)
             self.current_ammo_panel:SetVisible(false)
             self.upgrade_btn:SetVisible(false)
 
@@ -947,18 +970,27 @@ function PANEL:Paint()
                     end
                 else
                     self.ammo_panel:SetVisible(false)
+                    self.secondary_ammo_panel:SetVisible(false)
                 end
 
                 if self.item.secondary_ammo_price and self.item.secondary_ammo_price > 0 then
-                    self.ammo_secondary_btn:SetVisible(true)
+                    self.secondary_ammo_panel:SetVisible(true)
+
                     self.ammo_secondary_btn:SetTextColor(Color(255,255,255))
+                    self.ammo_secondary_btn:SetWide(self:GetWide() / 2)
                     self.ammo_secondary_btn:SetText(translate.Get("Shop_Buy_Secondary_Ammo") .. " x 1 (" .. tostring(self.item.secondary_ammo_price) .. "$)")
                     self.ammo_secondary_btn.Paint = function ()
                         surface.SetDrawColor(HORDE.color_crimson)
                         surface.DrawRect(0, 0, self:GetWide(), 200)
                     end
-                else
-                    self.ammo_secondary_btn:SetVisible(false)
+
+                    self.ammo_secondary_ten_btn:SetTextColor(Color(255,255,255))
+                    self.ammo_secondary_ten_btn:SetWide(self:GetWide() / 2)
+                    self.ammo_secondary_ten_btn:SetText(translate.Get("Shop_Buy_Secondary_Ammo") .. " x 10 (" .. tostring(self.item.secondary_ammo_price * 10) .. "$)")
+                    self.ammo_secondary_ten_btn.Paint = function ()
+                        surface.SetDrawColor(HORDE.color_crimson)
+                        surface.DrawRect(0, 0, self:GetWide(), 200)
+                    end
                 end
 
                 if self:IsUpgradable() then
@@ -990,7 +1022,7 @@ function PANEL:Paint()
                 end
             else
                 self.ammo_panel:SetVisible(false)
-                self.ammo_secondary_btn:SetVisible(false)
+                self.secondary_ammo_panel:SetVisible(false)
                 self.upgrade_btn:SetVisible(false)
                 self.current_ammo_panel.Paint = function () end
             end
@@ -1033,7 +1065,7 @@ function PANEL:Paint()
             end
 
             self.ammo_panel:SetVisible(false)
-            self.ammo_secondary_btn:SetVisible(false)
+            self.secondary_ammo_panel:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
             self.sell_btn:SetVisible(false)
             self.upgrade_btn:SetVisible(false)
@@ -1050,7 +1082,7 @@ function PANEL:Paint()
             end
 
             self.ammo_panel:SetVisible(false)
-            self.ammo_secondary_btn:SetVisible(false)
+            self.secondary_ammo_panel:SetVisible(false)
             self.upgrade_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
@@ -1095,14 +1127,14 @@ function PANEL:Paint()
             end
 
             self.ammo_panel:SetVisible(false)
-            self.ammo_secondary_btn:SetVisible(false)
+            self.secondary_ammo_panel:SetVisible(false)
             self.upgrade_btn:SetVisible(false)
             self.current_ammo_panel.Paint = function () end
         end
     else
         self.buy_btn:SetVisible(false)
         self.sell_btn:SetVisible(false)
-        self.ammo_secondary_btn:SetVisible(false)
+        self.secondary_ammo_panel:SetVisible(false)
         self.ammo_panel:SetVisible(false)
         self.upgrade_btn:SetVisible(false)
     end
