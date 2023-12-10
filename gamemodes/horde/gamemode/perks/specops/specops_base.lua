@@ -80,54 +80,54 @@ end
 local nv_color = Color(120, 255, 120, 255)
 
 local function nv_center(ent)
-	return ent:LocalToWorld(ent:OBBCenter())
+    return ent:LocalToWorld(ent:OBBCenter())
 end
 
 local function nv_posvisible(pos)
-	if pos.x < 50 then return false end
-	if pos.x > ScrW() - 50 then return false end
-	if pos.y < 50 then return false end
-	if pos.y > ScrH() - 50 then return false end
+    if pos.x < 50 then return false end
+    if pos.x > ScrW() - 50 then return false end
+    if pos.y < 50 then return false end
+    if pos.y > ScrH() - 50 then return false end
 
-	return true
+    return true
 end
 
 local function nv_unitstofeat(units)
     units = units + (units*0.25)
     units = math.floor(units / 12)
-	return units
+    return units
 end
 
 local function nv_cansee(ent)
-	local tracedata = {}
-	tracedata.start = MySelf:GetShootPos()
-	tracedata.endpos = nv_center(ent)
-	tracedata.filter = {ent, MySelf}
-	local trace = util.TraceLine(tracedata)
-	if trace.Hit then
-		return false
-	end
+    local tracedata = {}
+    tracedata.start = MySelf:GetShootPos()
+    tracedata.endpos = nv_center(ent)
+    tracedata.filter = {ent, MySelf}
+    local trace = util.TraceLine(tracedata)
+    if trace.Hit then
+        return false
+    end
 
-	return true
+    return true
 end
 
 local function nv_ents()
-	local entities = {}
+    local entities = {}
 
-	for k, v in pairs(ents.FindInSphere(MySelf:GetPos(), 1000)) do
+    for k, v in pairs(ents.FindInSphere(MySelf:GetPos(), 1000)) do
         if v:Health() > 0 and (v:IsPlayer() or v:IsNPC()) then
-		    table.insert(entities, v)
+            table.insert(entities, v)
         end
-	end
+    end
 
-	return entities
+    return entities
 end
 
 PERK.Hooks.Think = function()
     if SERVER then return end
     local ply = MySelf
     if not ply.Horde_StatusTable then return end
-	if not ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then return end
+    if not ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then return end
     local light = DynamicLight(0)
     if (light) then
         light.Pos = MySelf:GetPos() + Vector(0,0,30)
@@ -145,25 +145,25 @@ local swapColor = Color(nv_color.r,nv_color.g,nv_color.b)
 PERK.Hooks.HUDPaint = function()
     local ply = MySelf
     if not ply.Horde_StatusTable then return end
-	if ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then
+    if ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then
         swapColor.a = math.random(255)
-		surface.SetDrawColor(swapColor)
+        surface.SetDrawColor(swapColor)
 
-		for k, v in pairs(nv_ents()) do
-			--if nv_cansee(v) then
-				local pos = nv_center(v):ToScreen()
+        for k, v in pairs(nv_ents()) do
+            --if nv_cansee(v) then
+                local pos = nv_center(v):ToScreen()
 
-				if nv_posvisible(pos) then
+                if nv_posvisible(pos) then
                     surface.DrawCircle(pos.x, pos.y, 30)
-					--surface.DrawLine(pos.x, 0, pos.x, ScrH())
-					--surface.DrawLine(0, pos.y, ScrW(), pos.y)
-					draw.DrawText(v:Health(), "Trebuchet24",
-					pos.x - 15, pos.y - 15, nv_color, TEXT_ALIGN_LEFT)
-				end
-			--end
-		end
+                    --surface.DrawLine(pos.x, 0, pos.x, ScrH())
+                    --surface.DrawLine(0, pos.y, ScrW(), pos.y)
+                    draw.DrawText(v:Health(), "Trebuchet24",
+                    pos.x - 15, pos.y - 15, nv_color, TEXT_ALIGN_LEFT)
+                end
+            --end
+        end
 
-		draw.DrawText("T a c t i c a l V i s i o n", "ChatFont",
-		ScrW() / 2, ScrH() - 50, nv_color, TEXT_ALIGN_CENTER)
-	end
+        draw.DrawText("T a c t i c a l V i s i o n", "ChatFont",
+        ScrW() / 2, ScrH() - 50, nv_color, TEXT_ALIGN_CENTER)
+    end
 end
