@@ -123,23 +123,23 @@ local function nv_ents()
     return entities
 end
 
-PERK.Hooks.Think = function()
-    if SERVER then return end
-    local ply = MySelf
-    if not ply.Horde_StatusTable then return end
-    if not ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then return end
-    local light = DynamicLight(0)
-    if (light) then
-        light.Pos = MySelf:GetPos() + Vector(0,0,30)
-        light.r = nv_color.r
-        light.g = nv_color.g
-        light.b = nv_color.b
-        light.Brightness = 1
-        light.Size = 750
-        light.Decay = 750 * 5
-        light.DieTime = CurTime() + 0.1
-    end
-end
+-- PERK.Hooks.Think = function()
+--     if SERVER then return end
+--     local ply = MySelf
+--     if not ply.Horde_StatusTable then return end
+--     if not ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then return end
+--     local light = DynamicLight(0)
+--     if (light) then
+--         light.Pos = MySelf:GetPos() + Vector(0,0,30)
+--         light.r = nv_color.r
+--         light.g = nv_color.g
+--         light.b = nv_color.b
+--         light.Brightness = 1
+--         light.Size = 750
+--         light.Decay = 750 * 5
+--         light.DieTime = CurTime() + 0.1
+--     end
+-- end
 
 local swapColor = Color(nv_color.r,nv_color.g,nv_color.b)
 PERK.Hooks.HUDPaint = function()
