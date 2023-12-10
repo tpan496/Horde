@@ -63,6 +63,7 @@ if CLIENT then
     CreateClientConVar("horde_disable_default_gadget_use_key", 0, FCVAR_ARCHIVE, "Disable default key bind for active gadgets.")
     CreateClientConVar("horde_pickup_weapons", "1", true, true, "Allows the pickup of dropped weapons when walking over them.")
     CreateClientConVar("horde_heal_flash", "1", true, true, "Allows for a player's screen to flash to notify them when they're being healed.")
+    CreateClientConVar("horde_show_leaderboard", "0", true, false, "Enables forcibly displaying the leaderboard for ranks.")
 end
 
 if SERVER then

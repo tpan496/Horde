@@ -318,6 +318,8 @@ net.Receive("Horde_ToggleStats", function ()
     HORDE:ToggleStats()
 end)
 
+local showLeaderConvar = GetConVar("horde_show_leaderboard")
+
 net.Receive("Horde_ForceCloseShop", function ()
     if HORDE.ShopGUI then
         if HORDE.ShopGUI:IsVisible() then
@@ -338,8 +340,10 @@ net.Receive("Horde_ForceCloseShop", function ()
     end
 
     HORDE.TipPanel:SetVisible(false)
-    HORDE.leader_board:SetVisible(false)
 
+    if not showLeaderConvar:GetBool() then   
+        HORDE.leader_board:SetVisible(false)
+    end
     gui.EnableScreenClicker(false)
 end)
 

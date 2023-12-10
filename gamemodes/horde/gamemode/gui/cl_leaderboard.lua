@@ -97,11 +97,15 @@ function PANEL:Paint()
 
 end
 
+local showLeaderConvar = GetConVar("horde_show_leaderboard")
+
 function HORDE:ShowLeaderboardThenFadeOut()
     HORDE.leader_board:SetVisible(true)
-    timer.Simple(10, function ()
-        HORDE.leader_board:SetVisible(false)
-    end)
+    if not showLeaderConvar:GetBool() then 
+        timer.Simple(10, function ()
+            HORDE.leader_board:SetVisible(false)
+        end)
+    end
 end
 
 vgui.Register("HordeLeaderBoard", PANEL, "DPanel")
@@ -117,5 +121,13 @@ net.Receive("Horde_SyncTopTen", function ()
             top_tens[level] = {name=steamName, steamid=ply.steamid, class=ply.class}
             HORDE.leader_board:SetData()
         end)
+    end
+end)
+
+cvars.AddChangeCallback("horde_show_leaderboard", function(convar_name, oldval, newval)
+    if newval == "1" then
+        HORDE.leader_board:SetVisible(true)
+    else
+        HORDE.leader_board:SetVisible(false)
     end
 end)
