@@ -47,14 +47,10 @@ timer.Simple(5, function ()
     corner_panel.Paint = function ()
         if GetConVarNumber("horde_enable_client_gui") == 0 then return end
         draw.RoundedBox(10, 0, 0, width - height - ScreenScale(2), height, Color(40,40,40,200))
-        if LocalPlayer():Alive() then
-            if (HORDE.current_wave <= 0) or (wave_str == nil) then
-                draw.SimpleText(translate.Get("Game_Preparing..."), "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            else
-                draw.SimpleText("WAVE " .. wave_str, "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            end
+        if (HORDE.current_wave <= 0) or (wave_str == nil) then
+        	draw.SimpleText(translate.Get("Game_Preparing..."), "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         else
-            draw.SimpleText("Spectating", "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        	draw.SimpleText("WAVE " .. wave_str, "Info", ScreenScale(45), ScreenScale(7), Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
         draw.RoundedBox(10, width - height, 0, height, height, Color(40,40,40,200))
         if ammobox_refresh_count > 5 then
