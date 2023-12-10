@@ -77,9 +77,7 @@ PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
     end
 end
 
-local function nv_color()
-	return Color(120, 255, 120, 255)
-end
+local nv_color = Color(120, 255, 120, 255)
 
 local function nv_center(ent)
 	return ent:LocalToWorld(ent:OBBCenter())
@@ -133,9 +131,9 @@ PERK.Hooks.Think = function()
     local light = DynamicLight(0)
     if (light) then
         light.Pos = MySelf:GetPos() + Vector(0,0,30)
-        light.r = nv_color().r
-        light.g = nv_color().g
-        light.b = nv_color().b
+        light.r = nv_color.r
+        light.g = nv_color.g
+        light.b = nv_color.b
         light.Brightness = 1
         light.Size = 750
         light.Decay = 750 * 5
@@ -143,11 +141,13 @@ PERK.Hooks.Think = function()
     end
 end
 
+local swapColor = Color(nv_color.r,nv_color.g,nv_color.b)
 PERK.Hooks.HUDPaint = function()
     local ply = MySelf
     if not ply.Horde_StatusTable then return end
 	if ply.Horde_StatusTable[HORDE.Status_Tactical_Mode] then
-		surface.SetDrawColor(Color(nv_color().r,nv_color().g,nv_color().b,math.random(255)))
+        swapColor.a = math.random(255)
+		surface.SetDrawColor(swapColor)
 
 		for k, v in pairs(nv_ents()) do
 			--if nv_cansee(v) then
@@ -158,12 +158,12 @@ PERK.Hooks.HUDPaint = function()
 					--surface.DrawLine(pos.x, 0, pos.x, ScrH())
 					--surface.DrawLine(0, pos.y, ScrW(), pos.y)
 					draw.DrawText(v:Health(), "Trebuchet24",
-					pos.x - 15, pos.y - 15, nv_color(), TEXT_ALIGN_LEFT)
+					pos.x - 15, pos.y - 15, nv_color, TEXT_ALIGN_LEFT)
 				end
 			--end
 		end
 
 		draw.DrawText("T a c t i c a l V i s i o n", "ChatFont",
-		ScrW() / 2, ScrH() - 50, nv_color(), TEXT_ALIGN_CENTER)
+		ScrW() / 2, ScrH() - 50, nv_color, TEXT_ALIGN_CENTER)
 	end
 end
