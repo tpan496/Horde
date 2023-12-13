@@ -30,8 +30,9 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
 end
 SPELL.Hooks = {}
 SPELL.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
-    if ply.Horde_Has_Static_Guard and dmginfo:GetDamage() >= 10 then
+    if ply.Horde_Has_Static_Guard and dmginfo:GetDamage() >= 10 and not ply.StaticGuardActive then
         bonus.less = bonus.less * 0.1
+        ply.StaticGuardActive = true
         ply:EmitSound("horde/spells/static_guard_retaliate.ogg")
         local e = EffectData()
         if dmginfo:GetDamagePosition() ~= Vector(0,0,0) then
@@ -72,6 +73,7 @@ SPELL.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
                 LA:SetPos(ply:GetPos() + ply:OBBCenter())
             end)
         end
+        ply.StaticGuardActive = nil
     end
 end
 SPELL.Price = 300
