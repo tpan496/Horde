@@ -36,6 +36,7 @@ end
 PERK.Hooks.OnEntityCreated = function (ent)
     if not ent:IsValid() then return end
     timer.Simple(0.1, function()
+        if not IsValid(ent) then return end
         local ply = ent:GetNWEntity("HordeOwner")
         if ply:IsValid() and ply:Horde_GetPerk("engineer_symbiosis") and ent:IsNPC() and ent.SetMaxHealth and (not ent.Horde_Has_Symbiosis) then
             ent:SetMaxHealth(ent:GetMaxHealth() * 1.20)
