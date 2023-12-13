@@ -14,7 +14,7 @@ ENT.DirectDamageType = bit.bor(DMG_NEVERGIB, DMG_SHOCK) -- Damage type
 
 ENT.CollideCodeWithoutRemoving = true
 ENT.RemoveOnHit = false -- Should it remove itself when it touches something? | It will run the hit sound, place a decal, etc.
-
+ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
@@ -98,8 +98,7 @@ function ENT:Explode()
 end
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:IsAlly(ent)
-
-    if !ent.VJ_NPC_Class then return end
+    if not ent.VJ_NPC_Class then return end
 
     for _,npcclass in pairs(ent.VJ_NPC_Class) do
         for _,mynpcclass in pairs(self.VJ_NPC_Class) do
