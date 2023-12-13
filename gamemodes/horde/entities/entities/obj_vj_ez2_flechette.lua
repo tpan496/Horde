@@ -59,8 +59,8 @@ end
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Explode()
 
-	local time_until_explode = 2
-	local blastradius = 250
+	local time_until_explode = 2.25
+	local blastradius = 175
 	sound.EmitHint(SOUND_DANGER,self:GetPos(),blastradius * 1.5,time_until_explode,self)
 
 	timer.Simple(time_until_explode * 0.5, function() if IsValid(self) then

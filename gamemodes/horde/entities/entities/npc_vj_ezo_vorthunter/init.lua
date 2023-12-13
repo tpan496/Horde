@@ -9,7 +9,7 @@ include('shared.lua')
 -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.Model = {"models/huntervort.mdl"}
 
-ENT.StartHealth = 650
+ENT.StartHealth = 750
 ENT.HullType = HULL_MEDIUM_TALL
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}

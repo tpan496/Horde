@@ -16,7 +16,7 @@ end
 	-- Main Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.ViewModel					= "models/weapons/c_pistol.mdl"
 SWEP.WorldModel					= "models/weapons/w_pist_glock18.mdl"
-SWEP.HoldType 					= "pistol"
+SWEP.HoldType 					= "shotgun"
 SWEP.Spawnable					= true
 SWEP.AdminSpawnable				= false
 	-- NPC Settings ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	bullet:SetOwner(self:GetOwner())
 	bullet:Activate()
 	bullet:Spawn()
-	bullet.DirectDamage = 3
+	bullet.DirectDamage = 4
 
 	local phy = bullet:GetPhysicsObject()
 	if phy:IsValid() then

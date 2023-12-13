@@ -73,7 +73,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 		bullet:SetOwner(self:GetOwner())
 		bullet:Activate()
 		bullet:Spawn()
-		bullet.DirectDamage = 2
+		bullet.DirectDamage = 3
 
 		local phy = bullet:GetPhysicsObject()
 		if phy:IsValid() then

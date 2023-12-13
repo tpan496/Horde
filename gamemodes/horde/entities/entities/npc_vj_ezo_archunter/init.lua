@@ -9,7 +9,7 @@ include('shared.lua')
 -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.Model = {"models/hunterarc.mdl"}
 
-ENT.StartHealth = 350
+ENT.StartHealth = 475
 ENT.HullType = HULL_MEDIUM_TALL
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
