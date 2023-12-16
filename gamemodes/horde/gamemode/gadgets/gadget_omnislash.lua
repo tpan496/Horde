@@ -93,7 +93,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
                 dmg:SetAttacker(ply)
                 dmg:SetInflictor(ply)
                 dmg:SetDamageType(DMG_SLASH)
-                dmg:SetDamage(100)
+                dmg:SetDamage(200)
                 if IsValid(ent) then
                     dmg:SetDamagePosition(ent:GetPos())
                     ent:TakeDamageInfo(dmg)
