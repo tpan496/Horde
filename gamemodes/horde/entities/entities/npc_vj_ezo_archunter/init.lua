@@ -390,7 +390,7 @@ function ENT:CustomOnThink()
 
 			for dir, path_clear in pairs(self:VJ_CheckAllFourSides()) do
 				if path_clear then
-					if (not self:GetEnemy():IsPlayer()) or (self:GetEnemy():IsPlayer() and ((not IsValid(self:GetEnemy():GetEyeTrace().Entity)) or IsValid(self:GetEnemy():GetEyeTrace().Entity and self:GetEnemy():GetEyeTrace().Entity ~= self))) then
+					if (not self:GetEnemy():IsPlayer()) or (self:GetEnemy():IsPlayer() and ((not IsValid(self:GetEnemy():GetEyeTrace().Entity)) or self:GetEnemy():GetEyeTrace().Entity ~= self)) then
 						dir2 = "n"
 					elseif dir == "Back" then
 						dir2 = "s"
