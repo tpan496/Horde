@@ -34,6 +34,7 @@ end
 GADGET.Hooks.Horde_OnPlayerDamage = function( ply, npc, bonus, hitgroup, dmginfo )
     if not ply.Horde_NextAttack_Flash then return end
     if dmginfo:IsBulletDamage() then return end
+    ply.Horde_NextAttack_Flash = nil
 
     local dmg = DamageInfo()
     dmg:SetDamage( 200 )
@@ -54,8 +55,6 @@ GADGET.Hooks.Horde_OnPlayerDamage = function( ply, npc, bonus, hitgroup, dmginfo
     util.Effect( "seismic_wave", e, true, true )
 
     util.ScreenShake( ply:GetPos(), 10, 5, 1, 500 )
-
-    ply.Horde_NextAttack_Flash = nil
 end
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function( ply, dmginfo, bonus )
