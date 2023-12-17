@@ -9,7 +9,7 @@ ENT.Spawnable = false
 ENT.Model = {"models/weapons/hunter_flechette.mdl"}
 
 ENT.DoesDirectDamage = true -- Should it do a direct damage when it hits something?
-ENT.DirectDamage = 8 -- How much damage should it do when it hits something
+ENT.DirectDamage = 5 -- How much damage should it do when it hits something
 ENT.DirectDamageType = bit.bor(DMG_NEVERGIB, DMG_SHOCK) -- Damage type
 
 ENT.CollideCodeWithoutRemoving = true
@@ -76,15 +76,6 @@ function ENT:Explode()
 
 		ParticleEffect("hunter_projectile_explosion_1", self:GetPos(), Angle(0,0,0))
 		self:DeathEffects()
-
-		local expLight = ents.Create("light_dynamic")
-		expLight:SetKeyValue("brightness", "3")
-		expLight:SetKeyValue("distance", "250")
-		expLight:Fire("Color", "0 75 255")
-		expLight:SetPos(self:GetPos())
-		expLight:Spawn()
-		expLight:Fire("TurnOn", "", 0)
-		timer.Simple(0.1,function() if IsValid(expLight) then expLight:Remove() end end)
 
 		local attacker = self:GetOwner()
 		if !IsValid(attacker) then attacker = self end

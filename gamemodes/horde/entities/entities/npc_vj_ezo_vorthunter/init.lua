@@ -9,7 +9,7 @@ include('shared.lua')
 -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.Model = {"models/huntervort.mdl"}
 
-ENT.StartHealth = 750
+ENT.StartHealth = 400
 ENT.HullType = HULL_MEDIUM_TALL
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
@@ -33,8 +33,8 @@ ENT.TurningSpeed = 10 -- How fast it can turn
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 -- Melee Attack Animations
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1, "meleert"}
-ENT.MeleeAttackDistance = 100 -- How close does it have to be until it attacks?
-ENT.MeleeAttackDamageDistance = 110 -- How far does the damage go?
+ENT.MeleeAttackDistance = 75 -- How close does it have to be until it attacks?
+ENT.MeleeAttackDamageDistance = 80 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = 0.5 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 10
 ENT.MeleeAttackDamageType = DMG_SLASH
@@ -67,7 +67,7 @@ ENT.RangeUseAttachmentForPosID = "minigunbase" -- The attachment used on the ran
 ENT.RangeAttackEntityToSpawn = "obj_vj_ez2_flechette" -- The entity that is spawned when range attacking
 ENT.TimeUntilRangeAttackProjectileRelease = 1.5
 ENT.RangeDistance = 5000 -- This is how far away it can shoot
-ENT.RangeToMeleeDistance = 70 -- How close does it have to be until it uses melee?
+ENT.RangeToMeleeDistance = 60 -- How close does it have to be until it uses melee?
 ENT.RangeAttackExtraTimers = {1.5, 1.65, 1.8, 1.95}
 --------------------------------------------------------------------------------------------------------------------------------------------
 ENT.FootStepTimeRun = 0.3 -- Next foot step sound when it is running
@@ -223,7 +223,7 @@ end
 
 function ENT:MultipleMeleeAttacks()
 
-		if self:Visible(self:GetEnemy()) and self.RangeAttacking == false and self.MeleeAttacking == false and self.Alerting == false and self.Dodging == false and self.NearestPointToEnemyDistance > 500 and self.NearestPointToEnemyDistance < 1100 and CurTime() > self.NextCharge then
+		if self:Visible(self:GetEnemy()) and self.RangeAttacking == false and self.MeleeAttacking == false and self.Alerting == false and self.Dodging == false and self.NearestPointToEnemyDistance > 400 and self.NearestPointToEnemyDistance < 1100 and CurTime() > self.NextCharge then
 			VJ_EmitSound(self, self.ChargeSd, 100, math.random(80, 100))
 			self:VJ_ACT_PLAYACTIVITY("charge_start", true, false, true)
 
@@ -236,21 +236,21 @@ function ENT:MultipleMeleeAttacks()
 
 	local randAttack = math.random(1, 3)
 
-	if randAttack == 1 and self.NearestPointToEnemyDistance < 700 then
+	if randAttack == 1 and self.NearestPointToEnemyDistance < 500 then
 		self.AnimTbl_MeleeAttack = {"melee_02"}
 
 		self.TimeUntilMeleeAttackDamage = 0.6
-		self.MeleeAttackDamage = 35
+		self.MeleeAttackDamage = 25
 	end
 
-	if randAttack == 2 and self.NearestPointToEnemyDistance < 700 then
+	if randAttack == 2 and self.NearestPointToEnemyDistance < 500 then
 		self.AnimTbl_MeleeAttack = {"meleert"}
 
 		self.TimeUntilMeleeAttackDamage = 0.5
 		self.MeleeAttackDamage = 25
 	end
 
-	if randAttack == 3 and self.NearestPointToEnemyDistance < 700 then
+	if randAttack == 3 and self.NearestPointToEnemyDistance < 500 then
 		self.AnimTbl_MeleeAttack = {"meleeleft"}
 
 		self.TimeUntilMeleeAttackDamage = 0.5
@@ -357,8 +357,6 @@ end
 
 function ENT:RangeAttackCode_GetShootPos(projectile)
 	local startPos = projectile:GetPos()
-	ParticleEffect("", startPos + projectile:GetForward() * 30, self:GetForward():Angle(), projectile)
-
 	return self:CalculateProjectile("Line", startPos, self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 2000)
 end
 
