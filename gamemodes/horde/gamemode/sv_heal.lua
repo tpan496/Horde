@@ -73,7 +73,7 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
             end
         end
 		
-        if healer ~= ply and not HORDE:InBreak() and (ply:Health() < ply:GetMaxHealth()) then
+        if healer ~= ply and not HORDE:InBreak() and (ply:Health() < (ply:GetMaxHealth() * (1 + healinfo:GetOverHealPercentage() ) ) ) then
             healer:Horde_AddMoney(math.min(healinfo:GetHealAmount() * 0.75))
             healer:Horde_SyncEconomy()
             net.Start("Horde_RenderHealer")
