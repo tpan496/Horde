@@ -376,7 +376,7 @@ end
 
 function ENT:RangeAttackCode_GetShootPos(projectile)
 	local startPos = projectile:GetPos()
-	ParticleEffect("", startPos + projectile:GetForward() * 30, self:GetForward():Angle(), projectile)
+--	ParticleEffect("", startPos + projectile:GetForward() * 30, self:GetForward():Angle(), projectile)
 
 	return self:CalculateProjectile("Line", startPos, self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 2000)
 end
