@@ -52,6 +52,7 @@ ENT.WeaponAttackSecondaryTimeUntilFire = 2
 ENT.EntitiesToNoCollide = {"npc_vj_horde_zombine", "npc_vj_horde_plague_soldier"}
 ENT.CallForHelp = false
 ENT.CanInvestigate = false
+ENT.DropWeaponOnDeath = false
 
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",

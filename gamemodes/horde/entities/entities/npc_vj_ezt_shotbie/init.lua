@@ -32,6 +32,10 @@ ENT.BloodColor = "Red" -- The blood type, this will determine what it should use
 ENT.HasBloodParticle = true -- Does it spawn a particle when damaged?
 ENT.HasBloodDecal = true -- Does it spawn a decal when damaged?
 ENT.HasBloodPool = false -- Does it have a blood pool?
+ENT.DropWeaponOnDeath = false
+ENT.HasItemDropsOnDeath = true 
+ENT.ItemDropsOnDeathChance = 15
+ENT.ItemDropsOnDeath_EntityList = {"item_battery"}
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 -- ====== Flinching Code ====== --

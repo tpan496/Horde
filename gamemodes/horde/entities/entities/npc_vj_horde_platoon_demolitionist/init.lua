@@ -48,6 +48,7 @@ ENT.WeaponSpread = 1.5
 ENT.Weapon_FiringDistanceFar = 1500
 ENT.WeaponReload_FindCover = false
 ENT.Horde_Plague_Soldier = true
+ENT.DropWeaponOnDeath = false
 ENT.EntitiesToNoCollide = {"npc_vj_horde_platoon_heavy", "npc_vj_horde_platoon_berserker", "npc_vj_horde_platoon_demolitionist"}
 
 ENT.SoundTbl_Pain = {

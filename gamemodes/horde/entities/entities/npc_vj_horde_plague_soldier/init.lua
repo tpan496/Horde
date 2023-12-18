@@ -50,6 +50,8 @@ ENT.WeaponReload_FindCover = false
 ENT.Horde_Plague_Soldier = true
 ENT.CallForHelp = false
 ENT.CanInvestigate = false
+ENT.DropWeaponOnDeath = false
+
 
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",
