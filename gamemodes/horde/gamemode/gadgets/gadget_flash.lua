@@ -45,7 +45,7 @@ GADGET.Hooks.Horde_OnPlayerDamage = function( ply, npc, bonus, hitgroup, dmginfo
     dmg:SetDamageForce( Vector( 0, 0, 0 ) )
 
     ply.Horde_Invincible = true
-    util.BlastDamageInfo( dmg, ply:WorldSpaceCenter(), 200 )
+    util.BlastDamageInfo( dmg, ply:WorldSpaceCenter(), 300 )
     ply.Horde_Invincible = nil
 
     local e = EffectData()
