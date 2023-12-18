@@ -52,7 +52,7 @@ function EFFECT:Init(effectdata)
 		particle:SetVelocity(VectorRand():GetNormal() * 366)
 	end
 
-    local dlight = DynamicLight(0)
+    local dlight = DynamicLight( math.random( 0, 9999999 ) )
 	if dlight then
 		dlight.Pos = pos
 		dlight.r = 255

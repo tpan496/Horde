@@ -4,7 +4,7 @@ function EFFECT:Init(data)
 	if owner and owner:IsPlayer() and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
 		has_burner = true
 	end
-    local light = DynamicLight(0);
+    local light = DynamicLight( math.random( 0, 9999999 ) )
     if(light) then
         if has_burner then
             light.R = 0;

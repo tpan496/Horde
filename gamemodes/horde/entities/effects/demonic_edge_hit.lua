@@ -1,6 +1,6 @@
-function EFFECT:Init(data)
-    local light = DynamicLight(0);
-    if(light) then
+function EFFECT:Init( data )
+    local light = DynamicLight( math.random( 0, 9999999 ) )
+    if light then
         light.Pos = data:GetOrigin();
         light.Size = 128;
         light.Decay = 64;
@@ -9,11 +9,10 @@ function EFFECT:Init(data)
         light.B = 0;
         light.Brightness = 3;
         light.DieTime = CurTime()+1;
-
     end
 
     local DrawFlame = 1
-    sound.Play("ambient/fire/ignite.wav", self:GetPos(), 54, math.random(82,112))
+    sound.Play( "ambient/fire/ignite.wav", self:GetPos(), 54, math.random( 82, 112 ) )
 
     if DrawFlame == 1 then
 

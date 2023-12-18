@@ -35,7 +35,7 @@ function EFFECT:Think()
 		particle:SetRollDelta(math.Rand(-10, 10))
 		particle:SetAirResistance(250)
         if not self.dlight then
-            self.dlight = DynamicLight(0)
+            self.dlight = DynamicLight(self.entity:EntIndex())
             self.dlight.Pos = pos
             self.dlight.r = 0
             self.dlight.g = 150
