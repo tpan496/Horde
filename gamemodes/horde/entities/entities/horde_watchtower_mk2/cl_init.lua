@@ -6,7 +6,7 @@ end
 
 function ENT:Think()
     if not self.dlight then
-        self.dlight = DynamicLight(0)
+        self.dlight = DynamicLight(self:EntIndex())
         self.dlight.Pos = self:GetPos()
         self.dlight.r = 150
         self.dlight.g = 150

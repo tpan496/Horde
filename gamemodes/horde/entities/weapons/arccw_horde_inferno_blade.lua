@@ -269,7 +269,7 @@ function SWEP:Hook_Think()
     end
 
     if self.Owner.Client_Charged then
-        self.dlight = DynamicLight(0)
+        self.dlight = DynamicLight(self:EntIndex())
         self.dlight.Pos = self:GetPos()
         self.dlight.r = 200
         self.dlight.g = 100
