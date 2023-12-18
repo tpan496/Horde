@@ -34,7 +34,7 @@ ENT.HasBloodDecal = true -- Does it spawn a decal when damaged?
 ENT.HasBloodPool = false -- Does it have a blood pool?
 ENT.DropWeaponOnDeath = false
 ENT.HasItemDropsOnDeath = true 
-ENT.ItemDropsOnDeathChance = 15
+ENT.ItemDropsOnDeathChance = 8
 ENT.ItemDropsOnDeath_EntityList = {"item_battery"}
 
 ---------------------------------------------------------------------------------------------------------------------------------------------

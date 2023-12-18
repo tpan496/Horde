@@ -18,7 +18,7 @@ SWEP.Trivia_Mechanism = "Electromanetic Pulse"
 SWEP.Trivia_Country = "Combine"
 SWEP.Trivia_Year = 2010
 SWEP.Primary.MaxAmmo = 9
-
+SWEP.ForceDefaultAmmo = 0
 SWEP.Slot = 4
 
 SWEP.NotForNPCs = true
