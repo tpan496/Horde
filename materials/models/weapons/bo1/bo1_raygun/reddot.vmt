@@ -1,0 +1,14 @@
+VertexlitGeneric
+{
+	$basetexture	"models\weapons\bo1\bo1_raygun\reddot"
+	//$color2 "[0.75 0.75 0.75]"
+	$selfillum 1
+
+	$phong                      		1
+//	$phongexponent                      "15"
+	$phongboost                         "2.5"
+	$phongfresnelranges         "[2.5 5 5]"
+	$phongalbedotint             "1"
+	$normalmapalphaphongmask    	1
+
+}

@@ -1415,22 +1415,22 @@ Provides 8% increased Slashing and Blunt damage resistance.
 -- Gadgets
 LANGUAGE["Gadget_gadget_blast_plating"] = [[Blast Plating]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
-20% increased Blast damage resistance.
+40% increased Blast damage resistance.
 ]]
 
 LANGUAGE["Gadget_gadget_shock_plating"] = [[Shock Plating]]
 LANGUAGE["Gadget_Desc_gadget_shock_plating"] = [[
-20% increased Lightning damage resistance.
+40% increased Lightning damage resistance.
 ]]
 
 LANGUAGE["Gadget_gadget_heat_plating"] = [[Heat Plating]]
 LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
-20% increased Fire damage resistance.
+40% increased Fire damage resistance.
 ]]
 
 LANGUAGE["Gadget_gadget_detoxifier"] = [[Detoxifier]]
 LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
-20% increased Poison damage resistance.
+40% increased Poison damage resistance.
 ]]
 
 LANGUAGE["Gadget_gadget_diamond_plating"] = [[Diamond Plating]]

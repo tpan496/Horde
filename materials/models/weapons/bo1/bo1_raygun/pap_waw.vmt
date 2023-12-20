@@ -1,0 +1,18 @@
+VertexlitGeneric
+{
+	$basetexture	"models\weapons\pap\pap_blue_burn"
+	$bumpmap	"models\weapons\pap\pap_n"
+
+	$phong "1"
+//	
+	$phongboost "2.5"
+	$phongfresnelranges "[2 5 4]"
+	$phongalbedotint "1"
+	
+	$normalmapalphaenvmapmask "1"
+	
+	$envmap "env_cubemap"
+	$envmaptint "[0.4 0.4 0.5]"
+	$envmapfresnel "0.1"
+
+}
