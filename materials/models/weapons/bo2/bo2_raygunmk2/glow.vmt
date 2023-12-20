@@ -1,0 +1,30 @@
+VertexlitGeneric
+{
+	$basetexture	"models\weapons\bo2\bo2_raygunmk2\energy"
+	$bumpmap	"models\weapons\bo2\bo2_raygunmk2\energy_n"
+
+    "$detail" "models\weapons\bo2\bo2_raygunmk2\energy_glow"
+    "$detailblendfactor" "1"
+    $detailblendmode 3
+
+    "$selfillum" "1"
+    $selfillummask "models\weapons\bo2\bo2_raygunmk2\energy_glow"
+
+    Proxies
+	{
+		TextureScroll
+		{
+			texturescrollvar $detailtexturetransform
+			texturescrollrate 0.2
+			texturescrollangle 150
+		}
+        Sine // a proxy which produces a sine wave
+		{
+			resultVar	$detailblendfactor // The shader parameter to be manipulated
+			sineperiod	4
+			sinemin		0.9
+			sinemax		1.5
+		}
+	}
+
+}

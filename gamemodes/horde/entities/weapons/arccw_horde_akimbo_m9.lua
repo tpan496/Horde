@@ -27,8 +27,8 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/w_pist_elite_single.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 29
-SWEP.DamageMin = 21
+SWEP.Damage = 35
+SWEP.DamageMin = 25
 SWEP.Range = 50  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 6
 SWEP.DamageType = DMG_BULLET
@@ -43,11 +43,14 @@ SWEP.ReducedClipSize = 10
 SWEP.Recoil = 0.300
 SWEP.RecoilSide = 0.225
 SWEP.RecoilRise = 0.1
-SWEP.RecoilPunch = 2.5
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 0.079 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
+    {
+        Mode = 2,
+    },
     {
         Mode = 1,
     },
@@ -218,11 +221,11 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_perk"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Akimbotest",

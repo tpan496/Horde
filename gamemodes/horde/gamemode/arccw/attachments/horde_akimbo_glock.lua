@@ -37,7 +37,7 @@ att.LHIK_MovementMult = 0
 att.UBGL = true
 
 att.UBGL_PrintName = "AKIMBO"
-att.UBGL_Automatic = false
+att.UBGL_Automatic = true
 att.UBGL_MuzzleEffect = "muzzleflash_4"
 att.UBGL_ClipSize = 17
 att.UBGL_Ammo = "pistol"
@@ -45,6 +45,7 @@ att.UBGL_RPM = 60 / 0.079
 att.UBGL_Recoil = .4
 att.UBGL_RecoilSide = .4
 att.UBGL_RecoilRise = .2
+att.UBGL_RecoilPunch = 0
 att.UBGL_Capacity = 17
 
 att.Hook_ShouldNotSight = function(wep)

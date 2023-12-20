@@ -7,7 +7,6 @@ SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
-SWEP.CamAttachment = 3
 
 SWEP.PrintName = "M240"
 SWEP.Trivia_Class = "Light Machine Gun"
@@ -30,8 +29,8 @@ SWEP.Bipod_Integral = true
 SWEP.BipodDispersion = 0.5
 SWEP.BipodRecoil = 0.5
 
-SWEP.Damage = 46
-SWEP.DamageMin = 31
+SWEP.Damage = 50
+SWEP.DamageMin = 36
 SWEP.Range = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 7
 SWEP.DamageType = DMG_BULLET
@@ -47,7 +46,7 @@ SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.5
 SWEP.RecoilSide = 0.35
 SWEP.RecoilRise = 1
-SWEP.RecoilPunch = 2.5
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 650 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
@@ -295,6 +294,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload",
+        Mult = 0.8,
         Time = 291/30,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         MinProgress = 5,

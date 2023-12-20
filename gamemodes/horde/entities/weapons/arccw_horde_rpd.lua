@@ -7,7 +7,6 @@ SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
-SWEP.CamAttachment = 3
 
 SWEP.PrintName = "RPD"
 SWEP.Trivia_Class = "Light Machine Gun"
@@ -27,7 +26,7 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/arccw/fesiugmw2_2/c_rpd_1.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 42
+SWEP.Damage = 45
 SWEP.DamageMin = 33
 SWEP.Range = 2000 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 9
@@ -36,7 +35,7 @@ SWEP.ShootEntity = nil -- entity to fire, if any
 
 
 SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 100 -- DefaultClip is automatically set.
+SWEP.Primary.ClipSize = 150 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 200
 SWEP.ReducedClipSize = 50
 
@@ -44,7 +43,7 @@ SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4
 SWEP.RecoilSide = 0.2
 SWEP.RecoilRise = 0.5
-SWEP.RecoilPunch = 2.5
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 650 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
@@ -288,6 +287,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload",
+        Mult = 0.8,
         Time = 291/30,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         MinProgress = 7.13,

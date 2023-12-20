@@ -29,19 +29,19 @@ SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "000000"
 
-SWEP.Damage = 28 * 1.25
-SWEP.DamageMin = 21 * 1.25
+SWEP.Damage = 42
+SWEP.DamageMin = 30
 SWEP.Range = 1400 * 0.025  -- GAME UNITS * 0.025 = METRES
 
 SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 40 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 40
-SWEP.ReducedClipSize = 40
+SWEP.Primary.ClipSize = 50 -- DefaultClip is automatically set.
+SWEP.ExtendedClipSize = 50
+SWEP.ReducedClipSize = 50
 
-SWEP.Recoil = 0.45 * 1.2
+SWEP.Recoil = 0.2
 SWEP.RecoilSide = 0.4
 SWEP.RecoilRise = 1
-SWEP.RecoilPunch = 2.5
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 689 -- 60 / RPM.
 
@@ -249,6 +249,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload",
+        Mult = 0.8,
         Time = 102/30,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         SoundTable = {
@@ -257,12 +258,13 @@ SWEP.Animations = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_styaug_reload_clipin_v1.wav", 		t = 71/30},
 					},
         LHIK = true,
-        LHIKIn = 0.5,
-        LHIKOut = 0.5,
+        LHIKIn = 0.7,
+        LHIKOut = 0.7,
     },
     ["reload_empty"] = {
         Source = "reload_empty",
         Time = 121/30,
+        Mult = 0.8,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_styaug_reload_lift_v1.wav", 		t = 0},
@@ -271,8 +273,8 @@ SWEP.Animations = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_styaug_reload_chamber_v1.wav",		t = 89/30},
 					},
         LHIK = true,
-        LHIKIn = 0.5,
-        LHIKOut = 0.6,
+        LHIKIn = 0.7,
+        LHIKOut = 0.8,
     },
 ------------------------------------------------
 ------ Here lies foregrip animations. awesome --

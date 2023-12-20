@@ -37,15 +37,15 @@ SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
 SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 60 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 60
-SWEP.ReducedClipSize = 45
+SWEP.Primary.ClipSize = 75 -- DefaultClip is automatically set.
+SWEP.ExtendedClipSize = 75
+SWEP.ReducedClipSize = 75
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.3
 SWEP.RecoilSide = 0.2
 SWEP.RecoilRise = 0.2
-SWEP.RecoilPunch = 2.5
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 0.075 -- lazy, fix this l8r btich -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
@@ -301,6 +301,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload_empty",
+        Mult = 0.8,
         Time = 113/24,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         SoundTable = {

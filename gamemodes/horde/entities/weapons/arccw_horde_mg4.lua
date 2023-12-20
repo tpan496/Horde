@@ -7,7 +7,6 @@ SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
-SWEP.CamAttachment = 3
 
 SWEP.PrintName = "MG4"
 SWEP.Trivia_Class = "Light Machine Gun"
@@ -28,7 +27,7 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/w_mach_m249para.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 34
+SWEP.Damage = 40
 SWEP.DamageMin = 32
 SWEP.Range = 3000 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 5
@@ -37,15 +36,15 @@ SWEP.ShootEntity = nil -- entity to fire, if any
 
 
 SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 120 -- DefaultClip is automatically set.
+SWEP.Primary.ClipSize = 200 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 200
-SWEP.ReducedClipSize = 50
+SWEP.ReducedClipSize = 200
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.38
 SWEP.RecoilSide = 0.38
 SWEP.RecoilRise = 0.3
-SWEP.RecoilPunch = 2.5
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 800 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
@@ -306,6 +305,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload",
+        Mult = 0.8,
         Time = 291/30,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         MinProgress = 7.13,
@@ -327,6 +327,7 @@ SWEP.Animations = {
     },
     ["reload_att"] = {
         Source = "reload_att",
+        Mult = 0.8,
         Time = 291/30,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         MinProgress = 7.13,

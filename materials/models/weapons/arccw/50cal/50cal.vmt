@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+	$baseTexture				"models\weapons\arccw\50cal\50cal"
+	$bumpmap					"effects\flat_normal"
+	
+	$phong						1
+		$phongboost					10
+		$phongexponent				20
+		$phongfresnelranges			"[.1 .4 1]"
+		
+	$basemapalphaphongmask		1
+}

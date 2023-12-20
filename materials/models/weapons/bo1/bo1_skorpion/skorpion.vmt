@@ -1,0 +1,20 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/bo1/bo1_skorpion/skorpion_c"
+	"$bumpmap" "models/weapons/bo1/bo1_skorpion/skorpion_n"
+	$detail "models/weapons/bo1/gunmetal"
+	$detailblendmode 0
+	"$detailblendfactor" "1"
+	
+	
+	//"$color2" "[ .4 .4 .4 ]"
+	"$blendtintbybasealpha" "1"
+	"$phong" "1"
+	"$phongboost" "1"
+	"$phongalbedotint" "2"
+	"$PhongFresnelRanges" "[ 2 5 4 ]"
+	"$envmap" "env_cubemap"
+//////	"$basemapalphaenvmapmask" "1"
+	"$envmapfresnel" "0.01"
+	"$envmaptint" "[ .01 .01 .01 ]"
+}

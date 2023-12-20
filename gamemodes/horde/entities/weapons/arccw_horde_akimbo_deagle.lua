@@ -27,7 +27,7 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/w_pist_deagle.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 90
+SWEP.Damage = 60
 SWEP.DamageMin = 42
 SWEP.Range = 55  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 10
@@ -37,18 +37,22 @@ SWEP.ShootEntity = nil -- entity to fire, if any
 
 SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 7 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 10
-SWEP.ReducedClipSize = 4
+SWEP.ExtendedClipSize = 7
+SWEP.ReducedClipSize = 7
 
-SWEP.Recoil = 2.25 / 1.5
-SWEP.RecoilSide = 1.75 / 1.5
+SWEP.Recoil = 0.5
+SWEP.RecoilSide = 0.5
 SWEP.RecoilRise = 0.1
-SWEP.RecoilPunch = 2.5 / 1.5
+SWEP.RecoilPunch = 0.5
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 0.079 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
+        Mode = 2,
+    },
+	{
         Mode = 1,
     },
     {

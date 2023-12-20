@@ -34,7 +34,8 @@ end
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_ReactiveArmorDamage", function (ply, dmginfo, bonus, silent)
     if silent then return end
-    if not ply:IsValid() or not ply:Horde_GetReactiveArmorEnabled() or ply:Horde_GetReactiveArmor() == 0 or dmginfo:GetAttacker() == ply or dmginfo:GetDamage() < 25 or not ply:Alive() then return end
+    local attacker = dmginfo:GetAttacker()
+    if not ply:IsValid() or not ply:Horde_GetReactiveArmorEnabled() or ply:Horde_GetReactiveArmor() == 0 or HORDE:IsPlayerOrMinion(attacker) or dmginfo:GetDamage() < 25 or not ply:Alive() then return end
         bonus.resistance = 1
         local dmg = DamageInfo()
         dmg:SetAttacker(ply)

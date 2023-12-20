@@ -39,15 +39,16 @@ att.LHIK_MovementMult = 0
 att.UBGL = true
 
 att.UBGL_PrintName = "AKIMBO"
-att.UBGL_Automatic = false
+att.UBGL_Automatic = true
 att.UBGL_MuzzleEffect = "muzzleflash_4"
 att.UBGL_ClipSize = 7
 att.UBGL_Ammo = "357"
 att.UBGL_RPM = 60 / 0.079
-att.UBGL_Recoil = 2.25 / 1.5
-att.UBGL_RecoilSide = 1.75 / 1.5
+att.UBGL_Recoil = 0.5
+att.UBGL_RecoilSide = 0.5
 att.UBGL_RecoilRise = 0
-att.UBGL_Capacity =  2.5 / 1.5
+att.UBGL_RecoilPunch = 0
+att.UBGL_Capacity =  7
 
 att.Hook_ShouldNotSight = function(wep)
     return true
@@ -129,7 +130,7 @@ att.UBGL_Fire = function(wep, ubgl)
     wep.Owner:FireBullets({
 		Src = wep.Owner:EyePos(),
 		Num = 1,
-		Damage = 90,
+		Damage = 60,
 		Force = 1,
 		Attacker = wep.Owner,
 		Dir = wep.Owner:EyeAngles():Forward(),
