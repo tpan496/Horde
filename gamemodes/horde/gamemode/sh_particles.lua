@@ -79,3 +79,6 @@ PrecacheParticleSystem("black_hole")
 PrecacheParticleSystem("supernova")
 PrecacheParticleSystem("supernova_explosion")
 
+game.AddParticles( "particles/bo1/raygun.pcf" )
+PrecacheParticleSystem("raygun_splash")
+PrecacheParticleSystem("raygun_flash")

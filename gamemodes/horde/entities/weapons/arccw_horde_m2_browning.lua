@@ -26,8 +26,8 @@ SWEP.WorldModel = "models/horde/weapons/arccw/w_50cal_12.mdl"
 SWEP.ViewModelFOV = 60
 SWEP.DefaultBodygroups = "0000000"
 
-SWEP.Damage = 80
-SWEP.DamageMin = 60 -- damage done at maximum range
+SWEP.Damage = 100
+SWEP.DamageMin = 80 -- damage done at maximum range
 SWEP.Range = 500 -- in METRES
 SWEP.Penetration = 50
 SWEP.DamageType = DMG_BULLET
@@ -40,13 +40,13 @@ SWEP.TracerCol = Color(255, 25, 25)
 SWEP.TracerWidth = 3
 SWEP.ChamberSize = 0 -- how many rounds can be chambered.
 
-SWEP.Primary.ClipSize = 50 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 50
+SWEP.Primary.ClipSize = 100 -- DefaultClip is automatically set.
+SWEP.ExtendedClipSize = 150
 SWEP.ReducedClipSize = 50
 
-SWEP.Recoil = 1
-SWEP.RecoilSide = 1
-SWEP.MaxRecoilBlowback = 1
+SWEP.Recoil = 0.7
+SWEP.RecoilSide = 0.7
+SWEP.MaxRecoilBlowback = 0.7
 SWEP.RecoilPunch = 0
 
 SWEP.Delay = 0.12 -- 60 / RPM.

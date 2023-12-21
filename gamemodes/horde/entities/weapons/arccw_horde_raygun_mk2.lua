@@ -42,8 +42,8 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 60
 
-SWEP.Damage = 70
-SWEP.DamageMin = 50 -- damage done at maximum range
+SWEP.Damage = 80
+SWEP.DamageMin = 60 -- damage done at maximum range
 SWEP.Range = 200 -- in METRES
 SWEP.Penetration = 10
 SWEP.DamageType = DMG_SHOCK
@@ -83,7 +83,7 @@ SWEP.NPCWeaponType = {"weapon_pistol", "weapon_357"}
 SWEP.NPCWeight = 0
 
 SWEP.AccuracyMOA = 0 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 300 -- inaccuracy added by hip firing.
+SWEP.HipDispersion = 200 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 100
 
 SWEP.ShootWhileSprint = false

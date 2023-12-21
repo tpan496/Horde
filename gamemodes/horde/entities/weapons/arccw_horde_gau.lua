@@ -23,7 +23,7 @@ SWEP.Trivia_Country = "United States"
 SWEP.Trivia_Year = 1982
 end
 
-SWEP.Slot = 4
+SWEP.Slot = 2
 
 SWEP.UseHands = true
 
