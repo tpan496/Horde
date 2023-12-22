@@ -236,11 +236,22 @@ function plymeta:Horde_PayPlayer(plyToPay, amount)
     local amount = tonumber(amount)
     local plyForMoney
     local allPlys = player.GetAll()
+    local Matches = {}
     for _,v in ipairs(allPlys) do
         local findString = string.find(string.lower(v:GetName()), string.lower(plyToPay))
         if findString then
+            table.insert(Matches, v)
             plyForMoney = v
         end
+    end
+    if #Matches > 1 then
+        local Names = ""
+        for _,v in pairs(Matches) do
+            Names = Names.." "..v:GetName()..","
+        end
+        Names = string.TrimRight(Names, ",")
+        self:ChatPrint("Multiple players have given name:"..Names)
+        return
     end
     if plyForMoney == nil then self:ChatPrint("Invalid player.") return end
     if plyForMoney:SteamID() == self:SteamID() then return end -- Not that this really matters but it'd be a bit silly 
