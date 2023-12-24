@@ -106,12 +106,11 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 	local hitent = data.HitEntity
 
 	if self:IsAlly(hitent) then
-		self:Remove()
+        SafeRemoveEntityDelayed( self, 0 )
 		return
 	end
 
 	if hitent:IsWorld() then
-
 		self:EmitSound("npc/ministrider/flechette_impact_stick" .. math.random(1, 5) .. ".wav" , 85, math.random(90, 110))
 
 		self:SetPos(data.HitPos)
@@ -127,21 +126,16 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 			Damage = 0,
 			Distance = 25,
 		})
-
 	else
+        self:EmitSound("npc/ministrider/flechette_flesh_impact" .. math.random(1, 4) .. ".wav" , 85, math.random(90, 110))
 
-		self:EmitSound("npc/ministrider/flechette_flesh_impact" .. math.random(1, 4) .. ".wav" , 85, math.random(90, 110))
-
-
-			if hitent:GetClass() == "func_breakable_surf" then
-				hitent:Fire("Shatter")
-			end
-
-			self:DeathEffects()
-			self:Remove()
-		end
-
+        if hitent:GetClass() == "func_breakable_surf" then
+            hitent:Fire("Shatter")
+        end
+        self:DeathEffects()
+        SafeRemoveEntityDelayed( self, 0 )
 	end
+end
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DeathEffects()
