@@ -163,14 +163,13 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	bullet.TracerColor = Color(0, 191, 255)
 	bullet.TracerWidth = 20
 	bullet:Spawn()
-	bullet.DirectDamage = 8
+	bullet.DirectDamage = 3
 
 	local phy = bullet:GetPhysicsObject()
 	if phy:IsValid() then
 		local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
 		dir:Normalize()
-		dir = dir + VectorRand() * 0.02
 		dir:Normalize()
-		phy:ApplyForceCenter(dir * 4250)
+		phy:ApplyForceCenter(dir * 1500)
 	end
 end

@@ -35,7 +35,7 @@ ENT.Model = {"models/effects/combineball.mdl"} -- The models it should spawn wit
 ENT.MoveCollideType = MOVECOLLIDE_FLY_BOUNCE
 ENT.RemoveOnHit = false -- Should it remove itself when it touches something? | It will run the hit sound, place a decal, etc.
 ENT.DoesDirectDamage = false -- Should it do a direct damage when it hits something?
-ENT.DirectDamage = 50 -- How much damage should it do when it hits something
+ENT.DirectDamage = 0 -- How much damage should it do when it hits something
 ENT.DirectDamageType = DMG_BLAST -- Damage type
 --ENT.CollideCodeWithoutRemoving = true -- If RemoveOnHit is set to false, you can still make the projectile deal damage, place a decal, etc.
 ENT.DecalTbl_DeathDecals = {"Scorch"}
@@ -159,7 +159,7 @@ function ENT:CustomOnPhysicsCollide(data, phys)
     end
     dmg:SetInflictor(self)
     dmg:SetDamageType(DMG_GENERIC)
-    dmg:SetDamage(60)
+    dmg:SetDamage(15)
     util.BlastDamageInfo(dmg, self:GetPos(), 150)
 	--util.VJ_SphereDamage(self, self, myPos, 250, 100, DMG_BLAST, true, true, {DisableVisibilityCheck=true, Force=80})
 
