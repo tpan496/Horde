@@ -70,7 +70,7 @@ SWEP.MoveDispersion = 250
 
 SWEP.Primary.Ammo = "AlyxGun"
 SWEP.MagID = "m2" -- the magazine pool this gun draws from
-SWEP.ShootVol = 145 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 SWEP.ShootSound = "weapons/arccw/50cal/50cal_fire.wav"
 SWEP.ShootSoundSilenced = "arccw_go/m4a1/m4a1_silencer_01.wav"
