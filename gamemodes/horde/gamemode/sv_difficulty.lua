@@ -1,8 +1,12 @@
 -- Difficulty settings
 -- Rule: scale as difficulty/endless.
--- 0 - normal, 1 - hard, 2 - realism
+-- 1 - normal, 2 - hard, 3 - realism
 
-HORDE.CurrentDifficulty = GetConVar( "horde_difficulty" ):GetInt() + 1
+HORDE.CurrentDifficulty = GetConVar( "horde_difficulty" ):GetInt()
+if HORDE.Difficulty[HORDE.CurrentDifficulty] == nil then
+    HORDE.CurrentDifficulty = 2
+end
+
 HORDE.endless = GetConVar( "horde_endless" ):GetInt()
 HORDE.additional_pack = 0
 

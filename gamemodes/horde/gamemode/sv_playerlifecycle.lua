@@ -80,7 +80,7 @@ local function setNextMapDifficulty()
     end
 
     if not foundDiff then
-        GetConVar( "horde_difficulty" ):SetInt( 1 )
+        GetConVar( "horde_difficulty" ):SetInt( 2 )
     end
 end
 

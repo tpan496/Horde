@@ -28,7 +28,7 @@ CreateConVar("horde_corpse_cleanup", 1, nil, "Remove corpses.")
 CreateConVar("horde_base_walkspeed", 180, nil, "Base walkspeed.")
 CreateConVar("horde_base_runspeed", 220, nil, "Base runspeed.")
 
-CreateConVar("horde_difficulty", 0, nil, "Difficulty.")
+CreateConVar("horde_difficulty", 1, nil, "Difficulty.")
 CreateConVar("horde_disable_difficulty_voting", 0, nil, "Disable difficulty voting.")
 CreateConVar("horde_endless", 0, FCVAR_ARCHIVE, "Endless.")
 CreateConVar("horde_total_enemies_scaling", 0, nil, "Forces the gamemode to multiply maximum enemy count by this.")
