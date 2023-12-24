@@ -47,7 +47,8 @@ function plymeta:Horde_ClearBarrierStack()
 end
 
 hook.Add("Horde_OnPlayerDamageTakenPost", "Horde_BarrierDamage", function (ply, dmginfo, bonus)
-    if ply.Horde_BarrierStack <= 0 then return end
+    local attacker = dmginfo:GetAttacker()
+    if ply.Horde_BarrierStack <= 0 or HORDE:IsPlayerOrMinion(attacker) then return end
     if dmginfo:GetDamage() >= ply.Horde_BarrierStack / 2 then
         dmginfo:SubtractDamage(ply.Horde_BarrierStack / 2)
         ply:Horde_RemoveBarrierStack(ply.Horde_BarrierStack)

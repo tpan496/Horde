@@ -131,9 +131,9 @@ end
 function ENT:CustomOnThink()
 	if self:IsOnGround() then
 		if self.Critical then
-			self:SetLocalVelocity(self:GetMoveVelocity() * 1.35)
+			self:SetLocalVelocity(self:GetMoveVelocity() * 0.35)
 		else
-			self:SetLocalVelocity(self:GetMoveVelocity() * 1.175)
+			self:SetLocalVelocity(self:GetMoveVelocity() * 0.175)
 		end
 	else
 	end
