@@ -146,7 +146,7 @@ if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_r
 
 		--For increasing xp on high difficulties
 		local ExpMulti = 1 
-		if HORDE.difficulty >= 5 and HORDE.current_wave >= 4 then
+		if HORDE.CurrentDifficulty >= 5 and HORDE.current_wave >= 4 then
 			ExpMulti = 2
 		end
 

@@ -47,8 +47,8 @@ end
 
 hook.Add("Horde_PlayerMoveBonus", "Horde_FrostbiteMovespeed", function(ply, bonus_walk, bonus_run)
     if ply.Horde_Debuff_Active and ply.Horde_Debuff_Active[HORDE.Status_Frostbite] then
-        bonus_walk.more = bonus_walk.more * HORDE.difficulty_frostbite_slow[HORDE.difficulty]
-        bonus_run.more = bonus_run.more * 0.5 * HORDE.difficulty_frostbite_slow[HORDE.difficulty]
+        bonus_walk.more = bonus_walk.more * HORDE.Difficulty[HORDE.CurrentDifficulty].frostbiteSlow
+        bonus_run.more = bonus_run.more * 0.5 * HORDE.Difficulty[HORDE.CurrentDifficulty].frostbiteSlow
     end
 end)
 

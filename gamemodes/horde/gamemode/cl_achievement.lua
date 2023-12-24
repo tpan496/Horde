@@ -138,12 +138,12 @@ function HORDE:SaveMapAchievements()
         HORDE.achievements_map[map].players_apocalypse = HORDE.achievements_map[map].players_apocalypse or 0
 
 
-        HORDE.achievements_map[map].diffculty = math.max(HORDE.achievements_map[map].diffculty, HORDE.difficulty)
+        HORDE.achievements_map[map].diffculty = math.max(HORDE.achievements_map[map].diffculty, HORDE.CurrentDifficulty)
         HORDE.achievements_map[map].players = math.max(HORDE.achievements_map[map].players, #player.GetHumans())
-        if HORDE.difficulty >= 4 then
+        if HORDE.CurrentDifficulty >= 4 then
             HORDE.achievements_map[map].players_nightmare = math.max(HORDE.achievements_map[map].players_nightmare, #player.GetHumans())
         end
-        if HORDE.difficulty >= 5 then
+        if HORDE.CurrentDifficulty >= 5 then
             HORDE.achievements_map[map].players_apocalypse = math.max(HORDE.achievements_map[map].players_apocalypse, #player.GetHumans())
         end
         if GetConVarNumber("horde_default_item_config") == 1
@@ -233,7 +233,7 @@ end
 
 function HORDE:SaveClassAchievemnts()
     local class = ply:Horde_GetClass().name
-    local difficulty = HORDE.difficulty
+    local difficulty = HORDE.CurrentDifficulty
     local ply = MySelf
     if not ply:IsValid() then return end
 

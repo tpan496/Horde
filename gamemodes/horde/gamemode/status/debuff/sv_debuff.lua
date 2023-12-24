@@ -159,7 +159,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
             return
         end
 
-        local duration = 5 + HORDE.difficulty_status_duration_bonus[HORDE.difficulty]
+        local duration = 5 + HORDE.Difficulty[HORDE.CurrentDifficulty].statusDurationBonus
         local str = "Horde_Remove_" .. tostring(debuff) .. "_" .. self:SteamID()
         timer.Remove(str)
         timer.Create(str, duration, 1, function ()

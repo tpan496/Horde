@@ -25,15 +25,15 @@ function ENT:KeyValue(key, value)
     if v <= 0 then return end
 	if key == "startingmoney" then
 		HORDE.start_money = v or GetConVarNumber("horde_start_money")
-        HORDE.start_money = math.floor(HORDE.start_money * HORDE.difficulty_start_money_multiplier[HORDE.difficulty])
+        HORDE.start_money = math.floor(HORDE.start_money * HORDE.HORDE.Difficulty[HORDE.CurrentDifficulty].startMoneyMultiplier)
         for _, ply in pairs(player.GetAll()) do
             ply:Horde_SetMoney(HORDE.start_money)
         end
     elseif key == "killrewardbase" then
         HORDE.kill_reward_base = v or HORDE.kill_reward_base
-        HORDE.kill_reward_base = math.floor(tonumber(value) * HORDE.difficulty_reward_base_multiplier[HORDE.difficulty])
+        HORDE.kill_reward_base = math.floor(tonumber(value) * HORDE.Difficulty[HORDE.CurrentDifficulty].rewardMultiplier)
     elseif key == "roundbonusbase" then
         HORDE.round_bonus_base = v or HORDE.round_bonus_base
-        HORDE.round_bonus_base = math.floor(tonumber(value) * HORDE.difficulty_reward_base_multiplier[HORDE.difficulty])
+        HORDE.round_bonus_base = math.floor(tonumber(value) * HORDE.Difficulty[HORDE.CurrentDifficulty].rewardMultiplier)
 	end
 end

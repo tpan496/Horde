@@ -448,7 +448,7 @@ concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
             scale = math.min(8, horde_players_count)
             add = 0.60
         end
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, scale * (add + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, scale * (add + HORDE.Difficulty[HORDE.CurrentDifficulty].eliteHealthScaleAdd)))
     end
 
     if enemy.health_scale then
@@ -459,7 +459,7 @@ concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
         spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.endless_health_multiplier)
     end
 
-    spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.difficulty_health_multiplier[HORDE.difficulty])
+    spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.Difficulty[HORDE.CurrentDifficulty].healthMultiplier)
 
     spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
 

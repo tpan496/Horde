@@ -342,16 +342,16 @@ net.Receive("Horde_RenderEnemiesCount", function()
     wave_str = net.ReadString()
     local count = net.ReadInt(32)
     if is_boss then
-        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|  " .. "BOSS"
+        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.Difficulty[HORDE.CurrentDifficulty].name ) .. "|  " .. "BOSS"
     else
-        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|  " .. translate.Get("Game_Enemies") .. ": " .. tostring(count)
+        center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.Difficulty[HORDE.CurrentDifficulty].name ) .. "|  " .. translate.Get("Game_Enemies") .. ": " .. tostring(count)
     end
 end)
 
 net.Receive("Horde_RenderObjectives", function()
     local count = net.ReadUInt(4)
     local max_count = net.ReadUInt(4)
-    center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|  " .. "Objectives: " .. tonumber(count) .. "/" .. tonumber(max_count)
+    center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.Difficulty[HORDE.CurrentDifficulty].name ) .. "|  " .. "Objectives: " .. tonumber(count) .. "/" .. tonumber(max_count)
 end)
 
 net.Receive("Horde_RenderGameResult", function()
@@ -361,7 +361,7 @@ net.Receive("Horde_RenderGameResult", function()
 end)
 
 net.Receive("Horde_SyncEscapeStart", function ()
-    center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]) .. "|  " .. "Escape!"
+    center_panel_str = "|" .. translate.Get("Game_Difficulty_" .. HORDE.Difficulty[HORDE.CurrentDifficulty].name ) .. "|  " .. "Escape!"
 end)
 
 local heal_msg_cd = 0
