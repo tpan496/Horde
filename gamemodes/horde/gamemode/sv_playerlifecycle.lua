@@ -382,7 +382,7 @@ function HORDE:PlayerInit(ply)
     net.Send(ply)
 
     net.Start("Horde_SyncDifficulty")
-        net.WriteUInt(HORDE.difficulty,3)
+        net.WriteUInt(HORDE.difficulty,4)
     net.Send(ply)
 
     net.Start("Horde_SyncGameInfo")

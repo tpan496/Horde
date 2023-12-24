@@ -384,7 +384,7 @@ net.Receive("Horde_SyncEnemies", function ()
 end)
 
 net.Receive("Horde_SyncDifficulty", function ()
-    HORDE.difficulty = net.ReadUInt(3)
+    HORDE.difficulty = net.ReadUInt(4)
 end)
 
 net.Receive("Horde_SyncMaps", function ()
