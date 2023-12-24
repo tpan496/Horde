@@ -369,15 +369,12 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     summary_label:SetText("")
     summary_label:SetTextColor(Color(255,255,255))
     summary_label.Paint = function ()
-        draw.SimpleText(translate.Get("Game_Result_" .. status) .. "! " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.difficulty_text[HORDE.difficulty]), "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Game_Result_" .. status) .. "! " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.Difficulty[HORDE.CurrentDifficulty].name ), "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
     end
 
-    self.create_diff_panel("NORMAL")
-    self.create_diff_panel("HARD")
-    self.create_diff_panel("REALISM")
-    self.create_diff_panel("NIGHTMARE")
-    self.create_diff_panel("APOCALYPSE")
-    self.create_diff_panel("HELL")
+    for _, diff in pairs(HORDE.Difficulty) do
+        self.create_diff_panel(diff.name)
+    end
 end
 
 function PANEL:Paint(w, h)

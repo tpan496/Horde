@@ -6,6 +6,6 @@ hook.Add("EntityTakeDamage", "Horde_ShockDamageTaken", function(target, dmg)
     if attacker:IsPlayer() and target:IsNPC() then
         dmg:ScaleDamage(1 + 0.25 * (1 + attacker:Horde_GetApplyDebuffMore()))
     else
-        dmg:ScaleDamage(1 + HORDE.difficulty_shock_damage_increase[HORDE.difficulty])
+        dmg:ScaleDamage(1 + HORDE.Difficulty[HORDE.CurrentDifficulty].shockDamageIncrease)
     end
 end)

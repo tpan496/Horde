@@ -105,7 +105,7 @@ HORDE.total_enemies_per_wave = {15, 19, 23, 27, 30, 33, 36, 39, 42, 45}
 --HORDE.total_enemies_per_wave = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 -- Director
-HORDE.difficulty = 1
+HORDE.CurrentDifficulty = 1
 HORDE.total_enemies_this_wave = 0
 HORDE.alive_enemies_this_wave = 0
 HORDE.killed_enemies_this_wave = 0
@@ -163,7 +163,6 @@ HORDE.player_kills_weapon = {}
 HORDE.render_highlight_disable = 0
 HORDE.render_highlight_enemies = 1
 HORDE.render_highlight_ammoboxes = 2
-HORDE.difficulty_text = {"NORMAL", "HARD", "REALISM", "NIGHTMARE", "APOCALYPSE", "HELL"}
 
 -- ArcCW Attachments
 if ArcCWInstalled then

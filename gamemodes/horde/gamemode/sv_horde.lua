@@ -523,7 +523,7 @@ function HORDE:SpawnEnemy(enemy, pos)
                 add = 0.55
             end
         end
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(HORDE.difficulty_elite_health_scale_multiplier[HORDE.difficulty], scale * HORDE.difficulty_elite_health_scale_multiplier[HORDE.difficulty] * (add + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(HORDE.Difficulty[HORDE.CurrentDifficulty].eliteHealthScaleMultiplier, scale * HORDE.Difficulty[HORDE.CurrentDifficulty].eliteHealthScaleMultiplier * (add + HORDE.Difficulty[HORDE.CurrentDifficulty].eliteHealthScaleAdd)))
     end
 
     if enemy.health_scale then
@@ -534,7 +534,7 @@ function HORDE:SpawnEnemy(enemy, pos)
         spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.endless_health_multiplier)
     end
 
-    spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.difficulty_health_multiplier[HORDE.difficulty])
+    spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * HORDE.Difficulty[HORDE.CurrentDifficulty].healthMultiplier)
 
     spawned_enemy:SetHealth(spawned_enemy:GetMaxHealth())
 
@@ -593,16 +593,16 @@ function HORDE:SpawnEnemy(enemy, pos)
         local mut_prob = 0
         if enemy.is_elite and enemy.is_elite == true then
             if enemy.boss_properties and enemy.boss_properties.is_boss == true then
-                if HORDE.difficulty >= 2 then
+                if HORDE.CurrentDifficulty >= 2 then
                     mut_prob = 1.0
                 else
                     mut_prob = 0
                 end
             else
-                mut_prob = HORDE.difficulty_elite_mutation_probability[HORDE.difficulty]
+                mut_prob = HORDE.Difficulty[HORDE.CurrentDifficulty].eliteMutationProbability
             end
         else
-            mut_prob = HORDE.difficulty_mutation_probability[HORDE.difficulty]
+            mut_prob = HORDE.Difficulty[HORDE.CurrentDifficulty].mutationProbability
         end
 
         if mut_prob > 0 then
@@ -615,9 +615,9 @@ function HORDE:SpawnEnemy(enemy, pos)
                 end)
             end
 
-            if HORDE.difficulty >= 4 then
+            if HORDE.CurrentDifficulty >= 4 then
                 p = math.random()
-                if p <= HORDE.difficulty_mutation_probability[HORDE.difficulty] then
+                if p <= HORDE.Difficulty[HORDE.CurrentDifficulty].mutationProbability then
                     local mut = HORDE.current_mutations[math.random(1, #HORDE.current_mutations)]
                     timer.Simple(0.2, function() spawned_enemy:Horde_SetMutation(mut) end)
                 end
@@ -792,7 +792,7 @@ end
 -- Loops over valid nodes and spawn enemies.
 -- Boss should not be spawned in this function.
 function HORDE:SpawnEnemies(enemies, valid_nodes)
-    for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + math.floor(horde_players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.difficulty_additional_pack[HORDE.difficulty] + horde_players_count) do
+    for i = 0, math.random(HORDE.min_base_enemy_spawns_per_think + HORDE.Difficulty[HORDE.CurrentDifficulty].additionalPack + math.floor(horde_players_count/2), HORDE.max_base_enemy_spawns_per_think + HORDE.Difficulty[HORDE.CurrentDifficulty].additionalPack + horde_players_count) do
         if (#enemies + 1 <= HORDE.max_enemies_alive) and (HORDE.total_enemies_this_wave > 0) then
             local pos = table.Random(valid_nodes)
             if pos ~= nil then
@@ -975,7 +975,7 @@ function HORDE:SpawnAmmoboxes(valid_nodes)
     end
     horde_spawned_ammoboxes = {}
 
-    for i = 0, math.min(table.Count(player.GetAll()), HORDE.ammobox_max_count_limit) + HORDE.difficulty_additional_ammoboxes[HORDE.difficulty] do
+    for i = 0, math.min(table.Count(player.GetAll()), HORDE.ammobox_max_count_limit) + HORDE.Difficulty[HORDE.CurrentDifficulty].additionalAmmoBoxes do
         local pos = table.Random(valid_nodes)
         local spawned_ammobox = ents.Create("horde_ammobox")
         spawned_ammobox:SetPos(pos)
@@ -1051,7 +1051,7 @@ function HORDE:WaveStart()
     horde_players_count = countablePlayerCount
 
     horde_current_enemies_list = table.Copy(HORDE.enemies_normalized[current_wave])
-    local difficulty_coefficient = HORDE.difficulty * 0.05
+    local difficulty_coefficient = HORDE.CurrentDifficulty * 0.05
 
     if HORDE.endless == 0 then
         -- No endless
@@ -1091,7 +1091,7 @@ function HORDE:WaveStart()
     local max_enemies_alive_base = GetConVarNumber("horde_max_enemies_alive_base")
     local scale = GetConVarNumber("horde_max_enemies_alive_scale_factor")
     local max_enemies_alive_max = GetConVarNumber("horde_max_enemies_alive_max")
-    HORDE.max_enemies_alive = math.floor(math.min(max_enemies_alive_max, max_enemies_alive_base * HORDE.difficulty_max_enemies_alive_scale_factor + scale * horde_players_count))
+    HORDE.max_enemies_alive = math.floor(math.min(max_enemies_alive_max, max_enemies_alive_base * HORDE.Difficulty[HORDE.CurrentDifficulty].maxEnemiesAliveScaleFactor + scale * horde_players_count))
     HORDE.alive_enemies_this_wave = 0
     HORDE.current_break_time = -1
     HORDE.killed_enemies_this_wave = 0

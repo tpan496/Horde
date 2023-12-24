@@ -15,7 +15,7 @@ end
 
 function entmeta:Horde_ActivateHemorrhage()
     local r = {0.3, 0.35, 0.4, 0.5, 0.5, 0.5}
-    self:SetHealth(self:Health() - self:GetMaxHealth() * r[HORDE.difficulty])
+    self:SetHealth(self:Health() - self:GetMaxHealth() * r[HORDE.CurrentDifficulty])
     if self:Health() <= 0 then
         local dmg = DamageInfo()
         if inflictor and inflictor:IsValid() then
