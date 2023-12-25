@@ -155,7 +155,29 @@ HORDE.Difficulty = {
         additionalPack = 4,
         additionalAmmoBoxes = 5,
         hemorrhagePercentage = 0.5,
-    }
+    },
+    [8] = {
+        name = "SWARM",
+        damageMultiplier = 1.5,
+        enemyCountMultiplier = 3,
+        rewardMultiplier = 0.2,
+        healthMultiplier = 1.2,
+        startMoneyMultiplier = 1,
+        spawnRadiusMultiplier = 1,
+        maxEnemiesAliveScaleFactor = 5,
+        poisonHeadcrabDamage = 25,
+        statusDurationBonus = 1,
+        breakHealthLeft = 0.5,
+        shockDamageIncrease = 0.1,
+        frostbiteSlow = 0.5,
+        eliteHealthScaleAdd = 0.1,
+        eliteHealthScaleMultiplier = 1.1,
+        eliteMutationProbability = 0.30,
+        mutationProbability = 0.20,
+        additionalPack = 6,
+        additionalAmmoBoxes = 10,
+        hemorrhagePercentage = 0.5,
+    },
 }
 
 -- Making sure that all all keys are present
