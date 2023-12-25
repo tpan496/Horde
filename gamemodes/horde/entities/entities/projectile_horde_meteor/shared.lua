@@ -93,7 +93,7 @@ end
 
 function ENT:Detonate()
     if !self:IsValid() or self.Removing then return end
-    self:EmitSound("horde/spells/meteor_explode.ogg", 125, 100, 1, CHAN_AUTO)
+    self:EmitSound("horde/spells/meteor_explode.ogg", 75, 100, 1, CHAN_AUTO)
     for i = 1, math.random(5,10) do
 		local debris = ents.Create("base_gmodentity")
 		local mat = "debris/debris" .. tostring(math.random(1, 4))
