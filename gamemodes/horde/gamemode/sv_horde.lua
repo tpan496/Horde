@@ -1052,17 +1052,18 @@ function HORDE:WaveStart()
 
     horde_current_enemies_list = table.Copy(HORDE.enemies_normalized[current_wave])
     local difficulty_coefficient = HORDE.CurrentDifficulty * 0.05
+    local playerCountMultiplier = horde_players_count * 0.5
 
     if HORDE.endless == 0 then
         -- No endless
-        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(horde_players_count * (0.75 + difficulty_coefficient))
+        HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * playerCountMultiplier
     else
         if HORDE.total_enemies_per_wave[HORDE.current_wave] ~= nil then
              -- If we have enough waves, still use them
-             HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * math.ceil(horde_players_count * (0.75 + difficulty_coefficient))
+             HORDE.total_enemies_this_wave = HORDE.total_enemies_per_wave[HORDE.current_wave] * playerCountMultiplier
         else
             -- Use wave 10 settings scaled
-            HORDE.total_enemies_this_wave = (HORDE.total_enemies_per_wave[HORDE.max_max_waves] + 5 * (HORDE.current_wave - HORDE.max_max_waves)) * math.ceil(horde_players_count * (0.75 + difficulty_coefficient))
+            HORDE.total_enemies_this_wave = (HORDE.total_enemies_per_wave[HORDE.max_max_waves] + 5 * (HORDE.current_wave - HORDE.max_max_waves)) * playerCountMultiplier
             -- Scale damage and health
             HORDE.endless_damage_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
             HORDE.endless_health_multiplier = math.max(1, 1.1 ^ (HORDE.current_wave - HORDE.max_max_waves))
