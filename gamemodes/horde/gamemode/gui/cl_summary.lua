@@ -216,7 +216,7 @@ function PANEL:Init()
         name_label:SetPos((player_panel_h - 15) + 20, 0)
         name_label:SetText(ply:GetName())
         name_label:SetSize(w/2 - player_panel_h - 20, player_panel_h)
-        name_label:SetColor(Color(255,255,255))
+        name_label:SetColor(team.GetColor(ply:Team()))
         name_label:SetFont("SummaryText")
 
         local reason_label = vgui.Create("DLabel", panel)

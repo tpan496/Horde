@@ -121,12 +121,13 @@ function PANEL:RefreshPlayer()
 	local class = translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName
 
 	local name = pl:LongName()
+    local plyColor = team.GetColor(pl:Team())
 	local color = color_white
 
 	self.m_AvatarPanel:CenterVertical()
 
 	self.m_PlayerLabel:SetText( name )
-	self.m_PlayerLabel:SetColor( color )
+	self.m_PlayerLabel:SetColor( plyColor )
 	self.m_PlayerLabel:SizeToContents()
 
 	self.m_RankLabel:SetText( class )

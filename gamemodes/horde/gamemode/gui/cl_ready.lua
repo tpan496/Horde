@@ -29,7 +29,7 @@ function PANEL:CreateReadyPanel(ply, status)
     name_label:SetSize(ScreenScale(130-32)/4,ScreenScale(8))
     name_label.Paint = function ()
         if not ply:IsValid() then return end
-        draw.SimpleText(ply:GetName(), "Horde_Ready", ScreenScale(2.5), ScreenScale(1.5), Color(255,255,255))
+        draw.SimpleText(ply:GetName(), "Horde_Ready", ScreenScale(2.5), ScreenScale(1.5), team.GetColor(ply:Team()))
     end
 
     local status_label = vgui.Create("DPanel", panel)
