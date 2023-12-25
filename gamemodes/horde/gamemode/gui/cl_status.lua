@@ -596,16 +596,16 @@ function HORDE:PlayMoneyNotification(diff, money)
             anim:Run()
         end
     end
-    anim:Start(0.5) -- Animate for two seconds
+    anim:Start(0.25) -- Animate for two seconds
     if anim:Active() then
         anim:Run()
     end
-    timer.Simple(0.75, function ()
+    timer.Simple(0.5, function ()
         local anim2 = Derma_Anim("Linear", main, function(pnl, anim, delta, data)
             pnl:SetAlpha(255 - delta * 255)
             pnl:SetPos(x + ScreenScale(20) * delta, y_start)
         end)
-        anim2:Start(0.5)
+        anim2:Start(0.25)
         if anim2:Active() then
             anim2:Run()
         end
