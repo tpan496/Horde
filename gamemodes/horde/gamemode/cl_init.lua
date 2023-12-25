@@ -206,6 +206,28 @@ function HORDE:ToggleConfigMenu()
     end
 end
 
+-- Spectator mode
+local OBS_MODE_ROAMING = OBS_MODE_ROAMING
+local TEXT_ALIGN_CENTER = TEXT_ALIGN_CENTER
+local specNameOffset = Vector( 0, 0, 80 )
+hook.Add( "HUDPaint", "Horde_SpectatorWh", function()
+    if LocalPlayer():GetObserverMode() ~= OBS_MODE_ROAMING then return end
+
+    for _, ply in pairs( player.GetAll() ) do
+        if ply:Alive() then
+            local pos = ply:GetPos() + specNameOffset
+            local scr = pos:ToScreen()
+            local x, y = scr.x, scr.y
+
+            local health = ply:Health()
+            local hpColor = HSVToColor( ( health / ply:GetMaxHealth() ) * 120, 1, 1 )
+
+            draw.SimpleTextOutlined( ply:Nick(), "DermaDefault", x, y, team.GetColor( ply:Team() ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, color_black )
+            draw.SimpleTextOutlined( health, "DermaDefault", x, y + 20, hpColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, color_black )
+        end
+    end
+end )
+
 -- Entity Highlights
 HORDE.Player_Looking_At_Minion = nil
 if GetConVarNumber("horde_enable_halo") == 1 then
