@@ -100,9 +100,9 @@ function PANEL:Init()
         name_label:SetFont("Content")
         name_label.Paint = function ()
             if (players_diff_votes[diff] <= 0) or vote_btn_hovered or (self.diff_btns[vote_btn] == 1) then
-                draw.SimpleText(HORDE.Difficulty[diff].name, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
+                draw.SimpleText(diff, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
             else
-                draw.SimpleText(HORDE.Difficulty[diff].name, "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
+                draw.SimpleText(diff, "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
             end
         end
 
