@@ -926,6 +926,12 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         net.WriteTable( { enemy:WorldSpaceCenter() } )
         net.Broadcast()
 
+        timer.Simple( 5, function()
+            net.Start( "Horde_HighlightRemainingEnemies" )
+            net.WriteTable( {} )
+            net.Broadcast()
+        end)
+
         HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
     end
