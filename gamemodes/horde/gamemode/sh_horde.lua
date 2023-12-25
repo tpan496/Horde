@@ -163,7 +163,6 @@ HORDE.player_kills_weapon = {}
 
 -- Render / Gui
 HORDE.render_highlight_disable = 0
-HORDE.render_highlight_enemies = 1
 HORDE.render_highlight_ammoboxes = 2
 
 -- ArcCW Attachments

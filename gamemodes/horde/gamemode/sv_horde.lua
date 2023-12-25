@@ -1,4 +1,5 @@
 util.AddNetworkString("Horde_HighlightEntities")
+util.AddNetworkString("Horde_HighlightRemainingEnemies")
 util.AddNetworkString("Horde_DeathMarkHighlight")
 util.AddNetworkString("Horde_HunterMarkHighlight")
 util.AddNetworkString("Horde_RemoveDeathMarkHighlight")
@@ -26,7 +27,6 @@ local boss_music_loop = nil
 local horde_boss_critical = nil
 
 HORDE.horde_active_holdzones = nil
-local horde_has_escapezone = nil
 
 local entmeta = FindMetaTable("Entity")
 function entmeta:Horde_SetMostRecentAttacker(attacker)
@@ -176,12 +176,6 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             else
                 HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
             end
-        end
-
-        if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 20 then
-            net.Start("Horde_HighlightEntities")
-            net.WriteUInt(HORDE.render_highlight_enemies, 3)
-            net.Broadcast()
         end
 
         if not HORDE.horde_has_active_objective then
@@ -928,15 +922,9 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
             end
         net.Broadcast()
 
-        net.Start("Horde_HighlightEntities")
-        net.WriteUInt(HORDE.render_highlight_enemies, 3)
+        net.Start( "Horde_HighlightRemainingEnemies" )
+        net.WriteTable( { enemy:WorldSpaceCenter() } )
         net.Broadcast()
-
-        timer.Simple(5, function()
-            net.Start("Horde_HighlightEntities")
-            net.WriteUInt(HORDE.render_highlight_disable, 3)
-            net.Broadcast()
-        end)
 
         HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave - 1
         HORDE.alive_enemies_this_wave = HORDE.alive_enemies_this_wave + 1
@@ -1052,7 +1040,7 @@ function HORDE:WaveStart()
 
     horde_current_enemies_list = table.Copy(HORDE.enemies_normalized[current_wave])
     local difficulty_coefficient = HORDE.CurrentDifficulty * 0.05
-    local playerCountMultiplier = math.floor( horde_players_count * 0.75 )
+    local playerCountMultiplier = math.ceil( horde_players_count * 0.75 )
     if horde_players_count > 10 then -- cap off at 10 players to prevent rounds from being too long
         playerCountMultiplier = 5
     end
@@ -1204,6 +1192,7 @@ end
 
 -- Ends a wave.
 function HORDE:WaveEnd()
+    debug.Trace()
     timer.Remove("Horde_BossMusic")
     if boss_music_loop then
         boss_music_loop:Stop()
@@ -1321,6 +1310,7 @@ end
 
 -- Referenced some spawning mechanics from Zombie Invasion+
 local director_interval = CreateConVar("horde_director_interval", 1, FCVAR_ARCHIVE, "Game director execution interval in seconds. Decreasing this increases spawn rate."):GetFloat()
+local nextRemainingEnemiesHighlight = 0
 
 -- Game Director. Executes at every given interval.
 -- The director is responsible for:
@@ -1394,6 +1384,18 @@ function HORDE:Direct()
     -- Check enemy
     local enemies = HORDE:ScanEnemies()
     HORDE:RemoveDistantEnemies(enemies)
+
+    if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 20 and nextRemainingEnemiesHighlight <= CurTime() then
+        nextRemainingEnemiesHighlight = CurTime() + 1
+        local positions = {}
+        for _, enemy in ipairs( enemies ) do
+            table.insert( positions, enemy:WorldSpaceCenter() )
+        end
+
+        net.Start( "Horde_HighlightRemainingEnemies" )
+        net.WriteTable( positions )
+        net.Broadcast()
+    end
 
     if #enemies >= HORDE.max_enemies_alive then
         return
