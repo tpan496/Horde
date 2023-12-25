@@ -22,6 +22,7 @@ HORDE.Difficulty = {
         mutationProbability = 0,
         additionalPack = 0,
         additionalAmmoBoxes = 2,
+        hemorrhagePercentage = 0.3
     },
     [2] = {
         name = "HARD",
@@ -43,6 +44,7 @@ HORDE.Difficulty = {
         mutationProbability = 0.05,
         additionalPack = 1,
         additionalAmmoBoxes = 1,
+        hemorrhagePercentage = 0.35,
     },
     [3] = {
         name = "REALISM",
@@ -64,6 +66,7 @@ HORDE.Difficulty = {
         mutationProbability = 0.10,
         additionalPack = 0,
         additionalAmmoBoxes = 0,
+        hemorrhagePercentage = 0.4,
     },
     [4] = {
         name = "NIGHTMARE",
@@ -85,6 +88,7 @@ HORDE.Difficulty = {
         mutationProbability = 0.20,
         additionalPack = 2,
         additionalAmmoBoxes = 0,
+        hemorrhagePercentage = 0.5,
     },
     [5] = {
         name = "APOCALYPSE",
@@ -106,6 +110,7 @@ HORDE.Difficulty = {
         mutationProbability = 0.30,
         additionalPack = 3,
         additionalAmmoBoxes = 0,
+        hemorrhagePercentage = 0.5,
     },
     [6] = {
         name = "HELL",
@@ -127,7 +132,8 @@ HORDE.Difficulty = {
         mutationProbability = 1,
         additionalPack = 4,
         additionalAmmoBoxes = 2,
-    }
+        hemorrhagePercentage = 0.5,
+    },
     [7] = {
         name = "CHAOS",
         damageMultiplier = 2,
@@ -148,6 +154,7 @@ HORDE.Difficulty = {
         mutationProbability = 1,
         additionalPack = 4,
         additionalAmmoBoxes = 5,
+        hemorrhagePercentage = 0.5,
     }
 }
 
@@ -172,6 +179,7 @@ local requiredKeys = {
     "mutationProbability",
     "additionalPack",
     "additionalAmmoBoxes",
+    "hemorrhagePercentage",
 }
 
 for _, difficulty in pairs( HORDE.Difficulty ) do
