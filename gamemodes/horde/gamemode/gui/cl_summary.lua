@@ -372,7 +372,7 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
         draw.SimpleText(translate.Get("Game_Result_" .. status) .. "! " .. game.GetMap() .. " - " .. HORDE.Difficulty[HORDE.CurrentDifficulty].name, "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
     end
 
-    for _, diff in pairs(HORDE.Difficulty) do
+    for _, diff in ipairs(HORDE.Difficulty) do
         self.create_diff_panel(diff.name)
     end
 end
