@@ -1052,7 +1052,10 @@ function HORDE:WaveStart()
 
     horde_current_enemies_list = table.Copy(HORDE.enemies_normalized[current_wave])
     local difficulty_coefficient = HORDE.CurrentDifficulty * 0.05
-    local playerCountMultiplier = math.floor( horde_players_count * 0.5 )
+    local playerCountMultiplier = math.floor( horde_players_count * 0.75 )
+    if horde_players_count > 10 then -- cap off at 10 players to prevent rounds from being too long
+        playerCountMultiplier = 5
+    end
 
     if HORDE.endless == 0 then
         -- No endless
