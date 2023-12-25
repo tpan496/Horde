@@ -100,9 +100,9 @@ function PANEL:Init()
         name_label:SetFont("Content")
         name_label.Paint = function ()
             if (players_diff_votes[diff] <= 0) or vote_btn_hovered or (self.diff_btns[vote_btn] == 1) then
-                draw.SimpleText(translate.Get("Game_Difficulty_" .. diff), "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
+                draw.SimpleText(HORDE.Difficulty[HORDE.CurrentDifficulty].name, "Content", 10, 20, Color(255,255,255), TEXT_ALIGN_LEFT)
             else
-                draw.SimpleText(translate.Get("Game_Difficulty_" .. diff), "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
+                draw.SimpleText(HORDE.Difficulty[HORDE.CurrentDifficulty].name, "Content", 10, 20, HORDE.color_crimson, TEXT_ALIGN_LEFT)
             end
         end
 
@@ -369,7 +369,7 @@ function PANEL:SetData(status, mvp_player, mvp_damage, mvp_kills, damage_player,
     summary_label:SetText("")
     summary_label:SetTextColor(Color(255,255,255))
     summary_label.Paint = function ()
-        draw.SimpleText(translate.Get("Game_Result_" .. status) .. "! " .. game.GetMap() .. " - " .. translate.Get("Game_Difficulty_" .. HORDE.Difficulty[HORDE.CurrentDifficulty].name ), "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("Game_Result_" .. status) .. "! " .. game.GetMap() .. " - " .. HORDE.Difficulty[HORDE.CurrentDifficulty].name, "LargeTitle", 450, 0, Color(255,255,255), TEXT_ALIGN_CENTER)
     end
 
     for _, diff in pairs(HORDE.Difficulty) do
