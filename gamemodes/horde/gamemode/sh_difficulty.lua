@@ -128,6 +128,27 @@ HORDE.Difficulty = {
         additionalPack = 4,
         additionalAmmoBoxes = 2,
     }
+    [7] = {
+        name = "CHAOS",
+        damageMultiplier = 2,
+        healthMultiplier = 2.5,
+        enemyCountMultiplier = 1.5,
+        rewardMultiplier = 0.3,
+        startMoneyMultiplier = 0.6,
+        spawnRadiusMultiplier = 0.4,
+        maxEnemiesAliveScaleFactor = 1.75,
+        poisonHeadcrabDamage = 50,
+        statusDurationBonus = 5,
+        breakHealthLeft = 0.25,
+        shockDamageIncrease = 0.50,
+        frostbiteSlow = 0.75,
+        eliteHealthScaleAdd = 0.175,
+        eliteHealthScaleMultiplier = 1.75,
+        eliteMutationProbability = 0.75,
+        mutationProbability = 1,
+        additionalPack = 4,
+        additionalAmmoBoxes = 5,
+    }
 }
 
 -- Making sure that all all keys are present
