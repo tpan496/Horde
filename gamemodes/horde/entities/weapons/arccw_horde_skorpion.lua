@@ -152,9 +152,30 @@ SWEP.AttachmentElements = {
             {ind = 1, bg = 1},
         },
     },
-    ["light_stock"] = {
+    ["unfolded_stock"] = {
         VMBodygroups = {
             {ind = 2, bg = 1},
+        },
+    },
+    ["folded_stock"] = {
+        VMBodygroups = {
+            {ind = 2, bg = 2},
+        },
+    },
+    ["rs_none"] = {
+        VMBodygroups = {
+            {ind = 3, bg = 1},
+        },
+        VMElements = {
+            {
+                Model = "models/weapons/arccw_go/atts/pistol_rail.mdl",
+                Bone = "tag_weapon",
+                Offset = {
+                    pos = Vector(1.5, -0.125, 1.3),
+                    ang = Angle(0, 0, 0),
+                },
+                Scale = Vector(0.6, 0.6, 0.45)
+            }
         },
     },
     ["ammo_papunch"] = {
@@ -172,12 +193,14 @@ SWEP.Attachments = {
     { --1
         PrintName = "Optic", -- print name
         DefaultAttName = "Iron Sights",
-        Slot = "optic", -- what kind of attachments can fit here, can be string or table
+        Slot = "optic_lp", -- what kind of attachments can fit here, can be string or table
         Bone = "tag_weapon", -- relevant bone any attachments will be mostly referring to
+        VMScale = Vector(0.8, 0.8, 0.8),
         Offset = {
             vpos = Vector(0, -0.125, 2.25), -- 4.6 offset that the attachment will be relative to the bone
             vang = Angle(0, 0, 0),
         },
+        InstalledEles = {"rs_none"}, -- atm the optics are NOT parented to the rail, so don't change the rail position if you want to adjust the positions of optics
         CorrectivePos = Vector(0, 0, 0),
         CorrectiveAng = Angle(0, 0, 0),
     },
@@ -185,24 +208,34 @@ SWEP.Attachments = {
         PrintName = "Muzzle",
         DefaultAttName = "Standard Muzzle",
         Slot = "muzzle",
-        VMScale = Vector(1, 1, 1),
+        VMScale = Vector(0.85, 0.85, 0.85),
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(8, 0-0.125, 1.45), -- offset that the attachment will be relative to the bone
-            vang = Angle(0, 0, 0),
+            vpos = Vector(8, -0.125, 1.4), -- offset that the attachment will be relative to the bone
+            vang = Angle(-1.2, 0, 0),
         },
     },
     { --3
         PrintName = "Tactical",
         Slot = "tac",
-        VMScale = Vector(0.75, 0.75, 0.75),
+        VMScale = Vector(0.9, 0.9, 0.9),
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(0, -0.5, 1.75), -- offset that the attachment will be relative to the bone
-            vang = Angle(0, 0, 90),
+            
+            vpos = Vector(5.3, -0.1, 0.83), -- offset that the attachment will be relative to the bone
+            vang = Angle(0, 0, 0),
             wpos = Vector(8, 0.4, -4.5),
             wang = Angle(-7.5, 0, 85)
         },
+    },
+    {
+        PrintName = "Magazines",
+        Slot = "skorpion_mags",
+    },
+    {
+        PrintName = "Stock",
+        Slot = "skorpion_misc",
+        FreeSlot = true,
     },
     { --7
         PrintName = "Ammo Type",
@@ -210,15 +243,16 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Perk",
-        Slot = "go_perk"
+        Slot = {"go_perk", "go_perk_pistol"}
     },
     {
         PrintName = "Charm",
         Slot = "charm",
         FreeSlot = true,
         Bone = "tag_weapon",
+        VMScale = Vector(0.75, 0.75, 0.75),
         Offset = {
-            vpos = Vector(7, -0.5, 2),
+            vpos = Vector(-1, -0.7, 1.7),
             vang = Angle(0, 0, 0),
         },
     },
@@ -236,28 +270,32 @@ SWEP.Animations = {
     },
     ["holster"] = {
         Source = "holster",
-        Time = 1,
+        Time = 0.6,
+        Mult = 0.75,
         LHIK = true,
         LHIKIn = 0.2,
         LHIKOut = 0.25,
     },
     ["holster_empty"] = {
         Source = "holster_empty",
-        Time = 1,
+        Time = 0.6,
+        Mult = 0.75,
         LHIK = true,
         LHIKIn = 0.2,
         LHIKOut = 0.25,
     },
     ["draw"] = {
         Source = "draw",
-        Time = 1,
+        Time = 0.6,
+        Mult = 0.75,
         LHIK = true,
         LHIKIn = 0.2,
         LHIKOut = 0.25,
     },
     ["draw_stock"] = {
         Source = "first_draw_stock",
-        Time = 1,
+        Time = 0.6,
+        Mult = 0.75,
         LHIK = true,
         LHIKIn = 0.2,
         LHIKOut = 0.25,
@@ -268,7 +306,8 @@ SWEP.Animations = {
     },
     ["draw_stock_ext"] = {
         Source = "first_draw_stock",
-        Time = 1,
+        Time = 0.6,
+        Mult = 0.75,
         LHIK = true,
         LHIKIn = 0.2,
         LHIKOut = 0.2,
@@ -331,7 +370,40 @@ SWEP.Animations = {
             {s = "ArcCW_BO1.Skorpion_MagIn", t = 56 / 35}
         },
     },
+    ["reload_stock"] = {
+        Source = "reload",
+        Time = 90 / 35,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_SMG1,
+        Framerate = 30,
+        Checkpoints = {28, 38, 69},
+        LHIK = true,
+        LHIKIn = 0.5,
+        LHIKOut = 0.5,
+        SoundTable = {
+            {s = "ArcCW_BO1.Skorpion_MagOut", t = 15 / 35},
+            {s = "ArcCW_BO1.Skorpion_Futz", t = 45 / 30},
+            {s = "ArcCW_BO1.Skorpion_MagIn", t = 56 / 35}
+        },
+    },
     ["reload_empty"] = {
+        Source = "reload_empty",
+        Time = 120 / 35,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_SMG1,
+        Framerate = 30,
+        Checkpoints = {28, 38, 69},
+        LHIK = true,
+        LHIKIn = 0.5,
+        LHIKOut = 0.5,
+        SoundTable = {
+            {s = "ArcCW_BO1.Skorpion_MagOut", t = 16 / 35},
+            {s = "ArcCW_BO1.Skorpion_Futz", t = 45 / 30},
+            {s = "ArcCW_BO1.Skorpion_MagIn", t = 56 / 35},
+            {s = "ArcCW_BO1.Skorpion_BoltBack", t = 75 / 35},
+            {s = "ArcCW_BO1.Skorpion_BoltFwd", t = 81 / 35},
+        },
+       
+    },
+    ["reload_empty_stock"] = {
         Source = "reload_empty",
         Time = 120 / 35,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SMG1,
