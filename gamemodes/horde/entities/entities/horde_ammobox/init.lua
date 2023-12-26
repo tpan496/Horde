@@ -28,6 +28,12 @@ function ENT:StartTouch(entity)
             if wpn.Primary and wpn.Primary.MaxAmmo and wpn.Primary.MaxAmmo <= ply:GetAmmoCount(wpn:GetPrimaryAmmoType()) then
                 goto cont
             end
+
+            local clipCount = 1.5
+            if wpn:GetMaxClip1() == 0 then
+                clipCount = clipCount * 5
+            end
+
             local given = HORDE:GiveAmmo(entity, wpn, 1.5)
             given_ammo = given_ammo or given
             ::cont::
