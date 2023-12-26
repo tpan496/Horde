@@ -252,8 +252,23 @@ end )
 
 local highlightColor = Color( 255, 0, 0 )
 hook.Add( "HUDPaint", "Horde_HighlightRemainingEnemies", function()
-    for _, vec in ipairs( remainingEnemiesPositions ) do
-        local pos = vec:ToScreen()
+    for ent, vec in pairs( remainingEnemiesPositions ) do
+        local isValid = IsValid( ent )
+        local pos
+
+        if isValid and ent:Health() <= 0 then
+            remainingEnemiesPositions[ent] = nil
+            continue
+        end
+
+        if IsValid( ent ) and not ent:IsDormant() then
+            pos = ent:WorldSpaceCenter()
+        else
+            pos = vec
+        end
+
+        pos = pos:ToScreen()
+
         local x, y = pos.x, pos.y
         surface.DrawCircle( x, y, 3, highlightColor )
     end

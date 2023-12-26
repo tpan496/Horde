@@ -923,7 +923,7 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         net.Broadcast()
 
         net.Start( "Horde_HighlightRemainingEnemies" )
-        net.WriteTable( { enemy:WorldSpaceCenter() } )
+        net.WriteTable( { [enemy] = enemy:WorldSpaceCenter() } )
         net.Broadcast()
 
         timer.Simple( 5, function()
@@ -1393,13 +1393,13 @@ function HORDE:Direct()
 
     if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 20 and nextRemainingEnemiesHighlight <= CurTime() then
         nextRemainingEnemiesHighlight = CurTime() + 1
-        local positions = {}
+        local remainingTable = {}
         for _, enemy in ipairs( enemies ) do
-            table.insert( positions, enemy:WorldSpaceCenter() )
+            remainingTable[enemy] = enemy:WorldSpaceCenter()
         end
 
         net.Start( "Horde_HighlightRemainingEnemies" )
-        net.WriteTable( positions )
+        net.WriteTable( remainingTable )
         net.Broadcast()
     end
 
