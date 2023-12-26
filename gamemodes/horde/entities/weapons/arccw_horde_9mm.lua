@@ -1,6 +1,7 @@
 if not ArcCWInstalled then return end
 if CLIENT then
     SWEP.WepSelectIcon = surface.GetTextureID("items/hl2/weapon_pistol.png")
+    SWEP.WepSelectIconMat = Material("items/hl2/weapon_pistol.png")
     killicon.AddAlias("arccw_horde_9mm", "weapon_9mm")
 end
 SWEP.Base = "arccw_base"
@@ -164,7 +165,7 @@ SWEP.Animations = {
 
 function SWEP:DrawWeaponSelection(x, y, w, h, a)
     surface.SetDrawColor(255, 255, 255, a)
-    surface.SetMaterial(self.WepSelectIcon)
+    surface.SetMaterial(self.WepSelectIconMat)
 
     surface.DrawTexturedRect(x, y, w, w / 2)
 end
