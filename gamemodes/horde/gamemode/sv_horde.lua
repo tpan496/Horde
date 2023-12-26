@@ -1198,7 +1198,6 @@ end
 
 -- Ends a wave.
 function HORDE:WaveEnd()
-    debug.Trace()
     timer.Remove("Horde_BossMusic")
     if boss_music_loop then
         boss_music_loop:Stop()
