@@ -270,7 +270,9 @@ hook.Add( "HUDPaint", "Horde_HighlightRemainingEnemies", function()
         pos = pos:ToScreen()
 
         local x, y = pos.x, pos.y
-        surface.DrawCircle( x, y, 3, highlightColor )
+        surface.DrawCircle( x, y, 7, highlightColor )
+        surface.DrawCircle( x, y, 9, highlightColor )
+        surface.DrawCircle( x, y, 11, highlightColor )
     end
 end )
 
