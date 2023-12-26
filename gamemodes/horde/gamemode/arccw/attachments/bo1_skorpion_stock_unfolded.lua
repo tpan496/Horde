@@ -18,3 +18,4 @@ att.Mult_SpeedMult = 0.95
 att.Hook_SelectReloadAnimation = function(wep, anim)
     return anim .. "_stock"
 end
+ArcCW.LoadAttachmentType(att, "bo1_skorpion_stock_unfolded")

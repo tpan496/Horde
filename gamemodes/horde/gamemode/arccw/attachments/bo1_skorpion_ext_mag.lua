@@ -28,3 +28,4 @@ att.Hook_SelectReloadAnimation = function(wep, anim)
 end
 
 att.HideIfBlocked = true
+ArcCW.LoadAttachmentType(att, "bo1_skorpion_ext_mag")

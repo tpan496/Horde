@@ -11,3 +11,4 @@ att.Free = true
 
 att.SortOrder = 1
 att.Ignore = false
+ArcCW.LoadAttachmentType(att, "bo1_skorpion_stock_folded")
