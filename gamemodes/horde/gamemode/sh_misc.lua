@@ -11,6 +11,8 @@ if CLIENT then
 net.Receive("Horde_Antimatter_Shield_Deploy", function ()
     local ent = net.ReadEntity()
     local id = ent:EntIndex()
+    if not IsValid(ent) then return end
+
     local col_min, col_max = ent:GetCollisionBounds()
     local radius = col_max:Distance(col_min) / 2
     local height = math.abs(col_min.z - col_max.z)
