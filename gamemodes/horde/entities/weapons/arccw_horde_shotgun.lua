@@ -1,6 +1,6 @@
 if not ArcCWInstalled then return end
 if CLIENT then
-    SWEP.WepSelectIcon = Material("items/hl2/weapon_shotgun.png")
+    SWEP.WepSelectIcon = surface.GetTextureID("items/hl2/weapon_shotgun.png")
     killicon.AddAlias("arccw_horde_shotgun", "weapon_shotgun")
 end
 SWEP.Base = "arccw_base"

@@ -1,6 +1,6 @@
 if not ArcCWInstalled then return end
 if CLIENT then
-    SWEP.WepSelectIcon = Material("items/hl2/weapon_crowbar.png")
+    SWEP.WepSelectIcon = surface.GetTextureID("items/hl2/weapon_crowbar.png")
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
     killicon.AddAlias("arccw_horde_crowbar", "weapon_crowbar")
