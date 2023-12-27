@@ -64,7 +64,7 @@ function ENT:PhysicsCollide( data )
     if self.Removing then return end
     local dmg = DamageInfo()
     local owner = self:GetOwner()
-    if !IsValid( self ) then
+    if IsValid( owner ) then
         owner = self
     end
     dmg:SetAttacker(owner)
