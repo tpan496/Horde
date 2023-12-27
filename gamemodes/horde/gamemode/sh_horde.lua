@@ -9,7 +9,7 @@ CreateConVar("horde_enable_perk", 1, FCVAR_REPLICATED, "Enables perks or not.")
 CreateConVar("horde_enable_rank", 1, FCVAR_REPLICATED, "Enables ranks or not.")
 CreateConVar("horde_enable_client_gui", 1, nil, "Enables client information ui or not.")
 CreateConVar("horde_max_spawn_distance", 2000, nil, "Maximum enenmy respawn distance.")
-CreateConVar("horde_min_spawn_distance", 400, nil, "Minimum enenmy respawn distance.")
+CreateConVar("horde_min_spawn_distance", 750, FCVAR_ARCHIVE, "Minimum enenmy respawn distance.")
 CreateConVar("horde_max_spawn_z_distance", 500, nil, "Maximum enemy respawn height difference with players.")
 
 CreateConVar("horde_start_money", 900, nil, "Money given at start.")
