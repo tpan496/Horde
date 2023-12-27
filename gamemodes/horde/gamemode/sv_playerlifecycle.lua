@@ -579,8 +579,6 @@ end)
 HORDE.player_money = {}
 HORDE.player_money_wave = {}
 hook.Add("PlayerDisconnected", "Horde_PlayerDisconnect", function(ply)
-    PrintMessage(HUD_PRINTTALK, "Player " .. me:GetName() .. " has disconnected.")
-
     HORDE.current_players = player.GetAll()
     if HORDE.player_vote_map_change[ply] then
         HORDE.player_vote_map_change[ply] = nil
