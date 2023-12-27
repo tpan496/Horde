@@ -97,7 +97,7 @@ function ENT:PhysicsCollide( data )
 end
 
 function ENT:OnRemove()
-    if SERVER then
+    if SERVER and IsValid(self.Owner) then
         self.Owner:Horde_SetMinionCount(self.Owner:Horde_GetMinionCount() - 1)
     end
     self:EmitSound( "Weapon_HL_Hivehand.Hit" )
