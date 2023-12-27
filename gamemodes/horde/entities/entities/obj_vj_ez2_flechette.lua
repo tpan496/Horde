@@ -71,7 +71,7 @@ function ENT:Explode()
 
 		local realisticRadius = false
 
-		self:EmitSound("npc/ministrider/flechette_explode" .. math.random(1, 3) .. ".wav" , 100, math.random(110, 130), 0.66,  CHAN_WEAPON)
+		self:EmitSound("snpc/hunterarc/flechette_explode" .. math.random(1, 3) .. ".wav" , 100, math.random(110, 130), 0.66,  CHAN_WEAPON)
 
 		ParticleEffect("hunter_projectile_explosion_1", self:GetPos(), Angle(0,0,0))
 		self:DeathEffects()
@@ -95,7 +95,7 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 
 	if hitent:IsWorld() then
 
-		self:EmitSound("npc/ministrider/flechette_impact_stick" .. math.random(1, 5) .. ".wav" , 85, math.random(90, 110))
+		self:EmitSound("snpc/hunterarc/flechette_impact_stick" .. math.random(1, 5) .. ".wav" , 85, math.random(90, 110))
 
 		self:SetPos(data.HitPos)
 		self:SetMoveType(MOVETYPE_NONE)
@@ -113,7 +113,7 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 
 	else
 
-		self:EmitSound("npc/ministrider/flechette_flesh_impact" .. math.random(1, 4) .. ".wav" , 85, math.random(90, 110))
+		self:EmitSound("snpc/hunterarc/flechette_flesh_impact" .. math.random(1, 4) .. ".wav" , 85, math.random(90, 110))
 			if hitent:GetClass() == "func_breakable_surf" then
 				hitent:Fire("Shatter")
 			end
