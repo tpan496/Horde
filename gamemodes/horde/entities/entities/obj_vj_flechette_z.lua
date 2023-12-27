@@ -65,7 +65,7 @@ function ENT:Explode()
 	sound.EmitHint(SOUND_DANGER,self:GetPos(),blastradius*1.5,time_until_explode,self)
 
 	timer.Simple(time_until_explode*0.5, function() if IsValid(self) then
-		self:EmitSound("npc/ministrider/hunter_flechette_preexplode" .. math.random(1, 2) .. ".wav" , 70, math.random(70, 90))
+		self:EmitSound("snpc/hunterarc/hunter_flechette_preexplode" .. math.random(1, 2) .. ".wav" , 70, math.random(70, 90))
 	end end)
 
 	timer.Simple(time_until_explode, function() if IsValid(self) then
