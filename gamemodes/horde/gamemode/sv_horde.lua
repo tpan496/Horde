@@ -926,7 +926,7 @@ function HORDE:SpawnBoss(enemies, valid_nodes)
         net.WriteTable( { [spawned_enemy] = spawned_enemy:WorldSpaceCenter() } )
         net.Broadcast()
 
-        timer.Simple( 5, function()
+        timer.Simple( 10, function()
             net.Start( "Horde_HighlightRemainingEnemies" )
             net.WriteTable( {} )
             net.Broadcast()
