@@ -94,12 +94,14 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 	local hitent = data.HitEntity
 
 	if hitent:IsWorld() then
-
 		self:EmitSound("snpc/hunterarc/flechette_impact_stick" .. math.random(1, 5) .. ".wav" , 85, math.random(90, 110))
 
 		self:SetPos(data.HitPos)
-		self:SetMoveType(MOVETYPE_NONE)
-		self:SetSolid(SOLID_NONE)
+        
+        timer.Simple( 0, function()
+            self:SetMoveType(MOVETYPE_NONE)
+            self:SetSolid(SOLID_NONE)
+        end )
 
 		self:Explode()
 
@@ -110,19 +112,16 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 			Damage = 0,
 			Distance = 25,
 		})
-
 	else
-
 		self:EmitSound("snpc/hunterarc/flechette_flesh_impact" .. math.random(1, 4) .. ".wav" , 85, math.random(90, 110))
-			if hitent:GetClass() == "func_breakable_surf" then
-				hitent:Fire("Shatter")
-			end
+        if hitent:GetClass() == "func_breakable_surf" then
+            hitent:Fire("Shatter")
+        end
 
-			self:DeathEffects()
-			self:Remove()
-		end
-
-	end
+        self:DeathEffects()
+        self:Remove()
+    end
+end
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DeathEffects()
