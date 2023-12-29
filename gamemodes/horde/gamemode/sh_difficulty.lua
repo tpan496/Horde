@@ -22,7 +22,9 @@ HORDE.Difficulty = {
         mutationProbability = 0,
         additionalPack = 0,
         additionalAmmoBoxes = 2,
-        hemorrhagePercentage = 0.3
+        hemorrhagePercentage = 0.3,
+        xpMultiStart = 1,
+        xpMultiEnd = 1,
     },
     [2] = {
         name = "HARD",
@@ -45,6 +47,8 @@ HORDE.Difficulty = {
         additionalPack = 1,
         additionalAmmoBoxes = 1,
         hemorrhagePercentage = 0.35,
+        xpMultiStart = 1,
+        xpMultiEnd = 2,
     },
     [3] = {
         name = "REALISM",
@@ -67,6 +71,8 @@ HORDE.Difficulty = {
         additionalPack = 0,
         additionalAmmoBoxes = 0,
         hemorrhagePercentage = 0.4,
+        xpMultiStart = 2,
+        xpMultiEnd = 3,
     },
     [4] = {
         name = "NIGHTMARE",
@@ -89,6 +95,8 @@ HORDE.Difficulty = {
         additionalPack = 2,
         additionalAmmoBoxes = 0,
         hemorrhagePercentage = 0.5,
+        xpMultiStart = 2,
+        xpMultiEnd = 4,
     },
     [5] = {
         name = "APOCALYPSE",
@@ -111,6 +119,8 @@ HORDE.Difficulty = {
         additionalPack = 3,
         additionalAmmoBoxes = 0,
         hemorrhagePercentage = 0.5,
+        xpMultiStart = 3,
+        xpMultiEnd = 5,
     },
     [6] = {
         name = "HELL",
@@ -133,6 +143,8 @@ HORDE.Difficulty = {
         additionalPack = 4,
         additionalAmmoBoxes = 2,
         hemorrhagePercentage = 0.5,
+        xpMultiStart = 3,
+        xpMultiEnd = 6,
     },
     [7] = {
         name = "CHAOS",
@@ -155,6 +167,8 @@ HORDE.Difficulty = {
         additionalPack = 4,
         additionalAmmoBoxes = 5,
         hemorrhagePercentage = 0.5,
+        xpMultiStart = 4,
+        xpMultiEnd = 7,
     },
     [8] = {
         name = "SWARM",
@@ -177,6 +191,8 @@ HORDE.Difficulty = {
         additionalPack = 6,
         additionalAmmoBoxes = 10,
         hemorrhagePercentage = 0.5,
+        xpMultiStart = 2,
+        xpMultiEnd = 4,
     },
 }
 
