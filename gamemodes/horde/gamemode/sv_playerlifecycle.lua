@@ -660,7 +660,7 @@ hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
         if ent:IsWeapon() and not IsValid( ent:GetOwner() ) and ent.lastWeaponHolder == ply then
             local pickedUp = ply:PickupWeapon( ent )
             if not pickedUp then
-                ply:PrintMessage( HUD_PRINTTALK, "Failed to pick up " .. ent:GetClass() .. "!" )
+                ent:SetPos( ply:GetPos() + Vector( 0, 0, 25 ) )
             end
         end
     end
