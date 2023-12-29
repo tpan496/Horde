@@ -1,0 +1,17 @@
+VertexlitGeneric
+{
+	$basetexture	"models\weapons\waw\waw_optics\rus_scope_glass"
+	$bumpmap	"models\weapons\waw\normalmap"
+
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" 0.9
+	"$envmapsaturation" 0.6
+	"$envmaptint" "[ 0.5 0.5 0.5 ]"
+
+	"$phong" 			"1"
+	"$phongexponent" 		"0"
+	"$phongboost" 			"1.5"	
+	"$phongfresnelranges"		"[0.5 0.6 1]"
+	"$halflambert"			"1"
+	"$phongalbedotint"		"1"
+}

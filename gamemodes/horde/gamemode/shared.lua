@@ -48,6 +48,9 @@ function GM:Initialize()
     game.AddAmmoType({
         name = "horde_mine",
     })
+    game.AddAmmoType({
+        name = "horde_m2_flamethrower"
+    })
     if SERVER then
         HORDE.NPCS = list.Get("NPC")
     end

@@ -91,7 +91,7 @@ SWEP.ShootWhileSprint = false
 SWEP.Primary.Ammo = "RPG_Round" -- what ammo type the gun uses
 SWEP.MagID = "raygun" -- the magazine pool this gun draws from
 
-SWEP.ShootVol = 115 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "ArcCW_BO2.RGMK2_Fire"

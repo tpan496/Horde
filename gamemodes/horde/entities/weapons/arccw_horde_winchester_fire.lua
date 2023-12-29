@@ -31,8 +31,8 @@ SWEP.ViewModel = "models/horde/weapons/c_kf_winchester.mdl"
 SWEP.WorldModel = "models/weapons/w_annabelle.mdl"
 SWEP.ViewModelFOV = 45
 
-SWEP.Damage = 200
-SWEP.DamageMin = 150 -- damage done at maximum range
+SWEP.Damage = 300
+SWEP.DamageMin = 300 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 20
 SWEP.DamageType = DMG_BURN
@@ -77,9 +77,9 @@ SWEP.AccuracyMOA = 0.05 -- accuracy in Minutes of Angle. There are 60 MOA in a d
 SWEP.HipDispersion = 5 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 150
 
-SWEP.Primary.Ammo = "ar2" -- what ammo type the gun uses
+SWEP.Primary.Ammo = "SniperPenetratedRound" -- what ammo type the gun uses
 
-SWEP.ShootVol = 100 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "KF_winchester.Fire"

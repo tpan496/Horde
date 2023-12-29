@@ -28,7 +28,7 @@ SWEP.Range = 4000 * 0.025 -- in METRES
 SWEP.Penetration = 22
 
 SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 5 -- DefaultClip is automatically set.
+SWEP.Primary.ClipSize = 10 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 10
 SWEP.ReducedClipSize = 3
 
@@ -294,10 +294,3 @@ SWEP.Animations = {
         LHIKOut = 0.5,
     },
 }
-
-function SWEP:Hook_OnDeploy()
-    timer.Simple(0, function ()
-        if !IsValid(self) then return end
-        self:Attach(1, "optic_cheytacscope")
-    end)
-end

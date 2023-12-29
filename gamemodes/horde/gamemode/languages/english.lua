@@ -1272,7 +1272,7 @@ KRISS Vector Gen I equipped with a medical dart launcher.
 Uses an unconventional blowback system that results in its high firerate.
 
 Press B or ZOOM to fire healing darts.
-Healing dart heals 12 health and has a 1.5 second cooldown.
+Healing dart heals 20 health and has a 1.5 second cooldown.
 ]]
 
 LANGUAGE["Item_Chainsaw"] = [[Chainsaw]]

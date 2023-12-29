@@ -16,7 +16,7 @@ SWEP.HoldType				= "smg"
 SWEP.Primary.Automatic		= true
 SWEP.Primary.ClipSize		= 100
 SWEP.Primary.DefaultClip	= 100
-SWEP.Primary.Ammo			= "ar2"
+SWEP.Primary.Ammo			= "horde_m2_flamethrower"
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip  = -1
 SWEP.Secondary.Automatic	= false
@@ -85,7 +85,7 @@ function SWEP:PrimaryAttack()
             dmg:SetAttacker(self.Owner)
             dmg:SetInflictor(self)
             dmg:SetDamageType(DMG_BURN)
-            dmg:SetDamage(15)
+            dmg:SetDamage(20)
             util.BlastDamageInfo(dmg, trace.HitPos, 128)
 
             if (SERVER) and trace.Hit then
