@@ -301,7 +301,7 @@ net.Receive("Horde_HighlightSonar", function (len, ply)
     if highlight == true then
         hook.Add("PreDrawHalos", "Horde_SonarHalo" .. idx, function()
             if !entity:IsValid() then hook.Remove("PreDrawHalos", "Horde_SonarHalo" .. idx) end
-            halo.Add({entity}, Color(255, 255, 255), 5, 5, 1, true, true)
+            halo.Add({entity}, Color(255, 255, 255), 1, 1, 1, true, true)
         end)
     else
         hook.Remove("PreDrawHalos", "Horde_SonarHalo" .. idx)
@@ -313,7 +313,7 @@ net.Receive("Horde_DeathMarkHighlight", function(len,ply)
     local idx = entity:EntIndex()
     hook.Add("PreDrawHalos", "Horde_DeathMarkHalo" .. idx, function()
         if !entity:IsValid() then hook.Remove("PreDrawHalos", "Horde_DeathMarkHalo" .. idx) end
-        halo.Add({entity}, Color(255, 0, 255), 3, 3, 1, true, true)
+        halo.Add({entity}, Color(255, 0, 255), 1, 1, 1, true, true)
     end)
 end)
 
@@ -322,7 +322,7 @@ net.Receive("Horde_HunterMarkHighlight", function(len,ply)
     local idx = entity:EntIndex()
     hook.Add("PreDrawHalos", "Horde_HunterMarkHalo" .. idx, function()
         if !entity:IsValid() then hook.Remove("PreDrawHalos", "Horde_HunterMarkHalo" .. idx) end
-        halo.Add({entity}, Color(0, 255, 255), 5, 5, 1, true, true)
+        halo.Add({entity}, Color(0, 255, 255), 1, 1, 1, true, true)
     end)
 end)
 
