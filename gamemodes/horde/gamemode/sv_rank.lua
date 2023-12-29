@@ -142,15 +142,15 @@ function HORDE:LoadRank(ply)
 end
 
 local expMultiConvar = GetConVar("horde_experience_multiplier")
-local startXpMult = Horde.Difficulty[Horde.CurrentDifficulty].xpMultiStart
-local endXpMult = Horde.Difficulty[Horde.CurrentDifficulty].xpMultiEnd
-local endMinusStartXp = endXPMult - startXpMult
+local startXpMult = HORDE.Difficulty[HORDE.CurrentDifficulty].xpMultiStart
+local endXpMult = HORDE.Difficulty[HORDE.CurrentDifficulty].xpMultiEnd
+local endMinusStartXp = endXpMult - startXpMult
 
 if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_rank"):GetInt() == 1 then
 	hook.Add("Horde_OnEnemyKilled", "Horde_GiveExp", function(victim, killer, wpn)
-			
-		local wavePercent = Horde.current_wave / HORDE.max_waves
-		local roundXpMulti = startXpMult+(wavePercent*endMinusStartXp) --This gets the xp multi number between min and max multi based on round
+
+		local wavePercent = HORDE.current_wave / HORDE.max_waves
+		local roundXpMulti = startXpMult + ( wavePercent * endMinusStartXp ) --This gets the xp multi number between min and max multi based on round
 		local expMulti = roundXpMulti * expMultiConvar:GetInt()
 
 		if HORDE.current_wave <= 0 or GetConVar("sv_cheats"):GetInt() == 1 then return end
@@ -161,7 +161,7 @@ if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_r
 			expMulti = expMulti * 2
 			local p = math.random()
 			if p < 0.01 or (p < 0.1 and killer:Horde_GetGadget() == "gadget_corporate_mindset") then
-                   		killer:Horde_AddSkullTokens(1)
+                killer:Horde_AddSkullTokens(1)
 			end
 		end
 		killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + math.floor(expMulti) )
