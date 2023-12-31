@@ -38,9 +38,8 @@ SWEP.DefaultBodygroups = "0100000000"
 
 SWEP.Damage = 250
 SWEP.DamageMin = 250
-SWEP.RangeMin = 70
-SWEP.Range = 350
-SWEP.Penetration = 7
+SWEP.Range = 20
+SWEP.Penetration = 30
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 SWEP.MuzzleVelocity = 850 -- projectile or phys bullet muzzle velocity
