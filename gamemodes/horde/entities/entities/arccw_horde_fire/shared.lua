@@ -30,7 +30,7 @@ function entmeta:Horde_AddEffect_Molotov(ent)
     timer.Create("Horde_MolotovEffect" .. id, 0.5, 0, function ()
         if not self:IsValid() then timer.Remove("Horde_MolotovEffect" .. id) return end
         local d = DamageInfo()
-        d:SetDamage(25)
+        d:SetDamage(13)
         d:SetAttacker(ent.Owner)
         d:SetInflictor(ent)
         d:SetDamageType(DMG_BURN)
