@@ -747,12 +747,12 @@ hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
             ent:SetAngles(Angle(0, a.y, 0))
         end
 
-        HORDE:DropTurret(ent)
-
         if ent:GetClass() == "npc_vj_horde_rocket_turret" || ent:GetClass() == "npc_vj_horde_laser_turret" then
             ent:SetAngles(Angle(0,0,0))
             ent:PhysicsInit(SOLID_OBB)
         end
+        
+        HORDE:DropTurret(ent)
     end
 end)
 
