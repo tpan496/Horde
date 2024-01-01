@@ -25,7 +25,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 
 	local level = ply:Horde_GetSpellUpgrade("pulsar")
 	ent:SetSpellLevel(level)
-	ent:SetSpellBaseDamages({math.floor(150 + math.pow(level, 1.2) * 50)})
+	ent:SetSpellBaseDamages({math.floor(150 + math.pow(level, 1.2) * 100)})
     ent:SetPos( ply:EyePos() + (ply:GetAimVector() * 16 ))
 	ent:SetAngles( ply:EyeAngles() )
 
