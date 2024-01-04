@@ -2,7 +2,7 @@ PERK.PrintName = "Exsanguinate"
 PERK.Description =
 [[20% increased Bleeding buildup.
 Recover 5 health per second while near an enemy with Bleeding.
-Immune to Bleeding.]]
+]]
 PERK.Icon = "materials/perks/samurai/exsanguinate.png"
 PERK.Params = {
     [1] = {value = 0.20, percent = true},
@@ -26,12 +26,5 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
               end
           end
       end)
-    end
-end
-
-PERK.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus)
-    if ply:Horde_GetPerk("samurai_exsanguinate") and debuff == HORDE.Status_Bleeding then
-        bonus.apply = 0
-        return true
     end
 end
