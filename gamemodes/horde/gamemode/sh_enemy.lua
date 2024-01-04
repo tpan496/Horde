@@ -190,7 +190,7 @@ end
 function HORDE:GetDefaultEnemiesData ()
     -- name, class, weight, wave, elite, health_scale, damage_scale, reward_scale, model_scale, color
 
-    if HORDE.CurrentDifficulty == 6 then -- Chaos difficulty
+    if GetConVar( "horde_difficulty" ):GetInt() == 7 then -- Chaos difficulty
         -- The enemies created here are set to spawn 1 or 2 waves sooner than they normally would and aren't already set to spawn with the earlier wave
         
         HORDE:CreateEnemy("Crawler",    "npc_vj_horde_crawler",                 0.40,  1, false, 1, 1, 1, 1)
