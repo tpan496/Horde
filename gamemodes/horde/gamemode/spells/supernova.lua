@@ -33,7 +33,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
     local base_damage_2 = math.floor(500 + 100 * math.pow(level, 1.2)) * bonus.more * (1 + bonus.increase)
 
     sound.Play("horde/spells/supernova.ogg", pos, 500, 100, 1, CHAN_AUTO)
-    for i = 1, 17 do
+    for i = 1, 12 do
         timer.Simple((i-1) * 0.2, function ()
             HORDE:ApplyDamageInRadius(pos, 750, HORDE:DamageInfo(base_damage, DMG_BURN, ply, wpn), function (ent)
             end)
