@@ -36,9 +36,9 @@ PERK.Hooks.Horde_OnPlayerMinionDamage = function (ply, npc, bonus, dmginfo)
 end
 
 PERK.Hooks.OnEntityCreated = function (ent)
-    if not ent:IsValid() then return end
     if CLIENT then return end
     timer.Simple(0.1, function()
+        if not ent:IsValid() then return end
         local ply = ent:GetNWEntity("HordeOwner")
         if ply:IsPlayer() and ply:Horde_GetPerk("engineer_base") and ent:IsNPC() then
             if ent:GetClass() == "npc_turret_floor" then
