@@ -1,3 +1,9 @@
+if not ArcCWInstalled then return end
+
+AddCSLuaFile()
+
+local att = {}
+
 att.PrintName = "Unfolded Stock"
 att.AbbrevName = "Unfolded Stock"
 att.Icon = Material("entities/att/npczv1grey.png", "smooth mips")

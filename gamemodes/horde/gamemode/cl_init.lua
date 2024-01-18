@@ -61,6 +61,9 @@ include("arccw/attachments/horde_ubgl_medic.lua")
 include("arccw/attachments/horde_ubgl_m203.lua")
 include("arccw/attachments/horde_ammo_ap.lua")
 include("arccw/attachments/horde_ammo_sabot.lua")
+include("arccw/attachments/bo1_skorpion_ext_mag.lua")
+include("arccw/attachments/bo1_skorpion_stock_folded.lua")
+include("arccw/attachments/bo1_skorpion_stock_unfolded.lua")
 
 -- Some users report severe lag with halo
 CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
