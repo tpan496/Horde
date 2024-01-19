@@ -24,7 +24,7 @@ PERK.Hooks.Horde_OnUnSetPerk = function(ply, perk)
     if SERVER and perk == "engineer_symbiosis" then
         if not HORDE.player_drop_entities[ply:SteamID()] then return end
         for id, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-            if ent:IsNPC() and ent.Horde_Has_Symbiosis then
+            if IsValid( ent ) and ent:IsNPC() and ent.Horde_Has_Symbiosis then
                 ent:SetMaxHealth(ent:GetMaxHealth() / 1.20)
                 ent:SetHealth(ent:GetMaxHealth())
                 ent.Horde_Has_Symbiosis = nil
