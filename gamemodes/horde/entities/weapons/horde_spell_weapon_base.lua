@@ -216,7 +216,10 @@ function SWEP:Initialize()
     self:SetUltimateCharging(false)
     self:SetUltimateChargingTimer(0)
 
-    timer.Simple(0, function() self:InitializeSpells() end)
+    timer.Simple(0, function()
+        if not IsValid(self) then return end
+        self:InitializeSpells()
+    end)
 
     self:SetNextUltimateFire(CurTime())
     self.NextUtilityFire = CurTime()
