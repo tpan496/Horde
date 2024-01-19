@@ -12,32 +12,36 @@ PERK.Params = {
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
-    if SERVER and perk == "carcass_bio_thruster" then
+if SERVER then
+    PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
+        if perk ~= "carcass_bio_thruster" then return end
         ply:Horde_SetMaxHypertrophyStack(ply:Horde_GetMaxHypertrophyStack() + 1)
         local id = ply:SteamID()
         ply.Horde_Bio_Thruster_Stack = 0
         net.Start("Horde_SyncStatus")
-			net.WriteUInt(HORDE.Status_Bio_Thruster, 8)
-			net.WriteUInt(ply.Horde_Bio_Thruster_Stack, 8)
-		net.Send(ply)
+            net.WriteUInt(HORDE.Status_Bio_Thruster, 8)
+            net.WriteUInt(ply.Horde_Bio_Thruster_Stack, 8)
+        net.Send(ply)
+
         timer.Create("Horde_BioThrusterDegen" .. id, 3, 0, function ()
-            if !ply:IsValid() then timer.Remove("Horde_BioThrusterDegen" .. id) end
-            if !ply:Alive() then return end
+            if not ply:IsValid() then
+                timer.Remove("Horde_BioThrusterDegen" .. id)
+                return
+            end
+            if not ply:Alive() then return end
             ply.Horde_Bio_Thruster_Stack = math.max(0, ply.Horde_Bio_Thruster_Stack - 1)
         end)
     end
-end
 
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
-    if SERVER and perk == "carcass_bio_thruster" then
+    PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
+        if perk ~= "carcass_bio_thruster" then return end
         ply:Horde_SetMaxHypertrophyStack(ply:Horde_GetMaxHypertrophyStack() - 1)
         local id = ply:SteamID()
         ply.Horde_Bio_Thruster_Stack = 0
         timer.Remove("Horde_BioThrusterDegen" .. id)
         net.Start("Horde_SyncStatus")
-			net.WriteUInt(HORDE.Status_Bio_Thruster, 8)
-			net.WriteUInt(ply.Horde_Bio_Thruster_Stack, 8)
-		net.Send(ply)
+            net.WriteUInt(HORDE.Status_Bio_Thruster, 8)
+            net.WriteUInt(ply.Horde_Bio_Thruster_Stack, 8)
+        net.Send(ply)
     end
 end
