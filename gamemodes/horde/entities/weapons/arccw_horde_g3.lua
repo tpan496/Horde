@@ -141,6 +141,8 @@ SWEP.Hook_ModifyBodygroups = function(wep, data)
         end
     end
 
+    if not IsValid(vm) then return end
+
     if tacms then
         if barrel then
             vm:SetBodygroup(8, 2)
