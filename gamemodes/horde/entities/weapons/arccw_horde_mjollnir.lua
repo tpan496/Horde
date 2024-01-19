@@ -146,8 +146,7 @@ function SWEP:Hook_PostBash(info)
     if not self.Charged or not info.tr.Hit then return end
     if SERVER then
         for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 100)) do
-            if ent:IsPlayer() then
-            elseif ent:IsNPC() then
+            if ent:IsNPC() then
                 local dmg = DamageInfo()
                 dmg:SetDamage(50)
                 dmg:SetDamageType(DMG_SHOCK)
@@ -158,9 +157,9 @@ function SWEP:Hook_PostBash(info)
             end
         end
         timer.Simple(0.4, function ()
+            if not IsValid(self) then return end
             for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 100)) do
-                if ent:IsPlayer() then
-                elseif ent:IsNPC() then
+                if ent:IsNPC() then
                     local dmg = DamageInfo()
                     dmg:SetDamage(50)
                     dmg:SetDamageType(DMG_SHOCK)
@@ -172,9 +171,9 @@ function SWEP:Hook_PostBash(info)
             end
         end)
         timer.Simple(0.8, function ()
+            if not IsValid(self) then return end
             for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 100)) do
-                if ent:IsPlayer() then
-                elseif ent:IsNPC() then
+                if ent:IsNPC() then
                     local dmg = DamageInfo()
                     dmg:SetDamage(50)
                     dmg:SetDamageType(DMG_SHOCK)
