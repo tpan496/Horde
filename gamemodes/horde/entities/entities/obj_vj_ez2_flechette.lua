@@ -99,6 +99,7 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 		self:SetPos(data.HitPos)
         
         timer.Simple( 0, function()
+            if not IsValid( self ) then return end
             self:SetMoveType(MOVETYPE_NONE)
             self:SetSolid(SOLID_NONE)
         end )
