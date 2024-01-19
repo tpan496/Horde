@@ -232,8 +232,13 @@ function plymeta:Horde_PayPlayer(plyToPay, amount)
     if not plyToPay or not amount then return end
     if not self.nextPayTime then self.nextPayTime = CurTime() end
     if self.nextPayTime and CurTime() < self.nextPayTime then self:ChatPrint("Please wait before using !pay again.") return end
-    local plyToPay = tostring(plyToPay)
-    local amount = tonumber(amount)
+    plyToPay = tostring( plyToPay )
+    amount = tonumber( amount )
+    if not amount then
+        self:ChatPrint("Invalid amount.")
+        return
+    end
+
     local plyForMoney
     local allPlys = player.GetAll()
     local Matches = {}
