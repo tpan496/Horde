@@ -53,8 +53,8 @@ function plymeta:Horde_SetPhalanxEnabled(enabled)
         self.Horde_PhalanxRegenCooldown = 0
         self.Horde_PhalanxRegenTotal = 0
         timer.Create("Horde_PhalanxRegen" .. id, 1, 0, function ()
-            self.Horde_PhalanxRegenTotal = self.Horde_PhalanxRegenTotal + 1
             if not self:IsValid() then timer.Remove("Horde_PhalanxRegen" .. id) return end
+            self.Horde_PhalanxRegenTotal = self.Horde_PhalanxRegenTotal + 1
             if self.Horde_PhalanxRegenCooldown <= self.Horde_PhalanxRegenTotal then
                 self:Horde_AddPhalanxStack()
                 self.Horde_PhalanxRegenCooldown = self.Horde_PhalanxRegenTotal + 2
