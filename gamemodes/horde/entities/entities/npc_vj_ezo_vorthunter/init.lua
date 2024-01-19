@@ -363,6 +363,11 @@ end
 function ENT:CustomOnThink()
 	-- Charge Code
 	if self.Charging == true then
+		if not IsValid(self:GetEnemy()) then
+			self:StopCharge()
+			return
+		end
+
 		local tr = util.TraceHull({
 			start = self:GetPos() + self:OBBCenter(),
 			endpos = self:GetPos() + self:OBBCenter() + self:GetForward() * 80,
