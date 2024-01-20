@@ -109,13 +109,21 @@ if CLIENT then
 end
 
 function SWEP:Deploy()
+    local owner = self:GetOwner()
+
     self:SetWeaponHoldType( self.HoldType )
-    self.Weapon:SendWeaponAnim( ACT_VM_DRAW )
+    self:SendWeaponAnim( ACT_VM_DRAW )
     self:SetNextPrimaryFire( CurTime() + 0.5 )
     self:SetNextSecondaryFire( CurTime() + 0.5 )
     self.RegenerationTimer = CurTime() + 0.5
     self.Idle = 0
-    self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
+    self.IdleTimer = CurTime() + owner:GetViewModel():SequenceDuration()
+
+    if SERVER and self.HolsterTime then
+        local ammoCount = math.floor( ( CurTime() - self.HolsterTime ) * 0.5 )
+        owner:SetAmmo( math.min( owner:GetAmmoCount( "Hornet" ) + ammoCount, self.Primary.MaxAmmo ), self.Primary.Ammo )
+    end
+
     return true
 end
 
@@ -123,6 +131,7 @@ function SWEP:Holster()
     self.RegenerationTimer = CurTime()
     self.Idle = 0
     self.IdleTimer = CurTime()
+    self.HolsterTime = CurTime()
     return true
 end
 
