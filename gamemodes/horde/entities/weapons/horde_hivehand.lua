@@ -85,6 +85,8 @@ SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 0.1
 
+SWEP.AmmoRegenAmount = 2 -- Per second
+
 function SWEP:Initialize()
     self:SetWeaponHoldType( self.HoldType )
     self.Idle = 0
@@ -120,7 +122,7 @@ function SWEP:Deploy()
     self.IdleTimer = CurTime() + owner:GetViewModel():SequenceDuration()
 
     if SERVER and self.HolsterTime then
-        local ammoCount = math.floor( ( CurTime() - self.HolsterTime ) * 0.5 )
+        local ammoCount = math.floor( ( CurTime() - self.HolsterTime ) * self.AmmoRegenAmount )
         owner:SetAmmo( math.min( owner:GetAmmoCount( "Hornet" ) + ammoCount, self.Primary.MaxAmmo ), self.Primary.Ammo )
     end
 
@@ -218,7 +220,7 @@ end
 
 function SWEP:Think()
     if self.RegenerationTimer <= CurTime() and self:Ammo1() < self.Primary.MaxAmmo then
-        self:GetOwner():SetAmmo( self:Ammo1() + 1, self.Primary.Ammo )
+        self:GetOwner():SetAmmo( self:Ammo1() + self.AmmoRegenAmount / 2, self.Primary.Ammo )
         self.RegenerationTimer = CurTime() + 0.5
     end
     if self.Idle == 0 and self.IdleTimer <= CurTime() then
