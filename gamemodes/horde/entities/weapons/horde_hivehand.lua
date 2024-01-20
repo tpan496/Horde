@@ -94,8 +94,8 @@ end
 function SWEP:DrawHUD()
 if CLIENT then
     local x, y
-        if ( self.Owner == LocalPlayer() and self.Owner:ShouldDrawLocalPlayer() ) then
-            local tr = util.GetPlayerTrace( self.Owner )
+        if ( self:GetOwner() == LocalPlayer() and self:GetOwner():ShouldDrawLocalPlayer() ) then
+            local tr = util.GetPlayerTrace( self:GetOwner() )
             local trace = util.TraceLine( tr )
             local coords = trace.HitPos:ToScreen()
             x, y = coords.x, coords.y
@@ -136,19 +136,19 @@ function SWEP:Holster()
 end
 
 function SWEP:PrimaryAttack()
-if self.Weapon:Ammo1() <= 0 then return end
-if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end
+if self:Ammo1() <= 0 then return end
+if self.FiresUnderwater == false and self:GetOwner():WaterLevel() == 3 then return end
 if SERVER then
     local entity = ents.Create( "obj_horde_hornet" )
-    entity:SetOwner( self.Owner )
-    entity:SetNWEntity("HordeOwner", self.Owner)
+    entity:SetOwner( self:GetOwner() )
+    entity:SetNWEntity("HordeOwner", self:GetOwner())
     if IsValid( entity ) then
-        self.Owner:Horde_SetMinionCount(self.Owner:Horde_GetMinionCount() + 1)
-        local Forward = self.Owner:EyeAngles():Forward()
-        local Right = self.Owner:EyeAngles():Right()
-        local Up = self.Owner:EyeAngles():Up()
-        entity:SetPos( self.Owner:GetShootPos() + Forward * 12 + Right * 4 + Up * -6 )
-        entity:SetAngles( self.Owner:EyeAngles() )
+        self:GetOwner():Horde_SetMinionCount(self:GetOwner():Horde_GetMinionCount() + 1)
+        local Forward = self:GetOwner():EyeAngles():Forward()
+        local Right = self:GetOwner():EyeAngles():Right()
+        local Up = self:GetOwner():EyeAngles():Up()
+        entity:SetPos( self:GetOwner():GetShootPos() + Forward * 12 + Right * 4 + Up * -6 )
+        entity:SetAngles( self:GetOwner():EyeAngles() )
         entity:Spawn()
         local phys = entity:GetPhysicsObject()
         phys:SetMass( 1 )
@@ -164,30 +164,30 @@ if SERVER then
     end
 end
     self:EmitSound( self.Primary.Sound )
-    self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-    self.Owner:SetAnimation( PLAYER_ATTACK1 )
+    self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
+    self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
     self:TakePrimaryAmmo( self.Primary.TakeAmmo )
     self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
     self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
     self.RegenerationTimer = CurTime() + 0.5
     self.Idle = 0
-    self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
+    self.IdleTimer = CurTime() + self:GetOwner():GetViewModel():SequenceDuration()
 end
 
 function SWEP:SecondaryAttack()
-    if self.Weapon:Ammo1() <= 0 then return end
-    if self.FiresUnderwater == false and self.Owner:WaterLevel() == 3 then return end
+    if self:Ammo1() <= 0 then return end
+    if self.FiresUnderwater == false and self:GetOwner():WaterLevel() == 3 then return end
     if SERVER then
         local entity = ents.Create( "obj_horde_hornet_alt" )
-        entity:SetOwner( self.Owner )
-        entity:SetNWEntity("HordeOwner", self.Owner)
+        entity:SetOwner( self:GetOwner() )
+        entity:SetNWEntity("HordeOwner", self:GetOwner())
         if IsValid( entity ) then
-            self.Owner:Horde_SetMinionCount(self.Owner:Horde_GetMinionCount() + 1)
-            local Forward = self.Owner:EyeAngles():Forward()
-            local Right = self.Owner:EyeAngles():Right()
-            local Up = self.Owner:EyeAngles():Up()
-            entity:SetPos( self.Owner:GetShootPos() + Forward * 12 + Right * 4 + Up * -6 )
-            entity:SetAngles( self.Owner:EyeAngles() )
+            self:GetOwner():Horde_SetMinionCount(self:GetOwner():Horde_GetMinionCount() + 1)
+            local Forward = self:GetOwner():EyeAngles():Forward()
+            local Right = self:GetOwner():EyeAngles():Right()
+            local Up = self:GetOwner():EyeAngles():Up()
+            entity:SetPos( self:GetOwner():GetShootPos() + Forward * 12 + Right * 4 + Up * -6 )
+            entity:SetAngles( self:GetOwner():EyeAngles() )
             entity:Spawn()
             local phys = entity:GetPhysicsObject()
             phys:SetMass( 1 )
@@ -203,31 +203,31 @@ function SWEP:SecondaryAttack()
         end
     end
     self:EmitSound( self.Primary.Sound )
-    self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-    self.Owner:SetAnimation( PLAYER_ATTACK1 )
+    self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
+    self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
     self:TakePrimaryAmmo( self.Primary.TakeAmmo )
     self:SetNextPrimaryFire( CurTime() + self.Secondary.Delay )
     self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
     self.RegenerationTimer = CurTime() + 0.5
     self.Idle = 0
-    self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
+    self.IdleTimer = CurTime() + self:GetOwner():GetViewModel():SequenceDuration()
 end
 
 function SWEP:Reload()
 end
 
 function SWEP:Think()
-    if self.RegenerationTimer <= CurTime() and self.Weapon:Ammo1() < self.Primary.MaxAmmo then
-        self.Owner:SetAmmo( self.Weapon:Ammo1() + 1, self.Primary.Ammo )
+    if self.RegenerationTimer <= CurTime() and self:Ammo1() < self.Primary.MaxAmmo then
+        self:GetOwner():SetAmmo( self:Ammo1() + 1, self.Primary.Ammo )
         self.RegenerationTimer = CurTime() + 0.5
     end
     if self.Idle == 0 and self.IdleTimer <= CurTime() then
         if SERVER then
-            self.Weapon:SendWeaponAnim( ACT_VM_IDLE )
+            self:SendWeaponAnim( ACT_VM_IDLE )
         end
         self.Idle = 1
     end
-    if self.Weapon:Ammo1() > self.Primary.MaxAmmo then
-        self.Owner:SetAmmo( self.Primary.MaxAmmo, self.Primary.Ammo )
+    if self:Ammo1() > self.Primary.MaxAmmo then
+        self:GetOwner():SetAmmo( self.Primary.MaxAmmo, self.Primary.Ammo )
     end
 end
