@@ -355,7 +355,7 @@ hook.Add("Horde_OnPlayerDamageTaken", "Horde_ApplyFusionDamageTaken", function (
         bonus.less = bonus.less * (1 - 0.01 * HORDE.items[curr_weapon:GetClass()].weight)
     end
 end)
---[[
+
 hook.Add("Horde_OnEnemyKilled", "Horde_ApplyFusionOnKill", function (victim, ply, wpn)
     if not ply.Horde_Infusions then return end
     local curr_weapon = HORDE:GetCurrentWeapon(ply)
@@ -365,7 +365,7 @@ hook.Add("Horde_OnEnemyKilled", "Horde_ApplyFusionOnKill", function (victim, ply
         local healinfo = HealInfo:New({amount=1, healer=ply})
         HORDE:OnPlayerHeal(ply, healinfo)
     end
-end)]]--
+end)
 
 net.Receive("Horde_BuyInfusion", function (len, ply)
     if not ply:IsValid() or not ply:Alive() then return end
