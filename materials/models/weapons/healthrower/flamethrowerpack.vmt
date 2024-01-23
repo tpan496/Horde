@@ -1,0 +1,26 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/weapons/healthrower/flamethrowerpack"
+	"$bumpmap" "models/weapons/healthrower/m2text"
+	$surfaceprop 		 metal
+	$envmap				 env_cubemap
+	$envmaptint			"[ .1 .1 .1]"
+
+	$EmissiveBlendEnabled 		1					// Enable EmissiveBlend. Like $selfillum 1	
+	$EmissiveBlendStrength 		1 					// how strong the entire glow effect is.
+	$EmissiveBlendTexture 		"vgui/white"			// This will be useless, but is required.
+	$EmissiveBlendBaseTexture 	"models/weapons/healthrower/flamethrowerpack_detail"	// this is the glowing texture.vtf
+	$EmissiveBlendFlowTexture 	"vgui/white"	 		// EmmisiveBlend can "flow" or move. But ours is static, so a white texture is used.
+	$EmissiveBlendTint 			" [ 1 1 1 ] "		// RGB glow intensity. Leave at 1 1 1. This can be used to change how strong each color should glow. So instead of using a darker red color, you may use [.5 1 1] to have red glow half as strong.
+	$EmissiveBlendScrollVector 	" [ 0 0 ] " 		// makes the EmmissiveBlend flow in either direction if a proper EmissiveBlendFlowTexture were set. But ours is static, so leave at 0 0
+	Proxies
+	{
+		Sine
+		{
+			resultVar	$EmissiveBlendStrength 
+			sinemin		0
+			sinemax		1
+			sineperiod	5.00
+		}
+	}
+}

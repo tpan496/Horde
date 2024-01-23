@@ -1,15 +1,15 @@
-SWEP.PrintName = "M2 Flamethrower (Horde)"
+SWEP.PrintName = "M2 Health Thrower"
 SWEP.Author = "Sanikku, Syntax_Errorsanic, Gorlami"
-SWEP.Category = "ArcCW - Horde"
-SWEP.Purpose = "Bring forth flames upon your enemies!"
+SWEP.Category = "ArcCW - Horde (Custom)"
+SWEP.Purpose = "Heal your enemies to death like god intended"
 SWEP.Instructions = "Primary: Fire"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
 
-SWEP.ViewModel = "models/horde/weapons/c_m2.mdl"
-SWEP.WorldModel = "models/horde/weapons/w_m2f2.mdl"
+SWEP.ViewModel = "models/weapons/c_healthrower.mdl"
+SWEP.WorldModel = "models/weapons/w_healthrower.mdl"
 SWEP.UseHands = true
-SWEP.ViewModelFOV = 50
+SWEP.ViewModelFOV = 72
 SWEP.Slot = 3
 
 SWEP.HoldType = "smg"
@@ -22,9 +22,9 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
 SWEP.ReloadDelay = 2
-SWEP.Delay = 0.08
+SWEP.Delay = 0.1
 SWEP.ReloadSound = "ambient/machines/keyboard2_clicks.wav"
-
+--SWEP.Duration = 4
 if (CLIENT) then
     SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/horde_m2")
     SWEP.DrawWeaponInfoBox	= false
@@ -34,8 +34,8 @@ if (CLIENT) then
 end
 
 function SWEP:DrawHUD()
-    local owner = self:GetOwner()
     if CLIENT then
+        local owner = self:GetOwner()
     local x, y
     if ( owner == LocalPlayer() and owner:ShouldDrawLocalPlayer() ) then
     local tr = util.GetPlayerTrace( owner )
@@ -56,18 +56,18 @@ function SWEP:Initialize()
 end
 
 function SWEP:Precache()
-    PrecacheParticleSystem("m2_flame")
-    PrecacheParticleSystem("m2_flame_explosion")
+    PrecacheParticleSystem("medic_flame")
+    PrecacheParticleSystem("medic_flame_explosion")
 end
+
 
 function SWEP:PrimaryAttack()
     local owner = self:GetOwner()
     if (not self:CanPrimaryAttack()) then return end
-
     self:TakePrimaryAmmo(1)
     owner:MuzzleFlash()
     self:SetNextPrimaryFire( CurTime() + self.Delay )
-    if (SERVER) then
+    if SERVER then
         local eyetrace = owner:GetEyeTrace()
         local tracedata = {}
         tracedata.start = owner:GetShootPos()
@@ -83,21 +83,30 @@ function SWEP:PrimaryAttack()
             local dmg = DamageInfo()
             dmg:SetAttacker(owner)
             dmg:SetInflictor(self)
-            dmg:SetDamageType(DMG_BURN)
-            dmg:SetDamage(20)
+            dmg:SetDamageType(DMG_NERVEGAS)
+            dmg:SetDamage(40)
+            dmg:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
             util.BlastDamageInfo(dmg, trace.HitPos, 128)
-
+            for _, ent in pairs(ents.FindInSphere(trace.HitPos, 150)) do
+             if ent:IsPlayer() then
+                    local healinfo = HealInfo:New({amount = 5, healer = owner})
+                    HORDE:OnPlayerHeal(ent, healinfo)
+                elseif ent:GetClass() == "npc_vj_horde_antlion" then
+                    local healinfo = HealInfo:New({amount = 5, healer = owner})
+                    HORDE:OnAntlionHeal(ent, healinfo)
+                end
+            end
             if SERVER and trace.Hit then
                 local firefx = EffectData()
                 firefx:SetOrigin(trace.HitPos)
                 firefx:SetScale(1)
                 firefx:SetEntity(self.owner)
-                util.Effect("m2_flame_explosion",firefx,true,true)
+                util.Effect("medic_flame_explosion",firefx,true,true)
             end
-        end
+    end
         timer.Simple(math.min(500, Distance) / 1520, Ignite)
     end
-end
+        end
 
 function SWEP:SecondaryAttack()
 end
@@ -105,7 +114,7 @@ end
 function SWEP:Deploy()
     local owner = self:GetOwner()
     self:SendWeaponAnim(ACT_VM_DRAW)
-    if (SERVER) then
+    if SERVER then
         owner:EmitSound("ambient/machines/keyboard2_clicks.wav", 42, 100 )
     end
     return true
@@ -114,25 +123,28 @@ end
 function SWEP:Think()
     local owner = self:GetOwner()
     if owner:KeyReleased(IN_ATTACK) then
-        if (not self:CanPrimaryAttack()) then return end
-        if (SERVER) then
+     if (not self:CanPrimaryAttack()) then return end
+        if SERVER then
+            self:SendWeaponAnim(ACT_VM_IDLE)
             owner:EmitSound("ambient/fire/mtov_flame2.wav", 24, 100 )
         end
     end
+
     if owner:KeyDown(IN_ATTACK) then
         if (not self:CanPrimaryAttack()) then return end
-        if (SERVER) then
+        if SERVER then
+            self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
             owner:EmitSound("ambient/fire/mtov_flame2.wav", math.random(27,35), math.random(32,152) )
             owner:EmitSound("ambient/machines/thumper_dust.wav", math.random(27,35), math.random(32,152) )
         end
         local trace = owner:GetEyeTrace()
-        if (SERVER) then
+        if SERVER then
             local flamefx = EffectData()
             flamefx:SetOrigin(trace.HitPos)
             flamefx:SetStart(owner:GetShootPos())
             flamefx:SetAttachment(1)
             flamefx:SetEntity(self)
-            util.Effect("m2_flame",flamefx,true,true)
+            util.Effect("medic_flame",flamefx,true,true)
         end
     end
 end

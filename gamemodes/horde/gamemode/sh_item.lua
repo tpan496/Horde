@@ -622,8 +622,12 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Special",    "Hivehand",       "horde_hivehand",       2000,  5, "Organic weapon used by Xen soldiers.\nHas infinite ammo.\nPrimary fire generates homing ricocheting shots.\nSecondary fire rapidly unloads the entire weapon.",
     {Engineer=true}, 2, -1, nil, nil, {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Special",    "Spore Launcher", "horde_spore_launcher",2500,  7, "Improvised biological weapon.\nShoots out acidic projectiles that explodes after a short delay.\nHeals players and damages enemies.",
-    {Medic=true, Survivor=true}, 40, -1, nil, nil, {Medic=2, Survivor=2}, nil, {HORDE.DMG_POISON})
+    HORDE:CreateItem("Special",    "Spore Launcher", "horde_spore_launcher", 1750,  6, "Improvised biological weapon.\nShoots out acidic projectiles that explodes after a short delay.\nHeals players and damages enemies.",
+    {Medic=true, Survivor=true}, 15, -1, nil, nil, {Medic=2, Survivor=2}, nil, {HORDE.DMG_POISON})
+    HORDE:CreateItem("Special",    "M2 Health Thrower", "horde_healingthrower", 3000,  7, "M2-2 Health Thrower.\nAn American man-portable backpack flamethrower converted to heal stuff to death.\nsmells faintly of lime and mint (who hurt you)",
+    {Medic=true}, 30, -1, nil, nil, nil, nil, {HORDE.DMG_POISON})
+    HORDE:CreateItem("Explosive",  "Medic RPG",          "arccw_horde_medic_rpg",   3000,  8, "Medic Missile.\nAnti-Death Rocket Propelled Grenade \nmade in the Gamestop ventilation of an abandoned mall. \nnot to be confused with the infamous magic missile.",
+    {Medic=true}, 20, -1, nil, nil, nil, nil, {HORDE.DMG_POISON})
 
     HORDE:CreateItem("Explosive",    "Raygun",  "arccw_horde_raygun", 3000,  8, "Raygun. \nFires explosive electric bolts that deal Lightning damage.",
     {Warden=true}, 40, -1, nil, nil, nil, nil, {HORDE.DMG_LIGHTNING})

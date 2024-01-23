@@ -1,25 +1,25 @@
 if not ArcCWInstalled then return end
 if (CLIENT) then
-	SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/arccw_horde_rpg7")
+    SWEP.WepSelectIcon = surface.GetTextureID("vgui/hud/arccw_horde_rpg7")
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
-	killicon.Add("arccw_horde_rpg7", "vgui/hud/arccw_horde_rpg7", color_white)
+    killicon.Add("arccw_horde_rpg7", "vgui/hud/arccw_horde_rpg7", color_white)
     killicon.Add("horde_projectile_rpg", "vgui/hud/arccw_horde_rpg7", color_white)
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "ArcCW - Horde (Custom)" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "RPG7"
-SWEP.TrueName = "Ruchnoy Protivotankoviy Granatomyot"
-SWEP.Trivia_Class = "Rocket Launcher"
-SWEP.Trivia_Desc = "A portable, reusable, unguided, shoulder-launched, anti-tank, rocket-propelled grenade launcher."
-SWEP.Trivia_Manufacturer = "Bazalt and Degtyarev plant."
-SWEP.Trivia_Calibre = "Rockets"
-SWEP.Trivia_Mechanism = "Explosive"
-SWEP.Trivia_Country = "Soviet Union"
-SWEP.Trivia_Year = 1958
+SWEP.PrintName = "Medic RPG"
+SWEP.TrueName = "Medic Missile"
+SWEP.Trivia_Class = "Medical Rocket Launcher"
+SWEP.Trivia_Desc = "A portable, reusable, unguided, shoulder-launched, anti-tank, rocket-propelled Health launcher."
+SWEP.Trivia_Manufacturer = "Vodka and beer"
+SWEP.Trivia_Calibre = "Medic Missiles"
+SWEP.Trivia_Mechanism = "Healing"
+SWEP.Trivia_Country = "Abandoned Mall"
+SWEP.Trivia_Year = 2024
 
 SWEP.Slot = 3
 
@@ -27,9 +27,8 @@ SWEP.Spawnable = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/vj_weapons/c_rpg7_v2.mdl" --remind me to adjust the uv maps later so the bolts aren't made out of wood,they look rusty.
-SWEP.WorldModel = "models/vj_weapons/c_rpg7_v2.mdl"
-SWEP.MirrorVMWM = true -- Copy the viewmodel, along with all its attachments, to the worldmodel. Super convenient!
+SWEP.ViewModel = "models/vj_weapons/c_medic_rpg7.mdl"
+SWEP.WorldModel = "models/vj_weapons/c_medic_rpg7.mdl"
 SWEP.DefaultBodygroups = "00000000"
 SWEP.MirrorVMWM = true -- Copy the viewmodel, along with all its attachments, to the worldmodel. Super convenient!
 
@@ -39,18 +38,18 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 60
 
-SWEP.Damage = 500
-SWEP.DamageMin = 500 -- damage done at maximum range
+SWEP.Damage = 400
+SWEP.DamageMin = 400 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 0
 SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = "horde_projectile_rpg" -- entity to fire, if any
+SWEP.ShootEntity = "horde_projectile_medic_rpg" -- entity to fire, if any
 SWEP.MuzzleVelocity = 2000 -- projectile or phys bullet muzzle velocity
 
-SWEP.CanFireUnderwater = false
+SWEP.CanFireUnderwater = true
 
 SWEP.TracerNum = 1 -- tracer every X
-SWEP.TracerCol = Color(255, 25, 25)
+SWEP.TracerCol = Color(105, 255, 50)
 SWEP.TracerWidth = 3
 
 SWEP.ChamberSize = 0 -- how many rounds can be chambered.
@@ -98,7 +97,7 @@ SWEP.SpeedMult = 0.92
 SWEP.SightedSpeedMult = 0.65
 SWEP.SightTime = 0.2
 
-SWEP.BarrelLength = 18
+--SWEP.BarrelLength = 18
 
 SWEP.ProceduralRegularFire = false
 SWEP.ProceduralIronFire = false
@@ -135,10 +134,6 @@ SWEP.ExtraSightDist = 5
 
 SWEP.RejectAttachments = {["go_homemade_auto"] = true, ["go_perk_burst"] = true}
 SWEP.Attachments = {
-    {
-        PrintName = "Ammo",
-        Slot = "horde_ammo"
-    },
     {
         PrintName = "Perk",
         Slot = "go_perk"
@@ -189,5 +184,5 @@ SWEP.Animations = {
 }
 
 SWEP.ViewModelBoneMods = {
---	["missile"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
+   -- ["missile"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 }
