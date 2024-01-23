@@ -33,9 +33,9 @@ ENT.HasBloodParticle = true -- Does it spawn a particle when damaged?
 ENT.HasBloodDecal = true -- Does it spawn a decal when damaged?
 ENT.HasBloodPool = false -- Does it have a blood pool?
 ENT.DropWeaponOnDeath = false
-ENT.HasItemDropsOnDeath = true 
-ENT.ItemDropsOnDeathChance = 8
-ENT.ItemDropsOnDeath_EntityList = {"item_battery"}
+ENT.HasItemDropsOnDeath = true
+ENT.ItemDropsOnDeathChance = 4
+ENT.ItemDropsOnDeath_EntityList = {"item_battery","horde_ammobox"}
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 -- ====== Flinching Code ====== --

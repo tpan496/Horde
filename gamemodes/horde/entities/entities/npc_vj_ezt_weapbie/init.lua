@@ -38,9 +38,9 @@ ENT.HasGrenadeAttack = false -- Should the SNPC have a grenade attack?
 ENT.AnimTbl_GrenadeAttack = {"ThrowItem"} -- Grenade Attack Animations
 ENT.GrenadeAttackEntity = "npc_grenade_frag" -- The entity that the SNPC throws | Half Life 2 Grenade: "npc_grenade_frag"
 ENT.DropWeaponOnDeath = false
-ENT.HasItemDropsOnDeath = true 
-ENT.ItemDropsOnDeathChance = 8
-ENT.ItemDropsOnDeath_EntityList = {"item_battery"}
+ENT.HasItemDropsOnDeath = true
+ENT.ItemDropsOnDeathChance = 4
+ENT.ItemDropsOnDeath_EntityList = {"item_battery","horde_ammobox"}
 
 -- ====== Flinching Code ====== --
 ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
