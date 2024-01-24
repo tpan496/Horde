@@ -100,6 +100,8 @@ hook.Add("SpawnMenuOpen", "Horde_SpawnMenu", CheckAllowFeature)
 
 --function GM:OnSpawnMenuOpen() return CheckAllowHook("SpawnMenuOpen") end
 
+function GM:CanProperty() return CheckAllowFeature() end
+
 function GM:ContextMenuOpen() return CheckAllowHook("ContextMenuOpen") end
 
 function GM:PlayerNoClip(ply,desiredState)
