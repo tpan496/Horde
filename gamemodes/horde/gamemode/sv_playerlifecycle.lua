@@ -658,6 +658,9 @@ hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
 
     for _, ent in pairs( ents.GetAll() ) do
         if ent:IsWeapon() and not IsValid( ent:GetOwner() ) and ent.lastWeaponHolder == ply then
+            local canPickup = hook.Run( "PlayerCanPickupWeapon", ply, ent )
+            if canPickup == false then continue end
+
             local pickedUp = ply:PickupWeapon( ent )
             if not pickedUp then
                 ent:SetPos( ply:GetPos() + Vector( 0, 0, 25 ) )
