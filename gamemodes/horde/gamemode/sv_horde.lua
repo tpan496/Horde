@@ -154,6 +154,9 @@ hook.Add("EntityKeyValue", "Horde_EntityKeyValue", function(ent)
 end)
 
 function HORDE:OnEnemyKilled(victim, killer, weapon)
+    local owner = victim:GetNWEntity("HordeOwner", victim)
+    if owner:IsPlayer() then return end
+
     if IsValid(victim) and victim:IsNPC() and not victim:GetVar("horde_killed") then
         victim:SetVar("horde_killed", true)
         if IsValid(killer) and killer:IsPlayer() then
