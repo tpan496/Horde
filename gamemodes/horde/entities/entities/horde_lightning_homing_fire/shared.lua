@@ -63,7 +63,7 @@ local function GetFireParticle()
 end
 
 function ENT:Think()
-    if SERVER and self.DamageTime <= CurTime() then
+    if SERVER and self.DamageTime <= CurTime() and IsValid(self.Owner) then
         for _, ent in pairs(ents.FindInSphere(self:GetPos(), self.DamageRadius)) do
             if HORDE:IsPlayerOrMinion(ent) then
                 local dmg = DamageInfo()
