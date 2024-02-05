@@ -381,7 +381,6 @@ end
 
 function ENT:CustomOnThink()
 	-- Dodge
-
 		if self.Alerting == false and IsValid(self:GetEnemy()) and not self.Dead and CurTime() > self.NextDodging and self:GetPos():Distance(self:GetEnemy():GetPos()) < 4500 and self.RangeAttacking == false and self.Charging == false and self.MeleeAttacking == false then
 			local dodge_dirs = {}
 			local dir2 = nil
@@ -411,6 +410,10 @@ function ENT:CustomOnThink()
 		end
 
 	-- Charge Code
+    if self.Charging and self:GetEnemy() == nil then
+        self:StopCharge()
+    end
+
 	if self.Charging == true then
 		local tr = util.TraceHull({
 			start = self:GetPos() + self:OBBCenter(),
