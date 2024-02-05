@@ -157,7 +157,7 @@ function SWEP:Hook_PostBash(info)
             end
         end
         timer.Simple(0.4, function ()
-            if not IsValid(self) then return end
+            if not IsValid(self) and not IsValid(self.Owner) then return end
             for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 100)) do
                 if ent:IsNPC() then
                     local dmg = DamageInfo()
@@ -171,7 +171,7 @@ function SWEP:Hook_PostBash(info)
             end
         end)
         timer.Simple(0.8, function ()
-            if not IsValid(self) then return end
+            if not IsValid(self) and not IsValid(self.Owner) then return end
             for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 100)) do
                 if ent:IsNPC() then
                     local dmg = DamageInfo()
