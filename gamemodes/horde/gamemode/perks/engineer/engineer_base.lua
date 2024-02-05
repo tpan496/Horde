@@ -35,24 +35,23 @@ PERK.Hooks.Horde_OnPlayerMinionDamage = function (ply, npc, bonus, dmginfo)
     end
 end
 
-PERK.Hooks.OnEntityCreated = function(ent)
-    if not ent:IsValid() then return end
-    if CLIENT then return end
-    timer.Simple(0.1, function()
+if SERVER then
+    PERK.Hooks.OnEntityCreated = function(ent)
         if not ent:IsValid() then return end
-        local ply = ent:GetNWEntity("HordeOwner")
-        if ply:IsPlayer() and ply:Horde_GetPerk("engineer_base") and ent:IsNPC() then
-            if ent:GetClass() == "npc_turret_floor" then
-                if ent:GetMaxHealth() < 400 then
-                    if ent.Horde_Is_Mini_Sentry then
-                        ent:SetMaxHealth(200)
-                    else
-                        ent:SetMaxHealth(400)
-                    end
+        timer.Simple( 0.1, function()
+            if not ent:IsValid() then return end
+            local ply = ent:GetNWEntity("HordeOwner")
+            if ply:IsPlayer() and ply:Horde_GetPerk("engineer_base") and ent:IsNPC() and ent:GetClass() == "npc_turret_floor" and ent:GetMaxHealth() < 400 then
+                if ent.Horde_Is_Mini_Sentry then
+                    ent:SetMaxHealth(200)
+                    ent:SetHealth(200)
+                else
+                    ent:SetMaxHealth(400)
+                    ent:SetHealth(400)
                 end
             end
-        end
-    end)
+        end )
+    end
 end
 
 PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
