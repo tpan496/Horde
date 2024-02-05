@@ -116,6 +116,7 @@ function HORDE:SpawnManhack(ply, id)
     ent:SetNWEntity("HordeOwner", ply)
     ent:Spawn()
     ent:SetMaxHealth(150)
+    ent:SetHealth(150)
     ply:Horde_SyncEconomy()
     -- Minions have no player collsion
     timer.Simple(0.1, function ()
