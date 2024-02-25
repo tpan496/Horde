@@ -1,9 +1,12 @@
 function EFFECT:Init(data)
 	local Startpos = self:GetTracerShootPos(self.Position, data:GetEntity(), data:GetAttachment())
 	local Hitpos = data:GetOrigin()
-	local owner = data:GetEntity().Owner
+	local ent = data:GetEntity()
+    if not IsValid( ent ) then return end
+    local owner = ent.Owner
+
 	local has_burner = nil
-	if owner:IsValid() and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
+	if IsValid( owner ) and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
 		has_burner = true
 	end
 
