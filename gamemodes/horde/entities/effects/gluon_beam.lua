@@ -4,7 +4,7 @@ function EFFECT:Init( data )
     self.WeaponEnt = data:GetEntity()
     local owner = self.WeaponEnt.Owner
 	self.has_burner = nil
-	if owner and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
+	if IsValid( owner ) and owner:Horde_GetGadget() == "gadget_hydrogen_burner" then
 		self.has_burner = true
 	end
     self.Attachment = data:GetAttachment()
