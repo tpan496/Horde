@@ -93,13 +93,14 @@ function ENT:Detonate()
             prop:Spawn()
             prop:Activate()
             timer.Simple(0, function() prop:GetPhysicsObject():AddVelocity(VectorRand() * 300 + Vector(0, 0, 200)) end)
-            timer.Simple(0.5 + i * 0.1, function() if IsValid(prop) then
+            timer.Simple(0.5 + i * 0.1, function()
+                if not IsValid(prop) then return end
                 local e = EffectData()
                 e:SetOrigin(prop:GetPos())
                 util.Effect("Explosion", e)
                 util.BlastDamage(prop, attacker, prop:GetPos(), rad, dmg)
                 prop:Remove()
-            end end)
+            end)
         end
 
         self:Remove()
