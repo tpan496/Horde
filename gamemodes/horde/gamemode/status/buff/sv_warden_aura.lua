@@ -23,7 +23,10 @@ function entmeta:Horde_RemoveWardenAura()
         self.Horde_WardenAura:Remove()
         self.Horde_WardenAura = nil
         if self:IsPlayer() then
-            timer.Simple(0, function() self:Horde_RemoveWardenAuraEffects() end)
+            timer.Simple(0, function()
+                if not IsValid(self) then return end
+                self:Horde_RemoveWardenAuraEffects()
+            end)
         end
     end
 end
