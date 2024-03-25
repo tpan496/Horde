@@ -13,7 +13,7 @@ SWEP.Trivia_Mechanism = "Double-action"
 SWEP.Trivia_Country = "South Africa"
 SWEP.Trivia_Year = 1983
 
-SWEP.Slot = 3
+SWEP.Slot = 4
 
 SWEP.Spawnable = true
 
@@ -59,14 +59,15 @@ SWEP.Delay = 60 / 240 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
-        Mode = 2,
+        Mode = 1,
+        PrintName = "Double-Action"
     },
     {
         Mode = 0
     }
 }
 
-SWEP.NPCWeaponType = "weapon_pistol"
+SWEP.NPCWeaponType = "weapon_rpg"
 SWEP.NPCWeight = 75
 
 SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -83,8 +84,6 @@ SWEP.ShootSoundSilenced = nil
 SWEP.DistantShootSound = nil
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"
-SWEP.ShellModel = "models/shells/shell_9mm.mdl"
-SWEP.ShellScale = 1
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
@@ -104,14 +103,14 @@ SWEP.CaseBones = {}
 
 SWEP.IronSightStruct = {
     Pos = Vector(-5, -2, 2.5),
-    Ang = Angle(-1.201, 0, 0),
+    Ang = Angle(-1.1, 0, 0),
     ViewModelFOV = 65 / 2,
     Magnification = 2,
 }
 
 SWEP.HoldtypeHolstered = "ar2"
-SWEP.HoldtypeActive = "ar2"
-SWEP.HoldtypeSights = "ar2"
+SWEP.HoldtypeActive = "smg"
+SWEP.HoldtypeSights = "smg"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
 

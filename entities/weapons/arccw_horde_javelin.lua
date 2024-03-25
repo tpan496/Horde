@@ -13,15 +13,15 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "FGM-148 JAVELIN"
 SWEP.TrueName = "FGM-148 JAVELIN"
-SWEP.Trivia_Class = "Guided Rocket Launcher"
+SWEP.Trivia_Class = "Guided Anti-Tank Launcher"
 SWEP.Trivia_Desc = "Fire-and-forget missile with lock-on before launch and automatic self-guidance."
 SWEP.Trivia_Manufacturer = "Raytheon & Lockheed Martin"
-SWEP.Trivia_Calibre = "Guided Shell"
-SWEP.Trivia_Mechanism = "Explosive"
-SWEP.Trivia_Country = "United States"
+SWEP.Trivia_Calibre = "127mm Guided Shell"
+SWEP.Trivia_Mechanism = "Infrared homing, Tandem-charge HEAT"
+SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1996
 
-SWEP.Slot = 3
+SWEP.Slot = 4
 
 if GetConVar("arccw_truenames"):GetBool() then
     SWEP.PrintName = SWEP.TrueName
@@ -76,7 +76,7 @@ SWEP.Firemodes = {
     },
 }
 
-SWEP.NPCWeaponType = "weapon_pistol"
+SWEP.NPCWeaponType = "weapon_rpg"
 SWEP.NPCWeight = 75
 
 SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.

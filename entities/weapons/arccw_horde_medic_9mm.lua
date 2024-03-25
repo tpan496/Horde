@@ -1,7 +1,7 @@
 if not ArcCWInstalled then return end
 if CLIENT then
     SWEP.WepSelectIcon = Material("items/weapon_medic_9mm.png")
-    killicon.AddAlias("arccw_horde_medic_9mm", "weapon_9mm")
+    killicon.AddAlias("arccw_horde_medic_9mm", "weapon_pistol")
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
@@ -11,13 +11,12 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Medic 9mm"
 SWEP.Trivia_Class = "Pistol"
-SWEP.Trivia_Desc = "Standard issue pistol."
+SWEP.Trivia_Desc = "Stand still, or I'll stick it where the sun don't bloody shine."
 
-SWEP.Trivia_Manufacturer = "Combine"
+SWEP.Trivia_Manufacturer = "Combine Overwatch"
 SWEP.Trivia_Calibre = "9mm"
-SWEP.Trivia_Mechanism = "Semi-Auto"
-SWEP.Trivia_Country = "Combine"
-SWEP.Trivia_Year = 2007
+SWEP.Trivia_Mechanism = "Short Recoil"
+SWEP.Trivia_Year = 2003
 
 SWEP.Slot = 1
 
@@ -30,9 +29,9 @@ SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 7
 SWEP.DamageMin = 5
-SWEP.RangeMin = 12.5
-SWEP.Range = 31.25
-SWEP.Penetration = 2
+SWEP.RangeMin = 14
+SWEP.Range = 30
+SWEP.Penetration = 5
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
@@ -41,6 +40,8 @@ SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 18 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 18
 SWEP.ReducedClipSize = 18
+
+SWEP.PhysBulletMuzzleVelocity = 400
 
 SWEP.Recoil = 0.400
 SWEP.RecoilSide = 0.125
@@ -58,7 +59,7 @@ SWEP.Firemodes = {
     },
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_pistol"
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 0 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -86,8 +87,8 @@ SWEP.SightedSpeedMult = 0.8
 SWEP.SightTime = 0.125
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.5, -11, 3.2),
-    Ang = Angle(0, 0, 2),
+    Pos = Vector(-5.8, -11, 2.95),
+    Ang = Angle(0.7, -1.3, 2),
     ViewModelFOV = 65,
     Magnification = 1,
 }

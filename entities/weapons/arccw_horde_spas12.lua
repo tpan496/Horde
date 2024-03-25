@@ -11,7 +11,14 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "SPAS-12"
 SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "Pump action."
+SWEP.Trivia_Desc = "Iconic assault shotgun. Pump-action only."
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Franchi"
+    SWEP.Trivia_Calibre = "12 Gauge"
+    SWEP.Trivia_Mechanism = "Pump-action, Gas-Operated"
+    SWEP.Trivia_Country = "Italy"
+    SWEP.Trivia_Year = 1979
+    end
 
 SWEP.Slot = 2
 
@@ -40,6 +47,8 @@ SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 8 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 16
 SWEP.ReducedClipSize = 4
+
+SWEP.PhysBulletMuzzleVelocity = 400
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 3
@@ -205,7 +214,7 @@ SWEP.Attachments = {
     {
         PrintName = "Ammo Type",
         Slot = "go_ammo",
-        DefaultAttName = "Standard Ammo"
+        DefaultAttName = "Buckshot Shells"
     },
     {
         PrintName = "Perk",

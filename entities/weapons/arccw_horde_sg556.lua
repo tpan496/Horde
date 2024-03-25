@@ -8,14 +8,14 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "SIG SG556"
+SWEP.PrintName = "SIG SG553"
 SWEP.Trivia_Class = "Assault Rifle"
 SWEP.Trivia_Desc = "Swiss rifle created for the civilian market. Designed primarily for export to the USA. Good at range. Modified to have a military fire group."
 SWEP.Trivia_Manufacturer = "SIG Sauer"
 SWEP.Trivia_Calibre = "5.56x45mm NATO"
 SWEP.Trivia_Mechanism = "Gas-Operated"
-SWEP.Trivia_Country = "USA"
-SWEP.Trivia_Year = 1993
+SWEP.Trivia_Country = "Switzerland"
+SWEP.Trivia_Year = 2008
 
 SWEP.Slot = 2
 
@@ -96,8 +96,8 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.30
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.14, -8.573, 1.05),
-    Ang = Angle(-0.75, 0.15, 0),
+    Pos = Vector(-5.14, -8.573, 1.1),
+    Ang = Angle(-0.75, 0.05, 1),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false

@@ -9,15 +9,15 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "357 (Horde)"
-SWEP.Trivia_Class = "Pistol"
+SWEP.PrintName = ".357 (Horde)"
+SWEP.Trivia_Class = "Magnum Pistol"
 SWEP.Trivia_Desc = "Black Mesa standard issue."
 
-SWEP.Trivia_Manufacturer = "Black Mesa"
+SWEP.Trivia_Manufacturer = "Colt"
 SWEP.Trivia_Calibre = ".357 Magnum"
 SWEP.Trivia_Mechanism = "Double-Action"
-SWEP.Trivia_Country = "Black Mesa"
-SWEP.Trivia_Year = 2000
+SWEP.Trivia_Country = "USA"
+SWEP.Trivia_Year = 1998
 
 SWEP.Slot = 1
 
@@ -32,7 +32,7 @@ SWEP.Damage = 25
 SWEP.DamageMin = 20
 SWEP.RangeMin = 500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Range = 1250 * 0.025  -- GAME UNITS * 0.025 = METRES
-SWEP.Penetration = 4
+SWEP.Penetration = 6
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
@@ -42,9 +42,11 @@ SWEP.Primary.ClipSize = 6 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 6
 SWEP.ReducedClipSize = 6
 
+SWEP.PhysBulletMuzzleVelocity = 550
+
 SWEP.Recoil = 1.5
-SWEP.RecoilSide = 1.25
-SWEP.RecoilRise = 0.1
+SWEP.RecoilSide = 1.5
+SWEP.RecoilRise = 0.3
 SWEP.RecoilPunch = 1
 
 SWEP.Delay = 120 / 300 -- 30 / RPM.
@@ -61,9 +63,9 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_357"
 SWEP.NPCWeight = 150
 
-SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.AccuracyMOA = 6 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 250 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 50
+SWEP.MoveDispersion = 60
 
 SWEP.Primary.Ammo = "357" -- what ammo type the gun uses
 
@@ -84,14 +86,14 @@ SWEP.SightedSpeedMult = 0.8
 SWEP.SightTime = 0.125
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-4.7, -10, 0.5),
-    Ang = Angle(0, 0, 2),
+    Pos = Vector(-4.69, -10, 0.6),
+    Ang = Angle(0.3, -0.25, 1.3),
     ViewModelFOV = 65,
     Magnification = 1,
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "pistol"
+SWEP.HoldtypeActive = "revolver"
 SWEP.HoldtypeSights = "revolver"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL

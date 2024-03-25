@@ -10,8 +10,16 @@ SWEP.AdminOnly = false
 SWEP.CamAttachment = 3
 
 SWEP.PrintName = "M240"
-SWEP.Trivia_Class = "Light Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, large magazines."
+SWEP.Trivia_Class = "General Purpose Machine Gun"
+SWEP.Trivia_Desc = "Signature GPMG of American vehicle gunners and soldiers alike."
+
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "FN Herstal"
+    SWEP.Trivia_Calibre = "7.62x51mm NATO"
+    SWEP.Trivia_Mechanism = "Gas-Operated long-stroke piston, open bolt"
+    SWEP.Trivia_Country = "Belgium"
+    SWEP.Trivia_Year = 1977
+    end
 
 SWEP.Slot = 2
 
@@ -43,6 +51,8 @@ SWEP.Primary.ClipSize = 100 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 200
 SWEP.ReducedClipSize = 50
 
+SWEP.PhysBulletMuzzleVelocity = 850
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.5
 SWEP.RecoilSide = 0.35
@@ -60,7 +70,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_rpg"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 8 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.

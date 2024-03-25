@@ -11,11 +11,10 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Hemo Grenade"
 SWEP.Trivia_Class = "Hand Grenade"
-SWEP.Trivia_Desc = "."
+SWEP.Trivia_Desc = "The quickest method of donating Blood Plasma cells."
 SWEP.Trivia_Manufacturer = "Combine"
-SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Condensed Blood Plasma"
-SWEP.Trivia_Country = "Combine"
+SWEP.Trivia_Country = "Combine Overwatch"
 SWEP.Trivia_Year = 2010
 SWEP.Primary.MaxAmmo = 9
 SWEP.ForceDefaultAmmo = 0

@@ -10,12 +10,12 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "SCAR-H"
+SWEP.PrintName = "SCAR 17S"
 SWEP.Trivia_Class = "Battle Rifle"
 SWEP.Trivia_Desc = "High-class battle rifle designed to serve the needs of special forces in modern warfare."
 SWEP.Trivia_Manufacturer = "Fabrique National Herstale"
 SWEP.Trivia_Calibre = "7.62x51mm NATO"
-SWEP.Trivia_Mechanism = "Gas-Operated Rotating Bolt"
+SWEP.Trivia_Mechanism = "Gas-Operated, Rotating Bolt"
 SWEP.Trivia_Country = "Belgium"
 SWEP.Trivia_Year = 2009
 
@@ -95,9 +95,9 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.2
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.1, -8.573, 0.8),
-    Ang = Angle(-0.4, 0.825, -1.951),
-    Magnification = 1.1,
+    Pos = Vector(-4.99, -0.66, 0.85),
+    Ang = Angle(-0.5, 0.825, -1.951),
+    Magnification = 1.2,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false
 }

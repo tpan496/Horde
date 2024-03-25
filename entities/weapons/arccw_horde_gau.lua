@@ -11,16 +11,16 @@ SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "GAU-19"
-SWEP.Trivia_Class = "Heavy Machine Gun"
-SWEP.Trivia_Desc = "Three-barrel rotary heavy machine gun."
+SWEP.PrintName = "M134"
+SWEP.Trivia_Class = "Minigun"
+SWEP.Trivia_Desc = "''With its armor piercing 30 caliber bullets, the Chain Gun is capable of literally cutting opponents in two. Packed with all the punch you need in close combat fighting the Chain Gun delivers unparallelled reliability and functionality.''"
 
 if CLIENT then
 SWEP.Trivia_Manufacturer = "General Dynamics"
-SWEP.Trivia_Calibre = "12.7x99mm NATO"
-SWEP.Trivia_Mechanism = "Electric"
-SWEP.Trivia_Country = "United States"
-SWEP.Trivia_Year = 1982
+SWEP.Trivia_Calibre = "7.62x51mm NATO"
+SWEP.Trivia_Mechanism = "Electrically driven rotary breech"
+SWEP.Trivia_Country = "USA"
+SWEP.Trivia_Year = 1963
 end
 
 SWEP.Slot = 4
@@ -31,8 +31,8 @@ SWEP.ViewModel = "models/horde/weapons/c_gau.mdl"
 SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/horde/weapons/w_gau.mdl"
 SWEP.WorldModelOffset = {
-    pos = Vector(0, 5, -35),
-    ang = Angle(0, 0, 0),
+    pos = Vector(-10, -30, 0),
+    ang = Angle(-5, 0, 100),
     scale = 1,
 }
 SWEP.ViewModelFOV = 65
@@ -51,6 +51,8 @@ SWEP.Primary.ClipSize = 150 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 150
 SWEP.ReducedClipSize = 150
 
+SWEP.PhysBulletMuzzleVelocity = 1200
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.8
 SWEP.RecoilSide = 0.5
@@ -67,7 +69,7 @@ SWEP.Firemodes = {
     },
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_rpg"
 SWEP.NPCWeight = 150
 SWEP.CanBash = true
 
@@ -105,8 +107,8 @@ SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
 }
 
 SWEP.HoldtypeHolstered = "passive"
-SWEP.HoldtypeActive = "ar2"
-SWEP.HoldtypeSights = "rpg"
+SWEP.HoldtypeActive = "physgun"
+SWEP.HoldtypeSights = "physgun"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
 
@@ -139,8 +141,8 @@ SWEP.Attachments = {
         Offset = {
             vpos = Vector(-1.9, -1, 0.67),
             vang = Angle(0, 0, 90),
-            wpos = Vector(15.625, -0.253, -6.298),
-            wang = Angle(-8.829, -0.556, 90)
+            wpos = Vector(8.5, 0, -5),
+            wang = Angle(-5, 0, 10)
         },
     },
     {

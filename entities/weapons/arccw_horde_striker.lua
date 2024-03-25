@@ -11,22 +11,22 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Striker (Horde)"
 SWEP.Trivia_Class = "Shotgun"
-SWEP.Trivia_Desc = "Semi-automatic (single fire)"
+SWEP.Trivia_Desc = "StreetSweeper for the urban jungle"
 
-SWEP.Trivia_Manufacturer = "Benelli Armi SPA"
+SWEP.Trivia_Manufacturer = "Armsel, Cobray"
 SWEP.Trivia_Calibre = "12 Gauge"
-SWEP.Trivia_Mechanism = "Gas-Operated"
-SWEP.Trivia_Country = "Italy"
-SWEP.Trivia_Year = 1998
+SWEP.Trivia_Mechanism = "Rotating Cylinder"
+SWEP.Trivia_Country = "South Africa, USA"
+SWEP.Trivia_Year = 1993
 
-SWEP.Slot = 2
+SWEP.Slot = 3
 
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_striker_1.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-5, 3, -8),
+    pos = Vector(-4, 3, -5),
     ang = Angle(-10, 0, 180),
     scale = 1.5
 }
@@ -44,6 +44,8 @@ SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 12 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 18
 SWEP.ReducedClipSize = 6
+
+SWEP.PhysBulletMuzzleVelocity = 400
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 2
@@ -110,8 +112,8 @@ SWEP.IronSightStruct = {
 
 
 SWEP.HoldtypeHolstered = "passive"
-SWEP.HoldtypeActive = "shotgun"
-SWEP.HoldtypeSights = "ar2"
+SWEP.HoldtypeActive = "smg"
+SWEP.HoldtypeSights = "smg"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN
 

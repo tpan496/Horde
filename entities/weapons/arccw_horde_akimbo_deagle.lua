@@ -5,14 +5,18 @@ if CLIENT then
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - MW2"
+SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Desert Eagle"
 SWEP.Trivia_Class = "Handgun"
-SWEP.Trivia_Desc = "Semi-automatic (single fire)"
-
+SWEP.Trivia_Desc = ".50 Caliber hand cannon which operates not unlike full-size automatic rifles. Hope you can master the monstrous spread and muzzle climb on the damn thing."
+SWEP.Trivia_Manufacturer = "Magnum Research, IMI"
+SWEP.Trivia_Calibre = ".50 Action Express"
+SWEP.Trivia_Mechanism = "Gas-Operated, closed rotating bolt"
+SWEP.Trivia_Country = "USA, Israel"
+SWEP.Trivia_Year = 1995
 SWEP.Slot = 1
 
 SWEP.UseHands = true
@@ -40,6 +44,8 @@ SWEP.Primary.ClipSize = 7 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 10
 SWEP.ReducedClipSize = 4
 
+SWEP.PhysBulletMuzzleVelocity = 450
+
 SWEP.Recoil = 2.25 / 1.5
 SWEP.RecoilSide = 1.75 / 1.5
 SWEP.RecoilRise = 0.1
@@ -56,7 +62,7 @@ SWEP.Firemodes = {
     },
 }
 
-SWEP.NPCWeaponType = {"weapon_357"}
+SWEP.NPCWeaponType = "weapon_357"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 9 / 2 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -98,7 +104,7 @@ SWEP.IronSightStruct = {
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "revolver"
+SWEP.HoldtypeActive = "duel"
 SWEP.HoldtypeSights = "revolver"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_REVOLVER
@@ -338,7 +344,7 @@ SWEP.Animations = {
     ["reload"] = {
         Source = "reload",
         Time = 58/30,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_de50_reload_clipout_v1.wav", 	t = 10/30},
 						{s = "weapons/fesiugmw2/foley/wpfoly_de50_reload_clipin_v1.wav", 	t = 39/30},
@@ -352,7 +358,7 @@ SWEP.Animations = {
     ["reload_empty"] = {
         Source = "reload_empty",
         Time = 62/30,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_de50_reload_clipout_v1.wav", 	t = 10/30},
 						{s = "weapons/fesiugmw2/foley/wpfoly_de50_reload_clipin_v1.wav", 	t = 39/30},
@@ -500,7 +506,7 @@ SWEP.Animations = {
         Source = "reload_akimbo_right",
         Time = 58/30,
         MinProgress = 1.429,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_de50_reload_clipout_v1.wav", 	t = 10/30},
 						{s = "weapons/fesiugmw2/foley/wpfoly_de50_reload_clipin_v1.wav", 	t = 39/30},
@@ -510,7 +516,7 @@ SWEP.Animations = {
         Source = "reload_empty_akimbo_right",
         Time = 63/30,
         MinProgress = 1.429,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_de50_reload_clipout_v1.wav", 	t = 10/30},
 						{s = "weapons/fesiugmw2/foley/wpfoly_de50_reload_clipin_v1.wav", 	t = 39/30},

@@ -8,14 +8,14 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "G3 (Horde)"
+SWEP.PrintName = "HK91"
 SWEP.Trivia_Class = "Battle Rifle"
 SWEP.Trivia_Desc = "Slow-firing, heavy hitting battle rifle with origins tracing back to the end of World War 2. Developed to meet the needs of the newly-formed Bundeswehr."
 SWEP.Trivia_Manufacturer = "Heckler und Koch"
 SWEP.Trivia_Calibre = "7.62x51mm NATO"
 SWEP.Trivia_Mechanism = "Roller-Delayed Blowback"
 SWEP.Trivia_Country = "Germany"
-SWEP.Trivia_Year = 1958
+SWEP.Trivia_Year = 1962
 
 SWEP.Slot = 2
 
@@ -93,8 +93,8 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.25
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-4.73312, -8.573, 2.2),
-    Ang = Angle(0, 0, 0),
+    Pos = Vector(-4.73312, -5, 2.2),
+    Ang = Angle(-0.05, 0, 0),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false

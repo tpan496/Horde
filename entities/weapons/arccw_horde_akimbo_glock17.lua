@@ -5,14 +5,18 @@ if CLIENT then
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - MW2 - Unofficial"
+SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "G17"
 SWEP.Trivia_Class = "Handgun"
-SWEP.Trivia_Desc = "Semi-automatic (single fire)\nUnofficial."
-
+SWEP.Trivia_Desc = "Black Mesa and H.E.C.U. standard issue. No full auto unfortunately."
+SWEP.Trivia_Manufacturer = "Glock Ges.m.b.H."
+SWEP.Trivia_Calibre = "9x19mm Parabellum"
+SWEP.Trivia_Mechanism = "Short recoil, tilting barrel"
+SWEP.Trivia_Country = "Austria"
+SWEP.Trivia_Year = 2009
 SWEP.Slot = 1
 
 SWEP.UseHands = true
@@ -40,6 +44,8 @@ SWEP.Primary.ClipSize = 17 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 33
 SWEP.ReducedClipSize = 10
 
+SWEP.PhysBulletMuzzleVelocity = 410
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4
 SWEP.RecoilSide = 0.4
@@ -56,7 +62,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_pistol"}
+SWEP.NPCWeaponType = "weapon_pistol"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 7 / 2 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -98,7 +104,7 @@ SWEP.IronSightStruct = {
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "revolver"
+SWEP.HoldtypeActive = "duel"
 SWEP.HoldtypeSights = "revolver"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
@@ -344,7 +350,7 @@ SWEP.Animations = {
     ["reload"] = {
         Source = "reload",
         Time = 51/30,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_glock_reload_lift_v1.wav", 	t = 0},
 						{s = "weapons/fesiugmw2/foley/wpfoly_glock_reload_clipout_v1.wav", 	t = 9/24},
@@ -359,7 +365,7 @@ SWEP.Animations = {
     ["reload_empty"] = {
         Source = "reload_empty",
         Time = 60/30,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_glock_reload_lift_v1.wav", 	t = 0},
 						{s = "weapons/fesiugmw2/foley/wpfoly_glock_reload_clipout_v1.wav", 	t = 9/24},
@@ -528,7 +534,7 @@ SWEP.Animations = {
     ["reload_akimbo_right"] = {
         Source = "reload_akimbo_right",
         Time = 70/40,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_glock_reload_lift_v1.wav", 	t = 0},
 						{s = "weapons/fesiugmw2/foley/wpfoly_glock_reload_clipout_v1.wav", 	t = 4/40},
@@ -538,7 +544,7 @@ SWEP.Animations = {
     ["reload_empty_akimbo_right"] = {
         Source = "reload_empty_akimbo_right",
         Time = 89/40,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_glock_reload_lift_v1.wav", 	t = 0},
 						{s = "weapons/fesiugmw2/foley/wpfoly_glock_reload_clipout_v1.wav", 	t = 4/40},

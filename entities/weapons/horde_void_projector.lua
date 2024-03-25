@@ -15,7 +15,7 @@ SWEP.Purpose 		= "Necromancer Unique Weapon."
 
 SWEP.AdminSpawnable = false
 SWEP.Spawnable 		= true
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Spell - Horde"
 
 SWEP.ViewModelBoneMods = {
 	["ValveBiped.Grenade_body"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }

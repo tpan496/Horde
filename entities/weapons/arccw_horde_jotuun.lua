@@ -14,11 +14,10 @@ SWEP.AdminOnly = false
 SWEP.PrintName = "Jötunn"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Spiked mace with ice-related abilities."
-SWEP.Trivia_Manufacturer = "Jötunn"
-SWEP.Trivia_Calibre = "N/A"
+SWEP.Trivia_Manufacturer = "Frost Giants"
 SWEP.Trivia_Mechanism = "Blunt Weapon"
-SWEP.Trivia_Country = "???"
-SWEP.Trivia_Year = 0
+SWEP.Trivia_Country = "Old Scandinavia"
+SWEP.Trivia_Year = 1200
 
 SWEP.Slot = 0
 
@@ -30,8 +29,8 @@ SWEP.ViewModel = "models/horde/weapons/c_mace.mdl"
 SWEP.WorldModel = "models/horde/weapons/c_mace.mdl"
 SWEP.ViewModelFOV = 40
 SWEP.WorldModelOffset = {
-    pos = Vector(-4, 10, -5),
-    ang = Angle(90, 0, 180),
+    pos = Vector(-11, 21, -2),
+    ang = Angle(100, 30, 180),
     scale = 2
 }
 

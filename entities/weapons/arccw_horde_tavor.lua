@@ -11,7 +11,7 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "TAR-21"
 SWEP.Trivia_Class = "Assault Rifle"
-SWEP.Trivia_Desc = "Fully automatic, all purpose weapon."
+SWEP.Trivia_Desc = "Standard-issue service rifle of the IDF."
 
 if CLIENT then
 SWEP.Trivia_Manufacturer = "Israel Weapon Industries"
@@ -47,6 +47,8 @@ SWEP.Primary.ClipSize = 30 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 45
 SWEP.ReducedClipSize = 15
 
+SWEP.PhysBulletMuzzleVelocity = 850
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4
 SWEP.RecoilSide = 0.3
@@ -67,7 +69,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_ar2"
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -198,7 +200,7 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(-4.5, -0.7, 1.25),
+            vpos = Vector(4, -0.8, 0.8),
             vang = Angle(0, 0, 90),
             wpos = Vector(15.625, -0.253, -6.298),
             wang = Angle(-8.829, -0.556, 90)

@@ -11,10 +11,9 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Sonar Grenade"
 SWEP.Trivia_Class = "Hand Grenade"
-SWEP.Trivia_Desc = "."
-SWEP.Trivia_Manufacturer = "Combine"
-SWEP.Trivia_Calibre = "N/A"
-SWEP.Trivia_Mechanism = "Sonar"
+SWEP.Trivia_Desc = "Miniature sonar device designed to assist in marksmenship."
+SWEP.Trivia_Manufacturer = "Combine Overwatch"
+SWEP.Trivia_Mechanism = "Electronic fuze. Sonar"
 SWEP.Trivia_Country = "Combine"
 SWEP.Trivia_Year = 2010
 SWEP.Primary.MaxAmmo = 9

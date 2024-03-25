@@ -11,7 +11,15 @@ SWEP.CamAttachment = 3
 
 SWEP.PrintName = "M16A4"
 SWEP.Trivia_Class = "Assault Rifle"
-SWEP.Trivia_Desc = "3 round burst."
+SWEP.Trivia_Desc = "3 round burst Assault Rifle with an integrated Grenade Launcher."
+
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Colt, KAC"
+    SWEP.Trivia_Calibre = "5.56x45mm NATO"
+    SWEP.Trivia_Mechanism = "Direct Impingement"
+    SWEP.Trivia_Country = "USA"
+    SWEP.Trivia_Year = 2009
+    end
 
 SWEP.Slot = 2
 
@@ -41,6 +49,8 @@ SWEP.Primary.ClipSize = 30 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 45
 SWEP.ReducedClipSize = 15
 
+SWEP.PhysBulletMuzzleVelocity = 850
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.5
 SWEP.RecoilSide = 0.4
@@ -62,7 +72,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_ar2"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 2.5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -98,7 +108,7 @@ SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
 }
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-2.595, -3.512, -0.1), --
+    Pos = Vector(-2.595, -3.512, -0.08), --
     Ang = Angle(0.8, 0, 0),
     ViewModelFOV = 65 / 1.3,
     Magnification = 1.3,
@@ -106,7 +116,7 @@ SWEP.IronSightStruct = {
 
 SWEP.HoldtypeHolstered = "passive"
 SWEP.HoldtypeActive = "ar2"
-SWEP.HoldtypeSights = "rpg"
+SWEP.HoldtypeSights = "ar2"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
 
@@ -225,7 +235,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo"
     },
     {
         PrintName = "Perk",

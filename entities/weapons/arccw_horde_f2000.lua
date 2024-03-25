@@ -28,7 +28,7 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2/c_f2000_2a.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-5, 3, -5),
+    pos = Vector(-7, 3, -5),
     ang = Angle(-10, 0, 180),
     scale = 1.25
 }
@@ -46,6 +46,8 @@ SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 30 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 45
 SWEP.ReducedClipSize = 15
+
+SWEP.PhysBulletMuzzleVelocity = 850
 
 SWEP.Recoil = 0.45
 SWEP.RecoilSide = 0.45
@@ -66,7 +68,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_smg1"
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 6 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -102,7 +104,7 @@ SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
 }
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-3.025, -4.65, 0.881),
+    Pos = Vector(-3.025, -4.65, 0.86),
     Ang = Angle(-1.201, 0, 0),
     ViewModelFOV = 65 / 1.3,
     Magnification = 1.3,
@@ -204,7 +206,7 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(5, -1.35, 1.25),
+            vpos = Vector(5, -1.28, 1.2),
             vang = Angle(0, 0, 90),
         },
     },

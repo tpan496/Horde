@@ -11,8 +11,15 @@ SWEP.CamAttachment = 3
 
 SWEP.PrintName = "MG4"
 SWEP.Trivia_Class = "Light Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, large magazines."
+SWEP.Trivia_Desc = "Robust light machine gun sacrifices mobility for stability. High caliber sustained fire will neutralize targets at long ranges."
 
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Heckler and Koch."
+    SWEP.Trivia_Calibre = "5.56x45mm NATO"
+    SWEP.Trivia_Mechanism = "Gas-operated"
+    SWEP.Trivia_Country = "Germany"
+    SWEP.Trivia_Year = 2001
+    end
 SWEP.Slot = 2
 
 SWEP.UseHands = true
@@ -41,6 +48,8 @@ SWEP.Primary.ClipSize = 120 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 200
 SWEP.ReducedClipSize = 50
 
+SWEP.PhysBulletMuzzleVelocity = 850
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.38
 SWEP.RecoilSide = 0.38
@@ -58,7 +67,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_rpg"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.

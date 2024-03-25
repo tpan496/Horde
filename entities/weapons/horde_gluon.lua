@@ -31,7 +31,7 @@ sound = "horde/weapons/gluon/egon_run3.ogg"
 })
 
 SWEP.PrintName = "Gluon Gun"
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Horde"
 SWEP.Spawnable= true
 SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false

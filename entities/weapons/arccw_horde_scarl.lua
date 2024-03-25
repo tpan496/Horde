@@ -16,6 +16,14 @@ SWEP.PrintName = "SCAR-L"
 SWEP.Trivia_Class = "Assault Rifle"
 SWEP.Trivia_Desc = "SCAR light variant, chambered in 5.56x45mm NATO."
 
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "FN Herstal"
+    SWEP.Trivia_Calibre = "5.56x45mm NATO"
+    SWEP.Trivia_Mechanism = "Short-stroke Gas Piston, rotating bolt"
+    SWEP.Trivia_Country = "Belgium"
+    SWEP.Trivia_Year = 2004
+    end
+
 SWEP.Slot = 2
 
 SWEP.UseHands = true
@@ -43,6 +51,8 @@ SWEP.Primary.ClipSize = 30 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 45
 SWEP.ReducedClipSize = 20
 
+SWEP.PhysBulletMuzzleVelocity = 800
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4
 SWEP.RecoilSide = 0.3
@@ -63,7 +73,7 @@ SWEP.Firemodes = {
     },
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_ar2"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 4 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -100,8 +110,8 @@ SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
 }
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-2.52, -0, 0.12),
-    Ang = Angle(0, 0, 0),
+    Pos = Vector(-2.52, -0, 0.15),
+    Ang = Angle(0.25, 0, 0),
     ViewModelFOV = 65 / 1.3,
     Magnification = 1.3,
 }

@@ -5,14 +5,18 @@ if CLIENT then
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - MW2"
+SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
-SWEP.PrintName = "M9"
+SWEP.PrintName = "92SB"
 SWEP.Trivia_Class = "Handgun"
-SWEP.Trivia_Desc = "Semi-automatic (single fire)"
-
+SWEP.Trivia_Desc = "To whoever is reading this: this is not an M9."
+SWEP.Trivia_Manufacturer = "Beretta"
+SWEP.Trivia_Calibre = "9x19mm Parabellum"
+SWEP.Trivia_Mechanism = "Short recoil"
+SWEP.Trivia_Country = "Italy"
+SWEP.Trivia_Year = 1991
 SWEP.Slot = 1
 
 SWEP.UseHands = true
@@ -40,6 +44,8 @@ SWEP.Primary.ClipSize = 15 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 25
 SWEP.ReducedClipSize = 10
 
+SWEP.PhysBulletMuzzleVelocity = 410
+
 SWEP.Recoil = 0.300
 SWEP.RecoilSide = 0.225
 SWEP.RecoilRise = 0.1
@@ -56,7 +62,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_pistol"}
+SWEP.NPCWeaponType = "weapon_pistol"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 6 / 2 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -98,7 +104,7 @@ SWEP.IronSightStruct = {
 }
 
 SWEP.HoldtypeHolstered = "normal"
-SWEP.HoldtypeActive = "revolver"
+SWEP.HoldtypeActive = "duel"
 SWEP.HoldtypeSights = "revolver"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
@@ -334,7 +340,7 @@ SWEP.Animations = {
     ["reload"] = {
         Source = "reload",
         Time = 51/30,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 9/24},
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	t = 27/24},
@@ -348,7 +354,7 @@ SWEP.Animations = {
     ["reload_empty"] = {
         Source = "reload_empty",
         Time = 60/30,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 9/24},
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	t = 27/24},
@@ -514,7 +520,7 @@ SWEP.Animations = {
         Source = "reload_akimbo_right",
         Time = 70/40,
         MinProgress = 1.2,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 4/40},
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	t = 39/40},
@@ -524,7 +530,7 @@ SWEP.Animations = {
         Source = "reload_empty_akimbo_right",
         Time = 89/40,
         MinProgress = 1.2,
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
+        TPAnim = ACT_HL2MP_GESTURE_RELOAD_DUEL,
         SoundTable = {
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 4/40},
 						{s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	t = 45/40},

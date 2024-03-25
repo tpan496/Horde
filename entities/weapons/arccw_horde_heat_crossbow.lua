@@ -13,10 +13,9 @@ SWEP.PrintName = "Heat Crossbow"
 SWEP.Trivia_Class = "Crossbow"
 SWEP.Trivia_Desc = "Improvised sniper weapon. Can switch between ballistic mode and heat mode."
 SWEP.Trivia_Manufacturer = "Resistance"
-SWEP.Trivia_Calibre = "Rebar"
-SWEP.Trivia_Mechanism = "String"
-SWEP.Trivia_Country = "Earth"
-SWEP.Trivia_Year = 2007
+SWEP.Trivia_Calibre = "Red-hot Rebar"
+SWEP.Trivia_Mechanism = "Elastic, Electric"
+SWEP.Trivia_Year = 2004
 
 SWEP.Slot = 3
 
@@ -77,7 +76,7 @@ SWEP.MoveDispersion = 250
 
 SWEP.Primary.Ammo = "XBowBolt" -- what ammo type the gun uses
 
-SWEP.ShootVol = 100 -- volume of shoot sound
+SWEP.ShootVol = 90 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound = "weapons/crossbow/fire1.wav"

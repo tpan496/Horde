@@ -12,10 +12,10 @@ SWEP.PrintName = "AKM"
 SWEP.Trivia_Class = "Assault Rifle"
 SWEP.Trivia_Desc = "Ubiquitous Russian designed rifle used by militaries and militias around the world. One of the most popular weapons ever produced. Can be adapted into a variety of different forms."
 SWEP.Trivia_Manufacturer = "Izhmash"
-SWEP.Trivia_Calibre = "7.62x39mm Soviet"
-SWEP.Trivia_Mechanism = "Gas-Operated"
+SWEP.Trivia_Calibre = "7.62x39mm M43"
+SWEP.Trivia_Mechanism = "Gas-Operated, rotating bolt"
 SWEP.Trivia_Country = "Russia"
-SWEP.Trivia_Year = 1956
+SWEP.Trivia_Year = 1959
 
 SWEP.Slot = 2
 
@@ -95,8 +95,8 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.30
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.03, -10, 1.1),
-    Ang = Angle(0.16, 0.125, -2.412),
+    Pos = Vector(-5.03, -10, 1.05),
+    Ang = Angle(0.16, 0.04, -2.412),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false

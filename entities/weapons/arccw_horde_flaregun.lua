@@ -15,9 +15,9 @@ SWEP.TrueName = "Flare Gun"
 SWEP.Trivia_Class = "Flare Gun"
 SWEP.Trivia_Desc = "Shoots burning flares."
 SWEP.Trivia_Manufacturer = "Orion Safety Products"
-SWEP.Trivia_Calibre = "12-gauge"
-SWEP.Trivia_Mechanism = "Projectile"
-SWEP.Trivia_Country = "US"
+SWEP.Trivia_Calibre = "12 Gauge"
+SWEP.Trivia_Mechanism = "Single-Action"
+SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 2000
 
 SWEP.Slot = 1

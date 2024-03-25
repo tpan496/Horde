@@ -11,10 +11,9 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Shrapnel Grenade"
 SWEP.Trivia_Class = "Hand Grenade"
-SWEP.Trivia_Desc = "."
-SWEP.Trivia_Manufacturer = "Combine"
-SWEP.Trivia_Calibre = "N/A"
-SWEP.Trivia_Mechanism = "Anti-personnel Shrapnel"
+SWEP.Trivia_Desc = "Modified variant of the M67 Anti-Personnel Grenade designed to wound and maim targets rather than kill."
+SWEP.Trivia_Manufacturer = "Combine Overwatch"
+SWEP.Trivia_Mechanism = "Pyrotechnic delay M213 fuze, anti-personnel shrapnel pellets"
 SWEP.Trivia_Country = "Combine"
 SWEP.Trivia_Year = 2010
 SWEP.Primary.MaxAmmo = 9

@@ -11,7 +11,12 @@ SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "MP5K Medic PDW"
 SWEP.Trivia_Class = "Sub Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, close range."
+SWEP.Trivia_Desc = "Combat Medic variant of the venerable MP5K PDW designed for special forces units across the globe."
+SWEP.Trivia_Manufacturer = "Heckler und Koch"
+SWEP.Trivia_Calibre = "9x19mm Parabellum"
+SWEP.Trivia_Mechanism = "Roller-Delayed Blowback"
+SWEP.Trivia_Country = "Germany"
+SWEP.Trivia_Year = 2009
 
 SWEP.Slot = 2
 
@@ -40,6 +45,8 @@ SWEP.Primary.ClipSize = 30 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 45
 SWEP.ReducedClipSize = 15
 
+SWEP.PhysBulletMuzzleVelocity = 450
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4
 SWEP.RecoilSide = 0.35
@@ -59,7 +66,7 @@ SWEP.Firemodes = {
     },
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_smg1"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.

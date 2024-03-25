@@ -10,27 +10,26 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "SMG-1"
 SWEP.Trivia_Class = "Submachine Gun"
-SWEP.Trivia_Desc = "A compact, fully automatic firearm."
-SWEP.Trivia_Manufacturer = "Resistance"
-SWEP.Trivia_Calibre = "9x19mm Parabellum"
-SWEP.Trivia_Mechanism = "Roller-Delayed Blowback"
-SWEP.Trivia_Country = "Earth"
-SWEP.Trivia_Year = 2007
+SWEP.Trivia_Desc = "A compact, fully automatic PDW for Civil Protection and Overwatch fireteams."
+SWEP.Trivia_Manufacturer = "Combine Overwatch"
+SWEP.Trivia_Calibre = "4.6x30mm"
+SWEP.Trivia_Mechanism = "Short-stroke Gas Piston"
+SWEP.Trivia_Year = 2003
 
 SWEP.Slot = 2
 
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/c_smg1.mdl"
-SWEP.WorldModel = "models/weapons/w_smg_mp5.mdl"
+SWEP.WorldModel = "models/weapons/w_smg1.mdl"
 SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "000000000000"
 
-SWEP.Damage = 6
+SWEP.Damage = 8
 SWEP.DamageMin = 4 -- damage done at maximum range
-SWEP.Range = 31.25 -- in METRES
-SWEP.Penetration = 1
+SWEP.Range = 32 -- in METRES
+SWEP.Penetration = 4
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 SWEP.MuzzleVelocity = 1050 -- projectile or phys bullet muzzle velocity
@@ -38,7 +37,7 @@ SWEP.MuzzleVelocity = 1050 -- projectile or phys bullet muzzle velocity
 SWEP.ChamberSize = 0 -- how many rounds can be chambered.
 SWEP.Primary.ClipSize = 30 -- DefaultClip is automatically set.
 
-SWEP.PhysBulletMuzzleVelocity = 400
+SWEP.PhysBulletMuzzleVelocity = 750
 
 SWEP.Recoil = 0.25
 SWEP.RecoilSide = 0.125
@@ -83,7 +82,7 @@ SWEP.MeleeHitNPCSound = "physics/body/body_medium_break2.wav"
 SWEP.MuzzleEffect = "muzzleflash_smg"
 SWEP.ShellModel = "models/shells/shell_9mm.mdl"
 SWEP.ShellPitch = 100
-SWEP.ShellScale = 1.25
+SWEP.ShellScale = 1
 SWEP.ShellRotateAngle = Angle(0, 180, 0)
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
@@ -94,7 +93,7 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.275
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-6.4, -5, 0.9),
+    Pos = Vector(-6.4, -5, 0.87),
     Ang = Angle(0.75, 0.05, 0),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight

@@ -12,7 +12,6 @@ SWEP.PrintName = "AN/M14 Thermite"
 SWEP.Trivia_Class = "Hand Grenade"
 SWEP.Trivia_Desc = "A grenade that produces extremely hot molten iron via a burning thermite reaction. It is mainly intended to be used to destroy material rather than as a weapon."
 SWEP.Trivia_Manufacturer = "Day & Zimmermann"
-SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Thermite TH3"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1944

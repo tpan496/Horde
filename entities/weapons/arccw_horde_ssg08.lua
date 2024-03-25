@@ -54,7 +54,7 @@ SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
         Mode = 1,
-        PrintName = "FIRE"
+        PrintName = "Bolt-Action"
     },
     {
         Mode = 0
@@ -97,8 +97,8 @@ SWEP.SightedSpeedMult = 0.9
 SWEP.SightTime = 0.2
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.65, -8.573, 1.65),
-    Ang = Angle(0, 0.2, -0.55),
+    Pos = Vector(-5.64, -8.573, 1.65),
+    Ang = Angle(-0.2, 0.2, -0.55),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false
@@ -286,7 +286,7 @@ SWEP.Attachments = {
         Slot = "muzzle",
         Bone = "v_weapon.ssg08_parent",
         Offset = {
-            vpos = Vector(0.2, -2.3, 27),
+            vpos = Vector(0.2, -2.25, 27),
             vang = Angle(90, 0, -90),
         },
         InstalledEles = {"fh_none"},

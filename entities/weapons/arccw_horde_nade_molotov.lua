@@ -12,7 +12,6 @@ SWEP.PrintName = "Molotov Cocktail"
 SWEP.Trivia_Class = "Hand Grenade"
 SWEP.Trivia_Desc = "Improvised hand grenade created with a bottle of fuel and a rag, lit on fire and thrown. The Molotov Cocktail earned its name from Soviet foreign minister Vyacheslav Molotov, who claimed that Soviet bombing raids were humanitarian aid packages. Sarcastically, the Finns dubbed the bombs 'Molotov's Breadbaskets', and when they developed the fuel bomb to fight Soviet tanks, named them 'Molotov's Cocktails', to go with his food parcels."
 SWEP.Trivia_Manufacturer = "The People"
-SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Gasoline + Dish Soap"
 SWEP.Trivia_Country = "Finland"
 SWEP.Trivia_Year = 1939

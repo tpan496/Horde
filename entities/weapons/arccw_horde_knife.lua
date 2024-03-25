@@ -12,7 +12,6 @@ SWEP.PrintName = "Bayonet"
 SWEP.Trivia_Class = "Knife"
 SWEP.Trivia_Desc = "Sharp metal blade for stabbing and slashing. Usually found attached to a firearm."
 SWEP.Trivia_Manufacturer = "Cold Steel"
-SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Sharp Edge"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 2006

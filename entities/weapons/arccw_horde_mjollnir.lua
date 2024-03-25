@@ -15,7 +15,6 @@ SWEP.PrintName = "Mjollnir"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Warhammer."
 SWEP.Trivia_Manufacturer = "Asgard"
-SWEP.Trivia_Calibre = "N/A"
 SWEP.Trivia_Mechanism = "Club Weapon"
 SWEP.Trivia_Country = "Asgard"
 SWEP.Trivia_Year = 2018

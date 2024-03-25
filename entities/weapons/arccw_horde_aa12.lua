@@ -21,14 +21,14 @@ SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 2005
 end
 
-SWEP.Slot = 2
+SWEP.Slot = 3
 
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_aa12_1.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(0, 3, -8),
+    pos = Vector(-7, 3, -7),
     ang = Angle(-10, 0, 180),
     scale = 1.25
 }
@@ -46,6 +46,8 @@ SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 20 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 20
 SWEP.ReducedClipSize = 4
+
+SWEP.PhysBulletMuzzleVelocity = 450
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 2
@@ -201,7 +203,7 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(16, -1.1, 2.2),
+            vpos = Vector(14, -0.8, 2.1),
             vang = Angle(0, 0, 90),
             wpos = Vector(15.625, -0.253, -6.298),
             wang = Angle(-8.829, -0.556, 90)

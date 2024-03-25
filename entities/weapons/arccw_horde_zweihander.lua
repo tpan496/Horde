@@ -14,11 +14,10 @@ SWEP.AdminOnly = false
 SWEP.PrintName = "Zweihander"
 SWEP.Trivia_Class = "Melee Weapon"
 SWEP.Trivia_Desc = "Double hand sword."
-SWEP.Trivia_Manufacturer = "Arasaki"
-SWEP.Trivia_Calibre = "N/A"
+SWEP.Trivia_Manufacturer = "Landsknechte"
 SWEP.Trivia_Mechanism = "Slashing Weapon"
-SWEP.Trivia_Country = "Japan"
-SWEP.Trivia_Year = 2020
+SWEP.Trivia_Country = "Germany"
+SWEP.Trivia_Year = 1500
 
 SWEP.Slot = 0
 
@@ -29,7 +28,7 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/horde/weapons/c_zweihander.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-15, 10, -8),
+    pos = Vector(-13, 10, -8),
     ang = Angle(-10, 0, 180),
 }
 SWEP.WorldModel = "models/horde/weapons/c_zweihander.mdl"

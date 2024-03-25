@@ -4,17 +4,17 @@ if CLIENT then
     killicon.Add("arccw_horde_awp", "arccw/weaponicons/arccw_go_awp", Color(0, 0, 0, 255))
 end
 SWEP.Base = "arccw_base"
-SWEP.Spawnable = false -- this obviously has to be set to true
+SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "AWSM"
+SWEP.PrintName = "AWSM (Horde)"
 SWEP.Trivia_Class = "Sniper Rifle"
 SWEP.Trivia_Desc = "The Arctic Warfare Super Magnum is a cold-weather sniper rifle for police and military using a high-caliber round."
 SWEP.Trivia_Manufacturer = "Accuracy International"
 SWEP.Trivia_Calibre = ".338 Lapua Magnum"
 SWEP.Trivia_Mechanism = "Bolt-Action"
-SWEP.Trivia_Country = "United Kingdom"
+SWEP.Trivia_Country = "UK"
 SWEP.Trivia_Year = 1996
 
 SWEP.Slot = 2
@@ -53,7 +53,7 @@ SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
         Mode = 1,
-        PrintName = "FIRE"
+        PrintName = "Bolt-Action"
     },
     {
         Mode = 0
@@ -96,8 +96,8 @@ SWEP.SightedSpeedMult = 0.50
 SWEP.SightTime = 0.25
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-4.9109, -8.573, 1.80253),
-    Ang = Angle(0.060123, 0.26674, -0.55),
+    Pos = Vector(-4.9, -8.573, 1.80253),
+    Ang = Angle(-0, 0.26674, -0.55),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = false

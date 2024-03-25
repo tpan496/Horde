@@ -38,6 +38,8 @@ SWEP.Primary.ClipSize = 40 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 40
 SWEP.ReducedClipSize = 40
 
+SWEP.PhysBulletMuzzleVelocity = 1000
+
 SWEP.Recoil = 0.45 * 1.2
 SWEP.RecoilSide = 0.4
 SWEP.RecoilRise = 1
@@ -45,7 +47,7 @@ SWEP.RecoilPunch = 2.5
 
 SWEP.Delay = 60 / 689 -- 60 / RPM.
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_ar2"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
@@ -85,6 +87,7 @@ SWEP.Attachments = {
             vmin = Vector(0, 0, 3.5),
             vmax = Vector(3, 0, 3.5),
         },
+        Installed = "optic_mw2_mp5krearsight",
         InstalledEles = {"nors"},
         MergeSlots = {2},
     },

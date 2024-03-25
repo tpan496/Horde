@@ -10,8 +10,8 @@ SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
 SWEP.PrintName = "Anaconda (Horde)"
-SWEP.Trivia_Class = "Handgun"
-SWEP.Trivia_Desc = "Revolver."
+SWEP.Trivia_Class = "Magnum Revolver"
+SWEP.Trivia_Desc = "Bigger is better (It's an inuendo get it? Please laugh...)"
 
 SWEP.Trivia_Manufacturer = "Colt"
 SWEP.Trivia_Calibre = ".44 Magnum"
@@ -24,7 +24,12 @@ SWEP.Slot = 1
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2/c_anaconda.mdl"
-SWEP.MirrorVMWM = false
+SWEP.MirrorVMWM = true
+SWEP.WorldModelOffset = {
+    pos = Vector(-9, 3, -4),
+    ang = Angle(-7, 0, 180),
+    scale = 1.125
+}
 SWEP.WorldModel = "models/weapons/w_357.mdl"
 SWEP.ViewModelFOV = 65
 
@@ -41,6 +46,8 @@ SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 6 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 9
 SWEP.ReducedClipSize = 3
+
+SWEP.PhysBulletMuzzleVelocity = 450
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.80
@@ -59,7 +66,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_357"
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 5 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.

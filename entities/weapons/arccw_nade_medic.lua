@@ -9,10 +9,9 @@ SWEP.PrintName = "Medic Grenade"
 SWEP.Trivia_Class = "Hand Grenade"
 SWEP.Trivia_Desc = "A grenade that releases detoxification clouds."
 SWEP.Trivia_Manufacturer = "Horzine Biotech"
-SWEP.Trivia_Calibre = "N/A"
-SWEP.Trivia_Mechanism = "Medic Grenade MKI"
-SWEP.Trivia_Country = "Britain"
-SWEP.Trivia_Year = 2000
+SWEP.Trivia_Mechanism = "Antibiotic Gasses"
+SWEP.Trivia_Country = "UK"
+SWEP.Trivia_Year = 2009
 SWEP.Primary.MaxAmmo = 9
 SWEP.ForceDefaultAmmo = 0
 

@@ -11,7 +11,15 @@ SWEP.CamAttachment = 3
 
 SWEP.PrintName = "RPD"
 SWEP.Trivia_Class = "Light Machine Gun"
-SWEP.Trivia_Desc = "Fully automatic, large magazines."
+SWEP.Trivia_Desc = "Fully automatic, large magazines. Effective at medium to long range."
+
+if CLIENT then
+    SWEP.Trivia_Manufacturer = "Bazalt and Degtyarev plant."
+    SWEP.Trivia_Calibre = "7.62X39mm M43"
+    SWEP.Trivia_Mechanism = "Gas operated long stroke piston, flapper locking, open bolt"
+    SWEP.Trivia_Country = "Soviet Union"
+    SWEP.Trivia_Year = 1960
+    end
 
 SWEP.Slot = 2
 
@@ -40,6 +48,8 @@ SWEP.Primary.ClipSize = 100 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 200
 SWEP.ReducedClipSize = 50
 
+SWEP.PhysBulletMuzzleVelocity = 800
+
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4
 SWEP.RecoilSide = 0.2
@@ -57,7 +67,7 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
+SWEP.NPCWeaponType = "weapon_rpg"
 SWEP.NPCWeight = 100
 
 SWEP.AccuracyMOA = 4 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.

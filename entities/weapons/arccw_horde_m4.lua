@@ -8,14 +8,14 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "M4A1"
+SWEP.PrintName = "M4A1 CQBR"
 SWEP.Trivia_Class = "Assault Rifle"
 SWEP.Trivia_Desc = "A popular American assault rifle based on Eugene Stoner's AR-15 system. Well-balanced with good all-round characteristics."
-SWEP.Trivia_Manufacturer = "FN USA"
+SWEP.Trivia_Manufacturer = "Daniel Defense"
 SWEP.Trivia_Calibre = "5.56x45mm NATO"
-SWEP.Trivia_Mechanism = "Gas-Operated"
+SWEP.Trivia_Mechanism = "Direct impingement"
 SWEP.Trivia_Country = "USA"
-SWEP.Trivia_Year = 1993
+SWEP.Trivia_Year = 2000
 
 SWEP.Slot = 2
 
