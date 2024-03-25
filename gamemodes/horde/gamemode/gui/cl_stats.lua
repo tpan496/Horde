@@ -775,7 +775,9 @@ function PANEL:Init()
             if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(perk_level) then goto cont end
             if not MySelf.Horde_PerkChoices then break end
 
-            local choice = v.choices[MySelf.Horde_PerkChoices[class][perk_level] or 1]
+            local classPerkChoices = MySelf.Horde_PerkChoices[class]
+            local perkStats = classPerkChoices[perk_level]
+            local choice = v.choices[perkStats or 1]
             if not choice then error("Invalid choice in perk level " .. perk_level .. " for " .. class .. "!") return end
 
             local perk = HORDE.perks[choice]
