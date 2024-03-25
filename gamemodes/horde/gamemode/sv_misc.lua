@@ -36,7 +36,7 @@ end
 hook.Add("EntityTakeDamage", "ManhackContactDamage", function (target, dmginfo)
     local inflictor = dmginfo:GetInflictor()
     local ply = inflictor:GetNWEntity("HordeOwner")
-    if ply:IsPlayer() and inflictor:GetClass() == "npc_manhack" then
+    if IsValid( ply ) and ply:IsPlayer() and inflictor:GetClass() == "npc_manhack" then
         dmginfo:SetDamage(math.max(dmginfo:GetDamage(), inflictor:GetMaxHealth()))
         timer.Simple(0, function() if inflictor:IsValid() then
             if inflictor.Horde_Has_Antimatter_Shield then
