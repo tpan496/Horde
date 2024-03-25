@@ -49,18 +49,18 @@ function ENT:CustomOnPhysicsCollide(data, phys)
 	if self.Dead then return end
 	self.Dead = true
 	local dmg = DamageInfo()
-	if self.Owner:IsValid() then
-		dmg:SetAttacker(self.Owner)
-	else
-		dmg:SetAttacker(self)
+    local attacker = self.Owner
+	if not IsValid( attacker ) then
+		attacker = self
 	end
+    dmg:SetAttacker(attacker)
 	dmg:SetInflictor(self)
 	dmg:SetDamageType(DMG_GENERIC)
 	dmg:SetDamage(20)
 	util.BlastDamageInfo(dmg, self:GetPos(), 150)
 	for _, e in pairs(ents.FindInSphere(self:GetPos(), 180)) do
 		if e:IsPlayer() then
-			e:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 20, self.Owner)
+			e:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 20, attacker)
 		end
 	end
 	self:OnCollideSoundCode()
