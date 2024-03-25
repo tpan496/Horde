@@ -252,7 +252,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end
 
     -- Prevent minion from damaging players
-    if HORDE:IsPlayerMinion(dmg:GetInflictor()) or HORDE:IsPlayerMinion(dmg:GetAttacker()) then return true end
+    if (IsValid( dmg:GetInflictor() ) and HORDE:IsPlayerMinion(dmg:GetInflictor()))or (IsValid( dmg:GetAttacker() ) and HORDE:IsPlayerMinion(dmg:GetAttacker())) then return true end
 
     if dmg:GetDamage() <= 0.5 then return true end
 
