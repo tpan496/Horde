@@ -92,6 +92,26 @@ hook.Add( "MapVote_ChangeMap", "Horde_MapVote_ChangeMap", function(map)
     setNextMapDifficulty()
 end)
 
+function HORDE:ShouldCountPlayer( ply )
+    return hook.Run( "Horde_ShouldCountPlayer", ply ) ~= false
+end
+
+function HORDE:GetReadyPlayers()
+    local ready_count = 0
+    local countable_players = 0
+    for _, ply in pairs( player.GetAll() ) do
+        local should_count = HORDE:ShouldCountPlayer( ply )
+        if should_count ~= false then
+            if HORDE.player_ready[ply] == 1 then
+                ready_count = ready_count + 1
+            end
+            countable_players = countable_players + 1
+        end
+    end
+
+    return countable_players, ready_count
+end
+
 function HORDE:GameEnd(status)
     if HORDE.game_end then return end
     timer.Simple(HORDE.vote_remaining_time + 3, function ()
@@ -119,7 +139,9 @@ function HORDE:GameEnd(status)
         tokens = tokens + math.max(0, HORDE.CurrentDifficulty - 1)
     end
     for _, ply in pairs(player.GetHumans()) do
-        ply:Horde_AddSkullTokens(tokens)
+        if HORDE:ShouldCountPlayer(ply) then
+            ply:Horde_AddSkullTokens(tokens)
+        end
     end
 
     HORDE.game_end = true
@@ -556,15 +578,7 @@ function HORDE:PlayerInit(ply)
 
     if HORDE.start_game then return end
 
-    local ready_count = 0
-    local total_player = 0
-    for _, other_ply in pairs(player.GetAll()) do
-        if HORDE.player_ready[other_ply] == 1 then
-            ready_count = ready_count + 1
-        end
-        total_player = total_player + 1
-    end
-
+    local total_player, ready_count = HORDE:GetReadyPlayers()
     if total_player > 0 and total_player == ready_count then
         HORDE.start_game = true
     end

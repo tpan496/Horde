@@ -64,19 +64,12 @@ function Ready(ply)
     end
 
     HORDE.player_ready[ply] = 1
-    local ready_count = 0
-    local total_player = 0
-    for _, ready_ply in pairs(player.GetAll()) do
-        if HORDE.player_ready[ready_ply] == 1 then
-            ready_count = ready_count + 1
-        end
-        total_player = total_player + 1
-    end
 
-    if ready_count >= total_player then
+    local totalPlayers, readyCount = HORDE:GetReadyPlayers()
+    if readyCount >= totalPlayers then
         HORDE.start_game = true
         HORDE.current_break_time = math.min(HORDE.current_break_time, 10)
-    elseif ready_count >= HORDE:Round2(total_player * GetConVar("horde_ready_countdown_ratio"):GetFloat()) then
+    elseif readyCount >= HORDE:Round2(totalPlayers * GetConVar("horde_ready_countdown_ratio"):GetFloat()) then
         HORDE.start_game = true
         HORDE.current_break_time = math.min(HORDE.current_break_time, HORDE.total_break_time)
     end

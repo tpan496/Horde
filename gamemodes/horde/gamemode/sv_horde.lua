@@ -1040,7 +1040,7 @@ function HORDE:WaveStart()
 
     local countablePlayerCount = 0
     for _, ply in ipairs( player.GetAll() ) do
-        local result = hook.Run("Horde_ShouldCountPlayer", ply)
+        local result = HORDE:ShouldCountPlayer(ply)
         if result ~= false then
             countablePlayerCount = countablePlayerCount + 1
         end
@@ -1333,15 +1333,7 @@ function HORDE:Direct()
         HORDE:HardResetDirector()
         HORDE:HardResetEnemies()
 
-        local ready_count = 0
-        local total_player = 0
-        for _, ply in pairs(player.GetAll()) do
-            if HORDE.player_ready[ply] == 1 then
-                ready_count = ready_count + 1
-            end
-            total_player = total_player + 1
-        end
-
+        local total_player, ready_count = HORDE:GetReadyPlayers()
         if total_player > 0 and total_player == ready_count then
             HORDE.start_game = true
         else
