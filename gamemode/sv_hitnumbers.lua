@@ -1,23 +1,24 @@
 util.AddNetworkString("Horde_HitnumbersSpawn")
 util.AddNetworkString("Horde_HitnumbersDebuffSpawn")
+util.AddNetworkString("Horde_FearDebuffSpawn")
 
 -- Enable/Disable this addon globally.
 local on = true
 
 hook.Add("PostEntityTakeDamage", "Horde_HitnumbersDamagePost", function(target, dmginfo, took)
 	if not GetConVar("horde_display_damage"):GetBool() then return end
-    if not took then return end
+	if not took then return end
 	local attacker         = dmginfo:GetAttacker()
 	local attackerIsPlayer = attacker:IsPlayer()
 
-	if not ( attackerIsPlayer ) then return end
-	if attacker == target  then return end
-    if not target:IsNPC() then return end
+	if not (attackerIsPlayer) then return end
+	if attacker == target then return end
+	if not target:IsNPC() then return end
 
 	local dmgAmount = dmginfo:GetDamage()
 	local dmgType   = dmginfo:GetDamageType()
 	-- Get damage position.
-	local pos = dmginfo:GetDamagePosition()
+	local pos       = dmginfo:GetDamagePosition()
 	--[[if dmgType == DMG_CLUB or dmgType == DMG_SLASH then
 		pos = util.TraceHull({
 			start  = attacker:GetShootPos(),
@@ -27,10 +28,11 @@ hook.Add("PostEntityTakeDamage", "Horde_HitnumbersDamagePost", function(target, 
 			maxs   = Vector( 10, 10, 10),
 			mask   = MASK_SHOT_HULL,
 		}).HitPos
-	end]]--
-    if !pos or dmginfo:IsExplosionDamage() then
-        pos = target:GetPos()
-    end
+	end]]
+	--
+	if ! pos or dmginfo:IsExplosionDamage() then
+		pos = target:GetPos()
+	end
 
 	-- Create and send the indicator to players.
 	net.Start("Horde_HitnumbersSpawn", true)
@@ -48,18 +50,36 @@ hook.Add("PostEntityTakeDamage", "Horde_HitnumbersDamagePost", function(target, 
 	net.Send(attacker)
 end)
 
-hook.Add("Horde_PostEnemyDebuffApply", "Horde_HitnumbersDebuff", function (target, inflictor, debuff, pos)
-    if not GetConVar("horde_display_damage"):GetBool() then return end
-    if IsValid(inflictor) and inflictor:IsPlayer() then
-        net.Start("Horde_HitnumbersDebuffSpawn", true)
+hook.Add("Horde_PostEnemyDebuffApply", "Horde_HitnumbersDebuff", function(target, inflictor, debuff, pos)
+	if not GetConVar("horde_display_damage"):GetBool() then return end
+	if IsValid(inflictor) and inflictor:IsPlayer() then
+		net.Start("Horde_HitnumbersDebuffSpawn", true)
 
-        -- Debuff
-        net.WriteUInt(debuff, 32)
+		-- Debuff
+		net.WriteUInt(debuff, 32)
 
-        -- Damage position.
-        net.WriteVector(pos)
+		-- Damage position.
+		net.WriteVector(pos)
 
-        -- Send indicator to receiver, else all players.
-        net.Send(inflictor)
-    end
+		-- Send indicator to receiver, else all players.
+		net.Send(inflictor)
+	end
+end)
+
+hook.Add("Horde_PostFearApply", "Horde_FearDebuff", function(target, inflictor, debuff, pos, stack)
+	if not GetConVar("horde_display_damage"):GetBool() then return end
+	if IsValid(inflictor) and inflictor:IsPlayer() then
+		net.Start("Horde_FearDebuffSpawn", true)
+
+		-- Debuff
+		net.WriteUInt(debuff, 32)
+
+		-- Damage position.
+		net.WriteVector(pos)
+
+		net.WriteUInt(stack, 4)
+
+		-- Send indicator to receiver, else all players.
+		net.Send(inflictor)
+	end
 end)

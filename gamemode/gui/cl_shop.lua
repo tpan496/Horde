@@ -9,7 +9,7 @@ function PANEL:Init()
     end
     self:SetPos((ScrW() / 2) - (self:GetWide() / 2), (ScrH() / 2) - (self:GetTall() / 2))
 
-    local close_btn = vgui.Create("DButton", self) 
+    local close_btn = vgui.Create("DButton", self)
     close_btn:SetFont("marlett")
     close_btn:SetText("r")
     close_btn.Paint = function() end
@@ -22,7 +22,7 @@ function PANEL:Init()
     btn_container:SetTall(32)
     btn_container:Dock(TOP)
     btn_container:DockMargin(0, 48, 0, 0)
-    btn_container.Paint = function (pnl, w, h)
+    btn_container.Paint = function(pnl, w, h)
         surface.SetDrawColor(40, 40, 40, 0)
         surface.DrawRect(0, 0, self:GetWide(), 32)
     end
@@ -71,16 +71,19 @@ function PANEL:Init()
                 pnl:SetTall(pnl:GetTall() + 5)
                 DLabel.PerformLayout(pnl)
                 pnl:SetContentAlignment(4)
-                pnl:SetTextInset( 12, 0 )
+                pnl:SetTextInset(12, 0)
             end
         else
             btn = vgui.Create("DButton", btn_container)
             btn_container:AddPanel(btn)
             btn:Dock(dock)
             btn.PerformLayout = function(pnl)
-                pnl:SizeToContents() pnl:SetWide(pnl:GetWide() + 12) pnl:SetTall( pnl:GetParent():GetTall() ) DLabel.PerformLayout(pnl)
+                pnl:SizeToContents()
+                pnl:SetWide(pnl:GetWide() + 12)
+                pnl:SetTall(pnl:GetParent():GetTall())
+                DLabel.PerformLayout(pnl)
                 pnl:SetContentAlignment(4)
-                pnl:SetTextInset( 12, 0 )
+                pnl:SetTextInset(12, 0)
             end
         end
 
@@ -93,7 +96,7 @@ function PANEL:Init()
         btn.Paint = function(pnl, w, h)
             if text == "Class/Perks" then
                 if pnl:GetActive() then
-                    draw.RoundedBox(5, 0, 0, w, h, Color(40,40,40,230))
+                    draw.RoundedBox(5, 0, 0, w, h, Color(40, 40, 40, 230))
                 else
                     draw.RoundedBox(5, 0, 0, w, h, Color(220, 20, 60, p % 225))
                     if p >= 224 then
@@ -116,13 +119,13 @@ function PANEL:Init()
                 else
                     surface.SetDrawColor(color_white)
                 end
-                
+
                 surface.DrawTexturedRect(w - h - 10, 0, h, h)
             else
-                surface.SetDrawColor(0,0,0,0)
+                surface.SetDrawColor(0, 0, 0, 0)
                 surface.DrawRect(0, 0, w, h)
                 if pnl:GetActive() then
-                    surface.SetDrawColor(Color(40,40,40,230))
+                    surface.SetDrawColor(Color(40, 40, 40, 230))
                     surface.DrawRect(0, 0, w, h)
                 end
             end
@@ -139,19 +142,26 @@ function PANEL:Init()
                 else
                     pnl:SetTextColor(HORDE.color_crimson)
                 end
-            return end
+                return
+            end
             pnl:SetTextColor(Color(255, 255, 255))
         end
 
         btn.GetActive = function(pnl) return pnl.Active or false end
         btn.SetActive = function(pnl, state) pnl.Active = state end
 
-        if firstBtn then firstBtn = false; btn:SetActive(true) end
+        if firstBtn then
+            firstBtn = false; btn:SetActive(true)
+        end
 
         btn.DoClick = function(pnl)
             description_panel:SetData(nil)
-            for k, v in pairs(btns) do v:SetActive(false) v:OnDeactivate() end
-            pnl:SetActive(true) pnl:OnActivate()
+            for k, v in pairs(btns) do
+                v:SetActive(false)
+                v:OnDeactivate()
+            end
+            pnl:SetActive(true)
+            pnl:OnActivate()
             surface.PlaySound("UI/buttonclick.wav")
             if text == "Attachment" then
                 -- Reload attachments everytime a player click this
@@ -182,7 +192,7 @@ function PANEL:Init()
             panel:SetVisible(true)
             panel:SetZPos(100)
         end
-        btn.OnCursorEntered = function ()
+        btn.OnCursorEntered = function()
             surface.PlaySound("UI/buttonrollover.wav")
         end
 
@@ -234,7 +244,7 @@ function PANEL:Init()
         end)
 
         local ShopCategoryTab = vgui.Create("DPanel", self)
-        ShopCategoryTab.Paint = function () end
+        ShopCategoryTab.Paint = function() end
 
         if category ~= "Attachment" then
             local DScrollPanel = vgui.Create("DScrollPanel", ShopCategoryTab)
@@ -267,7 +277,7 @@ function PANEL:Init()
         end
 
         ::cont::
-    end    
+    end
 
     -- Class tab
     local ClassTab = vgui.Create("DPanel", self)
@@ -285,8 +295,8 @@ function PANEL:Init()
         classes[horde_class.order] = horde_class
     end
     table.sort(classes, function(a, b)
-            return a.order < b.order
-        end)
+        return a.order < b.order
+    end)
     for _, horde_class in pairs(classes) do
         local model = vgui.Create("HordeClass")
         model:SetSize(container:GetWide() - 16, 40)
@@ -295,15 +305,15 @@ function PANEL:Init()
     end
 
     createBtn("Class/Perks", ClassTab, RIGHT)
-    
+
     -- ArcCW Attachment Tab
     if ArcCWInstalled and not table.IsEmpty(attachments) and GetConVar("horde_arccw_attinv_free"):GetInt() == 0 then
         self.AttachmentTab = vgui.Create("DPanel", self)
-        self.AttachmentTab.Paint = function () end
+        self.AttachmentTab.Paint = function() end
         self.AttachmentTabLayout = vgui.Create("DCategoryList", self.AttachmentTab)
         self.AttachmentTabLayout:Dock(FILL)
-        self.AttachmentTabLayout:DockMargin(8,8,8,8)
-        self.AttachmentTabLayout.Paint = function () end
+        self.AttachmentTabLayout:DockMargin(8, 8, 8, 8)
+        self.AttachmentTabLayout.Paint = function() end
         self:ReloadAttachments(attachments, container, description_panel)
         createBtn("Attachment", self.AttachmentTab, LEFT)
     end
@@ -316,19 +326,19 @@ function PANEL:ReloadAttachments(attachments, container, description_panel)
         cat:SetHeaderHeight(40)
         cat:SetPaintBackground(false)
         cat:SetExpanded(false)
-        cat.Paint = function ()
+        cat.Paint = function()
             surface.SetDrawColor(50, 50, 50, 255)
             surface.DrawRect(0, 0, self:GetWide(), 40)
         end
         cat.Header:SetFont("Item")
-        cat.Header:SetTextColor(Color(255,255,255))
+        cat.Header:SetTextColor(Color(255, 255, 255))
         cat.Header:SetSize(container:GetWide() - 16, 40)
 
         local ShopCategoryTabLayout = vgui.Create("DIconLayout")
         ShopCategoryTabLayout:SetBorder(8)
         ShopCategoryTabLayout:SetSpaceX(8)
         ShopCategoryTabLayout:SetSpaceY(8)
-        
+
         if attachments[attachment_category] then
             for _, item in pairs(attachments[attachment_category]) do
                 if item.entity_properties.arccw_attachment_wpn then
@@ -359,26 +369,28 @@ local weight_mat = Material("weight.png", "mips smooth")
 function PANEL:Paint(w, h)
     -- Derma_DrawBackgroundBlur(self)
 
-    -- Entire 
+    -- Entire
     if ScrH() < 1080 then
-        draw.RoundedBox(0, 0, 0, w, h, Color(40,40,40))
+        draw.RoundedBox(0, 0, 0, w, h, Color(40, 40, 40))
     else
         draw.RoundedBox(0, 0, 0, w, h, HORDE.color_hollow)
     end
 
     local text
     local weight_text
-    weight_text = translate.Get("Shop_Weight") .. ': ' .. tostring(MySelf:Horde_GetMaxWeight() - MySelf:Horde_GetWeight()) .. "/" .. MySelf:Horde_GetMaxWeight() .. ""
+    weight_text = translate.Get("Shop_Weight") ..
+    ': ' .. tostring(MySelf:Horde_GetMaxWeight() - MySelf:Horde_GetWeight()) .. "/" .. MySelf:Horde_GetMaxWeight() .. ""
     surface.SetMaterial(weight_mat)
-    surface.SetDrawColor(Color(255,255,255))
+    surface.SetDrawColor(Color(255, 255, 255))
     surface.DrawTexturedRect(self:GetWide() - 60, 14, 20, 20)
-    
-    local text2 = translate.Get("Shop_Cash") .. ": " .. tostring(MySelf:Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(MySelf:Horde_GetSkullTokens())
+
+    local text2 = translate.Get("Shop_Cash") ..
+    ": " .. tostring(MySelf:Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(MySelf:Horde_GetSkullTokens())
     text = text2 .. '       ' .. weight_text
     draw.SimpleText(text, 'Heading', self:GetWide() - 60, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
     surface.SetMaterial(skull_mat)
-    surface.SetDrawColor(Color(255,255,255))
+    surface.SetDrawColor(Color(255, 255, 255))
     surface.DrawTexturedRect(self:GetWide() - surface.GetTextSize(text) + surface.GetTextSize(text2) - 55, 14, 20, 20)
 end
 

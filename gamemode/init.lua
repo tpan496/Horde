@@ -116,6 +116,7 @@ include("status/debuff/sv_shock.lua")
 include("status/debuff/sv_bleeding.lua")
 include("status/debuff/sv_freeze.lua")
 include("status/debuff/sv_hemorrhage.lua")
+include("status/debuff/sv_fear.lua")
 
 include("obj_entity_extend_sv.lua")
 include("sv_perk.lua")

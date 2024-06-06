@@ -12,7 +12,10 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     if dmginfo:GetDamageCustom() > 0 then return end
     if dmginfo:GetDamage() <= 0 then return end
     if not npc:IsValid() then return end
-    if GetConVar("horde_corpse_cleanup"):GetInt() == 1 and npc:Health() <= 0 then npc:Remove() return end
+    if GetConVar("horde_corpse_cleanup"):GetInt() == 1 and npc:Health() <= 0 then
+        npc:Remove()
+        return
+    end
 
     local attacker = dmginfo:GetAttacker()
     if not IsValid(attacker) then return end
@@ -37,7 +40,7 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     --npc:Horde_AddDebuffBuildup(HORDE.Status_Stun, dmginfo:GetDamage() * 10, ply, dmginfo:GetDamagePosition())
 
     -- Apply bonus
-    local bonus = {increase=increase, more=more, base_add=base_add, post_add=post_add}
+    local bonus = { increase = increase, more = more, base_add = base_add, post_add = post_add }
     if ply:Horde_GetCurrentSubclass() == "Gunslinger" then
         local wpn = HORDE:GetCurrentWeapon(dmginfo:GetInflictor())
         if IsValid(wpn) then
@@ -114,7 +117,7 @@ function HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     end
 
     hook.Run("Horde_OnPlayerDamagePost", ply, npc, bonus, hitgroup, dmginfo)
-    
+
     if not npc.Horde_Assist then
         npc.Horde_Assist = ply
     elseif ply ~= npc.Horde_Hit then
@@ -197,9 +200,9 @@ function HORDE:TakeDamage(victim, damage, dmgtype, attacker, inflictor, damage_c
     else
         dmginfo:SetInflictor(Entity(0))
     end
-    
+
     dmginfo:SetDamagePosition(victim:GetPos())
-    
+
     if dmgtype then
         dmginfo:SetDamageType(dmgtype)
     else
@@ -212,7 +215,7 @@ function HORDE:TakeDamage(victim, damage, dmgtype, attacker, inflictor, damage_c
     victim:TakeDamageInfo(dmginfo)
 end
 
-hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginfo)
+hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function(target, dmginfo)
     local attacker = dmginfo:GetAttacker()
     if not IsValid(attacker) then return end
     if not HORDE:IsEnemy(target) then return end
@@ -234,14 +237,14 @@ hook.Add("EntityTakeDamage", "Horde_DamageRedirection", function (target, dmginf
 end)
 
 -- Seems like ScaleNPCDamage is called before EntityTakeDamage.
-hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function (npc, hitgroup, dmginfo)
+hook.Add("ScaleNPCDamage", "Horde_ApplyDamage", function(npc, hitgroup, dmginfo)
     if (not HORDE:IsPlayerMinion(npc)) then
         HORDE:ApplyDamage(npc, hitgroup, dmginfo)
     end
 end)
 
 -- Player damage taken
-hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
+hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function(target, dmg)
     if not target:IsValid() or not target:IsPlayer() then return end
     if dmg:GetDamageCustom() ~= 0 then return true end
     local ply = target
@@ -250,14 +253,14 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
 
     -- Prevent damage from skill explosions (e.g. Rip and Tear, Chain Reaction, Kamikaze)
     if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end
-    
+
     -- Prevent minion from damaging players
     if HORDE:IsPlayerMinion(dmg:GetInflictor()) or HORDE:IsPlayerMinion(dmg:GetAttacker()) then return true end
-    
+
     if dmg:GetDamage() <= 0.5 then return true end
-    
+
     -- Apply bonus
-    local bonus = {resistance=0, less=1, evasion=0, block=0}
+    local bonus = { resistance = 0, less = 1, evasion = 0, block = 0 }
     local ret = hook.Run("Horde_OnPlayerDamageTaken", ply, dmg, bonus)
     if ret then return end
     if bonus.evasion > 0 then
@@ -330,11 +333,11 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
             debuff = HORDE.Status_Frostbite
             more = 2
             local effectdata = EffectData()
-                effectdata:SetOrigin(ply:GetPos() + ply:GetUp() * 50)
-                effectdata:SetScale(10)
-                effectdata:SetMagnitude(10)
-		    util.Effect("GlassImpact", effectdata, true, true)
-		    util.Effect("GlassImpact", effectdata, true, true)
+            effectdata:SetOrigin(ply:GetPos() + ply:GetUp() * 50)
+            effectdata:SetScale(10)
+            effectdata:SetMagnitude(10)
+            util.Effect("GlassImpact", effectdata, true, true)
+            util.Effect("GlassImpact", effectdata, true, true)
         elseif dmg:IsDamageType(DMG_DISSOLVE) then
             debuff = HORDE.Status_Necrosis
             more = 2
@@ -356,7 +359,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     end
 end)
 
-hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function (target, dmg)
+hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function(target, dmg)
     if not target:IsValid() or not HORDE:IsPlayerMinion(target) then return end
     if dmg:GetAttacker():IsPlayer() then return true end
     hook.Run("Horde_OnMinionDamageTaken", target, dmg)
@@ -367,7 +370,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function (target, d
     end
 
     local debuff = nil
-    local bonus = {more = 1}
+    local bonus = { more = 1 }
     if dmg:GetDamage() > 0 then
         if HORDE:IsPoisonDamage(dmg) then
             debuff = HORDE.Status_Break
@@ -382,11 +385,11 @@ hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function (target, d
             debuff = HORDE.Status_Frostbite
             bonus.more = 2
             local effectdata = EffectData()
-                effectdata:SetOrigin(target:GetPos() + target:GetUp() * 50)
-                effectdata:SetScale(10)
-                effectdata:SetMagnitude(10)
-		    util.Effect("GlassImpact", effectdata, true, true)
-		    util.Effect("GlassImpact", effectdata, true, true)
+            effectdata:SetOrigin(target:GetPos() + target:GetUp() * 50)
+            effectdata:SetScale(10)
+            effectdata:SetMagnitude(10)
+            util.Effect("GlassImpact", effectdata, true, true)
+            util.Effect("GlassImpact", effectdata, true, true)
         end
 
         if not debuff then return end
@@ -406,13 +409,13 @@ hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function (target, d
 end)
 
 -- Enemy damage.
-hook.Add("EntityTakeDamage", "Horde_MutationDamage", function (target, dmg)
+hook.Add("EntityTakeDamage", "Horde_MutationDamage", function(target, dmg)
     if target:IsValid() and target:IsNPC() and dmg:GetInflictor():IsWorld() and dmg:GetAttacker():IsNPC() then
         return true
     end
 end)
 
-hook.Add("Horde_OnPlayerDamageTaken",  "Horde_MeteorDefense", function (ply, dmginfo, bonus)
+hook.Add("Horde_OnPlayerDamageTaken", "Horde_MeteorDefense", function(ply, dmginfo, bonus)
     if ply:Horde_GetMaxMind() > 0 and IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor():GetClass() == "projectile_horde_meteor" then
         if dmginfo:IsDamageType(DMG_BLAST) then
             dmginfo:SetDamage(math.min(10, dmginfo:GetDamage()))
@@ -425,14 +428,14 @@ hook.Add("Horde_OnPlayerDamageTaken",  "Horde_MeteorDefense", function (ply, dmg
 end)
 
 -- Main target does not take splash damage
-hook.Add("EntityTakeDamage", "Horde_SplashDamage", function (target, dmg)
+hook.Add("EntityTakeDamage", "Horde_SplashDamage", function(target, dmg)
     if target:IsValid() and target:IsNPC() and dmg:GetInflictor() == target and dmg:GetAttacker():IsPlayer() and dmg:GetDamageCustom() == HORDE.DMG_SPLASH then
         return true
     end
 end)
 
 -- Boss headshot multiplier reduction
-hook.Add("ScaleNPCDamage", "Horde_BossHeadshotDamage", function (npc, hitgroup, dmg)
+hook.Add("ScaleNPCDamage", "Horde_BossHeadshotDamage", function(npc, hitgroup, dmg)
     if npc:IsValid() and npc:Horde_GetBossProperties() and hitgroup == HITGROUP_HEAD then
         dmg:ScaleDamage(0.70)
     end

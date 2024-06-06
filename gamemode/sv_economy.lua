@@ -57,7 +57,7 @@ function plymeta:Horde_SetMaxHealthOnly(base)
 end
 
 function plymeta:Horde_SetWeight(weight)
-    self.Horde_weight = math.max(weight, self:Horde_GetMaxWeight())
+    self.Horde_weight = math.Clamp(weight, 0, self:Horde_GetMaxWeight())
 end
 
 function plymeta:Horde_SetMaxWeight(weight)
@@ -181,7 +181,7 @@ end
 
 function plymeta:Horde_AddWeight(weight)
     if not self:IsValid() then return end
-    self.Horde_weight = math.max(0, (self.Horde_weight or 0) + weight)
+    self.Horde_weight = math.Clamp(self.Horde_weight + weight, 0, self:Horde_GetMaxWeight())
 end
 
 function plymeta:Horde_AddSkullTokens(tokens)
@@ -799,7 +799,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     local subclass_name = net.ReadString()
 
     if ply:Horde_GetSubclassUnlocked(subclass_name) == false then
-        HORDE:SendNotification("Subclass " .. subclass_name " is not unlocked on this server.", 1, ply)
+        HORDE:SendNotification("Subclass " .. subclass_name.." is not unlocked on this server.", 1, ply) -- Added missing "..''
         return
     end
     local class = HORDE.classes[name]
@@ -815,22 +815,30 @@ net.Receive("Horde_SelectClass", function (len, ply)
         ply:DropWeapon(wpn)
     end
     ply:Horde_SetSubclass(name, subclass_name)
+    ply:Horde_SetMaxWeight(HORDE.max_weight)
+    ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
+
 
     -- Remove all entities
     if HORDE.player_drop_entities[ply:SteamID()] then
         for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
             if ent:IsValid() then
+                local eClass = ent:GetClass()
+                local item = HORDE.items[eClass]
                 ent:Remove()
+                if ply.Horde_drop_entities and ply.Horde_drop_entities[eClass] then -- Remove them from here too
+                    ply.Horde_drop_entities[eClass] = ply.Horde_drop_entities[eClass] - 1
+                    if ply.Horde_drop_entities[eClass] == 0 then
+                        ply.Horde_drop_entities[eClass] = nil
+                    end
+                end
             end
         end
     end
     HORDE.player_drop_entities[ply:SteamID()] = {}
     ply:Horde_SetMinionCount(0)
-
-    ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_UnsetSpellWeapon()
     ply:Horde_ApplyPerksForClass()
-    ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
     if ply.Horde_Special_Armor then
         net.Start("Horde_SyncSpecialArmor")
             net.WriteString(ply.Horde_Special_Armor)

@@ -29,7 +29,7 @@ if ! SERVER then return end
 
 function ENT:Initialize()
 	self:SetModel(self.Model)
-	self:SetModelScale(0.5)
+	self:SetModelScale(2)
 	self:PhysicsInitSphere(1, "metal_bouncy")
 	construct.SetPhysProp(self:GetOwner(), self, 0, self:GetPhysicsObject(),
 		{ GravityToggle = false, Material = "metal_bouncy" })
@@ -42,7 +42,7 @@ function ENT:Initialize()
 		phys:EnableGravity(false)
 	end
 
-	timer.Simple(1.5, function() if IsValid(self) then self:DeathEffects() end end)
+	timer.Simple(1.5, function() if IsValid(self) then self:DeathEffects(100) end end)
 
 	self:DrawShadow(false)
 	self:ResetSequence("idle")
@@ -75,13 +75,13 @@ function ENT:PhysicsCollide(data, phys)
 		dmg:SetDamageType(DMG_GENERIC)
 		dmg:SetAttacker(self.Owner)
 		dmg:SetInflictor(self)
-		dmg:SetDamage(35)
+		dmg:SetDamage(50)
 		dmg:SetDamagePosition(self:GetPos())
 		hitEnt:TakeDamageInfo(dmg)
 	end
 
 	if (hitEnt:IsNPC() or hitEnt:IsPlayer()) then
-		self:Remove()
+		self:DeathEffects(math.max(100, hitEnt:Horde_GetFearStack() * 100))
 		return
 	end
 
@@ -101,10 +101,12 @@ end
 local color1 = Color(255, 255, 225, 32)
 local color2 = Color(255, 255, 225, 64)
 --
-function ENT:DeathEffects(data, phys)
-	--[[local myPos = self:GetPos()
-	effects.BeamRingPoint(myPos, 0.2, 12, 1024, 64, 0, color1, {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
-	effects.BeamRingPoint(myPos, 0.5, 12, 1024, 64, 0, color2, {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
+function ENT:DeathEffects(dmg, data, phys)
+	local myPos = self:GetPos()
+	effects.BeamRingPoint(myPos, 0.2, 12, 1024, 64, 0, color1,
+		{ material = "sprites/lgtning.vmt", framerate = 2, flags = 0, speed = 0, delay = 0, spread = 0 })
+	effects.BeamRingPoint(myPos, 0.5, 12, 1024, 64, 0, color2,
+		{ material = "sprites/lgtning.vmt", framerate = 2, flags = 0, speed = 0, delay = 0, spread = 0 })
 
 	local effectData = EffectData()
 	effectData:SetOrigin(myPos)
@@ -112,10 +114,21 @@ function ENT:DeathEffects(data, phys)
 
 	VJ_EmitSound(self, "weapons/physcannon/energy_sing_explosion2.wav", 150)
 	util.ScreenShake(myPos, 20, 150, 1, 1250)
-	util.VJ_SphereDamage(self, self, myPos, 400, 25, bit.bor(DMG_SONIC, DMG_BLAST), true, true, {DisableVisibilityCheck=true, Force=80})
 
-	self:Remove()]]
-	             --
+	for _, ent in pairs(ents.FindInSphere(myPos, 400)) do
+		if ent:IsNPC() and HORDE:IsPlayerOrMinion(ent) ~= true then
+			local dmginfo = DamageInfo()
+			dmginfo:SetAttacker(self.Owner)
+			dmginfo:SetInflictor(self)
+			dmginfo:SetDamageType(DMG_SONIC)
+			dmginfo:SetDamage(math.max(50, math.pow(ent:Horde_GetFearStack() * 100, 1.05)))
+			dmginfo:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
+			dmginfo:SetDamagePosition(ent:GetPos())
+			ent:TakeDamageInfo(dmginfo)
+		end
+	end
+
+	self:Remove()
 end
 
 function ENT:Draw()
