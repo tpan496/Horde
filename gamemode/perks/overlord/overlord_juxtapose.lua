@@ -1,12 +1,12 @@
 PERK.PrintName = "Juxtapose"
 PERK.Description = [[+1 Fear stack.
-Press SHIFT+E to create a mirror of yourself with 50% health.
-The mirror applies Fear to nearby enemies.]]
+Press SHIFT+E to create an illusion of yourself with 50% health.
+The illusion applies Fear to nearby enemies.]]
 PERK.Icon = "materials/perks/overlord/juxtapose.png"
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "overlord_juxtapose" then
-        ply:Horde_SetPerkCooldown(12)
+        ply:Horde_SetPerkCooldown(15)
         ply:Horde_SetPerkInternalCooldown(0)
         net.Start("Horde_SyncActivePerk")
         net.WriteUInt(HORDE.Status_Juxtapose, 8)

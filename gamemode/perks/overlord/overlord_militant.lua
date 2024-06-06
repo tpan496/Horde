@@ -6,6 +6,7 @@ PERK.Params = {
     [1] = { value = 0.2, percent = true },
     [2] = { value = 0.25, percent = true },
 }
+PERK.Hooks = {}
 PERK.Hooks.Horde_OnPlayerDebuffApply = function(ply, debuff, bonus, inflictor)
     if not ply:Horde_GetPerk("overlord_militant") then return end
     bonus.less = bonus.less * 0.8

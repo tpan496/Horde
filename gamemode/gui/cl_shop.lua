@@ -216,7 +216,11 @@ function PANEL:Init()
                 end
                 if not item.skull_tokens then item.skull_tokens = 0 end
                 if not item.total_levels then item.total_levels = 0 end
-                table.insert(items, item)
+                if MySelf:Horde_GetCurrentSubclass() == "Overlord" and string.match(item.class, "watchtower") then
+                else
+                    table.insert(items, item)
+                end
+
                 ::cont::
             end
         end
@@ -379,13 +383,14 @@ function PANEL:Paint(w, h)
     local text
     local weight_text
     weight_text = translate.Get("Shop_Weight") ..
-    ': ' .. tostring(MySelf:Horde_GetMaxWeight() - MySelf:Horde_GetWeight()) .. "/" .. MySelf:Horde_GetMaxWeight() .. ""
+        ': ' ..
+        tostring(MySelf:Horde_GetMaxWeight() - MySelf:Horde_GetWeight()) .. "/" .. MySelf:Horde_GetMaxWeight() .. ""
     surface.SetMaterial(weight_mat)
     surface.SetDrawColor(Color(255, 255, 255))
     surface.DrawTexturedRect(self:GetWide() - 60, 14, 20, 20)
 
     local text2 = translate.Get("Shop_Cash") ..
-    ": " .. tostring(MySelf:Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(MySelf:Horde_GetSkullTokens())
+        ": " .. tostring(MySelf:Horde_GetMoney()) .. '$ ' .. ' ' .. tostring(MySelf:Horde_GetSkullTokens())
     text = text2 .. '       ' .. weight_text
     draw.SimpleText(text, 'Heading', self:GetWide() - 60, 24, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 

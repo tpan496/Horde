@@ -252,7 +252,7 @@ function entmeta:Horde_AddDebuffBuildup(debuff, buildup, inflictor, pos)
                     local p, angle = self:GetBonePosition(bone)
                     local e = EffectData()
                     e:SetOrigin(p)
-                    util.Effect("horde_statHorde_AddStunus_shock", e, true, true)
+                    util.Effect("horde_status_shock", e, true, true)
                 end
             end)
         elseif debuff == HORDE.Status_Stun then

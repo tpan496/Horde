@@ -20,13 +20,12 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
 end
 
 PERK.Hooks.Horde_OnPlayerDebuffApply = function(ply, debuff, bonus)
-    if ply:Horde_GetPerk("overlord_deatheater") and (debuff == HORDE.Status_Necrosis) then
-        bonus.apply = 0
-        return true
+    if ply:Horde_GetPerk("overlord_deatheater") then
+        if debuff == HORDE.Status_Necrosis then
+            bonus.apply = 0
+            return true
+        else
+            bonus.less = bonus.less * 0.8
+        end
     end
-end
-
-PERK.Hooks.Horde_OnPlayerDebuffApply = function(ply, debuff, bonus, inflictor)
-    if not ply:Horde_GetPerk("overlord_deatheater") then return end
-    bonus.less = bonus.less * 0.8
 end

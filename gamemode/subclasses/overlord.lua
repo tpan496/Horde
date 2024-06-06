@@ -10,5 +10,5 @@ SUBCLASS.Perks = {
     [1] = { title = "Defense", choices = { "overlord_inverse_filter", "overlord_dispersion" } },
     [2] = { title = "Offense", choices = { "overlord_militant", "overlord_oppressor" } },
     [3] = { title = "Spatial Manipulation", choices = { "overlord_dark_energy_blast", "overlord_juxtapose" } },
-    [4] = { title = "Requiem", choices = { "overlord_doomed_prescence", "overlord_deatheater" } },
+    [4] = { title = "Requiem", choices = { "overlord_doomed_presence", "overlord_deatheater" } },
 } -- Required

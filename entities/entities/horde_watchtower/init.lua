@@ -36,6 +36,7 @@ function ENT:Initialize()
 end
 
 function ENT:Think()
+    if self.Horde_Owner:Horde_GetCurrentSubclass() == "Overlord" then return end
     if CurTime() >= self.Horde_NextThink + self.Horde_ThinkInterval then
         if self.Horde_Ammobox and self.Horde_Ammobox:IsValid() then
             self.Horde_Ammobox:Remove()
@@ -68,7 +69,7 @@ function ENT:Think()
 end
 
 hook.Add("PlayerUse", "PickUpWatchtower", function(ply, ent)
-	if HORDE:IsWatchTower(ent) and ent:GetNWEntity("HordeOwner"):IsValid() and ent:GetNWEntity("HordeOwner") == ply then        
+    if HORDE:IsWatchTower(ent) and ent:GetNWEntity("HordeOwner"):IsValid() and ent:GetNWEntity("HordeOwner") == ply then
         if not ent.Horde_WatchtowerPickupCd then
             ent.Horde_WatchtowerPickupCd = CurTime() + 0.5
         else
@@ -84,7 +85,7 @@ hook.Add("PlayerUse", "PickUpWatchtower", function(ply, ent)
             end
         end
         local p = ent:GetPos()
-		p.z = ply:GetPos().z + 12
+        p.z = ply:GetPos().z + 12
         ent:SetPos(p)
         local a = ply:GetAngles()
         ent:SetAngles(Angle(0, a.y, 0))
@@ -92,4 +93,4 @@ hook.Add("PlayerUse", "PickUpWatchtower", function(ply, ent)
         ent.Horde_WatchtowerPickedUp = ply
         ent.Horde_WatchtowerPickupCd = CurTime() + 0.5
     end
-end )
+end)

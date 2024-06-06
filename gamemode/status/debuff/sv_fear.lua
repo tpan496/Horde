@@ -55,13 +55,13 @@ end
 
 hook.Add("Horde_OnPlayerDamage", "Horde_FearStackDamage", function(ply, npc, bonus, hitgroup)
     if npc:Horde_GetFearStack() > 0 then
-        bonus.increase = bonus.increase + npc:Horde_GetFearStack() * 0.04
+        bonus.increase = bonus.increase + npc:Horde_GetFearStack() * 0.045
     end
 end)
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_FearStackDamageTaken", function(ply, dmg, bonus)
     if dmg:GetInflictor() and dmg:GetInflictor():IsNPC() and dmg:GetInflictor():Horde_GetFearStack() > 0 then
-        bonus.resistance = bonus.resistance + dmg:GetInflictor():Horde_GetMaxFearStack() * 0.02
+        bonus.resistance = bonus.resistance + dmg:GetInflictor():Horde_GetFearStack() * 0.04
     end
 end)
 

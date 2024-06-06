@@ -41,6 +41,7 @@ function ENT:Initialize()
 end
 
 function ENT:Think()
+    if self.Horde_Owner:Horde_GetCurrentSubclass() == "Overlord" then return end
     if CurTime() >= self.Horde_NextThink + self.Horde_ThinkInterval then
         if SERVER then
             if self.Horde_Owner:IsPlayer() then
@@ -67,27 +68,27 @@ function ENT:Think()
 end
 
 function ENT:StartTouch(ent)
-	if ent:IsPlayer() then
-		if HORDE.current_break_time > 0 then
+    if ent:IsPlayer() then
+        if HORDE.current_break_time > 0 then
             if not ent:Horde_GetInBuyZone() then
-			    ent:Horde_SetInBuyZone(true)
+                ent:Horde_SetInBuyZone(true)
                 self.Horde_PlayersInZone[ent:SteamID()] = ent
             end
-		else
-			ent:Horde_SetInBuyZone(false)
+        else
+            ent:Horde_SetInBuyZone(false)
             self.Horde_PlayersInZone[ent:SteamID()] = nil
-		end
-	end
+        end
+    end
 end
 
 function ENT:EndTouch(ent)
-	if ent:IsPlayer() then
-		ent:Horde_SetInBuyZone(false)
-		net.Start("Horde_ForceCloseShop")
-    	net.Send(ent)
+    if ent:IsPlayer() then
+        ent:Horde_SetInBuyZone(false)
+        net.Start("Horde_ForceCloseShop")
+        net.Send(ent)
 
         self.Horde_PlayersInZone[ent:SteamID()] = nil
-	end
+    end
 end
 
 function ENT:OnRemove()
