@@ -33,8 +33,8 @@ PERK.Hooks.Horde_OnUnSetPerk = function(ply, perk)
 end
 
 PERK.Hooks.OnEntityCreated = function(ent)
-    if not ent:IsValid() then return end
     if CLIENT then return end
+    if not ent:IsValid() then return end
     timer.Simple(0.1, function()
         if not ent:IsValid() then return end
         local ply = ent:GetNWEntity("HordeOwner")
