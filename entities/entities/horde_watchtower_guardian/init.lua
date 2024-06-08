@@ -38,6 +38,7 @@ function ENT:Initialize()
 end
 
 function ENT:Think()
+    if self.Horde_Owner:Horde_GetCurrentSubclass() == "Overlord" then return end
     if CurTime() >= self.Horde_NextThink + self.Horde_ThinkInterval then
         if SERVER then
             if self.Horde_Owner:IsPlayer() then

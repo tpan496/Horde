@@ -2,8 +2,8 @@ PERK.PrintName = "Symbiosis"
 PERK.Description = "Minions have {1} more health on spawn.\n{2} less damage taken for each minion alive."
 PERK.Icon = "materials/perks/symbiosis.png"
 PERK.Params = {
-    [1] = {value = 0.20, percent = true},
-    [2] = {value = 0.075, percent = true},
+    [1] = { value = 0.20, percent = true },
+    [2] = { value = 0.075, percent = true },
 }
 
 PERK.Hooks = {}
@@ -33,7 +33,9 @@ PERK.Hooks.Horde_OnUnSetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.OnEntityCreated = function (ent)
+PERK.Hooks.OnEntityCreated = function(ent)
+    if CLIENT then return end
+    if not ent:IsValid() then return end
     timer.Simple(0.1, function()
         if not ent:IsValid() then return end
         local ply = ent:GetNWEntity("HordeOwner")
@@ -45,7 +47,7 @@ PERK.Hooks.OnEntityCreated = function (ent)
     end)
 end
 
-PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
-    if not ply:Horde_GetPerk("engineer_symbiosis")  then return end
+PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
+    if not ply:Horde_GetPerk("engineer_symbiosis") then return end
     bonus.resistance = bonus.resistance + 0.075 * ply:Horde_GetMinionCount()
 end

@@ -37,6 +37,7 @@ function ENT:Initialize()
 end
 
 function ENT:Think()
+    if self.Horde_Owner:Horde_GetCurrentSubclass() == "Overlord" then return end
     if CurTime() >= self.Horde_NextThink + self.Horde_ThinkInterval then
         if SERVER then
             if self.Horde_Owner:IsPlayer() then
@@ -72,8 +73,10 @@ function ENT:Think()
                 dmg:SetDamagePosition(ent:GetPos() + ent:OBBCenter())
                 self:EmitSound("npc/vort/attack_shoot.wav")
                 ent:TakeDamageInfo(dmg)
-                util.ParticleTracerEx("vortigaunt_beam", self:GetPos(), ent:GetPos() + ent:OBBCenter(), true, self:EntIndex(), -1)
-                util.ParticleTracerEx("vortigaunt_beam_b", self:GetPos(), ent:GetPos() + ent:OBBCenter(), true, self:EntIndex(), -1)
+                util.ParticleTracerEx("vortigaunt_beam", self:GetPos(), ent:GetPos() + ent:OBBCenter(), true,
+                    self:EntIndex(), -1)
+                util.ParticleTracerEx("vortigaunt_beam_b", self:GetPos(), ent:GetPos() + ent:OBBCenter(), true,
+                    self:EntIndex(), -1)
                 break
             end
         end

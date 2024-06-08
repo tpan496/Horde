@@ -15,39 +15,39 @@ local difficulty_nightmare = 3
 local difficulty_apocalypse = 4
 
 -- Multipliers
-local difficulty_damage_multiplier = {1, 1.25, 1.5, 1.7, 1.9}
-local difficulty_enemy_count_multiplier = {1, 1.3, 1.5, 1.6, 1.7}
-HORDE.difficulty_reward_base_multiplier = {1, 0.8, 0.6, 0.5, 0.4}
-HORDE.difficulty_health_multiplier = {1, 1.25, 1.5, 1.5, 1.5}
-local difficulty_start_money_multiplier = {1, 0.9, 0.8, 0.75, 0.6}
-local difficulty_spawn_radiuis_multiplier = {1, 0.75, 0.5, 0.5, 0.4}
-local difficulty_max_enemies_alive_scale_factor = {1, 1.15, 1.25, 1.25, 1.3}
-local difficulty_poison_headcrab_damage = {50, 60, 75, 75, 75}
-HORDE.difficulty_status_duration_bonus = {0, 1, 2, 3, 4}
-HORDE.difficulty_break_health_left = {0.20, 0.15, 0.10, 0.10, 0.05}
-HORDE.difficulty_shock_damage_increase = {0.15, 0.20, 0.25, 0.25, 0.30}
-HORDE.difficulty_frostbite_slow = {0.40, 0.45, 0.50, 0.50, 0.55}
+local difficulty_damage_multiplier = { 1, 1.25, 1.5, 1.7, 1.9 }
+local difficulty_enemy_count_multiplier = { 1, 1.3, 1.5, 1.6, 1.7 }
+HORDE.difficulty_reward_base_multiplier = { 1, 0.8, 0.6, 0.5, 0.4 }
+HORDE.difficulty_health_multiplier = { 1, 1.25, 1.5, 1.5, 1.5 }
+local difficulty_start_money_multiplier = { 1, 0.9, 0.8, 0.75, 0.6 }
+local difficulty_spawn_radiuis_multiplier = { 1, 0.75, 0.5, 0.5, 0.4 }
+local difficulty_max_enemies_alive_scale_factor = { 1, 1.15, 1.25, 1.25, 1.3 }
+local difficulty_poison_headcrab_damage = { 50, 60, 75, 75, 75 }
+HORDE.difficulty_status_duration_bonus = { 0, 1, 2, 3, 4 }
+HORDE.difficulty_break_health_left = { 0.20, 0.15, 0.10, 0.10, 0.05 }
+HORDE.difficulty_shock_damage_increase = { 0.15, 0.20, 0.25, 0.25, 0.30 }
+HORDE.difficulty_frostbite_slow = { 0.40, 0.45, 0.50, 0.50, 0.55 }
 
 -- Flat modifiers
-HORDE.difficulty_elite_health_scale_add = {0, 0.1, 0.075, 0.100, 0.125, 0.15}
-HORDE.difficulty_elite_health_scale_multiplier = {1, 1, 1, 1.1, 1.2}
-HORDE.difficulty_additional_pack = {0, 1, 2, 2, 3}
-HORDE.difficulty_additional_ammoboxes = {2, 1, 0, 0, 0}
+HORDE.difficulty_elite_health_scale_add = { 0, 0.1, 0.075, 0.100, 0.125, 0.15 }
+HORDE.difficulty_elite_health_scale_multiplier = { 1, 1, 1, 1.1, 1.2 }
+HORDE.difficulty_additional_pack = { 0, 1, 2, 2, 3 }
+HORDE.difficulty_additional_ammoboxes = { 2, 1, 0, 0, 0 }
 
 -- Endless stuff
 HORDE.endless_health_multiplier = 1
 HORDE.endless_damage_multiplier = 1
 
 -- Mutation
-HORDE.difficulty_mutation_probability = {0, 0.05, 0.10, 0.20, 0.30}
-HORDE.difficulty_elite_mutation_probability = {0, 0.05, 0.10, 0.30, 0.40}
+HORDE.difficulty_mutation_probability = { 0, 0.05, 0.10, 0.20, 0.30 }
+HORDE.difficulty_elite_mutation_probability = { 0, 0.05, 0.10, 0.30, 0.40 }
 
 -- Hook settings
 -- Damage scaling/handling
 -- Turrets should not be one-shot
 function VJ_DestroyCombineTurret() end
 
-hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
+hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function(target, dmg)
     if not target:IsValid() then return end
     if target:IsPlayer() then
         if dmg:GetAttacker():IsNPC() then
@@ -57,9 +57,9 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             end
             if dmg:IsDamageType(DMG_CRUSH) then
                 -- Cap bullshit physics damage that can sometimes occur
-                dmg:SetDamage(math.min(dmg:GetDamage(),20))
+                dmg:SetDamage(math.min(dmg:GetDamage(), 20))
             end
-            
+
             if HORDE.endless == 1 then
                 dmg:ScaleDamage(difficulty_damage_multiplier[HORDE.difficulty] * HORDE.endless_damage_multiplier)
             else
@@ -83,9 +83,9 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
             if dmg:GetAttacker():GetClass() == "npc_headcrab_poison" then
                 dmg:SetDamage(math.min(dmg:GetDamage(), difficulty_poison_headcrab_damage[HORDE.difficulty]))
             end
-            
+
             if target:GetClass() == "npc_turret_floor" then
-                dmg:SetDamageForce(Vector(0,0,0))
+                dmg:SetDamageForce(Vector(0, 0, 0))
                 target:SetHealth(target:Health() - dmg:GetDamage())
                 if target:Health() <= 0 then
                     target:Fire("selfdestruct")
@@ -118,7 +118,7 @@ end)
 
 -- Fall damage handling
 hook.Add("GetFallDamage", "RealisticDamage", function(ply, speed)
-    local bonus = {less = 1}
+    local bonus = { less = 1 }
     local dmg = 0
     if HORDE.difficulty == difficulty_normal then
         dmg = 10

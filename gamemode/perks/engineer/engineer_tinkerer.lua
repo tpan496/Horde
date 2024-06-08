@@ -2,7 +2,7 @@ PERK.PrintName = "Tinkerer"
 PERK.Description = "{1} increased minion maximum health."
 PERK.Icon = "materials/perks/tinkerer.png"
 PERK.Params = {
-    [1] = {value = 0.15, percent = true},
+    [1] = { value = 0.15, percent = true },
 }
 
 PERK.Hooks = {}
@@ -32,8 +32,9 @@ PERK.Hooks.Horde_OnUnSetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.OnEntityCreated = function (ent)
+PERK.Hooks.OnEntityCreated = function(ent)
     if CLIENT then return end
+    if not ent:IsValid() then return end
     timer.Simple(0.1, function()
         if not ent:IsValid() then return end
         local ply = ent:GetNWEntity("HordeOwner")
