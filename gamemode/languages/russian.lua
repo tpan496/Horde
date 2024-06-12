@@ -83,6 +83,7 @@ LANGUAGE["Subclass_Title_Psycho"] = "Псих"
 LANGUAGE["Subclass_Title_Warlock"] = "Чародей"
 LANGUAGE["Subclass_Title_Carcass"] = "Туша"
 LANGUAGE["Subclass_Title_Hatcher"] = "Инкубатор"
+LANGUAGE["Subclass_Title_Overlord"] = "Повелитель"
 
 -- Infusion
 LANGUAGE["Game_Infusion"] = "Инфузия"
@@ -213,7 +214,7 @@ LANGUAGE["Infusion_Description_Chrono"] = [[
 
 LANGUAGE["Infusion_Description_Ruination"] = [[
 Увеличивается урон от оружия за счёт вашего текущего накопления некроза.
-За каждые 10 ед. накопления некроза урон увеличивается на 5% вплоть до 25%.
+За каждые 10 ед. накопления некроза урон увеличивается на 5%, вплоть до 25%.
 
 Вы получаете 10 ед. накопления некроза в секунду, удерживая это оружие.
 ]]
@@ -245,7 +246,7 @@ LANGUAGE["Shop_You_Are_Dead"] = "Вы мертвы."
 -- Categories
 LANGUAGE["Shop_Class"] = "Класс"
 LANGUAGE["Shop_Cash"] = "Деньги"
-LANGUAGE["Shop_Weight"] = "Масса"
+LANGUAGE["Shop_Weight"] = "Вес"
 LANGUAGE["Shop_Melee"] = "Ближний бой"
 LANGUAGE["Shop_Pistol"] = "Пистолеты"
 LANGUAGE["Shop_Shotgun"] = "Дробовики"
@@ -309,6 +310,7 @@ LANGUAGE["Class_Psycho"] = "Псих"
 LANGUAGE["Class_Warlock"] = "Чародей"
 LANGUAGE["Class_Carcass"] = "Туша"
 LANGUAGE["Class_Hatcher"] = "Инкубатор"
+LANGUAGE["Class_Overlord"] = "Повелитель"
 
 
 -- Gadgets
@@ -347,7 +349,7 @@ LANGUAGE["Class_Description_Berserker"] = [[
 Имеет доступ только к ближнему бою.]]
 
 LANGUAGE["Class_Description_Warden"] = [[
-Имеет полный доступ к дробовикам и сторожевым вышкам (horde_watchtower).]]
+Имеет полный доступ к дробовикам и сторожевым башням (horde_watchtower).]]
 
 LANGUAGE["Class_Description_Cremator"] = [[
 Имеет полный доступ к вооружению на тепловой основе.]]
@@ -380,7 +382,6 @@ LANGUAGE["Class_Description_Carcass"] = [[
 
 LANGUAGE["Class_Description_Hatcher"] = [[
 Имеет доступ к большинству лёгкому вооружению и медицинским инструментам.]]
-
 
 -- Default Base Perks
 LANGUAGE["Perk_survivor_base"] = [[
@@ -588,6 +589,18 @@ LANGUAGE["Perk_hatcher_base"] = [[
 	 - Увеличен радиус ароматического импульса и понижена перезарядка импульса жука.
 	 - Иммунитет к урону от яда и разрыва.
 ]]
+
+LANGUAGE["Perk_overlord_base"] = [[
+Класс "Повелитель" сфокусирован на подавление врагов и специальной защиты.
+
+Находясь рядом с врагами, на них накладывается эффект Страха.
+Каждый стак Страха заставляет врагов получать на {1} больше урона и наносить на {2} меньше урона.
+Страх может стакаться до 2 раз.
+
+На {3} увеличен радиус наложения Страха ({4} за каждый уровень, вплоть до {5}).
+На {6} уменьшено накопление дебаффов. ({7} за каждый уровень, вплоть до {8}).
+
+Ваша сторожевая башня не оказывает никакого влияния.]]
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[Выживание]]
@@ -1462,6 +1475,55 @@ LANGUAGE["Perk_hatcher_metamorphosis"] = [[
 Добавляется IV стадия эволюции, превращая мурав. льва в стража мурав. львов.
 Страж мурав. львов имеет увелич. здоровье и урон, но больше не контролируется.
 Страж муравьиных львов имеет иммунитет к эффектам статусов.]]
+
+-- Default Perks: Overlord
+LANGUAGE["Perk_Title_Overlord_Tier_1"] = [[Защита]]
+LANGUAGE["Perk_Title_overlord_inverse_filter"] = [[Обратный фильтр]]
+LANGUAGE["Perk_overlord_inverse_filter"] = [[
+На {1} уменьшено получение накопления дебаффов.
+На {2} уменьшено получение накопления кровотечения.
+Когда вы получаете накопление дебаффов, вы восстанавливаете здоровье.]]
+
+LANGUAGE["Perk_Title_overlord_dispersion"] = [[Дисперсия]]
+LANGUAGE["Perk_overlord_dispersion"] = [[
++1 к максимальным стакам Страха.
+Применение Страха снижает вашу скорость накопления дебаффов.]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_2"] = [[Наступление]]
+LANGUAGE["Perk_Title_overlord_militant"] = [[Борец]]
+LANGUAGE["Perk_overlord_militant"] = [[
+На {1} снижено получение накопления дебаффов.
+На {2} увеличен Баллистический урон по врагам, пораженные страхом.]]
+
+LANGUAGE["Perk_Title_overlord_oppressor"] = [[Угнетатель]]
+LANGUAGE["Perk_overlord_oppressor"] = [[
++2 к максимальным стакам Страха.]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_3"] = [[Пространственная манипуляция]]
+LANGUAGE["Perk_Title_overlord_dark_energy_blast"] = [[Взрыв Тёмной Энергии]]
+LANGUAGE["Perk_overlord_dark_energy_blast"] = [[
++1 к максимальным стакам Страха.
+Нажмите SHIFT+E, чтобы выстрелить энергетическим шаром.
+Наносит урон, пропорциональный количеству стакам Страха.]]
+
+LANGUAGE["Perk_Title_overlord_juxtapose"] = [[Сопоставить]]
+LANGUAGE["Perk_overlord_juxtapose"] = [[
++1 к максимальным стакам Страха.
+Нажмите SHIFT+E, чтобы создать иллюзию самого себя с 50% здоровья.
+Иллюзия накладывает Страх врагам поблизости.]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_4"] = [[Реквием]]
+LANGUAGE["Perk_Title_overlord_doomed_presence"] = [[Обреченное Присутствие]]
+LANGUAGE["Perk_overlord_doomed_presence"] = [[
+На {1} увеличен радиус Страха.
+Наложение Страха навсегда понижает {2} макс. здоровья неэлитных.
+Наложение Страха навсегда понижает {3} макс. здоровья элитных, вплоть до {4}.]]
+
+LANGUAGE["Perk_Title_overlord_deatheater"] = [[Пожиратель Смерти]]
+LANGUAGE["Perk_overlord_deatheater"] = [[
++2 к максимальным стакам Страха.
+На {1} уменьшено получение накопления дебаффов.
+Иммунитет к Некрозу.]]
 
 -- Default Config Shop Items
 -- Optional
