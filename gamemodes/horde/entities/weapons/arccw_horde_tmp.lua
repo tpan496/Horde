@@ -27,9 +27,9 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/w_smg_tmp.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 30
-SWEP.DamageMin = 25
-SWEP.Range = 500 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Damage = 31
+SWEP.DamageMin = 26
+SWEP.Range = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 4
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
