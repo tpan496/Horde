@@ -244,18 +244,18 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_horde_9mm"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_medic_9mm"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_357"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_glock"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_usp"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_p2000"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_p250"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_r8"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_deagle"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_glock"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_usp"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_p2000"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_p250"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_r8"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_deagle"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_m1911"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_anaconda"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_cz75"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_m9"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_fiveseven"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_tec9"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_cz75"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_m9"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_fiveseven"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_tec9"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_skorpion"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_tmp"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_akimbo_glock17"].infusions = ballistic_infusions_light
@@ -267,13 +267,13 @@ function HORDE:GetDefaultItemInfusions()
     -- SMGs
     local ballistic_infusions_smgs = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver}
     HORDE.items["arccw_horde_smg1"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_mac10"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_horde_mac10"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_horde_mp40"].infusions = ballistic_infusions_smgs
     HORDE.items["arccw_horde_uzi"].infusions = ballistic_infusions_smgs
-    HORDE.items["arccw_go_mp5"].infusions = ballistic_infusions_smgs
-    HORDE.items["arccw_go_ump"].infusions = ballistic_infusions_smgs
-    HORDE.items["arccw_go_bizon"].infusions = ballistic_infusions_smgs
-    HORDE.items["arccw_go_p90"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_horde_mp5"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_horde_ump"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_horde_bizon"].infusions = ballistic_infusions_smgs
+    HORDE.items["arccw_horde_p90"].infusions = ballistic_infusions_smgs
 
     local infusions_medic = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Rejuvenating, HORDE.Infusion_Septic}
     HORDE.items["arccw_horde_mp5k"].infusions = infusions_medic
@@ -284,16 +284,16 @@ function HORDE:GetDefaultItemInfusions()
 
     -- Shotguns
     HORDE.items["arccw_horde_shotgun"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_nova"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
-    HORDE.items["arccw_go_870"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_mag7"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_horde_m1014"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_horde_doublebarrel"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Concussive, HORDE.Infusion_Siphoning}
+    HORDE.items["arccw_horde_nova"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_horde_870"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_horde_mag7"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_horde_m1014"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_horde_doublebarrel"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
     HORDE.items["arccw_horde_trenchgun"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Flaming, HORDE.Infusion_Siphoning}
-    HORDE.items["arccw_horde_spas12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
-    HORDE.items["arccw_horde_striker"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
-    HORDE.items["arccw_horde_hsg1"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
-    HORDE.items["arccw_horde_aa12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Siphoning}
+    HORDE.items["arccw_horde_spas12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_horde_striker"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_horde_hsg1"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
+    HORDE.items["arccw_horde_aa12"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning, HORDE.Infusion_Hemo, HORDE.Infusion_Concussive, HORDE.Infusion_Arctic, HORDE.Infusion_Galvanizing, HORDE.Infusion_Septic, HORDE.Infusion_Flaming}
     HORDE.items["arccw_horde_medic_shotgun"].infusions = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Septic, HORDE.Infusion_Siphoning}
 
     local ballistic_infusions_rifles = {HORDE.Infusion_Ruination, HORDE.Infusion_Chrono, HORDE.Infusion_Impaling, HORDE.Infusion_Quality, HORDE.Infusion_Quicksilver, HORDE.Infusion_Siphoning}
@@ -388,30 +388,30 @@ function HORDE:GetDefaultItemsData()
     {Ghost=true}, 2, -1, nil, "items/hl2/weapon_357.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Ghost", "Gunslinger"})
     HORDE:CreateItem("Pistol",     "Flare Gun",      "arccw_horde_flaregun",   100,  2, "Orion Safety Flare Gun.\nIgnites enemies and deals Fire damage. \nDraws from reserve ammo rather than reloading manually.",
     {Cremator=true}, 1, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE}, nil, {"Cremator"})
-    HORDE:CreateItem("Pistol",     "Glock",          "arccw_go_glock",    750,  2, "Glock 18.\nSemi-automatic pistols manufactured in Austrian.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "USP",            "arccw_go_usp",      750,  2, "Universelle Selbstladepistole.\nA semi-automatic pistol developed in Germany by H&K.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "P2000",          "arccw_go_p2000",    750,  2, "Heckler & Koch P2000.\nA serviceable first-round pistol made by H&K.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "P250",           "arccw_go_p250",     750,  2, "SIG Sauer P250.\nA low-recoil sidearm with a high rate of fire.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "R8",             "arccw_go_r8",       750,  2, "R8 Revolver.\nDelivers a highly accurate and powerful round,\nbut at the expense of a lengthy trigger-pull.",
-    {Survivor=true, Ghost=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "Glock",          "arccw_horde_glock",    750,  2, "Glock 18.\nSemi-automatic pistols manufactured in Austrian.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, "arccw/weaponicons/arccw_go_glock", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "USP",            "arccw_horde_usp",      750,  2, "Universelle Selbstladepistole.\nA semi-automatic pistol developed in Germany by H&K.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, "arccw/weaponicons/arccw_go_usp", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "P2000",          "arccw_horde_p2000",    750,  2, "Heckler & Koch P2000.\nA serviceable first-round pistol made by H&K.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, "arccw/weaponicons/arccw_go_p2000", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "P250",           "arccw_horde_p250",     750,  2, "SIG Sauer P250.\nA low-recoil sidearm with a high rate of fire.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, "arccw/weaponicons/arccw_go_p250", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "R8",             "arccw_horde_r8",       750,  2, "R8 Revolver.\nDelivers a highly accurate and powerful round,\nbut at the expense of a lengthy trigger-pull.",
+    {Survivor=true, Ghost=true}, 5, -1, nil, "arccw/weaponicons/arccw_go_r8", nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "M1911",          "arccw_horde_m1911",   750,  2, "Colt 1911.\nStandard-issue sidearm for the United States Armed Forces.",
     {Ghost=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "Deagle",         "arccw_go_deagle",   750,  2, "Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
-    {Survivor=true, Ghost=true}, 5, -1, nil, nil, {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "Deagle",         "arccw_horde_deagle",   750,  2, "Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
+    {Survivor=true, Ghost=true}, 5, -1, nil, "arccw/weaponicons/arccw_go_deagle", {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "Anaconda",       "arccw_horde_anaconda",1000,  3, "Colt Anaconda.\nChambered for the powerful .44 Magnum.",
     {Ghost=true}, 10, -1, nil, nil, {Ghost=2}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "CZ75",           "arccw_go_cz75",     750,  2, "CZ 75.\nA semi-automatic pistol manufactured in Czech Republic.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "M9",             "arccw_go_m9",       750,  2, "Beretta M9.\nSidearm used by the United States Armed Forces.",
-    {Survivor=true, Ghost=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "FiveSeven",      "arccw_go_fiveseven",750,  2, "ES Five-seven.\nA Belgian semi-automatic pistol made by FN Herstal.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, nil, {Medic=1, Assault=1, Heavy=1, Demolition=1, Survivor=1, Engineer=1, Warden=1, Cremator=1}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Pistol",     "Tec-9",          "arccw_go_tec9",    1000,  3, "A Swedish-made semi-automatic pistol.\nLethal in close quarters.",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 8, -1, nil, nil, {Survivor=2}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "CZ75",           "arccw_horde_cz75",     750,  2, "CZ 75.\nA semi-automatic pistol manufactured in Czech Republic.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, "arccw/weaponicons/arccw_go_cz75", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "M9",             "arccw_horde_m9",       750,  2, "Beretta M9.\nSidearm used by the United States Armed Forces.",
+    {Survivor=true, Ghost=true}, 5, -1, nil, "arccw/weaponicons/arccw_go_m9", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "FiveSeven",      "arccw_horde_fiveseven",750,  2, "ES Five-seven.\nA Belgian semi-automatic pistol made by FN Herstal.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 5, -1, nil, "arccw/weaponicons/arccw_go_fiveseven", {Medic=1, Assault=1, Heavy=1, Demolition=1, Survivor=1, Engineer=1, Warden=1, Cremator=1}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Pistol",     "Tec-9",          "arccw_horde_tec9",    1000,  3, "A Swedish-made semi-automatic pistol.\nLethal in close quarters.",
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 8, -1, nil, "arccw/weaponicons/arccw_go_tec9", {Survivor=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "Skorpion",          "arccw_horde_skorpion",    1000,  3, "Sa vz. 61 Skorpion.\nDeveloped in 1959 by Miroslav Rybar and produced \nunder the official designation 'Samopal vzor 61'.",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Engineer=true, Warden=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
 
@@ -431,18 +431,18 @@ function HORDE:GetDefaultItemsData()
     {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, {Survivor=3}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "MP40",           "arccw_horde_mp40",  1250, 3, "Maschinenpistole 40.\nDeveloped in Nazi Germany and used extensively by the Axis powers during World War II.",
     {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("SMG",        "Mac10",          "arccw_go_mac10",    1500, 4, "Military Armament Corporation Model 10.\nBoasts a high rate of fire,\nwith poor spread accuracy and high recoil as trade-offs.",
-    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("SMG",        "MP5",            "arccw_go_mp5",      1500, 4, "Heckler & Koch MP5.\nOften imitated but never equaled,\nthe MP5 is perhaps the most versatile SMG in the world.",
-    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("SMG",        "UMP45",          "arccw_go_ump",      1500, 4, "KM UMP45.\nA lighter and cheaper successor to the MP5.",
-    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("SMG",        "MAC-10",          "arccw_horde_mac10",    1500, 4, "Military Armament Corporation Model 10.\nBoasts a high rate of fire,\nwith poor spread accuracy and high recoil as trade-offs.",
+    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, "arccw/weaponicons/arccw_go_mac10", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("SMG",        "MP5",            "arccw_horde_mp5",      1500, 4, "Heckler & Koch MP5.\nOften imitated but never equaled,\nthe MP5 is perhaps the most versatile SMG in the world.",
+    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, "arccw/weaponicons/arccw_go_mp5", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("SMG",        "UMP45",          "arccw_horde_ump",      1500, 4, "KM UMP45.\nA lighter and cheaper successor to the MP5.",
+    {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, "arccw/weaponicons/arccw_go_ump", nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "TMP",            "arccw_horde_tmp",   1500, 4, "Steyr TMP.\nA select-fire 9×19mm Parabellum caliber machine pistol.",
     {Medic=true, Assault=true, Heavy=true, Survivor=true, Engineer=true, Cremator=true}, 8, -1, nil, nil, {Survivor=2}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("SMG",        "PP Bizon",       "arccw_go_bizon",    2000, 5, "PP-19 Bizon.\nOffers a high-capacity magazine that reloads quickly.",
-    {Assault=true, Survivor=true}, 15, -1, nil, nil, {Assault=1, Medic=2}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("SMG",        "P90",            "arccw_go_p90",      2000, 5, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
-    {Assault=true, Survivor=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("SMG",        "PP Bizon",       "arccw_horde_bizon",    2000, 5, "PP-19 Bizon.\nOffers a high-capacity magazine that reloads quickly.",
+    {Assault=true, Survivor=true}, 15, -1, nil, "arccw/weaponicons/arccw_go_bizon", {Assault=1, Medic=2}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("SMG",        "P90",            "arccw_horde_p90",      2000, 5, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
+    {Assault=true, Survivor=true}, 15, -1, nil, "arccw/weaponicons/arccw_go_p90", nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "MP5K Medic PDW",  "arccw_horde_mp5k",  2000, 5, "MP5K-PDW.\nA lighter solution to MP5 equipped with a healing dart launcher.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 10 health and has a 0.8 second cooldown.",
     {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
     HORDE:CreateItem("SMG",        "MP9 Medic PDW",  "arccw_horde_mp9m",  2500, 6, "Brügger & Thomet MP9.\nManufactured in Switzerland,\nthe MP9 is favored by private security firms world-wide.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 10 health and has a 1 second cooldown.",
@@ -457,12 +457,12 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Shotgun",    "Pump-Action",    "arccw_horde_shotgun",100, 2, "A standard 12-gauge shotgun.",
     {Warden=true, Engineer=true, Cremator=true}, 2, -1, nil, "items/hl2/weapon_shotgun.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Warden"})
-    HORDE:CreateItem("Shotgun",    "Nova",           "arccw_go_nova",     1000, 4, "Benelli Nova.\nItalian pump-action 12-gauge shotgun.",
-    {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Shotgun",    "M870",           "arccw_go_870",      1500, 4, "Remington 870 Shotgun.\nManufactured in the United States.",
-    {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, {Engineer=1}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Shotgun",    "MAG7",           "arccw_go_mag7",     1500, 4, "Techno Arms MAG-7.\nFires a specialized 60mm 12 gauge shell.",
-    {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Shotgun",    "Nova",           "arccw_horde_nova",     1000, 4, "Benelli Nova.\nItalian pump-action 12-gauge shotgun.",
+    {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, "arccw/weaponicons/arccw_go_nova", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Shotgun",    "M870",           "arccw_horde_870",      1500, 4, "Remington 870 Shotgun.\nManufactured in the United States.",
+    {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, "arccw/weaponicons/arccw_go_870", {Engineer=1}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Shotgun",    "MAG7",           "arccw_horde_mag7",     1500, 4, "Techno Arms MAG-7.\nFires a specialized 60mm 12 gauge shell.",
+    {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, "arccw/weaponicons/arccw_go_mag7", nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "XM1014",         "arccw_horde_m1014",    2000, 5, "Benelli M4 Super 90.\nFully automatic shotgun.",
     {Assault=true, Heavy=true, Survivor=true, Engineer=true, Warden=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "Trench Gun",     "arccw_horde_trenchgun", 2250, 6, "Winchester Model 1200.\nShoots incendiary pellets.",
@@ -623,11 +623,11 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Special",    "Hivehand",       "horde_hivehand",       2000,  5, "Organic weapon used by Xen soldiers.\nHas infinite ammo.\nPrimary fire generates homing ricocheting shots.\nSecondary fire rapidly unloads the entire weapon.",
     {Engineer=true}, 2, -1, nil, nil, {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Spore Launcher", "horde_spore_launcher", 1750,  6, "Improvised biological weapon.\nShoots out acidic projectiles that explodes after a short delay.\nHeals players and damages enemies.",
-    {Medic=true, Survivor=true}, 15, -1, nil, nil, {Medic=2, Survivor=2}, nil, {HORDE.DMG_POISON})
+    {Medic=true, Survivor=true}, 10, -1, nil, nil, {Medic=2, Survivor=2}, nil, {HORDE.DMG_POISON})
     HORDE:CreateItem("Special",    "M2 Health Thrower", "horde_healingthrower", 3000,  7, "M2-2 Health Thrower.\nAn American man-portable backpack flamethrower converted to heal stuff to death.\nsmells faintly of lime and mint (who hurt you)",
-    {Medic=true}, 30, -1, nil, nil, nil, nil, {HORDE.DMG_POISON})
+    {Medic=true}, 35, -1, nil, nil, nil, nil, {HORDE.DMG_POISON})
     HORDE:CreateItem("Explosive",  "Medic RPG",          "arccw_horde_medic_rpg",   3000,  8, "Medic Missile.\nAnti-Death Rocket Propelled Grenade \nmade in the Gamestop ventilation of an abandoned mall. \nnot to be confused with the infamous magic missile.",
-    {Medic=true}, 20, -1, nil, nil, nil, nil, {HORDE.DMG_POISON})
+    {Medic=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_POISON})
 
     HORDE:CreateItem("Explosive",    "Raygun",  "arccw_horde_raygun", 3000,  8, "Raygun. \nFires explosive electric bolts that deal Lightning damage.",
     {Warden=true}, 40, -1, nil, nil, nil, nil, {HORDE.DMG_LIGHTNING})
@@ -837,46 +837,46 @@ HORDE.GetArcCWAttachments = function ()
     HORDE:CreateItem("Attachment", "[MP9] 350mm Carbine Barrel",    "go_mp9_barrel_long",  75,  0, "",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_mp9m"})
     HORDE:CreateItem("Attachment", "[MP5] 150mm Kurz Barrel",   "go_mp5_barrel_short",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_mp5"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_mp5"})
     HORDE:CreateItem("Attachment", "[MP5] 500mm Carbine Barrel",   "go_mp5_barrel_long",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_mp5"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_mp5"})
     HORDE:CreateItem("Attachment", "[MP5] 550mm Whisper Barrel",   "go_mp5_barrel_sd",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_mp5"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_mp5"})
     HORDE:CreateItem("Attachment", "[MAC10] 50mm Stub Barrel",   "go_mac10_barrel_stub",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_mac10"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_mac10"})
     HORDE:CreateItem("Attachment", "[MAC10] 200mm Patrol Barrel",   "go_mac10_barrel_med",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_mac10"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_mac10"})
     HORDE:CreateItem("Attachment", "[MAC10] 350mm Carbine Barrel",   "go_mac10_barrel_long",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_mac10"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_mac10"})
     HORDE:CreateItem("Attachment", "[UMP] 220mm HK Barrel",   "go_ump_barrel_med",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_ump"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_ump"})
     HORDE:CreateItem("Attachment", "[UMP] 350mm USC Barrel",   "go_ump_barrel_long",  100,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_ump"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_ump"})
     HORDE:CreateItem("Attachment", "[PP-Bizon] 230mm FSB Barrel",   "go_bizon_barrel_med",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_bizon"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_bizon"})
     HORDE:CreateItem("Attachment", "[PP-Bizon] 290mm GRU Barrel",   "go_bizon_barrel_long",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_bizon"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_bizon"})
     HORDE:CreateItem("Attachment", "[P90] 410mm PS90 Barrel",   "go_p90_barrel_med",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_p90"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_p90"})
     HORDE:CreateItem("Attachment", "[P90] 800mm Devolution Barrel",   "go_p90_barrel_long",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_p90"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_p90"})
 
     HORDE:CreateItem("Attachment", "[M1014] 350mm M1014 Barrel",   "go_m1014_barrel_short",  75,  0, "",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_m1014"})
     HORDE:CreateItem("Attachment", "[M1014] 750mm M1014 Barrel",   "go_m1014_barrel_long",  75,  0, "",
     {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_m1014"})
     HORDE:CreateItem("Attachment", "[MAG7] 280mm BodyGuard Barrel",   "go_mag7_barrel_short",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_mag7"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_mag7"})
     HORDE:CreateItem("Attachment", "[MAG7] 440mm Longsword Barrel",   "go_mag7_barrel_long",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_mag7"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_mag7"})
     HORDE:CreateItem("Attachment", "[Nova] 300mm BodyGuard Barrel",   "go_nova_barrel_short",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_nova"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_nova"})
     HORDE:CreateItem("Attachment", "[Nova] 710mm Longsword Barrel",   "go_nova_barrel_long",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_nova"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_nova"})
     HORDE:CreateItem("Attachment", "[M870] 350mm 870 Barrel",   "go_870_barrel_short",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_870"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_870"})
     HORDE:CreateItem("Attachment", "[M870] 750mm 870 Barrel",   "go_870_barrel_long",  75,  0, "",
-    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_go_870"})
+    {Medic=true, Assault=true, Heavy=true, Demolition=true, Survivor=true, Ghost=false, Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_870"})
 
     HORDE:CreateItem("Attachment", "[Galil] 216mm Navy Barrel",   "go_ace_barrel_short",  100,  0, "",
     {Medic=true, Assault=true, Heavy=false, Demolition=false, Survivor=true, Ghost=false, Engineer=false}, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Barrel", arccw_attachment_wpn="arccw_horde_ace"})
@@ -935,57 +935,57 @@ HORDE.GetArcCWAttachments = function ()
 
     -- Mag
     HORDE:CreateItem("Attachment", "[USP] 20-Round .45",   "go_usp_mag_20",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_usp"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_usp"})
     HORDE:CreateItem("Attachment", "[USP] 30-Round .45",   "go_usp_mag_30",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_usp"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_usp"})
     HORDE:CreateItem("Attachment", "[Glock] 31-Round 9mm",   "go_glock_mag_28",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_usp"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_usp"})
     HORDE:CreateItem("Attachment", "[Glock] 31-Round 9mm",   "go_glock_mag_28",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_glock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_glock"})
     HORDE:CreateItem("Attachment", "[P250] 21-Round .357",   "go_p250_mag_21",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_p250"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_p250"})
     HORDE:CreateItem("Attachment", "[M9] 24-Round 9mm",   "go_m9_mag_24",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_m9"})
     HORDE:CreateItem("Attachment", "[P2000] 24-Round 9mm",   "go_p2000_mag_24",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_p2000"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_p2000"})
     HORDE:CreateItem("Attachment", "[CZ75] 30-Round 9mm",   "go_cz75_mag_30",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_cz75"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_cz75"})
     HORDE:CreateItem("Attachment", "[Fiveseven] 30-Round 5.7mm",   "go_fiveseven_mag_30",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_fiveseven"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_fiveseven"})
     HORDE:CreateItem("Attachment", "[Tec-9] 10-Round 9mm",   "go_tec9_mag_10",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_tec9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_tec9"})
     HORDE:CreateItem("Attachment", "[Tec-9] 32-Round 9mm",   "go_tec9_mag_32",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_tec9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_tec9"})
 
     HORDE:CreateItem("Attachment", "[MP9] 15-Round 9mm",   "go_mp9_mag_15",  90,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_mp9m"})
     HORDE:CreateItem("Attachment", "[MAC10] 16-Round .45 Ingram",   "go_mac10_mag_16",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mac10"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_mac10"})
     HORDE:CreateItem("Attachment", "[MAC10] 48-Round .45 Grave",   "go_mac10_mag_48",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mac10"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_mac10"})
     HORDE:CreateItem("Attachment", "[MP5] 15-Round 9mm",   "go_mp5_mag_15",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mp5"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_mp5"})
     HORDE:CreateItem("Attachment", "[MP5] 40-Round 9mm",   "go_mp5_mag_40",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mp5"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_mp5"})
     HORDE:CreateItem("Attachment", "[PP-Bizon] 47-Round 9mm",   "go_bizon_mag_47",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_bizon"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_bizon"})
     HORDE:CreateItem("Attachment", "[PP-Bizon] 82-Round 9mm",   "go_bizon_mag_82",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_bizon"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_bizon"})
     HORDE:CreateItem("Attachment", "[UMP] 12-Round .45",   "go_ump_mag_12",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ump"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_ump"})
     HORDE:CreateItem("Attachment", "[UMP] 30-Round 9mm",   "go_ump_mag_30_9mm",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_ump"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_ump"})
 
     HORDE:CreateItem("Attachment", "[Nova] 8-Round 12-Gauge",   "go_nova_mag_8",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_nova"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_nova"})
     HORDE:CreateItem("Attachment", "[Mag7] 3-Round 12-Gauge",   "go_mag7_mag_3",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mag7"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_mag7"})
     HORDE:CreateItem("Attachment", "[Mag7] 7-Round 12-Gauge",   "go_mag7_mag_7",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_mag7"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_mag7"})
     HORDE:CreateItem("Attachment", "[M870] 4-Round",   "go_870_mag_4",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_870"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_870"})
     HORDE:CreateItem("Attachment", "[M870] 8-Round",   "go_870_mag_8",  90,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_870"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_horde_870"})
     HORDE:CreateItem("Attachment", "[M1014] 4-Round",   "go_m1014_mag_4",  90,  0, "",
     nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Magazine", arccw_attachment_wpn="arccw_go_m1014"})
     HORDE:CreateItem("Attachment", "[M1014] 7-Round",   "go_m1014_mag_7",  100,  0, "",
@@ -1040,41 +1040,41 @@ HORDE.GetArcCWAttachments = function ()
 
     -- Slide
     HORDE:CreateItem("Attachment", "[USP] Long Slide",   "go_usp_slide_long",   80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_usp"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_usp"})
     HORDE:CreateItem("Attachment", "[USP] Short Slide",  "go_usp_slide_short",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_usp"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_usp"})
     HORDE:CreateItem("Attachment", "[Glock] Auto Slide",   "go_glock_slide_auto",   80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_glock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_glock"})
     HORDE:CreateItem("Attachment", "[Glock] Short Slide",  "go_glock_slide_short",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_glock"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_glock"})
     HORDE:CreateItem("Attachment", "[P2000] Long Slide",   "go_p2000_slide_auto",   80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_p2000"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_p2000"})
     HORDE:CreateItem("Attachment", "[P2000] Short Slide",  "go_p2000_slide_short",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_p2000"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_p2000"})
     HORDE:CreateItem("Attachment", "[P250] Long Slide",   "go_p250_slide_long",   80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_p250"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_p250"})
     HORDE:CreateItem("Attachment", "[P250] Short Slide",  "go_p250_slide_short",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_p250"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_p250"})
     HORDE:CreateItem("Attachment", "[CZ75] Long Slide",   "go_cz75_slide_long",   80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_cz75"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_cz75"})
     HORDE:CreateItem("Attachment", "[CZ75] Short Slide",  "go_cz75_slide_short",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_cz75"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_cz75"})
     HORDE:CreateItem("Attachment", "[CZ75] Auto Slide",   "go_cz75_slide_auto",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_cz75"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_cz75"})
     HORDE:CreateItem("Attachment", "[FiveSeven] Short Slide",  "go_fiveseven_slide_short",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_fiveseven"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_fiveseven"})
     HORDE:CreateItem("Attachment", "[FiveSeven] Long Slide",   "go_fiveseven_slide_long",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_fiveseven"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_fiveseven"})
     HORDE:CreateItem("Attachment", "[Deagle] Short Slide",  "go_deagle_slide_short",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_deagle"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_deagle"})
     HORDE:CreateItem("Attachment", "[Deagle] Long Slide",   "go_deagle_slide_long",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_deagle"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_deagle"})
     HORDE:CreateItem("Attachment", "[M9] Short Slide",  "go_m9_slide_short",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_m9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_m9"})
     HORDE:CreateItem("Attachment", "[M9] Long Slide",   "go_m9_slide_long",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_m9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_m9"})
     HORDE:CreateItem("Attachment", "[M9] Auto Slide",   "go_m9_slide_auto",  80,  0, "",
-    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_go_m9"})
+    nil, 10, -1, {type=HORDE.ENTITY_PROPERTY_GIVE, is_arccw_attachment=true, arccw_attachment_type="Slide", arccw_attachment_wpn="arccw_horde_m9"})
 
     -- Stock
     HORDE:CreateItem("Attachment", "BT-2 Pistol Stock",  "go_stock_pistol_bt",  50,  0, "",
