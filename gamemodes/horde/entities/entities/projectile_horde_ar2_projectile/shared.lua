@@ -11,73 +11,75 @@ AddCSLuaFile()
 ENT.Model = "models/effects/combineball.mdl"
 ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
 ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
-ENT.Removing = nil
-ENT.StartPos = nil
-ENT.PlaySoundTimer = 0
-ENT.StartTime = 0
-ENT.BaseDamage = 25
-ENT.BaseSplashDamage = 10
-ENT.DirectDamage = 60 -- How much damage should it do when it hits something
-ENT.DirectDamageType = DMG_CRUSH -- Damage type
 
-function ENT:Draw()
-	self:DrawModel()
-	self:SetAngles((LocalPlayer():EyePos() - self:GetPos()):Angle())
+if not SERVER then
+	function ENT:Initialize()
+		local Pos = self:GetPos()
+		local orb = ParticleEmitter(Pos)
+		self.ball = orb:Add("models/effects/hordeball_glow1", Pos)
+		if self.ball then
+			self.ball:SetLifeTime(0)
+			self.ball:SetDieTime(100)
+			self.ball:SetStartSize(8)
+			self.ball:SetStartAlpha(200)
+			self.ball:SetAngleVelocity(Angle(math.Rand(.15,2),0,0))
+			self.ball:SetRoll(math.Rand( 0, 360 ))
+			self.ball:SetCollide(false)
+		end
+		orb:Finish()
+	end
+
+function ENT:Think()
+	local Pos = self:GetPos()
+	self.ball:SetPos(Pos)
 end
 
-if !SERVER then return end
-
-function ENT:Initialize()
-	self:SetModel(self.Model)
-	self:SetModelScale(0.5)
-    self:PhysicsInitSphere(1, "metal_bouncy")
-	construct.SetPhysProp(self:GetOwner(), self, 0, self:GetPhysicsObject(), {GravityToggle = false, Material = "metal_bouncy"})
-    local phys = self:GetPhysicsObject()
-    if phys:IsValid() then
-        phys:Wake()
-        phys:SetMass(1)
-        phys:SetBuoyancyRatio(0)
-        phys:EnableDrag(false)
-        phys:EnableGravity(false)
-    end
-
-    timer.Simple(1.5, function() if IsValid(self) then self:DeathEffects() end end)
-
-	self:DrawShadow(false)
-	self:ResetSequence("idle")
-	self:SetCoreType(true)
-
-	util.SpriteTrail(self, 0, colorWhite, true, 15, 0, 0.1, 1 / 6 * 0.5, "sprites/combineball_trail_black_1.vmt")
-end
-
-function ENT:SetCoreType(capture)
-	if capture then
-		self:SetSubMaterial(0, "models/effects/comball_glow1")
-	else
-		self:SetSubMaterial(0, "vj_base/effects/comball_glow2")
+function ENT:OnRemove()
+	self.ball:SetDieTime(0)
 	end
 end
 
-function ENT:SetupDataTables()
-	self:NetworkVar( "Int", 0, "Charged" )
+
+if not SERVER then return end
+local sprunk = Color(255, 165, 0, 200)
+function ENT:Initialize()
+	self:SetModel(self.Model)
+	self:SetModelScale(0.5)
+	self:PhysicsInitSphere(1, "metal_bouncy")
+
+	util.SpriteTrail(self, 0, sprunk, true, 15, 0, 0.1, 1 / 6 * 0.5, "sprites/combineball_trail_black_1.vmt")
+	local phys = self:GetPhysicsObject()
+	if phys:IsValid() then
+		phys:Wake()
+		phys:SetMass(1)
+		phys:SetBuoyancyRatio(0)
+		phys:EnableDrag(false)
+		phys:EnableGravity(false)
+	end
+	timer.Simple(1.5, function() if IsValid(self) then self:DeathEffects() end end)
+	self:DrawShadow(false)
 end
 
 function ENT:OnBounce(data, phys)
-
+	self:EmitSound("weapons/physcannon/energy_bounce" .. math.random(1,2) .. ".wav", 55, 100, 0.7, CHAN_AUTO )
 end
 
 function ENT:PhysicsCollide(data, phys)
-	local owner = self:GetOwner()
+	local attacker = self
+	if self:GetOwner():IsValid() then
+		attacker = self:GetOwner()
+	end
 	local hitEnt = data.HitEntity
-	if IsValid(owner) then
+	if IsValid(attacker) then
 		local dmg = DamageInfo()
-		dmg:SetDamageType(DMG_GENERIC)
-		dmg:SetAttacker(self.Owner)
+		dmg:SetDamageType(DMG_SHOCK)
+		dmg:SetAttacker(attacker)
 		dmg:SetInflictor(self)
 		dmg:SetDamage(35)
 		dmg:SetDamagePosition(self:GetPos())
 		hitEnt:TakeDamageInfo(dmg)
-    end
+		hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Shock, dmg:GetDamage() * 0.5, attacker, dmg:GetDamagePosition())
+	end
 
 	if (hitEnt:IsNPC() or hitEnt:IsPlayer()) then
 		self:Remove()
@@ -86,10 +88,6 @@ function ENT:PhysicsCollide(data, phys)
 
 	self:OnBounce(data,phys)
 
-	local dataF = EffectData()
-	dataF:SetOrigin(data.HitPos)
-	util.Effect("cball_bounce", dataF)
-
 	dataF = EffectData()
 	dataF:SetOrigin(data.HitPos)
 	dataF:SetNormal(data.HitNormal)
@@ -97,27 +95,9 @@ function ENT:PhysicsCollide(data, phys)
 	util.Effect("AR2Impact", dataF)
 end
 
-local color1 = Color(255, 255, 225, 32)
-local color2 = Color(255, 255, 225, 64)
---
+
 function ENT:DeathEffects(data, phys)
 	self:Remove()
 	return
-	--[[local myPos = self:GetPos()
-	effects.BeamRingPoint(myPos, 0.2, 12, 1024, 64, 0, color1, {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
-	effects.BeamRingPoint(myPos, 0.5, 12, 1024, 64, 0, color2, {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
 
-	local effectData = EffectData()
-	effectData:SetOrigin(myPos)
-	util.Effect("cball_explode", effectData)
-
-	VJ_EmitSound(self, "weapons/physcannon/energy_sing_explosion2.wav", 150)
-	util.ScreenShake(myPos, 20, 150, 1, 1250)
-	util.VJ_SphereDamage(self, self, myPos, 400, 25, bit.bor(DMG_SONIC, DMG_BLAST), true, true, {DisableVisibilityCheck=true, Force=80})
-
-	self:Remove()]]--
-end
-
-function ENT:Draw()
-    self:DrawModel()
 end

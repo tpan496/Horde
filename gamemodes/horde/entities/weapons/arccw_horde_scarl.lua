@@ -30,8 +30,8 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/w_rif_galil.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 47
-SWEP.DamageMin = 38
+SWEP.Damage = 73
+SWEP.DamageMin = 62
 SWEP.Range = 3000 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 8
 SWEP.DamageType = DMG_BULLET
@@ -47,7 +47,7 @@ SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 0.4
 SWEP.RecoilSide = 0.3
 SWEP.RecoilRise = 0
-SWEP.RecoilPunch = 2.2
+--SWEP.RecoilPunch = 2.2
 
 SWEP.Delay = 60 / 650 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.

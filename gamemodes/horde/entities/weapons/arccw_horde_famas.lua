@@ -3,50 +3,29 @@ if CLIENT then
     SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_go_famas")
     killicon.Add("arccw_horde_famas", "arccw/weaponicons/arccw_go_famas", Color(0, 0, 0, 255))
 end
-SWEP.Base = "arccw_base"
+SWEP.Base = "arccw_go_famas"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "FAMAS G1"
-SWEP.Trivia_Class = "Assault Rifle"
-SWEP.Trivia_Desc = "French bullpup assault rifle with three-round burst fire group. Considered by many to be a lousy gun, but it has won the French many a 'la victoire'."
-SWEP.Trivia_Manufacturer = "GIAT Industries"
-SWEP.Trivia_Calibre = "5.56x45mm NATO"
-SWEP.Trivia_Mechanism = "Delayed Blowback"
-SWEP.Trivia_Country = "France"
-SWEP.Trivia_Year = 1994
+
 
 SWEP.Slot = 2
 
-SWEP.UseHands = true
-
 SWEP.ViewModel = "models/weapons/arccw_go/v_rif_famas.mdl"
 SWEP.WorldModel = "models/weapons/arccw_go/v_rif_famas.mdl"
-SWEP.ViewModelFOV = 60
 
-SWEP.DefaultBodygroups = "000000000000"
-
-SWEP.Damage = 29 * 1.1
-SWEP.DamageMin = 19 * 1.1 -- damage done at maximum range
+SWEP.Damage = 50
+SWEP.DamageMin = 40  -- damage done at maximum range
 SWEP.Range = 100 -- in METRES
-SWEP.Penetration = 12
-SWEP.DamageType = DMG_BULLET
-SWEP.ShootEntity = nil -- entity to fire, if any
-SWEP.MuzzleVelocity = 1050 -- projectile or phys bullet muzzle velocity
--- IN M/S
-SWEP.ChamberSize = 1 -- how many rounds can be chambered.
+
 SWEP.Primary.ClipSize = 25 -- DefaultClip is automatically set.
 
-SWEP.PhysBulletMuzzleVelocity = 900
-
-SWEP.Recoil = 0.5
-SWEP.RecoilSide = 0.05
 SWEP.RecoilRise = 0.4
-SWEP.RecoilPunch = 2.5
+SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 1000 -- 60 / RPM.
-SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
         Mode = 2,
@@ -59,18 +38,8 @@ SWEP.Firemodes = {
     }
 }
 
-SWEP.NPCWeaponType = "weapon_ar2"
-SWEP.NPCWeight = 100
-
-SWEP.AccuracyMOA = 3 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 500 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 130
-
-SWEP.Primary.Ammo = "smg1" -- what ammo type the gun uses
-SWEP.MagID = "stanag" -- the magazine pool this gun draws from
 
 SWEP.ShootVol = 75 -- volume of shoot sound
-SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.FirstShootSound = "arccw_go/famas/famas_01.wav"
 SWEP.ShootSound = "arccw_go/famas/famas_04.wav"
@@ -285,96 +254,3 @@ SWEP.Attachments = {
         },
     },
 }
-
-SWEP.Animations = {
-    ["idle"] = {
-        Source = "idle"
-    },
-    ["draw"] = {
-        Source = "draw",
-        LHIK = true,
-        LHIKIn = 0,
-        LHIKOut = 0.5,
-    },
-    ["ready"] = {
-        Source = "ready",
-        LHIK = true,
-        LHIKIn = 0,
-        LHIKOut = 0.5,
-    },
-    ["fire"] = {
-        Source = {"shoot1", "shoot2", "shoot3"},
-        Time = 0.5,
-        ShellEjectAt = 0,
-    },
-    ["fire_iron"] = {
-        Source = "shoot_iron",
-        Time = 0.5,
-        ShellEjectAt = 0,
-    },
-    ["reload"] = {
-        Source = "reload",
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
-        Checkpoints = {16, 30},
-        FrameRate = 30,
-        LHIK = true,
-        LHIKIn = 0.7,
-        LHIKOut = 0.5,
-        LHIKEaseOut = 0.4
-    },
-    ["reload_empty"] = {
-        Source = "reload_empty",
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
-        Checkpoints = {16, 30, 55},
-        FrameRate = 30,
-        LHIK = true,
-        LHIKIn = 0.7,
-        LHIKOut = 0.15,
-        LHIKEaseOut = 0.15
-    },
-    ["enter_inspect"] = false,
-    ["idle_inspect"] = false,
-    ["exit_inspect"] = false,
-}
-
-sound.Add({
-    name = "ARCCW_GO_FAMAS.Draw",
-    channel = 16,
-    volume = 1.0,
-    sound = "arccw_go/famas/famas_draw.wav"
-})
-
-sound.Add({
-    name = "ARCCW_GO_FAMAS.Boltback",
-    channel = 16,
-    volume = 1.0,
-    sound = "arccw_go/famas/famas_boltback.wav"
-})
-
-sound.Add({
-    name = "ARCCW_GO_FAMAS.Boltforward",
-    channel = 16,
-    volume = 1.0,
-    sound = "arccw_go/famas/famas_boltforward.wav"
-})
-
-sound.Add({
-    name = "ARCCW_GO_FAMAS.Clipout",
-    channel = 16,
-    volume = 1.0,
-    sound = "arccw_go/famas/famas_clipout.wav"
-})
-
-sound.Add({
-    name = "ARCCW_GO_FAMAS.Clipin",
-    channel = 16,
-    volume = 1.0,
-    sound = "arccw_go/famas/famas_clipin.wav"
-})
-
-sound.Add({
-    name = "ARCCW_GO_FAMAS.Cliphit",
-    channel = 16,
-    volume = 1.0,
-    sound = "arccw_go/famas/famas_cliphit.wav"
-})

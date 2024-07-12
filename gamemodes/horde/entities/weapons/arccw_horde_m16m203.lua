@@ -27,8 +27,8 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/w_rif_m4a1.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 30
-SWEP.DamageMin = 20
+SWEP.Damage = 47
+SWEP.DamageMin = 36
 SWEP.RangeMin = 1500 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Range = 2000 * 0.025  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 7

@@ -23,12 +23,12 @@ SWEP.Slot = 2
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/weapons/v_irifle.mdl"
+SWEP.ViewModel = "models/weapons/c_irifle.mdl"
 SWEP.WorldModel = "models/weapons/w_irifle.mdl"
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 49
-SWEP.DamageMin = 30 -- damage done at maximum range
+SWEP.Damage = 76
+SWEP.DamageMin = 65 -- damage done at maximum range
 SWEP.Range = 1500 * 0.025 -- in METRES
 SWEP.Penetration = 5
 SWEP.DamageType = DMG_BULLET
@@ -106,8 +106,8 @@ SWEP.ProceduralIronFire = false
 SWEP.CaseBones = {}
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.8, -4, 1),
-    Ang = Angle(5, 0, 0),
+    Pos = Vector(-5.8, -4, 0.8),
+    Ang = Angle(2, 0, 0),
     Magnification = 1.1,
     SwitchToSound = "", -- sound that plays when switching to this sight
     CrosshairInSights = true
@@ -147,11 +147,14 @@ SWEP.ExtraSightDist = 10
 SWEP.GuaranteeLaser = true
 
 SWEP.WorldModelOffset = {
-    pos = Vector(-14, 6, -4),
-    ang = Angle(-10, 0, 180)
+    --pos = Vector(-14, 6, -4),
+    --ang = Angle(-10, 0, 180)
+    scale = Vector(0.9, 0.9, 0.9),
+    pos = Vector(16, 1, -3.2),
+    ang = Angle(-12, 180, 180)
 }
 
-SWEP.MirrorVMWM = true
+--SWEP.MirrorVMWM = true
 
 SWEP.Attachments = {
     {
