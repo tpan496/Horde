@@ -3,7 +3,7 @@ if CLIENT then
     SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_go_m249para")
     killicon.Add("arccw_horde_m249", "arccw/weaponicons/arccw_go_m249para", Color(0, 0, 0, 255))
 end
-SWEP.Base = "arccw_go_m249"
+SWEP.Base = "arccw_go_m249para"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
