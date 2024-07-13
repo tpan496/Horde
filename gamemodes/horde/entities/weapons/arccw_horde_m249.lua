@@ -22,6 +22,13 @@ SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.SpeedMult = 0.9
 
 SWEP.ShootSpeedMult = 0.75
+
+SWEP.Jamming = false
+SWEP.HeatCapacity = false
+SWEP.HeatDissipation = false
+SWEP.HeatLockout = false
+SWEP.HeatDelayTime = false
+
 SWEP.Attachments = {
     {
         PrintName = "Optic",
@@ -118,4 +125,3 @@ SWEP.Attachments = {
     },
 }
 
-SWEP.Jamming = nil

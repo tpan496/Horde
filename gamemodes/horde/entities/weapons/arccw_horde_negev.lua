@@ -21,4 +21,8 @@ SWEP.SpeedMult = 0.95
 SWEP.SightedSpeedMult = 0.75
 SWEP.ShootSpeedMult = 0.75
 
-SWEP.Jamming = nil
+SWEP.Jamming = false
+SWEP.HeatCapacity = false
+SWEP.HeatDissipation = false
+SWEP.HeatLockout = false
+SWEP.HeatDelayTime = false
