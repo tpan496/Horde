@@ -78,7 +78,7 @@ function ENT:PhysicsCollide(data, phys)
 		dmg:SetDamage(35)
 		dmg:SetDamagePosition(self:GetPos())
 		hitEnt:TakeDamageInfo(dmg)
-		hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Shock, dmg:GetDamage() * 0.5, attacker, dmg:GetDamagePosition())
+		hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Shock, dmg:GetDamage() * 0.75, attacker, dmg:GetDamagePosition())
 	end
 
 	if (hitEnt:IsNPC() or hitEnt:IsPlayer()) then
