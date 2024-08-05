@@ -61,6 +61,27 @@ LANGUAGE["Rank_Expert"] = "大师"
 LANGUAGE["Rank_Champion"] = "冠绝"
 LANGUAGE["Rank_Master"] = "宗师"
 
+-- Subclass Buttons
+LANGUAGE["Subclass_Title_Survivor"] = "生存者"
+LANGUAGE["Subclass_Title_Assault"] = "突击兵"
+LANGUAGE["Subclass_Title_Heavy"] = "重装兵"
+LANGUAGE["Subclass_Title_Medic"] = "医疗兵"
+LANGUAGE["Subclass_Title_Demolition"] = "爆破兵"
+LANGUAGE["Subclass_Title_Ghost"] = "幻影"
+LANGUAGE["Subclass_Title_Engineer"] = "工程师"
+LANGUAGE["Subclass_Title_Berserker"] = "狂战士"
+LANGUAGE["Subclass_Title_Warden"] = "守望者"
+LANGUAGE["Subclass_Title_Cremator"] = "火焰兵"
+LANGUAGE["Subclass_Title_Samurai"] = "武士"
+LANGUAGE["Subclass_Title_SpecOps"] = "特种兵"
+LANGUAGE["Subclass_Title_Gunslinger"] = "神枪手"
+LANGUAGE["Subclass_Title_Artificer"] = "信仰者"
+LANGUAGE["Subclass_Title_Necromancer"] = "死灵法师"
+LANGUAGE["Subclass_Title_Psycho"] = "暴徒"
+LANGUAGE["Subclass_Title_Warlock"] = "术士"
+LANGUAGE["Subclass_Title_Carcass"] = "残骸"
+LANGUAGE["Subclass_Title_Hatcher"] = "孵化者"
+LANGUAGE["Subclass_Title_Overlord"] = "霸主"
 
 -- Scoreboard
 LANGUAGE["Scoreboard_Name"] = "玩家"
@@ -74,6 +95,8 @@ LANGUAGE["Scoreboard_Ping"] = "延迟"
 
 
 -- Shop
+LANGUAGE["Rank Requirement(s) Not Met"] = "你还未达到所需的等级"
+LANGUAGE["Shop_You_Are_Dead"] = "你死了"
 LANGUAGE["Shop_Not_Enough_Money_Or_Carrying_Capacity"] = "你没有足够的金钱或者负重来购买当前物品!"
 -- Categories
 LANGUAGE["Shop_Class"] = "职业"
@@ -199,7 +222,6 @@ LANGUAGE["Infusion_Description_Siphoning"] = [[
 减少25%武器伤害。
 ]]
 LANGUAGE["Infusion_Description_Chrono"] = [[
-Increases weapon damage the longer the weapon is being held by the user.
 根据玩家持有武器的时间提升武器伤害。
 
 每一回合持有当前武器，提升6%武器伤害。
@@ -282,6 +304,7 @@ LANGUAGE["Class_Necromancer"] = "死灵法师"
 LANGUAGE["Class_Samurai"] = "武士"
 LANGUAGE["Class_???"] = "???"
 LANGUAGE["Class_Artificer"] = "信仰者"
+LANGUAGE["Class_Overlord"] = "霸主"
 
 -- Default Class Extra Descriptions
 LANGUAGE["Class_Description_Survivor"] = [[
@@ -620,7 +643,7 @@ LANGUAGE["Perk_ghost_kinetic_impact"] = [[
 每 {2} 距离，提升 {1} 子弹伤害。
 最多提升 {3} 子弹伤害。]]
 
-LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[歼灭]]
+LANGUAGE["Perk_Title_Ghost_Tier_4"] = [[歼灭]]
 LANGUAGE["Perk_Title_ghost_coup"] = [[恩赐解脱]]
 LANGUAGE["Perk_ghost_coup"] = [[
 直接击杀生命值小于 {1} 最大生命值的敌人。]]
@@ -639,7 +662,7 @@ LANGUAGE["Perk_engineer_tinkerer"] = [[
 
 LANGUAGE["Perk_Title_engineer_pioneer"] = [[先驱]]
 LANGUAGE["Perk_engineer_pioneer"] = [[
-提升 {2} 召唤物伤害。]]
+提升 {1} 召唤物伤害。]]
 
 LANGUAGE["Perk_Title_Engineer_Tier_2"] = [[核心]]
 LANGUAGE["Perk_Title_engineer_fusion"] = [[聚变反应]]
@@ -700,24 +723,24 @@ LANGUAGE["Perk_berserker_savagery"] = [[
 提升 {2} 最大生命值。]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[格挡]]
-LANGUAGE["Perk_Title_berserker_graceful_guard"] = [[Graceful Guard]]
+LANGUAGE["Perk_Title_berserker_graceful_guard"] = [[优雅格挡]]
 LANGUAGE["Perk_berserker_graceful_guard"] = [[
 空中格挡成功后:
   - 移除所有的异常状态和异常状态累计值。
   - 恢复 {1} 生命值。]]
 
-LANGUAGE["Perk_Title_berserker_unwavering_guard"] = [[Unwavering Guard]]
+LANGUAGE["Perk_Title_berserker_unwavering_guard"] = [[坚定格挡]]
 LANGUAGE["Perk_berserker_unwavering_guard"] = [[
 空中格挡成功后:
   - 提升 {1} 物理伤害，持续 {3} 秒。
   - 减少 {2} 受到的伤害，持续 {3} 秒。]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_4"] = [[秘技]]
-LANGUAGE["Perk_Title_berserker_mindeye"] = [[心眼]]
-LANGUAGE["Perk_berserker_mindeye"] = [[
-每次近战攻击可以获得一层心眼状态，最多 {1} 层。
-每层提升 {2} 闪避和 {3} 近战伤害。
-被敌人攻击命中或者层数超过最大时，层数清零。]]
+LANGUAGE["Perk_Title_berserker_phalanx"] = [[方阵]]
+LANGUAGE["Perk_berserker_phalanx"] = [[
+每2秒获得1个方阵,最多获得{1}个
+每个堆叠会增加{2}物理伤害抗性和{3}近战伤害
+攻击时失去方阵效果堆叠]]
 
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[肉斩骨断]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
@@ -773,8 +796,7 @@ LANGUAGE["Perk_cremator_methane"] = [[
 
 LANGUAGE["Perk_Title_cremator_napalm"] = [[凝固汽油弹]]
 LANGUAGE["Perk_cremator_napalm"] = [[
-提升 {1} 引燃半径。
-提升 {2} 引燃持续时间。]]
+提升 {1} 引燃持续时间。]]
 
 LANGUAGE["Perk_Title_Cremator_Tier_2"] = [[能量汲取]]
 LANGUAGE["Perk_Title_cremator_positron_array"] = [[阳电子阵列]]
@@ -804,13 +826,12 @@ LANGUAGE["Perk_Title_Cremator_Tier_4"] = [[能量释放]]
 LANGUAGE["Perk_Title_cremator_firestorm"] = [[烈焰风暴]]
 LANGUAGE["Perk_cremator_firestorm"] = [[
 火焰伤害对敌人累计爆裂值。
-爆裂值到达 {1} 后产生爆炸。
+爆裂值满后后产生爆炸。
 爆炸造成 {2} 爆炸伤害。]]
 
 LANGUAGE["Perk_Title_cremator_incineration"] = [[燃烧殆尽]]
 LANGUAGE["Perk_cremator_incineration"] = [[
-提升 {1} 引燃伤害。
-提升 {2} 引燃概率。]]
+提升 {1} 引燃伤害。]]
 
 -- Default Perks: Psycho
 LANGUAGE["Perk_psycho_base"] = [[
@@ -836,7 +857,7 @@ LANGUAGE["Perk_psycho_savor"] = [[
 吸收 {2} 暴击伤害为生命值。
 每次最多吸收 10 生命值。]]
 
-LANGUAGE["Perk_Title_Psycho_Tier_2"] = [[Садизм]]
+LANGUAGE["Perk_Title_Psycho_Tier_2"] = [[施虐]]
 LANGUAGE["Perk_Title_psycho_bloodbath"] = [[血浴]]
 LANGUAGE["Perk_psycho_bloodbath"] = [[
 +{1} 暴击率。
@@ -870,6 +891,59 @@ LANGUAGE["Perk_psycho_bestial_wrath"] = [[
 {1} 提升暴击伤害。
 狂暴模式中，近战伤害产生范围性伤害。
 狂暴模式中，每杀死一个敌人提供 1 生命恢复。]]
+
+-- Default Perks: SpecOps
+LANGUAGE["Perk_Title_SpecOps_Tier_1"] = [[装备]]
+LANGUAGE["Perk_Title_specops_smokescreen"] = [[烟幕]]
+LANGUAGE["Perk_specops_smokescreen"] = [[
+按Shift+E部署烟幕。
+受烟幕影响的玩家增加{1}的闪避。
+效果持续{2}秒]]
+
+LANGUAGE["Perk_Title_specops_flare"] = [[信号弹]]
+LANGUAGE["Perk_specops_flare"] = [[
+按Shift+E部署信号弹。
+信号弹提供照明和吸引敌人。
+闪光持续3秒]]
+
+LANGUAGE["Perk_Title_SpecOps_Tier_2"] = [[交战]]
+LANGUAGE["Perk_Title_specops_tactical_visor"] = [[战术目镜]]
+LANGUAGE["Perk_specops_tactical_visor"] = [[
+在战术模式下:
+增加{1}的弹道伤害。
+对四肢的伤害增加{2}]]
+
+LANGUAGE["Perk_Title_specops_neuron_stabilizer"] = [[神经元稳定剂]]
+LANGUAGE["Perk_specops_neuron_stabilizer"] = [[
+根据你在战术模式中停留的时间提供加成
+每秒弹道伤害增加{1}，最多{2}
++{3}伤害格挡每秒，最多{4}]]
+
+LANGUAGE["Perk_Title_SpecOps_Tier_3"] = [[保护]]
+LANGUAGE["Perk_Title_specops_biotic_mask"] = [[防毒面具]]
+LANGUAGE["Perk_specops_biotic_mask"] = [[
+在战术模式下:
+每秒恢复2%生命值
+减少{1}的出血，破裂和毒素的叠加]]
+
+LANGUAGE["Perk_Title_specops_adaptive_coating"] = [[自适应涂层]]
+LANGUAGE["Perk_specops_adaptive_coating"] = [[
+在战术模式下:
+对所有伤害的抗性增加{1}
+减少{2}的火、冷、闪电伤害]]
+
+LANGUAGE["Perk_Title_SpecOps_Tier_4"] = [[日落]]
+LANGUAGE["Perk_Title_specops_night_stalker"] = [[暗夜追猎者]]
+LANGUAGE["Perk_specops_night_stalker"] = [[
+在战术模式下:
+增加{1}的移动速度。
+增加{2}的爆头伤害]]
+
+LANGUAGE["Perk_Title_specops_peace_walker"] = [[和平行者]]
+LANGUAGE["Perk_specops_peace_walker"] = [[
+减少{1}的烟幕/信号弹冷却时间
+在战术模式下:
+增加{2}的弹道伤害。]]
 
 -- Default Perks: Carcass
 LANGUAGE["Perk_carcass_base"] = [[
@@ -961,6 +1035,104 @@ LANGUAGE["Perk_hatcher_base"] = [[
 阶段II  - 提升伤害，生命值，波动频率，提升 50% 毒素伤害抗性。
 阶段III - 提升伤害，生命值，波动频率，免疫毒素伤害和破坏异常状态。]]
 
+LANGUAGE["Perk_Title_Hatcher_Tier_1"] = [[阶段 I]]
+LANGUAGE["Perk_Title_hatcher_natural_selection"] = [[自然选择]]
+LANGUAGE["Perk_hatcher_natural_selection"] = [[
+增加 {1} 的蚁狮进化速度.]]
+
+LANGUAGE["Perk_Title_hatcher_growth_hormone"] = [[生长激素]]
+LANGUAGE["Perk_hatcher_growth_hormone"] = [[
+当蚁狮被治疗时增加 {1} 的蚁狮进化速度.]]
+
+LANGUAGE["Perk_Title_Hatcher_Tier_2"] = [[阶段 II]]
+LANGUAGE["Perk_Title_hatcher_sand_cloak"] = [[沙土斗篷]]
+LANGUAGE["Perk_hatcher_sand_cloak"] = [[
+阶段 II 的蚁狮会通过信息素波动获得沙土斗篷
+沙土斗篷增加{1}的躲闪
+沙土斗篷会持续{2}秒]]
+
+LANGUAGE["Perk_Title_hatcher_bio_barrier"] = [[生物屏障]]
+LANGUAGE["Perk_hatcher_bio_barrier"] = [[
+阶段 II 的蚁狮会通过信息素波动获得20点屏障
+屏障会使用电荷来吸收所有负面效果堆叠和受到的伤害
+每个玩家最多有50点屏障]]
+
+LANGUAGE["Perk_Title_Hatcher_Tier_3"] = [[阶段 III]]
+LANGUAGE["Perk_Title_hatcher_vile_blood"] = [[邪恶之血]]
+LANGUAGE["Perk_hatcher_vile_blood"] = [[
+阶段 III 的蚁狮会通过信息素波动获得邪恶之血
+邪恶之血会增加{1}的毒素伤害抗性
+邪恶之血允许玩家通过造成伤害来中断效果堆叠]]
+
+LANGUAGE["Perk_Title_hatcher_flesh_eater"] = [[肉食动物]]
+LANGUAGE["Perk_hatcher_flesh_eater"] = [[
+阶段 III 的蚁狮会通过气味脉冲获得肉食动物效果
+肉食动物允许玩家从造成的伤害中吸血{1},最多{2}
+肉食动物允许蚁狮从造成的伤害中吸血{2}]]
+
+LANGUAGE["Perk_Title_Hatcher_Tier_4"] = [[物竞天择]]
+LANGUAGE["Perk_Title_hatcher_swarm"] = [[狮群]]
+LANGUAGE["Perk_hatcher_swarm"] = [[
+蚁狮的最大数量 +1 ]]
+
+LANGUAGE["Perk_Title_hatcher_metamorphosis"] = [[蜕变]]
+LANGUAGE["Perk_hatcher_metamorphosis"] = [[
+添加进化阶段 IV ,蚁狮将蜕变成蚁狮守卫
+蚁狮守卫有着更高的生命值和伤害,但将变得不再可控
+蚁狮守卫对状态效果免疫]]
+
+-- Default Perks: Warlock-
+LANGUAGE["Perk_Title_Warlock_Tier_1"] = [[改变]]
+LANGUAGE["Perk_Title_warlock_meditate"] = [[冥想]]
+LANGUAGE["Perk_warlock_meditate"] = [[
+增加{1}的最大心智
+]]
+
+LANGUAGE["Perk_Title_warlock_quickcast"] = [[快速施法]]
+LANGUAGE["Perk_warlock_quickcast"] = [[
+增加{1}的法术充能速度
+]]
+
+LANGUAGE["Perk_Title_Warlock_Tier_2"] = [[通灵]]
+LANGUAGE["Perk_Title_warlock_sigil_of_courage"] = [[勇气符印]]
+LANGUAGE["Perk_warlock_sigil_of_courage"] = [[
+在符印内时,增加{1}的精神恢复
+符印每秒提供{2}点屏障
+]]
+
+LANGUAGE["Perk_Title_warlock_sigil_of_malediction"] = [[诅咒符印]]
+LANGUAGE["Perk_warlock_sigil_of_malediction"] = [[
+在你符印内的敌人会不断的受到物理伤害
+伤害等级取决于你的符印等级
+]]
+
+LANGUAGE["Perk_Title_Warlock_Tier_3"] = [[矢量化]]
+LANGUAGE["Perk_Title_warlock_arcane_supremacy"] = [[神秘霸主]]
+LANGUAGE["Perk_warlock_arcane_supremacy"] = [[
+增加{1}的最大精神值
+增加{2}的终极法术充能速度
+]]
+
+LANGUAGE["Perk_Title_warlock_negative_burst"] = [[负能冲击]]
+LANGUAGE["Perk_warlock_negative_burst"] = [[
+激活法术后会在你附近产生冲击波
+冲击波根据法术精神消耗造成伤害
+]]
+
+LANGUAGE["Perk_Title_Warlock_Tier_4"] = [[湮没]]
+LANGUAGE["Perk_Title_warlock_shaper_of_destruction"] = [[毁灭者]]
+LANGUAGE["Perk_warlock_shaper_of_destruction"] = [[
+增加{1}的最大精神值
+终极法术上升1级
+减少{2}的终极法术冷却时间
+]]
+
+LANGUAGE["Perk_Title_warlock_sigil_mastery"] = [[符印精通]]
+LANGUAGE["Perk_warlock_sigil_mastery"] = [[
+你的魔法等级上升1级
+激活法术时会产生一个当前符印的削弱版
+]]
+
 -- Default Perks: Gunslinger
 LANGUAGE["Perk_gunslinger_base"] = [[
 难度：中等
@@ -974,6 +1146,56 @@ LANGUAGE["Perk_gunslinger_base"] = [[
 在猎人标记下死去的敌人有 {4} 概率掉落额外金钱。
 
 你可以购买所有的手枪类武器。]]
+
+LANGUAGE["Perk_Title_Gunslinger_Tier_1"] = [[精准度]]
+LANGUAGE["Perk_Title_gunslinger_deadeye"] = [[死亡之眼]]
+LANGUAGE["Perk_gunslinger_deadeye"] = [[
+爆头可用使死亡之眼叠加,最多增加{1}次
+每个堆叠增加{2}的手枪伤害]]
+
+LANGUAGE["Perk_Title_gunslinger_puncture"] = [[刺穿]]
+LANGUAGE["Perk_gunslinger_puncture"] = [[
+增加{1}的猎人标记范围
+受到猎人标记的敌人受到的伤害增加{2}]]
+
+LANGUAGE["Perk_Title_Gunslinger_Tier_2"] = [[枪战]]
+LANGUAGE["Perk_Title_gunslinger_elusive"] = [[神出鬼没]]
+LANGUAGE["Perk_gunslinger_elusive"] = [[
+手持手枪武器时:
+增加{1}的移动速度
+增加{2}的躲闪]]
+
+LANGUAGE["Perk_Title_gunslinger_poach"] = [[偷猎]]
+LANGUAGE["Perk_gunslinger_poach"] = [[
+增加{1}的猎人标记持续时间
+击杀有猎人标记的敌人后有{2}的几率掉落可消耗的装备
+精英敌人有{3}的额外几率掉落装备]]
+
+LANGUAGE["Perk_Title_Gunslinger_Tier_3"] = [[技巧]]
+LANGUAGE["Perk_Title_gunslinger_quickdraw"] = [[快速拔枪]]
+LANGUAGE["Perk_gunslinger_quickdraw"] = [[
+切换武器时获得快速拔枪状态
+在该状态下手枪伤害增加{1}并增加{1}的闪避
+快速拔枪的效果持续{2}秒]]
+
+LANGUAGE["Perk_Title_gunslinger_smuggle"] = [[走私]]
+LANGUAGE["Perk_gunslinger_smuggle"] = [[
+击杀有猎人标记的敌人会获得额外的金钱
+允许随时随地打开商店
+打开走私者的商店后有60秒的冷却时间]]
+
+LANGUAGE["Perk_Title_Gunslinger_Tier_4"] = [[最后通牒]]
+LANGUAGE["Perk_Title_gunslinger_phantom_reload"] = [[幻影换弹]]
+LANGUAGE["Perk_gunslinger_phantom_reload"] = [[
+当幻影换弹激活时,切换手枪武器会立即换弹
+使用幻影换弹会丢弃整个弹匣
+幻影换弹的冷却时间为{1}秒]]
+
+LANGUAGE["Perk_Title_gunslinger_exorcism"] = [[驱魔]]
+LANGUAGE["Perk_gunslinger_exorcism"] = [[
+猎人标记会移除敌人身上的突变,持续{1}秒
+猎人标记每移除一次突变会造成{2}点伤害
+猎人标记有{3}的几率立即杀死非精英敌人]]
 
 -- Default Perks: Specops
 LANGUAGE["Perk_specops_base"] = [[
@@ -997,6 +1219,57 @@ LANGUAGE["Perk_necromancer_base"] = [[
 
 使用精神值代替护甲。]]
 
+LANGUAGE["Perk_Title_Necromancer_Tier_1"] = [[控制]]
+LANGUAGE["Perk_Title_necromancer_withering_prescence"] = [[冰寒之魂]]
+LANGUAGE["Perk_necromancer_withering_prescence"] = [[
+增加{1}的冻伤堆叠
+增加{2}的冻伤持续时间
+]]
+
+LANGUAGE["Perk_Title_necromancer_hollow_essence"] = [[虚空精华]]
+LANGUAGE["Perk_necromancer_hollow_essence"] = [[
+幽灵的最大存活数+{1}
+]] 
+
+LANGUAGE["Perk_Title_Necromancer_Tier_2"] = [[复苏]]
+LANGUAGE["Perk_Title_necromancer_energy_siphon"] = [[能量汲取]]
+LANGUAGE["Perk_necromancer_energy_siphon"] = [[
+吸取{1}造成的冰伤来恢复精神值,每次命中最高吸取{2}
+根据你当前的精神值增加冰伤,最高增加{3}
+]]
+
+LANGUAGE["Perk_Title_necromancer_eldritch_protection"] = [[灵异保护]]
+LANGUAGE["Perk_necromancer_eldritch_protection"] = [[
+增加{1}的精神再生
+遭到受冻伤影响的敌人的伤害减少{2}
+]]
+
+LANGUAGE["Perk_Title_Necromancer_Tier_3"] = [[秘术]]
+LANGUAGE["Perk_Title_necromancer_occult_armor"] = [[超自然护甲]]
+LANGUAGE["Perk_necromancer_occult_armor"] = [[
+使用精神值来减少所受伤害,最高减少{1}
+你的精神值越高,你受到的伤害就越少]]
+
+LANGUAGE["Perk_Title_necromancer_abyssal_might"] = [[深渊之力]]
+LANGUAGE["Perk_necromancer_abyssal_might"] = [[
+幽灵的最大存活数+{1}
+幽灵可以使用深渊咆哮
+]]
+
+LANGUAGE["Perk_Title_Necromancer_Tier_4"] = [[巅峰]]
+LANGUAGE["Perk_Title_necromancer_beacon_of_void"] = [[虚空信标]]
+LANGUAGE["Perk_necromancer_beacon_of_void"] = [[
+增加{1}的冻伤伤害
+增加{2}的冻伤持续时间
+你将免疫冻伤
+]]
+
+LANGUAGE["Perk_Title_necromancer_necromastery"] = [[死灵之主]]
+LANGUAGE["Perk_necromancer_necromastery"] = [[
+幽灵的最大存活数+{1}
+仆从的法术冷却时间减少{2}
+]]
+
 -- Default Perks: Warlock
 LANGUAGE["Perk_warlock_base"] = [[
 难度：中等
@@ -1013,6 +1286,61 @@ LANGUAGE["Perk_artificer_base"] = [[
 提升 {1} 火焰和雷电伤害。(每级提升 {2}, 最多至 {3})。
 
 使用精神值代替护甲。]]
+
+LANGUAGE["Perk_Title_Artificer_Tier_1"] = [[内在之力]]
+LANGUAGE["Perk_Title_artificer_solar_flux"] = [[太阳通量]]
+LANGUAGE["Perk_artificer_solar_flux"] = [[
+每当你使用不同的法术,增加{1}的法术伤害,最多增加{2}
+当你使用相同的法术时,伤害加成将被移除
+]]
+
+LANGUAGE["Perk_Title_artificer_purge"] = [[清洗]]
+LANGUAGE["Perk_artificer_purge"] = [[
+增加{1}的冲击效果堆叠
+增加{2}的爆头伤害
+]]
+
+LANGUAGE["Perk_Title_Artificer_Tier_2"] = [[恢复]]
+LANGUAGE["Perk_Title_artificer_devotion"] = [[虔诚]]
+LANGUAGE["Perk_artificer_devotion"] = [[
+增加{1}的精神恢复
+对火焰和冲击的免疫
+]]
+
+LANGUAGE["Perk_Title_artificer_intensity"] = [[强光]]
+LANGUAGE["Perk_artificer_intensity"] = [[
+每击杀一个敌人都会获得强光,最多堆叠{1}个
+每个堆叠增加{2}的精神恢复
+每个堆叠减少{3}的法术冷却
+]]
+
+LANGUAGE["Perk_Title_Artificer_Tier_3"] = [[法典]]
+LANGUAGE["Perk_Title_artificer_spell_echo"] = [[施法回响]]
+LANGUAGE["Perk_artificer_spell_echo"] = [[
+使你的法术有{1}的几率激活两次
+]]
+
+LANGUAGE["Perk_Title_artificer_multicast"] = [[多重施法]]
+LANGUAGE["Perk_artificer_multicast"] = [[
+允许你在充能时使用其他法术
+您只能使用不需要充能的咒语
+]]
+
+LANGUAGE["Perk_Title_Artificer_Tier_4"] = [[飞升]]
+LANGUAGE["Perk_Title_artificer_godslayer"] = [[弑神者]]
+LANGUAGE["Perk_artificer_godslayer"] = [[
+增加{1}的火焰伤害
+你的闪电法术可以点燃敌人
+你的闪电法术会留下火坑
+]]
+
+LANGUAGE["Perk_Title_artificer_draconic_reckoning"] = [[龙之审判]]
+LANGUAGE["Perk_artificer_draconic_reckoning"] = [[
+增加{1}的闪电伤害
+你的火焰伤害也会造成冲击伤害
+你的火焰法术造成闪电溅射伤害
+]]
+
 
 -- Default Perks: Samurai
 LANGUAGE["Perk_samurai_base"] = [[
@@ -1072,6 +1400,71 @@ LANGUAGE["Perk_samurai_demon_strike"] = [[
 {2} 提升对出血状态中敌人的近战伤害。
 吸收 {3} 在疾步中造成的近战伤害为生命值。]]
 
+-- Default Perks :Overlord
+LANGUAGE["Perk_overlord_base"] = [[
+难度: 高
+
+霸主专注于压制敌人和特殊防御
+在你附近的敌人会获得恐惧效果
+恐惧每叠加一层就会使敌人受到的伤害增加{1},造成的伤害减少{2}
+恐惧效果最多可以叠加2次
+
+增加了{1}的恐惧范围(每级增加{4},最多增加{5})
+减少了受到的{6}的负面效果堆叠(每级增加{7},最多增加{8})
+
+你的守望塔没有效果]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_1"] = [[防御]]
+LANGUAGE["Perk_Title_overlord_inverse_filter"] = [[反滤波器]]
+LANGUAGE["Perk_overlord_inverse_filter"] = [[
+受到的负面效果堆叠数减少{1}
+减少{2}受到的出血堆叠
+当受到负面效果时恢复生命值
+]]
+
+LANGUAGE["Perk_Title_overlord_dispersion"] = [[分散]]
+LANGUAGE["Perk_overlord_dispersion"] = [[
+恐惧叠加上限+1
+使用恐惧效果减少你的负面效果堆叠
+]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_2"] = [[进攻]]
+LANGUAGE["Perk_Title_overlord_militant"] = [[激进分子]]
+LANGUAGE["Perk_overlord_militant"] = [[
+受到的负面效果堆叠数减少{1}
+对受恐惧影响的敌人增加{1}的弹道伤害]]
+
+LANGUAGE["Perk_Title_overlord_oppressor"] = [[压制者]]
+LANGUAGE["Perk_overlord_oppressor"] = [[
+恐惧叠加上限+2]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_3"] = [[空间控制]]
+LANGUAGE["Perk_Title_overlord_dark_energy_blast"] = [[暗能爆裂]]
+LANGUAGE["Perk_overlord_dark_energy_blast"] = [[
+恐惧叠加上限+1
+按SHIFT+E发射能量球
+造成的伤害与恐惧的堆叠数量成正比]]
+
+LANGUAGE["Perk_Title_overlord_juxtapose"] = [[并列]]
+LANGUAGE["Perk_overlord_juxtapose"] = [[
+恐惧叠加上限+1
+按SHIFT+E创造一个有自身生命值50%的幻象
+幻象会对附近的敌人施加恐惧效果]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_4"] = [[安魂曲]]
+LANGUAGE["Perk_Title_overlord_doomed_presence"] = [[命中注定]]
+LANGUAGE["Perk_overlord_doomed_presence"] = [[
+增加{1}的恐惧范围
+使用恐惧会永久降低非精英敌人{2}的最大生命值
+使用恐惧会永久降低精英敌人{3}的最大生命值,最高降低{4}]]
+
+LANGUAGE["Perk_Title_overlord_deatheater"] = [[食死者]]
+LANGUAGE["Perk_overlord_deatheater"] = [[
+恐惧叠加上限+2
+减少{1}的负面效果堆叠
+免疫坏死]]
+
+
 -- Default Config Shop Items
 -- Optional
 -- Melee Items
@@ -1092,11 +1485,12 @@ LANGUAGE["Item_Desc_Combat Knife"] = [[
 ]]
 
 LANGUAGE["Item_Machete"] = [[砍刀]]
-LANGUAGE["Item_Desc_Bat"] = [[
-大砍刀。
+LANGUAGE["Item_Desc_Machete"] = [[
+大砍刀
+非常容易上手
 ]]
 
-LANGUAGE["Item_Fireaxe"] = [[消防服]]
+LANGUAGE["Item_Fireaxe"] = [[消防斧]]
 LANGUAGE["Item_Desc_Fireaxe"] = [[
 消防用斧头。
 厚重，但是威力不小。
@@ -1129,8 +1523,8 @@ LANGUAGE["Item_Desc_Mjollnir"] = [[
 战锤激活后，下一次攻击会对范围内敌人造成雷电伤害。
 ]]
 
-LANGUAGE["Item_Inferno Blade"] = [[恶魔刀锋]]
-LANGUAGE["Item_Desc_Inferno Blade"] = [[
+LANGUAGE["Item_Inferno"] = [[恶魔刀锋]]
+LANGUAGE["Item_Desc_Inferno"] = [[
 蕴含着火焰力量的弯刀。
 
 右键开启火焰模式，使攻击附带范围性火焰伤害。
@@ -1145,94 +1539,94 @@ LANGUAGE["Item_Desc_Thorn Mace"] = [[
 ]]
 
 -- Pistol Items
-LANGUAGE["Item_9mm"] = [[9mm]]
+LANGUAGE["Item_9mm"] = [[9毫米手枪]]
 LANGUAGE["Item_Desc_9mm"] = [[
 联合军标配手枪。
 ]]
 
 LANGUAGE["Item_357"] = [[357]]
 LANGUAGE["Item_Desc_357"] = [[
-Colt python magnum pistol.
-Used by Black Mesa security guards.
+柯尔特巨蟒马格南手枪
+黑山基地保安的同款
 ]]
 
-LANGUAGE["Item_Glock"] = [[Glock]]
+LANGUAGE["Item_Glock"] = [[格洛克]]
 LANGUAGE["Item_Desc_Glock"] = [[
-Glock 18.
+格洛克 18.
 奥地利制造半自动手枪。
 ]]
 
 LANGUAGE["Item_USP"] = [[USP]]
 LANGUAGE["Item_Desc_USP"] = [[
-Universelle Selbstladepistole.
+通用自动装填手枪
 德国公司H&K制造的半自动手枪。
 ]]
 
 LANGUAGE["Item_P2000"] = [[P2000]]
 LANGUAGE["Item_Desc_P2000"] = [[
-Heckler & Koch P2000.
-A serviceable first-round pistol made by H&K.
+黑克勒-科赫制造的P2000手枪.
+由黑克勒-科赫(HK)设计和生产的半自动手枪
 ]]
 
 LANGUAGE["Item_P250"] = [[P250]]
 LANGUAGE["Item_Desc_P250"] = [[
-SIG Sauer P250.
-A low-recoil sidearm with a high rate of fire.
+西格绍尔 P250.
+一种低后坐力,高射速的配枪
 ]]
 
 LANGUAGE["Item_R8"] = [[R8]]
 LANGUAGE["Item_Desc_R8"] = [[
-R8 Revolver.
-Delivers a highly accurate and powerful round,
-at the expense of a lengthy trigger-pull.
+R8左轮手枪
+以扣动扳机所需的时间为代价,
+发射出高度精确和强大的子弹
 ]]
 
 LANGUAGE["Item_Deagle"] = [[沙漠之鹰]]
 LANGUAGE["Item_Desc_Deagle"] = [[
-Night Hawk .50C.
-An iconic pistol that is diffcult to master.
+Night Hawk 生产的.50口径手枪.
+一把难以掌握的标志性手枪.
 ]]
 
 LANGUAGE["Item_M1911"] = [[M1911]]
 LANGUAGE["Item_Desc_M1911"] = [[
-Colt 1911.
-Standard-issue sidearm for the United States Armed Forces.
+柯尔特1911
+美国武装部队的标准配枪
 ]]
 
 LANGUAGE["Item_FiveSeven"] = [[57式]]
 LANGUAGE["Item_Desc_FiveSeven"] = [[
 ES Five-seven.
-A Belgian semi-automatic pistol made by FN Herstal.
+赫斯塔尔制造的比利时半自动手枪
 ]]
 
 LANGUAGE["Item_CZ75"] = [[CZ75]]
 LANGUAGE["Item_Desc_CZ75"] = [[
 CZ 75.
-A semi-automatic pistol manufactured in Czech Republic.
+由捷克共和国制造的一把半自动手枪
 ]]
 
 LANGUAGE["Item_M9"] = [[M9]]
 LANGUAGE["Item_Desc_M9"] = [[
-Beretta M9.
-Sidearm used by the United States Armed Forces.
+贝雷塔 M9.
+美国武装部队使用的手枪
 ]]
 
 LANGUAGE["Item_Tec-9"] = [[Tec-9]]
 LANGUAGE["Item_Desc_Tec-9"] = [[
-A Swedish-made semi-automatic pistol.
-Lethal in close quarters.
+瑞典制造的半自动手枪
+近距离致命
 ]]
 
 LANGUAGE["Item_TMP"] = [[TMP]]
 LANGUAGE["Item_Desc_TMP"] = [[
-Steyr TMP.
-A select-fire 9×19mm Parabellum caliber machine pistol.
+斯泰尔TMP
+一种可选择射击模式的9×19毫米 帕拉贝姆口径自动手枪
 ]]
 
-LANGUAGE["Item_Anaconda"] = [[Anaconda]]
+LANGUAGE["Item_Anaconda"] = [[蟒蛇]]
 LANGUAGE["Item_Desc_Anaconda"] = [[
-Colt Anaconda.
-Chambered for the powerful .44 Magnum.
+柯尔特蟒蛇
+装有强大的.44马格南弹药
 ]]
 
 LANGUAGE["Item_Dual Glock17"] = [[双持Glock17]]
@@ -1243,155 +1637,155 @@ LANGUAGE["Item_Dual Deagle"] = [[双持沙漠之鹰]]
 
 LANGUAGE["Item_SMG1"] = [[SMG1]]
 LANGUAGE["Item_Desc_SMG1"] = [[
-A compact, fully automatic firearm.
+一种小巧的全自动武器
 ]]
 
 LANGUAGE["Item_Mac10"] = [[Mac10]]
 LANGUAGE["Item_Desc_Mac10"] = [[
-Military Armament Corporation Model 10.
-Boasts a high rate of fire,
-with poor spread accuracy and high recoil as trade-offs.
+军事武器公司10型.
+以差的扩散精度和高后坐力换取高射速
 ]]
 
 LANGUAGE["Item_MP9"] = [[MP9]]
 LANGUAGE["Item_Desc_MP9"] = [[
-Brügger & Thomet MP9.
-Manufactured in Switzerland,
-the MP9 is favored by private security firms world-wide.
+商布鲁加&托梅制作的 MP9.
+在瑞士制造,
+受到世界各地私人保安公司的青睐
 ]]
 
 LANGUAGE["Item_MP5K"] = [[MP5K]]
 LANGUAGE["Item_Desc_MP5K"] = [[
-Heckler & Koch MP5K.
-A more convert and mobile version of the MP5.
+黑克勒-科赫制造的 MP5K.
+一个有着更高机动性版本的MP5
 ]]
 
 LANGUAGE["Item_MP5"] = [[MP5]]
 LANGUAGE["Item_Desc_MP5"] = [[
-Heckler & Koch MP5.
-Often imitated but never equaled,
-the MP5 is perhaps the most versatile SMG in the world.
+黑克勒-科赫制造的 MP5.
+一直被模仿,但从未被超越
+MP5也许是世界上最通用的冲锋枪
 ]]
 
 LANGUAGE["Item_UMP45"] = [[UMP45]]
 LANGUAGE["Item_Desc_UMP45"] = [[
 KM UMP45.
-A lighter and cheaper successor to the MP5.
+MP5的继任者,一块更轻更便宜的钢板
 ]]
 
 LANGUAGE["Item_PP Bizon"] = [[PP-野牛]]
 LANGUAGE["Item_Desc_PP Bizon"] = [[
-PP-19 Bizon.
-Offers a high-capacity magazine that reloads quickly.
+PP-19 野牛.
+提供一个高容量的弹筒,
+换弹快速
 ]]
 
 LANGUAGE["Item_P90"] = [[P90]]
 LANGUAGE["Item_Desc_P90"] = [[
 ES C90.
-A Belgian bullpup PDW with a magazine of 50 rounds.
+装有50发弹匣的比利时无托单兵自卫武器
 ]]
 
 LANGUAGE["Item_Pump-Action"] = [[简易霰弹枪]]
 LANGUAGE["Item_Desc_Pump-Action"] = [[
-A standard 12-gauge shotgun.
-RMB to fire 2 shots at once.
+一把标准的12口径霰弹枪
+按下鼠标右键来同时发射两个散弹
 ]]
 
-LANGUAGE["Item_Nova"] = [[Nova]]
+LANGUAGE["Item_Nova"] = [[新星]]
 LANGUAGE["Item_Desc_Nova"] = [[
-Benelli Nova.
-Italian pump-action 12-gauge shotgun.
+贝内利新星
+意大利12口径泵动霰弹枪
 ]]
 
 LANGUAGE["Item_M870"] = [[M870]]
 LANGUAGE["Item_Desc_M870"] = [[
-Remington 870 Shotgun.
-Manufactured in the United States.
+雷明顿 870 散弹枪
+在美国制造
 ]]
 
 LANGUAGE["Item_MAG7"] = [[MAG7]]
 LANGUAGE["Item_Desc_MAG7"] = [[
-Techno Arms MAG-7.
-Fires a specialized 60mm 12 gauge shell.
+塔克诺制作的 MAG-7.
+使用特制的60毫米x12口径散弹
 ]]
 
 LANGUAGE["Item_XM1014"] = [[XM1014]]
 LANGUAGE["Item_Desc_XM1014"] = [[
-Benelli M4 Super 90.
-Fully automatic shotgun.
+贝内利M4（Super 90）
+半自动霰弹枪
 ]]
 
 LANGUAGE["Item_SPAS-12"] = [[SPAS-12]]
 LANGUAGE["Item_Desc_SPAS-12"] = [[
-Franchi SPAS-12.
-A combat shotgun manufactured by Italian firearms company Franchi.
+弗兰基SPAS-12
+由意大利枪械制造商路易吉·弗兰基在1979—2000年期间所生产的战斗霰弹枪
 ]]
 
-LANGUAGE["Item_Striker"] = [[Striker]]
+LANGUAGE["Item_Striker"] = [[打击者]]
 LANGUAGE["Item_Desc_Striker"] = [[
-Armsel Striker.
-A 12-gauge shotgun with a revolving cylinder from South Africa.
+阿姆塞尔生产的打击者.
+一把来自南非的防暴控制及战斗用途霰弹枪,发射12铅径霰弹
 ]]
 
 LANGUAGE["Item_AA12"] = [[AA12]]
 LANGUAGE["Item_Desc_AA12"] = [[
-Atchisson Assault Shotgun.
-Devastating firepower at close to medium range.
+艾奇逊突击霰弹枪
+在近中距离下有着毁灭性的火力
 ]]
 
 
 LANGUAGE["Item_AR15"] = [[AR15]]
 LANGUAGE["Item_Desc_AR15"] = [[
-AR-15 Style Rifle.
-A lightweight semi-automatic rifle based on ArmaLite AR-15 design.
+AR-15 式步枪
+一种基于阿玛莱特生产的AR-15设计的轻型半自动步枪
 ]]
 
-LANGUAGE["Item_FAMAS"] = [[FAMAS]]
+LANGUAGE["Item_FAMAS"] = [[法玛斯]]
 LANGUAGE["Item_Desc_FAMAS"] = [[
-FAMAS bullpup assault rifle.
-Recognised for its high rate of fire."
+法玛斯无托突击步枪
+以高射速著称.
 ]]
 
-LANGUAGE["Item_Galil"] = [[Galil]]
+LANGUAGE["Item_Galil"] = [[加利尔]]
 LANGUAGE["Item_Desc_Galil"] = [[
-Galil ACE 22.
-Developed and originally manufactured by Israel Military Industries.
+加利尔ACE突击步枪
+由以色列军事工业公司开发和最初制造
 ]]
 
 LANGUAGE["Item_AK47"] = [[AK47]]
 LANGUAGE["Item_Desc_AK47"] = [[
-Avtomat Kalashnikova.
-A gas-operated, 7.62×39mm assault rifle developed in the Soviet Union.
+卡拉什尼科夫自动步枪
+苏联研制的一种气动式自动的7.62×39mm突击步枪
 ]]
 
 LANGUAGE["Item_M4A1"] = [[M4A1]]
 LANGUAGE["Item_Desc_M4A1"] = [[
-Colt M4.
-A 5.56×45mm NATO, air-cooled, gas-operated, select fire carbine.
+柯尔特制造的 M4.
+使用5.56×45mm北约弹,风冷,气动式自动,可选择开火模式的卡宾枪
 ]]
 
 LANGUAGE["Item_SG556"] = [[SG556]]
 LANGUAGE["Item_Desc_SG556"] = [[
 SIG SG 550.
-An assault rifle manufactured by Swiss Arms AG.
+瑞士武器公司生产的突击步枪
 ]]
 
 LANGUAGE["Item_AUG"] = [[AUG]]
 LANGUAGE["Item_Desc_AUG"] = [[
-Steyr AUG.
-An Austrian bullpup assault rifle.
+施泰尔AUG
+一款由奥地利枪械制造商施泰尔-曼利夏于1977年推出的军用突击步枪
 ]]
 
 LANGUAGE["Item_F2000"] = [[F2000]]
 LANGUAGE["Item_Desc_F2000"] = [[
 FN F2000.
-An ambidextrous bullpup rifle developed by FN.
+由FN公司开发的一种无托式步枪
 ]]
 
 LANGUAGE["Item_Tavor"] = [[Tavor]]
 LANGUAGE["Item_Desc_Tavor"] = [[
 IWI Tavor-21.
-Designed to maximize reliability, durability, and simplicity.
+旨在最大限度地提高可靠性,耐用性和简单性
 ]]
 
 LANGUAGE["Item_Winchester LAR"] = [[温切斯特杠杆步枪]]
@@ -1403,31 +1797,31 @@ LANGUAGE["Item_Desc_Winchester LAR"] = [[
 
 LANGUAGE["Item_ACR"] = [[ACR]]
 LANGUAGE["Item_Desc_ACR"] = [[
-Remington Adaptive Combat Rifle.
-A modular semi-Auto rifle.
+雷明顿先进战斗步枪
+模块化半自动步枪
 ]]
 
 LANGUAGE["Item_AWP"] = [[AWP]]
 LANGUAGE["Item_Desc_AWP"] = [[
-Magnum Ghost Rifle.
-A series of sniper rifles manufactured by the United Kingdom.
+马格南狙击步枪.
+英国制造的一系列狙击步枪
 ]]
 
 LANGUAGE["Item_SCAR"] = [[SCAR]]
 LANGUAGE["Item_Desc_SCAR"] = [[
 FN SCAR.
-An assault rifle developed by Belgian manufacturer FN Herstal.
+一种突击步枪,由比利时制造商开发
 ]]
 
 LANGUAGE["Item_G3"] = [[G3]]
 LANGUAGE["Item_Desc_G3"] = [[
-G3 Battle Rifle.
-A 7.62×51mm NATO, select-fire battle rifle developed by H&K.
+G3 战斗步枪
+使用7.62×51mm北约弹,由H&K开发的战斗步枪。
 ]]
 
 LANGUAGE["Item_Barret AMR"] = [[巴雷特反器材步枪]]
 LANGUAGE["Item_Desc_Barret AMR"] = [[
-.50 Cal Anti-Material Sniper Rifle.
+.50 口径的反器材狙击步枪
 能对目标造成巨额的子弹伤害。
 ]]
 
@@ -1438,37 +1832,110 @@ LANGUAGE["Item_Desc_SSG08 Medic SR"] = [[
 医疗针能够治疗队友并且伤害敌人。
 ]]
 
-LANGUAGE["Item_Negev"] = [[Negev]]
+LANGUAGE["Item_Negev"] = [[内格夫]]
 LANGUAGE["Item_Desc_Negev"] = [[
-IWI Negev.
-A 5.56×45mm NATO light machine gun developed by the IWI.
+IWI 内格夫.
+由IWI开发的使用5.56×45mm北约弹的轻机枪
 ]]
 
 LANGUAGE["Item_M249"] = [[M249]]
 LANGUAGE["Item_Desc_M249"] = [[
-M249 light machine gun.
-A gas operated and air-cooled weapon of destruction.
+M249 轻机枪
+气动式自动和风冷的毁灭性武器
 ]]
 
 LANGUAGE["Item_M240B"] = [[M240B]]
 LANGUAGE["Item_Desc_M240B"] = [[
 M240 Bravo.
-Fires 7.62mm NATO ammunition.
-Equipped by U.S. Armed Forces.
+发射7.62毫米北约弹药
+由美国武装部队装备
 ]]
 
 LANGUAGE["Item_MG4"] = [[MG4]]
 LANGUAGE["Item_Desc_MG4"] = [[
-Heckler & Koch MG4.
-A belt-fed 5.56 mm light machine gun that replaced MG3.
+黑克勒-科赫 MG4.
+弹链供弹轻机枪,发射5.56×45毫米弹药,取代MG3通用机枪。
 ]]
 
 LANGUAGE["Item_GAU-19"] = [[GAU-19转轮机枪]]
-LANGUAGE["Item_Desc_MG4"] = [[
+LANGUAGE["Item_Desc_GAU-19"] = [[
 GAU-19 转轮机枪。
 每分钟发射1300发.50BMG机枪子弹。
 
 长按右键预热机枪。
+]]
+
+LANGUAGE["Item_L86 LSW"] = [[L86 LSW]]
+LANGUAGE["Item_Desc_L86 LSW"] = [[
+SA80 L86 LSW
+无托式轻机枪
+]]
+
+LANGUAGE["Item_RPD"] = [[RPD]]
+LANGUAGE["Item_Desc_RPD"] = [[
+捷格加廖夫轻机枪
+一种使用7.62x39毫米口径子弹的轻机枪,
+由苏联瓦西里·捷格加廖夫研制
+]]
+
+LANGUAGE["Item_M240"] = [[M240]]
+LANGUAGE["Item_Desc_M240"] = [[
+M240 Bravo
+发射7.62毫米北约弹药
+由美国武装部队装备
+]]
+
+
+LANGUAGE["Item_MP40"] = [[MP40]]
+LANGUAGE["Item_Desc_MP40"] = [[
+施迈瑟冲锋枪
+第二次世界大战期间纳粹军队使用最广泛,性能最优良的冲锋枪
+]]
+
+LANGUAGE["Item_UZI"] = [[乌兹]]
+LANGUAGE["Item_Desc_UZI"] = [[
+乌兹冲锋枪
+1948年阿以战争后,由以色列国防军上尉(后来成为少校)Uziel Gal设计
+]]
+
+LANGUAGE["Item_SSG08"] = [[SSG08]]
+LANGUAGE["Item_Desc_SSG08"] = [[
+施泰尔 SSG 08.
+奥地利栓动狙击步枪,由施泰尔-曼利夏研制和生产
+作为狙击步枪提供了无与伦比的机动性
+]]
+
+LANGUAGE["Item_SCAR-H"] = [[SCAR-H]]
+LANGUAGE["Item_Desc_SCAR-H"] = [[
+FN SCAR-H
+一种突击步枪,由比利时制造商FN Herstal开发
+]]
+
+LANGUAGE["Item_AUG HBAR"] = [[AUG HBAR]]
+LANGUAGE["Item_Desc_AUG HBAR"] = [[
+Steyr AUG HBAR.
+一种AUG突击步枪的轻型辅助机枪改型
+]]
+
+LANGUAGE["Item_M16 M203"] = [[M16 M203]]
+LANGUAGE["Item_Desc_M16 M203"] = [[
+配备了M203榴弹发射器下挂的M16A4
+按E+R键来切换到M203
+]]
+
+LANGUAGE["Item_SCAR-L"] = [[SCAR-L]]
+LANGUAGE["Item_Desc_SCAR-L"] = [[
+FN SCAR-L.
+一种突击步枪,由比利时制造商开发
+轻便型版本,使用5.56x45毫米北约弹
+]]
+
+LANGUAGE["Item_OSIPR"] = [[OSIPR]]
+LANGUAGE["Item_Desc_OSIPR"] = [[
+联合军所使用的标准脉冲步枪
+
+按B键(默认)切换开火模式.
+发射常规弹药或能量球.
 ]]
 
 LANGUAGE["Item_Frag Grenade"] = [[高爆手雷]]
@@ -1515,6 +1982,13 @@ LANGUAGE["Item_Desc_EMP Grenade"] = [[
 对范围内敌人造成快速的雷电伤害。
 不会对玩家本身造成伤害。
 ]]
+
+LANGUAGE["Item_Shrapnel Grenade"] = [[破片手雷]]
+LANGUAGE["Item_Desc_Shrapnel Grenade"] = [[
+一种爆炸后产生弹片的手榴弹,
+在一片区域内造成弹道伤害
+]]
+
 
 LANGUAGE["Item_Resistance RPG"] = [[反抗军RPG]]
 LANGUAGE["Item_Desc_Resistance RPG"] = [[
@@ -1648,6 +2122,28 @@ LANGUAGE["Item_Desc_Full Kevlar Armor"] = [[
 提供100%护甲。
 ]]
 
+LANGUAGE["Item_Advanced Kevlar Armor"] = [[高级凯夫拉护甲]]
+LANGUAGE["Item_Desc_Advanced Kevlar Armor"] = [[
+一款杰出的生存者护甲
+提供100%的护甲
+增加5%的伤害抗性
+]]
+
+LANGUAGE["Item_Assault Vest"] = [[突击背心]]
+LANGUAGE["Item_Desc_Assault Vest"] = [[
+一款杰出的突击兵护甲
+提供100%的护甲
+增加8%的弹道伤害抗性
+]]
+
+LANGUAGE["Item_Bulldozer Suit"] = [[Bulldozer装甲]]
+LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
+一款杰出的重装兵护甲
+提供125%的护甲
+
+"BULLDOZER TIME!!!"
+]]
+
 LANGUAGE["Item_Watchtower MKII"] = [[守望塔 MKII]]
 LANGUAGE["Item_Desc_Watchtower MKII"] = [[
 一个能提供补给的守望塔。
@@ -1684,7 +2180,6 @@ MP7A1 医疗改进版。
 
 按 B 或者 放大键 发射医疗针。
 医疗针冷却时间为 1 秒。
-Healing dart recharges every 1 second.
 ]]
 
 LANGUAGE["Item_Vector Medic PDW"] = [[维克多医疗冲锋枪]]
@@ -1829,30 +2324,64 @@ LANGUAGE["Gadget_Desc_gadget_ultimate_booster"] = [[
 
 -- Assault Gadgets
 LANGUAGE["Gadget_gadget_iv_injection"] = [[生命注射剂]]
-LANGUAGE["Gadget_Desc_iv_injection"] = [[
+LANGUAGE["Gadget_Desc_gadget_iv_injection"] = [[
 恢复 25 点生命值。
 ]]
 
 LANGUAGE["Gadget_gadget_cortex"] = [[皮层刺激器]]
+LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
+每靠近一个敌人,获得1点肾上腺素
+精英敌人获得2点
+肾上腺素最大堆叠数量+1 
+]]
 
 LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[精神统一]]
+LANGUAGE["Gadget_Desc_gadget_neuro_amplifier"] = [[
+增加6%的肾上腺素躲闪
+]]
 
 LANGUAGE["Gadget_gadget_ouroboros"] = [[咬尾蛇]]
+LANGUAGE["Gadget_Desc_gadget_ouroboros"] = [[
+咬尾蛇神经系统辅助
+移除身体限制以增加战斗能力
+
+当你的生命值超过50%时,每秒损失1点生命值
+当你的生命值低于50%时,每秒获得2点生命值
+生命值每减少1%伤害提高0.8%
+]]
 
 -- Heavy Gadgets
 LANGUAGE["Gadget_gadget_energy_shield"] = [[能量盾]]
-LANGUAGE["Gadget_Desc_energy_shield"] = [[
+LANGUAGE["Gadget_Desc_gadget_energy_shield"] = [[
 获得额外 15 点护甲。
 上限为当前最高护甲自动回复值。
 ]]
 
 LANGUAGE["Gadget_gadget_exoskeleton"] = [[外骨骼]]
+LANGUAGE["Gadget_Desc_gadget_exoskeleton"] = [[
+使用主动技能会产生短暂的强化效果
+你将无法奔跑
+被动:提供增加20%的全球伤害抗性
+]]
 
 LANGUAGE["Gadget_gadget_hardening_injection"] = [[硬化注射剂]]
-LANGUAGE["Gadget_Desc_hardening_injection"] = [[
-移动速度减缓 {1}。
-提升 {2} 全局伤害抗性。
-提升 {3} 物理伤害抗性。
+LANGUAGE["Gadget_Desc_gadget_hardening_injection"] = [[
+移动速度减缓 50%
+提升 25% 全局伤害抗性
+提升 25% 物理伤害抗性
+]]
+
+
+LANGUAGE["Gadget_gadget_ulpa_filter"] = [[高效过滤器]]
+LANGUAGE["Gadget_Desc_gadget_ulpa_filter"] = [[
+增加{1}的最大护甲
+当你有护甲时减少所有来源{2}的堆叠
+]]
+
+
+LANGUAGE["Gadget_gadget_armor_fusion"] = [[护甲融合]]
+LANGUAGE["Gadget_Desc_gadget_armor_fusion"] = [[
+当开启时,消耗你的生命值来恢复你最大护甲值的{1}
 ]]
 
 -- Medic Gadgets
@@ -1978,3 +2507,4 @@ LANGUAGE["Notifications_Debuff_Shock"] = [[你陷入了感电状态。你的防�
 LANGUAGE["Notifications_Debuff_Break"] = [[你陷入了毒破状态。你的生命值被大幅减少。]]
 LANGUAGE["Notifications_Debuff_Decay"] = [[你陷入了衰退状态。你的身体无法恢复。]]
 LANGUAGE["Notifications_Debuff_Necrosis"] = [[你陷入了即死状态。你的生命即将结束。]]
+
