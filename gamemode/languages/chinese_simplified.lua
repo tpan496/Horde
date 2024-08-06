@@ -87,7 +87,7 @@ LANGUAGE["Subclass_Title_Overlord"] = "霸主"
 LANGUAGE["Scoreboard_Name"] = "玩家"
 LANGUAGE["Scoreboard_Class"] = "职业"
 LANGUAGE["Scoreboard_Perks"] = "技能"
-LANGUAGE["Scoreboard_Gadget"] = "配件"
+LANGUAGE["Scoreboard_Gadget"] = "器具"
 LANGUAGE["Scoreboard_Money"] = "金钱"
 LANGUAGE["Scoreboard_Kill"] = "击杀"
 LANGUAGE["Scoreboard_Death"] = "死亡"
@@ -113,6 +113,7 @@ LANGUAGE["Shop_Special"] = "特殊"
 LANGUAGE["Shop_Equipment"] = "装备"
 LANGUAGE["Shop_Attachment"] = "配件"
 LANGUAGE["Shop_Gadget"] = "器具"
+LANGUAGE["Shop_Spell"] = "法术"
 
 -- Attachments
 LANGUAGE["Shop_Optic"] = "瞄具"
@@ -1515,8 +1516,8 @@ LANGUAGE["Item_Desc_Chainsaw"] = [[
 长按右键能对敌人造成持续伤害。
 ]]
 
-LANGUAGE["Item_Mjollnir"] = [[雷神之锤]]
-LANGUAGE["Item_Desc_Mjollnir"] = [[
+LANGUAGE["Item_Mjölnir"] = [[雷神之锤]]
+LANGUAGE["Item_Desc_Mjölnir"] = [[
 隐藏着雷电能力的战锤。
 
 右键能够激活战锤的雷电能力。
@@ -1534,8 +1535,20 @@ LANGUAGE["Item_Desc_Inferno"] = [[
 LANGUAGE["Item_Thorn Mace"] = [[荆棘之星]]
 LANGUAGE["Item_Desc_Thorn Mace"] = [[
 蕴含着剧毒的锤矛。
+]]
 
+LANGUAGE["Item_Jötunn"] = [[霜巨人]]
+LANGUAGE["Item_Desc_Jötunn"] = [[
+用永久冻土材料锻造的被诅咒的尖钉权杖
 
+按RMB键释放强大的冰爆
+冰爆会增加你身上的冻伤状态堆叠
+]]
+
+LANGUAGE["Item_Zweihänder"] = [[双手剑]]
+LANGUAGE["Item_Desc_Zweihänder"] = [[
+一种重而大的双手长剑
+能轻易地将敌人斩首
 ]]
 
 -- Pistol Items
@@ -1617,6 +1630,12 @@ LANGUAGE["Item_Desc_Tec-9"] = [[
 近距离致命
 ]]
 
+LANGUAGE["Item_Flare Gun"] = [[信号枪]]
+LANGUAGE["Item_Desc_Flare Gun"] = [[
+猎户座安全信号枪
+点燃敌人并造成火焰伤害
+]]
+
 LANGUAGE["Item_TMP"] = [[TMP]]
 LANGUAGE["Item_Desc_TMP"] = [[
 斯泰尔TMP
@@ -1629,10 +1648,30 @@ LANGUAGE["Item_Desc_Anaconda"] = [[
 装有强大的.44马格南弹药
 ]]
 
-LANGUAGE["Item_Dual Glock17"] = [[双持Glock17]]
-LANGUAGE["Item_Dual M9"] = [[双持M9]]
-LANGUAGE["Item_Dual Deagle"] = [[双持沙漠之鹰]]
+LANGUAGE["Item_Medic 9mm"] = [[医疗9毫米手枪]]
+LANGUAGE["Item_Desc_Medic 9mm"] = [[
+经过改装的9毫米手枪,可以提供远程治疗
+按B键(默认)发射治疗飞镖
+治疗飞镖每发射一次冷却1秒
+]]
 
+LANGUAGE["Item_Dual Glock17"] = [[双持Glock17]]
+LANGUAGE["Item_Desc_Dual Glock17"] = [[
+双持格洛克 17.
+两把奥地利制造半自动手枪。
+]]
+
+LANGUAGE["Item_Dual M9"] = [[双持M9]]
+LANGUAGE["Item_Desc_Dual M9"] = [[
+双持贝雷塔 M9.
+两把美国武装部队使用的手枪
+]]
+
+LANGUAGE["Item_Dual Deagle"] = [[双持沙漠之鹰]]
+LANGUAGE["Item_Desc_Dual Deagle"] = [[
+双持Night Hawk 生产的.50口径手枪.
+两把难以掌握的标志性手枪.
+]]
 
 
 LANGUAGE["Item_SMG1"] = [[SMG1]]
@@ -1653,10 +1692,27 @@ LANGUAGE["Item_Desc_MP9"] = [[
 受到世界各地私人保安公司的青睐
 ]]
 
+LANGUAGE["Item_MP9 Medic PDW"] = [[MP9医疗冲锋枪]]
+LANGUAGE["Item_Desc_MP9 Medic PDW"] = [[
+商布鲁加&托梅制作的 MP9.
+在瑞士制造,
+受到世界各地私人保安公司的青睐
+按B键(默认)发射治疗飞镖
+治疗飞镖治疗10点生命值,有0.8秒的冷却时间`
+]]
+
 LANGUAGE["Item_MP5K"] = [[MP5K]]
 LANGUAGE["Item_Desc_MP5K"] = [[
 黑克勒-科赫制造的 MP5K.
 一个有着更高机动性版本的MP5
+]]
+
+LANGUAGE["Item_MP5K Medic PDW"] = [[MP5K医疗冲锋枪]]
+LANGUAGE["Item_Desc_MP5K Medic PDW"] = [[
+MP5K-单兵自卫武器(PDW)
+一个有着更高机动性版本的MP5,配备了一个治疗飞镖发射器
+按B键(默认)发射治疗飞镖
+治疗飞镖治疗10点生命值,有0.8秒的冷却时间
 ]]
 
 LANGUAGE["Item_MP5"] = [[MP5]]
@@ -1726,6 +1782,13 @@ LANGUAGE["Item_Desc_Striker"] = [[
 阿姆塞尔生产的打击者.
 一把来自南非的防暴控制及战斗用途霰弹枪,发射12铅径霰弹
 ]]
+
+LANGUAGE["Item_Trench Gun"] = [[堑壕枪]]
+LANGUAGE["Item_Desc_Trench Gun"] = [[
+温彻斯特1200型
+发射龙息弹
+]]
+
 
 LANGUAGE["Item_AA12"] = [[AA12]]
 LANGUAGE["Item_Desc_AA12"] = [[
@@ -1801,6 +1864,22 @@ LANGUAGE["Item_Desc_ACR"] = [[
 模块化半自动步枪
 ]]
 
+LANGUAGE["Item_ACR Medic AR"] = [[ACR医疗步枪]]
+LANGUAGE["Item_Desc_ACR Medic AR"] = [[
+雷明顿先进战斗步枪
+模块化半自动步枪
+配备治疗飞镖和军用医疗榴弹发射器
+按E+R键(默认)来装备军用医疗榴弹发射器
+按B(键)发射治疗飞镖
+治疗飞镖治疗15点生命值,1.5秒冷却时间
+]]
+
+LANGUAGE["Item_Apollo"] = [[阿波罗]]
+LANGUAGE["Item_Desc_Apollo"] = [[
+阿波罗焚烧步枪
+发射能量弹熔化敌人
+]]
+
 LANGUAGE["Item_AWP"] = [[AWP]]
 LANGUAGE["Item_Desc_AWP"] = [[
 马格南狙击步枪.
@@ -1819,12 +1898,23 @@ G3 战斗步枪
 使用7.62×51mm北约弹,由H&K开发的战斗步枪。
 ]]
 
-LANGUAGE["Item_Barret AMR"] = [[巴雷特反器材步枪]]
-LANGUAGE["Item_Desc_Barret AMR"] = [[
+LANGUAGE["Item_FN FAL"] = [[FN FAL]]
+LANGUAGE["Item_Desc_FN FAL"] = [[
+FN FAL
+由比利时人设计,赫斯塔尔公司制造的一种战斗步枪
+]]
+
+LANGUAGE["Item_Barrett AMR"] = [[巴雷特反器材步枪]]
+LANGUAGE["Item_Desc_Barrett AMR"] = [[
 .50 口径的反器材狙击步枪
 能对目标造成巨额的子弹伤害。
 ]]
 
+LANGUAGE["Item_M200"] = [[M200]]
+LANGUAGE["Item_Desc_M200"] = [[
+由美国夏伊战术公司生产的M200"干预者"
+造成巨额的弹道伤害
+]]
 
 LANGUAGE["Item_SSG08 Medic SR"] = [[SSG08医疗狙击枪]]
 LANGUAGE["Item_Desc_SSG08 Medic SR"] = [[
@@ -2049,6 +2139,18 @@ LANGUAGE["Item_Desc_Molotov"] = [[
 火焰对敌人造成持续伤害。
 ]]
 
+LANGUAGE["Item_M67 Frag Grenade"] = [[M67破片手雷]]
+LANGUAGE["Item_Desc_M67 Frag Grenade"] = [[
+M67高爆破片手榴弹
+军用级别,造成大量爆炸伤害
+]]
+
+LANGUAGE["Item_FGM-148 JAVELIN"] = [[FGM-148 标枪导弹]]
+LANGUAGE["Item_Desc_FGM-148 JAVELIN"] = [[
+FGM-148 标枪导弹
+锁定目标后可发射制导导弹
+]]
+
 LANGUAGE["Item_Incendiary Launcher"] = [[燃烧弹发射器]]
 LANGUAGE["Item_Desc_Incendiary Launcher"] = [[
 燃烧弹发射器。
@@ -2062,16 +2164,16 @@ LANGUAGE["Item_Desc_Heat Crossbow"] = [[
 使用炙热的钢管作为弹药。
 ]]
 
-LANGUAGE["Item_Turret"] = [[步哨枪]]
-LANGUAGE["Item_Desc_Turret"] = [[
-联合军专用步哨枪。
-能够用来看守固定区域。
-]]
-
 LANGUAGE["Item_Rocket Turret"] = [[榴弹步哨枪]]
 LANGUAGE["Item_Desc_Rocket Turret"] = [[
 光圈科技实验性步哨枪。
 对敌人发射迷你榴弹。
+]]
+
+LANGUAGE["Item_Heat Blaster"] = [[热能爆裂枪]]
+LANGUAGE["Item_Desc_Heat Blaster"] = [[
+发射火球的发射器
+按住鼠标右键蓄力攻击
 ]]
 
 LANGUAGE["Item_Medic Grenade"] = [[医疗手雷]]
@@ -2104,6 +2206,33 @@ LANGUAGE["Item_Welder"] = [[电焊]]
 LANGUAGE["Item_Desc_Welder"] = [[
 工程师使用的电焊枪。
 能够治疗玩家的召唤物，也能对敌人造成伤害。
+]]
+
+LANGUAGE["Item_Carcass Biosystem"] = [[残骸生物系统]]
+LANGUAGE["Item_Desc_Carcass Biosystem"] = [[
+只能由残骸子职业使用!
+先进的战斗生物系统完全搞砸了使用者的外貌
+留下难闻的恶臭
+LMB:拳击
+蓄力拳击可以在一个区域内造成更多伤害
+]]
+
+LANGUAGE["Item_Pheropod"] = [[信息素胶囊]]
+LANGUAGE["Item_Desc_Pheropod"] = [[
+只能由孵化者子职业使用!
+信息素胶囊能够孵化并控制蚁狮
+
+左键：释放胶囊
+投掷信息素胶囊，强制蚁狮对目标进行攻击。
+对蚁狮投掷胶囊能够恢复其 5% 生命值。
+
+右键：召唤蚁狮 (40 能量)
+创造一个蚁狮作为你的召唤物。治疗蚁狮能够加速其进化。
+长按右键能迫使蚁狮前往玩家。
+蚁狮进化后，每一阶段会获得新能力：
+阶段I   - 信息素波动：每 5 秒中产生一个波动，恢复附近玩家 5% 生命值。
+阶段II  - 提升伤害，生命值，波动频率，提升 50% 毒素伤害抗性。
+阶段III - 提升伤害，生命值，波动频率，免疫毒素伤害和破坏异常状态。
 ]]
 
 LANGUAGE["Item_Health Vial"] = [[治疗药瓶]]
@@ -2144,11 +2273,60 @@ LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
 "BULLDOZER TIME!!!"
 ]]
 
+LANGUAGE["Item_Hazmat Suit"] = [[防化服]]
+LANGUAGE["Item_Desc_Hazmat Suit"] = [[
+一款杰出的医疗兵护甲
+提供100%的护甲
+增加8%的毒素伤害抗性
+]]
+
+LANGUAGE["Item_Bomb Suit"] = [[防爆服]]
+LANGUAGE["Item_Desc_Bomb Suit"] = [[
+一款杰出的爆破兵护甲
+提供100%的护甲
+增加8%的爆炸伤害抗性
+]]
+
+LANGUAGE["Item_Assassin's Cloak"] = [[刺客斗篷]]
+LANGUAGE["Item_Desc_Bomb Suit"] = [[
+一款杰出的幻影护甲
+提供100%的护甲
+增加5%的闪避几率
+]]
+
+LANGUAGE["Item_Defense Matrix"] = [[防护矩阵]]
+LANGUAGE["Item_Desc_Defense Matrix"] = [[
+一款杰出的工程师护甲
+提供100%的护甲
+增加5%的伤害抗性
+]]
+
+LANGUAGE["Item_Battle Vest"] = [[战斗背心]]
+LANGUAGE["Item_Desc_Battle Vest"] = [[
+一款杰出的狂战士护甲
+提供100%的护甲
+增加8%的锐器/钝器伤害抗性
+]]
+
+LANGUAGE["Item_Riot Armor"] = [[防暴护甲]]
+LANGUAGE["Item_Desc_Riot Armor"] = [[
+一款杰出的守望者护甲
+提供100%的护甲
+增加8%的冲击和声波伤害抗性
+]]
+
+LANGUAGE["Item_Molten Armor"] = [[熔岩护甲]]
+LANGUAGE["Item_Desc_Molten Armor"] = [[
+一款杰出的火焰兵护甲
+提供100%的护甲
+增加8%的火焰伤害抗性
+]]
+
 LANGUAGE["Item_Watchtower MKII"] = [[守望塔 MKII]]
 LANGUAGE["Item_Desc_Watchtower MKII"] = [[
 一个能提供补给的守望塔。
 每 30 秒生成一个医疗包。
-(实体名称：horde_watchtower）: horde_watchtower_mk2)
+(实体名称: horde_watchtower_mk2)
 ]]
 
 LANGUAGE["Item_Watchtower MKIII"] = [[守望塔 MKIII]]
@@ -2156,7 +2334,28 @@ LANGUAGE["Item_Desc_Watchtower MKIII"] = [[
 一个用来击退敌人的守望塔。
 每 1 秒对附近单个敌人发射电击。
 电击造成 80 范围伤害。
-(实体名称：horde_watchtower）: horde_watchtower_mk3)
+(实体名称: horde_watchtower_mk3)
+]]
+
+LANGUAGE["Item_Watchtower Type-Beacon"] = [[守望塔-信标型]]
+LANGUAGE["Item_Desc_Watchtower Type-Beacon"] = [[
+可以作为重生点和商店的守望塔
+提供额外的照明
+(实体名称: horde_watchtower_beacon)
+]]
+
+LANGUAGE["Item_Watchtower Type-Interceptor"] = [[守望塔-拦截型]]
+LANGUAGE["Item_Desc_Watchtower Type-Interceptor"] = [[
+一种可以在自身和其他守望塔之间发射恒定激光束的守望塔
+激光束造成火焰伤害
+(实体名称: horde_watchtower_interceptor)
+]]
+
+LANGUAGE["Item_Watchtower Type-Guardian"] = [[守望塔-守护型]]
+LANGUAGE["Item_Desc_Watchtower Type-Guardian"] = [[
+在一个区域内提供护甲回复的守望塔
+护甲回复不会与自身叠加
+(实体名称: horde_watchtower_guardian)
 ]]
 
 LANGUAGE["Item_Tau Cannon"] = [[高斯枪]]
@@ -2203,6 +2402,32 @@ LANGUAGE["Item_Desc_Manhack"] = [[
 会自我再生的巡逻无人机。
 巡逻无人机攻击敌人后直接死亡。
 巡逻无人机对敌人造成自生生命值的伤害。
+]]
+
+LANGUAGE["Item_Turret"] = [[步哨枪]]
+LANGUAGE["Item_Desc_Turret"] = [[
+联合军专用步哨枪。
+能够用来看守固定区域。
+]]
+
+LANGUAGE["Item_Shotgun Turret"] = [[散弹步哨枪]]
+LANGUAGE["Item_Desc_Shotgun Turret"] = [[
+联合军专用散弹步哨枪
+开火时发射散弹
+]]
+
+LANGUAGE["Item_Laser Turret"] = [[激光步哨枪]]
+LANGUAGE["Item_Desc_Laser Turret"] = [[
+光圈科技研发的激光步哨枪
+开火时向敌人发射激光
+360度无死角攻击
+]]
+
+LANGUAGE["Item_Sniper Turret"] = [[重型狙击哨枪]]
+LANGUAGE["Item_Desc_Sniper Turret"] = [[
+联合军专用重型狙击哨枪
+射击距离很远,造成巨额伤害,但攻击角度受限
+如果可能的话,会精准打击头部
 ]]
 
 LANGUAGE["Item_Vortigaunt"] = [[弗地冈]]
@@ -2386,6 +2611,10 @@ LANGUAGE["Gadget_Desc_gadget_armor_fusion"] = [[
 
 -- Medic Gadgets
 LANGUAGE["Gadget_gadget_life_diffuser"] = [[活体扩散器]]
+LANGUAGE["Gadget_Desc_gadget_life_diffuser"] = [[
+发出一个治疗脉冲来治疗附近的玩家
+治疗20点血量
+]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[发射器（治愈弹）]]
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
@@ -2395,10 +2624,27 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_heal"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_healing_beam"] = [[治疗光波]]
+LANGUAGE["Gadget_Desc_gadget_healing_beam"] = [[
+在使用者和目标之间连接治疗光束
+如果目标是敌人,则从目标身上吸取生命值
+如果目标是队友,则恢复生命值
+]]
+
+LANGUAGE["Gadget_gadget_steroid"] = [[类固醇]]
+LANGUAGE["Gadget_Desc_gadget_steroid"] = [[
+增加25%的治疗效果
+]]
+
+LANGUAGE["Gadget_gadget_aegis"] = [[羊皮盾]]
+LANGUAGE["Gadget_Desc_gadget_aegis"] = [[
+瞄准一个玩家并使用可提供{1}秒的伤害和状态免疫
+如果没有瞄准的地方没有玩家则对自己使用
+(不受加速治疗增益的技能影响)
+]]
 
 -- Demolition Gadgets
 LANGUAGE["Gadget_gadget_proximity_defense"] = [[近身制御]]
-LANGUAGE["Gadget_Desc_proximity_defense"] = [[
+LANGUAGE["Gadget_Desc_gadget_proximity_defense"] = [[
 眩晕自身周围的所有敌人。
 ]]
 
@@ -2410,12 +2656,28 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_nitrous_propellor"] = [[氮气弹射器]]
+LANGUAGE["Gadget_Desc_gadget_nitrous_propellor"] = [[
+通过化学爆炸来让你飞起来
+]]
 
 LANGUAGE["Gadget_gadget_ied"] = [[应急地雷]]
+LANGUAGE["Gadget_Desc_gadget_ied"] = [[
+把简易地雷扔到地上
+当敌人进入感应范围时,简易地雷就会爆炸
+你有5个简易地雷
+简易地雷在引爆后重新补充
+]]
+
+LANGUAGE["Gadget_gadget_nuke"] = [[核弹]]
+LANGUAGE["Gadget_Desc_gadget_nuke"] = [[
+在延迟10秒后向目标地点投掷核弹
+轰击大片地区,并伴有多次余震
+并留下持续60的放射性废物
+]]
 
 -- Ghost Gadgets
 LANGUAGE["Gadget_gadget_optical_camouflage"] = [[光学迷彩]]
-LANGUAGE["Gadget_Desc_optical_camouflage"] = [[
+LANGUAGE["Gadget_Desc_gadget_optical_camouflage"] = [[
 强制提供 5 秒迷彩效果。
 迷彩效果期间，提升 50% 闪避概率。
 ]]
@@ -2428,12 +2690,38 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_death_mark"] = [[死亡标记]]
+LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
+在目标敌人身上放置一个标记
+被标记敌人受到的伤害增加15%
+被标记的敌人在死亡时爆炸,根据其生命值造成伤害
+标记持续10秒
+你一次只能标记一个敌人
+]]
 
 LANGUAGE["Gadget_gadget_assassin_optics"] = [[刺客镜片]]
+LANGUAGE["Gadget_Desc_gadget_assassin_optics"] = [[
+使你的下一次弹道伤害提高25%
+该效果在对敌人造成伤害后失效
+]]
 
 -- Engineer Gadgets
-LANGUAGE["Gadget_gadget_displacer"] = [[传送器]]
+LANGUAGE["Gadget_gadget_voidout"] = [[虚空之盾]]
+LANGUAGE["Gadget_Desc_gadget_voidout"] = [[
+允许你在随从身上放置一个护盾,抵消所受的伤害
+护盾在被击中时爆炸,造成相当于仆从生命值10%的寒冰伤害
+]]
+
+LANGUAGE["Gadget_gadget_quantum_tunnel"] = [[量子隧道]]
+LANGUAGE["Gadget_Desc_gadget_quantum_tunnel"] = [[
+允许你快速移动到你的瞄准的仆从的位置
+]]
+
 LANGUAGE["Gadget_gadget_turret_pack"] = [[便携步哨]]
+LANGUAGE["Gadget_Desc_gadget_turret_pack"] = [[
+部署一个临时步哨枪
+便携步哨的血量是普通步哨的50%
+便携步哨会在持续时间结束时被摧毁
+]]
 
 LANGUAGE["Gadget_gadget_e_parasite"] = [[E-寄生虫]]
 LANGUAGE["Gadget_Desc_gadget_e_parasite"] = [[
@@ -2458,7 +2746,7 @@ LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
 提升 {3} 移动速度。
 ]]
 
-LANGUAGE["Gadget_gadget_gadget_flash"] = [[一闪]]
+LANGUAGE["Gadget_gadget_flash"] = [[一闪]]
 LANGUAGE["Gadget_Desc_gadget_flash"] = [[
 向前快速移动，对路径上的所有敌人造成 {1} 利器伤害。
 提供短暂的无敌时间。
@@ -2471,15 +2759,36 @@ LANGUAGE["Gadget_Desc_gadget_hemocannon"] = [[
 最多有 5 发充能。每 5 秒充能一次。
 ]]
 
+LANGUAGE["Gadget_gadget_omnislash"] = [[无敌斩]]
+LANGUAGE["Gadget_Desc_gadget_omnislash"] = [[
+逐步脱离现实,反复砍杀目标敌人
+每次砍杀造成{1}点伤害
+如果主要攻击目标已经死亡,则攻击附近的目标
+在无敌斩期间,你无法被攻击
+]]
+
 -- Warden Gadgets
 LANGUAGE["Gadget_gadget_solar_array"] = [[太阳能阵列]]
+LANGUAGE["Gadget_Desc_gadget_solar_array"] = [[
+生成一个护甲电池
+]]
+
 LANGUAGE["Gadget_gadget_watchtower_pack"] = [[便携守望塔]]
+LANGUAGE["Gadget_Desc_gadget_watchtower_pack"] = [[
+部署一个额外的守望塔
+]]
+
 LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[发射器（雷电弹）]]
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_shock"] = [[
 发射能够穿透敌人的雷电弹。
 雷电弹每穿透一个敌人，造成 {1} 范围性雷电伤害。
 ]]
+
 LANGUAGE["Gadget_gadget_shock_nova"] = [[雷神]]
+LANGUAGE["Gadget_Desc_gadget_shock_nova"] = [[
+守望者光环迅速产生若干冲击波
+每个冲击波造成50点闪电伤害
+]]
 
 -- Cremator Gadgets
 LANGUAGE["Gadget_gadget_butane_can"] = [[易燃物]]
@@ -2497,7 +2806,17 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_fire"] = [[
 ]]
 
 LANGUAGE["Gadget_gadget_barbeque"] = [[烧烤]]
+LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
+被你烧死的敌人会掉落烤熟的残肢
+每个残肢恢复5点生命值
+]]
 
+LANGUAGE["Gadget_gadget_hydrogen_burner"] = [[氢气烧嘴]]
+LANGUAGE["Gadget_Desc_gadget_hydrogen_burner"] = [[
+蓝色火焰
+增加25%的火焰伤害
+你的火焰伤害将不再能点燃敌人
+]]
 
 -- Notifications
 LANGUAGE["Notifications_Debuff_Bleeding"] = [[你陷入了出血状态。你的生命值在慢慢流失。]]
@@ -2508,3 +2827,243 @@ LANGUAGE["Notifications_Debuff_Break"] = [[你陷入了毒破状态。你的生�
 LANGUAGE["Notifications_Debuff_Decay"] = [[你陷入了衰退状态。你的身体无法恢复。]]
 LANGUAGE["Notifications_Debuff_Necrosis"] = [[你陷入了即死状态。你的生命即将结束。]]
 
+
+
+-- Spells
+-- LMB
+LANGUAGE["Spell_Solar Orb"] = [[太阳星]]
+LANGUAGE["Spell_Desc_Solar Orb"] = [[利用太阳的能俩召唤火球,
+蓄力攻击会产生不同的效果]]
+
+LANGUAGE["Spell_Dark Orb"] = [[暗星]]
+LANGUAGE["Spell_Desc_Dark Orb"] = [[利用太阳能召唤黑暗的火球.
+黑暗火焰随着时间的推移会造成额外的物理伤害,
+但飞行速度较慢,
+蓄力攻击会产生不同的效果]]
+
+LANGUAGE["Spell_Void Sphere"] = [[虚空串联]]
+LANGUAGE["Spell_Desc_Void Sphere"] = [[召唤一个投射物,
+周期性地对附近的敌人造成严重的寒冰伤害]]
+
+LANGUAGE["Spell_Ice Arrow"] = [[寒冰之箭]]
+LANGUAGE["Spell_Desc_Ice Arrow"] = [[召唤可以快速射出的冰箭,
+蓄力攻击会产生不同的效果]]
+
+LANGUAGE["Spell_Meteor"] = [[流星]]
+LANGUAGE["Spell_Desc_Meteor"] = [[向目标投掷流星,
+蓄力投掷的流星会造成额外的爆炸伤害]]
+
+LANGUAGE["Spell_Neutron Beam"] = [[中子束]]
+LANGUAGE["Spell_Desc_Neutron Beam"] = [[向目标发射中子束,
+光束会穿透目标]]
+
+-- RMB
+LANGUAGE["Spell_Solar Bolt"] = [[太阳之矛]]
+LANGUAGE["Spell_Desc_Solar Bolt"] = [[闪电会以外科手术式的打击命中目标,
+蓄力攻击会增加伤害和射程]]
+
+LANGUAGE["Spell_Solar Storm"] = [[太阳风暴]]
+LANGUAGE["Spell_Desc_Solar Storm"] = [[向目标投射散射闪电,
+蓄力攻击会产生不同的效果]]
+
+LANGUAGE["Spell_Raise Spectre"] = [[复苏幽灵]]
+LANGUAGE["Spell_Desc_Raise Spectre"] = [[唤起一个用暗物质构成的幽灵]]
+
+LANGUAGE["Spell_Raise Greater Spectre"] = [[复苏大型幽灵]]
+LANGUAGE["Spell_Desc_Raise Greater Spectre"] = [[唤起一个使用暗物质构成的大型幽灵,
+更大的幽灵有更高的生命值和伤害,
+但它不能猛扑并且攻击效率会更低
+蓄力攻击来召唤大型幽灵,
+幽灵的最大数量可以通过额外技能增加]]
+
+LANGUAGE["Spell_Sigil of Arcana"] = [[奥秘之印]]
+LANGUAGE["Spell_Desc_Sigil of Arcana"] = [[产生一个增强法术伤害的符印,
+站在里面会使你的法术伤害提高15%]]
+
+LANGUAGE["Spell_Sigil of Alacrity"] = [[敏捷之印]]
+LANGUAGE["Spell_Desc_Sigil of Alacrity"] = [[生成一个提高蓄力速度的符印,
+站在里面会使你的蓄力速度提高15%]]
+
+-- F
+LANGUAGE["Spell_Illuminate"] = [[照亮]]
+LANGUAGE["Spell_Desc_Illuminate"] = [[照明你周围的区域]]
+
+LANGUAGE["Spell_Enlighten"] = [[启迪]]
+LANGUAGE["Spell_Desc_Enlighten"] = [[使你下一个法术的伤害提高15%]]
+
+LANGUAGE["Spell_Static Guard"] = [[磐石守卫]]
+LANGUAGE["Spell_Desc_Static Guard"] = [[通过生成停滞力场来抵御攻击,
+当抵御成功时,减少攻击者造成伤害的90%
+并对攻击者造成严重的闪电伤害.
+只有当受到的伤害至少为10时才会触发
+蓄力使用该法术来增加抵御次数窗口]]
+
+LANGUAGE["Spell_Mind Barrier"] = [[心灵障壁]]
+LANGUAGE["Spell_Desc_Mind Barrier"] = [[给予你20点屏障]]
+
+LANGUAGE["Spell_Warmth"] = [[温暖]]
+LANGUAGE["Spell_Desc_Warmth"] = [[治疗附近的玩家并提供微弱的光线]]
+
+LANGUAGE["Spell_Demonic Conversion"] = [[恶魔转化]]
+LANGUAGE["Spell_Desc_Demonic Conversion"] = [[立即杀死目标并将其转化为你的幽灵,
+只对非精英敌人有效
+如果你装备了大型幽灵,则会产生一个更大的幽灵]]
+
+LANGUAGE["Spell_Ice Coffin"] = [[寒冰之棺]]
+LANGUAGE["Spell_Desc_Ice Coffin"] = [[将使用者包裹在冰中,
+提供伤害免疫和生命回复
+但使用者将无法移动]]
+
+LANGUAGE["Spell_Void Maw"] = [[虚空噬兽]]
+LANGUAGE["Spell_Desc_Ice Coffin"] = [[在一个区域内施加寒冰伤害,
+每击中一个敌人吸血一次]]
+
+LANGUAGE["Spell_Refresher"] = [[刷新]]
+LANGUAGE["Spell_Desc_Refresher"] = [[重置你法术的冷却时间]]
+-- R
+LANGUAGE["Spell_Floating Chaos"] = [[躁动之乱]]
+LANGUAGE["Spell_Desc_Floating Chaos"] = [[在你附近召唤一个能量传送门来反射你的法术,
+只能有1个能量传送门存在]]
+
+LANGUAGE["Spell_Hallowed Bolt"] = [[神圣之矛]]
+LANGUAGE["Spell_Desc_Hallowed Bolt"] = [[用集中的闪电击中目标或区域,
+在一个区域内造成严重的闪电伤害]]
+
+LANGUAGE["Spell_Raise Hulk Spectre"] = [[复苏巨型幽灵]]
+LANGUAGE["Spell_Desc_Raise Hulk Spectre"] = [[唤起一个用暗物质构成的巨人幽灵,
+最多可以唤起1个巨人幽灵]]
+
+LANGUAGE["Spell_Void Cascade"] = [[虚空串联]]
+LANGUAGE["Spell_Desc_Void Cascade"] = [[召唤一个投射物,
+周期性地对附近的敌人造成严重的寒冰伤害]]
+
+LANGUAGE["Spell_Black Hole"] = [[黑洞]]
+LANGUAGE["Spell_Desc_Black Hole"] = [[产生一个黑洞,
+吸引并对敌人造成伤害]]
+
+LANGUAGE["Spell_Pulsar"] = [[脉冲星]]
+LANGUAGE["Spell_Desc_Pulsar"] = [[发射一颗脉冲星,在目标之间弹跳]]
+
+LANGUAGE["Spell_Supernova"] = [[超新星]]
+LANGUAGE["Spell_Desc_Supernova"] = [[产生一颗超新星,
+释放出极高的热量和辐射]]
+
+
+-- spell shop name&desc
+-- LMB
+LANGUAGE["Spell_solar_orb"] = [[太阳星]]
+LANGUAGE["Spell_Desc_solar_orb"] = [[利用太阳的能俩召唤火球,
+蓄力攻击会产生不同的效果]]
+
+LANGUAGE["Spell_dark_orb"] = [[暗星]]
+LANGUAGE["Spell_Desc_dark_orb"] = [[利用太阳能召唤黑暗的火球.
+黑暗火焰随着时间的推移会造成额外的物理伤害,
+但飞行速度较慢,
+蓄力攻击会产生不同的效果]]
+
+LANGUAGE["Spell_void_sphere"] = [[虚空串联]]
+LANGUAGE["Spell_Desc_void_sphere"] = [[召唤一个投射物,
+周期性地对附近的敌人造成严重的寒冰伤害]]
+
+LANGUAGE["Spell_ice_arrow"] = [[寒冰之箭]]
+LANGUAGE["Spell_Desc_ice_arrow"] = [[召唤可以快速射出的冰箭,
+蓄力攻击会产生不同的效果]]
+
+LANGUAGE["Spell_Meteor"] = [[流星]]
+LANGUAGE["Spell_Desc_Meteor"] = [[向目标投掷流星,
+蓄力投掷的流星会造成额外的爆炸伤害]]
+
+LANGUAGE["Spell_neutron_beam"] = [[中子束]]
+LANGUAGE["Spell_Desc_neutron_beam"] = [[向目标发射中子束,
+光束会穿透目标]]
+
+-- RMB
+LANGUAGE["Spell_solar_bolt"] = [[太阳之矛]]
+LANGUAGE["Spell_Desc_solar_bolt"] = [[闪电会以外科手术式的打击命中目标,
+蓄力攻击会增加伤害和射程]]
+
+LANGUAGE["Spell_solar_storm"] = [[太阳风暴]]
+LANGUAGE["Spell_Desc_solar_storm"] = [[向目标投射散射闪电,
+蓄力攻击会产生不同的效果]]
+
+LANGUAGE["Spell_raise_spectre"] = [[复苏幽灵]]
+LANGUAGE["Spell_Desc_raise_spectre"] = [[唤起一个用暗物质构成的幽灵]]
+
+LANGUAGE["Spell_raise_greater_spectre"] = [[复苏大型幽灵]]
+LANGUAGE["Spell_Desc_raise_greater_spectre"] = [[唤起一个使用暗物质构成的大型幽灵,
+更大的幽灵有更高的生命值和伤害,
+但它不能猛扑并且攻击效率会更低
+蓄力攻击来召唤大型幽灵,
+幽灵的最大数量可以通过额外技能增加]]
+
+LANGUAGE["Spell_sigil_of_arcana"] = [[奥秘之印]]
+LANGUAGE["Spell_Desc_sigil_of_arcana"] = [[产生一个增强法术伤害的符印,
+站在里面会使你的法术伤害提高15%]]
+
+LANGUAGE["Spell_sigil_of_alacrity"] = [[敏捷之印]]
+LANGUAGE["Spell_Desc_sigil_of_alacrity"] = [[生成一个提高蓄力速度的符印,
+站在里面会使你的蓄力速度提高15%]]
+
+-- F
+LANGUAGE["Spell_Illuminate"] = [[照亮]]
+LANGUAGE["Spell_Desc_Illuminate"] = [[照明你周围的区域]]
+
+LANGUAGE["Spell_Enlighten"] = [[启迪]]
+LANGUAGE["Spell_Desc_Enlighten"] = [[使你下一个法术的伤害提高15%]]
+
+LANGUAGE["Spell_static_guard"] = [[磐石守卫]]
+LANGUAGE["Spell_Desc_static_guard"] = [[通过生成停滞力场来抵御攻击,
+当抵御成功时,减少攻击者造成伤害的90%
+并对攻击者造成严重的闪电伤害.
+只有当受到的伤害至少为10时才会触发
+蓄力使用该法术来增加抵御次数窗口]]
+
+LANGUAGE["Spell_mind_barrier"] = [[心灵障壁]]
+LANGUAGE["Spell_Desc_mind_barrier"] = [[给予你20点屏障]]
+
+LANGUAGE["Spell_Warmth"] = [[温暖]]
+LANGUAGE["Spell_Desc_Warmth"] = [[治疗附近的玩家并提供微弱的光线]]
+
+LANGUAGE["Spell_demonic_conversion"] = [[恶魔转化]]
+LANGUAGE["Spell_Desc_demonic_conversion"] = [[立即杀死目标并将其转化为你的幽灵,
+只对非精英敌人有效
+如果你装备了大型幽灵,则会产生一个更大的幽灵]]
+
+LANGUAGE["Spell_ice_coffin"] = [[寒冰之棺]]
+LANGUAGE["Spell_Desc_ice_coffin"] = [[将使用者包裹在冰中,
+提供伤害免疫和生命回复
+但使用者将无法移动]]
+
+LANGUAGE["Spell_void_maw"] = [[虚空噬兽]]
+LANGUAGE["Spell_Desc_void_maw"] = [[在一个区域内施加寒冰伤害,
+每击中一个敌人吸血一次]]
+
+LANGUAGE["Spell_Refresher"] = [[刷新]]
+LANGUAGE["Spell_Desc_Refresher"] = [[重置你法术的冷却时间]]
+-- R
+LANGUAGE["Spell_floating_chaos"] = [[躁动之乱]]
+LANGUAGE["Spell_Desc_floating_chaos"] = [[在你附近召唤一个能量传送门来反射你的法术,
+只能有1个能量传送门存在]]
+
+LANGUAGE["Spell_hallowed_bolt"] = [[神圣之矛]]
+LANGUAGE["Spell_Desc_hallowed_bolt"] = [[用集中的闪电击中目标或区域,
+在一个区域内造成严重的闪电伤害]]
+
+LANGUAGE["Spell_raise_hulk_spectre"] = [[复苏巨型幽灵]]
+LANGUAGE["Spell_Desc_raise_hulk_spectre"] = [[唤起一个用暗物质构成的巨人幽灵,
+最多可以唤起1个巨人幽灵]]
+
+LANGUAGE["Spell_void_cascade"] = [[虚空串联]]
+LANGUAGE["Spell_Desc_void_cascade"] = [[召唤一个投射物,
+周期性地对附近的敌人造成严重的寒冰伤害]]
+
+LANGUAGE["Spell_black_hole"] = [[黑洞]]
+LANGUAGE["Spell_Desc_black_hole"] = [[产生一个黑洞,
+吸引并对敌人造成伤害]]
+
+LANGUAGE["Spell_Pulsar"] = [[脉冲星]]
+LANGUAGE["Spell_Desc_Pulsar"] = [[发射一颗脉冲星,在目标之间弹跳]]
+
+LANGUAGE["Spell_Supernova"] = [[超新星]]
+LANGUAGE["Spell_Desc_Supernova"] = [[产生一颗超新星,
+释放出极高的热量和辐射]]
