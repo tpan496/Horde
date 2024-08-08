@@ -49,19 +49,19 @@ function PANEL:DoClick()
     if not self.info then return end
     if self.locked then
         if MySelf:Horde_GetSkullTokens() < self.info.subclass.UnlockCost then return end
-        Derma_Query("Unlock?", "Unlock Subclass",
-                "Yes",
+        Derma_Query(translate.Get("shop_Unlock_Subclass_1_desc"), translate.Get("shop_Unlock_Subclass_1"),
+                translate.Get("info_YES"),
                 function()
                     net.Start("Horde_UnlockSubclass")
                         net.WriteString(self.info.subclass.PrintName)
                     net.SendToServer()
                     HORDE:ToggleShop()
                 end,
-                "No", function() end
+                translate.Get("info_NO"), function() end
             )
     else
-        Derma_Query("Change Subclass?", "Change Subclass",
-                "Yes",
+        Derma_Query(translate.Get("shop_Change_Subclass_1_desc"), translate.Get("shop_Change_Subclass_1"),
+                translate.Get("info_YES"),
                 function()
                     HORDE:SendSavedPerkChoices(self.info.subclass.PrintName)
                     MySelf:Horde_SetSubclass(self.info.class, self.info.subclass.PrintName)
@@ -76,7 +76,7 @@ function PANEL:DoClick()
                     end
                     HORDE:SaveSubclassChoices()
                 end,
-                "No", function() end
+                translate.Get("info_NO"), function() end
             )
     end
     

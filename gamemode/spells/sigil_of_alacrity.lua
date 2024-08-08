@@ -42,7 +42,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage, param)
 end
 SPELL.Price                      = 50
 SPELL.Upgrades                   = 5
-SPELL.Upgrade_Description        = "Increases area of effect and charge speed increase (+10% per level)."
+SPELL.Upgrade_Description        = translate.Get("shop_Spell_Upgrade_desc_sigil_of_alacrity")
 SPELL.Upgrade_Prices             = function (upgrade_level)
     return 550 + 50 * upgrade_level
 end

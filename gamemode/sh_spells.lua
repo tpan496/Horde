@@ -14,10 +14,10 @@ HORDE.Spell_Slot_Utility = 2
 HORDE.Spell_Slot_Reload = 3
 
 HORDE.Spell_Slots = {
-    [HORDE.Spell_Slot_LMB] = "LMB",
-    [HORDE.Spell_Slot_RMB] = "RMB",
-    [HORDE.Spell_Slot_Utility] = "F",
-    [HORDE.Spell_Slot_Reload] = "R",
+    [HORDE.Spell_Slot_LMB] = translate.Get("shop_Spell_LMB"),
+    [HORDE.Spell_Slot_RMB] = translate.Get("shop_Spell_RMB"),
+    [HORDE.Spell_Slot_Utility] = translate.Get("shop_Spell_F"),
+    [HORDE.Spell_Slot_Reload] = translate.Get("shop_Spell_R"),
 }
 
 HORDE.Spell_Type_Projectile = 0
@@ -29,13 +29,13 @@ HORDE.Spell_Type_Displacement = 5
 HORDE.Spell_Type_Utility = 6
 
 HORDE.Spell_Type_Strings = {
-    [HORDE.Spell_Type_Projectile] = "Projectile",
-    [HORDE.Spell_Type_Hitscan] = "Hitscan",
-    [HORDE.Spell_Type_AOE] = "Area of Effect",
-    [HORDE.Spell_Type_Minion] = "Minion",
-    [HORDE.Spell_Type_Guard] = "Guard",
-    [HORDE.Spell_Type_Displacement] = "Displacement",
-    [HORDE.Spell_Type_Utility] = "Utility",
+    [HORDE.Spell_Type_Projectile] = translate.Get("shop_Spell_type_Projectile"),
+    [HORDE.Spell_Type_Hitscan] = translate.Get("shop_Spell_type_Hitscan"),
+    [HORDE.Spell_Type_AOE] = translate.Get("shop_Spell_type_AOE"),
+    [HORDE.Spell_Type_Minion] = translate.Get("shop_Spell_type_Minion"),
+    [HORDE.Spell_Type_Guard] = translate.Get("shop_Spell_type_Guard"),
+    [HORDE.Spell_Type_Displacement] = translate.Get("shop_Spell_type_Displacement"),
+    [HORDE.Spell_Type_Utility] = translate.Get("shop_Spell_type_Utility"),
 }
 
 local prefix = "horde/gamemode/spells/"

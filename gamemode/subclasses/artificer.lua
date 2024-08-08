@@ -2,9 +2,7 @@ SUBCLASS.PrintName = "Artificer" -- Required
 SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Cremator -- Required for any new classes
 SUBCLASS.Icon = "subclasses/artificer.png" -- Required
-SUBCLASS.Description = [[
-Cremator subclass.
-Fire/lightning damage caster.]] -- Required
+SUBCLASS.Description = translate.Get("info_Artificer_extra_desc") -- Required
 SUBCLASS.BasePerk = "artificer_base"
 SUBCLASS.Perks = {
     [1] = {title = "Inner Strength", choices = {"artificer_solar_flux", "artificer_purge"}},

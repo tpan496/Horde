@@ -232,7 +232,7 @@ function PANEL:Paint()
 
         if MySelf:HasWeapon(self.item.class) or MySelf:Horde_GetGadget() == self.item.class or (MySelf.Horde_drop_entities and MySelf.Horde_drop_entities[self.item.class]) then
             self.price_panel:SetTextColor(HORDE.color_crimson)
-            self.price_panel:SetText("Owned")
+            self.price_panel:SetText(translate.Get("shop_Owned"))
             self.weight_panel_text:SetTextColor(HORDE.color_crimson)
             self.weight_panel_icon:SetImageColor(HORDE.color_crimson)
             if self.item.infusions and !table.IsEmpty(self.item.infusions) then

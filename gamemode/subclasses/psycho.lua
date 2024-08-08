@@ -2,9 +2,7 @@ SUBCLASS.PrintName = "Psycho" -- Required
 SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Survivor -- Required for any new classes
 SUBCLASS.Icon = "subclasses/psycho.png" -- Required
-SUBCLASS.Description = [[
-Survivor subclass.
-Hybrid fighter focused on critical hits.]] -- Required
+SUBCLASS.Description = translate.Get("info_Psycho_extra_desc") -- Required
 SUBCLASS.BasePerk = "psycho_base"
 SUBCLASS.Perks = {
     [1] = {title = "Violence", choices = {"psycho_ferocity", "psycho_savor"}},
