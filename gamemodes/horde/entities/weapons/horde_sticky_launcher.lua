@@ -157,7 +157,7 @@ function SWEP:PrimaryAttack()
                 end
                 table.insert(self.Stickies, entity)
                 if table.Count(self.Stickies) > 8 then
-                    self.Stickies[1]:Remove()
+                    SafeRemoveEntity(self.Stickies[1])
                     table.remove(self.Stickies, 1)
                 end
             end
