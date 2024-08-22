@@ -2,7 +2,7 @@
 -- Please use the variable names instead of the values!
 
 if SERVER then
-util.AddNetworkString("Horde_SyncActivePerk")
+    util.AddNetworkString("Horde_SyncActivePerk")
 end
 
 HORDE.Status_Icon = {}
@@ -44,6 +44,8 @@ HORDE:RegisterStatus("Hunter_Mark", "materials/status/hunter_mark.png", nil, nil
 HORDE:RegisterStatus("Smokescreen", "materials/perks/specops/smokescreen.png", nil, nil, true)
 HORDE:RegisterStatus("Flare", "materials/perks/specops/flare.png", nil, nil, true)
 HORDE:RegisterStatus("AAS_Perfume", "materials/perks/carcass/AAS_Perfume.png", nil, nil, true)
+HORDE:RegisterStatus("Juxtapose", "materials/perks/overlord/juxtapose.png", nil, nil, true)
+HORDE:RegisterStatus("DarkEnergyBlast", "materials/perks/overlord/dark_energy_blast.png", nil, nil, true)
 
 HORDE:RegisterStatus("Tactical_Mode", "materials/status/tactical_mode.png")
 HORDE:RegisterStatus("Camoflague", "materials/status/camoflague.png")
@@ -114,6 +116,7 @@ HORDE:RegisterStatus("Freeze", "materials/status/frostbite.png", nil, true)
 HORDE:RegisterStatus("Weaken", "materials/perks/crude_casing.png", nil, true)
 HORDE:RegisterStatus("Hinder", "materials/perks/sticky_compound.png", nil, true)
 HORDE:RegisterStatus("Hemorrhage", "materials/status/hemorrhage.png", nil, true)
+HORDE:RegisterStatus("Fear", "materials/status/fear.png", nil, true)
 
 HORDE.Status_Buildup_Sounds = {}
 HORDE.Status_Buildup_Sounds[HORDE.Status_Bleeding] = "horde/status/bleeding_buildup.ogg"
@@ -145,8 +148,8 @@ HORDE.Debuff_Notifications = {
 local plymeta = FindMetaTable("Player")
 function plymeta:Horde_SyncStatus(status, stack)
     net.Start("Horde_SyncStatus")
-        net.WriteUInt(status, 8)
-        net.WriteUInt(stack, 8)
+    net.WriteUInt(status, 8)
+    net.WriteUInt(stack, 8)
     net.Send(self)
 end
 
