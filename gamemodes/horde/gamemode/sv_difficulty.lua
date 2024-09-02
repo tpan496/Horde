@@ -50,6 +50,8 @@ hook.Add("EntityTakeDamage", "Horde_EntityTakeDamage", function (target, dmg)
         elseif dmg:GetAttacker():IsPlayer() and dmg:GetAttacker() ~= target then
             -- Prevent PVP
             return true
+        elseif dmg:GetAttacker():GetClass() == "mortarshell" then
+                return true -- Prevent PVP on certain maps with combine supression devices.
         elseif dmg:IsDamageType(DMG_CRUSH) then
             dmg:SetDamage(math.min(dmg:GetDamage(), 20))
         end
