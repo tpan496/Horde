@@ -83,7 +83,7 @@ SWEP.Primary.Ammo = "SMG1_Grenade" -- what ammo type the gun uses
 SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound = "KF_bullpup.Fire"
+SWEP.ShootSound = "KF_m79.Fire"
 SWEP.ShootSoundSilenced = nil
 SWEP.DistantShootSound = nil
 
