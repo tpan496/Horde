@@ -1,7 +1,7 @@
 if not ArcCWInstalled then return end
 SWEP.Base = "arccw_horde_gl_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "ArcCW - Horde (Custom)" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "M79"
@@ -20,8 +20,8 @@ SWEP.Spawnable = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/horde/weapons/v_m79.mdl"
-SWEP.WorldModel = "models/horde/weapons/v_m79.mdl"
+SWEP.ViewModel = "models/horde/weapons/c_kf_m79.mdl"
+SWEP.WorldModel = "models/horde/weapons/c_kf_m79.mdl"
 SWEP.MirrorVMWM = true
 --SWEP.WorldModelOffset = {
 --    pos        =    Vector(-8, 5, -8),
@@ -33,7 +33,7 @@ SWEP.WorldModelOffset = {
     ang        =    Angle(-10, 2.5, 180),
     bone    =    "ValveBiped.Bip01_R_Hand",
 }
-SWEP.ViewModelFOV = 50
+SWEP.ViewModelFOV = 45
 
 SWEP.Damage = 26
 SWEP.DamageMin = 20 -- damage done at maximum range
@@ -80,10 +80,10 @@ SWEP.MoveDispersion = 250
 
 SWEP.Primary.Ammo = "SMG1_Grenade" -- what ammo type the gun uses
 
-SWEP.ShootVol = 75 -- volume of shoot sound
+SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound = "GrenadeLauncher.Fire"
+SWEP.ShootSound = "KF_bullpup.Fire"
 SWEP.ShootSoundSilenced = nil
 SWEP.DistantShootSound = nil
 
@@ -107,7 +107,7 @@ SWEP.ProceduralIronFire = false
 SWEP.CaseBones = {}
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-3.5, 0, 0.5),
+    Pos = Vector(-5, 0, 2),
     Ang = Angle(-0, 0, 0),
     Magnification = 1.3,
 }
@@ -118,7 +118,7 @@ SWEP.HoldtypeSights = "ar2"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_PISTOL
 
-SWEP.ActivePos = Vector(0, 0, 0)
+SWEP.ActivePos = Vector(-1, -4, 1.5)
 SWEP.ActiveAng = Angle(0, 0, 0)
 
 SWEP.HolsterPos = Vector(-2, -7.145, -11.561)
@@ -129,9 +129,6 @@ SWEP.BarrelOffsetHip = Vector(2, 0, -2)
 
 SWEP.CustomizePos = Vector(12, -8, -4.897)
 SWEP.CustomizeAng = Angle(12.149, 30.547, 0)
-
-SWEP.SprintPos = Vector(5, 0, 0)
-SWEP.SprintAng = Angle(0, 25, 0)
 
 SWEP.AttachmentElements = {
 
@@ -191,53 +188,43 @@ SWEP.Animations = {
         Time = 0.5,
         ShellEjectAt = 0,
     },
-    ["reload"] = {
+    ["reload"] = { -- Adjust Time and FrameRate below if needed.
         Source = "reload",
-        Time = 2,
+        Time = 3, -- Reload duration
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
-        FrameRate = 30,
+        FrameRate = 30, -- Animation frames per second
         LHIK = true,
         LHIKIn = 0.5,
         LHIKOut = 0.2,
     },
 }
-sound.Add(
-{
-name = "GrenadeLauncher.Fire",
-channel = CHAN_WEAPON,
-volume = 0.8,
-soundlevel = SNDLVL_TALKING,
-sound = "horde/weapons/gl/fire.mp3"
+sound.Add({
+	name = 			"KF_m79_lift",
+	channel = 		CHAN_STATIC,
+	volume = 		1.0,
+	sound = 			"weapons/kf_m79/M79_Reload_000.wav"
 })
-sound.Add(
-{
-name = "GrenadeLauncher.LatchOpen",
-channel = CHAN_ITEM,
-volume = 1.0,
-soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/gl/grenade_launcher_latchopen.mp3"
+sound.Add({
+	name = 			"KF_m79_magout",
+	channel = 		CHAN_STATIC,
+	volume = 		1.0,
+	sound = 			"weapons/kf_m79/M79_Reload_022.wav"
 })
-sound.Add(
-{
-name = "GrenadeLauncher.ShellOut",
-channel = CHAN_ITEM,
-volume = 1.0,
-soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/gl/grenade_launcher_shellout.mp3"
+sound.Add({
+	name = 			"KF_m79_magin",
+	channel = 		CHAN_STATIC,
+	volume = 		1.0,
+	sound = 			"weapons/kf_m79/M79_Reload_064.wav"
 })
-sound.Add(
-{
-name = "GrenadeLauncher.ShellIn",
-channel = CHAN_ITEM,
-volume = 1.0,
-soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/gl/grenade_launcher_shellin.mp3"
+sound.Add({
+	name = 			"KF_m79_swing",
+	channel = 		CHAN_STATIC,
+	volume = 		1.0,
+	sound = 			"weapons/kf_m79/M79_Reload_082.wav"
 })
-sound.Add(
-{
-name = "GrenadeLauncher.ActionClosed",
-channel = CHAN_ITEM,
-volume = 1.0,
-soundlevel = SNDLVL_NORM,
-sound = "horde/weapons/gl/grenade_launcher_actionclosed.mp3"
+sound.Add({
+	name = 			"KF_m79.Fire",
+	channel = 		CHAN_WEAPON,
+	volume = 		1.0,
+	sound = 			{ "weapons/kf_m79/M79_fireST01.wav", "weapons/kf_m79/M79_fireST02.wav", "weapons/kf_m79/M79_fireST03.wav"}
 })
