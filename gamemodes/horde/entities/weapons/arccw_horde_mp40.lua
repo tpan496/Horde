@@ -27,7 +27,7 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "000000000000"
 
-SWEP.Damage = 30
+SWEP.Damage = 31
 SWEP.DamageMin = 24 -- damage done at maximum range
 SWEP.Range = 75 -- in METRES
 SWEP.Penetration = 4
@@ -45,7 +45,7 @@ SWEP.RecoilSide = 0.05
 SWEP.RecoilRise = 0.15
 SWEP.RecoilPunch = 2
 
-SWEP.Delay = 60 / 525 -- 60 / RPM.
+SWEP.Delay = 60 / 600 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -127,74 +127,6 @@ SWEP.CustomizeAng = Angle(5, 30, 30)
 SWEP.BarrelLength = 24
 
 SWEP.AttachmentElements = {
-    ["nors"] = {
-        VMBodygroups = {{ind = 4, bg = 1}},
-        WMBodygroups = {{ind = 4, bg = 1}},
-    },
-    ["nofh"] = {
-        VMBodygroups = {{ind = 1, bg = 1}},
-        WMBodygroups = {{ind = 1, bg = 1}},
-    },
-    ["ubrms"] = {
-        NameChange = "MP7A2",
-        VMBodygroups = {{ind = 3, bg = 1}},
-        WMBodygroups = {{ind = 3, bg = 1}},
-    },
-    ["go_mp7_mag_20"] = {
-        VMBodygroups = {
-            {ind = 2, bg = 1},
-        },
-        WMBodygroups = {
-            {ind = 2, bg = 1},
-        },
-    },
-    ["go_mp7_mag_40"] = {
-        VMBodygroups = {
-            {ind = 2, bg = 2},
-        },
-        WMBodygroups = {
-            {ind = 2, bg = 2},
-        },
-    },
-    ["go_mp7_stock_in"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 1},
-        },
-        WMBodygroups = {
-            {ind = 5, bg = 1},
-        },
-    },
-    ["go_mp7_stock_basilisk"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 2},
-        },
-        WMBodygroups = {
-            {ind = 5, bg = 2},
-        },
-    },
-    ["go_mp7_stock_contractor"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 3},
-        },
-        WMBodygroups = {
-            {ind = 5, bg = 3},
-        },
-    },
-    ["go_stock"] = {
-        VMBodygroups = {
-            {ind = 5, bg = 4},
-        },
-        VMElements = {
-            {
-                Model = "models/weapons/arccw_go/atts/stock_buftube.mdl",
-                Bone = "v_weapon.mp7_Parent",
-                Offset = {
-                    pos = Vector(0, -2.75, -4.75),
-                    ang = Angle(90, 0, -90),
-                },
-            }
-        },
-    },
 }
 
 SWEP.ExtraSightDist = 10
@@ -216,8 +148,9 @@ SWEP.Attachments = {
         Offset = {
             vpos = Vector(-0.55, -2, -5),
             vang = Angle(90, 0, -90),
+            wpos = Vector(-0.55, -2, -5),
+            wang = Angle(90, 0, -90),
         },
-        InstalledEles = {"nors"},
     },
     {
         PrintName = "Tactical",
@@ -226,6 +159,8 @@ SWEP.Attachments = {
         Offset = {
             vpos = Vector(-1, 0.2, 4),
             vang = Angle(90, 0, 0),
+            wpos = Vector(-0.55, -2, -5),
+            wang = Angle(90, 0, -90),
         },
     },
     {
@@ -236,8 +171,9 @@ SWEP.Attachments = {
         Offset = {
             vpos = Vector(-0.5, -1.3, 12),
             vang = Angle(90, 0, -90),
+            wpos = Vector(-0.55, -2, -5),
+            wang = Angle(90, 0, -90),
         },
-        InstalledEles = {"nofh"},
     },
     {
         PrintName = "Ammo Type",

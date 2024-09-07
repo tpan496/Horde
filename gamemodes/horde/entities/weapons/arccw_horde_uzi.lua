@@ -45,7 +45,7 @@ SWEP.Recoil = 0.60
 SWEP.RecoilSide = 0.55
 SWEP.RecoilRise = 0
 
-SWEP.Delay = 0.09 -- 60 / RPM.
+SWEP.Delay = 60 / 950-- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -168,7 +168,7 @@ SWEP.Attachments = {
             wpos = Vector(12.057, 4.317, -3.858),
             wang = Angle(-3.074, -23.004, 0)
         },
-		VMScale = Vector(1, 1, 1),
+        VMScale = Vector(1, 1, 1),
     },
     {
         PrintName = "Underbarrel",
@@ -212,7 +212,7 @@ SWEP.Attachments = {
         Slot = "mw2_wepcamo",
         FreeSlot = true,
     },
-	{
+    {
         PrintName = "Charm",
         Slot = "charm",
         FreeSlot = true,
@@ -229,23 +229,23 @@ SWEP.Attachments = {
 SWEP.Animations = {
     ["idle"] = {
         Source = "idle",
-        Time = 0/30,
+        Time = 0 / 30,
     },
     ["enter_sprint"] = {
         Source = "sprint_in",
-        Time = 11/30
+        Time = 11 / 30
     },
     ["idle_sprint"] = {
         Source = "sprint_loop",
-        Time = 31/40
+        Time = 31 / 40
     },
     ["exit_sprint"] = {
         Source = "sprint_out",
-        Time = 11/30
+        Time = 11 / 30
     },
     ["draw"] = {
         Source = "pullout",
-        Time = 26/30,
+        Time = 26 / 30,
         SoundTable = {{s = "MW2Common.Deploy", 		t = 0}},
         LHIK = true,
         LHIKIn = 0,
@@ -253,48 +253,48 @@ SWEP.Animations = {
     },
     ["holster"] = {
         Source = "putaway",
-        Time = 14/30,
+        Time = 14 / 30,
         LHIK = true,
         LHIKIn = 0.3,
         LHIKOut = 0.3,
     },
     ["fire"] = {
         Source = "fire",
-        Time = 7/30,
+        Time = 7 / 30,
         ShellEjectAt = 0,
     },
     ["fire_iron"] = {
         Source = "fire_ads",
-        Time = 7/30,
+        Time = 7 / 30,
         ShellEjectAt = 0,
     },
     ["reload"] = {
         Source = "reload",
-        Time = 76/30,
+        Time = 76 / 30,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SMG1,
         SoundTable = {
-						{s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_lift_v1.wav", 	t = 0/30},
-						{s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_clipout_v2.wav", 	t = 15/30},
-						{s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_clipin_v1.wav", 	t = 56/30},
-					},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_lift_v1.wav", 	t = 0 / 30},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_clipout_v2.wav", 	t = 15 / 30},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_clipin_v1.wav", 	t = 56 / 30},
+                    },
         LHIK = true,
-	LHIKEaseIn = 0.31,
+        LHIKEaseIn = 0.31,
         LHIKIn = 0.4,
         LHIKEaseOut = 0.25,
         LHIKOut = 0.3,
     },
     ["reload_empty"] = {
         Source = "reload_empty",
-        Time = 102/30,
+        Time = 102 / 30,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SMG1,
         SoundTable = {
-						{s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_lift_v1.wav", 	t = 0/30},
-						{s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_clipout_v2.wav", 	t = 15/30},
-						{s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_clipin_v1.wav", 	t = 56/30},
-						{s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_chamber_v1.wav", 	t = 76/30},
-					},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_lift_v1.wav", 	t = 0 / 30},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_clipout_v2.wav", 	t = 15 / 30},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_clipin_v1.wav", 	t = 56 / 30},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_miniuzi_reload_chamber_v1.wav", 	t = 76 / 30},
+                    },
         LHIK = true,
-	LHIKEaseIn = 0.31,
+        LHIKEaseIn = 0.31,
         LHIKIn = 0.4,
         LHIKEaseOut = 0.25,
         LHIKOut = 0.3,

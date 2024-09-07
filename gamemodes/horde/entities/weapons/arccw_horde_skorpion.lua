@@ -34,8 +34,8 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "0000000"
 
-SWEP.Damage = 26
-SWEP.DamageMin = 20 -- damage done at maximum range
+SWEP.Damage = 30
+SWEP.DamageMin = 22 -- damage done at maximum range
 SWEP.Range = 80
 SWEP.RangeMin = 15
 
@@ -221,7 +221,7 @@ SWEP.Attachments = {
         VMScale = Vector(0.9, 0.9, 0.9),
         Bone = "tag_weapon",
         Offset = {
-            
+
             vpos = Vector(5.3, -0.1, 0.83), -- offset that the attachment will be relative to the bone
             vang = Angle(0, 0, 0),
             wpos = Vector(8, 0.4, -4.5),
@@ -401,7 +401,7 @@ SWEP.Animations = {
             {s = "ArcCW_BO1.Skorpion_BoltBack", t = 75 / 35},
             {s = "ArcCW_BO1.Skorpion_BoltFwd", t = 81 / 35},
         },
-       
+
     },
     ["reload_empty_stock"] = {
         Source = "reload_empty",

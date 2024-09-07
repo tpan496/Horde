@@ -13,3 +13,6 @@ SWEP.Slot = 2
 
 SWEP.ViewModel = "models/weapons/arccw_go/v_pist_tec9.mdl"
 SWEP.WorldModel = "models/weapons/arccw_go/v_pist_tec9.mdl"
+
+SWEP.Damage = 42
+SWEP.DamageMin = 12
