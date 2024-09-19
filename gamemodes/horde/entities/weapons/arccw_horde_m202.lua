@@ -233,7 +233,7 @@ SWEP.Animations = {
     },
     ["reload"] = {
         Source = "reload",
-		Mult = 0.65,
+        Mult = 30 / 48,
         Time = 6.85, --6.96
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_AR2,
         LHIK = true,
@@ -241,13 +241,13 @@ SWEP.Animations = {
         LHIKOut = 0.2,
         --MinProgress = 0.1,
         SoundTable = {
-            {s = "ArcCW_BO1.M202_FlipSight", t = 12 / 30},
-            {s = "ArcCW_BO1.M202_Down", t = 40 / 30},
-            {s = "ArcCW_BO1.M202_Tap", t = 55 / 30},
-            {s = "ArcCW_BO1.M202_Start", t = 113 / 30},
-            {s = "ArcCW_BO1.M202_Up", t = 140 / 30},
-            {s = "ArcCW_BO1.M202_Ground", t = 165 / 30},
-            {s = "ArcCW_BO1.M202_FlipSight", t = 175 / 30},
+            {s = "ArcCW_BO1.M202_FlipSight", t = 12 / 48},
+            {s = "ArcCW_BO1.M202_Down", t = 40 / 48},
+            {s = "ArcCW_BO1.M202_Tap", t = 55 / 48},
+            {s = "ArcCW_BO1.M202_Start", t = 113 / 48},
+            {s = "ArcCW_BO1.M202_Up", t = 140 / 48},
+            {s = "ArcCW_BO1.M202_Ground", t = 165 / 48},
+            {s = "ArcCW_BO1.M202_FlipSight", t = 175 / 48},
         },
     },
     ["enter_sprint"] = {
