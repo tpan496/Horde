@@ -24,8 +24,10 @@ SWEP.ViewModel = "models/horde/weapons/arccw/c_bo1_chinalake.mdl"
 SWEP.WorldModel = "models/horde/weapons/arccw/c_bo1_chinalake.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-5, 5, 15),
-    ang = Angle(-90, 10, 180),
+    pos = Vector(2, 5, -6),
+    ang = Angle(-16, 0, 180),
+    bone = "ValveBiped.Bip01_R_Hand",
+    scale = 1
 }
 SWEP.ViewModelFOV = 60
 
@@ -173,20 +175,22 @@ SWEP.Animations = {
     },
     ["draw"] = {
         Source = "draw",
+        Time = 1
         LHIK = true,
         LHIKIn = 0.2,
         LHIKOut = 0.2,
         SoundTable = {
-            {s = "ArcCW_BO1.CL_Sight", t = 22 / 30}
+            {s = "ArcCW_BO1.CL_Sight", t = 22 / 50}
         },
     },
     ["holster"] = {
         Source = "holster",
+        Time = 1
         LHIK = true,
         LHIKIn = 0.2,
         LHIKOut = 0.1,
         SoundTable = {
-            {s = "ArcCW_BO1.CL_Sight", t = 20 / 30}
+            {s = "ArcCW_BO1.CL_Sight", t = 20 / 40}
         },
     },
     ["ready"] = {
