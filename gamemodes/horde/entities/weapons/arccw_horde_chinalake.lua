@@ -56,6 +56,11 @@ SWEP.MaxRecoilBlowback = 2
 SWEP.ShotgunReload = true
 SWEP.ManualAction = true
 
+-- Function to prevent post-reload cycling
+SWEP.Hook_PostReload = function(wep)
+    wep.SetNeedCycle(false)
+end
+
 -- SWEP.Delay = 60 / 300 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
@@ -190,8 +195,8 @@ SWEP.Animations = {
         LHIKIn = 0.2,
         LHIKOut = 0.95,
         SoundTable = {
-            {s = "ArcCW_BO1.CL_Back", t = 28 / 30},
-            {s = "ArcCW_BO1.CL_Fwd", t = 30 / 30},
+            {s = "ArcCW_BO1.CL_Back", t = 27 / 30},
+            {s = "ArcCW_BO1.CL_Fwd", t = 29 / 30},
         },
     },
     ["fire"] = {
@@ -220,7 +225,7 @@ SWEP.Animations = {
         Source = {
             "pump",
         },
-        Time = 68 / 50,
+        Time = 69 / 50,
         SoundTable = {
             {s = "ArcCW_BO1.CL_Back", t = 26 / 50},
             {s = "ArcCW_BO1.CL_Fwd", t = 38 / 50},
