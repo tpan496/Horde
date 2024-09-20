@@ -175,7 +175,7 @@ SWEP.Animations = {
     },
     ["draw"] = {
         Source = "draw",
-        Time = 1
+        Time = 1,
         LHIK = true,
         LHIKIn = 0.2,
         LHIKOut = 0.2,
@@ -185,7 +185,7 @@ SWEP.Animations = {
     },
     ["holster"] = {
         Source = "holster",
-        Time = 1
+        Time = 1,
         LHIK = true,
         LHIKIn = 0.2,
         LHIKOut = 0.1,
