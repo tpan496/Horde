@@ -37,9 +37,10 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 45
 
-SWEP.Damage = 35
-SWEP.DamageMin = 20
+SWEP.Damage = 42
+SWEP.DamageMin = 27
 SWEP.Range = 50 -- in METRES
+SWEP.RangeMin = 25 
 SWEP.Penetration = 2
 SWEP.DamageType = DMG_BUCKSHOT
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -64,7 +65,7 @@ SWEP.RecoilRise = 3
 SWEP.RecoilPunch = 0
 
 SWEP.Delay = 60 / 60 -- 60 / RPM.
-SWEP.Num = 10 -- number of shots per trigger pull.
+SWEP.Num = 12 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
 		PrintName = "PUMP",

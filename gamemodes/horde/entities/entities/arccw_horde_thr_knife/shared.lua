@@ -14,56 +14,56 @@ AddCSLuaFile()
 
 function ENT:Initialize()
     if SERVER then
+
         self:SetModel( self.Model )
         self:SetMoveType( MOVETYPE_VPHYSICS )
         self:SetSolid( SOLID_VPHYSICS )
+        self:SetMoveCollide(COLLISION_GROUP_PROJECTILE)
+        self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
         self:PhysicsInitSphere(1)
-        self:DrawShadow( true )
+        self:DrawShadow( false )
 
-        --self:SetAngles(Angle(0, 0, 0) )
 
         local phys = self:GetPhysicsObject()
         if phys:IsValid() then
-            phys:SetMass(0.1)
+            phys:SetMass(5)
             phys:SetBuoyancyRatio(0)
             phys:Wake()
+            phys:EnableGravity(false)
+            phys:EnableDrag(false)
         end
-
+        timer.Simple(0, function()
+            if not IsValid(self) then return end
+            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+        end)
         self.dt = CurTime() + 15
     end
 end
 
+--removed the ability to recover missed knives, kept causing "changing collision rules within a callback" errors
+--regardless of how it was set up
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
         if data.HitEntity:GetClass() == "worldspawn" then
-            self:SetMoveType( MOVETYPE_NONE )
-            self:SetAngles( data.OurOldVelocity:Angle() + Angle(90, 0, 0) )
-            self:SetPos( data.HitPos - (data.HitNormal * 2) )
             self:EmitSound( "arccw_go/knife/knife_hitwall3.wav" )
-            self.dt = CurTime() + 15
-            self.Collectable = true
-
-            self:SetTrigger(true)
-            self:UseTriggerBounds(true, 24)
+            self:Remove()
         else
             self:EmitSound( "arccw_go/knife/knife_hit1.wav" )
 
             self:FireBullets({
-                Attacker = self.Owner,
+                Attacker = self:GetOwner(),
                 Damage = 100,
                 Tracer = 0,
                 Distance = 4000,
-                Dir = (data.HitPos - self:GetPos()),
+                Dir = data.HitPos - self:GetPos(),
                 Src = self:GetPos(),
                 Callback = function(att, tr, dmg)
                     dmg:SetDamageType(DMG_SLASH)
-                    dmg:SetAttacker(self.Owner)
+                    dmg:SetAttacker(self:GetOwner())
                     dmg:SetInflictor(self)
 
-                    if (not tr.Entity:IsValid()) or (not tr.Entity:IsNPC()) then
-                        if data.HitEntity:IsNPC() then
-                            data.HitEntity:TakeDamageInfo(dmg)
-                        end
+                if (not tr.Entity:IsValid()) or (not tr.Entity:IsNPC()) and data.HitEntity:IsNPC() then
+                    data.HitEntity:TakeDamageInfo(dmg)
                     end
                 end
             })
@@ -72,18 +72,10 @@ function ENT:PhysicsCollide(data, physobj)
     end
 end
 
-function ENT:Touch(ply)
-    if !ply:IsPlayer() then return end
-
-    ply:GiveAmmo(1, "GrenadeHL1", false)
-    self:Remove()
-end
 
 function ENT:Think()
-    if SERVER then
-        if CurTime() >= self.dt then
-            self:Remove()
-        end
+    if SERVER and CurTime() >= self.dt then
+        self:Remove()
     end
 end
 

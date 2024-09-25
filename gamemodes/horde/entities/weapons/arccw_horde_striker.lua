@@ -32,9 +32,10 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 25
-SWEP.DamageMin = 15
-SWEP.Range = 600 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Damage = 42
+SWEP.DamageMin = 24
+SWEP.Range = 1000 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.RangeMin = 500 * 0.025 
 SWEP.Penetration = 1
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -51,13 +52,10 @@ SWEP.RecoilSide = 2
 
 SWEP.ShotgunReload = true
 
-SWEP.Delay = 60 / 350 -- 60 / RPM.
-SWEP.Num = 6 -- number of shots per trigger pull.
+SWEP.Delay = 60 / 400 -- 60 / RPM.
+SWEP.Num = 7 -- number of shots per trigger pull.
 SWEP.RunawayBurst = false
 SWEP.Firemodes = {
-    {
-        Mode = 2,
-    },
     {
         Mode = 1,
     },
@@ -286,7 +284,7 @@ SWEP.Animations = {
     },
     ["sgreload_start"] = {
         Source = "reload_start",
-        Time = 23/40,
+        Time = 16/40,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_lift_v1.wav", 		t = 0},
@@ -297,7 +295,7 @@ SWEP.Animations = {
     },
     ["sgreload_insert"] = {
         Source = "reload_loop",
-        Time = 8/40,
+        Time = 16/40,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_shell_v1.wav", 		t = 3/40},
@@ -307,14 +305,14 @@ SWEP.Animations = {
     },
     ["sgreload_finish"] = {
         Source = "reload_finish",
-        Time = 13/30,
+        Time = 16/40,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_end_v1.wav", 		t = 0.01},
                     },
     },
     ["sgreload_finish_empty"] = {
         Source = "reload_finish",
-        Time = 13/30,
+        Time = 16/30,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_end_v1.wav", 		t = 0.01},
                     },

@@ -6,7 +6,7 @@ if CLIENT then
     killicon.Add("arccw_horde_throwing_knife", "arccw/weaponicons/arccw_go_nade_knife", Color(0, 0, 0, 255))
     killicon.Add("arccw_horde_thr_knife", "arccw/weaponicons/arccw_go_nade_knife", Color(0, 0, 0, 255))
 end
-SWEP.Base = "arccw_base_nade"
+SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -36,16 +36,16 @@ SWEP.WorldModelOffset = {
 }
 
 SWEP.FuseTime = false
-
+SWEP.RegenerationTimer = CurTime()
+SWEP.AmmoRegenAmount = 1 -- Per second
 SWEP.Throwing = true
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = -1
 
 SWEP.MuzzleVelocity = 10000
---SWEP.ShootEntity = "arccw_horde_thr_knife"
 
 SWEP.Primary.Ammo = "GrenadeHL1"
-
+SWEP.Primary.MaxAmmo = 3
 SWEP.TTTWeaponType = "weapon_ttt_confgrenade"
 SWEP.NPCWeaponType = "weapon_grenade"
 SWEP.NPCWeight = 25
@@ -55,12 +55,10 @@ SWEP.PullPinTime = 0
 SWEP.BarrelOffsetSighted = Vector(0, 0, 0)
 SWEP.BarrelOffsetCrouch = nil
 SWEP.BarrelOffsetHip = Vector(0, 0, 0)
-
+--despite the overwritten think and primaryattack/secondaryattack function
+--arccw still needs all this to not cause the weapon to shit the bed
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
-
-SWEP.MeleeDamage = 45
-SWEP.Melee2Damage = 45
 
 SWEP.MeleeDamageType = DMG_SLASH
 SWEP.MeleeRange = 60
@@ -121,18 +119,83 @@ function SWEP:GetPrimaryAmmoType()
     return "GrenadeHL1"
 end
 
+function SWEP:Deploy()
+    local owner = self:GetOwner()
+
+    --`self:SetWeaponHoldType( self.HoldType )
+    self:SendWeaponAnim( ACT_VM_DRAW )
+    self:SetNextPrimaryFire( CurTime() + 0.5 )
+    self:SetNextSecondaryFire( CurTime() + 0.5 )
+    self.RegenerationTimer = CurTime() + 3
+
+    if SERVER and self.HolsterTime then
+        local ammoCount = math.floor( ( CurTime() - self.HolsterTime ) * self.AmmoRegenAmount )
+        owner:SetAmmo( math.min( owner:GetAmmoCount( "GrenadeHL1" ) + ammoCount, self.Primary.MaxAmmo ), self.Primary.Ammo )
+    end
+
+    return true
+end
+
+function SWEP:Holster()
+    self.RegenerationTimer = CurTime()
+    self.HolsterTime = CurTime()
+    return true
+end
+
+function SWEP:PrimaryAttack()
+    self:SetNextPrimaryFire(CurTime() + 0.5)
+    self:SetNextSecondaryFire( CurTime() + self:SequenceDuration())
+    local owner = self:GetOwner()
+    local trace = owner:GetEyeTrace()
+
+    if trace.HitPos:Distance(owner:GetShootPos()) <= 85 then
+            owner:SetAnimation( PLAYER_ATTACK1 )
+            self:SendWeaponAnim(ACT_VM_HITCENTER)
+        bullet = {}
+        bullet.Num    = 1
+        bullet.Src    = owner:GetShootPos()
+        bullet.Dir    = owner:GetAimVector()
+        bullet.Spread = Vector(0, 0, 0)
+        bullet.Tracer = 0
+        bullet.Force  = 1
+        bullet.Damage = 45
+        bullet.HullSize = 10
+        bullet.Callback = function(att, tr, dmginfo)
+            dmginfo:SetDamageType(DMG_SLASH)
+                    end
+    owner:FireBullets(bullet)
+    self:EmitSound("physics/flesh/flesh_impact_bullet" .. math.random( 1,2,3,4,5 ) .. ".wav")
+    else
+                    self:EmitSound("arccw_go/knife/knife_slash1.wav")
+            owner:SetAnimation( PLAYER_ATTACK1 )
+                    self:SendWeaponAnim(ACT_VM_MISSCENTER)
+    end
+end
+
 function SWEP:SecondaryAttack()
     if self:GetNextSecondaryFire() > CurTime() then return end
     local ply = self:GetOwner()
+
     if ply:GetAmmoCount("GrenadeHL1") <= 0 then return end
-    self:FireRocket("arccw_horde_thr_knife", 4000, ply:EyeAngles())
-    ply:SetAmmo(ply:GetAmmoCount("GrenadeHL1")-1, "GrenadeHL1")
-	self.Weapon:SetNextSecondaryFire(CurTime() + 1)
-    local anim = self:SelectAnimation("bash2")
-    self:PlayAnimation( anim )
+        self:FireRocket("arccw_horde_thr_knife", 4000, ply:EyeAngles(), false)
+        ply:SetAmmo(ply:GetAmmoCount("GrenadeHL1") -1, "GrenadeHL1")
+        self:SetNextSecondaryFire(CurTime() + 1)
+        local anim = self:SelectAnimation("bash2")
+        self:PlayAnimation( anim )
+        self.RegenerationTimer = CurTime() + 3
     timer.Simple(0.15, function ()
         if self:IsValid() then
             self:PlayAnimation("draw")
         end
     end)
+end
+function SWEP:Think()
+    local owner = self:GetOwner()
+    if self.RegenerationTimer <= CurTime() and self:Ammo1() < self.Primary.MaxAmmo then
+        owner:SetAmmo( self:Ammo1() + self.AmmoRegenAmount , self.Primary.Ammo )
+        self.RegenerationTimer = CurTime() + 3
+    end
+    if self:Ammo1() > self.Primary.MaxAmmo then
+        owner:SetAmmo( self.Primary.MaxAmmo, self.Primary.Ammo )
+    end
 end
