@@ -1,4 +1,4 @@
-if not ArcCWInstalled then return end
+if not ArcCWInstalled then return end --this still relies on content from arccw
 if CLIENT then
     SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_go_nade_knife")
     SWEP.DrawWeaponInfoBox	= false
@@ -6,115 +6,51 @@ if CLIENT then
     killicon.Add("arccw_horde_throwing_knife", "arccw/weaponicons/arccw_go_nade_knife", Color(0, 0, 0, 255))
     killicon.Add("arccw_horde_thr_knife", "arccw/weaponicons/arccw_go_nade_knife", Color(0, 0, 0, 255))
 end
-SWEP.Base = "arccw_horde_base_nade"
+SWEP.Base = "weapon_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Kunai"
-SWEP.Trivia_Class = "Knife"
-SWEP.Trivia_Desc = "Skeletonized knife intended for throwing. It's all in the wrist."
-SWEP.Trivia_Manufacturer = "Cold Steel"
-SWEP.Trivia_Calibre = "N/A"
-SWEP.Trivia_Mechanism = "Sharp Edge"
-SWEP.Trivia_Country = "USA"
-SWEP.Trivia_Year = 2004
-
 SWEP.Slot = 1
 
-SWEP.NotForNPCs = true
 
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/arccw_go/v_eq_throwingknife.mdl"
 SWEP.WorldModel = "models/weapons/arccw_go/w_eq_throwingknife_thrown.mdl"
-SWEP.ViewModelFOV = 60
+SWEP.ViewModelFOV = 72
 
-SWEP.WorldModelOffset = {
-    pos = Vector(3, 2, -1),
-    ang = Angle(-10, 0, 180)
+
+SWEP.WElements = {
+    ["mr sharp"] = { type = "Model", model = "models/weapons/arccw_go/w_eq_throwingknife_thrown.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 2, -1), angle = Angle(-10, 0, 180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
-SWEP.FuseTime = false
 SWEP.RegenerationTimer = CurTime()
 SWEP.AmmoRegenAmount = 1 -- Per second
-SWEP.Throwing = true
 
 SWEP.Primary.ClipSize = -1
 
-SWEP.MuzzleVelocity = 10000
-
+SWEP.HoldType = "knife"
 SWEP.Primary.Ammo = "GrenadeHL1"
 SWEP.Primary.MaxAmmo = 3
-SWEP.TTTWeaponType = "weapon_ttt_confgrenade"
-SWEP.NPCWeaponType = "weapon_grenade"
 SWEP.NPCWeight = 25
 
-SWEP.PullPinTime = 0
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
+SWEP.Secondary.Delay = 0.1
+--arccw shit the bed
 
-SWEP.BarrelOffsetSighted = Vector(0, 0, 0)
-SWEP.BarrelOffsetCrouch = nil
-SWEP.BarrelOffsetHip = Vector(0, 0, 0)
---despite the overwritten think and primaryattack/secondaryattack function
---arccw still needs all this to not cause the weapon to shit the bed
-SWEP.PrimaryBash = true
-SWEP.CanBash = true
+function SWEP:Initialize()
+    self:SetWeaponHoldType( self.HoldType )
 
-SWEP.MeleeDamageType = DMG_SLASH
-SWEP.MeleeRange = 60
-SWEP.MeleeAttackTime = 0.2
-SWEP.MeleeTime = 0.65
-SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
-
-SWEP.Melee2 = true
-SWEP.Melee2Range = 80
-SWEP.Melee2AttackTime = 0.5
-SWEP.Melee2Time = 1.25
-SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
-
-SWEP.Animations = {
-    ["draw"] = {
-        Source = "deploy",
-        SoundTable = {
-            {
-                s = "arccw_go/knife/knife_deploy1.wav",
-                t = 0
-            }
-        }
-    },
-    ["pre_throw"] = {
-        Source = "swing_build",
-        Time = 0.1
-    },
-    ["throw"] = {
-        Source = "swing_throw",
-        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_GRENADE,
-        Time = 0.1,
-        SoundTable = {
-            {
-                s = "arccw_go/knife/knife_slash1.wav",
-                t = 0
-            }
-        }
-    },
-    ["bash"] = {
-        Source = {"swing_misscenter", "swing_hitcenter"},
-        Time = 0.75,
-    },
-    ["bash2"] = {
-        Source = "swing_throw",
-        TPAnim = ACT_HL2MP_GESTURE_RANGE_ATTACK_GRENADE,
-        Time = 0.15,
-        SoundTable = {
-            {
-                s = "arccw_go/knife/knife_slash1.wav",
-                t = 0
-            }
-        }
-    },
-    ["idle"] = false,
-}
-
+    if CLIENT then
+    self.WElements = table.FullCopy( self.WElements )
+    self:CreateModels( self.WElements ) -- create worldmodels
+    end
+end
 function SWEP:GetPrimaryAmmoType()
     return "GrenadeHL1"
 end
@@ -122,8 +58,9 @@ end
 function SWEP:Deploy()
     local owner = self:GetOwner()
 
-    --`self:SetWeaponHoldType( self.HoldType )
+    self:SetWeaponHoldType( self.HoldType )
     self:SendWeaponAnim( ACT_VM_DRAW )
+    self:EmitSound("arccw_go/knife/knife_deploy1.wav")
     self:SetNextPrimaryFire( CurTime() + 0.5 )
     self:SetNextSecondaryFire( CurTime() + 0.5 )
     self.RegenerationTimer = CurTime() + 3
@@ -148,7 +85,7 @@ function SWEP:PrimaryAttack()
     local owner = self:GetOwner()
     local trace = owner:GetEyeTrace()
 
-    if trace.HitPos:Distance(owner:GetShootPos()) <= 85 then
+    if trace.HitPos:Distance(owner:GetShootPos()) <= 95 then
             owner:SetAnimation( PLAYER_ATTACK1 )
             self:SendWeaponAnim(ACT_VM_HITCENTER)
         bullet = {}
@@ -166,26 +103,40 @@ function SWEP:PrimaryAttack()
     owner:FireBullets(bullet)
     self:EmitSound("physics/flesh/flesh_impact_bullet" .. math.random( 1,2,3,4,5 ) .. ".wav")
     else
-                    self:EmitSound("arccw_go/knife/knife_slash1.wav")
-            owner:SetAnimation( PLAYER_ATTACK1 )
-                    self:SendWeaponAnim(ACT_VM_MISSCENTER)
+        self:EmitSound("arccw_go/knife/knife_slash1.wav")
+        owner:SetAnimation( PLAYER_ATTACK1 )
+        self:SendWeaponAnim(ACT_VM_MISSCENTER)
     end
 end
 
 function SWEP:SecondaryAttack()
-    if self:GetNextSecondaryFire() > CurTime() then return end
+  if self:GetNextSecondaryFire() > CurTime() then return end
     local ply = self:GetOwner()
-
+    local owner = self:GetOwner()
     if ply:GetAmmoCount("GrenadeHL1") <= 0 then return end
-        self:FireRocket("arccw_horde_thr_knife", 4000, ply:EyeAngles(), false)
+    owner:SetAnimation( PLAYER_ATTACK1 )
+    self:EmitSound("arccw_go/knife/knife_slash2.wav")
+    if ( CLIENT ) then return end
+
+    local ent = ents.Create( "arccw_horde_thr_knife" )
+    if ( not IsValid( ent ) ) then return end
+    local Forward = owner:GetAimVector()
+
+    ent:SetPos( owner:GetShootPos() + Forward * 32 )
+    ent:SetAngles( owner:EyeAngles() )
+    ent:SetOwner( owner )
+    ent:Spawn()
+    ent:Activate()
+    ent:SetVelocity( Forward * 4000 )
+    ent:GetPhysicsObject():SetVelocityInstantaneous( Forward * 4000)
+
         ply:SetAmmo(ply:GetAmmoCount("GrenadeHL1") -1, "GrenadeHL1")
         self:SetNextSecondaryFire(CurTime() + 1)
-        local anim = self:SelectAnimation("bash2")
-        self:PlayAnimation( anim )
+        self:SendWeaponAnim(ACT_VM_RELEASE)
         self.RegenerationTimer = CurTime() + 3
-    timer.Simple(0.15, function ()
+    timer.Simple(0.3, function ()
         if self:IsValid() then
-            self:PlayAnimation("draw")
+            self:SendWeaponAnim(ACT_VM_DRAW)
         end
     end)
 end
@@ -197,5 +148,293 @@ function SWEP:Think()
     end
     if self:Ammo1() > self.Primary.MaxAmmo then
         owner:SetAmmo( self.Primary.MaxAmmo, self.Primary.Ammo )
+    end
+end
+
+--nuclear approach so i don't have to open blender and recompile a worldmodel
+
+local entMeta = FindMetaTable( "Entity" )
+local entity_GetTable = entMeta.GetTable
+if CLIENT then
+    local entity_ManipulateBoneScale = entMeta.ManipulateBoneScale
+    local entity_ManipulateBoneAngles = entMeta.ManipulateBoneAngles
+    local entity_ManipulateBonePosition = entMeta.ManipulateBonePosition
+
+    local zeroVector = Vector( 0, 0, 0 )
+    local zeroAngle = Angle( 0, 0, 0 )
+    local oneVector = Vector( 1, 1, 1 )
+
+    SWEP.wRenderOrder = nil
+    function SWEP:DrawWorldModel()
+        local selfTbl = entity_GetTable( self )
+        if selfTbl.ShowWorldModel == nil or selfTbl.ShowWorldModel then
+            self:DrawModel()
+        end
+
+        if not selfTbl.WElements then return end
+
+        if not selfTbl.wRenderOrder then
+            selfTbl.wRenderOrder = {}
+
+            for k, v in pairs( selfTbl.WElements ) do
+                if v.type == "Model" then
+                    table.insert( selfTbl.wRenderOrder, 1, k )
+                elseif v.type == "Sprite" or v.type == "Quad" then
+                    table.insert( selfTbl.wRenderOrder, k )
+                end
+            end
+        end
+
+        if IsValid( self:GetOwner() ) then
+            bone_ent = self:GetOwner()
+        else
+            -- -- when the weapon is dropped
+            bone_ent = self
+        end
+
+        for _, name in pairs( selfTbl.wRenderOrder ) do
+            local v = selfTbl.WElements[name]
+            if not v then
+                selfTbl.wRenderOrder = nil
+                break
+            end
+            if v.hide then continue end
+
+            local pos, ang
+
+            if v.bone then
+                pos, ang = self:GetBoneOrientation( selfTbl.WElements, v, bone_ent )
+            else
+                pos, ang = self:GetBoneOrientation( selfTbl.WElements, v, bone_ent, "ValveBiped.Bip01_R_Hand" )
+            end
+
+            if not pos then continue end
+
+            local model = v.modelEnt
+            local sprite = v.spriteMaterial
+
+            if v.type == "Model" and IsValid( model ) then
+                model:SetPos( pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
+                ang:RotateAroundAxis( ang:Up(), v.angle.y )
+                ang:RotateAroundAxis( ang:Right(), v.angle.p )
+                ang:RotateAroundAxis( ang:Forward(), v.angle.r )
+
+                model:SetAngles( ang )
+                -- --model:SetModelScale(v.size)
+                local matrix = Matrix()
+                matrix:Scale( v.size )
+                model:EnableMatrix( "RenderMultiply", matrix )
+
+                if v.material == "" then
+                    model:SetMaterial( "" )
+                elseif model:GetMaterial() ~= v.material then
+                    model:SetMaterial( v.material )
+                end
+
+                if v.skin and v.skin ~= model:GetSkin() then
+                    model:SetSkin( v.skin )
+                end
+
+                if v.bodygroup then
+                    for k, v in pairs( v.bodygroup ) do
+                        if model:GetBodygroup( k ) ~= v then
+                            model:SetBodygroup( k, v )
+                        end
+                    end
+                end
+
+                if v.surpresslightning then
+                    render.SuppressEngineLighting( true )
+                end
+
+                render.SetColorModulation( v.color.r / 255, v.color.g / 255, v.color.b / 255 )
+                render.SetBlend( v.color.a / 255 )
+                model:DrawModel()
+                render.SetBlend( 1 )
+                render.SetColorModulation( 1, 1, 1 )
+
+                if v.surpresslightning then
+                    render.SuppressEngineLighting( false )
+                end
+            elseif v.type == "Sprite" and sprite then
+                local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
+                render.SetMaterial( sprite )
+                render.DrawSprite( drawpos, v.size.x, v.size.y, v.color )
+            elseif v.type == "Quad" and v.draw_func then
+                local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
+                ang:RotateAroundAxis( ang:Up(), v.angle.y )
+                ang:RotateAroundAxis( ang:Right(), v.angle.p )
+                ang:RotateAroundAxis( ang:Forward(), v.angle.r )
+
+                cam.Start3D2D( drawpos, ang, v.size )
+                v.draw_func( self )
+                cam.End3D2D()
+            end
+        end
+    end
+
+    function SWEP:GetBoneOrientation( basetab, tab, ent, bone_override )
+        local bone, pos, ang
+        if tab.rel and tab.rel ~= "" then
+            local v = basetab[tab.rel]
+
+            if not v then return end
+
+            -- -- Technically, if there exists an element with the same name as a bone
+            -- -- you can get in an infinite loop. Let's just hope nobody's that stupid.
+            pos, ang = self:GetBoneOrientation( basetab, v, ent )
+            if not pos then return end
+
+            pos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
+            ang:RotateAroundAxis( ang:Up(), v.angle.y )
+            ang:RotateAroundAxis( ang:Right(), v.angle.p )
+            ang:RotateAroundAxis( ang:Forward(), v.angle.r )
+        else
+            bone = ent:LookupBone( bone_override or tab.bone )
+
+            if not bone then return end
+
+            pos, ang = Vector( 0, 0, 0 ), Angle( 0, 0, 0 )
+            local m = ent:GetBoneMatrix( bone )
+            if m then
+                pos, ang = m:GetTranslation(), m:GetAngles()
+            end
+
+            if IsValid( self:GetOwner() ) and self:GetOwner():IsPlayer() and ent == self:GetOwner():GetViewModel() and self.ViewModelFlip then
+                ang.r = -ang.r ---- Fixes mirrored models
+            end
+        end
+
+        return pos, ang
+    end
+
+    function SWEP:CreateModels( tab )
+        if not tab then return end
+
+        -- -- Create the clientside models here because Garry says we can't do it in the render hook
+        for _, v in pairs( tab ) do
+            if (v.type == "Model" and v.model and v.model ~= "" and (not IsValid( v.modelEnt ) or v.createdModel ~= v.model) and
+                    string.find( v.model, ".mdl" ) and file.Exists( v.model, "GAME" )) then
+                v.modelEnt = ClientsideModel( v.model, RENDER_GROUP_VIEW_MODEL_OPAQUE )
+                if (IsValid( v.modelEnt )) then
+                    v.modelEnt:SetPos( self:GetPos() )
+                    v.modelEnt:SetAngles( self:GetAngles() )
+                    v.modelEnt:SetParent( self )
+                    v.modelEnt:SetNoDraw( true )
+                    v.createdModel = v.model
+                else
+                    v.modelEnt = nil
+                end
+            elseif (v.type == "Sprite" and v.sprite and v.sprite ~= "" and (not v.spriteMaterial or v.createdSprite ~= v.sprite)
+                    and file.Exists( "materials/" .. v.sprite .. ".vmt", "GAME" )) then
+                local name = v.sprite .. "-"
+                local params = { ["$basetexture"] = v.sprite }
+                -- -- make sure we create a unique name based on the selected options
+                local tocheck = { "nocull", "additive", "vertexalpha", "vertexcolor", "ignorez" }
+                for i, j in pairs( tocheck ) do
+                    if (v[j]) then
+                        params["$" .. j] = 1
+                        name = name .. "1"
+                    else
+                        name = name .. "0"
+                    end
+                end
+                v.createdSprite = v.sprite
+                v.spriteMaterial = CreateMaterial( name, "UnlitGeneric", params )
+            end
+        end
+    end
+
+    local allbones
+    local hasGarryFixedBoneScalingYet = false
+
+    function SWEP:UpdateBonePositions( vm )
+        if self.ViewModelBoneMods then
+            if (not vm:GetBoneCount()) then return end
+
+            -- -- !! WORKAROUND !! ----
+            -- -- We need to check all model names :/
+            local loopthrough = self.ViewModelBoneMods
+            if (not hasGarryFixedBoneScalingYet) then
+                allbones = {}
+                for i = 0, vm:GetBoneCount() do
+                    local bonename = vm:GetBoneName( i )
+                    if (self.ViewModelBoneMods[bonename]) then
+                        allbones[bonename] = self.ViewModelBoneMods[bonename]
+                    else
+                        allbones[bonename] = {
+                            scale = Vector( 1, 1, 1 ),
+                            pos = Vector( 0, 0, 0 ),
+                            angle = Angle( 0, 0, 0 )
+                        }
+                    end
+                end
+
+                loopthrough = allbones
+            end
+            --!! ----------- !! --
+
+            for k, v in pairs( loopthrough ) do
+                local bone = vm:LookupBone( k )
+                if (not bone) then continue end
+
+                -- -- !! WORKAROUND !! ----
+                local s = Vector( v.scale.x, v.scale.y, v.scale.z )
+                local p = Vector( v.pos.x, v.pos.y, v.pos.z )
+                local ms = Vector( 1, 1, 1 )
+                if (not hasGarryFixedBoneScalingYet) then
+                    local cur = vm:GetBoneParent( bone )
+                    while (cur >= 0) do
+                        local pscale = loopthrough[vm:GetBoneName( cur )].scale
+                        ms = ms * pscale
+                        cur = vm:GetBoneParent( cur )
+                    end
+                end
+
+                s = s * ms
+                --!! ----------- !! --
+
+                if vm:GetManipulateBoneScale( bone ) ~= s then
+                    vm:ManipulateBoneScale( bone, s )
+                end
+                if vm:GetManipulateBoneAngles( bone ) ~= v.angle then
+                    vm:ManipulateBoneAngles( bone, v.angle )
+                end
+                if vm:GetManipulateBonePosition( bone ) ~= p then
+                    vm:ManipulateBonePosition( bone, p )
+                end
+            end
+        else
+            self:ResetBonePositions( vm )
+        end
+    end
+
+    function SWEP:ResetBonePositions( vm )
+        local vmBones = vm:GetBoneCount()
+        if not vmBones then return end
+        for i = 0, vmBones do
+            entity_ManipulateBoneScale( vm, i, oneVector )
+            entity_ManipulateBoneAngles( vm, i, zeroAngle )
+            entity_ManipulateBonePosition( vm, i, zeroVector )
+        end
+    end
+
+    function table.FullCopy( tab )
+        if (not tab) then return nil end
+
+        local res = {}
+        for k, v in pairs( tab ) do
+            if (type( v ) == "table") then
+                res[k] = table.FullCopy( v ) ---- recursion ho!
+            elseif (type( v ) == "Vector") then
+                res[k] = Vector( v.x, v.y, v.z )
+            elseif (type( v ) == "Angle") then
+                res[k] = Angle( v.p, v.y, v.r )
+            else
+                res[k] = v
+            end
+        end
+
+        return res
     end
 end
