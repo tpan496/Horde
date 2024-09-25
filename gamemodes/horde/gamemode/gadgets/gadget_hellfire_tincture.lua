@@ -23,7 +23,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     timer.Remove("Horde_Hellfire_Tincture" .. id)
     timer.Create("Horde_Hellfire_Tincture" .. id, 1, 0, function ()
         if !ply:IsValid() or count <= 1 then timer.Remove("Horde_Hellfire_Tincture" .. id) return end
-        HORDE:TakeDamage(ply, 0.05 * ply:GetMaxHealth(), DMG_DIRECT)
+        HORDE:TakeDamage(ply, 0.05 * ply:GetMaxHealth(), DMG_DIRECT, ply, ply)
         HORDE:ApplyDamageInRadius(ply:GetPos(), 180, HORDE:DamageInfo(ply:GetMaxHealth() * 0.5, DMG_BURN, ply))
         count = count - 1
     end)
