@@ -6,7 +6,7 @@ if CLIENT then
     killicon.Add("arccw_horde_throwing_knife", "arccw/weaponicons/arccw_go_nade_knife", Color(0, 0, 0, 255))
     killicon.Add("arccw_horde_thr_knife", "arccw/weaponicons/arccw_go_nade_knife", Color(0, 0, 0, 255))
 end
-SWEP.Base = "arccw_horde_base_melee"
+SWEP.Base = "arccw_horde_base_nade"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -20,7 +20,7 @@ SWEP.Trivia_Mechanism = "Sharp Edge"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 2004
 
-SWEP.Slot = 4
+SWEP.Slot = 1
 
 SWEP.NotForNPCs = true
 
