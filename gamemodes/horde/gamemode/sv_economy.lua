@@ -778,13 +778,19 @@ net.Receive("Horde_SellItem", function (len, ply)
         if item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
             local drop_entities = ply:Horde_GetDropEntities()
             if drop_entities and drop_entities[class] then
-                ply:Horde_AddMoney(math.floor(0.75 * item.price * drop_entities[class]))
                 -- Remove all the drop entiies of this player
+                local removedCount = 0
                 for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-                    if ent:IsValid() and ent:GetClass() == class then
+                    if not IsValid( ent ) then
+                        HORDE.player_drop_entities[ply:SteamID()][ent] = nil
+                        continue
+                    end
+
+                    if ent:GetClass() == class then
                         ent.Horde_Minion_Respawn = nil
                         timer.Remove("Horde_ManhackRespawn" .. ent:GetCreationID())
                         ent:Remove()
+                        removedCount = removedCount + 1
                         if not ent:IsNPC() then
                             if ply.Horde_drop_entities and ply.Horde_drop_entities[class] then
                                 ply.Horde_drop_entities[class] = ply.Horde_drop_entities[class] - 1
@@ -798,6 +804,13 @@ net.Receive("Horde_SellItem", function (len, ply)
                         end
                     end
                 end
+
+                if removedCount == 0 then
+                    HORDE:SendNotification("You don't have this item!", 1, ply)
+                    return
+                end
+
+                ply:Horde_AddMoney(math.floor(0.75 * item.price * removedCount))
                 ply:Horde_SyncEconomy()
             end
         elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
