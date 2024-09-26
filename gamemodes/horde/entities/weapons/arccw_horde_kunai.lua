@@ -34,6 +34,7 @@ SWEP.Primary.ClipSize = -1
 SWEP.HoldType = "knife"
 SWEP.Primary.Ammo = "GrenadeHL1"
 SWEP.Primary.MaxAmmo = 3
+SWEP.Primary.Automatic = true
 SWEP.NPCWeight = 25
 
 SWEP.Secondary.ClipSize = -1

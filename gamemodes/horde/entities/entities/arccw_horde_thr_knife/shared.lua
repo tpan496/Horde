@@ -26,7 +26,7 @@ function ENT:Initialize()
 
         local phys = self:GetPhysicsObject()
         if phys:IsValid() then
-            phys:SetMass(5)
+            phys:SetMass(1)
             phys:SetBuoyancyRatio(0)
             phys:Wake()
             phys:EnableGravity(false)
@@ -49,25 +49,32 @@ function ENT:PhysicsCollide(data, physobj)
             self:Remove()
         else
             self:EmitSound( "arccw_go/knife/knife_hit1.wav" )
-
-            self:FireBullets({
-                Attacker = self:GetOwner(),
-                Damage = 100,
-                Tracer = 0,
-                Distance = 4000,
-                Dir = data.HitPos - self:GetPos(),
-                Src = self:GetPos(),
-                Callback = function(att, tr, dmg)
-                    dmg:SetDamageType(DMG_SLASH)
-                    dmg:SetAttacker(self:GetOwner())
-                    dmg:SetInflictor(self)
-
-                if (not tr.Entity:IsValid()) or (not tr.Entity:IsNPC()) and data.HitEntity:IsNPC() then
-                    data.HitEntity:TakeDamageInfo(dmg)
+            local owner = self:GetOwner()
+            local hitEnt = data.HitEntity
+            if IsValid(owner) then
+                local dmg = DamageInfo()
+                dmg:SetDamageType(DMG_SLASH)
+                dmg:SetAttacker(owner)
+                dmg:SetInflictor(self)
+                dmg:SetDamage(100)
+                dmg:SetDamagePosition(self:GetPos())
+                self:FireBullets({
+                    Attacker = owner,
+                    Inflictor = self,
+                    Damage = 100,
+                    Tracer = 0,
+                    Distance = 1000,
+                    Dir = data.HitPos - self:GetPos(),
+                    Src = self:GetPos(),
+                    Callback = function(att, tr, dmginfo)
+                        dmginfo:SetDamageType(DMG_SLASH)
+                        if ( not tr.Entity:IsValid()) or (not tr.Entity:IsNPC()) then
+                            hitEnt:TakeDamageInfo(dmg)
+                        end
                     end
-                end
-            })
-            self:Remove()
+                    })
+                self:Remove()
+            end
         end
     end
 end
