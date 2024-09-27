@@ -35,8 +35,12 @@ function PANEL:Init()
 	self.m_AvatarPanel:SetSize(32, 32 )
 	self.m_AvatarPanel:Center()
 	self.m_AvatarPanel:SetPaintBackground(false)
+	
+	self.m_AvatarButton = self:Add( "DButton", self.m_AvatarPanel )
+	self.m_AvatarButton:SetSize( 32, 32 )
+	self.m_AvatarButton:Center()
 
-    self.m_Avatar = vgui.Create("AvatarImage", self.m_AvatarPanel)
+    self.m_Avatar = vgui.Create("AvatarImage", self.m_AvatarButton)
 	self.m_Avatar:SetSize(32, 32)
 	self.m_Avatar:SetVisible(false)
 	self.m_Avatar:SetMouseInputEnabled(false)
@@ -73,6 +77,9 @@ function PANEL:PerformLayout()
 
     self.m_AvatarPanel:AlignLeft(w * 0.015)
 	self.m_AvatarPanel:CenterVertical()
+	
+	self.m_AvatarButton:AlignLeft(w * 0.015)
+	self.m_AvatarButton:CenterVertical()
 
 	self.m_PlayerLabel:SizeToContents()
 	self.m_PlayerLabel:AlignLeft(w * 0.05)
@@ -285,7 +292,8 @@ function PANEL:SetPlayer(pl)
 
 	self.m_Avatar:SetPlayer(pl)
 	self.m_Avatar:SetVisible(true)
-
+	
+	self.m_AvatarButton.DoClick = function() pl:ShowProfile() end
 
 	self.m_PingMeter:SetPlayer(pl)
 
