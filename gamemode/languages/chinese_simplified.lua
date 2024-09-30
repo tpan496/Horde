@@ -3591,4 +3591,3 @@ LANGUAGE["info_You_cant_sell_as_Necromancer"] = [[You can't sell Void Projector 
 LANGUAGE["info_You_cant_sell_as_Artificer"] = [[You can't sell Solar Seal as Artificer subclass!]]
 LANGUAGE["info_You_cant_sell_as_Warlock"] = [[You can't sell Astral Relic as Warlock subclass!]]
 LANGUAGE["info_You_cant_sell_as_Hatcher"] = [[You can't sell pheropod as Hatcher subclass!]]
-
