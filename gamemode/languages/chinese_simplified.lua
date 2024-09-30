@@ -1,3 +1,4 @@
+
 --[[
 HORDE Translation Guideline
 1. Use English as base.
