@@ -3071,8 +3071,6 @@ LANGUAGE["Spell_Supernova"] = [[超新星]]
 LANGUAGE["Spell_Desc_Supernova"] = [[产生一颗超新星,
 释放出极高的热量和辐射]]
 
-
-
 -- Extended translate
 -- F2
 LANGUAGE["info_leaderboard"] = [[  Leaderboard:]]
