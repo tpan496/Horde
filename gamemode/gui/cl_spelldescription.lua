@@ -161,7 +161,7 @@ function PANEL:Paint()
         self.sell_btn:SetWide(self:GetWide())
 
         if MySelf:Horde_HasSpell(self.item.ClassName) then
-            self.buy_btn:SetText("OWNED")
+            self.buy_btn:SetText(translate.Get("shop_Owned_1"))
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(Color(40,40,40))
                 surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -176,7 +176,7 @@ function PANEL:Paint()
             end
         elseif not self.level_satisfy then
             self.buy_btn:SetTextColor(Color(200,200,200))
-            self.buy_btn:SetText("Rank Requirement(s) Not Met")
+            self.buy_btn:SetText(translate.Get("shop_Rank_not_met"))
             
             self.buy_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson_dark)
@@ -217,7 +217,7 @@ function PANEL:Paint()
         elseif MySelf:Horde_GetMoney() < self.item.price or (not MySelf:Alive()) then
             self.buy_btn:SetTextColor(Color(200,200,200))
             if not MySelf:Alive() then
-                self.buy_btn:SetText("You are dead.")
+                self.buy_btn:SetText(translate.Get("Shop_You_Are_Dead"))
             else
                 self.buy_btn:SetText(translate.Get("Shop_Not_Enough_Money_Or_Carrying_Capacity"))
             end

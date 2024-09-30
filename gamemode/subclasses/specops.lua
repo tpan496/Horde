@@ -2,9 +2,7 @@ SUBCLASS.PrintName = "SpecOps" -- Required
 SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Assault -- Required for any new classes
 SUBCLASS.Icon = "subclasses/specops.png" -- Required
-SUBCLASS.Description = [[
-Assault subclass.
-Plays around a unique mode switch mechanic.]] -- Required
+SUBCLASS.Description = translate.Get("info_SpecOps_extra_desc") -- Required
 SUBCLASS.BasePerk = "specops_base"
 SUBCLASS.Perks = {
     [1] = {title = "Utility", choices = {"specops_smokescreen", "specops_flare"}},

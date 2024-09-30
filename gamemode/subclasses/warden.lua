@@ -1,5 +1,4 @@
 SUBCLASS.PrintName = "Warden"
-SUBCLASS.Description = [[
-Warden main class.]]
+SUBCLASS.Description = translate.Get("info_Warden_extra_desc")
 SUBCLASS.Perks = {}
 SUBCLASS.Icon = "Warden.png"

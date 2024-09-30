@@ -40,7 +40,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 end
 SPELL.Price                      = 1500
 SPELL.Upgrades                   = 3
-SPELL.Upgrade_Description        = "Increases damage and number of bounces."
+SPELL.Upgrade_Description        = translate.Get("shop_Spell_Upgrade_desc_pulsar")
 SPELL.Upgrade_Prices             = function (upgrade_level)
     return 800 + 100 * upgrade_level
 end

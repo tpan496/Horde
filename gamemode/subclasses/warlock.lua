@@ -2,9 +2,7 @@ SUBCLASS.PrintName = "Warlock" -- Required
 SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Demolition -- Required for any new classes
 SUBCLASS.Icon = "subclasses/warlock.png" -- Required
-SUBCLASS.Description = [[
-Demolition subclass.
-A slow caster that uses destructive spells.]] -- Required
+SUBCLASS.Description = translate.Get("info_Warlock_extra_desc") -- Required
 SUBCLASS.BasePerk = "warlock_base"
 SUBCLASS.Perks = {
     [1] = {title = "Transfigure", choices = {"warlock_meditate", "warlock_quickcast"}},
