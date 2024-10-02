@@ -220,14 +220,13 @@ LANGUAGE["Infusion_Description_Ruination"] = [[
 ]]
 
 -- Notifications
-LANGUAGE["Notifications_Debuff_Bleeding"] = [[У вас началось кровотечение. Со временем ваше здоровье пропадает.]]
+LANGUAGE["Notifications_Debuff_Bleeding"] = [[У вас началось кровотечение. Ваше здоровье периодически снижается.]]
 LANGUAGE["Notifications_Debuff_Ignite"] = [[Вы начали гореть. Со временем вы получаете урон от огня.]]
 LANGUAGE["Notifications_Debuff_Frostbite"] = [[Вы получили обморожение. Ваша скорость передвижения снижена.]]
 LANGUAGE["Notifications_Debuff_Shock"] = [[Вы получили шок. Вы получаете увеличенный урон от всех источников.]]
 LANGUAGE["Notifications_Debuff_Break"] = [[Вы получили разрыв. Ваше здоровье значительно снижено и будет медленно восстанавливаться.]]
 LANGUAGE["Notifications_Debuff_Decay"] = [[Вы получили разложение. Вы не можете исцелиться.]]
 LANGUAGE["Notifications_Debuff_Necrosis"] = [[Вы умираете от Некроза.]]
-
 
 -- Ranks
 LANGUAGE["Rank_Novice"] = "Новичок"
