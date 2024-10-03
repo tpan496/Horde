@@ -190,9 +190,9 @@ end
 function HORDE:GetDefaultEnemiesData ()
     -- name, class, weight, wave, elite, health_scale, damage_scale, reward_scale, model_scale, color
 
-    if GetConVar( "horde_difficulty" ):GetInt() == 7 then -- Chaos difficulty
+    if GetConVar( "horde_difficulty" ):GetInt() == 8 then -- Chaos difficulty
         -- The enemies created here are set to spawn 1 or 2 waves sooner than they normally would and aren't already set to spawn with the earlier wave
-        
+
         HORDE:CreateEnemy("Crawler",    "npc_vj_horde_crawler",                 0.40,  1, false, 1, 1, 1, 1)
         HORDE:CreateEnemy("Fast Zombie",      "npc_fastzombie",                 0.20,  1, false, 0.75, 1, 1, 1)
         HORDE:CreateEnemy("Poison Zombie",  "npc_poisonzombie",                 0.20,  1, false, 1, 1, 1.1, 1)
@@ -213,16 +213,11 @@ function HORDE:GetDefaultEnemiesData ()
 
         HORDE:CreateEnemy("Zombine", "npc_vj_horde_zombine",                    0.10,  4, false, 1, 1, 1.1, 1, nil,nil,nil,nil,nil,nil,nil,1)
         HORDE:CreateEnemy("Charred Zombine", "npc_vj_horde_charred_zombine",    0.05,  4, false, 1, 1, 1.1, 1, nil,nil,nil,nil,nil,nil,nil,1)
-        HORDE:CreateEnemy("Hulk",   "npc_vj_horde_hulk",                        0.05,  4, true, 1, 1, 2, 1, nil,nil,nil,nil,nil,nil,nil,1)
+        HORDE:CreateEnemy("Hulk",   "npc_vj_horde_hulk",                        0.05,  4, true, 0.75, 1, 2, 1, nil,nil,nil,nil,nil,nil,nil,1)
         HORDE:CreateEnemy("Lesser Hunter", "npc_vj_ezo_archunter",              0.05,  4, true, 1, 1, 1.25, 1)
         HORDE:CreateEnemy("Scorcher", "npc_vj_horde_scorcher",                  0.05,  4, true, 1, 1, 1.5, 1)
 
         HORDE:CreateEnemy("Charred Zombine", "npc_vj_horde_charred_zombine",    0.05,  5, false, 1, 1, 1.1, 1, nil,nil,nil,nil,nil,nil,nil,1)
-        HORDE:CreateEnemy("Hulk",   "npc_vj_horde_hulk",                        0.05,  5, true, 1, 1, 2, 1, nil,nil,nil,nil,nil,nil,nil,1)
-        HORDE:CreateEnemy("Plague Soldier", "npc_vj_horde_plague_soldier",      0.05,  5, false, 1, 1, 1.25, 1, nil,nil,nil,nil,nil,nil,nil,1)
-        HORDE:CreateEnemy("Blight", "npc_vj_horde_blight",                      0.05,  5, true, 1, 1, 1.5, 1)
-        HORDE:CreateEnemy("Lesion", "npc_vj_horde_lesion",                      0.03,  5, true, 1, 1, 2, 1, nil,nil,nil,nil,nil,nil,nil,1)
-        HORDE:CreateEnemy("Hell Hunter", "npc_vj_ezo_vorthunter",               0.05,  5, true, 1, 1, 1.5, 1)
         HORDE:CreateEnemy("Scorcher", "npc_vj_horde_scorcher",                  0.05,  5, true, 1, 1, 1.5, 1)
 
         HORDE:CreateEnemy("Lesion", "npc_vj_horde_lesion",                      0.03,  6, true, 1, 1, 2, 1, nil,nil,nil,nil,nil,nil,nil,1)
