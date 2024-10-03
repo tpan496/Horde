@@ -282,14 +282,15 @@ Complexity: EASY
 No bonus.]]
 
 LANGUAGE["Perk_assault_base"] = [[
-The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
-Complexity: EASY
-
-{1} more movement speed. ({2} per level, up to {3}).
-{5} increased Ballistic damage. ({6} per level, up to {7}).
-
-Gain Adrenaline when you kill an enemy.
-Adrenaline increases damage and speed by {4}.]]
+  The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
+  Complexity: EASY
+  
+  {1} more movement speed. ({2} per level, up to {3}).
+  {5} increased Ballistic damage. ({6} per level, up to {7}).
+  
+  Gain Adrenaline and Endorphins when you kill an enemy.
+  Adrenaline increases damage and speed by {4} per stack.
+  Endorphins raise Evasion by {8} per stack. ]]
 
 LANGUAGE["Perk_heavy_base"] = [[
 The Heavy class is a tank class that provides strong suppression firepower.
@@ -373,46 +374,51 @@ LANGUAGE["Perk_Title_Survivor_Tier_4"] = [[Inspired Learning]]
 LANGUAGE["Perk_Title_Assault_Tier_1"] = [[Maneuverability]]
 LANGUAGE["Perk_Title_assault_ambush"] = [[Ambush]]
 LANGUAGE["Perk_assault_ambush"] = [[
-{1} increased headshot damage.]]
+  {1} increased headshot damage.
+  {2} increased damage to everywhere but the head.]]
 
 LANGUAGE["Perk_Title_assault_charge"] = [[Charge]]
 LANGUAGE["Perk_assault_charge"] = [[
-Adds {1} maximum Adrenaline stacks.
-(Each Adrenaline stack increases damage and speed by {2}.)]]
+  When below max health, 
+  increase movespeed proportional to how low your health is,
+  up to {3}x movespeed when at 1 hp.]]
 
 LANGUAGE["Perk_Title_Assault_Tier_2"] = [[Adaptability]]
 LANGUAGE["Perk_Title_assault_drain"] = [[Drain]]
 LANGUAGE["Perk_assault_drain"] = [[
-{1} increased headshot damage when on full health.
-Recover {2} health for each enemy you killed.]]
+  {1} increase to headshot damage proportional to how full your health is.
+  Recover {2} health for each enemy you killed.
+  when above max health, increases headshot damage by {3}.]]
 
 LANGUAGE["Perk_Title_assault_overclock"] = [[Overclock]]
 LANGUAGE["Perk_assault_overclock"] = [[
-Adds {1} maximum Adrenaline stacks.]]
+  Recover {1} armor per adrenaline stack for each enemy you killed]]
 
 LANGUAGE["Perk_Title_Assault_Tier_3"] = [[Aggression]]
 
 LANGUAGE["Perk_Title_assault_cardiac_resonance"] = [[Cardiac Resonance]]
 LANGUAGE["Perk_assault_cardiac_resonance"] = [[
-Every time you kill an enemy,
-Players near you also gain {1} Adrenaline, up to {2}.
-Adds {3} maximum Adrenaline stacks.]]
+  Every time you kill an enemy,
+  Players near you gain {1} Adrenaline and {4} Barrier, up to {2} Adrenaline.
+  Kills add {3} Barrier for each Adrenaline Stack you have.
+  ]]
 
 LANGUAGE["Perk_Title_assault_cardiac_overload"] = [[Cardiac Overload]]
 LANGUAGE["Perk_assault_cardiac_overload"] = [[
-Adrenaline duration increased by {1}.
-Adds {2} maximum Adrenaline stacks.]]
+  Adrenaline duration increased by {1}.
+  Adds {2} maximum Endorphins]]
 
 LANGUAGE["Perk_Title_Assault_Tier_4"] = [[Conditioning]]
 LANGUAGE["Perk_Title_assault_heightened_reflex"] = [[Heightened Reflex]]
 LANGUAGE["Perk_assault_heightened_reflex"] = [[
 {1} increased headshot damage.
-{2} increased global damage resistance on maximum Adrenaline.]]
+{2} Chance to add 2 Endorphin stacks upon taking damage]]
 
 LANGUAGE["Perk_Title_assault_merciless_assault"] = [[Merciless Assault]]
 LANGUAGE["Perk_assault_merciless_assault"] = [[
 {1} chance to add 1 Adrenaline stack on headshot.
-Adds {2} maximum Adrenaline stacks.]]
+Every time you kill an enemy, Players near you also gain {3} Endorphin,
+up to {4} Endorphins.]]
 
 -- Default Perks: Heavy
 LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Suppression]]
@@ -1461,11 +1467,12 @@ LANGUAGE["Gadget_gadget_cortex"] = [[Cortex Stimulator]]
 LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
 For each enemy near you, gain 1 Adrenaline stack.
 Elite enemies grant 2 stacks.
++2 maximum Adrenaline stacks.
 ]]
 
 LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[Neuro Amplifier]]
 LANGUAGE["Gadget_Desc_neuro_amplifier"] = [[
-Adrenaline also increases 6% evasion.
+8% less damage taken per Adrenaline stack.
 ]]
 
 LANGUAGE["Gadget_ouroboros"] = [[Ouroboros]]
@@ -1475,7 +1482,7 @@ Removes body regulations to increase combat capabilities.
 
 When you have more than 50% health, you lose 1 health per second.
 When you have less than 50% health, you gain 2 health per second.
-For each 1% health missing, increase your damage by 0.8%.
+The less health you have the more damage you'll deal
 ]]
 
 -- Heavy Gadgets
@@ -1634,7 +1641,8 @@ Recharges after 5 seconds.
 -- Warden Gadgets
 LANGUAGE["Gadget_gadget_solar_array"] = [[Solar Array]]
 LANGUAGE["Gadget_Desc_gadget_solar_array"] = [[
-Drops an armor battery.
+Triggers a pulse that gives armor to nearby players.
+Repairs 20 armor.
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[Projectile Launcher (Shock)]]
