@@ -219,6 +219,15 @@ LANGUAGE["Infusion_Description_Ruination"] = [[
 Вы получаете 10 ед. накопления некроза в секунду, удерживая это оружие.
 ]]
 
+-- Notifications
+LANGUAGE["Notifications_Debuff_Bleeding"] = [[У вас началось кровотечение. Ваше здоровье периодически снижается.]]
+LANGUAGE["Notifications_Debuff_Ignite"] = [[Вы начали гореть. Со временем вы получаете урон от огня.]]
+LANGUAGE["Notifications_Debuff_Frostbite"] = [[Вы получили обморожение. Ваша скорость передвижения снижена.]]
+LANGUAGE["Notifications_Debuff_Shock"] = [[Вы получили шок. Вы получаете увеличенный урон от всех источников.]]
+LANGUAGE["Notifications_Debuff_Break"] = [[Вы получили разрыв. Ваше здоровье значительно снижено и будет медленно восстанавливаться.]]
+LANGUAGE["Notifications_Debuff_Decay"] = [[Вы получили разложение. Вы не можете исцелиться.]]
+LANGUAGE["Notifications_Debuff_Necrosis"] = [[Вы умираете от Некроза.]]
+
 -- Ranks
 LANGUAGE["Rank_Novice"] = "Новичок"
 LANGUAGE["Rank_Amateur"] = "Любитель"
@@ -2500,90 +2509,124 @@ LANGUAGE["Item_Desc_Battle Vest"] = [[
 -- Spells
 -- LMB
 LANGUAGE["Spell_Solar Orb"] = [[Солнечный шар]]
-LANGUAGE["Spell_Desc_Solar Orb"] = [[]]
+LANGUAGE["Spell_solar_orb"] = [[Солнечный шар]]
+LANGUAGE["Spell_Desc_solar_orb"] = [[Колдует огненные шары, используя солнечную энергию. Заряжайте для различных эффектов.]]
 
 LANGUAGE["Spell_Dark Orb"] = [[Тёмный шар]]
-LANGUAGE["Spell_Desc_Dark Orb"] = [[]]
+LANGUAGE["Spell_dark_orb"] = [[Тёмный шар]]
+LANGUAGE["Spell_Desc_dark_orb"] = [[Колдует тёмные огненные шары, используя солнечную энергию. Тёмное пламя со временем наносит дополнительный Физический урон, но медленнее летит. Заряжайте для различных эффектов.]]
 
 LANGUAGE["Spell_Void Sphere"] = [[Сфера пустоты]]
-LANGUAGE["Spell_Desc_Void Sphere"] = [[]]
+LANGUAGE["Spell_void_sphere"] = [[Сфера пустоты]]
+LANGUAGE["Spell_Desc_void_sphere"] = [[Проецирует энергию пустоты, наносящая урон от холода. Заряжайте для различных эффектов.]]
 
 LANGUAGE["Spell_Ice Arrow"] = [[Ледяная стрела]]
-LANGUAGE["Spell_Desc_Ice Arrow"] = [[]]
+LANGUAGE["Spell_ice_arrow"] = [[Ледяная стрела]]
+LANGUAGE["Spell_Desc_ice_arrow"] = [[Колдует ледяные стрелы, которые могут быть быстро выпущены. Заряжайте для различных эффектов.]]
 
 LANGUAGE["Spell_Meteor"] = [[Метеорит]]
-LANGUAGE["Spell_Desc_Meteor"] = [[]]
+LANGUAGE["Spell_meteor"] = [[Метеорит]]
+LANGUAGE["Spell_Desc_meteor"] = [[Швыряет метеорит в цель. Заряженный метеорит наносит дополнительный урон от взрыва.]]
 
 LANGUAGE["Spell_Neutron Beam"] = [[Нейтронный луч]]
-LANGUAGE["Spell_Desc_Neutron Beam"] = [[]]
+LANGUAGE["Spell_neutron_beam"] = [[Нейтронный луч]]
+LANGUAGE["Spell_Desc_neutron_beam"] = [[Стреляет нейтронным лучом в цель. Луч пробивает цели насквозь.]]
 
 -- RMB
 LANGUAGE["Spell_Solar Bolt"] = [[Солнечная молния]]
-LANGUAGE["Spell_Desc_Solar Bolt"] = [[]]
+LANGUAGE["Spell_solar_bolt"] = [[Солнечная молния]]
+LANGUAGE["Spell_Desc_solar_bolt"] = [[Хирургически ударяет молнией по цели. Заряжайте, чтобы увеличить урон и расстояние.]]
 
 LANGUAGE["Spell_Solar Storm"] = [[Солнечная буря]]
-LANGUAGE["Spell_Desc_Solar Storm"] = [[]]
+LANGUAGE["Spell_solar_storm"] = [[Солнечная буря]]
+LANGUAGE["Spell_Desc_solar_storm"] = [[Проецирует рассеяную молнию на цель. Заряжайте для различных эффектов.]]
 
 LANGUAGE["Spell_Raise Spectre"] = [[Призыв призрака]]
-LANGUAGE["Spell_Desc_Raise Spectre"] = [[]]
+LANGUAGE["Spell_raise_spectre"] = [[Призыв призрака]]
+LANGUAGE["Spell_Desc_raise_spectre"] = [[Призывает призрака, созданного из темной материи.
+Заряжайте, чтобы перепризвать призраков.
+Максимальное число призраков может увеличиваться за счет перков.]]
 
 LANGUAGE["Spell_Raise Greater Spectre"] = [[Призыв большого призрака]]
-LANGUAGE["Spell_Desc_Raise Greater Spectre"] = [[]]
+LANGUAGE["Spell_raise_greater_spectre"] = [[Призыв большого призрака]]
+LANGUAGE["Spell_Desc_raise_greater_spectre"] = [[Призывает большого призрака, созданного из темной материи. У большого призрака больше здоровья и урон, но он не может прыгать и медленнее атакует.
+Заряжайте, чтобы перепризвать призраков.
+Максимальное число призраков может увеличиваться за счет перков.]]
 
 LANGUAGE["Spell_Sigil of Arcana"] = [[Символ Арканы]]
-LANGUAGE["Spell_Desc_Sigil of Arcana"] = [[]]
+LANGUAGE["Spell_sigil_of_arcana"] = [[Символ Арканы]]
+LANGUAGE["Spell_Desc_sigil_of_arcana"] = [[Вызывает символ, которое улучшает урон заклинаний. Находясь в области, ваш урон заклинаний увеличивается на 15%.]]
 
 LANGUAGE["Spell_Sigil of Alacrity"] = [[Символ живости]]
-LANGUAGE["Spell_Desc_Sigil of Alacrity"] = [[]]
+LANGUAGE["Spell_sigil_of_alacrity"] = [[Символ живости]]
+LANGUAGE["Spell_Desc_sigil_of_alacrity"] = [[Вызывает символ, которое улучшает скорость зарядки. Находясь в области, ваша скорость зарядки увеличивается на 15%.]]
 
 -- F
 LANGUAGE["Spell_Illuminate"] = [[Освещение]]
-LANGUAGE["Spell_Desc_Illuminate"] = [[]]
+LANGUAGE["Spell_illuminate"] = [[Освещение]]
+LANGUAGE["Spell_Desc_illuminate"] = [[Освещает площадь вокруг вас.]]
 
 LANGUAGE["Spell_Enlighten"] = [[Просвещение]]
-LANGUAGE["Spell_Desc_Enlighten"] = [[]]
+LANGUAGE["Spell_enlighten"] = [[Просвещение]]
+LANGUAGE["Spell_Desc_enlighten"] = [[На 15% увеличивает урон вашего следующего заклинания.]]
 
 LANGUAGE["Spell_Static Guard"] = [[Статическая защита]]
-LANGUAGE["Spell_Desc_Static Guard"] = [[]]
+LANGUAGE["Spell_static_guard"] = [[Статическая защита]]
+LANGUAGE["Spell_Desc_static_guard"] = [[Парирует атаки, благодаря созданию статических полей. При парировании, снижает получаемый урон на 90% и возвращает сильный урон молнией. Срабатывает только, если получено не менее 10 урона. 
+Зарядка заклинания увеличивает время неуязвимости для парирования.]]
 
 LANGUAGE["Spell_Mind Barrier"] = [[Барьер разума]]
-LANGUAGE["Spell_Desc_Mind Barrier"] = [[]]
+LANGUAGE["Spell_mind_barrier"] = [[Барьер разума]]
+LANGUAGE["Spell_Desc_mind_barrier"] = [[Выдает игроку 20 единиц барьера.]]
 
 LANGUAGE["Spell_Warmth"] = [[Тепло]]
-LANGUAGE["Spell_Desc_Warmth"] = [[]]
+LANGUAGE["Spell_warmth"] = [[Тепло]]
+LANGUAGE["Spell_Desc_warmth"] = [[Исцеляет игроков поблизости и обеспечивает слабый свет.]]
 
 LANGUAGE["Spell_Demonic Conversion"] = [[Демоническое превращение]]
-LANGUAGE["Spell_Desc_Demonic Conversion"] = [[]]
+LANGUAGE["Spell_demonic_conversion"] = [[Демоническое превращение]]
+LANGUAGE["Spell_Desc_demonic_conversion"] = [[Мгновенно убивает цель и обращает в призрака. Работает только на неэлитных врагов. 
+Если у вас стоит Призыв большого призрака, появится большой призрак.]]
 
 LANGUAGE["Spell_Ice Coffin"] = [[Ледяной гроб]]
-LANGUAGE["Spell_Desc_Ice Coffin"] = [[]]
+LANGUAGE["Spell_ice_coffin"] = [[Ледяной гроб]]
+LANGUAGE["Spell_Desc_ice_coffin"] = [[Окутывает в лёд пользователя, обеспечивающий иммунитет к урону и регенирацию здоровья. Однако пользователь обездвижен.]]
 
 LANGUAGE["Spell_Void Maw"] = [[Утроба пустоты]]
-LANGUAGE["Spell_Desc_Ice Coffin"] = [[]]
+LANGUAGE["Spell_void_maw"] = [[Утроба пустоты]]
+LANGUAGE["Spell_Desc_void_maw"] = [[Наносит урон холодом по площади. Высасывает здоровье у врагов при каждом ударе противника.]]
 
 LANGUAGE["Spell_Refresher"] = [[Переподготовка]]
-LANGUAGE["Spell_Desc_Refresher"] = [[]]
+LANGUAGE["Spell_refresher"] = [[Переподготовка]]
+LANGUAGE["Spell_Desc_refresher"] = [[Сбрасывает перезарядку заклинаний.]]
 -- R
 LANGUAGE["Spell_Floating Chaos"] = [[Парящий хаос]]
-LANGUAGE["Spell_Desc_Floating Chaos"] = [[]]
+LANGUAGE["Spell_floating_chaos"] = [[Парящий хаос]]
+LANGUAGE["Spell_Desc_floating_chaos"] = [[Колдует рядом с вами энергетический портал, который отражает ваши заклинания. Может существовать только 1 парящий хаос.]]
 
 LANGUAGE["Spell_Hallowed Bolt"] = [[Освященная молния]]
-LANGUAGE["Spell_Desc_Hallowed Bolt"] = [[]]
+LANGUAGE["Spell_hallowed_bolt"] = [[Освященная молния]]
+LANGUAGE["Spell_Desc_hallowed_bolt"] = [[Ударяет цель или площадь концентрационной молнией. Наносит сильный урон от молнии по площади.]]
 
 LANGUAGE["Spell_Raise Hulk Spectre"] = [[Призыв призрака халка]]
-LANGUAGE["Spell_Desc_Raise Hulk Spectre"] = [[]]
+LANGUAGE["Spell_raise_hulk_spectre"] = [[Призыв призрака халка]]
+LANGUAGE["Spell_Desc_raise_hulk_spectre"] = [[Призывает халка призрака, созданного из темной материи. Вы можете призвать максимум 1 халка призрака.]]
 
 LANGUAGE["Spell_Void Cascade"] = [[Каскад пустоты]]
-LANGUAGE["Spell_Desc_Void Cascade"] = [[]]
+LANGUAGE["Spell_void_cascade"] = [[Каскад пустоты]]
+LANGUAGE["Spell_Desc_void_cascade"] = [[Колдует снаряд, который периодично наносит сильный урон от холода врагам поблизости.]]
 
 LANGUAGE["Spell_Black Hole"] = [[Чёрная дыра]]
-LANGUAGE["Spell_Desc_Black Hole"] = [[]]
+LANGUAGE["Spell_black_hole"] = [[Чёрная дыра]]
+LANGUAGE["Spell_Desc_black_hole"] = [[Вызывает чёрную дыру, которая притягивает и наносит урон врагам.]]
 
 LANGUAGE["Spell_Pulsar"] = [[Пульсар]]
-LANGUAGE["Spell_Desc_Pulsar"] = [[]]
+LANGUAGE["Spell_pulsar"] = [[Пульсар]]
+LANGUAGE["Spell_Desc_pulsar"] = [[Запускает пульсар, который отскакивает между врагами.]]
 
 LANGUAGE["Spell_Supernova"] = [[Сверхновая]]
-LANGUAGE["Spell_Desc_Supernova"] = [[]]
+LANGUAGE["Spell_supernova"] = [[Сверхновая]]
+LANGUAGE["Spell_Desc_supernova"] = [[Вызывает сверхновую, которая испускает экстримальную жару и радиацию.]]
 
 -- Gadgets
 LANGUAGE["Gadget_gadget_arctic_plating"] = [[Арктическое покрытие]]
@@ -2997,7 +3040,7 @@ LANGUAGE["Gadget_Desc_gadget_unstable_injection"] = [[
 - Восстанавливает 20% здоровья.
 - Даёт 1 стак Адреналина/Гипертрофии.
 - Даёт Укрепление/Берсерк/Спешку.
-- Увеличивает накопление статуса распада на 30.
+- Увеличивает накопление статуса разложения на 30.
 ]]
 
 LANGUAGE["Gadget_gadget_hellfire_tincture"] = [[Настойка адского огня]]
