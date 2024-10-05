@@ -14,10 +14,10 @@ GADGET.Cooldown = 10
 GADGET.Active = true
 GADGET.Params = {
     [1] = {value = 100},
-	[2] = {value = 0.25},
-	[3] = {value = 0.25},
-	[4] = {value = 0.9, percent = true},
-	[5] = {value = 0.05, percent = true},
+    [2] = {value = 0.25},
+    [3] = {value = 0.25},
+    [4] = {value = 0.9, percent = true},
+    [5] = {value = 0.05, percent = true},
 }
 GADGET.Hooks = {}
 
@@ -29,7 +29,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     local vel = dir * 8000
     ply.Horde_In_Flash = true
     ply.Horde_Invincible = true
-	ply.Flash_Fall_Damage_Prevention = true
+    ply.Flash_Fall_Damage_Prevention = true
     ply:Horde_AddPhasing(0.25, function ()
         ply.Horde_In_Flash = nil
         ply.Horde_Invincible = nil
@@ -41,9 +41,9 @@ end
 
 GADGET.Hooks.Horde_OnPhasingCollide = function (ply, npc)
     if ply.Horde_In_Flash and not npc.Horde_Taken_Flash_DMG then
-		local dmg = DamageInfo()
-		dmg:SetDamage(100)
-		dmg:SetDamageType(DMG_SLASH)
+        local dmg = DamageInfo()
+        dmg:SetDamage(100)
+        dmg:SetDamageType(DMG_SLASH)
         dmg:SetInflictor(ply)
         dmg:SetAttacker(ply)
         dmg:SetDamagePosition(npc:GetPos())
@@ -65,9 +65,9 @@ end
 
 GADGET.Hooks.Horde_GetFallDamage = function(ply, speed, bonus)
     if ply:Horde_GetGadget() ~= "gadget_flash" then return end
-	if not ply.Flash_Fall_Damage_Prevention then return end
-	bonus.less = bonus.less * 0.1
-	ply.Flash_Fall_Damage_Prevention = nil
+    if not ply.Flash_Fall_Damage_Prevention then return end
+    bonus.less = bonus.less * 0.1
+    ply.Flash_Fall_Damage_Prevention = nil
 end
 
 GADGET.Hooks.PlayerTick = function (ply, mv)
