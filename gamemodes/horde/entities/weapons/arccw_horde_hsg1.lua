@@ -10,7 +10,7 @@ SWEP.Category = "ArcCW - Horde (Custom)" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "HSG-1"
-SWEP.TrueName = "KSG"
+SWEP.TrueName = "HSG-1"
 SWEP.Trivia_Class = "Shotgun"
 SWEP.Trivia_Desc = "A rather powerful pump-action shotgun that reloads with magazines."
 SWEP.Trivia_Manufacturer = "Kel-tec"
@@ -31,16 +31,17 @@ SWEP.ViewModel = "models/horde/weapons/c_kf_ksg.mdl"
 SWEP.WorldModel = "models/weapons/arccw/w_tf2convent.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos        =    Vector(-15, 5, -8),
-    ang        =    Angle(-6, -2.5, 180),
+    pos        =    Vector(-12.6, 5.8, -12.3),
+    ang        =    Angle(4, 0, 180),
     bone    =    "ValveBiped.Bip01_R_Hand",
+    scale = 0.9
 }
-SWEP.ViewModelFOV = 45
+SWEP.ViewModelFOV = 56
 
 SWEP.Damage = 42
 SWEP.DamageMin = 27
 SWEP.Range = 50 -- in METRES
-SWEP.RangeMin = 25 
+SWEP.RangeMin = 25
 SWEP.Penetration = 2
 SWEP.DamageType = DMG_BUCKSHOT
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -64,11 +65,11 @@ SWEP.VisualRecoilMult = 3
 SWEP.RecoilRise = 3
 SWEP.RecoilPunch = 0
 
-SWEP.Delay = 60 / 60 -- 60 / RPM.
+SWEP.Delay = 60 / 80 -- 60 / RPM.
 SWEP.Num = 12 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
-		PrintName = "PUMP",
+        PrintName = "PUMP",
         Mode = 1,
     },
     {
@@ -118,7 +119,7 @@ SWEP.IronSightStruct = {
     Magnification = 1.3,
 }
 
-SWEP.HoldtypeHolstered = "normal"
+SWEP.HoldtypeHolstered = "passive"
 SWEP.HoldtypeActive = "shotgun"
 SWEP.HoldtypeSights = "ar2"
 
@@ -127,8 +128,8 @@ SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN
 SWEP.ActivePos = Vector(-1, -2, 1.5)
 SWEP.ActiveAng = Angle(0, 0, 0)
 
-SWEP.HolsterPos = Vector(-2, -7.145, -11.561)
-SWEP.HolsterAng = Angle(36.533, 0, 0)
+SWEP.HolsterPos = Vector(9, -8, 1.2)
+SWEP.HolsterAng = Angle(-14, 50, 0)
 
 SWEP.BarrelOffsetSighted = Vector(0, 0, -1)
 SWEP.BarrelOffsetHip = Vector(2, 0, -2)
@@ -137,7 +138,6 @@ SWEP.CustomizePos = Vector(12, -8, -4.897)
 SWEP.CustomizeAng = Angle(12.149, 30.547, 0)
 
 SWEP.AttachmentElements = {
-
 }
 
 SWEP.ExtraSightDist = 8
@@ -146,18 +146,22 @@ SWEP.Attachments = {
     {
         PrintName = "Optic",
         DefaultAttName = "Ironsights",
-        Slot = "optic",
+        Slot = {"optic","optic_lp"},
         Bone = "KSG_Shotgun",
         Offset = {
-            vpos = Vector(6, 0, 5.9),
+            vpos = Vector(6, 0, 6),
             vang = Angle(0, 0, 0),
             wpos = Vector(10, 0.8, -5.5),
             wang = Angle(-5, 1, 180)
         },
-        VMScale = Vector(1.2, 1.2, 1.2),
+        VMScale = Vector(1.45, 1.45, 1.45),
+        SlideAmount = {
+            vmin = Vector(3.8, 0, 6),
+            vmax = Vector(16.5, 0, 6),
+        },
     },
-	{
-	PrintName = "Underbarrel",
+    {
+    PrintName = "Underbarrel",
         Slot = {"foregrip"},
         Bone = "Pump",
         Offset = {
@@ -188,7 +192,7 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "Pump",
         Offset = {
-            vpos = Vector(5, 0, -1),
+            vpos = Vector(5, 0, -0.7),
             vang = Angle(0, 0, 0),
             wpos = Vector(9, 1, -4.5),
             wang = Angle(-5, 1, 180)
@@ -203,7 +207,7 @@ SWEP.Attachments = {
         PrintName = "Perk",
         Slot = "go_perk"
     },
-	{
+    {
         PrintName = "Charms",
         Slot = "charm",
         Bone = "Pump",
@@ -227,8 +231,8 @@ SWEP.Animations = {
         },
     ["idle_sights"] = {
         Source = "idle",
-        Time = 0,
-        },
+        Time = 4096, -- this is to prevent the constant jittering caused by adsing with an animation time of 0
+        }, --nobody is adsing long enough without firing or releasing ads to see the animation progress, if this does not suffice please increase this number or seek a psychiatrist
         ["exit_sight"] = {
             Source = "idle",
             Time = 0,
@@ -246,7 +250,7 @@ SWEP.Animations = {
         LHIKIn = 0,
         LHIKOut = 0.25,
     },
-	["fire"] = {
+    ["fire"] = {
         Source = "idle",
         Time = 10,
         ShellEjectAt = 0,
@@ -258,12 +262,12 @@ SWEP.Animations = {
     },
     ["cycle"] = {
         Source = "shoot",
-        Time = 1,
+        Time = 0.75,
         ShellEjectAt = 0,
     },
     ["cycle_iron"] = {
         Source = "shoot",
-        Time = 1,
+        Time = 0.75,
         ShellEjectAt = 0,
     },
     ["reload"] = {
@@ -278,32 +282,32 @@ SWEP.Animations = {
 }
 
 sound.Add({
-	name = 			"KF_Ksg.pullforward",
-	channel = 		CHAN_STATIC,
-	volume = 		1.0,
-	sound = 			"weapons/kf_ksg/KSG_Pullfwd.wav"
+    name = 			"KF_Ksg.pullforward",
+    channel = 		CHAN_STATIC,
+    volume = 		1.0,
+    sound = 			"weapons/kf_ksg/KSG_Pullfwd.wav"
 })
 sound.Add({
-	name = 			"KF_Ksg.pullback",
-	channel = 		CHAN_STATIC,
-	volume = 		1.0,
-	sound = 			"weapons/kf_ksg/KSG_Pullback.wav"
+    name = 			"KF_Ksg.pullback",
+    channel = 		CHAN_STATIC,
+    volume = 		1.0,
+    sound = 			"weapons/kf_ksg/KSG_Pullback.wav"
 })
 sound.Add({
-	name = 			"KF_Ksg.magout",
-	channel = 		CHAN_STATIC,
-	volume = 		1.0,
-	sound = 			"weapons/kf_ksg/KSG_Magout.wav"
+    name = 			"KF_Ksg.magout",
+    channel = 		CHAN_STATIC,
+    volume = 		1.0,
+    sound = 			"weapons/kf_ksg/KSG_Magout.wav"
 })
 sound.Add({
-	name = 			"KF_Ksg.magin",
-	channel = 		CHAN_STATIC,
-	volume = 		1.0,
-	sound = 			"weapons/kf_ksg/KSG_Magin.wav"
+    name = 			"KF_Ksg.magin",
+    channel = 		CHAN_STATIC,
+    volume = 		1.0,
+    sound = 			"weapons/kf_ksg/KSG_Magin.wav"
 })
 sound.Add({
-	name = 			"KF_Ksg.Fire",
-	channel = 		CHAN_WEAPON,
-	volume = 		1.0,
-	sound = 			{ "weapons/kf_ksg/KSG_Fire_S.wav"}
+    name = 			"KF_Ksg.Fire",
+    channel = 		CHAN_WEAPON,
+    volume = 		1.0,
+    sound = 			{ "weapons/kf_ksg/KSG_Fire_S.wav"}
 })

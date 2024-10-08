@@ -33,7 +33,7 @@ SWEP.Primary.ClipSize = -1
 
 SWEP.HoldType = "knife"
 SWEP.Primary.Ammo = "GrenadeHL1"
-SWEP.Primary.MaxAmmo = 3
+SWEP.Primary.MaxAmmo = 5
 SWEP.Primary.Automatic = true
 SWEP.NPCWeight = 25
 
@@ -58,19 +58,16 @@ end
 
 function SWEP:Deploy()
     local owner = self:GetOwner()
-
     self:SetWeaponHoldType( self.HoldType )
     self:SendWeaponAnim( ACT_VM_DRAW )
     self:EmitSound("arccw_go/knife/knife_deploy1.wav")
     self:SetNextPrimaryFire( CurTime() + 0.5 )
     self:SetNextSecondaryFire( CurTime() + 0.5 )
-    self.RegenerationTimer = CurTime() + 3
-
+    self.RegenerationTimer = CurTime() + 2.25
     if SERVER and self.HolsterTime then
         local ammoCount = math.floor( ( CurTime() - self.HolsterTime ) * self.AmmoRegenAmount )
         owner:SetAmmo( math.min( owner:GetAmmoCount( "GrenadeHL1" ) + ammoCount, self.Primary.MaxAmmo ), self.Primary.Ammo )
     end
-
     return true
 end
 
@@ -83,31 +80,8 @@ end
 function SWEP:PrimaryAttack()
     self:SetNextPrimaryFire(CurTime() + 0.5)
     self:SetNextSecondaryFire( CurTime() + self:SequenceDuration())
-    local owner = self:GetOwner()
-    local trace = owner:GetEyeTrace()
-
-    if trace.HitPos:Distance(owner:GetShootPos()) <= 95 then
-            owner:SetAnimation( PLAYER_ATTACK1 )
-            self:SendWeaponAnim(ACT_VM_HITCENTER)
-        bullet = {}
-        bullet.Num    = 1
-        bullet.Src    = owner:GetShootPos()
-        bullet.Dir    = owner:GetAimVector()
-        bullet.Spread = Vector(0, 0, 0)
-        bullet.Tracer = 0
-        bullet.Force  = 1
-        bullet.Damage = 45
-        bullet.HullSize = 10
-        bullet.Callback = function(att, tr, dmginfo)
-            dmginfo:SetDamageType(DMG_SLASH)
-                    end
-    owner:FireBullets(bullet)
-    self:EmitSound("physics/flesh/flesh_impact_bullet" .. math.random( 1,2,3,4,5 ) .. ".wav")
-    else
+    self:DoAttack()
         self:EmitSound("arccw_go/knife/knife_slash1.wav")
-        owner:SetAnimation( PLAYER_ATTACK1 )
-        self:SendWeaponAnim(ACT_VM_MISSCENTER)
-    end
 end
 
 function SWEP:SecondaryAttack()
@@ -134,22 +108,114 @@ function SWEP:SecondaryAttack()
         ply:SetAmmo(ply:GetAmmoCount("GrenadeHL1") -1, "GrenadeHL1")
         self:SetNextSecondaryFire(CurTime() + 1)
         self:SendWeaponAnim(ACT_VM_RELEASE)
-        self.RegenerationTimer = CurTime() + 3
+        self.RegenerationTimer = CurTime() + 2.25
     timer.Simple(0.3, function ()
         if self:IsValid() then
             self:SendWeaponAnim(ACT_VM_DRAW)
         end
     end)
 end
+
 function SWEP:Think()
     local owner = self:GetOwner()
     if self.RegenerationTimer <= CurTime() and self:Ammo1() < self.Primary.MaxAmmo then
         owner:SetAmmo( self:Ammo1() + self.AmmoRegenAmount , self.Primary.Ammo )
-        self.RegenerationTimer = CurTime() + 3
+        self.RegenerationTimer = CurTime() + 2.25
     end
     if self:Ammo1() > self.Primary.MaxAmmo then
         owner:SetAmmo( self.Primary.MaxAmmo, self.Primary.Ammo )
     end
+end
+
+function SWEP:FindHullIntersection(VecSrc, tr, Mins, Maxs, pEntity)
+    local VecHullEnd = VecSrc + ((tr.HitPos - VecSrc) * 2)
+    local tracedata = {}
+    tracedata.start  = VecSrc
+    tracedata.endpos = VecHullEnd
+    tracedata.filter = pEntity
+    tracedata.mask   = MASK_SOLID
+    tracedata.mins   = Mins
+    tracedata.maxs   = Maxs
+    local tmpTrace = util.TraceLine( tracedata )
+
+    if tmpTrace.Hit then
+      tr = tmpTrace
+      return tr
+    end
+
+    local Distance = 2000
+    for i = 0, 1 do
+      for j = 0, 1 do
+        for k = 0, 1 do
+          local VecEnd = Vector()
+          VecEnd.x = VecHullEnd.x + (i > 0 and Maxs.x or Mins.x)
+          VecEnd.y = VecHullEnd.y + (j > 0 and Maxs.y or Mins.y)
+          VecEnd.z = VecHullEnd.z + (k > 0 and Maxs.z or Mins.z)
+          tracedata.endpos = VecEnd
+          tmpTrace = util.TraceLine( tracedata )
+          if tmpTrace.Hit then
+            local ThisDistance = (tmpTrace.HitPos - VecSrc):Length()
+            if (ThisDistance < Distance) then
+              tr = tmpTrace
+              Distance = ThisDistance
+            end
+          end
+        end
+      end
+    end
+    return tr
+end
+
+function SWEP:DoAttack()
+    --credit to xdshot for this logic https://steamcommunity.com/sharedfiles/filedetails/?id=506283460, i'd have lost my marbles by now
+    local Attacker = self:GetOwner()
+    local Range = 95
+
+    Attacker:LagCompensation(true)
+    local Forward = Attacker:GetAimVector()
+    local AttackSrc = Attacker:GetShootPos()
+    local AttackEnd = AttackSrc + Forward * Range
+    local tracedata = {}
+
+    tracedata.start   = AttackSrc
+    tracedata.endpos  = AttackEnd
+    tracedata.filter  = Attacker
+    tracedata.mask    = MASK_SOLID
+    tracedata.mins    = Vector( -16, -16, -18 ) -- head_hull_mins
+    tracedata.maxs    = Vector( 16, 16, 18 ) -- head_hull_maxs
+
+    local tr = util.TraceLine( tracedata )
+    if not tr.Hit then tr = util.TraceHull( tracedata ) end
+
+    if tr.Hit and ( not (IsValid(tr.Entity) and tr.Entity) or tr.HitWorld ) then
+        local HullDuckMins, HullDuckMaxs = Attacker:GetHullDuck()
+        tr = self:FindHullIntersection(AttackSrc, tr, HullDuckMins, HullDuckMaxs, Attacker)
+        AttackEnd = tr.HitPos
+    end
+
+    local HitEntity = IsValid(tr.Entity) and tr.Entity or Entity(0) -- Ugly hack to destroy glass surf. 0 is worldspawn.
+    local DidHitPlrOrNPC = HitEntity and ( HitEntity:IsPlayer() or HitEntity:IsNPC() ) and IsValid( HitEntity )
+    local Force = Forward:GetNormalized() * 300
+    local damageinfo = DamageInfo()
+    damageinfo:SetAttacker( Attacker )
+    damageinfo:SetInflictor( self )
+    damageinfo:SetDamage( 75 )
+    damageinfo:SetDamageType(DMG_SLASH)
+    damageinfo:SetDamageForce( Force )
+    damageinfo:SetDamagePosition( AttackEnd )
+    HitEntity:DispatchTraceAttack( damageinfo, tr, Forward )
+    Attacker:SetAnimation( PLAYER_ATTACK1 )
+
+    local Act = ACT_VM_HITCENTER or ACT_VM_MISSCENTER
+    if Act then
+      self:SendWeaponAnim( Act )
+    end
+
+    if DidHitPlrOrNPC then
+        local Snd = Sound("physics/flesh/flesh_impact_bullet" .. math.random( 1,2,3,4,5 ) .. ".wav")
+        self:EmitSound( Snd )
+    end
+    Attacker:LagCompensation(false) -- Don't forget to disable it!
 end
 
 --nuclear approach so i don't have to open blender and recompile a worldmodel
@@ -171,7 +237,6 @@ if CLIENT then
         if selfTbl.ShowWorldModel == nil or selfTbl.ShowWorldModel then
             self:DrawModel()
         end
-
         if not selfTbl.WElements then return end
 
         if not selfTbl.wRenderOrder then

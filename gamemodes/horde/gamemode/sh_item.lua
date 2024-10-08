@@ -475,7 +475,7 @@ function HORDE:GetDefaultItemsData()
     {Warden=true}, 15, -1, nil, nil, {Warden=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Shotgun",    "HSG-1",           "arccw_horde_hsg1",  3000, 8, "Modified version of the Kel-Tec KSG. \nUses a box magazine instead of being tube-fed.",
     {Warden=true}, 15, -1, nil, nil, {Warden=2}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Shotgun",    "AA12",           "arccw_horde_aa12",  3500, 9, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
+    HORDE:CreateItem("Shotgun",    "AA12",           "arccw_horde_aa12",  3750, 9, "Atchisson Assault Shotgun.\nDevastating firepower at close to medium range.",
     {Warden=true, Heavy=true}, 25, -1, nil, nil, {Warden=3}, nil, {HORDE.DMG_BALLISTIC})
 
     HORDE:CreateItem("Rifle",      "AR15",           "arccw_horde_ar15",     2000, 6, "AR-15 Style Rifle.\nA lightweight semi-automatic rifle based on ArmaLite AR-15 design.",

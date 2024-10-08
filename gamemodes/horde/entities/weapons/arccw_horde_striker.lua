@@ -26,17 +26,17 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/weapons/arccw/fesiugmw2_2/c_striker_1.mdl"
 SWEP.MirrorVMWM = true
 SWEP.WorldModelOffset = {
-    pos = Vector(-5, 3, -8),
+    pos = Vector(-3.5, 4, -5),
     ang = Angle(-10, 0, 180),
-    scale = 1.5
+    scale = 1.1
 }
 SWEP.ViewModelFOV = 65
 
-SWEP.Damage = 42
-SWEP.DamageMin = 24
+SWEP.Damage = 43
+SWEP.DamageMin = 25
 SWEP.Range = 1000 * 0.025  -- GAME UNITS * 0.025 = METRES
-SWEP.RangeMin = 500 * 0.025 
-SWEP.Penetration = 1
+SWEP.RangeMin = 500 * 0.025
+SWEP.Penetration = 10
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
@@ -67,9 +67,10 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_shotgun"
 SWEP.NPCWeight = 125
 
-SWEP.AccuracyMOA = 125 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 300 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 175
+SWEP.AccuracyMOA = 90 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
+SWEP.MoveDispersion = 100
+
 
 SWEP.Primary.Ammo = "buckshot" -- what ammo type the gun uses
 
@@ -91,7 +92,7 @@ SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
 SWEP.SpeedMult = 1
-SWEP.SightedSpeedMult = 0.4
+SWEP.SightedSpeedMult = 0.7
 SWEP.SightTime = 0.3
 
 SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
@@ -107,11 +108,12 @@ SWEP.IronSightStruct = {
 }
 
 
-SWEP.HoldtypeHolstered = "passive"
-SWEP.HoldtypeActive = "shotgun"
-SWEP.HoldtypeSights = "ar2"
 
-SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN
+SWEP.HoldtypeHolstered = "passive"
+SWEP.HoldtypeActive = "smg"
+SWEP.HoldtypeSights = "smg"
+
+SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
 
 SWEP.ActivePos = Vector(-0.25, -0.5, 0.75)
 SWEP.ActiveAng = Angle(0, 0, 0)
@@ -154,22 +156,24 @@ SWEP.AttachmentElements = {
 }
 
 SWEP.Attachments = {
-	{
+    {
         PrintName = "Optic",
         DefaultAttName = "Iron Sights",
-        Slot = "optic",
+        Slot = {"optic","optic_lp"},
         Bone = "tag_weapon",
         Offset = {
             vpos = Vector(4.4, 0, 2.2),
             vang = Angle(0, 0, 0),
             wang = Angle(-9.738, 0, 180)
         },
+        GivesFlags = {"optics"},
+        ExcludeFlags = {"tac"},
         InstalledEles = {"sight"},
     },
     {
         PrintName = "Muzzle",
         DefaultAttName = "Standard Muzzle",
-        Slot = "muzzle_shotgun",
+        Slot = {"muzzle_shotgun","muzzle"},
         Bone = "tag_weapon",
         Offset = {
             vpos = Vector(15, 0, 1),
@@ -177,7 +181,7 @@ SWEP.Attachments = {
             wpos = Vector(26.648, 0.782, -8.042),
             wang = Angle(-9.79, 0, 180)
         },
-		VMScale = Vector(1.25, 1.25, 1.25),
+        VMScale = Vector(1.25, 1.25, 1.25),
     },
     {
         PrintName = "Underbarrel",
@@ -196,14 +200,17 @@ SWEP.Attachments = {
         Slot = "tac",
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(6, -1, -0.6),
-            vang = Angle(0, 0, 90),
-            wpos = Vector(15.625, -0.253, -6.298),
-            wang = Angle(-8.829, -0.556, 90)
+            vpos = Vector(4.4, 0, 2.2),
+            vang = Angle(0, 0, 180),
+            wang = Angle(-9.738, 0, 180)
         },
+        VMScale = Vector(0.8, 0.8, 0.8),
+        GivesFlags = {"tac"},
+        ExcludeFlags = {"optic"},
+        InstalledEles = {"sight"},
         SlideAmount = {
-            vmin = Vector(4, -1, -0.6),
-            vmax = Vector(9.5, -1, -0.6),
+            vmin = Vector(4.5, 0, 2.2),
+            vmax = Vector(3.2, 0, 2.2),
         },
     },
     {
@@ -226,40 +233,41 @@ SWEP.Attachments = {
         Slot = "mw2_wepcamo",
         FreeSlot = true,
     },
-	{
+    {
         PrintName = "Charm",
         Slot = "charm",
         FreeSlot = true,
         Bone = "tag_weapon",
         Offset = {
-            vpos = Vector(13, -0.5, 0.8),
+            vpos = Vector(13, -0.6, 1),
             vang = Angle(0, 0, 0),
             wpos = Vector(9.625, 1.5, -4),
             wang = Angle(0, 0, 180)
         },
+        VMScale = Vector(0.7, 0.7, 0.7),
     },
 }
 
 SWEP.Animations = {
     ["idle"] = {
         Source = "idle",
-        Time = 1/100,
+        Time = 1 / 100,
     },
     ["enter_sprint"] = {
         Source = "sprint_in",
-        Time = 10/30
+        Time = 10 / 30
     },
     ["idle_sprint"] = {
         Source = "sprint_loop",
-        Time = 30/40
+        Time = 30 / 40
     },
     ["exit_sprint"] = {
         Source = "sprint_out",
-        Time = 10/30
+        Time = 10 / 30
     },
     ["draw"] = {
         Source = "pullout",
-        Time = 26/30,
+        Time = 26 / 30,
         SoundTable = {{s = "MW2Common.Deploy", 		t = 0}},
         LHIK = true,
         LHIKIn = 0,
@@ -267,79 +275,54 @@ SWEP.Animations = {
     },
     ["holster"] = {
         Source = "putaway",
-        Time = 25/30,
+        Time = 25 / 30,
         LHIK = true,
         LHIKIn = 0,
         LHIKOut = 0.3,
     },
     ["fire"] = {
         Source = "fire",
-        Time = 10/30,
+        Time = 10 / 30,
         ShellEjectAt = 0,
     },
     ["fire_iron"] = {
         Source = "fire_ads",
-        Time = 10/30,
+        Time = 10 / 30,
         ShellEjectAt = 0,
     },
     ["sgreload_start"] = {
         Source = "reload_start",
-        Time = 16/40,
+        Time = 16 / 40,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_lift_v1.wav", 		t = 0},
-                        {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_shell_v1.wav", 		t = 20/40},
-                        {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_button_v1.wav", 		t = 36/40},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_shell_v1.wav", 		t = 20 / 40},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_button_v1.wav", 		t = 36 / 40},
                     },
-		RestoreAmmo = 1, -- only used by shotgun empty insert reload
+        RestoreAmmo = 1, -- only used by shotgun empty insert reload
     },
     ["sgreload_insert"] = {
         Source = "reload_loop",
-        Time = 16/40,
+        Time = 16 / 40,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
         SoundTable = {
-                        {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_shell_v1.wav", 		t = 3/40},
-                        {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_button_v1.wav", 		t = 19/40},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_shell_v1.wav", 		t = 3 / 40},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_button_v1.wav", 		t = 19 / 40},
                     },
         TPAnimStartTime = 0.3,
     },
     ["sgreload_finish"] = {
         Source = "reload_finish",
-        Time = 16/40,
+        Time = 16 / 40,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_end_v1.wav", 		t = 0.01},
                     },
     },
     ["sgreload_finish_empty"] = {
         Source = "reload_finish",
-        Time = 16/30,
+        Time = 16 / 30,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_end_v1.wav", 		t = 0.01},
                     },
     },
 }
-
- -- Super fucky temp!
- -- S H U T  U P    A N D   K E E P  T H E M   P I N N E D  D O W N
-
--- notverycreativenowarewe
-local nvcnaw = 5
-
- -- hipfire
- -- maximum accuracy
-    SWEP.Inaccuracy_Hip_Max_Stand	= nvcnaw
-    SWEP.Inaccuracy_Hip_Max_Duck	= nvcnaw
-    SWEP.Inaccuracy_Hip_Max_Prone	= nvcnaw
- -- minimum accuracy
-    SWEP.Inaccuracy_Hip_Min_Stand   = nvcnaw
-    SWEP.Inaccuracy_Hip_Min_Duck    = nvcnaw
-    SWEP.Inaccuracy_Hip_Min_Prone   = nvcnaw
-
- -- sighted fire
- -- yeah
-    SWEP.Inaccuracy_ADS = 5.5
-
- -- inaccuracy when you're... i don't remember
-SWEP.Inaccuracy_Add_ADS			= 0
-SWEP.Inaccuracy_Add_Hip			= 0
-SWEP.Inaccuracy_Add_Move		= 0.1

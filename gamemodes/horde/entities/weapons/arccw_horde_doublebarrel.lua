@@ -32,13 +32,13 @@ SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 50
 SWEP.DamageMin = 25
-SWEP.Range = 400 * 0.025  -- GAME UNITS * 0.025 = METRES
-SWEP.RangeMin = 100 * 0.025  -- GAME UNITS * 0.025 = METRES
-SWEP.Penetration = 1
+SWEP.Range = 1100 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.RangeMin = 300 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Penetration = 16
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
-
+SWEP.CanFireUnderwater = true --DO NOT SET THIS TO FALSE UNLESS YOU'RE FINE WITH PLAYERS POTENTIALLY BECOMING MOTORBOATS
 SWEP.ChamberSize = 0
 SWEP.Primary.ClipSize = 2 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 2
@@ -47,8 +47,8 @@ SWEP.ReducedClipSize = 2
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 6
 SWEP.RecoilSide = 4
-
-SWEP.Delay = 0.009 -- 60 / RPM.
+SWEP.Delay = 60 / 1000 -- 60 / RPM.
+SWEP.AmmoPerShot = 1
 SWEP.Num = 6 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -63,7 +63,7 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_shotgun"
 SWEP.NPCWeight = 125
 
-SWEP.AccuracyMOA = 1000 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.AccuracyMOA = 100 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 250 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 50 -- inaccuracy added by moving. Applies in sights as well! Walking speed is considered as "maximum".
 SWEP.SightsDispersion = 0 -- dispersion that remains even in sights
@@ -89,7 +89,7 @@ SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
 SWEP.SpeedMult = 1
 SWEP.SightedSpeedMult = 0.8
-SWEP.SightTime = 0.3
+SWEP.SightTime = 0.05
 
 SWEP.BulletBones = { -- the bone that represents bullets in gun/mag
     -- [0] = "bulletchamber",
@@ -108,7 +108,7 @@ SWEP.HoldtypeHolstered = "passive"
 SWEP.HoldtypeActive = "shotgun"
 SWEP.HoldtypeSights = "ar2"
 
-SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_SHOTGUN
+SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
 
 SWEP.ActivePos = Vector(0, 0, 1)
 SWEP.ActiveAng = Angle(0, 0, 0)
@@ -135,7 +135,7 @@ SWEP.AttachmentElements = {
 }
 
 SWEP.Attachments = {
-	{
+    {
         PrintName = "Optic",
         DefaultAttName = "Iron Sights",
         Slot = "optic",
@@ -184,7 +184,7 @@ SWEP.Attachments = {
             wpos = Vector(15.625, -0.253, -6.298),
             wang = Angle(-8.829, -0.556, 90)
         },
-		VMScale = Vector(1, 1, 1),
+        VMScale = Vector(1, 1, 1),
     },
     {
         PrintName = "Ammo Type",
@@ -195,7 +195,7 @@ SWEP.Attachments = {
         PrintName = "Perk",
         Slot = "go_perk"
     },
-	{
+    {
         PrintName = "Charm",
         Slot = "charm",
         FreeSlot = true,
@@ -212,46 +212,46 @@ SWEP.Attachments = {
 SWEP.Animations = {
     ["idle"] = {
         Source = "idle",
-        Time = 100/30,
+        Time = 100 / 30,
     },
     ["enter_sprint"] = {
         Source = "sprint_in",
-        Time = 10/30
+        Time = 10 / 30
     },
     ["idle_sprint"] = {
         Source = "sprint_loop",
-        Time = 30/40
+        Time = 30 / 40
     },
     ["exit_sprint"] = {
         Source = "sprint_out",
-        Time = 10/30
+        Time = 10 / 30
     },
     ["draw"] = {
         Source = "pullout",
-        Time = 24/30,
+        Time = 15 / 30,
         SoundTable = {{s = "MW2Common.Deploy", 		t = 0}},
     },
     ["holster"] = {
         Source = "putaway",
-        Time = 17/30,
+        Time = 15 / 30,
         LHIK = true,
         LHIKIn = 0,
         LHIKOut = 0.9,
     },
     ["fire"] = {
         Source = "fire",
-        Time = 12/30,
+        Time = 12 / 30,
     },
     ["reload"] = {
         Source = "reload",
-        Time = 76/45,
+        Time = 76 / 45,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_lift_v1.wav", 		t = 0.01},
-                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_open_v1.wav", 		t = 7/45},
-                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_clipout_v1.wav", 		t = 13/45},
-                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_clip1in_v1.wav", 		t = 30/45},
-                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_clip2in_v1.wav", 		t = 41/45},
-                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_chamber_v1.wav", 		t = 63/45},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_open_v1.wav", 		t = 7 / 45},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_clipout_v1.wav", 		t = 13 / 45},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_clip1in_v1.wav", 		t = 30 / 45},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_clip2in_v1.wav", 		t = 41 / 45},
+                        {s = "weapons/fesiugmw2/foley/wpfoly_ranger_reload_chamber_v1.wav", 		t = 63 / 45},
                     },
         MinProgress = 1,
         LHIK = true,
@@ -290,9 +290,13 @@ SWEP.Inaccuracy_Add_Move		= 0.1
 
 function SWEP:Hook_ShouldNotFireFirst()
     if self:GetCurrentFiremode().Mode == 3 then
-        self.AccuracyMOA = 200
+        self.AccuracyMOA = 150
+        self.AmmoPerShot = 2
+        self.Num = 12 -- number of shots per trigger pull.
     else
         self.AccuracyMOA = 100
+        self.AmmoPerShot = 1
+        self.Num = 6 -- number of shots per trigger pull.
     end
 end
 
@@ -300,10 +304,10 @@ function SWEP:Hook_ShouldNotFire()
     if CLIENT then return end
     if self:GetCurrentFiremode().Mode == 3 then
         local ply = self:GetOwner()
-        if self:Clip1() >= 2 and !ply:KeyDown(IN_USE) then
+        if self:Clip1() >= 2 and not ply:KeyDown(IN_USE) then
             local dir = -ply:GetForward()
             dir:Normalize()
-            local vel = dir * 350
+            local vel = dir * 450
             ply:SetLocalVelocity(ply:GetVelocity() + vel)
         end
     end
