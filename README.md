@@ -1,4 +1,4 @@
-# Horde - A Wave zombie survival gamemode for Garry's Mod.
+# Horde - A wave zombie survival gamemode for Garry's Mod.
 
 ### Want to contribute to our fork?
 - Join our [Discord](discord.gg/npc).
