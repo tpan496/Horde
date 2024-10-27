@@ -2,9 +2,7 @@ SUBCLASS.PrintName = "Overlord"           -- Required
 SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Warden -- Required for any new classes
 SUBCLASS.Icon = "subclasses/overlord.png" -- Required
-SUBCLASS.Description = [[
-Warden subclass.
-Focus on oppression and special defense.]] -- Required
+SUBCLASS.Description = translate.Get("info_Overlord_extra_desc") -- Required
 SUBCLASS.BasePerk = "overlord_base"
 SUBCLASS.Perks = {
     [1] = { title = "Defense", choices = { "overlord_inverse_filter", "overlord_dispersion" } },

@@ -31,7 +31,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 end
 SPELL.Price                      = 50
 SPELL.Upgrades                   = 5
-SPELL.Upgrade_Description        = "Increases damage."
+SPELL.Upgrade_Description        = translate.Get("shop_Spell_Upgrade_desc_meteor")
 SPELL.Upgrade_Prices             = function (upgrade_level)
     return 550 + 50 * upgrade_level
 end
