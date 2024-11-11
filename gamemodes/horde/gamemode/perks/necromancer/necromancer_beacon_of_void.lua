@@ -5,29 +5,29 @@ PERK.Description =
 You are immune to Frostbite.]]
 PERK.Icon = "materials/perks/necromancer/beacon_of_void.png"
 PERK.Params = {
-    [1] = {value = 0.2, percent = true},
-    [2] = {value = 0.5, percent = true},
+    [1] = { value = 0.2, percent = true },
+    [2] = { value = 0.5, percent = true },
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
-    if not ply:Horde_GetPerk("necromancer_beacon_of_void")  then return end
-    if HORDE:IsColdDamage(dmginfo) then
+PERK.Hooks.Horde_OnPlayerDamage = function ( ply, _, bonus, _, dmginfo )
+    if not ply:Horde_GetPerk( "necromancer_beacon_of_void" )  then return end
+    if HORDE:IsColdDamage( dmginfo ) then
         bonus.more = bonus.more * 1.2
     end
 end
 
 
-PERK.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus)
-    if not ply:Horde_GetPerk("necromancer_beacon_of_void")  then return end
+PERK.Hooks.Horde_OnPlayerDebuffApply = function ( ply, debuff, bonus )
+    if not ply:Horde_GetPerk( "necromancer_beacon_of_void" )  then return end
     if debuff == HORDE.Status_Frostbite then
         bonus.apply = 0
         return true
     end
 end
 
-PERK.Hooks.Horde_OnEnemyFrostbiteApply = function (inflictor, ent, duration_bonus)
-    if inflictor and inflictor:IsPlayer() and inflictor:Horde_GetPerk("necromancer_beacon_of_void") then
+PERK.Hooks.Horde_OnEnemyFrostbiteApply = function ( inflictor, _, duration_bonus )
+    if inflictor and inflictor:IsPlayer() and inflictor:Horde_GetPerk( "necromancer_beacon_of_void" ) then
         duration_bonus.increase = duration_bonus.increase + 0.5
     end
 end
