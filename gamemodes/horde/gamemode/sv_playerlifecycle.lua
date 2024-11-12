@@ -517,7 +517,6 @@ function HORDE:PlayerInit(ply)
 
     hook.Run("Horde_ResetStatus", ply)
     -- Misc stuff
-    ply.Horde_Spectre_Max_Count = 1
     ply:Horde_ApplyPerksForClass()
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
     HORDE.player_class_changed[ply:SteamID()] = false
