@@ -360,6 +360,10 @@ concommand.Add("horde_use_perk_skill", function (ply, cmd, args)
     HORDE:UsePerkSkill(ply)
 end)
 
+concommand.Add("horde_use_quick_grenade", function (ply, cmd, args)
+    HORDE:UseQuickGrenade(ply)
+end)
+
 concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
     if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
         HORDE:SendNotificationSandboxOnly(ply)

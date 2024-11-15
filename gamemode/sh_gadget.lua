@@ -105,6 +105,7 @@ function plymeta:Horde_UnsetGadget()
         if item then
             self:Horde_AddWeight(item.weight)
         end
+        self:Horde_AddMoney(math.floor(0.75 * item.price))
     end
     hook.Run("Horde_OnUnsetGadget", self, self.Horde_Gadget)
     if SERVER then

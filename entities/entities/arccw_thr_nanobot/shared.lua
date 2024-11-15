@@ -11,7 +11,7 @@ ENT.AdminSpawnable = false
 ENT.Model = "models/weapons/w_grenade.mdl"
 ENT.FuseTime = 2
 ENT.ArmTime = 0
-ENT.Duration = 7.5
+ENT.Duration = 15
 ENT.ImpactFuse = false
 
 ENT.Armed = false
@@ -21,7 +21,7 @@ ENT.TouchDamageTick = 0
 
 ENT.Ticks = 0
 ENT.TouchedEntities = {}
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER
 
 AddCSLuaFile()
 
@@ -51,12 +51,18 @@ function ENT:Initialize()
 
         self.SpawnTime = CurTime()
         self:SetColor(Color(0, 0, 200))
+        
+        if self.Owner.GrenadeDampened then
+            self.dampening = true
+        end
     end
 end
 
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
-        self:GetPhysicsObject():SetDamping(2, 2)
+        if self.dampening then
+            self:GetPhysicsObject():SetDamping(6, 2)
+        end
         if data.Speed > 75 then
             self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
         elseif data.Speed > 25 then
@@ -89,7 +95,7 @@ function ENT:Think()
                 if HORDE:IsPlayerMinion(e) then
                     e:SetHealth(math.min(e:GetMaxHealth(), e:GetMaxHealth() * 0.03 + e:Health()))
                 elseif e:IsPlayer() then
-                    HORDE:SelfHeal(e, 3)
+                    HORDE:SelfHeal(e, 2)
                 end
             end
             self.NextDamageTick = CurTime() + 0.5

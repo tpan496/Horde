@@ -38,11 +38,9 @@ SWEP.ProceduralViewBobIntensity = 0
 
 SWEP.FuseTime = false
 
-SWEP.FuseTime = false
-
 SWEP.Throwing = true
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = -1
 
 
 SWEP.MuzzleVelocity = 1000

@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminSpawnable = false
 
 ENT.Model = "models/weapons/arccw_go/w_eq_flashbang_thrown.mdl"
-ENT.FuseTime = 2.5
+ENT.FuseTime = 1.25
 ENT.ArmTime = 0
 ENT.ImpactFuse = false
 ENT.Armed = true
@@ -30,19 +30,26 @@ function ENT:Initialize()
 
         self.SpawnTime = CurTime()
 
+        if self.Owner.GrenadeDampened then
+            self.dampening = true
+        end
+
         if self.FuseTime <= 0 then
             self:Detonate()
         end
 
         timer.Simple(0, function()
             if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+            self:SetCollisionGroup(COLLISION_GROUP_PLAYER)
         end)
     end
 end
 
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
+        if self.dampening then
+            self:GetPhysicsObject():SetDamping(6, 2)
+        end
         if data.Speed > 75 then
             self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
         elseif data.Speed > 25 then
@@ -72,7 +79,7 @@ function ENT:FlashBang()
         attacker = self:GetOwner()
     end
 
-    util.BlastDamage(self, attacker, self:GetPos(), 150, 80)
+    --util.BlastDamage(self, attacker, self:GetPos(), 150, 80)
 
     local effectdata = EffectData()
     effectdata:SetOrigin( self:GetPos() )
@@ -85,6 +92,7 @@ function ENT:FlashBang()
     local targets = ents.FindInSphere(flashorigin, flashpower)
     if not targets then return end
     for _, k in pairs(targets) do
+        --[[
         if k:IsPlayer() then
             local dist = k:EyePos():Distance(flashorigin)
             local dp = (k:EyePos() - flashorigin):Dot(k:EyeAngles():Forward())
@@ -99,8 +107,10 @@ function ENT:FlashBang()
 
             k:SetDSP( 37, false )
 
-        elseif k:IsNPC() then
-            k:Horde_AddDebuffBuildup(HORDE.Status_Stun, 200, attacker, k:GetPos())
+        else
+        ]]
+        if k:IsNPC() then
+            k:Horde_AddDebuffBuildup(HORDE.Status_Stun, 500, attacker, k:GetPos())
         end
     end
 end

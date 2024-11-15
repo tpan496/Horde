@@ -201,13 +201,13 @@ function PANEL:Init()
         return btn
     end
 
-    local class = MySelf:Horde_GetClass()
+    local class = MySelf:Horde_GetCurrentSubclass()
 
     for _, category in pairs(HORDE.categories) do
         local items = {}
 
         for _, item in pairs(HORDE.items) do
-            if item.category == category and ((item.whitelist == nil) or (item.whitelist and item.whitelist[class.name]) or (MySelf:Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol")) then
+            if item.category == category and ((item.whitelist == nil) or (item.whitelist and item.whitelist[class]) or (MySelf:Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol")) then
                 if (item.category == "Gadget" and MySelf:Horde_GetGadget() == item.class) or MySelf:HasWeapon(item.class) then
                     item.cmp = -1
                 else

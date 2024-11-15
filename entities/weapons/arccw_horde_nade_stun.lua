@@ -39,7 +39,7 @@ SWEP.FuseTime = 1.25
 
 SWEP.Throwing = true
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = -1
 
 
 SWEP.MuzzleVelocity = 1000

@@ -29,7 +29,10 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "carcass_base" then
         ply:Horde_SetMaxHypertrophyStack(ply:Horde_GetMaxHypertrophyStack() + 1)
         if ply:HasWeapon("horde_carcass") == true then return end
-        ply:StripWeapons()
+        --ply:StripWeapons()
+        for _, wpn in pairs(ply:GetWeapons()) do
+            ply:DropWeapon(wpn)
+        end
         timer.Simple(0, function() ply:Give("horde_carcass") end)
     end
 end

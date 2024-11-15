@@ -19,6 +19,7 @@ SWEP.Primary.ClipSize = 100
 SWEP.Primary.DefaultClip = 100
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "none"
+SWEP.Primary.MaxAmmo = 0
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1

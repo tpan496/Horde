@@ -550,7 +550,7 @@ function PANEL:Paint()
 
                 self.sell_btn:SetVisible(true)
                 self.sell_btn:SetTextColor(Color(255,255,255))
-                self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.25)) .. "$")
+                self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.75)) .. "$")
                 self.sell_btn.Paint = function ()
                     surface.SetDrawColor(HORDE.color_crimson)
                     surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -916,7 +916,7 @@ function PANEL:Paint()
 
             self.sell_btn:SetVisible(true)
             self.sell_btn:SetTextColor(Color(255,255,255))
-            self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.25)) .. "$")
+            self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.75)) .. "$")
             self.sell_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -1005,12 +1005,20 @@ function PANEL:Paint()
             local x, y =  self.buy_btn:GetPos()
             y = y - self.buy_btn:GetTall()
             local start_pos = x + 15
-            local classes = {"Survivor", "Assault", "Heavy", "Medic", "Demolition", "Ghost", "Engineer", "Berserker", "Warden", "Cremator"}
+            --local classes = {"Survivor", "Assault", "Heavy", "Medic", "Demolition", "Ghost", "Engineer", "Berserker", "Warden", "Cremator"}
+            local classes = {}
+            for k,v in pairs(HORDE.subclasses) do 
+                table.insert(classes, k)
+            end
             for _, class in pairs(classes) do
                 local level = self.item.levels[class]
                 if level and level > 0 then
+                    if(start_pos + 40 >= self:GetWide() * 1) then
+                        start_pos = x + 15
+                        y = y - 40
+                    end
                     local rank, rank_level = HORDE:LevelToRank(level)
-                    local mat = Material(HORDE.classes[class].icon, "mips smooth")
+                    local mat = Material(HORDE.subclasses[class].Icon, "mips smooth")
                     surface.SetMaterial(mat) -- Use our cached material
                     surface.SetDrawColor(HORDE.Rank_Colors[rank])
                     surface.DrawTexturedRect(start_pos, y + 5, 40, 40)
@@ -1057,7 +1065,7 @@ function PANEL:Paint()
                 if drop_entities[self.item.class] then
                     self.sell_btn:SetVisible(true)
                     self.sell_btn:SetTextColor(Color(255,255,255))
-                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class])) .. "$")
+                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.75 * drop_entities[self.item.class])) .. "$")
                     self.sell_btn.Paint = function ()
                         surface.SetDrawColor(HORDE.color_crimson)
                         surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -1076,7 +1084,7 @@ function PANEL:Paint()
                     self.buy_btn:SetText(translate.Get("Shop_Buy_Item") .. " " .. drop_entities[self.item.class] .. "/" .. self.item.entity_properties.limit)
                     self.sell_btn:SetVisible(true)
                     self.sell_btn:SetTextColor(Color(255,255,255))
-                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class])) .. "$")
+                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.75 * drop_entities[self.item.class])) .. "$")
                     self.sell_btn.Paint = function ()
                         surface.SetDrawColor(HORDE.color_crimson)
                         surface.DrawRect(0, 0, self:GetWide(), 200)

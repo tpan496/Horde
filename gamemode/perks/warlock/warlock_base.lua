@@ -32,7 +32,10 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         ply:SetMaxArmor(0)
         if ply:HasWeapon("horde_astral_relic") == true then return end
         ply:Horde_UnsetSpellWeapon()
-        ply:StripWeapons()
+        --ply:StripWeapons()
+        for _, wpn in pairs(ply:GetWeapons()) do
+            ply:DropWeapon(wpn)
+        end
         timer.Simple(0, function()
             if !ply:Alive() then return end
             if !ply:Horde_GetPerk("warlock_base") then return end
