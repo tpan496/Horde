@@ -33,7 +33,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         for _, wpn in pairs(ply:GetWeapons()) do
             ply:DropWeapon(wpn)
         end
-        timer.Simple(0, function() ply:Give("horde_carcass") end)
+        timer.Simple(0.1, function() ply:Give("horde_carcass") end)
     end
 end
 

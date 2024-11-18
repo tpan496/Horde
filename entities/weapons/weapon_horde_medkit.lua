@@ -17,13 +17,13 @@ SWEP.UseHands = true
 
 SWEP.Primary.ClipSize = 100
 SWEP.Primary.DefaultClip = 100
-SWEP.Primary.Automatic = false
+SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "none"
 SWEP.Primary.MaxAmmo = 0
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
-SWEP.Secondary.Automatic = false
+SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
 
 SWEP.HealAmount = 20 -- Maximum heal amount per use
@@ -64,18 +64,33 @@ function SWEP:PrimaryAttack()
 
 	local ent = tr.Entity
 
-	local need = self.HealAmount
-	if ( IsValid( ent ) ) then need = self.HealAmount end
+	local ply = self.Owner
+	local overheal = 1.2
 
-	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() or ent:GetClass() == "npc_vj_horde_antlion") ) then
+	if ply:Horde_GetPerk("medic_painkillers") then
+		overheal = overheal
+	else
+		overheal = 1
+	end
 
-		self:TakePrimaryAmmo( need )
+	if ( IsValid( ent ) && ( ent:IsPlayer() or ent:GetClass() == "npc_vj_horde_antlion") ) then
+		local need = math.min(ent:GetMaxHealth() * overheal - ent:Health(), (ent:GetMaxHealth() * 0.2)) or self.HealAmount
+		local medkit_heal_coeff = ent:GetMaxHealth() / math.max(1, self.Primary.ClipSize)
+		local medkit_charge_coeff = math.min(1, self:Clip1() / (need / medkit_heal_coeff))
 
-        local healinfo = HealInfo:New({amount=need, healer=self.Owner})
+		if ent:Health() >= ent:GetMaxHealth() * (overheal) then
+			ent:EmitSound( DenySound )
+			self:SetNextPrimaryFire( CurTime() + 1 )
+			return
+		end
+
+		self:TakePrimaryAmmo( need / medkit_heal_coeff * medkit_charge_coeff )
+
+		local healinfo = HealInfo:New({amount = need * medkit_charge_coeff, healer=self.Owner})
 		if ent:IsPlayer() then
 			HORDE:OnPlayerHeal(ent, healinfo)
 		else
-            HORDE:OnAntlionHeal(ent, healinfo)
+			HORDE:OnAntlionHeal(ent, healinfo)
 		end
 		ent:EmitSound( HealSound )
 
@@ -87,11 +102,6 @@ function SWEP:PrimaryAttack()
 		-- Even though the viewmodel has looping IDLE anim at all times, we need this to make fire animation work in multiplayer
 		timer.Create( "weapon_idle" .. self:EntIndex(), self:SequenceDuration(), 1, function() if ( IsValid( self ) ) then self:SendWeaponAnim( ACT_VM_IDLE ) end end )
 
-	else
-
-		self.Owner:EmitSound( DenySound )
-		self:SetNextPrimaryFire( CurTime() + 1 )
-
 	end
 
 end
@@ -101,36 +111,42 @@ function SWEP:SecondaryAttack()
 	if ( CLIENT ) then return end
 
 	local ent = self.Owner
+	if not IsValid(ent) then return end
 
-	local need = self.HealAmount
-	if ( IsValid( ent ) ) then need = self.HealAmount end
-
-	if ( IsValid( ent ) && self:Clip1() >= need) then
-
-		self:TakePrimaryAmmo( need )
-
-        local healinfo = HealInfo:New({amount=need, healer=self.Owner})
-		if ent:IsPlayer() then
-			HORDE:OnPlayerHeal(ent, healinfo)
-		elseif ent:GetClass() == "npc_vj_horde_antlion" then
-			HORDE:OnAntlionHeal(ent, healinfo)
-		end
-        
-		ent:EmitSound( HealSound )
-
-		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-
-		self:SetNextSecondaryFire( CurTime() + self:SequenceDuration() + 0.5 )
-		self.Owner:SetAnimation( PLAYER_ATTACK1 )
-
-		timer.Create( "weapon_idle" .. self:EntIndex(), self:SequenceDuration(), 1, function() if ( IsValid( self ) ) then self:SendWeaponAnim( ACT_VM_IDLE ) end end )
-
+	local overheal = 1.2
+	if ent:Horde_GetPerk("medic_painkillers") then
+		overheal = overheal
 	else
-
-		ent:EmitSound( DenySound )
-		self:SetNextSecondaryFire( CurTime() + 1 )
-
+		overheal = 1
 	end
+
+	local need = math.min(ent:GetMaxHealth() * overheal - ent:Health(), (ent:GetMaxHealth() * 0.2)) or self.HealAmount
+	local medkit_heal_coeff = ent:GetMaxHealth() / math.max(1, self.Primary.ClipSize)
+	local medkit_charge_coeff = math.min(1, self:Clip1() / (need / medkit_heal_coeff))
+
+	if ent:Health() >= ent:GetMaxHealth() * (overheal) then
+		ent:EmitSound(DenySound)
+		self:SetNextSecondaryFire(CurTime() + 1)
+		return
+	end
+
+	self:TakePrimaryAmmo( need / medkit_heal_coeff * medkit_charge_coeff )
+
+	local healinfo = HealInfo:New({amount = need * medkit_charge_coeff, healer=self.Owner})
+	if ent:IsPlayer() then
+		HORDE:OnPlayerHeal(ent, healinfo)
+	elseif ent:GetClass() == "npc_vj_horde_antlion" then
+		HORDE:OnAntlionHeal(ent, healinfo)
+	end
+
+	ent:EmitSound( HealSound )
+
+	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
+
+	self:SetNextSecondaryFire( CurTime() + self:SequenceDuration() + 0.5 )
+	self.Owner:SetAnimation( PLAYER_ATTACK1 )
+
+	timer.Create( "weapon_idle" .. self:EntIndex(), self:SequenceDuration(), 1, function() if ( IsValid( self ) ) then self:SendWeaponAnim( ACT_VM_IDLE ) end end )
 
 end
 
@@ -157,4 +173,8 @@ function SWEP:CustomAmmoDisplay()
 
 	return self.AmmoDisplay
 
+end
+
+function SWEP:OnDrop()
+	self:Remove()
 end

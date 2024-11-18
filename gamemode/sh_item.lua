@@ -429,7 +429,7 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Pistol", "Medic 9mm", "arccw_horde_medic_9mm", 75, 1,
         "Modified 9mm that provides ranged healing.\n\nPress B or ZOOM to fire healing darts.\nHealing dart recharges every 1 second.",
         { Medic = true, Hatcher = true, }, 2, -1, nil, "items/weapon_medic_9mm.png", nil, nil, { HORDE.DMG_BALLISTIC, HORDE.DMG_POISON },
-        nil, { "Medic" })
+        nil, { "Medic", "Hatcher" })
     HORDE:CreateItem("Pistol", "357", "arccw_horde_357", 100, 2,
         "Colt python magnum pistol.\nUsed by Black Mesa security guards.",
         { Ghost = true, Gunslinger = true, }, 3, -1, nil, "items/hl2/weapon_357.png", nil, nil, { HORDE.DMG_BALLISTIC }, nil,
@@ -542,7 +542,7 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Shotgun", "Pump-Action", "arccw_horde_shotgun", 100, 3, "A standard 12-gauge shotgun.",
         { Warden = true, Overlord = true, }, 6, -1, nil, "items/hl2/weapon_shotgun.png", nil, nil, { HORDE.DMG_BALLISTIC }, nil,
-        { "Warden" })
+        { "Warden", "Overlord", })
     HORDE:CreateItem("Shotgun", "Nova", "arccw_go_nova", 1000, 4, "Benelli Nova.\nItalian pump-action 12-gauge shotgun.",
         { Assault = true, SpecOps = true, Heavy = true, Survivor = true, Psycho = true, Engineer = true, Warden = true, Overlord = true, }, 10, -1, nil, nil, nil, nil,
         { HORDE.DMG_BALLISTIC })
@@ -880,7 +880,7 @@ function HORDE:GetDefaultItemsData()
         - Immune to Poison damage and Break.]],
         { Hatcher = true }, -1, -1, nil, nil, nil, nil, { HORDE.DMG_SLASH, HORDE.DMG_POISON }, nil, { "Hatcher" }, true)
 
-    HORDE:CreateItem("Equipment", "Medkit", "weapon_horde_medkit", 50, 0,
+    HORDE:CreateItem("Equipment", "Medkit", "weapon_horde_medkit", 0, 0,
         "Rechargeble medkit.\nRMB to self-heal, LMB to heal others.",
         nil, 10, -1, nil, "items/weapon_medkit.png", nil, nil, nil, nil, { "Survivor", "Psycho", "Assault", "SpecOps", "Medic", "Hatcher", "Heavy", "Carcass", "Demolition", "Warlock", "Ghost", "Gunslinger", "Engineer", "Necromancer", "Berserker", "Samurai", "Warden", "Overlord", "Cremator", "Artificer", })
     HORDE:CreateItem("Equipment", "Health Vial", "item_healthvial", 15, 0,

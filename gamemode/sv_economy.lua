@@ -3,7 +3,16 @@ concommand.Add("horde_drop_money", function (ply, cmd, args)
 end)
 
 concommand.Add("horde_drop_weapon", function (ply, cmd, args)
-    if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and (ply:GetActiveWeapon().Base == "horde_spell_weapon_base" or ply:GetActiveWeapon().Base == "arccw_horde_base_nade" or ply:GetActiveWeapon():GetClass() == "horde_slam" or ply:GetActiveWeapon():GetClass() == "horde_pheropod" or ply:GetActiveWeapon():GetClass() == "horde_carcass") then
+    local cannotdropbase = {
+    horde_spell_weapon_base = "horde_spell_weapon_base",
+    arccw_horde_base_nade = "arccw_horde_base_nade",}
+    local cannotdropclass = {
+    horde_pheropod = "horde_pheropod",
+    horde_carcass = "horde_carcass",
+    weapon_horde_medkit = "weapon_horde_medkit",
+    --[[horde_slam = "horde_slam",]]}
+    if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and (ply:GetActiveWeapon():GetClass() == cannotdropclass[ply:GetActiveWeapon():GetClass()] or ply:GetActiveWeapon().Base == cannotdropbase[ply:GetActiveWeapon().Base]) then
+        ply:EmitSound("player/suit_denydevice.wav")
         return
     end
     ply:DropWeapon()
@@ -158,6 +167,31 @@ function plymeta:Horde_RemoveDropEntity(class, entity_creation_id, weightless)
     local item = HORDE.items[class]
     if item and (not weightless) then
         self:Horde_AddWeight(item.weight)
+    end
+end
+
+function plymeta:Horde_RemoveMinionsAndDrops()
+    if not self:IsValid() then return end
+    if HORDE.player_drop_entities[self:SteamID()] then
+        for _, ent in pairs(HORDE.player_drop_entities[self:SteamID()]) do
+            if ent:IsValid() and ent:GetNWEntity("HordeOwner"):IsPlayer() then
+                local eClass = ent:GetClass()
+                local item = HORDE.items[eClass]
+                if item then
+                    self:Horde_AddMoney(math.floor(0.25 * item.price))
+                end
+                ent:Remove()
+                if self.Horde_drop_entities and self.Horde_drop_entities[eClass] then
+                    self.Horde_drop_entities[eClass] = self.Horde_drop_entities[eClass] - 1
+                    if self.Horde_drop_entities[eClass] == 0 then
+                        self.Horde_drop_entities[eClass] = nil
+                    end
+                end
+                if item and not ent:IsNPC() then
+                    self:Horde_AddWeight(item.weight)
+                end
+            end
+        end
     end
 end
 
@@ -725,7 +759,7 @@ net.Receive("Horde_SellItem", function (len, ply)
     end
     if ply:HasWeapon(class) then
         local item = HORDE.items[class]
-        ply:Horde_AddMoney(math.floor(item.price * 0.75))
+        ply:Horde_AddMoney(math.floor(item.price * 0.25))
         ply:StripWeapon(class)
         ply:Horde_SyncEconomy()
     else
@@ -733,7 +767,7 @@ net.Receive("Horde_SellItem", function (len, ply)
         if item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
             local drop_entities = ply:Horde_GetDropEntities()
             if drop_entities and drop_entities[class] then
-                ply:Horde_AddMoney(math.floor(0.75 * item.price * drop_entities[class]))
+                ply:Horde_AddMoney(math.floor(0.25 * item.price * drop_entities[class]))
                 -- Remove all the drop entiies of this player
                 for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
                     if ent:IsValid() and ent:GetClass() == class then
@@ -759,7 +793,7 @@ net.Receive("Horde_SellItem", function (len, ply)
             if ply:Horde_GetGadget() == nil then return end
             ply:Horde_UnsetGadget()
             -- Sell value function in sh_gadget for plymeta:Horde_unsetGadget() for timing
-            --ply:Horde_AddMoney(math.floor(0.75 * item.price))
+            --ply:Horde_AddMoney(math.floor(0.25 * item.price))
             ply:Horde_SyncEconomy()
         end
     end
@@ -829,6 +863,9 @@ net.Receive("Horde_SelectClass", function (len, ply)
             if ent:IsValid() then
                 local eClass = ent:GetClass()
                 local item = HORDE.items[eClass]
+                if item then
+                    ply:Horde_AddMoney(math.floor(0.25 * item.price))
+                end
                 ent:Remove()
                 if ply.Horde_drop_entities and ply.Horde_drop_entities[eClass] then -- Remove them from here too
                     ply.Horde_drop_entities[eClass] = ply.Horde_drop_entities[eClass] - 1

@@ -43,7 +43,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         for _, wpn in pairs(ply:GetWeapons()) do
             ply:DropWeapon(wpn)
         end
-        timer.Simple(0, function()
+        timer.Simple(0.1, function()
             if !ply:Alive() then return end
             if !ply:Horde_GetPerk("necromancer_base") then return end
             ply:Give("horde_void_projector")
@@ -70,6 +70,8 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
         ply:Horde_SetMind(0)
         ply:Horde_SetMindRegenTick(0)
         ply:SetMaxArmor(100)
+        -- Removes minions (for subclass swapping)
+        ply:Horde_RemoveMinionsAndDrops()
     end
 end
 
