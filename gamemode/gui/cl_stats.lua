@@ -259,97 +259,80 @@ function PANEL:Init()
     update_text_panel:SetSize(self:GetParent():GetWide(), 2000)
     update_text_panel:SetVisible(true)
     local update_text =[[
-        -- Assist
-            Added a simple assist reward.
+-- New Framework and Mechanics --
 
-        -- Class Grenades
-        Each class now has its own unique grenade that complements its playstyle.
-        Grenades have an ammo limit of 6 in total.
-        
-        < Assasult: Stun Grenade (arccw_horde_nade_stun)
-        < Heavy: Shrapnel Grenade (arccw_horde_nade_shrapnel)
-        < Ghost: Sonar Grenade (arccw_horde_nade_sonar)
-        < Demolition: M67 Frag Grenade (arccw_horde_m67)
-        < Medic: Medic Grenade (arccw_nade_medic)
-        < Engineer: Nanobot Grenade (arccw_horde_nade_nanobot)
-        < Berserker: Hemo Grenade (arccw_horde_nade_hemo)
-        < Warden: EMP Grenade (arccw_horde_nade_emp)
-        < Cremator: Molotov (arccw_horde_nade_molotov)
-        
-        -- Assault Class Changes:
-        Item Changes:
-            < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
-            < Reworked Weapon: FAMAS (arccw_horde_famas)
-            < Reworked Weapon: Galil (arccw_horde_ace)
-            < Reworked Weapon: M4A1 (arccw_horde_m4)
-            < Reworked Weapon: AK47 (arccw_horde_ak47)
-            < Reworked Weapon: SG556 (arccw_horde_sg556)
-            < Reworked Weapon: AUG (arccw_horde_aug)
-        
-        -- Heavy Class Changes
-        Perk Changes:
-            < Added maximum armor bonus passive.
-            < Ballistic Shock effect changed.
-            < Reactive Armor perk effect changed.
-        
-        Item Changes:
-            < Rebalanced weapon damage values and prices. The goal is to make more high tier weapons available.
-            < Weapons with visible Bipods will now have Bipods by default.
-            < Energy Shield gadget effect changed.
-            < ULPA Filter gadget effect changed.
-            < New Gadget: Armor Fusion (gadget_armor_fusion)
-        
-        -- Demolition Class Changes
-        Perk changes:
-            < Reduced Blast resistance passive
-            < Added Blast damage bonus passive
-            < Pressurized Warhead / Chain Reaction effects changed
-        
-        Weapon changes:
-            < All default config demolition weapons now have arm distance and headshot detection.
-            < Added two new attachments for explosive projectile weapons.
-            < Rebalanced weapon damage values.
-            < New Weapon: FGM-148 Javelin (arccw_horde_javelin)
-        
-        -- Medic Class Changes:
-        Item Changes:
-            < New Weapon: MP9 Medic (arccw_horde_mp9m)
-            < New Weapon: MP5K Medic (arccw_horde_mp5k)
-            < New Weapon: ACR Medic (arccw_horde_medic_acr)
-            < New Gadget: Aegis (gadget_aegis)
-        
-        -- Ghost Class Changes:
-        Item Changes:
-            < Slightly reduced damage of Barrett and M200.
-            < Increased price and damage of AWP.
-            < Increased damage of heat crossbow.
-            < Automatic weapons have been removed from Ghost weapon pool.
-            < Dual pistols off-hand damage have been fixed.
-            < New Weapon: SSG08 (arccw_horde_ssg08)
-        
-        -- Warden Class Changes:
-        Perk Changes:
-            < Energize and Inoculation have switched slots.
-            < Energize now only applies to damage instance at least 8.
-        
-        Item Changes:
-            < Fixed Double Barrel dealing too much damage as intended and added back knockback boost.
-            < Reworked Weapon: SPAS12 (arccw_horde_spas12)
-        
-        -- Cremator Class Changes:
-        Perk Changes:
-            < Reduced passive Fire damage resistance.
-            < Entropy Shield effect changed.
-        
-        Item Changes:
-            < Increased price of some weapons.
-        
-        -- Berserker Class Changes:
-        Item Changes:
-            < New Gadget: Omnislash (gadget_omnislash)]]
-    local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
+
+
+-- Perks that have access to their special grenades can now throw their grenades via the quicknade hotkey, “G” by default. Or bind, “horde_use_quick_grenade” to a key/button. You can also disable the default quick grenade key by typing, “"horde_disable_default_quick_grenade_key 1" into the console command.
+
+-- Classes and Subclasses now use their own whitelist pools giving them their own unique shop config. If you use your own custom config, you’ll have to set them up again for the subclasses unfortunately.
+
+-- Screen effects now use a border hud like system for the base framework (it currently only affects when being healing, as other screen effects will come in future perk updates such as Psycho’s Frenzy Mode screen effect).
+
+-- Area of effects such as explosions now use a different formula that allows better control over drop off damage and entity detection (only the framework is here and is meant for future perk updates).
+
+-- Items and Gadgets that are automatically stripped (swapping classes) are now instead automatically sold. Gadgets that are purchased while you already have a gadget are now automatically sold (you’ll still need to have the amount of money to buy it but the correct amount of money will be deducted or refunded after purchase).
+
+
+
+-- Gameplay Changes --
+
+
+-- Ammo boxes will now restore secondary ammo reserves (secondary ammo reserves are ammunition used by equipment like underbarrel grenade launchers).
+
+
+
+-- Weapon Changes --
+
+
+
+-- Medkit --
+
+-- Medkit will now consume up to 20 charges to heal up to 20% of your maximum health and scale accordingly to how much charges are remaining instead of requiring a flat 20 charges to heal a flat 20 amount of health.
+
+-- Medkit now works while holding your fire button so you don’t have to spam it.
+
+-- Medkit now requires you to have a target in order to heal your target (this means that you can hold your left mouse and flick your mouse and it will instantly heal your target if there is an eligible target.
+
+-- Medkit weight is now 0.
+
+-- Medkit purchase cost is now 0.
+
+-- Every class now starts with a Medkit.
+
+-- You cannot drop Medkits (you can still sell it to get rid of it).
+
+-- You can no longer use Medkit if you’re at 100% maximum health or at maximum overhealed health (this prevents you from wasting Medkit charges).
+
+-- Fixed ammo boxes being eaten due to Medkits never having a full ammo reserve.
+
+
+
+-- Grenades --
+
+-- Throwing your last grenade never gets rid of your grenade, allowing you to still pick up ammo boxes to refill your grenades. You’ll still have a grenade in your hand while having zero grenades so rip your immersion.
+
+-- Grenades now have 2 different throwing modes.
+
+-- Primary fire (default - left mouse button) will not cook your grenade and throw your grenade at full velocity while having full bounce effect.
+
+-- Secondary fire (default - right mouse) will cook your grenade and throw your grenade at full velocity while having a dampened effect, which will backspin your grenade causing it to cancel most of its momentum.
+
+-- Quick grenades will throw grenades at a significantly lower velocity while having a dampened effect. 
+
+-- Grenades can no longer be dropped (you can still sell it to get rid of it)
+
+-- Maximum special grenade reserve capacity limited to 9 grenades
+
+-- Most grenades have had their fuse time set to 2 seconds with the exception of stun grenades which have 1.25 seconds.
+
+-- Assault and SpecOps stun grenades no longer flashbangs yourself or others, destroy your ears or other ears, nor deal damage to yourself or enemies.
+
+-- Stun grenades now always have full stun buildup power (this means it will always stun the enemy no matter the difficulty as long as their internal stun cooldown is off cooldown).
+]]
+    local mt = multlinetext(update_text, update_text_panel:GetWide() - 550, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Major Update 1.2.1", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText("Dank Update 2.0.0", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 

@@ -34,11 +34,11 @@ SWEP.WorldModelOffset = {
     ang = Angle(-10, 0, 180)
 }
 
-SWEP.FuseTime = 5
+SWEP.FuseTime = 2
 
 SWEP.Throwing = true
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = -1
 
 
 SWEP.MuzzleVelocity = 1000

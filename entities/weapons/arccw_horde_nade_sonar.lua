@@ -39,7 +39,7 @@ SWEP.FuseTime = 2.5
 
 SWEP.Throwing = true
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = -1
 
 SWEP.MuzzleVelocity = 1000
 SWEP.ShootEntity = "arccw_thr_sonar"
@@ -48,7 +48,7 @@ SWEP.TTTWeaponType = "weapon_ttt_confgrenade"
 SWEP.NPCWeaponType = "weapon_grenade"
 SWEP.NPCWeight = 50
 
-SWEP.PullPinTime = 0.25
+SWEP.PullPinTime = 0.5
 
 SWEP.Animations = {
     ["draw"] = {

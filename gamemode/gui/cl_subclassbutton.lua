@@ -35,11 +35,11 @@ function PANEL:Init()
     self.locked_panel:SetMouseInputEnabled(false)
     self.locked_panel.Paint = function ()
         if self.locked then
-            draw.SimpleText(self.info.subclass.UnlockCost, "Info", p:GetWide() - 65, 28, color_white, TEXT_ALIGN_CENTER)
+            draw.SimpleText(self.info.subclass.UnlockCost, "Info", p:GetWide() - 38, 8, color_white, TEXT_ALIGN_CENTER)
             local mat = Material("skull.png", "mips smooth")
             surface.SetDrawColor(color_white)
             surface.SetMaterial(mat) -- Use our cached material
-            surface.DrawTexturedRect(p:GetWide() - 42, 22, 32, 32)
+            surface.DrawTexturedRect(p:GetWide() - 26, 2, 24, 24)
         end
     end
 end
@@ -121,8 +121,14 @@ function PANEL:SetData(classname, subclass_name)
         self.icon:SetImageColor(Color(150,150,150,255))
         self.title:SetColor(Color(150,150,150,255))
         self.desc:SetColor(Color(150,150,150,255))
-        self.title:SetText("???")
-        self.desc:SetText("??????\n??????")
+        --self.title:SetText("???")
+        --self.desc:SetText("??????\n??????")
+        local text = subclass.Description .. "\n"
+        local loc_desc = translate.Get("Subclass_" .. subclass.Description) or text
+        self.desc:SetText(loc_desc)
+        local title = subclass.PrintName or "Unnamed Subclass"
+        local loc_title = translate.Get("Subclass_Title_" .. title) or subclass.PrintName
+        self.title:SetText(loc_title)
         self.desc:SetFont("Horde_PerkButton_Text")
     else
         self.icon:SetImageColor(color_white)

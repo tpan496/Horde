@@ -41,10 +41,16 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         for _, wpn in pairs(ply:GetWeapons()) do
             ply:DropWeapon(wpn)
         end
-        timer.Simple(0, function() ply:Give("horde_pheropod") end)
+        timer.Simple(0.1, function() ply:Give("horde_pheropod") end)
     end
 end
 
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
+    if SERVER and perk == "hatcher_base" then
+        -- Removes minions (for subclass swapping)
+        ply:Horde_RemoveMinionsAndDrops()
+    end
+end
 
 PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
     if SERVER then

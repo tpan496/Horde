@@ -105,6 +105,9 @@ function plymeta:Horde_UnsetGadget()
         if item then
             self:Horde_AddWeight(item.weight)
         end
+        if not self.has_used_consumable_gadget then
+            self:Horde_AddMoney(math.floor(0.25 * item.price))
+        end
     end
     hook.Run("Horde_OnUnsetGadget", self, self.Horde_Gadget)
     if SERVER then
@@ -160,6 +163,10 @@ if SERVER then
             net.Send(ply)
 
             if HORDE.gadgets[ply:Horde_GetGadget()].Once then
+                ply.has_used_consumable_gadget = true
+                timer.Simple(0, function ()
+                    ply.has_used_consumable_gadget = nil
+                end)
                 ply:Horde_UnsetGadget()
                 ply:Horde_SyncEconomy()
             end

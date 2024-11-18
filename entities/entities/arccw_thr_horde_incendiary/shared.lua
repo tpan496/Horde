@@ -74,9 +74,13 @@ function ENT:Initialize()
 
         self.SpawnTime = CurTime()
 
+        if self.Owner.GrenadeDampened then
+            self.dampening = true
+        end
+
         timer.Simple(0, function()
             if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+            self:SetCollisionGroup(COLLISION_GROUP_PLAYER)
         end)
     end
 
@@ -89,7 +93,9 @@ end
 
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
-        self:GetPhysicsObject():SetDamping(2,2)
+        if self.dampening then
+            self:GetPhysicsObject():SetDamping(6, 2)
+        end
         if data.Speed > 75 then
             self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
         elseif data.Speed > 25 then

@@ -203,11 +203,25 @@ if game.SinglePlayer() then
             ply.Horde_In_LShift = nil
         end
     end)
+
+    hook.Add("PlayerButtonDown", "Horde_G_Key", function(ply, key)
+        if GetConVar("horde_disable_default_quick_grenade_key"):GetInt() == 1 then return end
+        if (key == KEY_G) then
+            ply:ConCommand("horde_use_quick_grenade")
+        end
+    end)
 else
     if CLIENT then
     hook.Add("PlayerButtonDown", "Horde_UseKeyAndShift", function(ply, key)
         if (key == KEY_E) and input.IsButtonDown(KEY_LSHIFT) then
             ply:ConCommand("horde_use_perk_skill")
+        end
+    end)
+
+    hook.Add("PlayerButtonDown", "Horde_G_Key", function(ply, key)
+        if GetConVar("horde_disable_default_quick_grenade_key"):GetInt() == 1 then return end
+        if (key == KEY_G) then
+            ply:ConCommand("horde_use_quick_grenade")
         end
     end)
     end
@@ -293,4 +307,128 @@ if SERVER then
             ply:Horde_SetPerkNextThink(CurTime() + 1)
         end
     end)
+	
+    -- Quick Grenade. It's hand crafted for now so it won't work with workshop subclasses.
+    function HORDE:UseQuickGrenade(ply)
+        if ply:HasWeapon("horde_carcass") or ply:HasWeapon("horde_astral_relic") or ply:HasWeapon("horde_void_projector") or ply:HasWeapon("horde_solar_seal") then return end
+        local classes = {
+            --[[ -- Survivor and Psycho will get their own special grenade instead of default. Default grenade doesn't work well.
+            ["Survivor"] = {
+                grenadeclass = "weapon_frag",
+                grenadethrown = "npc_grenade_frag",
+            },
+            ["Psycho"] = {
+                grenadeclass = "weapon_frag",
+                grenadethrown = "npc_grenade_frag",
+            },
+            ]]
+            ["Assault"] = {
+                grenadeclass = "arccw_horde_nade_stun",
+                grenadethrown = "arccw_thr_stun",
+            },
+            ["SpecOps"] = {
+                grenadeclass = "arccw_horde_nade_stun",
+                grenadethrown = "arccw_thr_stun",
+            },
+            ["Heavy"] = {
+                grenadeclass = "arccw_horde_nade_shrapnel",
+                grenadethrown = "arccw_thr_shrapnel",
+            },
+            --Carcass can't use grenades
+            ["Medic"] = {
+                grenadeclass = "arccw_nade_medic",
+                grenadethrown = "arccw_thr_medicgrenade",
+            },
+            ["Hatcher"] = {
+                grenadeclass = "arccw_nade_medic",
+                grenadethrown = "arccw_thr_medicgrenade",
+            },
+            ["Demolition"] = {
+                grenadeclass = "arccw_horde_m67",
+                grenadethrown = "arccw_thr_horde_m67",
+            },
+            --Warlock can't use grenades
+            ["Ghost"] = {
+                grenadeclass = "arccw_horde_nade_sonar",
+                grenadethrown = "arccw_thr_sonar",
+            },
+            ["Gunslinger"] = {
+                grenadeclass = "arccw_horde_nade_sonar",
+                grenadethrown = "arccw_thr_sonar",
+            },
+            ["Engineer"] = {
+                grenadeclass = "arccw_horde_nade_nanobot",
+                grenadethrown = "arccw_thr_nanobot",
+            },
+            --Necromancer can't use grenades
+            ["Berserker"] = {
+                grenadeclass = "arccw_horde_nade_hemo",
+                grenadethrown = "arccw_thr_hemo",
+            },
+            ["Samurai"] = {
+                grenadeclass = "arccw_horde_nade_hemo",
+                grenadethrown = "arccw_thr_hemo",
+            },
+            ["Warden"] = {
+                grenadeclass = "arccw_horde_nade_emp",
+                grenadethrown = "arccw_thr_emp",
+            },
+            ["Overlord"] = {
+                grenadeclass = "arccw_horde_nade_emp",
+                grenadethrown = "arccw_thr_emp",
+            },
+            ["Cremator"] = {
+                grenadeclass = "arccw_horde_nade_molotov",
+                grenadethrown = "arccw_thr_horde_molotov",
+            },
+            --Artificer can't use grenades
+        }
+        
+        local nade = ply:GetActiveWeapon()
+        if classes[ply:Horde_GetCurrentSubclass()] == nil then return end
+        if ply:GetAmmoCount("Grenade") <= 0 or nade.Base == "arccw_horde_base_nade" or (!ply:HasWeapon(classes[ply:Horde_GetCurrentSubclass()].grenadeclass)) then 
+            ply:EmitSound("player/suit_denydevice.wav") return 
+        end
+        
+        if ply:Horde_GetSpamPerkCooldown() > CurTime() then return true end
+        ply:Horde_SetSpamPerkCooldown(CurTime() + 0.35)
+        ply:SetAmmo(ply:GetAmmoCount("Grenade") - 1, "Grenade")
+        ply.GrenadeDampened = true
+        
+        local grenade = ents.Create(classes[ply:Horde_GetCurrentSubclass()].grenadethrown)
+        local vel = 15
+        local ang = ply:EyeAngles()
+
+        local src = (ply:EyePos() + Vector(0,0,-3) + ( ply:GetAimVector() * 16 ) + (ply:GetRight()*-4))
+
+        if !grenade:IsValid() then print("!!! INVALID ROUND " .. grenade) return end
+
+        local grenadeAng = Angle(ang.p, ang.y, ang.r)
+
+        grenade:SetAngles(grenadeAng)
+        grenade:SetPos(src)
+
+        grenade:SetOwner(ply)
+        grenade.Owner = ply
+        grenade.Inflictor = grenade
+
+        local RealVelocity = (ply:GetAbsVelocity() or Vector(0, 0, 0)) + ang:Forward() * vel / 0.0254
+        grenade.CurVel = RealVelocity -- for non-physical projectiles that move themselves
+
+        grenade:Spawn()
+        grenade:Activate()
+        
+        local spin = grenade:GetPhysicsObject()
+        spin:AddAngleVelocity(Vector(0, -750, 0))
+        
+        if !grenade.NoPhys and grenade:GetPhysicsObject():IsValid() then
+            grenade:SetCollisionGroup(grenade.CollisionGroup or COLLISION_GROUP_DEBRIS)
+            grenade:GetPhysicsObject():SetVelocityInstantaneous(RealVelocity)
+        end
+
+        if grenade.Launch and grenade.SetState then
+            grenade:SetState(1)
+            grenade:Launch()
+        end
+    end
 end

@@ -376,74 +376,103 @@ function PANEL:Init()
             return {checkboxes=entity_checkboxes, editors={weapon_editor=weapon_editor, weapon_manual_toggle=weapon_manual_toggle, weapon_editor_manual=weapon_editor_manual, entity_editor=entity_editor, give_editors=give_editors, give_arccw_attachment_editor=arccw_attachment_editor, give_arccw_attachment_type_editor=arccw_attachment_type_editor, drop_editors=drop_editors, drop_editor_x = hor_editor, drop_editor_z = ver_editor, drop_editor_yaw = yaw_editor, drop_editor_limit = limit_editor, gadget_editor = gadget_editor}}
         elseif name == "whitelist" then
             local editors = {}
-            local start_pos = 70
-            local start_pos_2 = 70
-            local i = 1
-            local classes = {"Survivor", "Assault", "Heavy", "Medic", "Demolition", "Ghost", "Engineer", "Berserker", "Warden", "Cremator"}
+
+            local classes = {}
+            for k,v in pairs(HORDE.subclasses) do
+                table.insert(classes, k)
+                table.sort(classes)
+            end
+
+            local AmountOfClasses = table.Count(classes)
+            local maxrows = 3
+            local columns = math.ceil(AmountOfClasses / maxrows)
+            local current = 0
+            local side_margin = 74
+            local w, h = 104, 24
+            local size = columns * h
+            local y = (panel:GetTall() * 0.5) - (size * 0.5)
+
             for _, class in pairs(classes) do
                 local editor = vgui.Create("DCheckBoxLabel", panel)
-                editor:SetSize(75, height / 2)
-                if i <= 5 then
-                    editor:SetPos(start_pos, 25)
-                    start_pos = start_pos + 75
-                else
-                    editor:SetPos(start_pos_2, 45)
-                    start_pos_2 = start_pos_2 + 75
-                end
+                editor:SetSize(w, h)
                 editor:SetText(class)
-                editor:SetTextColor(Color(0,0,0))
+                editor:SetTextColor(Color(0, 0, 0))
                 editor:SetChecked(true)
+                editor:SetPos(side_margin + current * w, y)
                 table.insert(editors, editor)
-                i = i + 1
+
+                current = current + 1
+                if(current >= maxrows) then
+                    y = y + h
+                    current = 0
+                end
             end
 
             return editors
         elseif name == "levels" then
-            local label = vgui.Create("DLabel", panel)
-            label:SetText("(0-99) 5=Amateur, 10=Skilled, 15=Pro, etc.")
-            label:SetTextColor(Color(0,0,0))
-            label:SetPos(80,100)
-            label:SetWide(200)
-
             local editors = {}
-            local start_pos = 80
-            local start_pos_2 = 80
-            local i = 1
-            local classes = {"Survivor", "Assault", "Heavy", "Medic", "Demolition", "Ghost", "Engineer", "Berserker", "Warden", "Cremator"}
+
+            local classes = {}
+            for k,v in pairs(HORDE.subclasses) do
+                table.insert(classes, k)
+                table.sort(classes)
+            end
+
+            local AmountOfClasses = table.Count(classes)
+            local maxrows = 3
+            local columns = math.ceil(AmountOfClasses / maxrows)
+            local current = 0
+            local side_margin = 74
+            local w, h = 104, 36
+            local size = columns * h
+            local y = (panel:GetTall() * 0.5) - (size * 0.5)
+
+            local label = vgui.Create("DLabel", panel)
+            label:SetText("(0-100) 5 = Green, 10 = Blue, 15 = Purple, \n20 = Orange, 25 = Yellow, 30+ = Red")
+            label:SetTextColor(Color(0,0,0))
+            label:SetPos(side_margin + current * w, y - 50)
+            label:SetSize(200, 100)
+
             for _, class in pairs(classes) do
                 local editor = vgui.Create("DTextEntry", panel)
                 editor:SetSize(25, 25)
+                editor:SetTextColor(Color(0, 0, 0))
+                editor:SetPos(side_margin + current * w, y + 25)
 
                 local editor_label = vgui.Create("DLabel", panel)
                 editor_label:SetText(class)
                 editor_label:SetTextColor(Color(0,0,0))
-                if i <= 5 then
-                    editor:SetPos(start_pos, 25)
-                    editor_label:SetPos(start_pos + 30, 25)
-                    start_pos = start_pos + 75
-                else
-                    editor:SetPos(start_pos_2, 65)
-                    editor_label:SetPos(start_pos_2 + 30, 65)
-                    start_pos_2 = start_pos_2 + 75
-                end
+                editor_label:SetPos(side_margin + 30 + current * w, y + 27)
 
                 table.insert(editors, {editor=editor, label=editor_label})
-                i = i + 1
+
+                current = current + 1
+                if(current >= maxrows) then
+                    y = y + h
+                    current = 0
+                end
             end
 
             return editors
-        elseif name == "damage type" then
+        elseif name == "damage \n  type" then
             local editors = {}
-            local start_pos = 70
-            local start_pos_2 = 70
-            local i = 1
+
             local dmgs =
                 {a=HORDE.DMG_BALLISTIC, b=HORDE.DMG_SLASH, c=HORDE.DMG_BLUNT, d=HORDE.DMG_PHYSICAL,
                 e=HORDE.DMG_FIRE, f=HORDE.DMG_COLD, g=HORDE.DMG_LIGHTNING, h=HORDE.DMG_POISON, i=HORDE.DMG_BLAST}
+
+            local AmountOfDmgTypes = table.Count(dmgs)
+            local maxrows = 3
+            local columns = math.ceil(AmountOfDmgTypes / maxrows)
+            local current = 0
+            local side_margin = 74
+            local w, h = 114, 24
+            local size = columns * h
+            local y = (panel:GetTall() * 0.5) - (size * 0.5)
+
             for _, dmg in SortedPairs(dmgs) do
                 local editor = vgui.Create("DCheckBoxLabel", panel)
                 local lb = vgui.Create("DLabel", panel)
-                lb:SetWidth(100)
                 local icon = vgui.Create("DPanel", panel)
                 icon.Paint = function ()
                     local icon2 = Material(HORDE.DMG_TYPE_ICON[dmg], "mips smooth")
@@ -453,38 +482,36 @@ function PANEL:Init()
                     surface.SetDrawColor(color)
                     surface.DrawTexturedRect(0, 0, 15, 15)
                 end
-                editor:SetSize(100, height / 2)
-                if i <= 4 then
-                    editor:SetPos(start_pos, 25)
-                    lb:SetPos(start_pos + 40, 25)
-                    icon:SetPos(start_pos + 20, 25)
-                    start_pos = start_pos + 90
-                else
-                    editor:SetPos(start_pos_2, 45)
-                    lb:SetPos(start_pos_2 + 40, 45)
-                    icon:SetPos(start_pos_2 + 20, 45)
-                    start_pos_2 = start_pos_2 + 90
-                end
+
+                lb:SetWidth(100)
                 lb:SetText(HORDE.DMG_TYPE_STRING[dmg])
                 lb:SetTextColor(Color(0,0,0))
+                lb:SetPos(side_margin + current * w + 38, y - 2)
+
+                icon:SetPos(side_margin + current * w + 19, y)
+
+                editor:SetSize(w, h)
                 editor:SetText("")
                 editor:SetTextColor(Color(0,0,0))
                 editor:SetChecked(true)
                 editor.dmgtype = dmg
+                editor:SetPos(side_margin + current * w, y)
+                editor.infusion = infusion
                 table.insert(editors, editor)
-                i = i + 1
+
+                current = current + 1
+                if(current >= maxrows) then
+                    y = y + h
+                    current = 0
+                end
             end
 
             return editors
         elseif name == "infusions" then
             local editors = {}
-            local start_pos = 70
-            local start_pos_2 = 70
-            local start_pos_3 = 70
-            local start_pos_4 = 70
-            local i = 1
-            local infusions =
-                {a=HORDE.Infusion_Hemo,
+
+            local infusions = {
+                a=HORDE.Infusion_Hemo,
                 b=HORDE.Infusion_Concussive,
                 c=HORDE.Infusion_Septic,
                 d=HORDE.Infusion_Flaming,
@@ -497,11 +524,29 @@ function PANEL:Init()
                 k=HORDE.Infusion_Siphoning,
                 l=HORDE.Infusion_Titanium,
                 m=HORDE.Infusion_Chrono,
-                n=HORDE.Infusion_Ruination}
+                n=HORDE.Infusion_Ruination,
+                --[[
+                o=HORDE.Infusion_Rush,
+                p=HORDE.Infusion_Tech,
+                q=HORDE.Infusion_Gizmo,
+                r=HORDE.Infusion_Onslaught,
+                s=HORDE.Infusion_Chaotic,
+                t=HORDE.Infusion_Echo,
+                ]]
+                }
+
+            local AmountOfInfusions = table.Count(infusions)
+            local maxrows = 3
+            local columns = math.ceil(AmountOfInfusions / maxrows)
+            local current = 0
+            local side_margin = 74
+            local w, h = 104, 24
+            local size = columns * h
+            local y = (panel:GetTall() * 0.5) - (size * 0.5)
+
             for _, infusion in SortedPairs(infusions) do
                 local editor = vgui.Create("DCheckBoxLabel", panel)
                 local lb = vgui.Create("DLabel", panel)
-                lb:SetWidth(100)
                 local icon = vgui.Create("DPanel", panel)
                 icon.Paint = function ()
                     local icon2 = Material(HORDE.Infusion_Icons[infusion], "mips smooth")
@@ -511,36 +556,27 @@ function PANEL:Init()
                     surface.SetDrawColor(color)
                     surface.DrawTexturedRect(0, 0, 15, 15)
                 end
-                editor:SetSize(100, height / 2)
-                if i <= 4 then
-                    editor:SetPos(start_pos, 25)
-                    lb:SetPos(start_pos + 40, 25)
-                    icon:SetPos(start_pos + 20, 25)
-                    start_pos = start_pos + 90
-                elseif i <= 8 then
-                    editor:SetPos(start_pos_2, 45)
-                    lb:SetPos(start_pos_2 + 40, 45)
-                    icon:SetPos(start_pos_2 + 20, 45)
-                    start_pos_2 = start_pos_2 + 90
-                elseif i <= 12 then
-                    editor:SetPos(start_pos_3, 65)
-                    lb:SetPos(start_pos_3 + 40, 65)
-                    icon:SetPos(start_pos_3 + 20, 65)
-                    start_pos_3 = start_pos_3 + 90
-                elseif i <= 16 then
-                    editor:SetPos(start_pos_4, 85)
-                    lb:SetPos(start_pos_4 + 40, 85)
-                    icon:SetPos(start_pos_4 + 20, 85)
-                    start_pos_4 = start_pos_4 + 90
-                end
+
+                lb:SetWidth(100)
                 lb:SetText(HORDE.Infusion_Names[infusion])
                 lb:SetTextColor(Color(0,0,0))
+                lb:SetPos(side_margin + current * w + 38, y - 2)
+                
+                icon:SetPos(side_margin + current * w + 19, y)
+                
+                editor:SetSize(w, h)
                 editor:SetText("")
                 editor:SetTextColor(Color(0,0,0))
                 editor:SetChecked(true)
+                editor:SetPos(side_margin + current * w, y)
                 editor.infusion = infusion
                 table.insert(editors, editor)
-                i = i + 1
+
+                current = current + 1
+                if(current >= maxrows) then
+                    y = y + h
+                    current = 0
+                end
             end
 
             return editors
@@ -573,6 +609,14 @@ function PANEL:Init()
         end
     end
 
+    local classes = {}
+    for k,v in pairs(HORDE.subclasses) do
+        table.insert(classes, k)
+    end
+    local AmountOfClasses = table.Count(classes)
+    local maxrows = 3
+    local classmult = math.ceil(AmountOfClasses / maxrows)
+    
     local class_editors = create_property_editor("class", 40 * 3, entity_type_panel)
     category_editor = create_property_editor("category", 35, entity_type_panel, weapon_categories)
     local name_editor = create_property_editor("name", 35, entity_type_panel)
@@ -580,13 +624,13 @@ function PANEL:Init()
     local skull_tokens_editor = create_property_editor("skull tokens", 35, entity_properties_panel)
     weight_editor = create_property_editor("weight", 35, entity_properties_panel)
     description_editor = create_property_editor("description", 100, entity_properties_panel)
-    local whitelist_editors = create_property_editor("whitelist", 40 * 2, entity_properties_panel)
+    local whitelist_editors = create_property_editor("whitelist", 50 + 25 * classmult, entity_properties_panel)
     ammo_price_editor = create_property_editor("ammo price", 35, entity_properties_panel)
     secondary_ammo_price_editor = create_property_editor("alt ammo price", 35, entity_properties_panel)
     shop_icon_editor = create_property_editor("shop icon", 35, entity_properties_panel)
-    level_editors = create_property_editor("levels", 150, entity_properties_panel)
-    dmgtype_editors = create_property_editor("damage type", 100, entity_properties_panel)
-    infusion_editors = create_property_editor("infusions", 100, entity_properties_panel)
+    level_editors = create_property_editor("levels", 150 + 30 * classmult, entity_properties_panel)
+    dmgtype_editors = create_property_editor("damage \n  type", 100, entity_properties_panel)
+    infusion_editors = create_property_editor("infusions", 150 + 80, entity_properties_panel)
     starter_editors = create_property_editor("starter class", 100, starter_properties_panel)
 
     if GetConVarNumber("horde_default_item_config") == 1 or (GetConVarString("horde_external_lua_config") and GetConVarString("horde_external_lua_config") ~= "") then

@@ -86,7 +86,13 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
         healer:Horde_AddHealAmount(healinfo:GetHealAmount())
         return
     end
-    ply:ScreenFade(SCREENFADE.IN, Color(50, 200, 50, 10), 0.3, 0)
+    --ply:ScreenFade(SCREENFADE.IN, Color(50, 200, 50, 10), 0.3, 0)
+    HORDE.SendBorderEffect(ply, {
+        id = "Healing_SE",
+        color = Color(50, 200, 50),
+        time = 0.3,
+        alpha = 50,
+    })
     if healer ~= ply then
         healer:Horde_AddMoney(3)
         healer:Horde_SyncEconomy()
