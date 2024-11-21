@@ -526,13 +526,20 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
 
         -- Draw Grenade
         if (MySelf:HasWeapon("horde_carcass") == false) and (MySelf:HasWeapon("horde_astral_relic") == false) and (MySelf:HasWeapon("horde_void_projector") == false) and (MySelf:HasWeapon("horde_solar_seal") == false) then
-            draw.RoundedBox(10, ScrW() - airgap - ScreenScale(28.5), ScrH() - ScreenScale(59.5) - airgap, airgap + ScreenScale(20), ScreenScale(15), Color(40,40,40,150))
-            surface.SetMaterial(grenadeui)
-            surface.SetDrawColor(color_white)
+            surface.SetFont(fontgrenade)
+
+            local str = MySelf:GetAmmoCount("Grenade")
+            local imageSize = ScreenScale(15)
             local wx = ScrW() - airgap - ScreenScale(80)
             local wy = ScrH() - ScreenScale(61.5) - airgap
-            surface.DrawTexturedRect(wx + ScreenScale(62.5), wy + ScreenScale(2.25), ScreenScale(15), ScreenScale(15))
-            draw.SimpleText(tostring(MySelf:GetAmmoCount("Grenade")), fontgrenade, wx + ScreenScale(62.5), wy + ScreenScale(3.75), color_white, TEXT_ALIGN_RIGHT)
+            local textWide, textTall = surface.GetTextSize(str)
+            local barWide = textWide + imageSize - 6
+
+            draw.RoundedBox(10, ScrW() - airgap - (ScreenScale(8.5) + barWide), ScrH() - ScreenScale(59.5) - airgap, airgap + barWide, ScreenScale(15), Color(40,40,40,150))
+            surface.SetMaterial(grenadeui)
+            surface.SetDrawColor(255, 255, 255, 255)
+            surface.DrawTexturedRect(wx + ScreenScale(62.5), wy + ScreenScale(2.25), imageSize, imageSize)
+            draw.SimpleText(str, fontgrenade, wx + ScreenScale(62.5), wy + ScreenScale(3.75), color_white, TEXT_ALIGN_RIGHT)
         end
 
         -- Draw Weight

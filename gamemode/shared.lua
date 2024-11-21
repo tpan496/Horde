@@ -11,40 +11,7 @@ DeriveGamemode("sandbox")
 
 function GM:Initialize()
     game.AddAmmoType({
-        name = "arccw_horde_nade_incendiary"
-    })
-    game.AddAmmoType({
-        name = "arccw_horde_nade_molotov"
-    })
-    game.AddAmmoType({
-        name = "arccw_nade_m67"
-    })
-    game.AddAmmoType({
-        name = "arccw_horde_m67"
-    })
-    game.AddAmmoType({
         name = "arccw_nade_medic_ubgl"
-    })
-    game.AddAmmoType({
-        name = "arccw_nade_knife"
-    })
-    game.AddAmmoType({
-        name = "arccw_horde_nade_stun"
-    })
-    game.AddAmmoType({
-        name = "arccw_horde_nade_nanobot",
-    })
-    game.AddAmmoType({
-        name = "arccw_horde_nade_hemo",
-    })
-    game.AddAmmoType({
-        name = "arccw_horde_nade_shrapnel",
-    })
-    game.AddAmmoType({
-        name = "arccw_horde_nade_sonar",
-    })
-    game.AddAmmoType({
-        name = "arccw_horde_nade_emp",
     })
     game.AddAmmoType({
         name = "horde_mine",
