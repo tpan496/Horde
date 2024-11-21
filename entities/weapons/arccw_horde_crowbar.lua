@@ -119,3 +119,10 @@ SWEP.BashAng = Angle(35, -30, 0)
 
 SWEP.HolsterPos = Vector(0, -3, -2)
 SWEP.HolsterAng = Angle(-10, 0, 0)
+
+function SWEP:DrawWeaponSelection(x, y, w, h, a)
+    surface.SetDrawColor(255, 255, 255, a)
+    surface.SetMaterial(self.WepSelectIcon)
+
+    surface.DrawTexturedRect(x, y, w, w / 2)
+end

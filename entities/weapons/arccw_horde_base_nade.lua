@@ -204,3 +204,10 @@ end
 function SWEP:OnDrop()
 	self:Remove()
 end
+
+DEFINE_BASECLASS(SWEP.Base)
+
+function SWEP:Initialize(...)
+    self.Primary.Ammo = "Grenade"
+    BaseClass.Initialize(self, ...)
+end

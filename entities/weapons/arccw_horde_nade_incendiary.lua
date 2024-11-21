@@ -17,7 +17,7 @@ SWEP.Trivia_Mechanism = "Thermite TH3"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1944
 SWEP.ForceDefaultAmmo = 0
-SWEP.Primary.MaxAmmo = 10
+SWEP.Primary.MaxAmmo = 9
 
 SWEP.Slot = 4
 
