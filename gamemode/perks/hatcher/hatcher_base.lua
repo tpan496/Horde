@@ -39,6 +39,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "hatcher_base" then
         if ply:HasWeapon("horde_pheropod") == true then return end
         for _, wpn in pairs(ply:GetWeapons()) do
+            if wpn:GetClass() == "weapon_horde_medkit" then continue end
             ply:DropWeapon(wpn)
         end
         timer.Simple(0.1, function() ply:Give("horde_pheropod") end)

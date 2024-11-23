@@ -52,7 +52,7 @@ function SWEP:PrimaryAttack()
 		self.Owner:LagCompensation( true )
 	end
 
-	local tr = util.TraceLine( {
+	local tr = util.TraceHull( {
 		start = self.Owner:GetShootPos(),
 		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 100,
 		filter = self.Owner
@@ -79,8 +79,8 @@ function SWEP:PrimaryAttack()
 		local medkit_charge_coeff = math.min(1, self:Clip1() / (need / medkit_heal_coeff))
 
 		if ent:Health() >= ent:GetMaxHealth() * (overheal) then
-			ent:EmitSound( DenySound )
-			self:SetNextPrimaryFire( CurTime() + 1 )
+			--ent:EmitSound( DenySound )
+			--self:SetNextPrimaryFire( CurTime() + 1 )
 			return
 		end
 
@@ -125,8 +125,8 @@ function SWEP:SecondaryAttack()
 	local medkit_charge_coeff = math.min(1, self:Clip1() / (need / medkit_heal_coeff))
 
 	if ent:Health() >= ent:GetMaxHealth() * (overheal) then
-		ent:EmitSound(DenySound)
-		self:SetNextSecondaryFire(CurTime() + 1)
+		--ent:EmitSound(DenySound)
+		--self:SetNextSecondaryFire(CurTime() + 1)
 		return
 	end
 
