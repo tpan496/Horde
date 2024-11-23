@@ -13,7 +13,7 @@ end
 function ENT:Initialize()
     self:PhysicsInitSphere(self.Horde_AuraRadius)
     self:SetCollisionBounds(Vector(-self.Horde_AuraRadius, -self.Horde_AuraRadius, -self.Horde_AuraRadius), Vector(self.Horde_AuraRadius, self.Horde_AuraRadius, self.Horde_AuraRadius))
-    self:SetSolid(SOLID_VPHYSICS)
+    self:SetSolid(SOLID_NONE)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
     self:SetTrigger(true)
