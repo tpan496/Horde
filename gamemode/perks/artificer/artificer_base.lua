@@ -27,6 +27,7 @@ PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
         ply:Horde_UnsetSpellWeapon()
         --ply:StripWeapons()
         for _, wpn in pairs(ply:GetWeapons()) do
+            if wpn:GetClass() == "weapon_horde_medkit" then continue end
             ply:DropWeapon(wpn)
         end
         timer.Simple(0.1, function()

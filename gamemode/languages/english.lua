@@ -1679,3 +1679,82 @@ LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
 Ignited enemies killed by you drop edible gibs.
 Each gib restores 5 health.
 ]]
+
+-- Dank Patch notes
+LANGUAGE["Game_Dank_Patch_Notes"] = [[Dank Update 2.0.0]]
+LANGUAGE["Game_Dank_Patch_Notes_Info"] = [[
+-- New Framework and Mechanics --
+
+
+
+-- Perks that have access to their special grenades can now throw their grenades via the quicknade hotkey, “G” by default. Or bind, “horde_use_quick_grenade” to a key/button. You can also disable the default quick grenade key by typing, “"horde_disable_default_quick_grenade_key 1" into the console command.
+
+-- Classes and Subclasses now use their own whitelist pools giving them their own unique shop config. If you use your own custom config, you’ll have to set them up again for the subclasses unfortunately.
+
+-- Screen effects now use a border hud like system for the base framework (it currently only affects when being healing, as other screen effects will come in future perk updates such as Psycho’s Frenzy Mode screen effect).
+
+-- Area of effects such as explosions now use a different formula that allows better control over drop off damage and entity detection (only the framework is here and is meant for future perk updates).
+
+-- Items and Gadgets that are automatically stripped (swapping classes) are now instead automatically sold. Gadgets that are purchased while you already have a gadget are now automatically sold (you’ll still need to have the amount of money to buy it but the correct amount of money will be deducted or refunded after purchase).
+
+
+
+-- Gameplay Changes --
+
+
+-- Ammo boxes will now restore secondary ammo reserves (secondary ammo reserves are ammunition used by equipment like underbarrel grenade launchers).
+
+
+
+-- Weapon Changes --
+
+
+
+-- Medkit --
+
+-- Medkit will now consume up to 20 charges to heal up to 20% of your maximum health and scale accordingly to how much charges are remaining instead of requiring a flat 20 charges to heal a flat 20 amount of health.
+
+-- Medkit now works while holding your fire button so you don’t have to spam it.
+
+-- Medkit now requires you to have a target in order to heal your target (this means that you can hold your left mouse and flick your mouse and it will instantly heal your target if there is an eligible target.
+
+-- Medkit weight is now 0.
+
+-- Medkit purchase cost is now 0.
+
+-- Every class now starts with a Medkit.
+
+-- You cannot drop Medkits and swapping classes no longer drops it (you can still sell it to get rid of it).
+
+-- Medkit is destroyed upon dropping it.
+
+-- You can no longer use Medkit if you’re at 100% maximum health or at maximum overhealed health (this prevents you from wasting Medkit charges).
+
+-- Fixed ammo boxes being eaten due to Medkits never having a full ammo reserve.
+
+
+
+-- Grenades --
+
+-- Throwing your last grenade never gets rid of your grenade, allowing you to still pick up ammo boxes to refill your grenades. You’ll still have a grenade in your hand while having zero grenades so rip your immersion.
+
+-- Grenades now have 2 different throwing modes.
+
+-- Primary fire (default - left mouse button) will not cook your grenade and throw your grenade at full velocity while having full bounce effect.
+
+-- Secondary fire (default - right mouse) will cook your grenade and throw your grenade at full velocity while having a dampened effect, which will backspin your grenade causing it to cancel most of its momentum.
+
+-- Quick grenades will throw grenades at a significantly lower velocity while having a dampened effect. 
+
+-- Grenades can no longer be dropped (you can still sell it to get rid of it)
+
+-- Grenades are destroyed upon dropping it.
+
+-- Maximum special grenade reserve capacity limited to 9 grenades
+
+-- Most grenades have had their fuse time set to 2 seconds with the exception of stun grenades which have 1.25 seconds.
+
+-- Assault and SpecOps stun grenades no longer flashbangs yourself or others, destroy your ears or other ears, nor deal damage to yourself or enemies.
+
+-- Stun grenades now always have full stun buildup power (this means it will always stun the enemy no matter the difficulty as long as their internal stun cooldown is off cooldown).
+]]

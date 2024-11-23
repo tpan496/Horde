@@ -85,13 +85,14 @@ net.Receive("Horde_PerkChoice", function(len, ply)
 
     ply:Horde_SetMaxHealth()
     ply:Horde_SetMaxArmor()
-    if ply:Horde_GetSpellWeapon() then
-        ply:Horde_RecalcAndSetMaxMind()
-    else
-        ply:Horde_SetMaxMind(0)
-        ply:Horde_SetMind(0)
-    end
-    
+    timer.Simple(0.1, function()
+        if ply:Horde_GetSpellWeapon() then
+            ply:Horde_RecalcAndSetMaxMind()
+        else
+            ply:Horde_SetMaxMind(0)
+            ply:Horde_SetMind(0)
+        end
+    end)
 
     if HORDE.current_wave < HORDE:Horde_GetWaveForPerk(level) then return end
 

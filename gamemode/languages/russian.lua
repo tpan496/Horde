@@ -3078,3 +3078,7 @@ LANGUAGE["Gadget_Desc_gadget_elixir"] = [[
 Восстанавливает 100% вашего здоровья.
 Удаляет все эффекты статусов.
 ]]
+
+-- Dank Patch notes
+--LANGUAGE["Game_Dank_Patch_Notes"] = [[ Giving CrystalFire employment ]]
+--LANGUAGE["Game_Dank_Patch_Notes_Info"] = [[ Giving CrystalFire employment ]]

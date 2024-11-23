@@ -416,10 +416,6 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
                 end
             end
         end
-
-    end
-    if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
-        wpn:Remove()
     end
 end)
 
@@ -850,6 +846,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
     -- Drop all weapons
     ply:Horde_SetClass(class)
     for _, wpn in pairs(ply:GetWeapons()) do
+        if wpn:GetClass() == "weapon_horde_medkit" then continue end
         ply:DropWeapon(wpn)
     end
     ply:Horde_SetSubclass(name, subclass_name)
