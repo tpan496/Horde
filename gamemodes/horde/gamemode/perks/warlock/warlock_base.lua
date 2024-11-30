@@ -62,3 +62,14 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
         ply:SetMaxArmor(100)
     end
 end
+
+PERK.Hooks.Horde_OnPlayerDamage = function ( ply, npc, _, _, dmginfo )
+    if !ply:Horde_GetPerk( "warlock_base" ) then return end
+
+    if HORDE:IsLightningDamage( dmginfo ) then
+        npc:Horde_AddDebuffBuildup(
+            HORDE.Status_Shock,
+            dmginfo:GetDamage(),
+            ply, dmginfo:GetDamagePosition() )
+    end
+end
