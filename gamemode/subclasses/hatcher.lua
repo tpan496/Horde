@@ -2,9 +2,7 @@ SUBCLASS.PrintName = "Hatcher" -- Required
 SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Medic -- Required for any new classes
 SUBCLASS.Icon = "subclasses/hatcher.png" -- Required
-SUBCLASS.Description = [[
-Medic subclass.
-Support class that relies on Antlions to support teammates.]] -- Required
+SUBCLASS.Description = translate.Get("info_Hatcher_extra_desc") -- Required
 SUBCLASS.BasePerk = "hatcher_base"
 SUBCLASS.Perks = {
     [1] = {title = "Stage I", choices = {"hatcher_natural_selection", "hatcher_growth_hormone"}},

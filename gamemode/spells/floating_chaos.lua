@@ -36,7 +36,7 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 end
 SPELL.Price                      = 1500
 SPELL.Upgrades                   = 3
-SPELL.Upgrade_Description        = "Increases duration and number of spells echoed."
+SPELL.Upgrade_Description        = translate.Get("shop_Spell_Upgrade_desc_floating_chaos")
 SPELL.Upgrade_Prices             = function (upgrade_level)
     return 800 + 100 * upgrade_level
 end

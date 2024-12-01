@@ -2,9 +2,7 @@ SUBCLASS.PrintName = "Necromancer" -- Required
 SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Engineer -- Required for any new classes
 SUBCLASS.Icon = "subclasses/necromancer.png" -- Required
-SUBCLASS.Description = [[
-Engineer subclass.
-Specializes in cold damage and spectre minions.]] -- Required
+SUBCLASS.Description = translate.Get("info_Necromancer_extra_desc") -- Required
 SUBCLASS.BasePerk = "necromancer_base"
 SUBCLASS.Perks = {
     [1] = {title = "Domination", choices = {"necromancer_withering_prescence", "necromancer_hollow_essence"}},

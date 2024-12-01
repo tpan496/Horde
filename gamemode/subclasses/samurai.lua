@@ -2,9 +2,7 @@ SUBCLASS.PrintName = "Samurai" -- Required
 SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Berserker -- Required for any new classes
 SUBCLASS.Icon = "subclasses/samurai.png" -- Required
-SUBCLASS.Description = [[
-Berserker subclass.
-Specializes in timed strikes and Bleeding damage.]] -- Required
+SUBCLASS.Description = translate.Get("info_Samurai_extra_desc") -- Required
 SUBCLASS.BasePerk = "samurai_base"
 SUBCLASS.Perks = {
     [1] = {title = "Technique", choices = {"samurai_focus_slash", "samurai_flesh_bloom"}},

@@ -2,9 +2,9 @@ local PANEL = {}
 
 local function GetImmune(status)
     if HORDE:GetStat(status) == 0 then
-        return "NO"
+        return translate.Get("info_NO")
     else
-        return "YES"
+        return translate.Get("info_YES")
     end
 end
 
@@ -258,81 +258,11 @@ function PANEL:Init()
     local update_text_panel = vgui.Create("DPanel", description_panel)
     update_text_panel:SetSize(self:GetParent():GetWide(), 2000)
     update_text_panel:SetVisible(true)
-    local update_text =[[
--- New Framework and Mechanics --
 
-
-
--- Perks that have access to their special grenades can now throw their grenades via the quicknade hotkey, “G” by default. Or bind, “horde_use_quick_grenade” to a key/button. You can also disable the default quick grenade key by typing, “"horde_disable_default_quick_grenade_key 1" into the console command.
-
--- Classes and Subclasses now use their own whitelist pools giving them their own unique shop config. If you use your own custom config, you’ll have to set them up again for the subclasses unfortunately.
-
--- Screen effects now use a border hud like system for the base framework (it currently only affects when being healing, as other screen effects will come in future perk updates such as Psycho’s Frenzy Mode screen effect).
-
--- Area of effects such as explosions now use a different formula that allows better control over drop off damage and entity detection (only the framework is here and is meant for future perk updates).
-
--- Items and Gadgets that are automatically stripped (swapping classes) are now instead automatically sold. Gadgets that are purchased while you already have a gadget are now automatically sold (you’ll still need to have the amount of money to buy it but the correct amount of money will be deducted or refunded after purchase).
-
-
-
--- Gameplay Changes --
-
-
--- Ammo boxes will now restore secondary ammo reserves (secondary ammo reserves are ammunition used by equipment like underbarrel grenade launchers).
-
-
-
--- Weapon Changes --
-
-
-
--- Medkit --
-
--- Medkit will now consume up to 20 charges to heal up to 20% of your maximum health and scale accordingly to how much charges are remaining instead of requiring a flat 20 charges to heal a flat 20 amount of health.
-
--- Medkit now works while holding your fire button so you don’t have to spam it.
-
--- Medkit now requires you to have a target in order to heal your target (this means that you can hold your left mouse and flick your mouse and it will instantly heal your target if there is an eligible target.
-
--- Medkit weight is now 0.
-
--- Medkit purchase cost is now 0.
-
--- Every class now starts with a Medkit.
-
--- You cannot drop Medkits (you can still sell it to get rid of it).
-
--- You can no longer use Medkit if you’re at 100% maximum health or at maximum overhealed health (this prevents you from wasting Medkit charges).
-
--- Fixed ammo boxes being eaten due to Medkits never having a full ammo reserve.
-
-
-
--- Grenades --
-
--- Throwing your last grenade never gets rid of your grenade, allowing you to still pick up ammo boxes to refill your grenades. You’ll still have a grenade in your hand while having zero grenades so rip your immersion.
-
--- Grenades now have 2 different throwing modes.
-
--- Primary fire (default - left mouse button) will not cook your grenade and throw your grenade at full velocity while having full bounce effect.
-
--- Secondary fire (default - right mouse) will cook your grenade and throw your grenade at full velocity while having a dampened effect, which will backspin your grenade causing it to cancel most of its momentum.
-
--- Quick grenades will throw grenades at a significantly lower velocity while having a dampened effect. 
-
--- Grenades can no longer be dropped (you can still sell it to get rid of it)
-
--- Maximum special grenade reserve capacity limited to 9 grenades
-
--- Most grenades have had their fuse time set to 2 seconds with the exception of stun grenades which have 1.25 seconds.
-
--- Assault and SpecOps stun grenades no longer flashbangs yourself or others, destroy your ears or other ears, nor deal damage to yourself or enemies.
-
--- Stun grenades now always have full stun buildup power (this means it will always stun the enemy no matter the difficulty as long as their internal stun cooldown is off cooldown).
-]]
-    local mt = multlinetext(update_text, update_text_panel:GetWide() - 550, 'Content')
+    local update_text = translate.Get("info_Mechanics_Latest_Update_desc")
+    local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()
-        draw.SimpleText("Dank Update 2.0.0", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Latest_Update_title"), 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw.DrawText(mt, 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
@@ -375,21 +305,21 @@ function PANEL:Init()
         surface.SetDrawColor(Color(50, 50, 50))
         surface.DrawTexturedRect(50, 730, 40, 40)
 
-        draw.SimpleText("Debuff Status", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Bleed:", 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from certain enemies and mutations. When inflicted, removes health over time.", 'Content', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Ignite:", 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from Fire damage. When inflicted, deals Fire damage over time.", 'Content', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Frostbite:", 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from Cold damage. When inflicted, reduces movement speed by 40/45/50/50/55%.", 'Content', 100, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Shock:", 'Heading', 100, 450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from Lightning damage. When inflicted, causes player to receive 15/20/25/25/30% more damage.", 'Content', 100, 500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Break:", 'Heading', 100, 550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from Poison damage. When inflicted, removes 80/85/90/90/95% of player health that is recovered slowly.", 'Content', 100, 600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Decay:", 'Heading', 100, 650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from Decay mutation. When inflicted, prevents healing.", 'Content', 100, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Necrosis:", 'Heading', 100, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Buildup from Blight enemies. When inflicted, causes instant death.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_title"), 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Bleed"), 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Bleed_desc"), 'Content', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Ignite"), 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Ignite_desc"), 'Content', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Frostbite"), 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Frostbite_desc"), 'Content', 100, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Shock"), 'Heading', 100, 450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Shock_desc"), 'Content', 100, 500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Break"), 'Heading', 100, 550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Break_desc"), 'Content', 100, 600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Decay"), 'Heading', 100, 650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Decay_desc"), 'Content', 100, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Necrosis"), 'Heading', 100, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Debuff_Status_Effects_Necrosis_desc"), 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
     local damage_text_panel = vgui.Create("DPanel", description_panel)
@@ -441,25 +371,25 @@ function PANEL:Init()
         surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_BLAST])
         surface.DrawTexturedRect(50, 930, 40, 40)
 
-        draw.SimpleText("Damage Types", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Ballistic:", 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("DMG_BULLET, DMG_SNIPER, DMG_BUCKSHOT.", 'Content', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Slash:", 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("DMG_SLASH.", 'Content', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Blunt:", 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("DMG_CLUB.", 'Content', 100, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Other Physical Damage:", 'Heading', 100, 450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("DMG_GENERIC, DMG_CRUSH, DMG_SONIC.", 'Content', 100, 500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Fire:", 'Heading', 100, 550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Increases Ignite buildup. DMG_BURN, DMG_SLOWBURN, DMG_PLASMA.", 'Content', 100, 600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Cold:", 'Heading', 100, 650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Increases Frostbite buildup. DMG_REMOVENORAGDOLL.", 'Content', 100, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Lightning:", 'Heading', 100, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Increases Shock buildup. DMG_SHOCK, DMG_ENERGYBEAM.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Poison:", 'Heading', 100, 850, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Increases Break buildup. DMG_NERVEGAS, DMG_ACID, DMG_POISON, DMG_PARALYZE", 'Content', 100, 900, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Blast:", 'Heading', 100, 950, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("DMG_BLAST, DMG_MISSILEDEFENSE.", 'Content', 100, 1000, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_title"), 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Ballistic"), 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Ballistic_desc"), 'Content', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Slash"), 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Slash_desc"), 'Content', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Blunt"), 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Blunt_desc"), 'Content', 100, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Other_Physical_Damage"), 'Heading', 100, 450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Other_Physical_Damage_desc"), 'Content', 100, 500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Fire"), 'Heading', 100, 550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Fire_desc"), 'Content', 100, 600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Cold"), 'Heading', 100, 650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Cold_desc"), 'Content', 100, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Lightning"), 'Heading', 100, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Lightning_desc"), 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Poison"), 'Heading', 100, 850, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Poison_desc"), 'Content', 100, 900, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Blast"), 'Heading', 100, 950, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Damage_Types_Blast_desc"), 'Content', 100, 1000, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
     local function draw_resistances(pos, res)
@@ -491,118 +421,118 @@ function PANEL:Init()
     enemies_text_panel:SetSize(self:GetParent():GetWide(), 5000)
     enemies_text_panel:SetVisible(false)
     enemies_text_panel.Paint = function ()
-        draw.SimpleText("Regular Enemies", 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Walker", 'Heading', 50, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Slow moving zombies that come in hordes.", 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Sprinter", 'Heading', 50, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Zombies with moderate speed that come in hordes.", 'Content', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Crawler", 'Heading', 50, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Zombies with fast speed that come in hordes that are easy to dispose of.", 'Content', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Fast Zombie/Poison Zombie/Zombine", 'Heading', 50, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Zombies that roam around City-17.", 'Content', 100, 450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Charred Zombine", 'Heading', 50, 500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Zombine convered in flames that are more suicidal.", 'Content', 100, 550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Regular_Enemies"), 'LargeTitle', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Walker"), 'Heading', 50, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Walker_desc"), 'Content', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Sprinter"), 'Heading', 50, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Sprinter_desc"), 'Content', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Crawler"), 'Heading', 50, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Crawler_desc"), 'Content', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_FPZombine"), 'Heading', 50, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_FPZombine_desc"), 'Content', 100, 450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Charred_Zombine"), 'Heading', 50, 500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Charred_Zombine_desc"), 'Content', 100, 550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(500, {[HORDE.DMG_FIRE] = 0.5, [HORDE.DMG_COLD] = 1.25})
 
-        draw.SimpleText("Elite Enemies", 'LargeTitle', 50, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Exploder", 'Heading', 50, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Explodes on death, dealing Poison damage. Does not explode when decapitated. Weak to headshots.", 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Elite_Enemies"), 'LargeTitle', 50, 700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Exploder"), 'Heading', 50, 750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Exploder_desc"), 'Content', 100, 800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(750, {[HORDE.DMG_POISON] = 0.5, [HORDE.DMG_FIRE] = 1.5, [HORDE.DMG_BLAST] = 1.5})
         
-        draw.SimpleText("Vomitter", 'Heading', 50, 850, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Ranged attackers that spits flesh at enemies. Inflicts Bleeding.", 'Content', 100, 900, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Scorcher", 'Heading', 50, 950, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Vomitters covered in flames. Spits burning flesh that deal Fire damage. Has a flamethrower attack.", 'Content', 100, 1000, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Vomitter"), 'Heading', 50, 850, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Vomitter_desc"), 'Content', 100, 900, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Scorcher"), 'Heading', 50, 950, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Scorcher_desc"), 'Content', 100, 1000, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(950, {[HORDE.DMG_FIRE] = 0.5, [HORDE.DMG_COLD] = 1.25})
 
-        draw.SimpleText("Screecher", 'Heading', 50, 1050, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Emits screaming shockwaves when approached. Deals Lightning damage.", 'Content', 100, 1100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Screecher"), 'Heading', 50, 1050, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Screecher_desc"), 'Content', 100, 1100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(1050, {[HORDE.DMG_LIGHTNING] = 0.5, [HORDE.DMG_BLAST] = 1.25})
         
-        draw.SimpleText("Blight", 'Heading', 50, 1150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Increases Necrosis buildup to nearby players when shot in the torso. Weak to headshots.", 'Content', 100, 1200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Blight"), 'Heading', 50, 1150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Blight_desc"), 'Content', 100, 1200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(1150, {[HORDE.DMG_LIGHTNING] = 1.5})
         
-        draw.SimpleText("Weeper", 'Heading', 50, 1250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Emits growling shockwaves when approached. Deals Cold damage.", 'Content', 100, 1300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Weeper"), 'Heading', 50, 1250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Weeper_desc"), 'Content', 100, 1300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(1250, {[HORDE.DMG_FIRE] = 1.25, [HORDE.DMG_COLD] = 0.5, [HORDE.DMG_LIGHTNING] = 0.75, [HORDE.DMG_BLAST] = 1.25})
         
-        draw.SimpleText("Hulk", 'Heading', 50, 1350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Dangerous enemy with high health. Rages when health drops below 50%.", 'Content', 100, 1400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Yeti", 'Heading', 50, 1450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Hulks that are experimented with dangerous mutations.", 'Content', 100, 1500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Hulk"), 'Heading', 50, 1350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Hulk_desc"), 'Content', 100, 1400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Yeti"), 'Heading', 50, 1450, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Yeti_desc"), 'Content', 100, 1500, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         draw_resistances(1450, {[HORDE.DMG_FIRE] = 1.25, [HORDE.DMG_COLD] = 0.5})
 
-        draw.SimpleText("Lesion", 'Heading', 50, 1550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Dangerous enemy with high health and agility. Rages periodically or when provoked.", 'Content', 100, 1600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Lesion"), 'Heading', 50, 1550, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Lesion_desc"), 'Content', 100, 1600, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("Plague Elite", 'Heading', 50, 1650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Dangerous enemy with high health. Can fire devastating energy balls and summon minions.", 'Content', 100, 1700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Plague_Elite"), 'Heading', 50, 1650, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Plague_Elite_desc"), 'Content', 100, 1700, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("Bosses", 'LargeTitle', 50, 1750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Bosses"), 'LargeTitle', 50, 1750, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("Alpha Gonome", 'Heading', 50, 1800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Alpha_Gonome"), 'Heading', 50, 1800, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         local next_pos = write_paragraph({
-            "An aged gonome that gained increased endurance and power.",
-            "Corruption Aura: Inflicts Bleeding to players nearby.",
-            "Claw Attack: Deals Slashing damage. Inflicts Bleeding.",
-            "Acid Throw: Ranged attack that deals Poison damage.",
-            "Frenzy (Phase 2): Passively increases movement speed and action speed.",
+            translate.Get("info_Mechanics_Enemies_Alpha_Gonome_desc_0"),
+            translate.Get("info_Mechanics_Enemies_Alpha_Gonome_desc_1"),
+            translate.Get("info_Mechanics_Enemies_Alpha_Gonome_desc_2"),
+            translate.Get("info_Mechanics_Enemies_Alpha_Gonome_desc_3"),
+            translate.Get("info_Mechanics_Enemies_Alpha_Gonome_desc_4"),
         }, 1850)
 
-        draw.SimpleText("Gamma Gonome", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Gamma_Gonome"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "A gonome infused with cryo-engine that provides minor camouflage.",
-            "Claw Attack: Deals Slashing damage. Inflicts Frostbite.",
-            "Icicle Throw: Ranged attack that deals Cold damage.",
-            "Icestorm (Phase 2): Creates a large icestorm near itself, dealing massive Cold damage to nearby units.",
+            translate.Get("info_Mechanics_Enemies_Gamma_Gonome_desc_0"),
+            translate.Get("info_Mechanics_Enemies_Gamma_Gonome_desc_1"),
+            translate.Get("info_Mechanics_Enemies_Gamma_Gonome_desc_2"),
+            translate.Get("info_Mechanics_Enemies_Gamma_Gonome_desc_3"),
         }, next_pos + 100)
 
-        draw.SimpleText("Subject: Wallace Breen", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Subject_Wallace_Breen"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "A gonome infused with a human subject to increase cognitive capabilities.",
-            "Claw Attack: Deals Slashing damage. Inflicts Haemorrhage.",
-            "Particle Cannon: An accurate ranged cannon that deals massive Physical and Blast damage. Inflicts Decay.",
-            "Particle Cannon (Phase 2): Generates continuous explosions post detonation.",
-            "Shockwave: Generates a shockwave when it received certain amount of damage. Inflicts Haemorrhage.",
-            "Haemorrhage: A strong Bleeding debuff that builds up slowly on its own. Removes health one the bar is full."
+            translate.Get("info_Mechanics_Enemies_Subject_Wallace_Breen_desc_0"),
+            translate.Get("info_Mechanics_Enemies_Subject_Wallace_Breen_desc_1"),
+            translate.Get("info_Mechanics_Enemies_Subject_Wallace_Breen_desc_2"),
+            translate.Get("info_Mechanics_Enemies_Subject_Wallace_Breen_desc_3"),
+            translate.Get("info_Mechanics_Enemies_Subject_Wallace_Breen_desc_4"),
+            translate.Get("info_Mechanics_Enemies_Subject_Wallace_Breen_desc_5"),
         }, next_pos + 100)
 
-        draw.SimpleText("Xen Host Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Xen_Host_Unit"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "Experimental unit made from Gonarch.",
-            "Claw Attack: Deals Slash damage.",
-            "Acid Mortar: Spits acid from above acting like a mortar.",
-            "Spawn Baby Headcrab: Spawns a swarm of baby headcrabs.",
+            translate.Get("info_Mechanics_Enemies_Xen_Host_Unit_desc_0"),
+            translate.Get("info_Mechanics_Enemies_Xen_Host_Unit_desc_1"),
+            translate.Get("info_Mechanics_Enemies_Xen_Host_Unit_desc_2"),
+            translate.Get("info_Mechanics_Enemies_Xen_Host_Unit_desc_3"),
         }, next_pos + 100)
 
-        draw.SimpleText("Xen Destroyer Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Xen_Destroyer_Unit"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "Experimental unit made from Xen Gargantua. Dropping heavy armor and focuses on offense capabilities.",
-            "Slam Attack: Deals Blunt damage.",
-            "Fumethrower: Creates streams of dark flame that deals Fire damage and inflicts Necrosis.",
-            "Earthshatter: Stomps the ground and generates a tracing shockwave torwards the target. Deals Physical damage.",
-            "Sonic Blast (Phase 2): Accumulates energy over time, indicated by its red light. When full, blinds players and blasts the area with Physical damage.",
+            translate.Get("info_Mechanics_Enemies_Xen_Destroyer_Unit_desc_0"),
+            translate.Get("info_Mechanics_Enemies_Xen_Destroyer_Unit_desc_1"),
+            translate.Get("info_Mechanics_Enemies_Xen_Destroyer_Unit_desc_2"),
+            translate.Get("info_Mechanics_Enemies_Xen_Destroyer_Unit_desc_3"),
+            translate.Get("info_Mechanics_Enemies_Xen_Destroyer_Unit_desc_4"),
         }, next_pos + 100)
 
-        draw.SimpleText("Xen Psychic Unit", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Xen_Psychic_Unit"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "Experimental unit made from Xen Kingpin. Has enhanced psychic and physical capabilities.",
-            "Claw Attack: Deals Slashing damage.",
-            "Lightning Beam: Projects a lightning beam, dealing heavy Lightning damage in an area.",
-            "Lightning Beam (Phase 2): Lightning Beam leaves behind ground flames that last for a long time.",
-            "Lightning Orb: Creates homing lightning orbs that follow players. Explodes after delay on contact, dealing Lightning damage.",
-            "Melee Mode (Phase 2): Greatly increases speed and focuses on Melee attacks.",
-            "Psionic Shield (Phase 2): Melee Mode only. When the shield is active, reduces damage taken by 50%.",
+            translate.Get("info_Mechanics_Enemies_Xen_Psychic_Unit_desc_0"),
+            translate.Get("info_Mechanics_Enemies_Xen_Psychic_Unit_desc_1"),
+            translate.Get("info_Mechanics_Enemies_Xen_Psychic_Unit_desc_2"),
+            translate.Get("info_Mechanics_Enemies_Xen_Psychic_Unit_desc_3"),
+            translate.Get("info_Mechanics_Enemies_Xen_Psychic_Unit_desc_4"),
+            translate.Get("info_Mechanics_Enemies_Xen_Psychic_Unit_desc_5"),
+            translate.Get("info_Mechanics_Enemies_Xen_Psychic_Unit_desc_6"),
         }, next_pos + 100)
 
-        draw.SimpleText("Plague Platoon", 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Mechanics_Enemies_Plague_Platoon"), 'Heading', 50, next_pos + 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         next_pos = write_paragraph({
-            "Combine commanders that have been converted into biological weapons using parasites.",
-            "While their brains are fully infested, they retain a low level of setience.",
-            "Plague Heavy: Armed with an M249 machine gun. Can throw shrapnel grenades",
-            "Plague Demolition: Armed with an RPG-7. Can throw M67 grenade with mini-cluster nades.",
-            "Plauge Berserker: Armed with a katana and inflicts Bleeding buildup on you.",
+            translate.Get("info_Mechanics_Enemies_Plague_Platoon_desc_0"),
+            translate.Get("info_Mechanics_Enemies_Plague_Platoon_desc_1"),
+            translate.Get("info_Mechanics_Enemies_Plague_Platoon_desc_2"),
+            translate.Get("info_Mechanics_Enemies_Plague_Platoon_desc_3"),
+            translate.Get("info_Mechanics_Enemies_Plague_Platoon_desc_4"),
         }, next_pos + 100)
     end
 
@@ -682,20 +612,20 @@ function PANEL:Init()
         return mechanic_btn
     end
 
-    self.create_mechanic_btn("Latest Update", update_text_panel)
-    self.create_mechanic_btn("Damage Types", damage_text_panel)
-    self.create_mechanic_btn("Debuff Status Effects", debuff_text_panel)
+    self.create_mechanic_btn(translate.Get("info_Mechanics_Latest_Update"), update_text_panel)
+    self.create_mechanic_btn(translate.Get("info_Mechanics_Damage_Types"), damage_text_panel)
+    self.create_mechanic_btn(translate.Get("info_Mechanics_Debuff_Status_Effects"), debuff_text_panel)
     if GetConVarNumber("horde_default_enemy_config") == 1 then
-        self.create_mechanic_btn("Enemies", enemies_text_panel)
+        self.create_mechanic_btn(translate.Get("info_Mechanics_Enemies"), enemies_text_panel)
     end
-    self.create_mechanic_btn("Donate $", donate_text_panel)
+    self.create_mechanic_btn(translate.Get("info_Mechanics_Donate"), donate_text_panel)
 
     local basic_stats_panel = vgui.Create("DPanel", stats_panel)
     basic_stats_panel:Dock(LEFT)
     basic_stats_panel:SetWide(self:GetWide() / 3)
     basic_stats_panel:SetTall(self:GetTall())
     basic_stats_panel.Paint = function ()
-        draw.SimpleText("Basic", 'Heading', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Basic"), 'Heading', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
         local mat = Material("materials/status/speed.png", "mips smooth")
         surface.SetMaterial(mat)
@@ -722,11 +652,11 @@ function PANEL:Init()
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(50, 280, 40, 40)
 
-        draw.SimpleText("Speed:", 'Heading', 100, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Health:", 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Armor:", 'Heading', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Evasion:", 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Block:", 'Heading', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Basic_Speed"), 'Heading', 100, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Basic_Health"), 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Basic_Armor"), 'Heading', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Basic_Evasion"), 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Basic_Block"), 'Heading', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         
 
         draw.SimpleText(tostring(HORDE:GetStat("speed") * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 100, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
@@ -735,7 +665,7 @@ function PANEL:Init()
         draw.SimpleText(tostring(HORDE:GetStat("evasion") * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 250, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(HORDE:GetStat("block"), 'Heading', self:GetWide() / 3 - 10, 300, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 
-        draw.SimpleText("Perks", 'Heading', 50, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Perks"), 'Heading', 50, 400, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         local y = 50
         local class = MySelf:Horde_GetCurrentSubclass()
         mat = Material(HORDE.subclasses[class].Icon, "mips smooth")
@@ -808,11 +738,11 @@ function PANEL:Init()
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(50, 230, 40, 40)
 
-        draw.SimpleText("Physical Resistances", 'Heading', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Ballistic Resistance:", 'Heading', 100, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Slash Resistance:", 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Blunt Resistance:", 'Heading', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Other:", 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Physical_Resistances"), 'Heading', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Physical_Resistances_Ballistic_Resistance"), 'Heading', 100, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Physical_Resistances_Slash_Resistance"), 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Physical_Resistances_Blunt_Resistance"), 'Heading', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Physical_Resistances_Other"), 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
         draw.SimpleText(tostring(HORDE:GetStat(HORDE.DMG_BALLISTIC) * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 100, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(tostring(HORDE:GetStat(HORDE.DMG_SLASH) * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 150, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
@@ -843,12 +773,12 @@ function PANEL:Init()
         surface.SetMaterial(mat)
         surface.SetDrawColor(HORDE.DMG_COLOR[HORDE.DMG_BLAST])
         surface.DrawTexturedRect(50, 560, 40, 40)
-        draw.SimpleText("Special Resistances", 'Heading', 50, 330, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Fire Resistance:", 'Heading', 100, 380, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Cold Resistance:", 'Heading', 100, 430, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Lightning Resistance:", 'Heading', 100, 480, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Poison Resistance:", 'Heading', 100, 530, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Blast Resistance:", 'Heading', 100, 580, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Special_Resistances"), 'Heading', 50, 330, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Special_Resistances_Fire_Resistance"), 'Heading', 100, 380, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Special_Resistances_Cold_Resistance"), 'Heading', 100, 430, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Special_Resistances_Lightning_Resistance"), 'Heading', 100, 480, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Special_Resistances_Poison_Resistance"), 'Heading', 100, 530, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Stats_Special_Resistances_Blast_Resistance"), 'Heading', 100, 580, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     
         draw.SimpleText(tostring(HORDE:GetStat(HORDE.DMG_FIRE) * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 380, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(tostring(HORDE:GetStat(HORDE.DMG_COLD) * 100) .. "%", 'Heading', self:GetWide() / 3 - 10, 430, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
@@ -862,7 +792,7 @@ function PANEL:Init()
     immunity_stats_panel:SetWide(self:GetWide() / 3)
     immunity_stats_panel:SetTall(self:GetTall())
     immunity_stats_panel.Paint = function ()
-        draw.SimpleText("Status Effects", 'Heading', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Status_Effects"), 'Heading', 50, 50, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 
         local mat = Material("materials/status/bleeding.png", "mips smooth")
         surface.SetMaterial(mat)
@@ -894,12 +824,12 @@ function PANEL:Init()
         surface.SetDrawColor(HORDE.STATUS_COLOR[HORDE.Status_Necrosis])
         surface.DrawTexturedRect(50, 330, 40, 40)
 
-        draw.SimpleText("Bleeding Immunity:", 'Heading', 100, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Ignite Immunity:", 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Frostbite Immunity:", 'Heading', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Shock Immunity:", 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Break Immunity:", 'Heading', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-        draw.SimpleText("Necrosis Immunity:", 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Status_Effects_Bleeding_Immunity"), 'Heading', 100, 100, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Status_Effects_Ignite_Immunity"), 'Heading', 100, 150, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Status_Effects_Frostbite_Immunity"), 'Heading', 100, 200, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Status_Effects_Shock_Immunity"), 'Heading', 100, 250, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Status_Effects_Break_Immunity"), 'Heading', 100, 300, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+        draw.SimpleText(translate.Get("info_Status_Effects_Necrosis_Immunity"), 'Heading', 100, 350, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
         
         draw.SimpleText(GetImmune(HORDE.Status_Bleeding), 'Heading', self:GetWide() / 3 - 50, 100, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
         draw.SimpleText(GetImmune(HORDE.Status_Ignite), 'Heading', self:GetWide() / 3 - 50, 150, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
@@ -912,7 +842,7 @@ function PANEL:Init()
     local stats_btn = vgui.Create("DButton", self)
     local stats_activated = true
     local stats_hovered = false
-    stats_btn:SetText("Stats")
+    stats_btn:SetText(translate.Get("info_Stats"))
     stats_btn:SetTextColor(Color(255,255,255))
     stats_btn:SetFont("Title")
     stats_btn:SetSize(250, 50)
@@ -929,7 +859,7 @@ function PANEL:Init()
     local achievements_btn = vgui.Create("DButton", self)
     local achievements_activated = false
     local achievements_hovered = false
-    achievements_btn:SetText("Achievements")
+    achievements_btn:SetText(translate.Get("info_Achievements"))
     achievements_btn:SetTextColor(Color(255,255,255))
     achievements_btn:SetFont("Title")
     achievements_btn:SetSize(250, 50)
@@ -946,7 +876,7 @@ function PANEL:Init()
     local learn_btn = vgui.Create("DButton", self)
     local learn_activated = false
     local learn_hovered = false
-    learn_btn:SetText("Mechanics")
+    learn_btn:SetText(translate.Get("info_Mechanics"))
     learn_btn:SetTextColor(Color(255,255,255))
     learn_btn:SetFont("Title")
     learn_btn:SetSize(250, 50)

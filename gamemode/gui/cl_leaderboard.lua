@@ -30,7 +30,7 @@ function PANEL:SetData()
     self.leader_panel:SetSize(w, ScreenScale(15) * (1 + table.Count(top_tens)))
 
     local llabel = vgui.Create("DLabel", self.leader_panel)
-    llabel:SetText("  Leaderboard:")
+    llabel:SetText(translate.Get("info_leaderboard"))
     llabel:SetFont("Info")
     llabel:SetTextColor(color_white)
     llabel:SetSize(100, ScreenScale(15))

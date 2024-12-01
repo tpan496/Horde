@@ -88,7 +88,7 @@ function PANEL:Paint()
 
         if MySelf:Horde_HasSpell(self.item.ClassName) == true then
             self.price_panel:SetTextColor(HORDE.color_crimson)
-            self.price_panel:SetText("Owned")
+            self.price_panel:SetText(translate.Get("shop_Owned"))
         else
             if is_rich then
                 surface.SetTextColor(self.text_color)
