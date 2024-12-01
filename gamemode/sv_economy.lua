@@ -3,7 +3,16 @@ concommand.Add("horde_drop_money", function (ply, cmd, args)
 end)
 
 concommand.Add("horde_drop_weapon", function (ply, cmd, args)
-    if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon().Base == "horde_spell_weapon_base" then
+    local cannotdropbase = {
+    horde_spell_weapon_base = "horde_spell_weapon_base",
+    arccw_horde_base_nade = "arccw_horde_base_nade",}
+    local cannotdropclass = {
+    horde_pheropod = "horde_pheropod",
+    horde_carcass = "horde_carcass",
+    weapon_horde_medkit = "weapon_horde_medkit",
+    --[[horde_slam = "horde_slam",]]}
+    if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and (ply:GetActiveWeapon():GetClass() == cannotdropclass[ply:GetActiveWeapon():GetClass()] or ply:GetActiveWeapon().Base == cannotdropbase[ply:GetActiveWeapon().Base]) then
+        ply:EmitSound("player/suit_denydevice.wav")
         return
     end
     ply:DropWeapon()
@@ -158,6 +167,31 @@ function plymeta:Horde_RemoveDropEntity(class, entity_creation_id, weightless)
     local item = HORDE.items[class]
     if item and (not weightless) then
         self:Horde_AddWeight(item.weight)
+    end
+end
+
+function plymeta:Horde_RemoveMinionsAndDrops()
+    if not self:IsValid() then return end
+    if HORDE.player_drop_entities[self:SteamID()] then
+        for _, ent in pairs(HORDE.player_drop_entities[self:SteamID()]) do
+            if ent:IsValid() and ent:GetNWEntity("HordeOwner"):IsPlayer() then
+                local eClass = ent:GetClass()
+                local item = HORDE.items[eClass]
+                if item then
+                    self:Horde_AddMoney(math.floor(0.25 * item.price))
+                end
+                ent:Remove()
+                if self.Horde_drop_entities and self.Horde_drop_entities[eClass] then
+                    self.Horde_drop_entities[eClass] = self.Horde_drop_entities[eClass] - 1
+                    if self.Horde_drop_entities[eClass] == 0 then
+                        self.Horde_drop_entities[eClass] = nil
+                    end
+                end
+                if item and not ent:IsNPC() then
+                    self:Horde_AddWeight(item.weight)
+                end
+            end
+        end
     end
 end
 
@@ -398,7 +432,8 @@ hook.Add("PlayerCanPickupWeapon", "Horde_Economy_Pickup", function (ply, wpn)
             return false
         end
         if ply:Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol" then return true end
-        if (item.whitelist and (not item.whitelist[ply:Horde_GetClass().name])) then
+
+        if item.whitelist and not item.whitelist[ply:Horde_GetCurrentSubclass()] then
             return false
         end
         
@@ -432,7 +467,7 @@ hook.Add("WeaponEquip", "Horde_Economy_Equip", function (wpn, ply)
             ply:Horde_SyncEconomy()
             return
         end
-        if (ply:Horde_GetWeight() - item.weight < 0) or (item.whitelist and (not item.whitelist[ply:Horde_GetClass().name])) then
+        if (ply:Horde_GetWeight() - item.weight < 0) or (item.whitelist and not item.whitelist[ply:Horde_GetCurrentSubclass()]) then
             timer.Simple(0, function ()
                 ply:DropWeapon(wpn)
             end)
@@ -623,6 +658,8 @@ net.Receive("Horde_BuyItem", function (len, ply)
                     net.Send(ply)
                 end
                 ply:SetArmor(ply:GetMaxArmor() * item.entity_properties.armor / 100)
+                ply:Horde_SetMaxHealth()
+                ply:Horde_SetMaxArmor()
                 ply:Horde_AddMoney(-price)
                 ply:Horde_AddSkullTokens(-skull_tokens)
                 ply:Horde_SyncEconomy()
@@ -755,7 +792,8 @@ net.Receive("Horde_SellItem", function (len, ply)
         elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
             if ply:Horde_GetGadget() == nil then return end
             ply:Horde_UnsetGadget()
-            ply:Horde_AddMoney(math.floor(0.25 * item.price))
+            -- Sell value function in sh_gadget for plymeta:Horde_unsetGadget() for timing
+            --ply:Horde_AddMoney(math.floor(0.25 * item.price))
             ply:Horde_SyncEconomy()
         end
     end
@@ -825,6 +863,9 @@ net.Receive("Horde_SelectClass", function (len, ply)
             if ent:IsValid() then
                 local eClass = ent:GetClass()
                 local item = HORDE.items[eClass]
+                if item then
+                    ply:Horde_AddMoney(math.floor(0.25 * item.price))
+                end
                 ent:Remove()
                 if ply.Horde_drop_entities and ply.Horde_drop_entities[eClass] then -- Remove them from here too
                     ply.Horde_drop_entities[eClass] = ply.Horde_drop_entities[eClass] - 1
@@ -870,17 +911,30 @@ net.Receive("Horde_BuyItemAmmoPrimary", function (len, ply)
         return
     end
     
+    local wpn = ply:GetWeapon(class)
+    local clip_size = wpn:GetMaxClip1()
+    local ammo_id = wpn:GetPrimaryAmmoType()
+
+    -- Magazine size check
+    if clip_size > 0 then
+        clip_size = clip_size
+    elseif ammo_id >= 1 then
+        clip_size = 1
+    end
+
+    -- Primary ammo limit (also prevents over spending money)
+    if wpn.Primary and wpn.Primary.MaxAmmo then
+        if wpn.Primary.MaxAmmo <= ply:GetAmmoCount(ammo_id) then return end
+        if count * clip_size + ply:GetAmmoCount(ammo_id) > wpn.Primary.MaxAmmo then
+            count = wpn.Primary.MaxAmmo - ply:GetAmmoCount(ammo_id)
+        end
+    elseif count * clip_size + ply:GetAmmoCount(ammo_id) >= 9999 then
+        if ply:GetAmmoCount(ammo_id) >= 9999 then return end
+        count = math.ceil((9999 - ply:GetAmmoCount(ammo_id)) / clip_size)
+    end
+
     local price = HORDE.items[class].ammo_price * count
     if ply:Horde_GetMoney() >= price then
-        local wpn = ply:GetWeapon(class)
-        if wpn.Primary and wpn.Primary.MaxAmmo then
-            if count + ply:GetAmmoCount(wpn:GetPrimaryAmmoType()) > wpn.Primary.MaxAmmo then
-                count = wpn.Primary.MaxAmmo - ply:GetAmmoCount(wpn:GetPrimaryAmmoType())
-            end
-            if wpn.Primary.MaxAmmo <= ply:GetAmmoCount(wpn:GetPrimaryAmmoType()) then
-                return
-            end
-        end
         ply:Horde_AddMoney(-price)
         HORDE:GiveAmmo(ply, wpn, count)
         ply:Horde_SyncEconomy()
@@ -895,13 +949,26 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         return
     end
     
+    local wpn = ply:GetWeapon(class)
+    local clip_size = wpn:GetMaxClip2()
+    local ammo_id = wpn:GetSecondaryAmmoType()
+    
+    -- For Secondary ammo and ArcCW underbarrel attachments ammo limit
+    if wpn.Secondary and wpn.Secondary.MaxAmmo and wpn.Secondary.MaxAmmo <= ply:GetAmmoCount(ammo_id) then return end
+    if ply:GetAmmoCount(ammo_id) >= 9999 then return end
+    
     local price = HORDE.items[class].secondary_ammo_price
     if ply:Horde_GetMoney() >= price then
+        -- Magazine size check
+        if clip_size > 0 then
+            clip_size = clip_size
+        elseif ammo_id >= 1 then
+            clip_size = 1
+        end
+
         ply:Horde_AddMoney(-price)
-        local wpn = ply:GetWeapon(class)
-        local ammo_id = wpn:GetSecondaryAmmoType()
         if ammo_id >= 0 then
-            ply:GiveAmmo(1, ammo_id, false)
+            ply:GiveAmmo(clip_size, ammo_id, false)
             ply:Horde_SyncEconomy()
         end
     end
@@ -930,9 +997,11 @@ net.Receive("Horde_BuyItemUpgrade", function (len, ply)
 end)
 
 function HORDE:CanSell(ply, class)
-    if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
-        return false, "You can't sell grenades as Demolition class!"
+    --[[
+    if ply:Horde_GetClass().name == HORDE.Class_Demolition and (class == "arccw_horde_m67" or class == "horde_slam") then
+        return false, "You can't sell grenades or SLAM as Demolition class!"
     end
+    ]]
 
     if ply:Horde_GetSubclass(ply:Horde_GetClass().name) == "Necromancer" and class == "horde_void_projector" then
         return false, "You can't sell Void Projector as Necromancer subclass!"

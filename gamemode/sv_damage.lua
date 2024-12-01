@@ -440,3 +440,116 @@ hook.Add("ScaleNPCDamage", "Horde_BossHeadshotDamage", function(npc, hitgroup, d
         dmg:ScaleDamage(0.70)
     end
 end)
+
+-- New dank explosion code
+--[[
+    <entity> attacker = attacker
+    <vector> origin = position for damage
+    <int> radius = radius
+    <int> falloffradius = minimum distance for damage to start decreasing
+    <int> damage = damage
+    <int> damagetype = Damage type, https://wiki.facepunch.com/gmod/Enums/DMG
+    <float> basedamagemul = base damage multiplier
+
+    <string> fallofftype = Damage falloff mode
+        instant : Only uses base damage when target's distance > min distance
+        linear : It explains itself
+        linear_inverted : It explains itself
+
+    <float> falloff_speed = Damage falloff speed
+    <int> falloff_cap = Damage falloff cap
+    <bool> ignoreattacker = Ignore the attacker
+]]
+local defaults = { -- Default variables
+    radius = 100,
+    falloffradius = 0,
+    falloff_cap = 0,
+    damage = 100,
+    basedamagemul = 0,
+    fallofftype = "linear",
+    falloff_speed = 1,
+    ignoreattacker = false,
+    origin = Vector(0, 0, 0),
+    damagetype = 64, -- DMG_BLAST
+}
+function HORDE.RadiusDamageExtra(data)
+    if(!data || !IsValid(data.attacker)) then return end -- check is data table and attacker is valid or not
+    for k,v in pairs(defaults) do -- apply default variables so it won't error out when you didn't enter it
+
+        --[[
+            k = key
+            v = value
+
+            e.x
+                defaults = { -- This is a table
+                    radius = 100, -- radius is key, 100 is value
+                }
+
+            if you pay attention at both data table and defaults table, they have same keys, we can use it to validate the values in the key we wanted
+        ]]
+
+        if(data[k]) then continue end -- If value is valid then skip it
+        data[k] = v -- Apply the default value to data table if it's invalid, so you don't have to enter every single key
+    end
+
+    -- local variables will be faster than table-lookup in the for loop
+    local attacker = data.attacker
+    local inflictor = attacker
+    if(attacker:IsPlayer() && IsValid(attacker:GetActiveWeapon())) then inflictor = attacker:GetActiveWeapon() end
+    local radius = data.radius
+    local fradius = data.falloffradius
+    local fradius_min = math.max(radius - fradius, 0)
+    if(fradius_min == 0) then -- Prevent math.huge(infinite) when dividing
+        fradius_min = 1
+    end
+    local dmg = data.damage
+    local dmgtype = data.damagetype
+    local basedmg_scale = data.basedamagemul
+    local ftype = data.fallofftype
+    local fscale = data.falloff_speed
+    local fcap = data.falloff_cap
+    local skip_attacker = data.ignoreattacker
+
+    local pos = data.origin
+
+    local base_dmg = dmg * basedmg_scale
+    local scalable_dmg = dmg * math.max(1 - basedmg_scale, 0) -- Just in case if you got basedmg_scale > 1
+
+    for _, ent in pairs(ents.FindInSphere(pos, radius)) do
+        if(skip_attacker && ent == attacker) then continue end
+        local dst = ent:GetPos():Distance(pos)
+        if(dst > radius) then continue end -- Sometimes it returns entities with incorrect distance, filte it out
+        local sData = {
+            checkmode = 2,
+            originVector = pos,
+            targetEntity = ent,
+            advancedCheck = true,
+        }
+        if(!HORDE.IsInSight(sData)) then continue end
+        local dmginfo = DamageInfo()
+            dmginfo:SetAttacker(attacker)
+            dmginfo:SetInflictor(inflictor)
+            dmginfo:SetDamagePosition(ent:GetPos())
+            dmginfo:SetDamageType(dmgtype)
+
+        if(dst <= fradius) then
+            dmginfo:SetDamage(dmg)
+
+            ent:TakeDamageInfo(dmginfo)
+        else
+            local newdst = dst - fradius
+            local scale = (newdst / fradius_min) / fscale
+            local sdmg = scalable_dmg
+            if(ftype == "instant") then
+                sdmg = 0
+            elseif(ftype == "linear") then
+                sdmg = sdmg * (1 - scale)
+            elseif(ftype == "linear_inverted") then
+                sdmg = sdmg * scale
+            end
+            dmginfo:SetDamage(math.max(base_dmg + sdmg, fcap))
+
+            ent:TakeDamageInfo(dmginfo)
+        end
+    end
+end

@@ -55,6 +55,7 @@ CreateConVar("horde_enable_ammo_gui", 1, FCVAR_ARCHIVE, "Enables ammo UI.")
 
 CreateConVar("horde_enable_class_models", 1, FCVAR_ARCHIVE, "Enables ammo UI.")
 CreateClientConVar("horde_disable_default_gadget_use_key", 0, FCVAR_ARCHIVE, "Disable default key bind for active gadgets.")
+CreateClientConVar("horde_disable_default_quick_grenade_key", 0, FCVAR_ARCHIVE, "Disable default key bind for quick grenade.")
 
 if SERVER then
 util.AddNetworkString("Horde_SideNotification")
@@ -304,4 +305,182 @@ function HORDE.Queue:Create()
         return (last-first+1)
     end
     return t
-  end
+end
+
+--Custom Line of sight check
+local function checkInSight(trace, targetent, advanced)
+    if(!advanced) then
+        trace.endpos = trace.endpos + targetent:OBBCenter()
+        return util.TraceLine(trace).Fraction == 1
+    else
+        if(util.TraceLine(trace).Fraction == 1) then return true end
+        trace.endpos = trace.endpos + targetent:OBBCenter()
+        if(util.TraceLine(trace).Fraction == 1) then return true end
+        trace.endpos = targetent:GetPos() + Vector(0, 0, targetent:OBBMaxs().z)
+        if(util.TraceLine(trace).Fraction == 1) then return true end
+        return false
+    end
+end
+
+--[[
+    checkmode :
+        1 = Use Entity position for origin
+        2 = Use Vector Given for origin
+
+    originEntity = Entity that will be used for origin, only available when checkmode is 1
+    originEntityCenter = Use origin entity's center position for origin
+    originVector = Vector that will be used for origin, only available when checkmode is 2
+    targetEntity = Entity to check
+
+    advancedCheck = Use three points (Bottom, Center, Top) to check visibility, Will be 3x costy
+    maxAngle = Maximum angle offset to target, leave empty to skip this check, only available when checkmode is 1
+]]
+function HORDE.IsInSight(data)
+    local mode = data.checkmode || 1
+    if(mode == 1) then
+        local origin = data.originEntity:GetPos()
+        if(data.originEntityCenter) then
+            origin = origin + originEntity:OBBCenter()
+        end
+        local pos = data.targetEntity:GetPos()
+        if(data.maxAngle) then
+            local y1 = data.originEntity:GetAngles().y
+            local y2 = (pos - origin):Angle().y
+            if(math.NormalizeAngle(y1 - y2) > data.maxAngle) then
+                return false
+            end
+        end
+        local tr = {
+            start = origin,
+            endpos = pos,
+            mask = MASK_SOLID_BRUSHONLY,
+        }
+        return checkInSight(tr, data.targetEntity, data.advancedCheck)
+    else
+        local pos = data.targetEntity:GetPos()
+        local tr = {
+            start = data.originVector,
+            endpos = pos,
+            mask = MASK_SOLID_BRUSHONLY,
+        }
+        return checkInSight(tr, data.targetEntity, data.advancedCheck)
+    end
+end
+
+-- This is a SHARED file, you need to separate the codes for server and client
+if(SERVER) then -- Codes for serverside
+    util.AddNetworkString("Horde_ScreenEffect")
+
+    function HORDE.SendBorderEffect(ply, data)
+        net.Start("Horde_ScreenEffect")
+        net.WriteTable(data)
+        net.Send(ply)
+    end
+	--[[
+	function HORDE.SetOldWeapons(player)
+        player.OldWeapons = {}
+        for k,v in ipairs(player:GetWeapons()) do
+            table.insert(player.OldWeapons, v:GetClass())
+        end
+    end
+
+    function HORDE.RestoreWeapons(player)
+        if(!player.OldWeapons) then return end
+        for k,v in ipairs(player.OldWeapons) do
+            player:Give(v)
+        end
+        player.OldWeapons = {}
+    end
+	]]
+else -- Codes for clientside
+--Custom Border Screen effects
+    HORDE.BorderDefaultMaterial = Material("materials/hud_effects/Rectangle_Effect_01.png")
+    net.Receive("Horde_ScreenEffect", function()
+        local data = net.ReadTable()
+        HORDE:SetBorderEffects(data)
+    end)
+
+    HORDE.BorderEffects = {}
+    
+    function HORDE:RemoveAllScreenEffects()
+        HORDE.BorderEffects = {}
+    end
+    
+    function HORDE.GetFixedValue(inputNum)
+        local target = 0.016666
+        return inputNum / (target / RealFrameTime())
+    end
+
+    --[[
+        id = ID for the border effects, it's REQUIRED
+        material = Texture for the effect, leave empty for default fade texture
+        color = Color for the effect, default white
+        alpha = it explains itself
+        time = Length of effect, default 1 seconds
+        wait_til_end = Delay the fadeout until the draw time ends
+        fadeoutspeed = Speed when fadingout, only works when wait_til_end is true
+    ]]
+    local default = {
+        material = HORDE.BorderDefaultMaterial,
+        color = Color(255, 255, 255, 255),
+        alpha = 255,
+        time = 1,
+        wait_til_end = false,
+        fadeoutspeed = 10,
+    }
+    function HORDE:SetBorderEffects(data)
+        if(!data || !data.id) then return end
+        local id = data.id
+        local effect = {}
+            effect.calpha = 255
+        if(data.material) then
+            data.material = Material(data.material)
+        end
+        if(!HORDE.BorderEffects[id]) then
+            for index,val in pairs(default) do
+                if(data[index]) then
+                    effect[index] = data[index]
+                else
+                    effect[index] = val
+                end
+                if(index == "time") then
+                    effect.endtime = CurTime() + effect[index]
+                end
+            end
+            HORDE.BorderEffects[id] = effect
+        else
+            for index,val in pairs(data) do
+                HORDE.BorderEffects[id][index] = val
+                if(index == "time") then
+                    HORDE.BorderEffects[id].endtime = CurTime() + val
+                end
+            end
+        end
+    end
+
+    hook.Add("HUDPaintBackground", "HORDE_BorderEffect", function()
+        if (!LocalPlayer():Alive()) then
+            HORDE.BorderEffects = {}
+        end
+        for k,v in next, HORDE.BorderEffects do
+            if(v.endtime <= CurTime()) then
+                if(!v.wait_til_end) then
+                    HORDE.BorderEffects[k] = nil
+                    continue
+                else
+                    v.calpha = math.Clamp(v.calpha - HORDE.GetFixedValue(v.fadeoutspeed), 0, 255)
+                    if(v.calpha <= 0) then
+                        HORDE.BorderEffects[k] = nil
+                        continue
+                    end
+                end
+            end
+            if(!v.wait_til_end) then
+                v.calpha = v.alpha * math.Clamp((v.endtime - CurTime()) / v.time, 0, 1)
+            end
+            surface.SetDrawColor(v.color.r, v.color.g, v.color.b, v.calpha)
+            surface.SetMaterial(v.material)
+            surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+        end
+    end)
+end

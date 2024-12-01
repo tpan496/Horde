@@ -7,10 +7,12 @@ ENT.Spawnable = false
 ENT.AdminSpawnable = false
 
 ENT.Model = "models/weapons/arccw_go/w_eq_fraggrenade_thrown.mdl"
-ENT.FuseTime = 3.5
+ENT.FuseTime = 2
 ENT.ArmTime = 0
 ENT.ImpactFuse = false
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER
+
+ENT.GrenadeDamage = 225
 
 AddCSLuaFile()
 
@@ -30,6 +32,10 @@ function ENT:Initialize()
 
         self.SpawnTime = CurTime()
 
+        if self.Owner.GrenadeDampened then
+            self.dampening = true
+        end
+
         if self.FuseTime <= 0 then
             self:Detonate()
         end
@@ -38,7 +44,9 @@ end
 
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
-        self:GetPhysicsObject():SetDamping(2, 2)
+        if self.dampening then
+            self:GetPhysicsObject():SetDamping(6, 2)
+        end
         if self.Detonated then return end
         if data.Speed > 75 then
             self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
@@ -48,12 +56,15 @@ function ENT:PhysicsCollide(data, physobj)
 
         if IsValid(self.Owner) then
             if self.Owner:Horde_GetPerk("demolition_frag_impact") and (not HORDE:IsPlayerMinion(data.HitEntity)) then
+                self.GrenadeDamage = self.GrenadeDamage * 1.25
                 self:Detonate(impact)
-                for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
+                for _, ent in pairs(ents.FindInSphere(self:GetPos(), 250)) do
                     if HORDE:IsEnemy(ent) then
                         ent:Horde_AddDebuffBuildup(HORDE.Status_Stun, 500, self.Owner, ent:GetPos())
                     end
                 end
+            else
+                self.GrenadeDamage = 225
             end
         end
 

@@ -1,5 +1,12 @@
 SWEP.Base = "arccw_base_nade"
 
+SWEP.CookPrimFire = false
+SWEP.CookAltFire = true
+
+SWEP.Primary.ClipSize = -1
+SWEP.KeepIfEmpty = true
+SWEP.BottomlessClip = true
+
 function SWEP:FireRocket(ent, vel, ang, dontinheritvel)
     if CLIENT then return end
 
@@ -184,9 +191,23 @@ end
 function SWEP:PrimaryAttack()
     self:PreThrow()
     self.SecondaryThrow = nil
+    self.Owner.GrenadeDampened = nil
 end
 
 function SWEP:SecondaryAttack()
+    if self:GetNextPrimaryFire() >= CurTime() then return end
     self:PreThrow()
-    self.SecondaryThrow = true
+    self.SecondaryThrow = nil
+    self.Owner.GrenadeDampened = true
+end
+
+function SWEP:OnDrop()
+	self:Remove()
+end
+
+DEFINE_BASECLASS(SWEP.Base)
+
+function SWEP:Initialize(...)
+    self.Primary.Ammo = "Grenade"
+    BaseClass.Initialize(self, ...)
 end

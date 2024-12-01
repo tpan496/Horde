@@ -280,6 +280,7 @@ local hp = Material("status/hp.png", "smooth")
 local armor = Material("status/armor.png", "mips smooth")
 local mind = Material("status/mind.png", "mips smooth")
 local weight = Material("weight.png")
+local grenadeui = Material("status/grenade_ui.png", "smooth")
 local vhp = 0
 local varmor = 0
 local vmind = 0
@@ -287,6 +288,7 @@ surface.CreateFont("HealthInfo", { font = "arial", size = ScreenScale(15), exten
 surface.CreateFont("HealthInfo2", { font = "arial", size = ScreenScale(12), extended = true})
 surface.CreateFont("Horde_WeaponName", { font = "arial", size = ScreenScale(6), extended = true})
 surface.CreateFont("Horde_Weight", { font = "arial", size = ScreenScale(8), extended = true})
+surface.CreateFont("Horde_Grenade", { font = "arial", size = ScreenScale(12), extended = true})
 surface.CreateFont("Horde_SpellButton", { font = "arial", size = ScreenScale(4), extended = true})
 surface.CreateFont("Horde_SpellCooldown", { font = "arial", size = ScreenScale(6), extended = true})
 surface.CreateFont("Horde_SpellMindCost", { font = "arial", size = ScreenScale(4), extended = true})
@@ -294,6 +296,7 @@ local font = "HealthInfo"
 local font2 = "HealthInfo2"
 local font3 = "Horde_WeaponName"
 local fontweight = "Horde_Weight"
+local fontgrenade = "Horde_Grenade"
 local display_money = 0
 hook.Add("HUDPaint", "Horde_DrawHud", function ()
     if GetConVarNumber("horde_enable_client_gui") == 0 then return end
@@ -519,6 +522,24 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
                     draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(47), icon_y + ScreenScale(15), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                 end
             end
+        end
+
+        -- Draw Grenade
+        if (MySelf:HasWeapon("horde_carcass") == false) and (MySelf:HasWeapon("horde_astral_relic") == false) and (MySelf:HasWeapon("horde_void_projector") == false) and (MySelf:HasWeapon("horde_solar_seal") == false) then
+            surface.SetFont(fontgrenade)
+
+            local str = MySelf:GetAmmoCount("Grenade")
+            local imageSize = ScreenScale(15)
+            local wx = ScrW() - airgap - ScreenScale(80)
+            local wy = ScrH() - ScreenScale(61.5) - airgap
+            local textWide, textTall = surface.GetTextSize(str)
+            local barWide = textWide + imageSize - 6
+
+            draw.RoundedBox(10, ScrW() - airgap - (ScreenScale(8.5) + barWide), ScrH() - ScreenScale(59.5) - airgap, airgap + barWide, ScreenScale(15), Color(40,40,40,150))
+            surface.SetMaterial(grenadeui)
+            surface.SetDrawColor(255, 255, 255, 255)
+            surface.DrawTexturedRect(wx + ScreenScale(62.5), wy + ScreenScale(2.25), imageSize, imageSize)
+            draw.SimpleText(str, fontgrenade, wx + ScreenScale(62.5), wy + ScreenScale(3.75), color_white, TEXT_ALIGN_RIGHT)
         end
 
         -- Draw Weight

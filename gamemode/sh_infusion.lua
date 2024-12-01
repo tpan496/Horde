@@ -372,8 +372,14 @@ net.Receive("Horde_BuyInfusion", function (len, ply)
     and !table.IsEmpty(HORDE.items[class].infusions)
     and table.HasValue(HORDE.items[class].infusions, infusion) then
         local price = 100 + HORDE.items[class].price / 5
+        local ret_price = (100 + HORDE.items[class].price / 5) * 0.75
         if ply:Horde_GetMoney() >= price then
-            ply:Horde_AddMoney(-price)
+            if not ply.Horde_Infusions then ply.Horde_Infusions = {} end
+            if ply.Horde_Infusions[class] == nil then
+                ply:Horde_AddMoney(-price)
+            else
+                ply:Horde_AddMoney(-price + ret_price)
+            end
             HORDE:InfuseWeapon(ply, class, infusion)
             net.Start("Horde_SyncInfusion")
                 net.WriteTable(ply.Horde_Infusions)
@@ -390,7 +396,7 @@ end)
 net.Receive("Horde_SellInfusion", function (len, ply)
     if not ply:IsValid() or not ply:Alive() then return end
     local class = net.ReadString()
-    local ret_price = HORDE.items[class].price / 20
+    local ret_price = (100 + HORDE.items[class].price / 5) * 0.75
     ply:Horde_AddMoney(ret_price)
     HORDE:InfuseWeapon(ply, class, HORDE.Infusion_None)
     net.Start("Horde_SyncInfusion")

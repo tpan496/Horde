@@ -223,10 +223,7 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     elseif text[1] == "!mapconfig" then
         MapConfig(ply)
     elseif text[1] == "!drop" then
-        if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon().Base == "horde_spell_weapon_base" then
-            return
-        end
-        ply:DropWeapon()
+        ply:ConCommand("horde_drop_weapon")
     elseif text[1] == "!throwmoney" then
         ply:Horde_DropMoney(text[2])
     elseif text[1] == "!rtv" then
@@ -358,6 +355,10 @@ end)
 
 concommand.Add("horde_use_perk_skill", function (ply, cmd, args)
     HORDE:UsePerkSkill(ply)
+end)
+
+concommand.Add("horde_use_quick_grenade", function (ply, cmd, args)
+    HORDE:UseQuickGrenade(ply)
 end)
 
 concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)

@@ -1,6 +1,6 @@
 if not ArcCWInstalled then return end
 -- Referenced From GSO
-SWEP.Base = "arccw_base_nade"
+SWEP.Base = "arccw_horde_base_nade"
 SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
@@ -35,7 +35,7 @@ SWEP.FuseTime = 2
 
 SWEP.Throwing = true
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = -1
 
 
 SWEP.MuzzleVelocity = 1000
@@ -45,7 +45,7 @@ SWEP.TTTWeaponType = "weapon_ttt_medicgrenade"
 SWEP.NPCWeaponType = "weapon_grenade"
 SWEP.NPCWeight = 50
 
-SWEP.PullPinTime = 0.25
+SWEP.PullPinTime = 0.5
 
 SWEP.Animations = {
     ["draw"] = {
@@ -54,7 +54,7 @@ SWEP.Animations = {
     },
     ["pre_throw"] = {
         Source = "pullpin",
-        Time = 0.25,
+        Time = 0.5,
     },
     ["throw"] = {
         Source = "throw",

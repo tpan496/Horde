@@ -7,11 +7,11 @@ ENT.Spawnable = false
 ENT.AdminSpawnable = false
 
 ENT.Model = "models/weapons/arccw_go/w_eq_incendiarygrenade_thrown.mdl"
-ENT.FuseTime = 1.5
+ENT.FuseTime = 2
 ENT.ArmTime = 0
 ENT.ImpactFuse = false
 ENT.Armed = true
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER
 
 AddCSLuaFile()
 
@@ -32,6 +32,10 @@ function ENT:Initialize()
         self.SpawnTime = CurTime()
         self:SetColor(Color(100, 100, 200))
 
+        if self.Owner.GrenadeDampened then
+            self.dampening = true
+        end
+
         if self.FuseTime <= 0 then
             self:Detonate()
         end
@@ -40,7 +44,9 @@ end
 
 function ENT:PhysicsCollide(data, physobj)
     if SERVER then
-        self:GetPhysicsObject():SetDamping(2, 2)
+        if self.dampening then
+            self:GetPhysicsObject():SetDamping(6, 2)
+        end
         if data.Speed > 75 then
             self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
         elseif data.Speed > 25 then

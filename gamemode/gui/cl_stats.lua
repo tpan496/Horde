@@ -258,6 +258,7 @@ function PANEL:Init()
     local update_text_panel = vgui.Create("DPanel", description_panel)
     update_text_panel:SetSize(self:GetParent():GetWide(), 2000)
     update_text_panel:SetVisible(true)
+
     local update_text = translate.Get("info_Mechanics_Latest_Update_desc")
     local mt = multlinetext(update_text, update_text_panel:GetWide() - 50, 'Content')
     update_text_panel.Paint = function ()

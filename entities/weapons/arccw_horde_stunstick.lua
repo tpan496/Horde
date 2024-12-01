@@ -164,3 +164,10 @@ function SWEP:Hook_PostBash(t)
         tr.Entity:TakeDamageInfo(dmginfo)
     end
 end
+
+function SWEP:DrawWeaponSelection(x, y, w, h, a)
+    surface.SetDrawColor(255, 255, 255, a)
+    surface.SetMaterial(self.WepSelectIcon)
+
+    surface.DrawTexturedRect(x, y, w, w / 2)
+end

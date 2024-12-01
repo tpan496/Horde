@@ -17,7 +17,7 @@ SWEP.Trivia_Mechanism = "Thermite TH3"
 SWEP.Trivia_Country = "USA"
 SWEP.Trivia_Year = 1944
 SWEP.ForceDefaultAmmo = 0
-SWEP.Primary.MaxAmmo = 10
+SWEP.Primary.MaxAmmo = 9
 
 SWEP.Slot = 4
 
@@ -34,11 +34,11 @@ SWEP.WorldModelOffset = {
     ang = Angle(-10, 0, 180)
 }
 
-SWEP.FuseTime = 5
+SWEP.FuseTime = 2
 
 SWEP.Throwing = true
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = -1
 
 
 SWEP.MuzzleVelocity = 1000

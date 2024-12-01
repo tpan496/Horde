@@ -46,7 +46,7 @@ SWEP.Category = "ArcCW - Horde"
 
 SWEP.DrawAmmo = true
 
-SWEP.Primary.MaxAmmo = 90
+SWEP.Primary.MaxAmmo = 100
 SWEP.Primary.ClipSize = -1
 
 if ( CLIENT ) then
@@ -129,7 +129,9 @@ function SWEP:Throw(level)
 	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )
 	timer.Simple(0.2, function ()
-		self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
+        if self.Owner:GetActiveWeapon():GetClass() == "horde_pheropod" then
+            self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
+        end
 	end)
 	self:EmitSound( ShootSound )
 	if ( CLIENT ) then return end
@@ -291,4 +293,8 @@ function SWEP:Think()
 		self.EnergyRegenTimer = CurTime() + 0.25
 		self:SetClip1(math.min(self.Primary.MaxAmmo, self:Clip1() + 1))
 	end
+end
+
+function SWEP:OnDrop()
+	self:Remove()
 end

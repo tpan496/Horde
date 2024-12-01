@@ -39,7 +39,7 @@ SWEP.FuseTime = 2
 
 SWEP.Throwing = true
 
-SWEP.Primary.ClipSize = 1
+SWEP.Primary.ClipSize = -1
 SWEP.Primary.Ammo = "Grenade"
 
 SWEP.MuzzleVelocity = 1000

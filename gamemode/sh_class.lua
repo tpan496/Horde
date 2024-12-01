@@ -425,13 +425,21 @@ function plymeta:Horde_SetSubclass(class_name, subclass_name)
                     if self:Horde_GetCurrentSubclass() == "Gunslinger" and item.category == "Pistol" then
                         continue
                     end
-                    if (item.whitelist and (not item.whitelist[self:Horde_GetClass().name])) then
+                    if item.whitelist and not item.whitelist[self:Horde_GetCurrentSubclass()] then
                         timer.Simple(0, function ()
                             self:DropWeapon(wpn)
                         end)
                         continue
                     end
                 end
+            end
+        end
+        
+        --Check Gadget
+        for _, gadget in pairs(HORDE.items) do
+            if gadget.category == "Gadget" and self:Horde_GetGadget() == gadget.class and gadget.whitelist and not gadget.whitelist[self:Horde_GetCurrentSubclass()] then
+                self:Horde_UnsetGadget()
+                self:Horde_SyncEconomy()
             end
         end
 
