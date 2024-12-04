@@ -1,6 +1,6 @@
 SPELL.PrintName      = "Solar Storm"
 SPELL.Weapon         = {"horde_solar_seal"}
-SPELL.Mind           = {5, 10, 20}
+SPELL.Mind           = {5, 10, 15}
 
 SPELL.ChargeTime     = {0, 0.5, 1}
 SPELL.ChargeRelease  = nil

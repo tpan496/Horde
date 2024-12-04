@@ -1,7 +1,7 @@
 SPELL.PrintName      = "Void Sphere"
 SPELL.Weapon         = { "horde_void_projector" }
 
-SPELL.Mind           = { 5, 10, 20 }
+SPELL.Mind           = { 5, 10, 15 }
 SPELL.ChargeTime     = { 0, 0.5, 1 }
 SPELL.ChargeRelease  = nil
 SPELL.Cooldown       = 1
