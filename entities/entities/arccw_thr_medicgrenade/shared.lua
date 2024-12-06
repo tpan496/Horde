@@ -155,7 +155,7 @@ function ENT:Think()
                     dmg:SetDamageType(DMG_NERVEGAS)
                     dmg:SetAttacker(self.Owner)
                     dmg:SetInflictor(self)
-                    dmg:SetDamagePosition(self:GetPos())
+                    dmg:SetDamagePosition(ent:GetPos())
                     ent:TakeDamageInfo(dmg)
                 end
             end

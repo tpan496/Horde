@@ -43,7 +43,9 @@ Dank Update 2.0.0
 
 -- Every class now starts with a Medkit.
 
--- You cannot drop Medkits (you can still sell it to get rid of it).
+-- You cannot drop Medkits and swapping classes no longer drops it (you can still sell it to get rid of it).
+
+-- Medkit is destroyed upon dropping it.
 
 -- You can no longer use Medkit if you’re at 100% maximum health or at maximum overhealed health (this prevents you from wasting Medkit charges).
 
@@ -64,6 +66,8 @@ Dank Update 2.0.0
 -- Quick grenades will throw grenades at a significantly lower velocity while having a dampened effect. 
 
 -- Grenades can no longer be dropped (you can still sell it to get rid of it)
+
+-- Grenades are destroyed upon dropping it.
 
 -- Maximum special grenade reserve capacity limited to 9 grenades
 
