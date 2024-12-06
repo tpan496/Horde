@@ -33,6 +33,11 @@ function HORDE_WriteAvatar(steamid, ctx)
     file.Write("horde/avatars/"..steamid..".png", ctx)
 end
 
+function HORDE_GetFixedValue(input)
+    local target = 0.016666
+    return input / (target / RealFrameTime())
+end
+
 local emptyAvatar = file.Read("materials/horde/emptyframe.png", "GAME")
 
 function HORDE_DownloadAvatar(steamid64)
