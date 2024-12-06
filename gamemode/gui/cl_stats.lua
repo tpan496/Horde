@@ -1,4 +1,271 @@
 local PANEL = {}
+HORDE_PlayerNames = {}
+HORDE_QueuedAvatarDownload = {}
+
+if(file.Exists("horde/playernames.txt", "DATA")) then
+    local data = util.JSONToTable(file.Read("horde/playernames.txt"), false, true)
+    if(data && istable(data)) then
+        HORDE_PlayerNames = data
+    end
+end
+
+function HORDE_WriteName(steamid64, nick)
+    file.Write("horde/playernames.txt", util.TableToJSON(HORDE_PlayerNames))
+end
+
+function HORDE_GetNick(steamid64)
+    if(HORDE_PlayerNames[steamid64]) then
+        return HORDE_PlayerNames[steamid64]
+    else
+        HORDE_PlayerNames[steamid64] = "Fetching.."
+        steamworks.RequestPlayerInfo(steamid64, function(nick)
+            local ret = nick
+            if(!ret || ret == "" || ret == "anonymous") then
+                ret = "<INVALID PLAYER>"
+            end
+            HORDE_PlayerNames[steamid64] = ret
+            HORDE_WriteName(steamid64, nick)
+        end)
+    end
+end
+
+function HORDE_WriteAvatar(steamid, ctx)
+    file.Write("horde/avatars/"..steamid..".png", ctx)
+end
+
+local emptyAvatar = file.Read("materials/horde/emptyframe.png", "GAME")
+
+function HORDE_DownloadAvatar(steamid64)
+    HTTP({
+        failed = function(reason)
+        end,
+        success = function(code, body, headers)
+            local st, ed = string.find(body, "<avatarFull>"), string.find(body, "</avatarFull>")
+            if(st && ed) then
+                st = st + 12
+                ed = ed - 1
+                local ctx = string.sub(body, st, ed)
+                local avatar_link = string.Replace(ctx, "<![CDATA[", "")
+                avatar_link = string.Replace(avatar_link, "]]>", "")
+                HTTP({
+                    failed = function(reason)
+                    end,
+                    success = function(code, body, headers)
+                        HORDE_WriteAvatar(steamid64, body)
+                    end,
+                    method = "GET",
+                    url = avatar_link
+                })
+            else
+                HORDE_WriteAvatar(steamid64, emptyAvatar)
+            end
+        end,
+        method = "GET",
+        url = "https://steamcommunity.com/profiles/"..steamid64.."?xml=1"
+    })
+end
+
+function HORDE_GetTextSize(font, text)
+    surface.SetFont(font)
+    return surface.GetTextSize(text)
+end
+
+function HORDE_CreatePanel(parent, x, y, w, h, color, r)
+    r = r || 0
+    local panel = vgui.Create("DPanel", parent)
+        panel:SetPos(x, y)
+        panel:SetSize(w, h)
+        panel.Paint2x = function() end
+        panel.Paint = function()
+            draw.RoundedBox(r, 0, 0, w, h, color)
+            panel.Paint2x()
+        end
+        panel:SetZPos(0)
+    return panel
+end
+
+function HORDE_CreateLabel(parent, x, y, text, font, color, bg, bgcolor)
+    local label = vgui.Create("DLabel", parent)
+        label.oPos = Vector(x, y)
+        label:SetPos(x, y)
+        label:SetFont(font)
+        label:SetText(text)
+        label:SetColor(color)
+        local w, h = HORDE_GetTextSize(font, label:GetText())
+        label:SetSize(w, h)
+
+        label.CentHor = function()
+            local w, h = HORDE_GetTextSize(font, label:GetText())
+            label:SetPos(label.oPos.x - w / 2, label.oPos.y)
+            label:SetSize(w, h)
+        end
+
+        label.CentVer = function()
+            local w, h = HORDE_GetTextSize(font, label:GetText())
+            label:SetPos(label.oPos.x, label.oPos.y - h / 2)
+            label:SetSize(w, h)
+        end
+
+        label.CentPos = function()
+            local w, h = HORDE_GetTextSize(font, label:GetText())
+            label:SetPos(label.oPos.x - w / 2, label.oPos.y - h / 2)
+            label:SetSize(w, h)
+        end
+
+        label.UpdateText = function(text)
+            label:SetText(text)
+            local w, h = HORDE_GetTextSize(font, label:GetText())
+            label:SetSize(w, h)
+        end
+
+        if(bg) then
+            label.oPaint = label.Paint
+            label.Paint = function()
+                draw.RoundedBox(0, 0, 0, label:GetWide(), label:GetTall(), bgcolor)
+                label.oPaint(label)
+            end
+        end
+
+    local tw, th = HORDE_GetTextSize(font, label:GetText())
+    return tw, th, label
+end
+
+function HORDE_CreateScroll(parent, x, y, w, h, color)
+    local frame = vgui.Create("DScrollPanel", parent)
+    frame:SetPos(x, y)
+    frame:SetSize(w, h)
+    frame.Paint = function() draw.RoundedBox(0, 0, 0, w, h, color) end
+
+    frame.ScrollAmount = ScreenScaleH(64) -- You can change it with returned panel object
+    frame.Smoothing = 0.2
+
+    frame.CurrrentScroll = 0
+    frame.MaximumScroll = 0 -- Don't touch this value
+    frame.Panels = {}
+
+    frame.FiltePanels = function(searchString)
+        for k,v in ipairs(frame.Panels) do
+            if(!IsValid(v)) then
+                table.remove(frame.Panels, k)
+                continue
+            end
+            if(!v.SortString) then continue end
+            if(string.find(v.SortString, searchString)) then
+                if(!frame.HideAnimation) then
+                    v:SetVisible(true)
+                else
+                    v.Display = true
+                end
+            else
+                if(!frame.HideAnimation) then
+                    v:SetVisible(false)
+                    v.Display = false
+                end
+            end
+            local t = v:GetTall() -- So it recalculate the dock position
+            v:SetTall(t - 1)
+            v:SetTall(t)
+        end
+    end
+
+    frame.AddPanel = function(ui)
+        table.insert(frame.Panels, ui)
+    end
+
+    local DVBar = frame:GetVBar()
+    local down = false
+    local clr = 0
+
+    DVBar:SetWide(ScreenScaleH(4))
+    DVBar:SetX(DVBar:GetX() - DVBar:GetWide())
+
+    DVBar.Think = function()
+        frame.MaximumScroll = DVBar.CanvasSize
+        if(down) then return end
+        local dvscroll = DVBar:GetScroll()
+        local step = frame.CurrrentScroll - dvscroll
+        if(math.abs(step) > 1) then
+            clr = 125
+        end
+        DVBar:SetScroll(dvscroll + HORDE_GetFixedValue(step * frame.Smoothing))
+    end
+
+    function frame:OnMouseWheeled(delta)
+        frame.CurrrentScroll = math.Clamp(frame.CurrrentScroll + frame.ScrollAmount * -delta, 0, frame.MaximumScroll)
+    end
+
+    function DVBar:Paint(drawW, drawH)
+        draw.RoundedBox(0, 0, 0, drawW, drawH, Color(0, 0, 0, 150))
+    end
+
+    function DVBar.btnUp:Paint() return end
+    function DVBar.btnDown:Paint() return end
+
+    DVBar.btnGrip.oOnMousePressed = DVBar.btnGrip.OnMousePressed
+    function DVBar.btnGrip.OnMousePressed(self, code)
+        down = true
+        DVBar.btnGrip.oOnMousePressed(self, code)
+        frame.CurrrentScroll = DVBar:GetScroll()
+    end
+    DVBar.oOnMousePressed = DVBar.OnMousePressed
+    function DVBar.OnMousePressed(self, code)
+        down = true
+        DVBar.oOnMousePressed(self, code)
+    end
+
+    function DVBar.btnGrip:Paint(drawW, drawH)
+        local roundWide = drawW * 0.5
+        if(DVBar.btnGrip:IsHovered()) then
+            clr = math.Clamp(clr + HORDE_GetFixedValue(8), 0, 80)
+            if(input.IsMouseDown(107) && !down) then
+                down = true
+            end
+        else
+            clr = math.Clamp(clr - HORDE_GetFixedValue(8), 0, 80)
+        end
+
+        if(down && !input.IsMouseDown(107)) then
+            down = false
+        end
+
+        if(down) then
+            frame.CurrrentScroll = DVBar:GetScroll()
+            clr = 125
+        end
+
+        local _color = 130 + clr
+        draw.RoundedBox(roundWide, 0, 0, drawW, drawH, Color(_color, _color, _color, 255))
+    end
+    return frame
+end
+
+function HORDE_InvisButton(parent, x, y, w, h, func)
+    local btn = vgui.Create("DButton", parent)
+        btn:SetPos(x, y)
+        btn:SetSize(w, h)
+        btn:SetText("")
+        btn.Paint = function() end
+        btn.DoClick = func
+        
+        return btn
+end
+
+local function HTTPUpdateStatus(addr)
+    http.Post("https://meiryiservice.xyz/horde/horde_status.php",{
+        steamid = LocalPlayer():SteamID64(),
+        host = GetHostName(),
+        map = game.GetMap(),
+        addr = addr,
+        wave = tostring(HORDE.current_wave || 0),
+        difficulty = tostring(HORDE.difficulty || 1),
+        playercount = tostring(player.GetCount()),
+        maxplayer = tostring(game.MaxPlayers()),
+    },
+    function(body, length, headers, code)
+    end,
+    function(message)
+    end)
+end
 
 local function GetImmune(status)
     if HORDE:GetStat(status) == 0 then
@@ -52,6 +319,7 @@ function PANEL:Init()
     stats_panel:SetPos(0, 50)
     stats_panel:SetSize(self:GetWide(), self:GetTall() - 50)
     stats_panel:SetBackgroundColor(HORDE.color_hollow)
+    stats_panel:SetVisible(false)
     self.stats_panel = stats_panel
 
     local achievements_panel = vgui.Create("DPanel", self)
@@ -60,6 +328,170 @@ function PANEL:Init()
     achievements_panel:SetBackgroundColor(HORDE.color_hollow)
     achievements_panel:SetVisible(false)
     self.achievements_panel = achievements_panel
+
+    -- Man I hate coding UI without UI library
+    local looking2play_panel = vgui.Create("DPanel", self)
+    looking2play_panel:SetPos(0, 50)
+    looking2play_panel:SetSize(self:GetWide(), self:GetTall() - 50)
+    looking2play_panel:SetBackgroundColor(HORDE.color_hollow)
+    looking2play_panel:SetVisible(true)
+
+    local gap = 12
+    local _, _, text = HORDE_CreateLabel(looking2play_panel, gap, gap, "Find other players to play with!", "LargeTitle", color_white, false)
+    local _, _, playercount = HORDE_CreateLabel(looking2play_panel, gap, text:GetY() + text:GetTall() + gap, "Online players : Fetching..", "Title", color_white, false)
+    local _, _, note = HORDE_CreateLabel(looking2play_panel, gap, playercount:GetY(), "Connection might take a while, please be patient", "Title", color_white, false)
+    note:SetX(looking2play_panel:GetWide() - note:GetWide() - gap)
+
+    local upperGap = playercount:GetY() + playercount:GetTall() + gap
+    local playerlist = HORDE_CreateScroll(looking2play_panel, gap, upperGap, looking2play_panel:GetWide() - gap * 2, looking2play_panel:GetTall() - upperGap - gap, Color(30, 30, 30, 255))
+
+    local serverlist = {
+        {
+            ServerName = "Horde Gamemode Official Server (1.2.1)",
+            Address = "131.153.172.122:27055",
+            MaxPlayers = 10,
+        },
+    }
+    local players = {}
+
+    playerlist.Update = function()
+        playerlist:Clear()
+        local plycount = 0
+        local count = {}
+        local labels = {}
+        local tall = playerlist:GetTall() * 0.135
+        local gap_str = 6
+
+        for _, server in pairs(serverlist) do
+            count[server.Address] = 0
+        end
+
+        for _, data in ipairs(serverlist) do
+            local base = HORDE_CreatePanel(playerlist, 0, 0, playerlist:GetWide(), tall, Color(20, 20, 20, 255))
+                base:Dock(TOP)
+                base:DockMargin(0, 0, 0, 5)
+             local image = vgui.Create("DImage", base)
+                image:SetSize(tall, tall)
+                image:SetImage("server.png")
+            local _, _, nick = HORDE_CreateLabel(base, tall + gap_str, gap_str, data.ServerName, "LargeTitle", color_white)
+            local _, _, addr = HORDE_CreateLabel(base, tall + gap_str, nick:GetY() + nick:GetTall() + gap_str, data.Address, "Heading", Color(150, 150, 150, 255))
+            addr:SetY(base:GetTall() - addr:GetTall() - gap_str)
+            local _, _, count = HORDE_CreateLabel(base, 0, base:GetTall() * 0.5, "0 / "..data.MaxPlayers, "Title", Color(150, 150, 150, 255))
+            count:SetPos(base:GetWide() - count:GetWide() - gap_str, (base:GetTall() - count:GetTall()) * 0.5)
+            local btn = HORDE_InvisButton(base, 0, 0, base:GetWide(), base:GetTall(), function()
+                if(steamid64 == LocalPlayer():SteamID64()) then return end
+                LocalPlayer():ConCommand("connect "..data.Address)
+            end)
+            btn.Alpha = 0
+            btn.Paint = function()
+                if(btn:IsHovered()) then
+                    btn.Alpha = math.Clamp(btn.Alpha + 100 * RealFrameTime(), 0, 20)
+                else
+                    btn.Alpha = math.Clamp(btn.Alpha - 100 * RealFrameTime(), 0, 20)
+                end
+                draw.RoundedBox(0, 0, 0, base:GetWide(), base:GetTall(), Color(255, 255, 255, btn.Alpha))
+            end
+
+            labels[data.Address] = count
+        end
+
+        for steamid64, data in pairs(players) do
+            steamid64 = tostring(steamid64)
+            local base = HORDE_CreatePanel(playerlist, 0, 0, playerlist:GetWide(), tall, Color(20, 20, 20, 255))
+                base:Dock(TOP)
+                base:DockMargin(0, 0, 0, 5)
+            local avatar = vgui.Create("DImage", base)
+                avatar:SetSize(tall, tall)
+                avatar.NamePath = "horde/avatars/"..steamid64..".png"
+                avatar.NextUpdate = 0
+                avatar.AvatarMaterial = nil
+                avatar.Think = function()
+                    if(avatar.NextUpdate > SysTime()) then return end
+                        if(file.Exists(avatar.NamePath, "DATA")) then
+                            avatar.AvatarMaterial = Material("data/"..avatar.NamePath)
+                            avatar.Think = nil
+                            return
+                        else
+                            if(!HORDE_QueuedAvatarDownload[steamid64]) then
+                                HORDE_QueuedAvatarDownload[steamid64] = true
+                            end
+                        end
+                    avatar.NextUpdate = SysTime() + 0.2
+                end
+                avatar.Paint = function()
+                    if(avatar.AvatarMaterial) then
+                        surface.SetDrawColor(255, 255, 255, 255)
+                        surface.SetMaterial(avatar.AvatarMaterial)
+                        surface.DrawTexturedRect(0, 0, tall, tall)
+                    end
+                end
+                local _, _, nick = HORDE_CreateLabel(base, tall + gap_str, gap_str, "Fetching..", "LargeTitle", color_white)
+                nick.NextUpdate = 0
+                nick.Think = function()
+                    if(nick.NextUpdate > SysTime()) then return end
+                    local name = HORDE_GetNick(steamid64)
+                    nick.UpdateText(HORDE_PlayerNames[steamid64])
+                    if(name != "Fetching..") then
+                        nick.Think = nil
+                    end
+                    nick.NextUpdate = SysTime() + 0.2
+                end
+                local _, _, addr = HORDE_CreateLabel(base, tall + gap_str, nick:GetY() + nick:GetTall() + gap_str, data.host.." ["..data.address.."]".." ["..data.playercount.." / "..data.maxplayer.."]", "Heading", Color(150, 150, 150, 255))
+                addr:SetY(base:GetTall() - addr:GetTall() - gap_str)
+                local wavestr = "Wave : " .. data.wave
+                if(tonumber(data.wave) <= 0) then
+                    wavestr = "Preparing phase"
+                end
+                local diff = HORDE.difficulty_text[tonumber(data.difficulty)]
+                if(diff) then
+                    diff = translate.Get("Game_Difficulty_"..diff) || "Unknown Difficulty"
+                else
+                    diff = "Unknown Difficulty"
+                end
+                local _, _, info = HORDE_CreateLabel(base, tall + gap_str, 0, data.map.." | "..wavestr.." | "..diff, "Heading", Color(150, 150, 150, 255))
+                info:SetPos(base:GetWide() - (info:GetWide() + gap_str), base:GetTall() - addr:GetTall() - gap_str)
+                local btn = HORDE_InvisButton(base, 0, 0, base:GetWide(), base:GetTall(), function()
+                    if(steamid64 == LocalPlayer():SteamID64()) then return end
+                    LocalPlayer():ConCommand("connect "..data.address)
+                end)
+                btn.Alpha = 0
+                btn.Paint = function()
+                    if(btn:IsHovered()) then
+                        btn.Alpha = math.Clamp(btn.Alpha + 100 * RealFrameTime(), 0, 20)
+                    else
+                        btn.Alpha = math.Clamp(btn.Alpha - 100 * RealFrameTime(), 0, 20)
+                    end
+                    draw.RoundedBox(0, 0, 0, base:GetWide(), base:GetTall(), Color(255, 255, 255, btn.Alpha))
+                end
+            plycount = plycount + 1
+        end
+
+        for addr, _count in pairs(count) do
+            local label = labels[addr]
+            if(label) then
+                label.UpdateText(_count.." / 10")
+                label:SetX(playerlist:GetWide() - label:GetWide() - gap_str)
+            end
+        end
+
+        playercount.UpdateText("Online players : " .. plycount)
+    end
+
+    local FetchPlayers = function()
+        players = {}
+        http.Fetch("https://meiryiservice.xyz/horde/players.txt",
+        function(body, length, headers, code)
+            local t = util.JSONToTable(body, false, true)
+            if(istable(t) && IsValid(playerlist)) then
+                players = t
+                playerlist.Update()
+            end
+        end,
+        function(message)
+         end)
+    end
+
+    FetchPlayers()
 
     local maps_panel = vgui.Create("DScrollPanel", achievements_panel)
     maps_panel:Dock(LEFT)
@@ -840,7 +1272,7 @@ function PANEL:Init()
     end
 
     local stats_btn = vgui.Create("DButton", self)
-    local stats_activated = true
+    local stats_activated = false
     local stats_hovered = false
     stats_btn:SetText("Stats")
     stats_btn:SetTextColor(Color(255,255,255))
@@ -890,10 +1322,29 @@ function PANEL:Init()
         end
     end
 
+    local looking2play_btn = vgui.Create("DButton", self)
+    local looking2play_activated = true
+    local looking2play_hovered = false
+    looking2play_btn:SetText("Looking to play")
+    looking2play_btn:SetTextColor(Color(255,255,255))
+    looking2play_btn:SetFont("Title")
+    looking2play_btn:SetSize(250, 50)
+    looking2play_btn:SetPos(750, 0)
+    looking2play_btn.Paint = function ()
+        if looking2play_hovered then draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_crimson) return end
+        if looking2play_activated then
+            draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_crimson)
+        else
+            draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_hollow)
+        end
+    end
+
     stats_btn.DoClick = function ()
         stats_activated = true
         achievements_activated = nil
+        looking2play_activated = nil
         learn_activated = nil
+        looking2play_panel:SetVisible(false)
         stats_panel:SetVisible(true)
         achievements_panel:SetVisible(false)
         learn_panel:SetVisible(false)
@@ -913,7 +1364,9 @@ function PANEL:Init()
     achievements_btn.DoClick = function ()
         achievements_activated = true
         stats_activated = nil
+        looking2play_activated = nil
         learn_activated = nil
+        looking2play_panel:SetVisible(false)
         achievements_panel:SetVisible(true)
         stats_panel:SetVisible(false)
         learn_panel:SetVisible(false)
@@ -933,10 +1386,26 @@ function PANEL:Init()
     learn_btn.DoClick = function ()
         achievements_activated = nil
         stats_activated = nil
+        looking2play_activated = nil
         learn_activated = true
+        looking2play_panel:SetVisible(false)
         achievements_panel:SetVisible(false)
         stats_panel:SetVisible(false)
         learn_panel:SetVisible(true)
+        surface.PlaySound("UI/buttonclick.wav")
+    end
+
+    looking2play_btn.DoClick = function()
+        achievements_activated = nil
+        stats_activated = nil
+        looking2play_activated = nil
+        learn_activated = nil
+        looking2play_activated = true
+        looking2play_panel:SetVisible(true)
+        achievements_panel:SetVisible(false)
+        stats_panel:SetVisible(false)
+        learn_panel:SetVisible(false)
+        FetchPlayers()
         surface.PlaySound("UI/buttonclick.wav")
     end
 
@@ -957,7 +1426,7 @@ function PANEL:Init()
     discord_btn:SetTextColor(Color(255,255,255))
     discord_btn:SetFont("Title")
     discord_btn:SetSize(250, 50)
-    discord_btn:SetPos(750, 0)
+    discord_btn:SetPos(1000, 0)
     discord_btn.Paint = function ()
         if discord_hovered then draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_crimson) return end
         if discord_activated then
@@ -969,6 +1438,47 @@ function PANEL:Init()
     discord_btn.DoClick = function ()
         gui.OpenURL("https://discord.gg/NevEgfAPSN")
     end
+
+    local offset = 8
+    local button_size = 20
+    local gap = 6
+    local auto_btn = HORDE_CreatePanel(self, 0, 0, 256, 36, Color(0, 0, 0, 255))
+    auto_btn:SetZPos(32767)
+    auto_btn:SetPos(8, self:GetTall() - auto_btn:GetTall() - 8)
+    auto_btn.Paint = function()
+        draw.RoundedBox(0, 0, 0, auto_btn:GetWide(), auto_btn:GetTall(), Color(30, 30, 30, 255))
+        local toggled = true -- man this is really bad, but it's just one button so I think it might be fine
+        if(file.Exists("horde/hidemenu.txt", "DATA")) then
+            if(file.Read("horde/hidemenu.txt", "DATA") == "false") then
+                toggled = false
+            end
+        end
+
+        if(toggled) then
+            draw.RoundedBox(0, offset, offset, button_size, button_size, Color(255, 255, 255, 255))
+        else
+            --draw.RoundedBox(0, offset, offset, button_size, button_size, Color(255, 255, 255, 255))
+            surface.SetDrawColor(255, 255, 255, 255)
+            surface.DrawOutlinedRect(offset, offset, button_size, button_size, 2)
+        end
+    end
+
+    -- For anyone who is reading this, I do this because it's only for one button and I'm lazy
+    function auto_btn:OnMousePressed()
+        if(file.Exists("horde/hidemenu.txt", "DATA")) then
+            if(file.Read("horde/hidemenu.txt", "DATA") == "false") then
+                file.Write("horde/hidemenu.txt", "true")
+            else
+                file.Write("horde/hidemenu.txt", "false")
+            end
+        else
+            file.Write("horde/hidemenu.txt", "false")
+        end
+        surface.PlaySound("UI/buttonclick.wav")
+    end
+
+    local _, _, label = HORDE_CreateLabel(auto_btn, gap * 3 + button_size, auto_btn:GetTall() * 0.5, "Automatically open this menu", "Content", Color(255, 255, 255, 255))
+    label.CentVer()
 
     local close_btn = vgui.Create("DButton", self)
     close_btn:SetFont("marlett")
@@ -995,3 +1505,48 @@ function PANEL:Paint(w, h)
 end
 
 vgui.Register("HordeStats", PANEL)
+
+local nextUpdate = SysTime()
+local nextQueue = 0
+local connectAddress = "NULL"
+hook.Add("Think", "HORDE_UpdateStatus", function()
+    if(nextQueue < SysTime()) then
+        for k,v in pairs(HORDE_QueuedAvatarDownload) do
+            HORDE_DownloadAvatar(k)
+            HORDE_QueuedAvatarDownload[k] = nil
+            break
+        end
+        nextQueue = SysTime() + 0.33
+    end
+    if(nextUpdate > SysTime() || !IsValid(LocalPlayer())) then return end
+    if(connectAddress == "NULL") then
+        for _, ply in ipairs(player.GetAll()) do
+            if(ply:IsListenServerHost()) then
+                connectAddress = "p2p:"..ply:SteamID64()
+                break
+            end
+        end
+
+        if(connectAddress == "NULL") then
+            connectAddress = game.GetIPAddress()
+        end
+    end
+    HTTPUpdateStatus(connectAddress)
+    nextUpdate = SysTime() + 10
+end)
+
+file.CreateDir("horde/avatars")
+
+HORDE_OpenMenu = HORDE_OpenMenu || true
+hook.Add("HUDPaint", "HORDE_AutoMenu", function()
+    if(HORDE_OpenMenu == true) then
+        HORDE_OpenMenu = false
+        local open = true
+        if(file.Exists("horde/hidemenu.txt", "DATA")) then
+            if(file.Read("horde/hidemenu.txt", "DATA") == "false") then
+                return
+            end
+        end
+        HORDE:ToggleStats()
+    end
+end)
