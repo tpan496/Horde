@@ -319,6 +319,7 @@ function PANEL:Init()
     stats_panel:SetPos(0, 50)
     stats_panel:SetSize(self:GetWide(), self:GetTall() - 50)
     stats_panel:SetBackgroundColor(HORDE.color_hollow)
+    stats_panel:SetVisible(false)
     self.stats_panel = stats_panel
 
     local achievements_panel = vgui.Create("DPanel", self)
@@ -333,7 +334,7 @@ function PANEL:Init()
     looking2play_panel:SetPos(0, 50)
     looking2play_panel:SetSize(self:GetWide(), self:GetTall() - 50)
     looking2play_panel:SetBackgroundColor(HORDE.color_hollow)
-    looking2play_panel:SetVisible(false)
+    looking2play_panel:SetVisible(true)
 
     local gap = 12
     local _, _, text = HORDE_CreateLabel(looking2play_panel, gap, gap, "Find other players to play with!", "LargeTitle", color_white, false)
@@ -443,7 +444,7 @@ function PANEL:Init()
                 end
                 local diff = HORDE.difficulty_text[tonumber(data.difficulty)]
                 if(diff) then
-                    diff = translate.Get("Game_Difficulty_"..diff)
+                    diff = translate.Get("Game_Difficulty_"..diff) || "Unknown Difficulty"
                 else
                     diff = "Unknown Difficulty"
                 end
@@ -1341,7 +1342,7 @@ function PANEL:Init()
     end
 
     local stats_btn = vgui.Create("DButton", self)
-    local stats_activated = true
+    local stats_activated = false
     local stats_hovered = false
     stats_btn:SetText("Stats")
     stats_btn:SetTextColor(Color(255,255,255))
@@ -1392,7 +1393,7 @@ function PANEL:Init()
     end
 
     local looking2play_btn = vgui.Create("DButton", self)
-    local looking2play_activated = false
+    local looking2play_activated = true
     local looking2play_hovered = false
     looking2play_btn:SetText("Looking to play")
     looking2play_btn:SetTextColor(Color(255,255,255))
@@ -1508,6 +1509,47 @@ function PANEL:Init()
         gui.OpenURL("https://discord.gg/NevEgfAPSN")
     end
 
+    local offset = 8
+    local button_size = 20
+    local gap = 6
+    local auto_btn = HORDE_CreatePanel(self, 0, 0, 256, 36, Color(0, 0, 0, 255))
+    auto_btn:SetZPos(32767)
+    auto_btn:SetPos(8, self:GetTall() - auto_btn:GetTall() - 8)
+    auto_btn.Paint = function()
+        draw.RoundedBox(0, 0, 0, auto_btn:GetWide(), auto_btn:GetTall(), Color(30, 30, 30, 255))
+        local toggled = true -- man this is really bad, but it's just one button so I think it might be fine
+        if(file.Exists("horde/hidemenu.txt", "DATA")) then
+            if(file.Read("horde/hidemenu.txt", "DATA") == "false") then
+                toggled = false
+            end
+        end
+
+        if(toggled) then
+            draw.RoundedBox(0, offset, offset, button_size, button_size, Color(255, 255, 255, 255))
+        else
+            --draw.RoundedBox(0, offset, offset, button_size, button_size, Color(255, 255, 255, 255))
+            surface.SetDrawColor(255, 255, 255, 255)
+            surface.DrawOutlinedRect(offset, offset, button_size, button_size, 2)
+        end
+    end
+
+    -- For anyone who is reading this, I do this because it's only for one button and I'm lazy
+    function auto_btn:OnMousePressed()
+        if(file.Exists("horde/hidemenu.txt", "DATA")) then
+            if(file.Read("horde/hidemenu.txt", "DATA") == "false") then
+                file.Write("horde/hidemenu.txt", "true")
+            else
+                file.Write("horde/hidemenu.txt", "false")
+            end
+        else
+            file.Write("horde/hidemenu.txt", "false")
+        end
+        surface.PlaySound("UI/buttonclick.wav")
+    end
+
+    local _, _, label = HORDE_CreateLabel(auto_btn, gap * 3 + button_size, auto_btn:GetTall() * 0.5, "Automatically open this menu", "Content", Color(255, 255, 255, 255))
+    label.CentVer()
+
     local close_btn = vgui.Create("DButton", self)
     close_btn:SetFont("marlett")
     close_btn:SetText("r")
@@ -1564,3 +1606,17 @@ hook.Add("Think", "HORDE_UpdateStatus", function()
 end)
 
 file.CreateDir("horde/avatars")
+
+HORDE_OpenMenu = HORDE_OpenMenu || true
+hook.Add("HUDPaint", "HORDE_AutoMenu", function()
+    if(HORDE_OpenMenu == true) then
+        HORDE_OpenMenu = false
+        local open = true
+        if(file.Exists("horde/hidemenu.txt", "DATA")) then
+            if(file.Read("horde/hidemenu.txt", "DATA") == "false") then
+                return
+            end
+        end
+        HORDE:ToggleStats()
+    end
+end)
