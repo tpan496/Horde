@@ -22,8 +22,6 @@ end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "engineer_base" then
-        -- Removes and sells turrets (for subclass swapping)
-        --ply:Horde_RemoveMinionsAndDrops()
     end
 end
 

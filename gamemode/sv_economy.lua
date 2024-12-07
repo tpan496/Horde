@@ -10,7 +10,7 @@ concommand.Add("horde_drop_weapon", function (ply, cmd, args)
     horde_pheropod = "horde_pheropod",
     horde_carcass = "horde_carcass",
     weapon_horde_medkit = "weapon_horde_medkit",
-    --[[horde_slam = "horde_slam",]]}
+    horde_slam = "horde_slam",}
     if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and (ply:GetActiveWeapon():GetClass() == cannotdropclass[ply:GetActiveWeapon():GetClass()] or ply:GetActiveWeapon().Base == cannotdropbase[ply:GetActiveWeapon().Base]) then
         ply:EmitSound("player/suit_denydevice.wav")
         return

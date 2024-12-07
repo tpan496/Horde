@@ -5,8 +5,8 @@ SWEP.AdminSpawnable			= true
 SWEP.Primary.Ammo = "slam"
 --SWEP.Primary.MaxAmmo = 9
 SWEP.Primary.Delay = 1.25
-SWEP.Primary.Automatic = false
-SWEP.Primary.DefaultClip = 1
+SWEP.Primary.Automatic = true
+SWEP.Primary.DefaultClip = 0
 SWEP.Primary.ClipSize = -1
 
 SWEP.HoldType = "slam"
@@ -250,4 +250,8 @@ end
 
 -- Reload does nothing
 function SWEP:Reload()
+end
+
+function SWEP:OnDrop()
+	self:Remove()
 end
