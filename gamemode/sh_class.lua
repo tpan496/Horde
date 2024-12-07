@@ -442,7 +442,10 @@ function plymeta:Horde_SetSubclass(class_name, subclass_name)
                 self:Horde_SyncEconomy()
             end
         end
-
+        
+        --Check Minions
+        self:Horde_RemoveMinionsAndDrops()
+        
         HORDE:SendNotification(class_name .. " subclass changed to " .. HORDE.subclasses[subclass_name].PrintName, 0, self)
     end
     if CLIENT then

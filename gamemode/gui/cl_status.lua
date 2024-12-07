@@ -527,7 +527,6 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
         end
 
         -- Draw Grenade
-        -- Grenade UI is bugged
         if (MySelf:HasWeapon("horde_carcass") == false) and (MySelf:HasWeapon("horde_astral_relic") == false) and (MySelf:HasWeapon("horde_void_projector") == false) and (MySelf:HasWeapon("horde_solar_seal") == false) then
             surface.SetFont(fontgrenade)
 
@@ -536,7 +535,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
             local wx = ScrW() - airgap - ScreenScale(80)
             local wy = ScrH() - ScreenScale(61.5) - airgap
             local textWide, textTall = surface.GetTextSize(str)
-            local barWide = textWide + imageSize - 6
+            local barWide = textWide + imageSize - 5
 
             draw.RoundedBox(10, ScrW() - airgap - (ScreenScale(8.5) + barWide), ScrH() - ScreenScale(59.5) - airgap, airgap + barWide, ScreenScale(15), Color(40,40,40,150))
             surface.SetMaterial(grenadeui)
