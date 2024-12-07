@@ -25,7 +25,7 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "warden_base" then
         ply:Horde_RemoveWardenAura()
         -- Removes and sells Warden towers (for subclass swapping)
-        ply:Horde_RemoveMinionsAndDrops()
+        --ply:Horde_RemoveMinionsAndDrops()
     end
 end
 

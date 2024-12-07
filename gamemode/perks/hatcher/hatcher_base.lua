@@ -49,7 +49,7 @@ end
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "hatcher_base" then
         -- Removes minions (for subclass swapping)
-        ply:Horde_RemoveMinionsAndDrops()
+        --ply:Horde_RemoveMinionsAndDrops()
     end
 end
 
