@@ -486,7 +486,9 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
                     surface.SetDrawColor(HORDE.Infusion_Colors[infusion])
                     surface.DrawTexturedRect(ScrW() - ScreenScale(16), icon_y, ScreenScale(6), ScreenScale(6))
                 end
-                if (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) and (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
+                if wpn.Base == "arccw_horde_base_nade" then
+                    draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(47), icon_y + ScreenScale(15), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                elseif (wpn:GetMaxClip1() > 0 or wpn:Clip1() > 0) and (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
                     local c1 = color_white
                     local c2 = color_white
                     if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
@@ -526,22 +528,22 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
 
         -- Draw Grenade
         -- Grenade UI is bugged
-        -- if (MySelf:HasWeapon("horde_carcass") == false) and (MySelf:HasWeapon("horde_astral_relic") == false) and (MySelf:HasWeapon("horde_void_projector") == false) and (MySelf:HasWeapon("horde_solar_seal") == false) then
-        --     surface.SetFont(fontgrenade)
+        if (MySelf:HasWeapon("horde_carcass") == false) and (MySelf:HasWeapon("horde_astral_relic") == false) and (MySelf:HasWeapon("horde_void_projector") == false) and (MySelf:HasWeapon("horde_solar_seal") == false) then
+            surface.SetFont(fontgrenade)
 
-        --     local str = MySelf:GetAmmoCount("Grenade")
-        --     local imageSize = ScreenScale(15)
-        --     local wx = ScrW() - airgap - ScreenScale(80)
-        --     local wy = ScrH() - ScreenScale(61.5) - airgap
-        --     local textWide, textTall = surface.GetTextSize(str)
-        --     local barWide = textWide + imageSize - 6
+            local str = MySelf:GetAmmoCount("Grenade")
+            local imageSize = ScreenScale(15)
+            local wx = ScrW() - airgap - ScreenScale(80)
+            local wy = ScrH() - ScreenScale(61.5) - airgap
+            local textWide, textTall = surface.GetTextSize(str)
+            local barWide = textWide + imageSize - 6
 
-        --     draw.RoundedBox(10, ScrW() - airgap - (ScreenScale(8.5) + barWide), ScrH() - ScreenScale(59.5) - airgap, airgap + barWide, ScreenScale(15), Color(40,40,40,150))
-        --     surface.SetMaterial(grenadeui)
-        --     surface.SetDrawColor(255, 255, 255, 255)
-        --     surface.DrawTexturedRect(wx + ScreenScale(62.5), wy + ScreenScale(2.25), imageSize, imageSize)
-        --     draw.SimpleText(str, fontgrenade, wx + ScreenScale(62.5), wy + ScreenScale(3.75), color_white, TEXT_ALIGN_RIGHT)
-        -- end
+            draw.RoundedBox(10, ScrW() - airgap - (ScreenScale(8.5) + barWide), ScrH() - ScreenScale(59.5) - airgap, airgap + barWide, ScreenScale(15), Color(40,40,40,150))
+            surface.SetMaterial(grenadeui)
+            surface.SetDrawColor(255, 255, 255, 255)
+            surface.DrawTexturedRect(wx + ScreenScale(62.5), wy + ScreenScale(2.25), imageSize, imageSize)
+            draw.SimpleText(str, fontgrenade, wx + ScreenScale(62.5), wy + ScreenScale(3.75), color_white, TEXT_ALIGN_RIGHT)
+        end
 
         -- Draw Weight
         draw.RoundedBox(10, ScrW() - airgap - ScreenScale(78), ScrH() - ScreenScale(44) - airgap, airgap + ScreenScale(70), ScreenScale(10), Color(40,40,40,150))

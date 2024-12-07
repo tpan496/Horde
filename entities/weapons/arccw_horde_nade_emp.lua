@@ -70,7 +70,7 @@ SWEP.Animations = {
     }
 }
 
-function SWEP:Initialize()
+function SWEP:CustomInitialize()
     if CLIENT then
         local vm = self.Owner:GetViewModel()
         vm:SetColor(Color(255, 0, 0))

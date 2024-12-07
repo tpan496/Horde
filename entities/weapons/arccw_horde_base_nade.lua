@@ -205,9 +205,14 @@ function SWEP:OnDrop()
 	self:Remove()
 end
 
+function SWEP:CustomInitialize()
+    -- Add all derivative intialization here...
+end
+
 DEFINE_BASECLASS(SWEP.Base)
 
 function SWEP:Initialize(...)
-    self.Primary.Ammo = "Grenade"
     BaseClass.Initialize(self, ...)
+    self.Primary.Ammo = "Grenade"
+    self:CustomInitialize()
 end
