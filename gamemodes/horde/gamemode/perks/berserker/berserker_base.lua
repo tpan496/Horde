@@ -47,3 +47,9 @@ PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
         ply:Horde_SetPerkLevelBonus("berserker_base", math.min(0.20, 0.008 * ply:Horde_GetLevel(HORDE.Class_Berserker)))
     end
 end
+
+hook.Add("Horde_PlayerMoveBonus", "Horde_BerserkerSpeed", function (ply, bonus_walk, bonus_run)
+    if not ply:Horde_GetPerk("berserker_base") then return end
+    bonus_walk.increase = bonus_walk.increase + 0.3
+    bonus_run.increase = bonus_run.increase + 0.3
+end)
