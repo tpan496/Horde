@@ -247,6 +247,7 @@ hook.Add("EntityTakeDamage", "Horde_ApplyDamageTaken", function (target, dmg)
     local ply = target
 
     if dmg:GetAttacker():IsPlayer() and (dmg:GetInflictor() == dmg:GetAttacker()) then return true end
+    if target and dmg:GetInflictor():GetClass() == "mortarshell" then return true end
 
     -- Prevent damage from skill explosions (e.g. Rip and Tear, Chain Reaction, Kamikaze)
     if dmg:GetInflictor():IsNPC() and dmg:GetAttacker():IsPlayer() then return true end
