@@ -463,6 +463,7 @@ function ENT:CustomOnThink()
 					d:SetDamage( 30 )
 					d:SetAttacker( self )
 					d:SetDamageType( DMG_CLUB )
+					d:SetInflictor( self )
 					v:TakeDamageInfo( d )
 					
 					v:SetVelocity(self:GetForward() * 300 + self:GetUp() * 200)
