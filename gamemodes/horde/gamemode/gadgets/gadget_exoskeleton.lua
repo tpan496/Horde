@@ -4,7 +4,7 @@ GADGET.Description =
 [[Using the active ability activates a short boost
 
 You cannot run
-Passively increases Global damage resistance by {2}]]
+Passively increases Global damage resistance by {1}]]
 
 GADGET.Duration = 0
 GADGET.Cooldown = 5

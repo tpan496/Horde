@@ -49,13 +49,15 @@ end
 function plymeta:Horde_SetNeuronStabilizerEnabled(enabled)
     self.Horde_NeuronStabilizerEnabled = enabled
     local id = self:SteamID()
-    if enabled then
+    if enabled and self:Horde_GetPerk("specops_base") then
         self.Horde_NeuronStabilizerRegenCooldown = 0
         self.Horde_NeuronStabilizerRegenTotal = 0
         timer.Create("Horde_NeuronStabilizerRegen" .. id, 0.5, 0, function ()
             if not IsValid( self ) then return end
             self.Horde_NeuronStabilizerRegenTotal = self.Horde_NeuronStabilizerRegenTotal + 1
-            if not self:IsValid() then timer.Remove("Horde_NeuronStabilizerRegen" .. id) return end
+            if not self:IsValid() or not self:Horde_GetPerk("specops_base") then
+                self.Horde_NeuronStabilizerEnabled = disabled
+                timer.Remove("Horde_NeuronStabilizerRegen" .. id) return end
             if self.Horde_NeuronStabilizerRegenCooldown <= self.Horde_NeuronStabilizerRegenTotal then
                 self:Horde_AddNeuronStabilizerStack()
                 self.Horde_NeuronStabilizerRegenCooldown = self.Horde_NeuronStabilizerRegenTotal + 2

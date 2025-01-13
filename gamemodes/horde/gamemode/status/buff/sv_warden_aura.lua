@@ -1,15 +1,15 @@
-local entmeta = FindMetaTable("Entity")
-local plymeta = FindMetaTable("Player")
+local entmeta = FindMetaTable( "Entity" )
+local plymeta = FindMetaTable( "Player" )
 
 function entmeta:Horde_AddWardenAura()
     if self.Horde_WardenAura then self:Horde_RemoveWardenAura() end
-    local ent = ents.Create("horde_warden_aura")
+    local ent = ents.Create( "horde_warden_aura" )
     ent:SetPos(self:GetPos())
     ent:SetParent(self)
-    if self:GetNWEntity("HordeOwner"):IsPlayer() then
-        ent:Horde_SetAuraRadius(self:GetNWEntity("HordeOwner"):Horde_GetWardenAuraRadius() * self:GetNWEntity("HordeOwner"):Horde_GetPerkLevelBonus("warden_base"))
+    if self:GetNWEntity( "HordeOwner" ):IsPlayer() then
+        ent:Horde_SetAuraRadius(self:GetNWEntity( "HordeOwner" ):Horde_GetWardenAuraRadius() * self:GetNWEntity( "HordeOwner" ):Horde_GetPerkLevelBonus( "warden_base" ))
     else
-        ent:Horde_SetAuraRadius(self:Horde_GetWardenAuraRadius() * self:Horde_GetPerkLevelBonus("warden_base"))
+        ent:Horde_SetAuraRadius(self:Horde_GetWardenAuraRadius() * self:Horde_GetPerkLevelBonus( "warden_base" ))
         timer.Simple(0, function() self:Horde_AddWardenAuraEffects(self) end)
     end
     ent:Spawn()
@@ -26,7 +26,7 @@ function entmeta:Horde_RemoveWardenAura()
             timer.Simple(0, function()
                 if not IsValid(self) then return end
                 self:Horde_RemoveWardenAuraEffects()
-            end)
+            end )
         end
     end
 end
@@ -75,7 +75,7 @@ function plymeta:Horde_AddWardenAuraEffects(provider)
     if not provider or not IsValid( provider ) or not self:Alive() then return end
 
     if HORDE:IsWatchTower(provider) then
-        self.Horde_WardenAuraProvider = provider:GetNWEntity("HordeOwner")
+        self.Horde_WardenAuraProvider = provider:GetNWEntity( "HordeOwner" )
     else
         self.Horde_WardenAuraProvider = provider
     end
@@ -89,7 +89,7 @@ function plymeta:Horde_AddWardenAuraEffects(provider)
     if self.Horde_WardenAuraProvider:Horde_GetEnableWardenAuraInoculation() then
         self.Horde_WardenAuraInoculation = true
     end
-    net.Start("Horde_SyncStatus")
+    net.Start( "Horde_SyncStatus" )
         net.WriteUInt(HORDE.Status_WardenAura, 8)
         net.WriteUInt(1, 8)
     net.Send(self)
@@ -101,7 +101,7 @@ function plymeta:Horde_RemoveWardenAuraEffects()
     self.Horde_WardenAuraHealthRegen = nil
     self.Horde_WardenAuraDamageBonus = nil
     self.Horde_WardenAuraInoculation = nil
-    net.Start("Horde_SyncStatus")
+    net.Start( "Horde_SyncStatus" )
         net.WriteUInt(HORDE.Status_WardenAura, 8)
         net.WriteUInt(0, 8)
     net.Send(self)
@@ -110,27 +110,26 @@ function plymeta:Horde_RemoveWardenAuraEffects()
     end
 end
 
-hook.Add("Horde_OnPlayerDamageTaken", "Horde_WardenAuraDamageTaken", function(ply, dmginfo, bonus)
+hook.Add( "Horde_OnPlayerDamageTaken", "Horde_WardenAuraDamageTaken", function(ply, dmginfo, bonus)
     if ply.Horde_WardenAuraDamageBlock then
         if ply.Horde_WardenAuraProvider.Horde_EnableWardenAuraBuffBonus then
-            bonus.block = 3
+            bonus.block = bonus.block + 3
         else
-            bonus.block = 2
+            bonus.block = bonus.block + 2
         end
     end
-end)
+end )
 
 hook.Add("Horde_OnPlayerDebuffApply", "Horde_WardenAuraInoculation", function (ply, debuff, bonus, inflictor)
-    if ply.Horde_WardenAuraInoculation then
-        if debuff == HORDE.Status_Ignite or debuff == HORDE.Status_Frostbite or debuff == HORDE.Status_Shock then
-            if ply.Horde_WardenAuraProvider.Horde_EnableWardenAuraBuffBonus then
-                bonus.less = bonus.less * 0.5
-            else
-                bonus.less = bonus.less * 0.75
-            end
+    if not ply.Horde_WardenAuraInoculation then return end
+    if debuff == HORDE.Status_Ignite or debuff == HORDE.Status_Frostbite or debuff == HORDE.Status_Shock then
+        if ply.Horde_WardenAuraProvider.Horde_EnableWardenAuraBuffBonus then
+            bonus.less = bonus.less * 0.5
+        else
+            bonus.less = bonus.less * 0.75
         end
     end
-end)
+end )
 
 hook.Add("PlayerTick", "Horde_WardenAuraHealthRegen", function(ply, mv)
     if not ply.Horde_WardenAuraHealthRegen then return end
@@ -145,7 +144,7 @@ hook.Add("PlayerTick", "Horde_WardenAuraHealthRegen", function(ply, mv)
         HORDE:OnPlayerHeal(ply, healinfo, true)
         ply.Horde_WardenAuraHealthRegenCurTime = CurTime()
     end
-end)
+end )
 
 hook.Add("Horde_OnPlayerDamage", "Horde_WardenAuraDamage", function (ply, npc, bonus, hitgroup, dmginfo)
     if ply.Horde_WardenAuraDamageBonus and dmginfo:GetInflictor():GetClass() ~= "entityflame" and dmginfo:GetDamage() >= 8 then
@@ -155,13 +154,13 @@ hook.Add("Horde_OnPlayerDamage", "Horde_WardenAuraDamage", function (ply, npc, b
         end
         bonus.base_add = bonus.base_add + amount
     end
-end)
+end )
 
 hook.Add("Horde_ResetStatus", "Horde_WardenAuraEffectsReset", function(ply)
     ply:Horde_RemoveWardenAuraEffects()
     ply.Horde_WardenAuraHealthRegenCurTime = CurTime()
-end)
+end )
 
 hook.Add("DoPlayerDeath", "Horde_WardenAuraDoPlayerDeath", function(victim)
     victim:Horde_RemoveWardenAura()
-end)
+end )
