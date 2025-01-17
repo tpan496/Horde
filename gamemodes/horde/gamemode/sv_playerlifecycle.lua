@@ -682,6 +682,10 @@ hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
     end
 end)
 
+hook.Add( "PlayerSpawn", "Horde_ReapplyArmorBonus", function(ply)
+    ply:Horde_SetMaxArmor()
+end )
+
 hook.Add("Move", "Horde_PlayerMove", function (ply, mv)
     if ply:Horde_GetClass() then
         ply:SetJumpPower(150)

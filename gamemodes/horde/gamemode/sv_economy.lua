@@ -350,7 +350,8 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
             end
         end
     end
-
+    -- Reapply armor bonus if present
+    ply:Horde_SetMaxArmor()
     ply:Horde_SyncEconomy()
     if ply:Alive() and not (HORDE.start_game and HORDE.current_break_time <= 0) then
         HORDE:GiveStarterWeapons(ply)
@@ -665,10 +666,14 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 if item.class == "armor100" or item.class == "armor150" then
                     if ply:Armor() >= ply:GetMaxArmor() then return end
                 elseif item.class == "armor_heavy" then
-                    if armortag ~= true then
-                        ply:SetMaxArmor( ply:GetMaxArmor() + 25 )
+                    if not ply.Horde_HasHeavyArmor then -- Check if the player has already purchased heavy armor
+                        ply.Horde_HasHeavyArmor = true  -- Set the flag to indicate heavy armor has been purchased
+                        hook.Add("Horde_OnSetMaxArmor", "Horde_HeavyArmorBonus", function(ply, bonus)
+                            if ply.Horde_HasHeavyArmor then
+                                bonus.add = bonus.add + 25
+                            end
+                        end )
                     end
-                    armortag = true
                     if ply:Armor() >= ply:GetMaxArmor() then return end
                 else
                     ply.Horde_Special_Armor = item.class
