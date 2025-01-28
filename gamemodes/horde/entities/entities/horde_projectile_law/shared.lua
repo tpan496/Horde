@@ -3,11 +3,11 @@ ENT.PrintName 			= "LAW Round"
 ENT.Model = "models/weapons/w_missile_launch.mdl"
 ENT.LifeTime = 10 -- Time to removal
 ENT.EnableGravity = false
-ENT.ProjectileDamage = 1000 -- Projectile/explosion damage
+ENT.ProjectileDamage = 1250 -- Projectile/explosion damage
 ENT.ProjectileUnarmedDamageType = DMG_CLUB -- Damage type when hitting something unarmed
 ENT.ProjectileExplosionDamageType = DMG_BLAST -- Explosion damage type
 ENT.ProjectileDamageRadius = 180 -- Explosion radius
-ENT.ArmDistance = 150 -- Safety distance
+ENT.ArmDistance = 180 -- Safety distance
 ENT.Decal = "Scorch"
 
 ENT.Ticks = 0
