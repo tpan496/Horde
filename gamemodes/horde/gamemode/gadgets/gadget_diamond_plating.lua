@@ -1,11 +1,9 @@
 GADGET.PrintName = "Diamond Plating"
-GADGET.Description = "{1} increased Physical damage resistance."
+GADGET.Description = "15% increased Physical damage resistance."
 GADGET.Icon = "items/gadgets/diamond_plating.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
-GADGET.Params = {
-    [1] = {value = 0.15, percent = true},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)

@@ -9,9 +9,7 @@ For each 1% health missing, increase your damage by 0.8%.]]
 GADGET.Icon = "items/gadgets/ouroboros.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
-GADGET.Params = {
-    [1] = {value = 5},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnSetGadget = function (ply, gadget)

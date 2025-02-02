@@ -9,9 +9,7 @@ GADGET.Icon = "items/gadgets/death_mark.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 2
 GADGET.Active = true
-GADGET.Params = {
-    [1] = {value = 0.15, percent = true},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

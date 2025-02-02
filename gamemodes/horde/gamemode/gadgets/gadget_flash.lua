@@ -1,13 +1,12 @@
 GADGET.PrintName = "Flash"
 GADGET.Description = [[Dashes forward, on your next melee attack dealing a 200 slash damage explosion.
-Provides a short invincibility frame.]]
+Provides a short invincibility frame.
+90% reduced fall damage taken until you land on the ground.]]
 GADGET.Icon = "items/gadgets/flash.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
 GADGET.Active = true
-GADGET.Params = {
-    [1] = { value = 100 },
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function( ply )
@@ -20,6 +19,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function( ply )
     local vel = dir * 8000
     ply.Horde_NextAttack_Flash = true
     ply.Horde_Invincible = true
+    ply.Flash_Fall_Damage_Prevention = true
 
     timer.Simple( 0, function()
         ply:SetLocalVelocity( vel )
@@ -61,4 +61,18 @@ GADGET.Hooks.Horde_OnPlayerDamageTaken = function( ply, dmginfo, bonus )
     if not ply.Horde_Invincible then return end
     dmginfo:SetDamage( 0 )
     return true
+end
+
+GADGET.Hooks.Horde_GetFallDamage = function(ply, speed, bonus)
+    if ply:Horde_GetGadget() ~= "gadget_flash" then return end
+    if not ply.Flash_Fall_Damage_Prevention then return end
+    bonus.less = bonus.less * 0.1
+    ply.Flash_Fall_Damage_Prevention = nil
+end
+
+GADGET.Hooks.PlayerTick = function (ply, mv)
+    if not ply.Flash_Fall_Damage_Prevention or not ply:Alive() then return end
+    if ply:IsOnGround() and not ply.Horde_In_Flash then
+        ply.Flash_Fall_Damage_Prevention = nil
+    end
 end

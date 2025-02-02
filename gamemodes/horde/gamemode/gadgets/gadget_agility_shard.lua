@@ -1,13 +1,11 @@
 GADGET.PrintName = "Agility Shard"
-GADGET.Description = "{1} increased movement speed for 30 seconds."
+GADGET.Description = "20% increased movement speed for 30 seconds."
 GADGET.Icon = "items/gadgets/agility_shard.png"
 GADGET.Droppable = true
 GADGET.Once = true
 GADGET.Cooldown = 0
 GADGET.Active = true
-GADGET.Params = {
-    [1] = {value = 0.2, percent = true},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

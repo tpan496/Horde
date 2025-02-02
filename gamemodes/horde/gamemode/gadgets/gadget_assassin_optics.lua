@@ -6,9 +6,7 @@ GADGET.Icon = "items/gadgets/assassin_optics.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 3
 GADGET.Active = true
-GADGET.Params = {
-    [1] = {value = 0.25, percent = true},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

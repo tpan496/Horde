@@ -1,6 +1,5 @@
 GADGET.PrintName = "Elixir"
-GADGET.Description = [[Recovers 100% of your health.
-Removes all status effects.]]
+GADGET.Description = "Recovers 100% of your health.\nRemoves all status effects."
 GADGET.Icon = "items/gadgets/elixir.png"
 GADGET.Droppable = true
 GADGET.Active = true

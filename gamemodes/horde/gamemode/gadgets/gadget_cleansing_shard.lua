@@ -1,12 +1,10 @@
 GADGET.PrintName = "Cleansing Shard"
-GADGET.Description = "Recover {1} health.\nRemoves all status effects."
+GADGET.Description = "Recover 10 health.\nRemoves all status effects."
 GADGET.Icon = "items/gadgets/cleansing_shard.png"
 GADGET.Droppable = true
 GADGET.Once = true
 GADGET.Active = true
-GADGET.Params = {
-    [1] = {value = 10},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

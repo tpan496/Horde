@@ -5,8 +5,8 @@ Grants a spleen that negates all debuffs when buildup is full.
 The spleen regenerates every {2} seconds.]]
 PERK.Icon = "materials/perks/carcass/tactical_spleen.png"
 PERK.Params = {
-    [1] = {value = 0.2, percent = true},
-    [2] = {value = 5},
+    [1] = { value = 0.2, percent = true },
+    [2] = { value = 5 },
 }
 PERK.Hooks = {}
 

@@ -4,11 +4,7 @@ GADGET.Icon = "items/gadgets/berserk_armor.png"
 GADGET.Duration = 10
 GADGET.Cooldown = 20
 GADGET.Active = true
-GADGET.Params = {
-    [1] = {value = 0.25, percent = true},
-    [2] = {value = 0.25, percent = true},
-    [3] = {value = 0.25, percent = true},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

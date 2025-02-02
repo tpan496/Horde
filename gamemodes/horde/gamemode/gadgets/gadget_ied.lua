@@ -3,16 +3,14 @@ GADGET.Icon = "items/gadgets/ied.png"
 GADGET.Description =
 [[Drops an Improvised Explosive Device on the ground.
 IED explodes when an enemy comes in range.
-You have {1} IED charges. An IED recharges after detonation.]]
+You have 5 IED charges. An IED recharges after detonation.]]
 
 GADGET.Duration = 0
 GADGET.Cooldown = 0.5
 GADGET.Active = true
 GADGET.Charges = 5
 
-GADGET.Params = {
-    [1] = { value = 5 },
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function ( ply )

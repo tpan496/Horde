@@ -4,9 +4,7 @@ GADGET.Icon = "items/gadgets/butane_can.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 20
 GADGET.Active = true
-GADGET.Params = {
-    [1] = {value = 375},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

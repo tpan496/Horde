@@ -1,15 +1,10 @@
 GADGET.PrintName = "ULPA Filter"
-GADGET.Description =
-[[{1} increased maximum armor.
-{2} less debuff buildup.]]
+GADGET.Description = "Adds 25 to maximum armor.\n50% less debuff buildup."
 GADGET.Icon = "items/gadgets/ulpa_filter.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
 GADGET.Active = false
-GADGET.Params = {
-    [1] = { value = 0.25, percent = true },
-    [2] = { value = 0.5, percent = true },
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDebuffApply = function ( ply, debuff, bonus, inflictor )

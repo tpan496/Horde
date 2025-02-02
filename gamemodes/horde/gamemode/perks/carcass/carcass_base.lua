@@ -3,12 +3,12 @@ PERK.Description = [[
 The Carcass class uses its high health and regeneration for various effects.
 Complexity: HIGH
 
-{1} increased maximum health. ({2} per level, up to {3}).
+{1} increased maximum health. ({2} + {3} per level, up to {4}).
 
-{4} chance to gain Hypertrophy when you hit an enemy ({5} chance on headshot).
+{5} chance to gain Hypertrophy when you hit an enemy ({6} chance on headshot).
 100% chance to gain Hypertrophy when you are hit.
-Hypertrophy reduces damage taken by {6}.
-Hypertrophy provides 2% health regen per second.
+Each Hypertrophy stack reduces damage taken by {7}.
+Each Hypertrophy stack regenerates {8} health per second.
 
 Equipped with Carcass Biosystem.
 Cannot use any other weapons other than medkits because your hands are fucked.
@@ -16,12 +16,14 @@ LMB: Punch
 Hold for a charged punch that deals increased damage in an area.]]
 PERK.Icon = "materials/subclasses/carcass.png"
 PERK.Params = {
-    [1] = {percent = true, base = 0.25, level = 0.02, max = 0.75, classname = "Carcass"},
-    [2] = {value = 0.02, percent = true},
-    [3] = {value = 0.75, percent = true},
-    [4] = {value = 0.5, percent = true},
-    [5] = {value = 0.75, percent = true},
-    [6] = {value = 0.05, percent = true},
+    [1] = { percent = true, base = 0.25, level = 0.02, max = 0.75, classname = "Carcass" },
+    [2] = { value = 0.25, percent = true },
+    [3] = { value = 0.02, percent = true },
+    [4] = { value = 0.75, percent = true },
+    [5] = { value = 0.5, percent = true },
+    [6] = { value = 0.75, percent = true },
+    [7] = { value = 0.05, percent = true },
+    [8] = { value = 0.02, percent = true },
 }
 PERK.Hooks = {}
 

@@ -6,9 +6,7 @@ GADGET.Icon = "items/gadgets/barbeque.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
 GADGET.Active = false
-GADGET.Params = {
-    [1] = {value = 5},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)

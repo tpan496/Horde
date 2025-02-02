@@ -3,9 +3,7 @@ GADGET.Description = [[When toggled, drains your health and recovers armor up to
 GADGET.Icon = "items/gadgets/armor_fusion.png"
 GADGET.Cooldown = 1
 GADGET.Active = true
-GADGET.Params = {
-    [1] = {value = 0.5, percent = true},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

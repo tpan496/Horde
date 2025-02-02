@@ -1,15 +1,13 @@
 GADGET.PrintName = "Omnislash"
 GADGET.Description = [[Phasing out of reality and repeatedly slashes the target enemy.
-Each slash deals {1} damage.
+Each slash deals 50 damage.
 Bounces to a nearby target if the main target is dead.
 You are invulnerable during Omnislash.]]
 GADGET.Icon = "items/gadgets/omnislash.png"
 GADGET.Duration = 4
 GADGET.Cooldown = 15
 GADGET.Active = true
-GADGET.Params = {
-    [1] = {value = 50},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 local function SpawnPlayer(ply, ply_pos, ply_angles, armor)

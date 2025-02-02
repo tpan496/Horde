@@ -5,9 +5,7 @@ GADGET.Duration = 0
 GADGET.Cooldown = 10
 GADGET.Active = true
 GADGET.Droppable = true
-GADGET.Params = {
-    [1] = {value = 150},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

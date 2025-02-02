@@ -4,10 +4,7 @@ GADGET.Icon = "items/gadgets/projectile_launcher_heal.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
 GADGET.Active = true
-GADGET.Params = {
-    [1] = {value = 75},
-    [2] = {value = 25},
-}
+GADGET.Params = {}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)
