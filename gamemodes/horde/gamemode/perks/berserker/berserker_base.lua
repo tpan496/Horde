@@ -5,15 +5,16 @@ Complexity: HIGH
 
 {1} increased Slashing and Blunt damage. ({2} per level, up to {3}).
 {1} increased Global damage resistance. ({2} per level, up to {3}).
-{4} increased Movement Speed and +2 damage block.
+{4} increased Movement Speed and +{5} damage block.
 
-Aerial Parry: Jump to reduce Physical damage taken by {5}.]]
+Aerial Parry: Jump to reduce Physical damage taken by {6}.]]
 PERK.Params = {
     [1] = { percent = true, level = 0.008, max = 0.20, classname = HORDE.Class_Berserker },
     [2] = { value = 0.008, percent = true },
     [3] = { value = 0.20, percent = true },
     [4] = { value = 0.2, percent = true },
-    [5] = { value = 0.65, percent = true },
+    [5] = { value = 2 },
+    [6] = { value = 0.65, percent = true },
 }
 
 PERK.Hooks = {}

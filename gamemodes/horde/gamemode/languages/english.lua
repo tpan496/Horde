@@ -339,9 +339,10 @@ The Berserker class is a melee-centered class that can be played both offensivel
 Complexity: HIGH
 
 {1} increased Slashing and Blunt damage. ({2} per level, up to {3}).
-{4} increased Global damage resistance. ({5} per level, up to {6}).
+{1} increased Global damage resistance. ({2} per level, up to {3}).
+{4} increased Movement Speed and +{5} damage block.
 
-Aerial Parry: Jump to reduce Physical damage taken by {7}.]]
+Aerial Parry: Jump to reduce Physical damage taken by {6}.]]
 
 LANGUAGE["Perk_warden_base"] = [[
 The Warden is a support class that uses aura effects and structures to buff teammates.

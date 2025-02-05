@@ -215,9 +215,10 @@ La clase Berserker es una class centrado en cuerpo a cuerpo que puede ser utiliz
 Complejidad: ALTA
 
 {1} daño Cortante y Golpeante aumentado. ({2} por nivel, hasta {3}).
-{4} resistencia al daño Global aumentada. ({5} por nivel, hasta {6}).
+{1} resistencia al daño Global aumentada. ({2} por nivel, hasta {3}).
+{4} aumento de la velocidad de movimiento y +{5} bloqueo de daño.
 
-Desvío Aeréo: Salta para reducir daño Físico recibido un {7}.]]
+Desvío Aeréo: Salta para reducir daño Físico recibido un {6}.]]
 
 LANGUAGE["Perk_warden_base"] = [[
 El Guardián es una clase soporte que usa sus efectos de aura y estructuras para mejorar a los aliados.
