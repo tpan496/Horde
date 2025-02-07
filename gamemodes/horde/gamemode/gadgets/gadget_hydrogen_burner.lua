@@ -1,10 +1,11 @@
 GADGET.PrintName = "Hydrogen Burner"
-GADGET.Description = "Blue flame.\n25% more Fire damage.\nYour Fire damage no longer Ignites."
+GADGET.Description = "Blue flame.\n{1} more Fire damage.\nYour Fire damage no longer Ignites."
 GADGET.Icon = "items/gadgets/hydrogen_burner.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
 GADGET.Active = nil
 GADGET.Params = {
+    [1] = { value = 0.25, percent = true },
 }
 GADGET.Hooks = {}
 

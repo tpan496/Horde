@@ -1,10 +1,13 @@
 GADGET.PrintName = "Chakra"
-GADGET.Description = "Reduces debuff buildup by 20%.\n\nOn use:\nRemoves all debuff buildups and debuffs.\nRecover 10 health."
+GADGET.Description = "Reduces debuff buildup by {1}.\n\nOn use:\nRemoves all debuff buildups and debuffs.\nRecover {2} health."
 GADGET.Icon = "items/gadgets/chakra.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 5
 GADGET.Active = true
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 0.2, percent = true },
+    [2] = { value = 10 },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

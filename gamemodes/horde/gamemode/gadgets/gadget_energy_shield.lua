@@ -1,9 +1,10 @@
 GADGET.PrintName = "Energy Shield"
-GADGET.Description = "Gain 75 barrier on use."
+GADGET.Description = "Gain {1} barrier on use."
 GADGET.Icon = "items/gadgets/energy_shield.png"
 GADGET.Cooldown = 5
 GADGET.Active = true
 GADGET.Params = {
+    [1] = { value = 75 },
 }
 GADGET.Hooks = {}
 

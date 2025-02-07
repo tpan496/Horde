@@ -1,11 +1,13 @@
 GADGET.PrintName = "Damage Shard"
-GADGET.Description = "25% increased Global damage for 30 seconds."
+GADGET.Description = "{1} increased Global damage for 30 seconds."
 GADGET.Icon = "items/gadgets/damage_shard.png"
 GADGET.Droppable = true
 GADGET.Once = true
 GADGET.Active = true
 GADGET.Cooldown = 0
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 0.2, percent = true },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

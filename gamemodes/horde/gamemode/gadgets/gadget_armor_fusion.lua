@@ -1,9 +1,11 @@
 GADGET.PrintName = "Armor Fusion"
-GADGET.Description = [[When toggled, drains your health and recovers armor up to 50% of your maximum armor.]]
+GADGET.Description = [[When toggled, drains your health and recovers armor up to {1} of your maximum armor.]]
 GADGET.Icon = "items/gadgets/armor_fusion.png"
 GADGET.Cooldown = 1
 GADGET.Active = true
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 0.5, percent = true },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

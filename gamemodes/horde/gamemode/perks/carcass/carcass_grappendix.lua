@@ -11,20 +11,19 @@ PERK.Params = {
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetMaxHealth = function(ply, bonus)
-    if SERVER and ply:Horde_GetPerk("carcass_grappendix") then
+if SERVER then
+    PERK.Hooks.Horde_OnSetMaxHealth = function(ply, bonus)
+        if perk ~= "carcass_grappendix" then return end
         bonus.increase = bonus.increase + 0.2
     end
-end
 
-PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
-    if SERVER and perk == "carcass_anabolic_gland" then
+    PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
+        if perk ~= "carcass_anabolic_gland" then return end
         ply:Horde_SetMaxHypertrophyStack(ply:Horde_GetMaxHypertrophyStack() + 1)
     end
-end
 
-PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
-    if SERVER and perk == "carcass_anabolic_gland" then
+    PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
+        if perk ~= "carcass_anabolic_gland" then return end
         ply:Horde_SetMaxHypertrophyStack(ply:Horde_GetMaxHypertrophyStack() - 1)
     end
 end

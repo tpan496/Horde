@@ -223,7 +223,7 @@ LANGUAGE["Infusion_Description_Ruination"] = [[
 持有當前武器時，每秒玩家會獲得 10 即死累計值。
 ]]
 
--- Classes
+-- Classes 
 LANGUAGE["Class_Survivor"] = "倖存者"
 LANGUAGE["Class_Assault"] = "突擊兵"
 LANGUAGE["Class_Heavy"] = "重裝兵"
@@ -1697,81 +1697,82 @@ XEN 星球士兵使用的生物兵器。
 
 LANGUAGE["Item_Advanced Kevlar Armor"] = [[Advanced Kevlar Armor]]
 LANGUAGE["Item_Desc_Advanced Kevlar Armor"] = [[
-Distinguished Survivor armor.
+精良的倖存者盔甲。
 
-Fills up 100% of your armor bar.
-Provides 5% increased damage resistance.
+填充你 100% 的護甲條。
+提供 5% 的傷害抗性。
 ]]
 
 LANGUAGE["Item_Assault Vest"] = [[Assault Vest]]
 LANGUAGE["Item_Desc_Assault Vest"] = [[
-Distinguished Assault armor.
+精良的突擊兵盔甲。
 
-Fills up 100% of your armor bar.
-Provides 8% increased Ballistic damage resistance.
+填充你 100% 的護甲條。
+提供 8% 的彈道傷害抗性。
 ]]
 
 LANGUAGE["Item_Bulldozer Suit"] = [[Bulldozer Suit]]
 LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
-Distinguished Heavy armor.
+精良的重型盔甲。
 
-Fills up 125% of your armor bar.
+填充你 125% 的護甲條。
+提升 25% 最大護甲值。
 ]]
 
 LANGUAGE["Item_Hazmat Suit"] = [[Hazmat Suit]]
 LANGUAGE["Item_Desc_Hazmat Suit"] = [[
-Distinguished Medic armor.
+精良的醫療兵盔甲。
 
-Fills up 100% of your armor bar.
-Provides 8% increased Poison damage resistance.
+填充你 100% 的護甲條。
+提供 8% 的毒素傷害抗性。
 ]]
 
 LANGUAGE["Item_Bomb Suit"] = [[Bomb Suit]]
 LANGUAGE["Item_Desc_Bomb Suit"] = [[
-Distinguished Demolition armor.
+精良的爆破兵盔甲。
 
-Fills up 100% of your armor bar.
-Provides 8% increased Blast damage resistance.
+填充你 100% 的護甲條。
+提供 8% 的爆炸傷害抗性。
 ]]
 
 LANGUAGE["Item_Assassin's Cloak"] = [[Assassin's Cloak]]
 LANGUAGE["Item_Desc_Assassin's Cloak"] = [[
-Distinguished Ghost armor.
+精良的幻影盔甲。
 
-Fills up 100% of your armor bar.
-Provides 5% increased evasion.
+填充你 100% 的護甲條。
+提供 5% 的閃避率。
 ]]
 
 LANGUAGE["Item_Defense Matrix"] = [[Defense Matrix]]
 LANGUAGE["Item_Desc_Defense Matrix"] = [[
-Distinguished Engineer armor.
+精良的工程師盔甲。
 
-Fills up 100% of your armor bar.
-Provides 5% increased damage resistance.
+填充你 100% 的護甲條。
+提供 5% 的傷害抗性。
 ]]
 
 LANGUAGE["Item_Riot Armor"] = [[Riot Armor]]
 LANGUAGE["Item_Desc_Riot Armor"] = [[
-Distinguished Warden armor.
+精良的守望者盔甲。
 
-Fills up 100% of your armor bar.
-Provides 8% increased Shock and Sonic damage resistance.
+填充你 100% 的護甲條。
+提供 8% 的電擊和音波傷害抗性。
 ]]
 
 LANGUAGE["Item_Molten Armor"] = [[Molten Armor]]
 LANGUAGE["Item_Desc_Molten Armor"] = [[
-Distinguished Cremator armor.
+精良的火焰兵盔甲。
 
-Fills up 100% of your armor bar.
-Provides 8% increased Fire damage resistance.
+填充你 100% 的護甲條。
+提供 8% 的火焰傷害抗性。
 ]]
 
 LANGUAGE["Item_Battle Vest"] = [[Battle Vest]]
 LANGUAGE["Item_Desc_Battle Vest"] = [[
-Distinguished Berserker armor.
+精良的狂戰士盔甲。
 
-Fills up 100% of your armor bar.
-Provides 8% increased Slashing and Blunt damage resistance.
+填充你 100% 的護甲條。
+提供 8% 的斬擊和鈍擊傷害抗性。
 ]]
 
 -- Gadgets
@@ -1803,27 +1804,27 @@ LANGUAGE["Gadget_Desc_gadget_arctic_plating"] = [[
 
 LANGUAGE["Gadget_gadget_blast_plating"] = [[防爆塗層]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
-提升 20% 爆炸傷害抗性。
+提升 {1} 爆炸傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_shock_plating"] = [[絕緣塗層]]
 LANGUAGE["Gadget_Desc_gadget_shock_plating"] = [[
-提升 20% 雷電傷害抗性。
+提升 {1} 雷電傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_heat_plating"] = [[抗熱塗層]]
 LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
-提升 20% 火焰傷害抗性。
+提升 {1} 火焰傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_detoxifier"] = [[抗毒劑]]
 LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
-提升 20% 毒素傷害抗性。
+提升 {1} 毒素傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_diamond_plating"] = [[鑽石塗層]]
 LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
-提升 15% 物理傷害抗性。
+提升 {1} 物理傷害抗性。
 ]]
 
 LANGUAGE["Gadget_gadget_corporate_mindset"] = [[企業頭腦]]
@@ -1837,12 +1838,12 @@ LANGUAGE["Gadget_Desc_gadget_corporate_mindset"] = [[
 
 LANGUAGE["Gadget_gadget_vitality_booster"] = [[體力提升]]
 LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
-增加 25 最大生命值。
+增加 {1} 最大生命值。
 ]]
 
 LANGUAGE["Gadget_gadget_damage_booster"] = [[傷害提升]]
 LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
-提升 25% 全局傷害。
+提升 {1} 全局傷害。
 ]]
 
 -- Assault Gadgets
@@ -1859,30 +1860,30 @@ Elite enemies grant 2 stacks.
 
 LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[精神統一]]
 LANGUAGE["Gadget_Desc_neuro_amplifier"] = [[
-「腎上腺素」提升 6% 閃避機率。
+「腎上腺素」提升 {1} 閃避機率。
 ]]
 
 LANGUAGE["Gadget_ouroboros"] = [[咬尾蛇]]
 LANGUAGE["Gadget_Desc_ouroboros"] = [[
-Ouroboros nervous system assistant.
-Removes body regulations to increase combat capabilities.
+銜尾蛇神經輔助裝置。
+消除身體限制，提升作戰能力。
 
-When you have more than 50% health, you lose 1 health per second.
-When you have less than 50% health, you gain 2 health per second.
-For each 1% health missing, increase your damage by 0.8%.
+當你的生命值高於 50% 時，每秒失去 1 點生命值。
+當你的生命值低於 50% 時，每秒恢復 2 點生命值。
+每損失 1% 生命值，傷害就會增加 0.8%。
 ]]
 
 -- Heavy Gadgets
 LANGUAGE["Gadget_gadget_energy_shield"] = [[能量盾]]
 LANGUAGE["Gadget_Desc_energy_shield"] = [[
-暫時獲得額外 25 點護甲。
+暫時獲得額外 {1} 點護甲。
 ]]
 
 LANGUAGE["Gadget_gadget_hardening_injection"] = [[硬化注射劑]]
 LANGUAGE["Gadget_Desc_hardening_injection"] = [[
-移動速度減緩 50%。
-提升 25% 全局傷害抗性。
-提升 25% 物理傷害抗性。
+移動速度減緩 {1}。
+提升 {2} 全局傷害抗性。
+提升 {3} 物理傷害抗性。
 ]]
 
 LANGUAGE["Gadget_exoskeleton"] = [[外骨骼]]
@@ -1890,7 +1891,7 @@ LANGUAGE["Gadget_Desc_exoskeleton"] = [[
 Using the active ability activates a short boost.
 
 You cannot run.
-Passively provides 20% increased Global damage resistance.
+Passively provides {1} increased Global damage resistance.
 ]]
 
 LANGUAGE["Gadget_t_virus"] = [[T-病毒]]
@@ -1903,7 +1904,7 @@ Cannot convert pass 250% health.
 LANGUAGE["Gadget_gadget_life_diffuser"] = [[活體擴散器]]
 LANGUAGE["Gadget_Desc_gadget_life_diffuser"] = [[
 釋放脈衝治療自身周圍的玩家。
-治療 20 生命。
+治療 {1} 生命。
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[發射器（治癒彈）]]
@@ -1937,9 +1938,9 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
 LANGUAGE["Gadget_death_mark"] = [[死亡標記]]
 LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
 標記指向的敵人。
-被標記的敵人遭受 15% 更多傷害。
+被標記的敵人遭受 {1} 更多傷害。
 被標記的敵人死亡時會爆炸造成傷害基於目標生命值。
-標記持續 10 秒。
+標記持續 {2} 秒。
 一次只能標記 1 個敵人。
 ]]
 
@@ -2006,15 +2007,16 @@ LANGUAGE["Gadget_Desc_gadget_chakra"] = [[
 
 LANGUAGE["Gadget_gadget_berserk_armor"] = [[狂戰盔甲]]
 LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
-提升 25% 全局傷害。
-提升 25% 全局傷害抗性。
-提升 25% 移動速度。
+提升 {1} 全局傷害。
+提升 {2} 全局傷害抗性。
+提升 {3} 移動速度。
 ]]
 
 LANGUAGE["Gadget_gadget_flash"] = [[一閃]]
 LANGUAGE["Gadget_Desc_flash"] = [[
-向前快速移動，對路徑上的所有敵人造成 100 利器傷害。
+向前快速移動，在你的下一次近戰攻擊中造成 {1} 的斬擊傷害爆炸。
 提供短暫的無敵時間。
+在你落地之前，減少 {2} 的墜落傷害。
 ]]
 
 LANGUAGE["Gadget_gadget_aerial_guard"] = [[空中制御]]
@@ -2024,15 +2026,16 @@ While in air, take 65% less Physical damage.
 
 LANGUAGE["Gadget_gadget_hemocannon"] = [[血能炮]]
 LANGUAGE["Gadget_Desc_hemocannon"] = [[
-消耗 10 生命值，發射血漿製作的投射物。
-血漿爆炸後對敵人造成 100 利器傷害並且累積出血值。
-最多有 5 發充能。每 5 秒充能一次。
+消耗 {1} 生命值，發射血漿製作的投射物。
+血漿爆炸後對敵人造成 {2} 利器傷害並且累積出血值。
+最多有 {3} 發充能。每 {4} 秒充能一次。
 ]]
 
 -- Warden Gadgets
 LANGUAGE["Gadget_gadget_solar_array"] = [[太陽能陣列]]
 LANGUAGE["Gadget_Desc_gadget_solar_array"] = [[
-產生一個護甲包。
+觸發一個脈衝，為附近的玩家提供護甲。
+修復 {1} 護甲。
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[發射器（雷電彈）]]

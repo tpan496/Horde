@@ -1348,6 +1348,7 @@ LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
 Distinguished Heavy armor.
 
 Fills up 125% of your armor bar.
+Increases your maximum armor by 25%.
 ]]
 
 LANGUAGE["Item_Hazmat Suit"] = [[Hazmat Suit]]
@@ -1443,12 +1444,12 @@ Greatly increases skull tokens drop chance.
 
 LANGUAGE["Gadget_gadget_vitality_booster"] = [[Vitality Booster]]
 LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
-+50 to maximum health.
++{1} to maximum health.
 ]]
 
 LANGUAGE["Gadget_gadget_damage_booster"] = [[Damage Booster]]
 LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
-25% increased Global damage.
+{1} increased Global damage.
 ]]
 
 -- Assault Gadgets
@@ -1466,7 +1467,7 @@ Elite enemies grant 2 stacks.
 
 LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[Neuro Amplifier]]
 LANGUAGE["Gadget_Desc_neuro_amplifier"] = [[
-Adrenaline also increases 6% evasion.
+Adrenaline also increases {1} evasion.
 ]]
 
 LANGUAGE["Gadget_ouroboros"] = [[Ouroboros]]
@@ -1487,9 +1488,9 @@ Gain 15 armor, up to maximum armor regen limit.
 
 LANGUAGE["Gadget_gadget_hardening_injection"] = [[Hardening Injection]]
 LANGUAGE["Gadget_Desc_hardening_injection"] = [[
-Movespeed reduced by 50%.
-25% increased Global damage resistance.
-25% increased Physical damage resistance.
+Movespeed reduced by {1}.
+{2} increased Global damage resistance.
+{3} increased Physical damage resistance.
 ]]
 
 LANGUAGE["Gadget_exoskeleton"] = [[Exoskeleton]]
@@ -1510,7 +1511,7 @@ Cannot convert pass 250% health.
 LANGUAGE["Gadget_gadget_life_diffuser"] = [[Life Diffuser]]
 LANGUAGE["Gadget_Desc_gadget_life_diffuser"] = [[
 Triggers a pulse that heals nearby players.
-Heals 20 health.
+Heals {1} health.
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[Projectile Launcher (Heal)]]
@@ -1607,15 +1608,16 @@ Enemies killed while infected by E-Parasite explode on death.
 -- Berserker Gadgets
 LANGUAGE["Gadget_gadget_berserk_armor"] = [[Berserker Armor]]
 LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
-25% increased damage.
-25% increased Global damage resistance.
-25% increased move speed.
+{1} increased damage.
+{2} increased Global damage resistance.
+{3} increased move speed.
 ]]
 
 LANGUAGE["Gadget_gadget_flash"] = [[Flash]]
 LANGUAGE["Gadget_Desc_flash"] = [[
-Dashes forward, dealing 100 Slashing damage to all enemies on the path.
+Dashes forward, on your next melee attack dealing a {1} slash damage explosion.
 Provides a short invincibility frame.
+{2} reduced fall damage taken until you land on the ground.
 ]]
 
 LANGUAGE["Gadget_gadget_aerial_guard"] = [[Aerial Guard]]
@@ -1625,18 +1627,18 @@ While in air, take 65% less Physical damage.
 
 LANGUAGE["Gadget_gadget_hemocannon"] = [[Hemocannon]]
 LANGUAGE["Gadget_Desc_hemocannon"] = [[
-Shoots a projectile at the cost of 10 health.
+Shoots a projectile at the cost of {1} health.
 The projectile travels for a short distance and explodes.
-The explosion deals 100 Slashing damage.
-Has a maximum of 5 charges.
-Recharges after 5 seconds.
+The explosion deals {2} Slashing damage.
+Has a maximum of {3} charges.
+Recharges after {4} seconds.
 ]]
 
 -- Warden Gadgets
 LANGUAGE["Gadget_gadget_solar_array"] = [[Solar Array]]
 LANGUAGE["Gadget_Desc_gadget_solar_array"] = [[
 Triggers a pulse that gives armor to nearby players.
-Repairs 20 armor.
+Repairs {1} armor.
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[Projectile Launcher (Shock)]]

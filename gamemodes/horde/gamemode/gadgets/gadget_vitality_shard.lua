@@ -1,10 +1,12 @@
 GADGET.PrintName = "Vitality Shard"
-GADGET.Description = "Recover 25 health."
+GADGET.Description = "Recover {1} health."
 GADGET.Icon = "items/gadgets/vitality_shard.png"
 GADGET.Droppable = true
 GADGET.Once = true
 GADGET.Active = true
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 25 },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

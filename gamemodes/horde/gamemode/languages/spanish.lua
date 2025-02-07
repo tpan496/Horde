@@ -1213,6 +1213,7 @@ LANGUAGE["Item_Bulldozer Suit"] = [[Traje de Excavadora]]
 LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
 Armadura de Pesado distinguida.
 Llena tu barra de armadura hasta 125%.
+25% armadura máxima aumentada.
 ]]
 
 LANGUAGE["Item_Hazmat Suit"] = [[Traje Hazmat]]
@@ -1267,27 +1268,27 @@ Proporciona 8% más de resistencia al daño Cortante/Golpeante.
 -- Gadgets
 LANGUAGE["Gadget_gadget_blast_plating"] = [[Galjanoplastia Explosiva]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
-20% de resistencia al daño Explosivo aumentado.
+{1} de resistencia al daño Explosivo aumentado.
 ]]
 
 LANGUAGE["Gadget_gadget_shock_plating"] = [[Galjanoplastia de Choque]]
 LANGUAGE["Gadget_Desc_gadget_shock_plating"] = [[
-20% de resistencia al daño Relámpago aumentado.
+{1} de resistencia al daño Relámpago aumentado.
 ]]
 
 LANGUAGE["Gadget_gadget_heat_plating"] = [[Galjanoplastia de Calor]]
 LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
-20% de resistencia al daño de Fuego aumentado.
+{1} de resistencia al daño de Fuego aumentado.
 ]]
 
 LANGUAGE["Gadget_gadget_detoxifier"] = [[Desintoxicante]]
 LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
-20% de resistencia al daño Venenoso aumentado.
+{1} de resistencia al daño Venenoso aumentado.
 ]]
 
 LANGUAGE["Gadget_gadget_diamond_plating"] = [[Galjanoplastia de Diamante]]
 LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
-15% de resistencia al daño Físico aumentado.
+{1} de resistencia al daño Físico aumentado.
 ]]
 
 LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Mentalidad Corporativa]]
@@ -1300,12 +1301,12 @@ Aumenta enormemente la posibilidad de soltar fichas de calavera.
 
 LANGUAGE["Gadget_gadget_vitality_booster"] = [[Potenciador de Vitalidad]]
 LANGUAGE["Gadget_Desc_gadget_vitality_booster"] = [[
-+25 de vida máxima.
++{1} de vida máxima.
 ]]
 
 LANGUAGE["Gadget_gadget_damage_booster"] = [[Potenciador de Daño]]
 LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
-25% de daño Global incrementado.
+{1} de daño Global incrementado.
 ]]
 
 -- Assault Gadgets
@@ -1322,7 +1323,7 @@ Enemigos élites dan 2 cargas.
 
 LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[Neuro Amplificador]]
 LANGUAGE["Gadget_Desc_neuro_amplifier"] = [[
-Adrenalina también incrementa 6% de evasión.
+Adrenalina también incrementa {1} de evasión.
 ]]
 
 LANGUAGE["Gadget_ouroboros"] = [[Ouroboros]]
@@ -1337,21 +1338,21 @@ Por cada 1% de vida faltante, aumenta tu daño un 0.8%.
 -- Heavy Gadgets
 LANGUAGE["Gadget_gadget_energy_shield"] = [[Escudos de Energía]]
 LANGUAGE["Gadget_Desc_energy_shield"] = [[
-Temporalmente ganas 25 de armadura.
+Temporalmente ganas {1} de armadura.
 ]]
 
 LANGUAGE["Gadget_gadget_hardening_injection"] = [[Inyección de Endurecimiento]]
 LANGUAGE["Gadget_Desc_hardening_injection"] = [[
-Velocidad de movimiento reducido un 50%.
-25% de resistencia al daño Global aumentado.
-25% de resistencia al daño Físico aumentado.
+Velocidad de movimiento reducido un {1}.
+{2} de resistencia al daño Global aumentado.
+{3} de resistencia al daño Físico aumentado.
 ]]
 
 LANGUAGE["Gadget_exoskeleton"] = [[Exoesqueleto]]
 LANGUAGE["Gadget_Desc_exoskeleton"] = [[
 Usando esta habilidad activa una breve mejora.
 No puedes correr.
-Pasivamente proporciona un 20% de resistencia al daño Global.
+Pasivamente proporciona un {1} de resistencia al daño Global.
 ]]
 
 LANGUAGE["Gadget_t_virus"] = [[Virus-T]]
@@ -1364,7 +1365,7 @@ No puedes pasarte de 250% de vida.
 LANGUAGE["Gadget_gadget_life_diffuser"] = [[Difusor de Vida]]
 LANGUAGE["Gadget_Desc_gadget_life_diffuser"] = [[
 Activa un pulso que cura a jugadores cercanos.
-Cura 20 de vida.
+Cura {1} de vida.
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[Lanzador de Proyectiles (Curativo)]]
@@ -1398,9 +1399,9 @@ Aturde enemigos al pegarlos.
 LANGUAGE["Gadget_death_mark"] = [[Marca de la Muerte]]
 LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
 Coloca una marca al enemigo apuntado.
-Enemigos apuntados reciben un 15% mas de daño.
+Enemigos apuntados reciben un {1} mas de daño.
 Enemigos marcados explotan al morir, realizando daño basado en su vida.
-La marca dura 10 segundos.
+La marca dura {2} segundos.
 Puedes marcar 1 enemigo a la vez.
 ]]
 
@@ -1461,15 +1462,16 @@ Enemigos asesinados mientras están infectados por el Parásito-E exlpotarán al
 -- Berserker Gadgets
 LANGUAGE["Gadget_gadget_berserk_armor"] = [[Armadura de Berserker]]
 LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
-25% de daño incrementado.
-25% más resistencia al daño Global.
-25% de velocidad de movimiento aumentada.
+{1} de daño incrementado.
+{2} más resistencia al daño Global.
+{3} de velocidad de movimiento aumentada.
 ]]
 
 LANGUAGE["Gadget_gadget_flash"] = [[Destello]]
 LANGUAGE["Gadget_Desc_flash"] = [[
-Embiste hacia adelante, realizando 100 de daño Cortante a todos los enemigos en su camino.
-Proporciona un breve tiempo de invencibilidad.
+Se lanza hacia adelante, y en tu próximo ataque cuerpo a cuerpo causa una explosión de daño cortante de {1}.
+Proporciona un breve período de invulnerabilidad.
+Reduce el daño por caída en un {2} hasta que aterrices.
 ]]
 
 LANGUAGE["Gadget_gadget_aerial_guard"] = [[Guardia Aéreo]]
@@ -1479,17 +1481,18 @@ Mientras estés en el aire, recibes 65% menos de daño Físico.
 
 LANGUAGE["Gadget_gadget_hemocannon"] = [[Hemocañón]]
 LANGUAGE["Gadget_Desc_hemocannon"] = [[
-Dispara un proyectil al costo de 10 de vida.
+Dispara un proyectil al costo de {1} de vida.
 El proectil viaja una corta distancia y explota.
-La explosión realiza 100 de daño Cortante.
-Tiene un máximo de 5 cargas.
-Se recarga después de 5 segundos.
+La explosión realiza {2} de daño Cortante.
+Tiene un máximo de {3} cargas.
+Se recarga después de {4} segundos.
 ]]
 
 -- Warden Gadgets
 LANGUAGE["Gadget_gadget_solar_array"] = [[Panel Solar]]
 LANGUAGE["Gadget_Desc_gadget_solar_array"] = [[
-Suelta una batería de armadura.
+Activa un pulso que otorga armadura a los jugadores cercanos.
+Repara {1} de armadura.
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[Lanzador de Proyectiles (Choque)]]

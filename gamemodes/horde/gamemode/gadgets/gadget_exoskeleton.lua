@@ -1,12 +1,14 @@
 GADGET.PrintName = "Exoskeleton"
 GADGET.Icon = "items/gadgets/exoskeleton.png"
-GADGET.Description = "Using the active ability activates a short boost\n\nYou cannot run\nPassively increases Global damage resistance by 20%"
+GADGET.Description = "Using the active ability activates a short boost\n\nYou cannot run\nPassively increases Global damage resistance by {1}"
 
 GADGET.Duration = 0
 GADGET.Cooldown = 5
 GADGET.Active = true
 
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 0.2, percent = true },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function ( ply )

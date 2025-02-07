@@ -1,9 +1,11 @@
 GADGET.PrintName = "Heat Plating"
-GADGET.Description = "40% increased Fire damage resistance."
+GADGET.Description = "{1} increased Fire damage resistance."
 GADGET.Icon = "items/gadgets/heat_plating.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 0.4, percent = true },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)

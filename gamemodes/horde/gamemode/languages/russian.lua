@@ -2380,6 +2380,7 @@ LANGUAGE["Item_Bulldozer Suit"] = [[Костюм Бульдозера]]
 LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
 Отличительная броня Тяжеловеса.
 Заполняет 125% вашей брони.
+На 25% увеличено количество максимальной брони.
 ]]
 
 LANGUAGE["Item_Hazmat Suit"] = [[Химзащитный костюм]]
@@ -2523,32 +2524,32 @@ LANGUAGE["Spell_Desc_Supernova"] = [[]]
 -- Gadgets
 LANGUAGE["Gadget_gadget_arctic_plating"] = [[Арктическое покрытие]]
 LANGUAGE["Gadget_Desc_gadget_arctic_plating"] = [[
-На 20% увеличена устойчивость к урону от холода.
+На {1} увеличена устойчивость к урону от холода.
 ]]
 
 LANGUAGE["Gadget_gadget_blast_plating"] = [[Взрывное покрытие]]
 LANGUAGE["Gadget_Desc_gadget_blast_plating"] = [[
-На 20% увеличена устойчивость к урону от взрыва.
+На {1} увеличена устойчивость к урону от взрыва.
 ]]
 
 LANGUAGE["Gadget_gadget_shock_plating"] = [[Противоударное покрытие]]
 LANGUAGE["Gadget_Desc_gadget_shock_plating"] = [[
-На 20% увеличена устойчивость к урону от электричества.
+На {1} увеличена устойчивость к урону от электричества.
 ]]
 
 LANGUAGE["Gadget_gadget_heat_plating"] = [[Термостойкое покрытие]]
 LANGUAGE["Gadget_Desc_gadget_heat_plating"] = [[
-На 20% увеличена устойчивость к урону от огня.
+На {1} увеличена устойчивость к урону от огня.
 ]]
 
 LANGUAGE["Gadget_gadget_detoxifier"] = [[Детоксикатор]]
 LANGUAGE["Gadget_Desc_gadget_detoxifier"] = [[
-На 20% увеличена устойчивость к урону от яда.
+На {1} увеличена устойчивость к урону от яда.
 ]]
 
 LANGUAGE["Gadget_gadget_diamond_plating"] = [[Алмазное покрытие]]
 LANGUAGE["Gadget_Desc_gadget_diamond_plating"] = [[
-На 15% увеличена устойчивость к физическому урону.
+На {1} увеличена устойчивость к физическому урону.
 ]]
 
 LANGUAGE["Gadget_gadget_corporate_mindset"] = [[Корпоративное Мышление]]
@@ -2615,14 +2616,16 @@ LANGUAGE["Gadget_Desc_gadget_agility_booster"] = [[
 LANGUAGE["Gadget_gadget_resistance_booster"] = [[Усилитель сопротивления]]
 LANGUAGE["Gadget_Desc_gadget_resistance_booster"] = [[
 На {1} увеличено глобальное сопротивление к урону.
+{2} Уменьшение накопления дебаффов
 ]]
 
 LANGUAGE["Gadget_gadget_ultimate_booster"] = [[Предельный усилитель]]
 LANGUAGE["Gadget_Desc_gadget_ultimate_booster"] = [[
 На {1} увеличена скорость передвижения.
-На {1} увеличено максимальное здоровье.
+На {2} увеличено максимальное здоровье.
 На {1} увеличен любой урон.
 На {1} увеличено глобальное сопротивление к урону.
+{2} Уменьшение накопления дебаффов
 ]]
 
 -- Assault Gadgets
@@ -2640,7 +2643,7 @@ LANGUAGE["Gadget_Desc_gadget_cortex"] = [[
 
 LANGUAGE["Gadget_gadget_neuro_amplifier"] = [[Нейроусилитель]]
 LANGUAGE["Gadget_Desc_gadget_neuro_amplifier"] = [[
-Адреналин увеличивает уклонение на 6%.
+Адреналин увеличивает уклонение на {1}.
 ]]
 
 LANGUAGE["Gadget_gadget_ouroboros"] = [[Уроборос]]
@@ -2655,27 +2658,27 @@ LANGUAGE["Gadget_Desc_gadget_ouroboros"] = [[
 -- Heavy Gadgets
 LANGUAGE["Gadget_gadget_energy_shield"] = [[Энергетический Щит]]
 LANGUAGE["Gadget_Desc_gadget_energy_shield"] = [[
-Выдаётся 15 единиц брони, вплоть до максимального предела регенерации брони.
+Выдаётся {1} единиц брони, вплоть до максимального предела регенерации брони.
 ]]
 
 LANGUAGE["Gadget_gadget_hardening_injection"] = [[Упрочняющая инъекция]]
 LANGUAGE["Gadget_Desc_gadget_hardening_injection"] = [[
-Скорость передвижения уменьшена на 50%.
-На 25% повышена глобальная устойчивость к урону.
-На 25% повышена устойчивость к физическому урону.
+Скорость передвижения уменьшена на {1}.
+На {2} повышена глобальная устойчивость к урону.
+На {3} повышена устойчивость к физическому урону.
 ]]
 
 LANGUAGE["Gadget_gadget_exoskeleton"] = [[Экзоскелет]]
 LANGUAGE["Gadget_Desc_gadget_exoskeleton"] = [[
 Использование активной способности активирует короткий буст.
 Ты не можешь бежать.
-Пассивно обеспечивает на 20% повышенную глобальную устойчивость к урону.
+Пассивно обеспечивает на {1} повышенную глобальную устойчивость к урону.
 ]]
 
 LANGUAGE["Gadget_gadget_ulpa_filter"] = [[ВССП Фильтр]]
 LANGUAGE["Gadget_Desc_gadget_ulpa_filter"] = [[
-На 50% уменьшено накопление из всех источников, пока у вас есть броня.
-Накопления также истощяют вашу броню.
+Добавляет {1} к максимальной броне.
+На {2} уменьшено накопление дебаффов.
 ]]
 
 LANGUAGE["Gadget_gadget_armor_fusion"] = [[Сплавление брони]]
@@ -2688,7 +2691,7 @@ LANGUAGE["Gadget_Desc_gadget_armor_fusion"] = [[
 LANGUAGE["Gadget_gadget_life_diffuser"] = [[Диффузор жизни]]
 LANGUAGE["Gadget_Desc_gadget_life_diffuser"] = [[
 Запускает импульс, который исцеляет ближайших игроков.
-Исцеляет 20 ед. здоровья.
+Исцеляет {1} ед. здоровья.
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_heal"] = [[Пушка для снарядов (Лечащая)]]
@@ -2734,9 +2737,9 @@ LANGUAGE["Gadget_Desc_gadget_projectile_launcher_ballistic"] = [[
 LANGUAGE["Gadget_gadget_death_mark"] = [[Чёрная Метка]]
 LANGUAGE["Gadget_Desc_gadget_death_mark"] = [[
 Ставит метку на выбранном враге.
-Отмеченный враг получает урон, увеличенный на 15%.
+Отмеченный враг получает урон, увеличенный на {1}.
 Отмеченный враг взрывается при смерти, нанося урон, основанный на его здоровье.
-Метка длится 10 секунд.
+Метка длится {2} секунд.
 Вы можете отметить только 1 врага одновременно.
 ]]
 
@@ -2817,24 +2820,25 @@ LANGUAGE["Gadget_Desc_gadget_chakra"] = [[
 
 LANGUAGE["Gadget_gadget_berserk_armor"] = [[Броня Берсерка]]
 LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
-Урон увеличен на 25%.
-На 25% увеличена глобальная устойчивость к урону.
-На 25% увеличена скорость передвижения.
+Урон увеличен на {1}.
+На {2} увеличена глобальная устойчивость к урону.
+На {3} увеличена скорость передвижения.
 ]]
 
 LANGUAGE["Gadget_gadget_flash"] = [[Флэш]]
 LANGUAGE["Gadget_Desc_gadget_flash"] = [[
-Бросается вперед, нанося {1} режущего урона всем врагам на пути.
+Бросается вперед, при следующей атаке в ближнем бою нанося {1} режущего урона взрывом.
 Обеспечивает короткую рамку неуязвимости.
+Уменьшает урон от падения на {2} до приземления.
 ]]
 
 LANGUAGE["Gadget_gadget_hemocannon"] = [[Гемоцианин]]
 LANGUAGE["Gadget_Desc_gadget_hemocannon"] = [[
-Стреляет снарядом ценой 10 единиц здоровья.
+Стреляет снарядом ценой {1} единиц здоровья.
 Снаряд пролетает небольшое расстояние и взрывается.
-Взрыв наносит 100 режущего урона.
-Имеет максимум 5 зарядов.
-Перезаряжается через 5 секунд.
+Взрыв наносит {2} режущего урона.
+Имеет максимум {3} зарядов.
+Перезаряжается через {4} секунд.
 ]]
 
 LANGUAGE["Gadget_gadget_omnislash"] = [[Всенаправленный разрез]]
@@ -2848,7 +2852,8 @@ LANGUAGE["Gadget_Desc_gadget_omnislash"] = [[
 -- Warden Gadgets
 LANGUAGE["Gadget_gadget_solar_array"] = [[Солнечная батарея]]
 LANGUAGE["Gadget_Desc_gadget_solar_array"] = [[
-Бросает броневую батарею.
+Активирует импульс, который дает броню ближайшим игрокам.
+Восстанавливает {1} брони.
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_shock"] = [[Пушка для снарядов (Шоковая)]]
@@ -2893,7 +2898,7 @@ LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
 LANGUAGE["Gadget_gadget_hydrogen_burner"] = [[Водородная горелка]]
 LANGUAGE["Gadget_Desc_gadget_hydrogen_burner"] = [[
 Синее пламя.
-На 25% увеличен урон от огня.
+На {1} увеличен урон от огня.
 Ваш урон от огня больше не воспламеняется.
 ]]
 
@@ -2937,8 +2942,8 @@ LANGUAGE["Gadget_Desc_gadget_unstable_injection"] = [[
 LANGUAGE["Gadget_gadget_hellfire_tincture"] = [[Настойка адского огня]]
 LANGUAGE["Gadget_Desc_gadget_hellfire_tincture"] = [[
 Каждую секунду:
-- Наносит вам урон 5% от вашего максимального здоровья.
-- Наносит огненный урон по врагам вблизи 50% от вашего максимального здоровья.
+- Наносит вам урон {1} от вашего максимального здоровья.
+- Наносит огненный урон по врагам вблизи {2} от вашего максимального здоровья.
 ]]
 
 LANGUAGE["Gadget_gadget_specimen_crystal_small"] = [[Образец кристалла (маленький)]]

@@ -1,10 +1,14 @@
 GADGET.PrintName = "Berserker Armor"
-GADGET.Description = "25% increased damage.\n25% increased Global damage resistance.\n25% increased movespeed."
+GADGET.Description = "{1} increased damage.\n{2} increased Global damage resistance.\n{3} increased movespeed."
 GADGET.Icon = "items/gadgets/berserk_armor.png"
 GADGET.Duration = 10
 GADGET.Cooldown = 20
 GADGET.Active = true
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 0.25, percent = true },
+    [2] = { value = 0.25, percent = true },
+    [3] = { value = 0.25, percent = true },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

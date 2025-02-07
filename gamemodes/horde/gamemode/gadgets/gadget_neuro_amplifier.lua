@@ -1,11 +1,12 @@
 GADGET.PrintName = "Neuro Amplifier"
 GADGET.Description =
-[[Gain 6% evasion per Adrenaline stack.]]
+[[Gain {1} evasion per Adrenaline stack.]]
 GADGET.Icon = "items/gadgets/neuro_amplifier.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
 GADGET.Active = false
 GADGET.Params = {
+    [1] = { value = 0.06, percent = true },
 }
 GADGET.Hooks = {}
 

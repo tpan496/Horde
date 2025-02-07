@@ -1,15 +1,18 @@
 GADGET.PrintName = "Death Mark"
 GADGET.Description =
 [[Places a mark on the targeted enemy.
-Marked enemy takes 15% increased damage.
+Marked enemy takes {1} increased damage.
 Marked enemy explodes on death, dealing damage based on its health.
-The mark lasts for 10 seconds.
+The mark lasts for {2} seconds.
 You can only mark 1 enemy at a time.]]
 GADGET.Icon = "items/gadgets/death_mark.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 2
 GADGET.Active = true
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 0.15, percent = true },
+    [2] = { value = 10 }
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

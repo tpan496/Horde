@@ -1,9 +1,11 @@
 GADGET.PrintName = "Detoxifier"
-GADGET.Description = "40% increased Poison damage resistance."
+GADGET.Description = "{1} increased Poison damage resistance."
 GADGET.Icon = "items/gadgets/detoxifier.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 0.4, percent = true },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)

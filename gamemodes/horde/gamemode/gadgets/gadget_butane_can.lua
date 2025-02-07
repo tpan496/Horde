@@ -1,10 +1,12 @@
 GADGET.PrintName = "Butane Can"
-GADGET.Description = "Drops a Butane Can that explodes on physical impact.\nExplosion deals 375 Fire damage.\nOnly 1 Butane Can can be spawned at a time."
+GADGET.Description = "Drops a Butane Can that explodes on physical impact.\nExplosion deals {1} Fire damage.\nOnly 1 Butane Can can be spawned at a time."
 GADGET.Icon = "items/gadgets/butane_can.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 20
 GADGET.Active = true
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 375 },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)

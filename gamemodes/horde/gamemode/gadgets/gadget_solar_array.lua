@@ -1,10 +1,11 @@
 GADGET.PrintName = "Solar Array"
-GADGET.Description = "Triggers a pulse that gives armor to nearby players.\nRepairs 20 armor."
+GADGET.Description = "Triggers a pulse that gives armor to nearby players.\nRepairs {1} armor."
 GADGET.Icon = "items/gadgets/solar_array.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
 GADGET.Active = true
 GADGET.Params = {
+    [1] = { value = 20 },
 }
 GADGET.Hooks = {}
 

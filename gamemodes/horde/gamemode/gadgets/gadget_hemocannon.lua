@@ -1,16 +1,20 @@
 GADGET.PrintName = "Hemocannon"
 GADGET.Description =
-[[Shoots a projectile at the cost of 10 health.
+[[Shoots a projectile at the cost of {1} health.
 The projectile travels for a short distance and explodes.
-The explosion deals 100 Slashing damage and inflicts Bleeding buildup.
-Has a maximum of 5 charges.
-Recharges after 5 seconds.]]
+The explosion deals {2} Slashing damage and inflicts Bleeding buildup.
+Has a maximum of {3} charges.
+Recharges after {4} seconds.]]
 GADGET.Icon = "items/gadgets/hemocannon.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0.5
 GADGET.Charges = 5
 GADGET.Active = true
 GADGET.Params = {
+    [1] = { value = 10 },
+    [2] = { value = 100 },
+    [3] = { value = 5 },
+    [4] = { value = 5 },
 }
 
 GADGET.Hooks = {}

@@ -1,12 +1,15 @@
 GADGET.PrintName = "Flash"
-GADGET.Description = [[Dashes forward, on your next melee attack dealing a 200 slash damage explosion.
+GADGET.Description = [[Dashes forward, on your next melee attack dealing a {1} slash damage explosion.
 Provides a short invincibility frame.
-90% reduced fall damage taken until you land on the ground.]]
+{2} reduced fall damage taken until you land on the ground.]]
 GADGET.Icon = "items/gadgets/flash.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 10
 GADGET.Active = true
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 200 },
+    [2] = { value = 0.9, percent = true },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_UseActiveGadget = function( ply )

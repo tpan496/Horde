@@ -1,12 +1,14 @@
 GADGET.PrintName = "Barbeque"
 GADGET.Description =
 [[Ignited enemies killed by you drop edible gibs.
-Each gib restores 5 health.]]
+Each gib restores {1} health.]]
 GADGET.Icon = "items/gadgets/barbeque.png"
 GADGET.Duration = 0
 GADGET.Cooldown = 0
 GADGET.Active = false
-GADGET.Params = {}
+GADGET.Params = {
+    [1] = { value = 5 },
+}
 GADGET.Hooks = {}
 
 GADGET.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)

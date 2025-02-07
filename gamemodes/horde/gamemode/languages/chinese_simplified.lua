@@ -1808,6 +1808,7 @@ LANGUAGE["Gadget_Desc_gadget_damage_booster"] = [[
 LANGUAGE["Gadget_gadget_resistance_booster"] = [[抗性提升]]
 LANGUAGE["Gadget_Desc_gadget_resistance_booster"] = [[
 提升 {1} 全局伤害抗性。
+减少 {2} 异常状态积累。
 ]]
 
 LANGUAGE["Gadget_gadget_agility_booster"] = [[敏捷提升]]
@@ -1817,10 +1818,11 @@ LANGUAGE["Gadget_Desc_gadget_agility_booster"] = [[
 
 LANGUAGE["Gadget_gadget_ultimate_booster"] = [[极限提升]]
 LANGUAGE["Gadget_Desc_gadget_ultimate_booster"] = [[
-增加 {1} 最大生命值。
+增加 {2} 最大生命值。
 提升 {1} 全局伤害。
 提升 {1} 全局伤害抗性。
 提升 {1} 移动速度。
+减少 {2} 异常状态积累。
 ]]
 
 -- Assault Gadgets
@@ -1838,7 +1840,7 @@ LANGUAGE["Gadget_gadget_ouroboros"] = [[咬尾蛇]]
 -- Heavy Gadgets
 LANGUAGE["Gadget_gadget_energy_shield"] = [[能量盾]]
 LANGUAGE["Gadget_Desc_energy_shield"] = [[
-获得额外 15 点护甲。
+获得额外 {1} 点护甲。
 上限为当前最高护甲自动回复值。
 ]]
 
@@ -1929,13 +1931,14 @@ LANGUAGE["Gadget_gadget_gadget_flash"] = [[一闪]]
 LANGUAGE["Gadget_Desc_gadget_flash"] = [[
 向前快速移动，对路径上的所有敌人造成 {1} 利器伤害。
 提供短暂的无敌时间。
+在你落地之前，减少 {2} 的坠落伤害。
 ]]
 
 LANGUAGE["Gadget_gadget_hemocannon"] = [[血能炮]]
 LANGUAGE["Gadget_Desc_gadget_hemocannon"] = [[
-消耗 10 生命值，发射血浆制作的投射物。
-血浆爆炸后对敌人造成 100 利器伤害并且累积出血值。
-最多有 5 发充能。每 5 秒充能一次。
+消耗 {1} 生命值，发射血浆制作的投射物。
+血浆爆炸后对敌人造成 {2} 利器伤害并且累积出血值。
+最多有 {3} 发充能。每 {4} 秒充能一次。
 ]]
 
 -- Warden Gadgets
