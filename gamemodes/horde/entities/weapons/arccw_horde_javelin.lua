@@ -196,9 +196,9 @@ SWEP.Animations = {
             t = 0
             },
             {
-                s = "horde/weapons/javelin/reload2.ogg",
-                t = 2
-                }
+            s = "horde/weapons/javelin/reload2.ogg",
+            t = 2
+            }
         },
     },
 }
@@ -232,7 +232,7 @@ function SWEP:Hook_Think()
     if self.Owner:KeyDown(IN_ATTACK2) then
         self.Owner:SetFOV(25, 0)
         self.Owner:DrawViewModel(false)
-        if CLIENT then function self:AdjustMouseSensitivity() return 25 / self.Owner:GetInfoNum("fov_desired", 25) end end
+        function self:AdjustMouseSensitivity() return 25 / self.Owner:GetInfoNum("fov_desired", 25) end
         self.Scoped = true
         self.SpeedMult = 0.5
 
@@ -282,7 +282,7 @@ function SWEP:Hook_Think()
         self:SetLocked_Target(NULL)
         self.Owner:DrawViewModel(true)
         self.SpeedMult = 0.9
-        if CLIENT then function self:AdjustMouseSensitivity() return 1 end end
+        function self:AdjustMouseSensitivity() return 1 end
     end
 end
 

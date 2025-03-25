@@ -11,7 +11,7 @@ SWEP.Spawnable = true -- this obviously has to be set to true
 SWEP.Category = "ArcCW - Horde" -- edit this if you like
 SWEP.AdminOnly = false
 
-SWEP.PrintName = "RPG7"
+SWEP.PrintName = "RPG-7"
 SWEP.TrueName = "Ruchnoy Protivotankoviy Granatomyot"
 SWEP.Trivia_Class = "Rocket Launcher"
 SWEP.Trivia_Desc = "A portable, reusable, unguided, shoulder-launched, anti-tank, rocket-propelled grenade launcher."

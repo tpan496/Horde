@@ -583,10 +583,10 @@ function HORDE:GetDefaultItemsData()
     --{Demolition=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     --HORDE:CreateItem("Explosive",  "Static Mine",  "horde_static_mine",  2000,  5, "Combine reactive mines that hovers in air.\nExplode when enemies come in proximity.\nYou can plant at most 5 reactive mines.",
     --{Demolition=true}, 15, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
-    HORDE:CreateItem("Explosive",  "M79 GL",         "arccw_horde_m79",    1500,  5, "M79 Grenade Launcher.\nShoots 40x46mm grenades the explodes on impact.",
+    HORDE:CreateItem("Explosive",  "M79 GL",         "arccw_horde_m79",    1500,  5, "M79 Grenade Launcher.\nShoots 40x46mm grenades that explode on impact.",
     {Demolition=true, Survivor=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
-    HORDE:CreateItem("Explosive",  "China Lake GL",         "arccw_horde_chinalake",    2250,  6, "China Lake Pump-Action Grenade Launcher.\nShoots 40x46mm grenades that explode on impact.",
-    {Demolition=true}, 25, -1, nil, nil, {Demolition=2}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
+    HORDE:CreateItem("Explosive",  "China Lake GL",         "arccw_horde_chinalake",    2100,  6, "Pump-Action Grenade Launcher.\nHolds a total of four 40mm grenades,\nand cycles similar to a pump-action shotgun.",
+    {Demolition=true}, 36, -1, nil, nil, {Demolition=2}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "Sticky Launcher",  "horde_sticky_launcher", 2500,  7, "Sticky grenade launcher.\nLaunches grenades that stick to surfaces and entities.\n\nRMB to detonate.",
     {Demolition=true}, 50, -1, nil, nil, {Demolition=2}, nil, {HORDE.DMG_BLAST}, {HORDE.Infusion_Quality})
     HORDE:CreateItem("Explosive",  "M32 GL",         "arccw_horde_m32",    3000,  8, "Milkor Multiple Grenade Launcher.\nA lightweight 40mm six-shot revolver grenade launcher.",
