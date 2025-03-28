@@ -72,7 +72,7 @@ SWEP.SwayScale = 0
 SWEP.AutoSwitchTo = false
 SWEP.AutoSwitchFrom = false
 SWEP.Weight = 5
-SWEP.Slot = 5
+SWEP.Slot = 4
 SWEP.SlotPos = 3
 
 SWEP.UseHands = true
