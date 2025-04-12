@@ -158,7 +158,7 @@ function scoreboard:show()
 	if FITTR then -- Mutually exclusive with outfitter
 		local outfitterButton = vgui.Create( "DButton" )
 		scoreboard.OutfitterButton = outfitterButton
-		outfitterButton:SetText( "Outfitter" )
+		outfitterButton:SetText( "Fittr" )
 		outfitterButton:SetSize( 200, 40 )
 		outfitterButton:SetPos( 5, ScrH() / 2 + 25 )
 		outfitterButton:SetTextColor( Color( 255, 255, 255 ) )
