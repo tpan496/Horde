@@ -155,6 +155,27 @@ function scoreboard:show()
 		end
 	end
 
+	if FITTR then -- Mutually exclusive with outfitter
+		local outfitterButton = vgui.Create( "DButton" )
+		scoreboard.OutfitterButton = outfitterButton
+		outfitterButton:SetText( "Outfitter" )
+		outfitterButton:SetSize( 200, 40 )
+		outfitterButton:SetPos( 5, ScrH() / 2 + 25 )
+		outfitterButton:SetTextColor( Color( 255, 255, 255 ) )
+
+		function outfitterButton:DoClick()
+			RunConsoleCommand( "fittr" )
+		end
+
+		function outfitterButton:Paint( w, h )
+			if self:IsHovered() then
+				draw_RoundedBox( 8, 0, 0, w, h, Color( 30, 30, 30, 255 ) )
+			else
+				draw_RoundedBox( 8, 0, 0, w, h, Color( 40, 40, 40, 255 ) )
+			end
+		end
+	end
+
 	if hook.GetTable().HUDPaint and hook.GetTable().HUDPaint["SimpleTP.HUDPaint"] then
 		local thirdPerson = vgui.Create( "DButton" )
 		scoreboard.ThirdPerson = thirdPerson
