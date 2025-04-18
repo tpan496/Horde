@@ -134,12 +134,31 @@ function scoreboard:show()
 		CreatePlayerPanel(ply)
 	end
 
+	local playerSelectorButton = vgui.Create( "DButton" )
+	scoreboard.PlayerSelectorButton = playerSelectorButton
+	playerSelectorButton:SetText( "Default player model" )
+	playerSelectorButton:SetSize( 200, 40 )
+	playerSelectorButton:SetPos( 5, ScrH() / 2 - 25 )
+	playerSelectorButton:SetTextColor( Color( 255, 255, 255 ) )
+	function playerSelectorButton:DoClick()
+		RunConsoleCommand( "open_playermodel_selector" )
+	end
+
+	function playerSelectorButton:Paint( w, h )
+		if self:IsHovered() then
+			draw_RoundedBox( 8, 0, 0, w, h, Color( 30, 30, 30, 255 ) )
+		else
+			draw_RoundedBox( 8, 0, 0, w, h, Color( 40, 40, 40, 255 ) )
+		end
+	end
+
+	local offset = 25
 	if outfitter and outfitter.GUIOpen then
 		local outfitterButton = vgui.Create( "DButton" )
 		scoreboard.OutfitterButton = outfitterButton
 		outfitterButton:SetText( "Outfitter" )
 		outfitterButton:SetSize( 200, 40 )
-		outfitterButton:SetPos( 5, ScrH() / 2 + 25 )
+		outfitterButton:SetPos( 5, ScrH() / 2 + offset )
 		outfitterButton:SetTextColor( Color( 255, 255, 255 ) )
 
 		function outfitterButton:DoClick()
@@ -153,6 +172,8 @@ function scoreboard:show()
 				draw_RoundedBox( 8, 0, 0, w, h, Color( 40, 40, 40, 255 ) )
 			end
 		end
+
+		offset = offset + 50
 	end
 
 	if FITTR then -- Mutually exclusive with outfitter
@@ -160,7 +181,7 @@ function scoreboard:show()
 		scoreboard.OutfitterButton = outfitterButton
 		outfitterButton:SetText( "Fittr" )
 		outfitterButton:SetSize( 200, 40 )
-		outfitterButton:SetPos( 5, ScrH() / 2 + 25 )
+		outfitterButton:SetPos( 5, ScrH() / 2 + offset )
 		outfitterButton:SetTextColor( Color( 255, 255, 255 ) )
 
 		function outfitterButton:DoClick()
@@ -174,14 +195,16 @@ function scoreboard:show()
 				draw_RoundedBox( 8, 0, 0, w, h, Color( 40, 40, 40, 255 ) )
 			end
 		end
+
+		offset = offset + 50
 	end
 
-	if hook.GetTable().HUDPaint and hook.GetTable().HUDPaint["SimpleTP.HUDPaint"] then
+	if true then --hook.GetTable().HUDPaint and hook.GetTable().HUDPaint["SimpleTP.HUDPaint"] then
 		local thirdPerson = vgui.Create( "DButton" )
 		scoreboard.ThirdPerson = thirdPerson
 		thirdPerson:SetText( "Third Person" )
 		thirdPerson:SetSize( 200, 40 )
-		thirdPerson:SetPos( 5, ScrH() / 2 - 25 )
+		thirdPerson:SetPos( 5, ScrH() / 2 + offset )
 		thirdPerson:SetTextColor( Color( 255, 255, 255 ) )
 
 		function thirdPerson:DoClick()
@@ -200,6 +223,8 @@ function scoreboard:show()
 				draw_RoundedBox( 8, 0, 0, w, h, Color( 40, 40, 40, 255 ) )
 			end
 		end
+
+		offset = offset + 50
 	end
 
 	function scoreboard:hide()
@@ -219,6 +244,11 @@ function scoreboard:show()
 		if IsValid(self.OutfitterButton) then
 			self.OutfitterButton:Remove()
 		end
+
+		if IsValid(self.PlayerSelectorButton) then
+			self.PlayerSelectorButton:Remove()
+		end
+
 		hook.Remove("KeyPress", "Horde_Scoreboard_Mouse")
 	end
 
