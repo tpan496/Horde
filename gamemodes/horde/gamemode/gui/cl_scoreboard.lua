@@ -199,7 +199,7 @@ function scoreboard:show()
 		offset = offset + 50
 	end
 
-	if true then --hook.GetTable().HUDPaint and hook.GetTable().HUDPaint["SimpleTP.HUDPaint"] then
+	if hook.GetTable().HUDPaint and hook.GetTable().HUDPaint["SimpleTP.HUDPaint"] then
 		local thirdPerson = vgui.Create( "DButton" )
 		scoreboard.ThirdPerson = thirdPerson
 		thirdPerson:SetText( "Third Person" )
