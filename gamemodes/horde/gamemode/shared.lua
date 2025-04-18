@@ -155,16 +155,14 @@ end
 
 function GM:ShowSpare2(ply) Ready(ply) end
 
-local groups = {"group01", "group03"}
-local sex = {"female", "male"}
-local nums = {"_01", "_02", "_03", "_04", "_05", "_06"}
-
 function GM:PlayerSetModel(ply)
     local class = ply:Horde_GetClass()
     if class and class.model and class.model ~= nil then
-        return ply:Horde_SetClassModel(class)
+        ply:Horde_SetClassModel(class)
+        return
     end
-    return ply:SetModel("models/player/" .. table.Random(groups) .. "/" .. table.Random(sex) .. table.Random(nums) .. ".mdl")
+
+    player_manager.RunClass( ply, "SetModel" )
 end
 
 function GM:ShouldCollide(ent1, ent2)
