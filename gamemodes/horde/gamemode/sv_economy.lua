@@ -424,9 +424,9 @@ hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
                 end
             end
         end
-
     end
-    if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
+
+    if ply:Horde_GetClass() and ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
         wpn:Remove()
     end
 end)

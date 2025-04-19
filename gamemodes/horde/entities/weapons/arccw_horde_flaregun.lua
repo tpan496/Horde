@@ -26,8 +26,8 @@ SWEP.Spawnable = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/vj_weapons/v_flaregun.mdl"
-SWEP.WorldModel = "models/vj_weapons/w_flaregun.mdl"
+SWEP.ViewModel = "models/vj_base/weapons/v_flaregun.mdl"
+SWEP.WorldModel = "models/vj_base/weapons/w_flaregun.mdl"
 SWEP.ViewModelFOV = 60
 
 SWEP.Damage = 0

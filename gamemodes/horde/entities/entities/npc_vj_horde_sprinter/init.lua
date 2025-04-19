@@ -5,7 +5,7 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/blacktea/zpszombie1.mdl", "models/blacktea/zpszombie2.mdl", "models/blacktea/zpszombie3.mdl", "models/blacktea/zpszombie5.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = {"models/vj_zombies/fast1.mdl", "models/vj_zombies/fast2.mdl", "models/vj_zombies/fast3.mdl", "models/vj_zombies/fast4.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 90
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
