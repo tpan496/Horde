@@ -5,7 +5,19 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_zombies/slow1.mdl", "models/vj_zombies/slow2.mdl", "models/vj_zombies/slow3.mdl", "models/vj_zombies/slow4.mdl", "models/vj_zombies/slow5.mdl", "models/vj_zombies/slow6.mdl", "models/vj_zombies/slow7.mdl", "models/vj_zombies/slow8.mdl", "models/vj_zombies/slow9.mdl", "models/vj_zombies/slow10.mdl", "models/vj_zombies/slow11.mdl", "models/vj_zombies/slow12.mdl"}
+ENT.Model = {
+    "models/zombie/zclassic_01.mdl",
+    "models/zombie/zclassic_02.mdl",
+    "models/zombie/zclassic_03.mdl",
+    "models/zombie/zclassic_04.mdl",
+    "models/zombie/zclassic_05.mdl",
+    "models/zombie/zclassic_06.mdl",
+    "models/zombie/zclassic_07.mdl",
+    "models/zombie/zclassic_08.mdl",
+    "models/zombie/zclassic_09.mdl",
+    "models/zombie/zclassic_10.mdl",
+    "models/zombie/zclassic_11.mdl",
+    "models/zombie/zclassic_12.mdl",} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 75
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
