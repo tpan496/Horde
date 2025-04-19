@@ -63,6 +63,10 @@ end
 
 function HORDE:CreateGadgetItem(class, price, weight, whitelist, levels, dmgtype, hidden)
     local gadget = HORDE.gadgets[class]
+    if not gadget then
+        print("[HORDE] Gadget " .. class .. " not found.")
+        return
+    end
     HORDE:CreateItem("Gadget", gadget.PrintName, class, price, weight, "", whitelist, 10, -1, {type=HORDE.ENTITY_PROPERTY_GADGET}, nil, levels, nil, dmgtype, nil, nil, hidden)
 end
 

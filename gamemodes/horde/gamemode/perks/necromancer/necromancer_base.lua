@@ -23,7 +23,7 @@ PERK.Params = {
 PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnPlayerDamageTaken = function ( ply, dmginfo, bonus )
-    if !ply:Horde_GetPerk( "necromancer_base" )  then return end
+    if not ply:Horde_GetPerk( "necromancer_base" )  then return end
 
     if HORDE:IsColdDamage( dmginfo ) then
         bonus.resistance = bonus.resistance + ply:Horde_GetPerkLevelBonus( "necromancer_base" )
@@ -32,7 +32,7 @@ PERK.Hooks.Horde_OnPlayerDamageTaken = function ( ply, dmginfo, bonus )
 end
 
 PERK.Hooks.Horde_OnPlayerDamage = function ( ply, npc, _, _, dmginfo )
-    if !ply:Horde_GetPerk( "necromancer_base" ) then return end
+    if not ply:Horde_GetPerk( "necromancer_base" ) then return end
 
     if HORDE:IsColdDamage( dmginfo ) then
         npc:Horde_AddDebuffBuildup(
@@ -56,28 +56,28 @@ PERK.Hooks.Horde_OnSetPerk = function( ply, perk )
         ply:StripWeapons()
 
         timer.Simple( 0, function()
-            if !ply:Alive() then return end
+            if not ply:Alive() then return end
 
-            if !ply:Horde_GetPerk( "necromancer_base" ) then return end
+            if not ply:Horde_GetPerk( "necromancer_base" ) then return end
             ply:Give( "horde_void_projector" )
 
-            if ( !ply:Horde_GetPrimarySpell() or ( ply:Horde_GetPrimarySpell().Weapon ~= nil
-            and !table.HasValue( ply:Horde_GetPrimarySpell().Weapon, "horde_void_projector" ) ) ) then
+            if ( not ply:Horde_GetPrimarySpell() or ( ply:Horde_GetPrimarySpell().Weapon ~= nil
+            and not table.HasValue( ply:Horde_GetPrimarySpell().Weapon, "horde_void_projector" ) ) ) then
                 ply:Horde_SetSpell( "void_sphere" )
             end
 
-            if ( !ply:Horde_GetSecondarySpell() or ( ply:Horde_GetSecondarySpell().Weapon ~= nil
-            and !table.HasValue( ply:Horde_GetSecondarySpell().Weapon, "horde_void_projector" ) ) ) then
+            if ( not ply:Horde_GetSecondarySpell() or ( ply:Horde_GetSecondarySpell().Weapon ~= nil
+            and not table.HasValue( ply:Horde_GetSecondarySpell().Weapon, "horde_void_projector" ) ) ) then
                 ply:Horde_SetSpell( "raise_spectre" )
             end
 
-            if ( !ply:Horde_GetUtilitySpell() or ( ply:Horde_GetUtilitySpell().Weapon ~= nil
-            and !table.HasValue( ply:Horde_GetUtilitySpell().Weapon, "horde_void_projector" ) ) ) then
+            if ( not ply:Horde_GetUtilitySpell() or ( ply:Horde_GetUtilitySpell().Weapon ~= nil
+            and not table.HasValue( ply:Horde_GetUtilitySpell().Weapon, "horde_void_projector" ) ) ) then
                 ply:Horde_SetSpell( "illuminate" )
             end
 
             if ( ply:Horde_GetUltimateSpell() and ( ply:Horde_GetUltimateSpell().Weapon ~= nil
-            and !table.HasValue( ply:Horde_GetUltimateSpell().Weapon, "horde_void_projector" ) ) ) then
+            and not table.HasValue( ply:Horde_GetUltimateSpell().Weapon, "horde_void_projector" ) ) ) then
                 ply:Horde_UnsetSpell( ply:Horde_GetUltimateSpell().ClassName )
             end
 
