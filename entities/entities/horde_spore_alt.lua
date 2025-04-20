@@ -15,7 +15,7 @@ self.Entity:PhysicsInit( SOLID_VPHYSICS )
 self.Entity:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE )
 self.Entity:DrawShadow( false )
 self.ExplodeTimer = CurTime() + 2
-ParticleEffectAttach("antlion_spit_trail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+ParticleEffectAttach("vj_acid_idle", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 
 function ENT:Think()

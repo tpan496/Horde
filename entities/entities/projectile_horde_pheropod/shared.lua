@@ -48,7 +48,7 @@ function ENT:Initialize()
     self.BaseSplashDamage = self.BaseSplashDamage + 4 * self.properties.level
     end
 
-    ParticleEffectAttach("antlion_spit_trail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+    ParticleEffectAttach("vj_acid_idle", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 
 function ENT:SetupDataTables()

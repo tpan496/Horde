@@ -9,7 +9,7 @@ ENT.Spawnable 			= false
 
 AddCSLuaFile()
 
-ENT.Model = "models/spitball_medium.mdl"
+ENT.Model = "models/vj_base/projectiles/spit_acid_medium.mdl"
 ENT.Ticks = 0
 ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
 ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
@@ -46,7 +46,7 @@ function ENT:Initialize()
     self.StartTime = CurTime()
     end
 
-    ParticleEffectAttach("antlion_spit_trail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+    ParticleEffectAttach("vj_acid_idle", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 
 function ENT:SetupDataTables()

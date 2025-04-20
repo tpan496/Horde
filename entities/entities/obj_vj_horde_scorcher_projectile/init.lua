@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 
-ENT.Model = {"models/gibs/humans/brain_gib.mdl"} -- The models it should spawn with | Picks a random one from the table
+ENT.Model = {"models/vj_base/gibs/human/brain.mdl"} -- The models it should spawn with | Picks a random one from the table
 -- ====== Shake World On Death Variables ====== --
 ENT.ShakeWorldOnDeath = true -- Should the world shake when the projectile hits something?
 ENT.ShakeWorldOnDeathAmplitude = 3 -- How much the screen will shake | From 1 to 16, 1 = really low 16 = really high
@@ -19,8 +19,8 @@ ENT.RadiusDamageForce_Up = false -- How much up force should it have? | false = 
 ENT.RadiusDamageDisableVisibilityCheck = false -- Should it disable the visibility check? | true = Disables the visibility check
 -----------------------------------------------------
 ENT.DecalTbl_DeathDecals = {"Scorch"}
-ENT.SoundTbl_Idle = {"vj_fire/fireball_throw.wav"}
-ENT.SoundTbl_OnCollide = {"vj_fire/fireball_explode.wav"}
+ENT.SoundTbl_Idle = {"vj_base/ambience/fireball_throw.wav"}
+ENT.SoundTbl_OnCollide = {"vj_base/ambience/fireball_explode.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomPhysicsObjectOnInitialize(phys)
 	phys:Wake()
@@ -34,8 +34,8 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	ParticleEffectAttach("fire_jet_01_flame", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	ParticleEffectAttach("vj_rpg1_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	--ParticleEffectAttach("vj_rpg2_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+	ParticleEffectAttach("vj_rocket_idle1", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+	--ParticleEffectAttach("vj_rocket_idle2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()

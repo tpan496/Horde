@@ -41,10 +41,6 @@ function ENT:Initialize()
 		phys:EnableDrag(false)
 		phys:SetBuoyancyRatio(0)
 	end
-
-	-- Misc Functions
-	//ParticleEffectAttach("smoke_burning_engine_01", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	//ParticleEffectAttach("fire_jet_01_flame", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 	
 	//self.Entity:Ignite( 120, 40 )
 	self.StartGlow1 = ents.Create( "env_sprite" )
@@ -92,6 +88,7 @@ function ENT:DeathEffects(data,phys)
 	util.Effect( "ThumperDust", effectdata )
 	util.Effect( "Explosion", effectdata )
 	util.Effect( "energy_explosion", effectdata )
+	ParticleEffect("vj_explosion_shockwave1", data.HitPos, Angle(0,0,0))
 
 	self.ExplosionLight1 = ents.Create("light_dynamic")
 	self.ExplosionLight1:SetKeyValue("brightness", "4")
