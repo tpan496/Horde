@@ -192,7 +192,7 @@ function HORDE:GetDefaultEnemiesData ()
     HORDE:CreateEnemy("Walker", "npc_vj_horde_walker",                      1.00,  1, false, 1, 1, 1, 1)
     HORDE:CreateEnemy("Sprinter", "npc_vj_horde_sprinter",                  0.85,  1, false, 1, 1, 1, 1)
     HORDE:CreateEnemy("Headcrab Zombie Torso", "npc_zombie_torso",          0.30,  1, false, 1, 1, 1, 1)
-    HORDE:CreateEnemy("Zombie Torso", "npc_vj_zss_czombietors",             0.30,  1, false, 0.5, 1, 1, 1)
+    HORDE:CreateEnemy("Zombie Torso", "npc_vj_zss_crabless_torso",             0.30,  1, false, 0.5, 1, 1, 1)
     HORDE:CreateEnemy("Exploder", "npc_vj_horde_exploder",                  0.25,  1, true, 1, 1, 1.25, 1)
 
     HORDE:CreateEnemy("Walker", "npc_vj_horde_walker",                      1.00,  2, false, 1, 1, 1, 1)

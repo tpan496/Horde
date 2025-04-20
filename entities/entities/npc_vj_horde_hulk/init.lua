@@ -5,7 +5,7 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/horde/hulk/hulk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = {"models/vj_zombies/hulk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 1200
 ENT.HullType = HULL_MEDIUM_TALL
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -31,14 +31,16 @@ ENT.MeleeAttackKnockBack_Up1 = 250 -- How far it will push you up | First in mat
 ENT.MeleeAttackKnockBack_Up2 = 260 -- How far it will push you up | Second in math.random
 	-- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
-ENT.SoundTbl_FootStep = {"npc/zombie/foot1.wav","npc/zombie/foot2.wav","npc/zombie/foot3.wav"}
-ENT.SoundTbl_Breath = {"npc/zombie_poison/pz_breathe_loop1.wav"}
-ENT.SoundTbl_Idle = {"npc/zombie_poison/pz_idle2.wav","npc/zombie_poison/pz_idle3.wav","npc/zombie_poison/pz_idle4.wav"}
-ENT.SoundTbl_Alert = {"npc/zombie_poison/pz_warn1.wav","npc/zombie_poison/pz_warn2.wav"}
-ENT.SoundTbl_MeleeAttack = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
-ENT.SoundTbl_MeleeAttackMiss = {"zsszombie/miss1.wav","zsszombie/miss2.wav","zsszombie/miss3.wav","zsszombie/miss4.wav"}
-ENT.SoundTbl_Pain = {"npc/zombie_poison/pz_pain1.wav","npc/zombie_poison/pz_pain2.wav","npc/zombie_poison/pz_pain3.wav"}
-ENT.SoundTbl_Death = {"npc/zombie_poison/pz_die1.wav","npc/zombie_poison/pz_die2.wav"}
+ENT.SoundTbl_FootStep = {"npc/zombie/foot1.wav", "npc/zombie/foot2.wav", "npc/zombie/foot3.wav"}
+ENT.SoundTbl_Breath = "npc/zombie_poison/pz_breathe_loop1.wav"
+ENT.SoundTbl_Idle = {"npc/zombie_poison/pz_idle2.wav", "npc/zombie_poison/pz_idle3.wav", "npc/zombie_poison/pz_idle4.wav"}
+ENT.SoundTbl_Alert = {"npc/zombie_poison/pz_alert1.wav", "npc/zombie_poison/pz_alert2.wav"}
+ENT.SoundTbl_CallForHelp = "npc/zombie_poison/pz_call1.wav"
+ENT.SoundTbl_BeforeMeleeAttack = {"npc/zombie_poison/pz_warn1.wav", "npc/zombie_poison/pz_warn2.wav"}
+ENT.SoundTbl_MeleeAttack = {"npc/zombie/claw_strike1.wav", "npc/zombie/claw_strike2.wav", "npc/zombie/claw_strike3.wav"}
+ENT.SoundTbl_MeleeAttackMiss = {"vj_zombies/slow/miss1.wav", "vj_zombies/slow/miss2.wav", "vj_zombies/slow/miss3.wav", "vj_zombies/slow/miss4.wav"}
+ENT.SoundTbl_Pain = {"npc/zombie_poison/pz_pain1.wav", "npc/zombie_poison/pz_pain2.wav", "npc/zombie_poison/pz_pain3.wav"}
+ENT.SoundTbl_Death = {"npc/zombie_poison/pz_die1.wav", "npc/zombie_poison/pz_die2.wav"}
 
 ENT.GeneralSoundPitch1 = 60
 ENT.GeneralSoundPitch2 = 65
@@ -57,6 +59,32 @@ function ENT:CustomOnInitialize()
 	self:SetMoveVelocity(Vector(0,0,0))
 
 	self:EmitSound("zsszombie/vj_bossz_call.wav", 1500, 90, 1, CHAN_STATIC)
+end
+
+function ENT:OnInput(key, activator, caller, data)
+	if key == "step" then
+		self:PlayFootstepSound()
+	elseif key == "melee" then
+		self:ExecuteMeleeAttack()
+	end
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_RUN or act == ACT_WALK then
+		if self:IsOnFire() then
+			return ACT_WALK_ON_FIRE
+		-- Run if we are half health
+		elseif act == ACT_RUN && self.Critical  then
+			return ACT_RUN
+		end
+		return ACT_WALK
+	end
+	return self.BaseClass.TranslateActivity(self, act)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnFootstepSound(moveType, sdFile)
+	util.ScreenShake(self:GetPos(), 2, 5, 0.5, 250)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
