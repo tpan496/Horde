@@ -241,103 +241,176 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	end
 end
 
-local finishAttack = {
-	[VJ_ATTACK_MELEE] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_melee_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Melee, self.NextAnyAttackTime_Melee_DoRand, self.TimeUntilMeleeAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+local attackTimers = {
+	[VJ.ATTACK_TYPE_MELEE] = function(self, skipStopAttacks)
+		if !skipStopAttacks then
+			timer.Create("attack_melee_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Melee, self.TimeUntilMeleeAttackDamage, self.AttackAnimDuration), 1, function()
 				self:StopAttacks()
-				self:DoChaseAnimation()
+				self:MaintainAlertBehavior()
 			end)
 		end
-		timer.Create("timer_melee_finished_abletomelee"..self:EntIndex(), self:DecideAttackTimer(self.NextMeleeAttackTime, self.NextMeleeAttackTime_DoRand), 1, function()
+		timer.Create("attack_melee_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextMeleeAttackTime), 1, function()
 			self.IsAbleToMeleeAttack = true
 		end)
 	end,
-	[VJ_ATTACK_RANGE] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_range_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Range, self.NextAnyAttackTime_Range_DoRand, self.TimeUntilRangeAttackProjectileRelease, self.CurrentAttackAnimationDuration), 1, function()
+	[VJ.ATTACK_TYPE_RANGE] = function(self, skipStopAttacks)
+		if !skipStopAttacks then
+			timer.Create("attack_range_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Range, self.TimeUntilRangeAttackProjectileRelease, self.AttackAnimDuration), 1, function()
 				self:StopAttacks()
-				self:DoChaseAnimation()
+				self:MaintainAlertBehavior()
 			end)
 		end
-		timer.Create("timer_range_finished_abletorange"..self:EntIndex(), self:DecideAttackTimer(self.NextRangeAttackTime, self.NextRangeAttackTime_DoRand), 1, function()
+		timer.Create("attack_range_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextRangeAttackTime), 1, function()
 			self.IsAbleToRangeAttack = true
 		end)
 	end,
-	[VJ_ATTACK_LEAP] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_leap_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Leap, self.NextAnyAttackTime_Leap_DoRand, self.TimeUntilLeapAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+	[VJ.ATTACK_TYPE_LEAP] = function(self, skipStopAttacks)
+		if !skipStopAttacks then
+			timer.Create("attack_leap_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Leap, self.TimeUntilLeapAttackDamage, self.AttackAnimDuration), 1, function()
 				self:StopAttacks()
-				self:DoChaseAnimation()
+				self:MaintainAlertBehavior()
 			end)
 		end
-		timer.Create("timer_leap_finished_abletoleap"..self:EntIndex(), self:DecideAttackTimer(self.NextLeapAttackTime, self.NextLeapAttackTime_DoRand), 1, function()
+		timer.Create("attack_leap_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextLeapAttackTime), 1, function()
 			self.IsAbleToLeapAttack = true
 		end)
 	end
 }
 
-
-function ENT:RangeAttackCode()
-	if self.Dead == true or self.vACT_StopAttacks == true or self.Flinching == true or self.MeleeAttacking == true then return end
-	if IsValid(self:GetEnemy()) then
-		self.RangeAttacking = true
-		self:PlaySoundSystem("RangeAttack")
-		if self.RangeAttackAnimationStopMovement == true then self:StopMoving() end
-		if self.RangeAttackAnimationFaceEnemy == true then self:FaceCertainEntity(self:GetEnemy(), true) end
-		self:CustomRangeAttackCode()
-		-- Default projectile code
-		local projectile = ents.Create(self.RangeAttackEntityToSpawn)
-		projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
-		projectile:SetAngles((self:GetEnemy():GetPos() - projectile:GetPos()):Angle())
-		projectile:SetOwner(self)
-		projectile:SetPhysicsAttacker(self)
-		projectile:Spawn()
-		projectile:Activate()
-		local phys = projectile:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:Wake()
-			local vel = (self:GetEnemy():GetPos() - projectile:GetPos())
-            if self.RangeAttackEntityToSpawn == "obj_vj_horde_homing_lightning" then
-                vel:Normalize()
-                vel = vel * 200
-				if self.Critical then
-					timer.Simple(0.2, function ()
-						if !IsValid(self) then return end
-						local projectile2 = ents.Create("obj_vj_horde_homing_lightning")
-						projectile2:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
-						projectile2:SetAngles((self:GetEnemy():GetPos() - projectile2:GetPos()):Angle())
-						projectile2:SetOwner(self)
-						projectile2:SetPhysicsAttacker(self)
-						projectile2:Spawn()
-						projectile2:Activate()
-						local phys2 = projectile2:GetPhysicsObject()
-						if IsValid(phys2) then
-							phys2:Wake()
-							local vel2 = (self:GetEnemy():GetPos() - projectile2:GetPos())
-							vel2:Normalize()
-							vel2 = vel2 * 200
-							phys:SetVelocity(vel2)
+function ENT:ExecuteRangeAttack()
+	local selfData = self:GetTable()
+	if selfData.Dead or selfData.PauseAttacks or selfData.Flinching or selfData.AttackType == VJ.ATTACK_TYPE_MELEE then return end
+	local ene = self:GetEnemy()
+	local eneValid = IsValid(ene)
+	if eneValid then
+		selfData.AttackType = VJ.ATTACK_TYPE_RANGE
+		//self:PointAtEntity(ene)
+		-- Create projectile
+		if !self:OnRangeAttackExecute("Init", ene) then
+			local projectileClass = selfData.RangeAttackEntityToSpawn
+			if projectileClass then
+				local projectile = ents.Create(self.RangeAttackEntityToSpawn)
+				local target_pos = self:GetEnemy():GetPos()
+				projectile:SetPos(self:GetAttachment(1).Pos)
+				projectile:SetAngles((target_pos - projectile:GetPos()):Angle())
+				projectile:SetOwner(self)
+				projectile:SetPhysicsAttacker(self)
+				projectile:Spawn()
+				projectile:Activate()
+				//constraint.NoCollide(self, projectile, 0, 0)
+				local phys = projectile:GetPhysicsObject()
+				if IsValid(phys) then
+					phys:Wake()
+					--local vel = self:RangeAttackProjVel(projectile)
+					local vel = (self:GetEnemy():GetPos() - projectile:GetPos())
+					if self.RangeAttackEntityToSpawn == "obj_vj_horde_homing_lightning" then
+						vel:Normalize()
+						vel = vel * 200
+						if self.Critical then
+							timer.Simple(0.2, function ()
+								if !IsValid(self) then return end
+								local projectile2 = ents.Create("obj_vj_horde_homing_lightning")
+								projectile2:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
+								projectile2:SetAngles((self:GetEnemy():GetPos() - projectile2:GetPos()):Angle())
+								projectile2:SetOwner(self)
+								projectile2:SetPhysicsAttacker(self)
+								projectile2:Spawn()
+								projectile2:Activate()
+								local phys2 = projectile2:GetPhysicsObject()
+								if IsValid(phys2) then
+									phys2:Wake()
+									local vel2 = (self:GetEnemy():GetPos() - projectile2:GetPos())
+									vel2:Normalize()
+									vel2 = vel2 * 200
+									phys:SetVelocity(vel2)
+								end
+								self:CustomRangeAttackCode_AfterProjectileSpawn(projectile2)
+							end)
 						end
-						self:CustomRangeAttackCode_AfterProjectileSpawn(projectile2)
-					end)
+					end
+					phys:SetVelocity(vel)
+					projectile:SetAngles(vel:GetNormal():Angle())
+				else
+					local vel = self:RangeAttackProjVel(projectile)
+					projectile:SetVelocity(vel)
+					projectile:SetAngles(vel:GetNormal():Angle())
 				end
-            end
-			phys:SetVelocity(vel)
-			--projectile:SetAngles(vel:GetNormal():Angle())
+				self:OnRangeAttackExecute("PostSpawn", ene, projectile)
+			end
 		end
-		if self.Critical then
-			projectile.OwnerCritical = true
-		end
-		self:CustomRangeAttackCode_AfterProjectileSpawn(projectile)
 	end
-	self.AlreadyDoneRangeAttackFirstProjectile = true
-	if self.AttackStatus < VJ_ATTACK_STATUS_EXECUTED then
-		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED
-		if self.TimeUntilRangeAttackProjectileRelease != false then
-			finishAttack[VJ_ATTACK_RANGE](self)
+	if selfData.AttackState < VJ.ATTACK_STATE_EXECUTED then
+		if eneValid then -- Play range attack only once, otherwise it will spam it for every projectile!
+			self:PlaySoundSystem("RangeAttack")
+		end
+		selfData.AttackState = VJ.ATTACK_STATE_EXECUTED
+		if selfData.TimeUntilRangeAttackProjectileRelease then
+			attackTimers[VJ.ATTACK_TYPE_RANGE](self)
 		end
 	end
 end
+
+
+-- function ENT:RangeAttackCode()
+-- 	if self.Dead == true or self.vACT_StopAttacks == true or self.Flinching == true or self.MeleeAttacking == true then return end
+-- 	if IsValid(self:GetEnemy()) then
+-- 		self.RangeAttacking = true
+-- 		self:PlaySoundSystem("RangeAttack")
+-- 		if self.RangeAttackAnimationStopMovement == true then self:StopMoving() end
+-- 		if self.RangeAttackAnimationFaceEnemy == true then self:FaceCertainEntity(self:GetEnemy(), true) end
+-- 		self:CustomRangeAttackCode()
+-- 		-- Default projectile code
+-- 		local projectile = ents.Create(self.RangeAttackEntityToSpawn)
+-- 		projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
+-- 		projectile:SetAngles((self:GetEnemy():GetPos() - projectile:GetPos()):Angle())
+-- 		projectile:SetOwner(self)
+-- 		projectile:SetPhysicsAttacker(self)
+-- 		projectile:Spawn()
+-- 		projectile:Activate()
+-- 		local phys = projectile:GetPhysicsObject()
+-- 		if IsValid(phys) then
+-- 			phys:Wake()
+-- 			local vel = (self:GetEnemy():GetPos() - projectile:GetPos())
+--             if self.RangeAttackEntityToSpawn == "obj_vj_horde_homing_lightning" then
+--                 vel:Normalize()
+--                 vel = vel * 200
+-- 				if self.Critical then
+-- 					timer.Simple(0.2, function ()
+-- 						if !IsValid(self) then return end
+-- 						local projectile2 = ents.Create("obj_vj_horde_homing_lightning")
+-- 						projectile2:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
+-- 						projectile2:SetAngles((self:GetEnemy():GetPos() - projectile2:GetPos()):Angle())
+-- 						projectile2:SetOwner(self)
+-- 						projectile2:SetPhysicsAttacker(self)
+-- 						projectile2:Spawn()
+-- 						projectile2:Activate()
+-- 						local phys2 = projectile2:GetPhysicsObject()
+-- 						if IsValid(phys2) then
+-- 							phys2:Wake()
+-- 							local vel2 = (self:GetEnemy():GetPos() - projectile2:GetPos())
+-- 							vel2:Normalize()
+-- 							vel2 = vel2 * 200
+-- 							phys:SetVelocity(vel2)
+-- 						end
+-- 						self:CustomRangeAttackCode_AfterProjectileSpawn(projectile2)
+-- 					end)
+-- 				end
+--             end
+-- 			phys:SetVelocity(vel)
+-- 			--projectile:SetAngles(vel:GetNormal():Angle())
+-- 		end
+-- 		if self.Critical then
+-- 			projectile.OwnerCritical = true
+-- 		end
+-- 		self:CustomRangeAttackCode_AfterProjectileSpawn(projectile)
+-- 	end
+-- 	self.AlreadyDoneRangeAttackFirstProjectile = true
+-- 	if self.AttackStatus < VJ_ATTACK_STATUS_EXECUTED then
+-- 		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED
+-- 		if self.TimeUntilRangeAttackProjectileRelease != false then
+-- 			finishAttack[VJ_ATTACK_RANGE](self)
+-- 		end
+-- 	end
+-- end
 
 VJ.AddNPC("Xen Psychic Unit","npc_vj_horde_xen_psychic_unit", "Zombies")

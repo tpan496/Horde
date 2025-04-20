@@ -40,7 +40,7 @@ function ENT:Initialize()
     timer.Simple(5, function ()
         if IsValid(self) then self:Remove() end
     end)
-    ParticleEffectAttach("vj_rpg1_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+    ParticleEffectAttach("vj_rocket_idle1", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 
 function ENT:Think()

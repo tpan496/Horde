@@ -9,7 +9,7 @@ ENT.Spawnable 			= false
 
 AddCSLuaFile()
 
-ENT.Model = "models/spitball_medium.mdl"
+ENT.Model = "models/vj_base/projectiles/spit_acid_medium.mdl"
 ENT.Ticks = 0
 ENT.FuseTime = 10
 ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE

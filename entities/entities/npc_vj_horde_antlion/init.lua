@@ -234,37 +234,37 @@ end
 function ENT:Horde_IsStage(x)
 	return self.Evolve_Stage >= x
 end
-local finishAttack = {
-	[VJ_ATTACK_MELEE] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_melee_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Melee, self.NextAnyAttackTime_Melee_DoRand, self.TimeUntilMeleeAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+local attackTimers = {
+	[VJ.ATTACK_TYPE_MELEE] = function(self, skipStopAttacks)
+		if !skipStopAttacks then
+			timer.Create("attack_melee_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Melee, self.TimeUntilMeleeAttackDamage, self.AttackAnimDuration), 1, function()
 				self:StopAttacks()
-				self:DoChaseAnimation()
+				self:MaintainAlertBehavior()
 			end)
 		end
-		timer.Create("timer_melee_finished_abletomelee"..self:EntIndex(), self:DecideAttackTimer(self.NextMeleeAttackTime, self.NextMeleeAttackTime_DoRand), 1, function()
+		timer.Create("attack_melee_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextMeleeAttackTime), 1, function()
 			self.IsAbleToMeleeAttack = true
 		end)
 	end,
-	[VJ_ATTACK_RANGE] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_range_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Range, self.NextAnyAttackTime_Range_DoRand, self.TimeUntilRangeAttackProjectileRelease, self.CurrentAttackAnimationDuration), 1, function()
+	[VJ.ATTACK_TYPE_RANGE] = function(self, skipStopAttacks)
+		if !skipStopAttacks then
+			timer.Create("attack_range_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Range, self.TimeUntilRangeAttackProjectileRelease, self.AttackAnimDuration), 1, function()
 				self:StopAttacks()
-				self:DoChaseAnimation()
+				self:MaintainAlertBehavior()
 			end)
 		end
-		timer.Create("timer_range_finished_abletorange"..self:EntIndex(), self:DecideAttackTimer(self.NextRangeAttackTime, self.NextRangeAttackTime_DoRand), 1, function()
+		timer.Create("attack_range_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextRangeAttackTime), 1, function()
 			self.IsAbleToRangeAttack = true
 		end)
 	end,
-	[VJ_ATTACK_LEAP] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_leap_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Leap, self.NextAnyAttackTime_Leap_DoRand, self.TimeUntilLeapAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+	[VJ.ATTACK_TYPE_LEAP] = function(self, skipStopAttacks)
+		if !skipStopAttacks then
+			timer.Create("attack_leap_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Leap, self.TimeUntilLeapAttackDamage, self.AttackAnimDuration), 1, function()
 				self:StopAttacks()
-				self:DoChaseAnimation()
+				self:MaintainAlertBehavior()
 			end)
 		end
-		timer.Create("timer_leap_finished_abletoleap"..self:EntIndex(), self:DecideAttackTimer(self.NextLeapAttackTime, self.NextLeapAttackTime_DoRand), 1, function()
+		timer.Create("attack_leap_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextLeapAttackTime), 1, function()
 			self.IsAbleToLeapAttack = true
 		end)
 	end
@@ -274,7 +274,7 @@ function ENT:OnTakeDamage(dmginfo)
 	--self:SetPlaybackRate(1)
 	timer.Simple(2, function ()
 		if self:IsValid() then
-			finishAttack[VJ_ATTACK_MELEE](self)
+			attackTimers[VJ.ATTACK_TYPE_MELEE](self)
 		end
 	end)
 	local hitgroup = self:GetLastDamageHitGroup()
@@ -312,7 +312,7 @@ function ENT:Follow(ent, stopIfFollowing)
 	if !IsValid(ent) or self.Dead or GetConVar("ai_disabled"):GetInt() == 1 or self == ent then return false end
 	local isPly = ent:IsPlayer()
 	local isLiving = isPly or ent:IsNPC() -- Is it a living entity?
-	if VJ_IsAlive(ent) && ((isPly && !VJ_CVAR_IGNOREPLAYERS) or (!isPly)) then
+	if ent:Health() > 0 && ((isPly && !VJ_CVAR_IGNOREPLAYERS) or (!isPly)) then
 		local followData = self.FollowData
 		if !self.IsFollowing then
 			if isPly then
@@ -371,7 +371,7 @@ end
 function ENT:CustomOnMeleeAttack_BeforeChecks()
 	timer.Simple(2, function ()
 		if self:IsValid() then
-			finishAttack[VJ_ATTACK_MELEE](self)
+			attackTimers[VJ.ATTACK_TYPE_MELEE](self)
 		end
 	end)
 end
@@ -413,16 +413,27 @@ end
 
 function ENT:RangeAttackLocation(pos)
 	if self.Evolve_Stage == 4 then return end
-	local seed = CurTime(); self.CurAttackSeed = seed
-	self.CurrentAttackAnimation = VJ_PICK(self.AnimTbl_RangeAttack)
-	self.CurrentAttackAnimationDuration = self:DecideAnimationLength(self.CurrentAttackAnimation, false, self.RangeAttackAnimationDecreaseLengthAmount)
-	self.PlayingAttackAnimation = true
-	timer.Create("timer_act_playingattack"..self:EntIndex(), self.CurrentAttackAnimationDuration, 1, function() self.PlayingAttackAnimation = false end)
-	self:VJ_ACT_PLAYACTIVITY(self.CurrentAttackAnimation, false, 0, false, self.RangeAttackAnimationDelay, {SequenceDuration=self.CurrentAttackAnimationDuration})
-	if self.TimeUntilRangeAttackProjectileRelease == false then
-		finishAttack[VJ_ATTACK_RANGE](self)
+	local selfData = self:GetTable()
+	selfData.AttackType = VJ.ATTACK_TYPE_RANGE
+	selfData.AttackState = VJ.ATTACK_STATE_STARTED
+	self:OnRangeAttack("Init", ene)
+	self:PlaySoundSystem("BeforeRangeAttack")
+	local seed = CurTime()
+	selfData.AttackSeed = seed
+	local anim, animDur, animType = self:PlayAnim(selfData.AnimTbl_RangeAttack, false, 0, false, selfData.RangeAttackAnimationDelay)
+	timer.Create("attack_range_start" .. self:EntIndex(), selfData.TimeUntilRangeAttackProjectileRelease / selfData.AnimPlaybackRate, selfData.RangeAttackReps, function() if selfData.AttackSeed == seed then self:ExecuteRangeAttack() end end)
+	if anim != ACT_INVALID then
+		selfData.AttackAnim = anim
+		selfData.AttackAnimDuration = animDur - (selfData.RangeAttackAnimationDecreaseLengthAmount / selfData.AnimPlaybackRate)
+		if animType != ANIM_TYPE_GESTURE then -- Allow things like chasing to continue for gestures
+			selfData.AttackAnimTime = CurTime() + selfData.AttackAnimDuration
+		end
+	end
+	--self:VJ_ACT_PLAYACTIVITY(self.CurrentAttackAnimation, false, 0, false, self.RangeAttackAnimationDelay, {SequenceDuration=self.CurrentAttackAnimationDuration})
+	if !selfData.TimeUntilRangeAttackProjectileRelease then
+		attackTimers[VJ_ATTACK_RANGE](self)
 	else -- If it's not event based...
-		timer.Create("timer_range_start"..self:EntIndex(), self.TimeUntilRangeAttackProjectileRelease / self:GetPlaybackRate(), self.RangeAttackReps, function() if self.CurAttackSeed == seed then self:RangeAttackP(pos) end end)
+		timer.Create("timer_range_start"..self:EntIndex(), selfData.TimeUntilRangeAttackProjectileRelease / self:GetPlaybackRate(), selfData.RangeAttackReps, function() self:RangeAttackP(pos) end)
 	end
 end
 
@@ -432,32 +443,48 @@ function ENT:CustomRangeAttackCode_BeforeProjectileSpawn(projectile)
 end
 
 function ENT:RangeAttackP(pos)
-	if self.Dead == true or self.vACT_StopAttacks == true or self.Flinching == true or self.MeleeAttacking == true then return end
-	self.RangeAttacking = true
-	self:PlaySoundSystem("RangeAttack")
-	if self.RangeAttackAnimationStopMovement == true then self:StopMoving() end
-	if self.RangeAttackAnimationFaceEnemy == true then self:FaceCertainEntity(self:GetEnemy(), true) end
-	-- Default projectile code
-	local projectile = ents.Create(self.RangeAttackEntityToSpawn)
-	local target_pos = pos + Vector(0, 10, 0)
-	self:CustomRangeAttackCode_BeforeProjectileSpawn(projectile)
-	projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
-	projectile:SetAngles((target_pos - projectile:GetPos()):Angle())
-	projectile:SetOwner(self)
-	projectile:SetPhysicsAttacker(self)
-	projectile:Spawn()
-	projectile:Activate()
-	local phys = projectile:GetPhysicsObject()
-	if IsValid(phys) then
-		local vel = (pos - self:LocalToWorld(Vector(0, 0, 0)))*2 + self:GetUp()*1
-		phys:SetVelocity(vel)
-		--projectile:SetAngles(vel:GetNormal():Angle())
+	print("force range")
+	local selfData = self:GetTable()
+	if selfData.Dead or selfData.PauseAttacks or selfData.Flinching or selfData.AttackType == VJ.ATTACK_TYPE_MELEE then return end
+	local ene = self:GetEnemy()
+	local eneValid = IsValid(ene)
+	--if eneValid then
+	selfData.AttackType = VJ.ATTACK_TYPE_RANGE
+	-- Create projectile
+	if !self:OnRangeAttackExecute("Init", ene) then
+		local projectile = ents.Create(self.RangeAttackEntityToSpawn)
+		local target_pos = pos + Vector(0, 10, 0)
+		projectile.Owner = self
+		projectile.BaseDamage = self.RangeAttackDamage
+		projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up)
+		projectile:SetAngles((target_pos - projectile:GetPos()):Angle())
+		projectile:SetOwner(self)
+		projectile:SetPhysicsAttacker(self)
+		projectile:Spawn()
+		projectile:Activate()
+		//constraint.NoCollide(self, projectile, 0, 0)
+		local phys = projectile:GetPhysicsObject()
+		if IsValid(phys) then
+			phys:Wake()
+			--local vel = self:RangeAttackProjVel(projectile)
+			local vel = (target_pos - self:GetAttachment(1).Pos) * 1.5
+			phys:SetVelocity(vel)
+			projectile:SetAngles(vel:GetNormal():Angle())
+		else
+			local vel = self:RangeAttackProjVel(projectile)
+			projectile:SetVelocity(vel)
+			projectile:SetAngles(vel:GetNormal():Angle())
+		end
+		self:OnRangeAttackExecute("PostSpawn", ene, projectile)
 	end
-	self.AlreadyDoneRangeAttackFirstProjectile = true
-	if self.AttackStatus < VJ_ATTACK_STATUS_EXECUTED then
-		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED
-		if self.TimeUntilRangeAttackProjectileRelease != false then
-			finishAttack[VJ_ATTACK_RANGE](self)
+	--end
+	if selfData.AttackState < VJ.ATTACK_STATE_EXECUTED then
+		if eneValid then -- Play range attack only once, otherwise it will spam it for every projectile!
+			self:PlaySoundSystem("RangeAttack")
+		end
+		selfData.AttackState = VJ.ATTACK_STATE_EXECUTED
+		if selfData.TimeUntilRangeAttackProjectileRelease then
+			attackTimers[VJ.ATTACK_TYPE_RANGE](self)
 		end
 	end
 end

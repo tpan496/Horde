@@ -284,98 +284,102 @@ function ENT:DoEntityRelationshipCheck()
 	if eneSeen == true then return true else return false end
 end
 
-local finishAttack = {
-	[VJ_ATTACK_MELEE] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_melee_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Melee, self.NextAnyAttackTime_Melee_DoRand, self.TimeUntilMeleeAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+local attackTimers = {
+	[VJ.ATTACK_TYPE_MELEE] = function(self, skipStopAttacks)
+		if !skipStopAttacks then
+			timer.Create("attack_melee_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Melee, self.TimeUntilMeleeAttackDamage, self.AttackAnimDuration), 1, function()
 				self:StopAttacks()
-				self:DoChaseAnimation()
+				self:MaintainAlertBehavior()
 			end)
 		end
-		timer.Create("timer_melee_finished_abletomelee"..self:EntIndex(), self:DecideAttackTimer(self.NextMeleeAttackTime, self.NextMeleeAttackTime_DoRand), 1, function()
+		timer.Create("attack_melee_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextMeleeAttackTime), 1, function()
 			self.IsAbleToMeleeAttack = true
 		end)
 	end,
-	[VJ_ATTACK_RANGE] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_range_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Range, self.NextAnyAttackTime_Range_DoRand, self.TimeUntilRangeAttackProjectileRelease, self.CurrentAttackAnimationDuration), 1, function()
+	[VJ.ATTACK_TYPE_RANGE] = function(self, skipStopAttacks)
+		if !skipStopAttacks then
+			timer.Create("attack_range_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Range, self.TimeUntilRangeAttackProjectileRelease, self.AttackAnimDuration), 1, function()
 				self:StopAttacks()
-				self:DoChaseAnimation()
+				self:MaintainAlertBehavior()
 			end)
 		end
-		timer.Create("timer_range_finished_abletorange"..self:EntIndex(), self:DecideAttackTimer(self.NextRangeAttackTime, self.NextRangeAttackTime_DoRand), 1, function()
+		timer.Create("attack_range_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextRangeAttackTime), 1, function()
 			self.IsAbleToRangeAttack = true
 		end)
 	end,
-	[VJ_ATTACK_LEAP] = function(self, skipStopAttacks)
-		if skipStopAttacks != true then
-			timer.Create("timer_leap_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Leap, self.NextAnyAttackTime_Leap_DoRand, self.TimeUntilLeapAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+	[VJ.ATTACK_TYPE_LEAP] = function(self, skipStopAttacks)
+		if !skipStopAttacks then
+			timer.Create("attack_leap_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Leap, self.TimeUntilLeapAttackDamage, self.AttackAnimDuration), 1, function()
 				self:StopAttacks()
-				self:DoChaseAnimation()
+				self:MaintainAlertBehavior()
 			end)
 		end
-		timer.Create("timer_leap_finished_abletoleap"..self:EntIndex(), self:DecideAttackTimer(self.NextLeapAttackTime, self.NextLeapAttackTime_DoRand), 1, function()
+		timer.Create("attack_leap_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextLeapAttackTime), 1, function()
 			self.IsAbleToLeapAttack = true
 		end)
 	end
 }
 
-function ENT:MeleeAttackCode(isPropAttack, attackDist, customEnt)
-	if self.Dead == true or self.vACT_StopAttacks == true or self.Flinching == true or (self.StopMeleeAttackAfterFirstHit == true && self.AlreadyDoneMeleeAttackFirstHit == true) then return end
-	isPropAttack = isPropAttack or self.MeleeAttack_DoingPropAttack -- Is this a prop attack?
-	attackDist = attackDist or self.MeleeAttackDamageDistance -- How far should the attack go?
-	local curEnemy = customEnt or self:GetEnemy()
-	if self.MeleeAttackAnimationFaceEnemy == true && isPropAttack == false then self:FaceCertainEntity(curEnemy, true) end
-	self:CustomOnMeleeAttack_BeforeChecks()
-	if self.DisableDefaultMeleeAttackCode == true then return end
-	local myPos = self:GetPos()
+function ENT:ExecuteMeleeAttack(isPropAttack)
+	local selfData = self:GetTable()
+	if selfData.Dead or selfData.PauseAttacks or selfData.Flinching or (selfData.MeleeAttackStopOnHit && selfData.AttackState == VJ.ATTACK_STATE_EXECUTED_HIT) then return end
+	isPropAttack = isPropAttack or selfData.MeleeAttack_IsPropAttack -- Is this a prop attack?
+	local skip = self:OnMeleeAttackExecute("Init")
 	local hitRegistered = false
-	for _,v in pairs(ents.FindInSphere(self:SetMeleeAttackDamagePosition(), attackDist)) do
-		if v != self && v:GetClass() != self:GetClass() && (((v:IsNPC() or (v:IsPlayer() && v:Alive() && GetConVar("ai_ignoreplayers"):GetInt() == 0)) && self:Disposition(v) != D_LI)) && self:GetSightDirection():Dot((Vector(v:GetPos().x, v:GetPos().y, 0) - Vector(myPos.x, myPos.y, 0)):GetNormalized()) > math.cos(math.rad(self.MeleeAttackDamageAngleRadius)) then
-			if isPropAttack == true && (v:IsPlayer() or v:IsNPC()) && self:VJ_GetNearestPointToEntityDistance(v) > self.MeleeAttackDistance then continue end //if (self:GetPos():Distance(v:GetPos()) <= self:VJ_GetNearestPointToEntityDistance(v) && self:VJ_GetNearestPointToEntityDistance(v) <= self.MeleeAttackDistance) == false then
-			if self:CustomOnMeleeAttack_AfterChecks(v, vProp) == true then continue end
-			-- Knockback
-			if self.HasMeleeAttackKnockBack == true && v.MovementType != VJ_MOVETYPE_STATIONARY && (v.VJ_IsHugeMonster != true or v.IsVJBaseSNPC_Tank == true) then
-				v:SetGroundEntity(NULL)
-				v:SetVelocity(self:GetForward()*math.random(self.MeleeAttackKnockBack_Forward1, self.MeleeAttackKnockBack_Forward2) + self:GetUp()*math.random(self.MeleeAttackKnockBack_Up1, self.MeleeAttackKnockBack_Up2))
-			end
+	local myPos = self:GetPos()
+	local myClass = self:GetClass()
+	for _, ent in ipairs(ents.FindInSphere(self:MeleeAttackTraceOrigin(), selfData.MeleeAttackDamageDistance)) do
+		if ent == self or ent:GetClass() == myClass then continue end
+		if ent:IsPlayer() && (ent.VJ_IsControllingNPC or !ent:Alive() or VJ_CVAR_IGNOREPLAYERS) then continue end
+		if ((ent.VJ_ID_Living && self:Disposition(ent) != D_LI) or ent.VJ_ID_Attackable or ent.VJ_ID_Destructible) && self:GetHeadDirection():Dot((Vector(ent:GetPos().x, ent:GetPos().y, 0) - Vector(myPos.x, myPos.y, 0)):GetNormalized()) > math.cos(math.rad(selfData.MeleeAttackDamageAngleRadius)) then
+			if isPropAttack && ent.VJ_ID_Living && VJ.GetNearestDistance(self, ent, true) > selfData.MeleeAttackDistance then continue end -- Since this attack initiated as prop attack, its melee distance may be off!
+			local applyDmg = true
+			local isProp = ent.VJ_ID_Attackable
+			if self:OnMeleeAttackExecute("PreDamage", ent, isProp) == true then continue end
+			local dmgAmount = self:ScaleByDifficulty(selfData.MeleeAttackDamage)
+			-- Handle prop interaction
+			local propBehavior = selfData.PropInteraction
 			-- Damage
+			print("dmg")
             local applyDmg = DamageInfo()
             applyDmg:SetDamage(self.MeleeAttackDamage)
             applyDmg:SetDamageType(self.MeleeAttackDamageType)
-            if v:IsNPC() or v:IsPlayer() then applyDmg:SetDamageForce(self:GetForward()*((applyDmg:GetDamage()+100)*70)) end
+            if ent:IsNPC() or ent:IsPlayer() then applyDmg:SetDamageForce(self:GetForward()*((applyDmg:GetDamage()+100)*70)) end
             applyDmg:SetInflictor(self)
             applyDmg:SetAttacker(self)
-			applyDmg:SetDamagePosition(v:GetPos())
+			applyDmg:SetDamagePosition(ent:GetPos())
             if self:GetNWEntity("HordeOwner"):IsValid() then
                 applyDmg:SetAttacker(self:GetNWEntity("HordeOwner"))
             end
-            v:TakeDamageInfo(applyDmg)
-			v:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, self.MeleeAttackDamage / 2, self:GetNWEntity("HordeOwner"))
-			if v:IsPlayer() then
+            ent:TakeDamageInfo(applyDmg)
+			ent:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, self.MeleeAttackDamage / 2, self:GetNWEntity("HordeOwner"))
+			if ent:IsPlayer() then
+				ent:ViewPunch(Angle(math.random(-1, 1) * dmgAmount, math.random(-1, 1) * dmgAmount, math.random(-1, 1) * dmgAmount))
 				-- Apply DSP
-				if self.MeleeAttackDSPSoundType != false && ((self.MeleeAttackDSPSoundUseDamage == false) or (self.MeleeAttackDSPSoundUseDamage == true && self.MeleeAttackDamage >= self.MeleeAttackDSPSoundUseDamageAmount && GetConVar("vj_npc_nomeleedmgdsp"):GetInt() == 0)) then
-					v:SetDSP(self.MeleeAttackDSPSoundType, false)
+				if selfData.MeleeAttackDSP && ((!selfData.MeleeAttackDSPLimit) or (dmgAmount >= selfData.MeleeAttackDSPLimit)) then
+					ent:SetDSP(selfData.MeleeAttackDSP, false)
 				end
-				v:ViewPunch(Angle(math.random(-1, 1)*self.MeleeAttackDamage, math.random(-1, 1)*self.MeleeAttackDamage, math.random(-1, 1)*self.MeleeAttackDamage))
+				-- Speed modifier
+				if selfData.MeleeAttackPlayerSpeed then
+					self:DoMeleeAttackPlayerSpeed(ent, selfData.MeleeAttackPlayerSpeedWalk, selfData.MeleeAttackPlayerSpeedRun, selfData.MeleeAttackPlayerSpeedTime, {PlaySound = selfData.HasMeleeAttackPlayerSpeedSounds, SoundTable = selfData.SoundTbl_MeleeAttackPlayerSpeed, SoundLevel = selfData.MeleeAttackPlayerSpeedSoundLevel, FadeOutTime = 1})
+				end
 			end
 		end
 	end
-	if self.AttackStatus < VJ_ATTACK_STATUS_EXECUTED then
-		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED
-		if self.TimeUntilMeleeAttackDamage != false then
-			finishAttack[VJ_ATTACK_MELEE](self)
+	if selfData.AttackState < VJ.ATTACK_STATE_EXECUTED then
+		selfData.AttackState = VJ.ATTACK_STATE_EXECUTED
+		if selfData.TimeUntilMeleeAttackDamage then
+			attackTimers[VJ.ATTACK_TYPE_MELEE](self)
 		end
 	end
-	if hitRegistered == true then
-		self:PlaySoundSystem("MeleeAttack")
-		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED_HIT
-	else
-		self:CustomOnMeleeAttack_Miss()
-		-- !!!!!!!!!!!!!! DO NOT USE THESE !!!!!!!!!!!!!! [Backwards Compatibility!]
-		if self.MeleeAttackWorldShakeOnMiss then util.ScreenShake(myPos, self.MeleeAttackWorldShakeOnMissAmplitude or 16, 100, self.MeleeAttackWorldShakeOnMissDuration or 1, self.MeleeAttackWorldShakeOnMissRadius or 2000) end
-		-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		self:PlaySoundSystem("MeleeAttackMiss", {}, VJ_EmitSound)
+	if !skip then
+		if hitRegistered then
+			self:PlaySoundSystem("MeleeAttack")
+			selfData.AttackState = VJ.ATTACK_STATE_EXECUTED_HIT
+		else
+			self:OnMeleeAttackExecute("Miss")
+			self:PlaySoundSystem("MeleeAttackMiss")
+		end
 	end
 end
 

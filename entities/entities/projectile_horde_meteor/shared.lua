@@ -43,9 +43,9 @@ function ENT:CustomOnInitialize()
         if self:GetCharged() >= 2 then
             self:Ignite(999)
             if self:GetCharged() == 2 then
-                HORDE:SimpleParticleSystem("vj_rpg1_fulltrail", self:GetPos(), Angle(0,0,0), self)
+                HORDE:SimpleParticleSystem("vj_rocket_idle1", self:GetPos(), Angle(0,0,0), self)
             else
-                HORDE:SimpleParticleSystem("vj_rpg2_fulltrail", self:GetPos(), Angle(0,0,0), self)
+                HORDE:SimpleParticleSystem("vj_rocket_idle2", self:GetPos(), Angle(0,0,0), self)
             end
         end
     end)

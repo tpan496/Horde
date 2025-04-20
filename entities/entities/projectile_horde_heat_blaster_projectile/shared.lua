@@ -92,7 +92,7 @@ function ENT:Initialize()
 
     self.SpawnTime = CurTime()
 
-    --ParticleEffectAttach("vj_rpg1_fulltrail", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+    --ParticleEffectAttach("vj_rocket_idle1", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 
 function ENT:Think()

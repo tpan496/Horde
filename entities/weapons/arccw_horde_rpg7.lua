@@ -27,8 +27,8 @@ SWEP.Spawnable = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/vj_weapons/c_rpg7.mdl"
-SWEP.WorldModel = "models/vj_weapons/w_ins_rpg7.mdl"
+SWEP.ViewModel = "models/vj_base/weapons/c_rpg7.mdl"
+SWEP.WorldModel = "models/vj_base/weapons/w_rpg7.mdl"
 SWEP.WorldModelOffset = {
     pos = Vector(0, 0, -7),
     ang = Angle(0, 0, 0),
@@ -79,9 +79,9 @@ SWEP.Primary.Ammo = "RPG_Round" -- what ammo type the gun uses
 SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound = "vj_weapons/rpg/rpg_fire.wav"
-SWEP.ShootSoundSilenced = "vj_weapons/rpg/rpg_fire_far.wav"
-SWEP.DistantShootSound = "vj_weapons/rpg/rpg_fire_far.wav"
+SWEP.ShootSound = "vj_base/weapons/rpg/single.wav"
+-- SWEP.ShootSoundSilenced = "vj_weapons/rpg/rpg_fire_far.wav"
+-- SWEP.DistantShootSound = "vj_weapons/rpg/rpg_fire_far.wav"
 
 --SWEP.MuzzleEffect = "muzzleflash_pistol"
 --SWEP.ShellModel = "models/shells/shell_9mm.mdl"

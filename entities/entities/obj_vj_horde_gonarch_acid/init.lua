@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 
-ENT.Model = {"models/spitball_medium.mdl"} -- The models it should spawn with | Picks a random one from the table
+ENT.Model = {"models/vj_base/projectiles/spit_acid_medium.mdl"} -- The models it should spawn with | Picks a random one from the table
 -- ====== Shake World On Death Variables ====== --
 ENT.ShakeWorldOnDeath = true -- Should the world shake when the projectile hits something?
 ENT.ShakeWorldOnDeathAmplitude = 4 -- How much the screen will shake | From 1 to 16, 1 = really low 16 = really high

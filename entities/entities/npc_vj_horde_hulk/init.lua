@@ -67,7 +67,7 @@ function ENT:OnInput(key, activator, caller, data)
 	elseif key == "melee" then
 		self:ExecuteMeleeAttack()
 	end
-
+end
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)
