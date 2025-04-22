@@ -14,16 +14,6 @@ ENT.MaxJumpLegalDistance = VJ_Set(400, 550) -- The max distance the NPC can jump
 
 -- AI
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
-ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
-ENT.ConstantlyFaceEnemy_IfAttacking = true -- Should it face the enemy when attacking?
-ENT.ConstantlyFaceEnemy_Postures = "Standing" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
-ENT.ConstantlyFaceEnemyDistance = 2000 -- How close does it have to be until it starts to face the enemy?
-ENT.NoChaseAfterCertainRange = false -- Should the SNPC not be able to chase when it's between number x and y?
-ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance" -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance" -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_Type = "OnlyRange" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it's able to range attack
-ENT.InvestigateSoundDistance = 100 -- How far away can the SNPC hear sounds? | This number is timed by the calculated volume of the detectable sound.
-
 ENT.AttackProps = true -- Should it attack props when trying to move?
 ENT.PushProps = true -- Should it push props when trying to move?
 ENT.PropAP_MaxSize = 2 -- This is a scale number for the max size it can attack/push | x < 1  = Smaller props & x > 1  = Larger props | Default base value: 1
@@ -58,11 +48,11 @@ ENT.MeleeAttackWorldShakeOnMissAmplitude = 8
 
 -- Ranged
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
-ENT.RangeAttackEntityToSpawn = "obj_gonome_acid_cold" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_horde_gonome_acid_cold" -- The entity that is spawned when range attacking
 ENT.RangeDistance = 2000 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 80 -- How close does it have to be until it uses melee?
 ENT.NextRangeAttackTime = 5 -- How much time until it can use a range attack?
-ENT.TimeUntilRangeAttackProjectileRelease = false -- How much time until the projectile code is ran?
+ENT.TimeUntilRangeAttackProjectileRelease = 0.1
 ENT.RangeAttackPos_Up = 10 -- Up/Down spawning position for range attack
 ENT.RangeAttackPos_Forward = 50 -- Forward/Backward spawning position for range attack
 ENT.RangeAttackPos_Right = -20 -- Right/Left spawning position for range attack
@@ -91,17 +81,20 @@ ENT.SoundTbl_MeleeAttackMiss = {"zsszombie/miss1.wav","zsszombie/miss2.wav","zss
 ENT.SoundTbl_Pain = {"horde/gargantua/gar_pain1.ogg","horde/gargantua/gar_pain2.ogg","horde/gargantua/gar_pain3.ogg"}
 ENT.SoundTbl_Death = {"horde/gargantua/gar_die1.ogg"}
 
-ENT.Garg_AttackType = -1
-ENT.Garg_AbleToFlame = false
-ENT.Garg_NextAbleToFlameT = 0
-ENT.Garg_NextStompAttackT = 0
+ENT.Garg_CanFlame = false
+ENT.Garg_FlameLevel = 0 -- 0 = Not started | 1 = Preparing | 2 = Flame active
+ENT.Garg_NextFlameT = 0
 ENT.Garg_MeleeLargeKnockback = false
 ENT.NextFlashTime = CurTime()
 ENT.NextFlashCooldown = 30
+ENT.Garg_NextStompAttackT = CurTime()
+
+function ENT:PreInit()
+	self.TimersToRemove[#self.TimersToRemove + 1] = "garg_flame_reset"
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
-    //self:SetCollisionBounds(Vector(20, 20, 85), Vector(-20, -20, 0))
-    //self:SetSkin(1)
+function ENT:Init()
     self:SetCollisionBounds(Vector(70,70,210), Vector(-70,-70,0))
     self:SetModelScale(0.5)
     self:AddRelationship("npc_headcrab_poison D_LI 99")
@@ -186,42 +179,84 @@ function ENT:FlashBang()
 end
 
 function ENT:Garg_ResetFlame()
-	self.Garg_AbleToFlame = false
-	self.Garg_AttackType = -1
-	self.AnimTbl_IdleStand = {ACT_IDLE}
-	self.NextIdleStandTime = 0
+	if self.Garg_CanFlame then
+		self:ResetTurnTarget()
+	end
+	self.Garg_CanFlame = false
+	self.Garg_FlameLevel = 0
 	self.DisableChasingEnemy = false
-	VJ_STOPSOUND(self.Garg_FlameSd)
+	VJ.STOPSOUND(self.Garg_FlameSd)
 	self:StopParticles()
 end
 
-function ENT:MultipleMeleeAttacks()
-	local r = math.random(1, 3)
-	if r == 1 then
-		self.MeleeAttackDamage = 30
-		self.TimeUntilMeleeAttackDamage = 0.8
-		self.AnimTbl_MeleeAttack = {"vjseq_smash"}
-		self.HasMeleeAttackKnockBack = false
-		self.Garg_MeleeLargeKnockback = false
-	elseif r == 2 then
-		self.MeleeAttackDamage = 30
-		self.TimeUntilMeleeAttackDamage = 0.8
-		self.AnimTbl_MeleeAttack = {"vjseq_attack"}
-		self.HasMeleeAttackKnockBack = true
-		self.Garg_MeleeLargeKnockback = false
-	elseif r == 3 then
-		self.MeleeAttackDamage = 25
-		self.TimeUntilMeleeAttackDamage = 0.4
-		self.AnimTbl_MeleeAttack = {"vjseq_kickcar"}
-		self.HasMeleeAttackKnockBack = true
-		self.Garg_MeleeLargeKnockback = true
+function ENT:OnMeleeAttack(status, enemy)
+	if status == "Init" then
+		local randMelee = math.random(1, 3)
+		if randMelee == 1 then
+			self.AnimTbl_MeleeAttack = "vjseq_smash"
+			self.HasMeleeAttackKnockBack = false
+			self.Garg_MeleeLargeKnockback = false
+		elseif randMelee == 2 then
+			self.AnimTbl_MeleeAttack = "vjseq_attack"
+			self.HasMeleeAttackKnockBack = true
+			self.Garg_MeleeLargeKnockback = false
+		elseif randMelee == 3 then
+			self.AnimTbl_MeleeAttack = "vjseq_kickcar"
+			self.HasMeleeAttackKnockBack = true
+			self.Garg_MeleeLargeKnockback = true
+		end
 	end
 end
 
-function ENT:CustomOnThink()
-	if self.Garg_AbleToFlame == false or self.AttackType != VJ_ATTACK_RANGE or !IsValid(self:GetEnemy()) then
-		self:Garg_ResetFlame()
+function ENT:RangeAttackProjPos(projectile)
+	return self:GetPos() + self:GetUp() * 20 + self:GetForward() * 50 + self:GetRight() * -20
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjVel(projectile)
+	return VJ.CalculateTrajectory(self, self:GetEnemy(), "Line", projectile:GetPos(), 1, 200)
+end
+
+function ENT:OnThinkActive()
+	if self.Garg_CanFlame && self.Garg_NextFlameT < CurTime() && self.AttackType == VJ.ATTACK_TYPE_NONE then
+		self.DisableChasingEnemy = true
+		self:StopMoving()
+		
+		-- Startup animation and sound
+		if self.Garg_FlameLevel == 0 then
+			self:PlayAnim("shootflames1", "LetAttacks", false)
+			self.Garg_FlameLevel = 1
+			self.Garg_NextFlameT = CurTime() + 0.8 -- Don't use anim duration because we want it to start playing the flame animation mid way
+			timer.Simple(0.5, function() -- Play flame start sound
+				if IsValid(self) && self.Garg_CanFlame then
+					VJ.EmitSound(self, "horde/gargantua/gar_flamerun1.ogg", 80)
+				end
+			end)
+			return
+		end
+		
+		self.Garg_FlameLevel = 2
+		self.Garg_NextFlameT = CurTime() + 0.2
+		
+		local range = 550
+		VJ.ApplyRadiusDamage(self, self, self:GetPos() + self:OBBCenter() + self:GetForward()*50, range, 2, DMG_BURN, true, true, {UseConeDegree = 35}, function(ent) if HORDE:IsPlayerOrMinion(ent) then ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 7, self) end end)
+		
+		-- COSMETICS: Sound, particle and decal
+		self.Garg_FlameSd = VJ_CreateSound(self, "horde/gargantua/gar_flamerun1.ogg")
+		self:StopParticles()
+		ParticleEffectAttach("xen_destroyer_flame", PATTACH_POINT_FOLLOW, self, 2)
+		ParticleEffectAttach("xen_destroyer_flame", PATTACH_POINT_FOLLOW, self, 3)
+		local startPos1 = self:GetAttachment(2).Pos
+		local startPos2 = self:GetAttachment(3).Pos
+		local tr1 = util.TraceLine({start = startPos1, endpos = startPos1 + self:GetForward()*range, filter = self})
+		local tr2 = util.TraceLine({start = startPos2, endpos = startPos2 + self:GetForward()*range, filter = self})
+		local hitPos1 = tr1.HitPos
+		local hitPos2 = tr2.HitPos
+		sound.EmitHint(SOUND_DANGER, (hitPos1 + startPos1) / 2, 300, 1, self) -- Pos: Midpoint of start and hit pos, same as Vector((hitPos1.x + startPos1.x ) / 2, (hitPos1.y + startPos1.y ) / 2, (hitPos1.z + startPos1.z ) / 2)
+		sound.EmitHint(SOUND_DANGER, (hitPos2 + startPos2) / 2, 300, 1, self)
+		--util.Decal("VJ_HLR1_Scorch", hitPos1 + tr1.HitNormal, hitPos1 - tr1.HitNormal)
+		--util.Decal("VJ_HLR1_Scorch", hitPos2 + tr2.HitNormal, hitPos2 - tr2.HitNormal)
 	end
+
 	if self.Critical then
 		local p = 30 - (self.NextFlashTime - CurTime())
 		if self.NextFlashTime < CurTime() then
@@ -276,35 +311,36 @@ function ENT:CustomOnThink()
 			self:SetLocalVelocity(self:GetMoveVelocity() * 2)
 		end
 	else
-		--self.AnimationPlaybackRate = 1.5
 		self:SetLocalVelocity(self:GetMoveVelocity() * 1.5)
 	end
-	ParticleEffectAttach("vj_rpg1_flare", PATTACH_POINT_FOLLOW, self, 1)
+	ParticleEffectAttach("vj_rocket_idle1_flare", PATTACH_POINT_FOLLOW, self, 1)
 end
 
-function ENT:MultipleRangeAttacks()
+function ENT:OnThinkAttack(isAttacking, enemy)
+	local eneData = self.EnemyData
+	local eneVisible = eneData.Visible
+	local range = 550
+	if eneVisible && self.AttackType == VJ.ATTACK_TYPE_NONE && eneData.DistanceNearest <= range && eneData.DistanceNearest > self.MeleeAttackDistance then
+		self.Garg_CanFlame = true
+		self:SetTurnTarget(enemy, -1)
+		-- Make it constantly delay the range attack timer by 1 second (Which will also successfully play the flame-end sound)
+		timer.Create("garg_flame_reset" .. self:EntIndex(), 1, 0, function()
+			self:Garg_ResetFlame()
+		end)
+	else
+		self:Garg_ResetFlame()
+	end
+end
+
+ENT.DisableDefaultRangeAttackCode = true
+function ENT:CustomRangeAttackCode()
 	local range = 400
-	if self.NearestPointToEnemyDistance <= range then -- Flame attack
-		self.Garg_AttackType = 0
-		self.Garg_AbleToFlame = true
-		self.RangeDistance = range
-		self.AnimTbl_RangeAttack = {ACT_RANGE_ATTACK1}
-		self.TimeUntilRangeAttackProjectileRelease = 0.1
-		self.DisableRangeAttackAnimation = true
-		self.DisableDefaultRangeAttackCode = true
-		self.SoundTbl_BeforeRangeAttack = {"horde/gargantua/gar_flameon1.ogg"}
-		self.SoundTbl_RangeAttack = {"horde/gargantua/gar_flameoff1.ogg"}
-		self.NextIdleStandTime = 0 -- Reset the idle animation
-	elseif self.Garg_NextStompAttackT < CurTime() then -- Laser stomp attack
-		self.Garg_AttackType = 1
-		self.Garg_AbleToFlame = false
-		self.RangeDistance = 2000
-		self.AnimTbl_RangeAttack = {"stomp"}
-		self.TimeUntilRangeAttackProjectileRelease = false
-		self.DisableRangeAttackAnimation = false
-		self.DisableDefaultRangeAttackCode = false
-		self.SoundTbl_BeforeRangeAttack = {}
-		self.SoundTbl_RangeAttack = {"horde/gargantua/gar_stomp1.ogg"}
+	local selfData = self:GetTable()
+	if self.Garg_NextStompAttackT < CurTime() then -- Laser stomp attack
+		selfData.RangeDistance = 2000
+		selfData.AnimTbl_RangeAttack = {"stomp"}
+		selfData.SoundTbl_BeforeRangeAttack = {}
+		selfData.SoundTbl_RangeAttack = {"horde/gargantua/gar_stomp1.ogg"}
 
 		local enemy_pos = self:GetEnemy():GetPos()
 		local dist = enemy_pos:Distance(self:GetPos())
@@ -327,7 +363,8 @@ function ENT:MultipleRangeAttacks()
 				local pos = self:GetPos() + dir * start
 				timer.Simple(0.25 + i * 0.1, function()
 					if !IsValid(self) then return end
-					ParticleEffect("striderbuster_explode_core", pos, Angle(0,0,0), nil)
+					ParticleEffect("vj_explosionfire2", pos, Angle(0,0,0), nil)
+					ParticleEffect("vj_explosion_rocks1", pos, Angle(0,0,0), nil)
 					sound.Play("horde/gargantua/hit_large.ogg", pos)
 					local dmg = DamageInfo()
 					dmg:SetAttacker(self)
@@ -342,47 +379,11 @@ function ENT:MultipleRangeAttacks()
 		end)
 		
 		self.Garg_NextStompAttackT = CurTime() + 5
-	else
-		self.Garg_AttackType = -1
-		self.Garg_AbleToFlame = false
 	end
 end
 
 function ENT:CustomOnRemove()
 	VJ_STOPSOUND(self.Garg_FlameSd)
-end
-
-function ENT:CustomOnThink_AIEnabled()
-	if IsValid(self:GetEnemy()) && (self.NearestPointToEnemyDistance <= 400) && (self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && self.Garg_AbleToFlame == true && self.Garg_NextAbleToFlameT < CurTime() && self.Garg_AttackType == 0 and timer.Exists("timer_range_start"..self:EntIndex()) then
-		local range = 550
-		self.Garg_NextAbleToFlameT = CurTime() + 0.2
-		self.DisableChasingEnemy = true
-		self.AnimTbl_IdleStand = {"shootflames2"}
-		self.NextIdleStandTime = 0
-		self:StopMoving()
-		util.VJ_SphereDamage(self, self, self:GetPos() + self:OBBCenter() + self:GetForward()*50, range, 2, DMG_BURN, true, true, {UseCone=true, UseConeDegree=30}, function(ent) if HORDE:IsPlayerOrMinion(ent) then ent:Horde_AddDebuffBuildup(HORDE.Status_Necrosis, 7, self) end end)
-		-- COSMETICS: Sound, particle and decal
-		self.Garg_FlameSd = VJ_CreateSound(self, "horde/gargantua/gar_flamerun1.ogg")
-		self:StopParticles()
-		ParticleEffectAttach("xen_destroyer_flame", PATTACH_POINT_FOLLOW, self, 2)
-		ParticleEffectAttach("xen_destroyer_flame", PATTACH_POINT_FOLLOW, self, 3)
-		local startPos1 = self:GetAttachment(2).Pos
-		local startPos2 = self:GetAttachment(3).Pos
-		local tr1 = util.TraceLine({start = startPos1, endpos = startPos1 + self:GetForward()*range, filter = self})
-		local tr2 = util.TraceLine({start = startPos2, endpos = startPos2 + self:GetForward()*range, filter = self})
-		local hitPos1 = tr1.HitPos
-		local hitPos2 = tr2.HitPos
-		sound.EmitHint(SOUND_DANGER, (hitPos1 + startPos1) / 2, 300, 1, self) -- Pos: Midpoint of start and hit pos, same as Vector((hitPos1.x + startPos1.x ) / 2, (hitPos1.y + startPos1.y ) / 2, (hitPos1.z + startPos1.z ) / 2)
-		sound.EmitHint(SOUND_DANGER, (hitPos2 + startPos2) / 2, 300, 1, self)
-		--util.Decal("VJ_HLR_Scorch", hitPos1 + tr1.HitNormal, hitPos1 - tr1.HitNormal)
-		--util.Decal("VJ_HLR_Scorch", hitPos2 + tr2.HitNormal, hitPos2 - tr2.HitNormal)
-		-- Make it constantly delay the range attack timer by 1 second (Which will also successfully play the flame-end sound)
-		timer.Adjust("timer_range_start"..self:EntIndex(), 1, 0, function()
-			self:RangeAttackCode()
-			self:Garg_ResetFlame()
-			timer.Remove("timer_range_start"..self:EntIndex())
-		end)
-	end
 end
 
 VJ.AddNPC("Xen Destroyer Unit","npc_vj_horde_xen_destroyer_unit", "Zombies")

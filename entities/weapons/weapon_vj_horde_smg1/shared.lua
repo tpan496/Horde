@@ -43,42 +43,60 @@ SWEP.HasReloadSound = true -- Does it have a reload sound? Remember even if this
 SWEP.ReloadSound = {"weapons/smg1/smg1_reload.wav"}
 SWEP.Primary.Tracer = 0
 SWEP.Primary.DisableBulletCode = true
----------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnSecondaryAttack()
-	local owner = self:GetOwner()
-	owner:ViewPunch(Angle(-self.Primary.Recoil *3, 0, 0))
-	VJ_EmitSound(self, "weapons/ar2/ar2_altfire.wav", 85)
+-- ---------------------------------------------------------------------------------------------------------------------------------------------
+-- function SWEP:CustomOnSecondaryAttack()
+-- 	local owner = self:GetOwner()
+-- 	owner:ViewPunch(Angle(-self.Primary.Recoil *3, 0, 0))
+-- 	VJ_EmitSound(self, "weapons/ar2/ar2_altfire.wav", 85)
 
-	local proj = ents.Create(self.NPC_SecondaryFireEnt)
-	proj:SetPos(owner:GetShootPos())
-	proj:SetAngles(owner:GetAimVector():Angle())
-	proj:SetOwner(owner)
-	proj:Spawn()
-	proj:Activate()
-	local phys = proj:GetPhysicsObject()
-	if IsValid(phys) then
-		phys:Wake()
-		phys:SetVelocity(owner:GetAimVector() * 2000)
-	end
-	return true
-end
+-- 	local proj = ents.Create(self.NPC_SecondaryFireEnt)
+-- 	proj:SetPos(owner:GetShootPos())
+-- 	proj:SetAngles(owner:GetAimVector():Angle())
+-- 	proj:SetOwner(owner)
+-- 	proj:Spawn()
+-- 	proj:Activate()
+-- 	local phys = proj:GetPhysicsObject()
+-- 	if IsValid(phys) then
+-- 		phys:Wake()
+-- 		phys:SetVelocity(owner:GetAimVector() * 2000)
+-- 	end
+-- 	return true
+-- end
 
-function SWEP:CustomOnPrimaryAttack_BeforeShoot()
+function SWEP:OnPrimaryAttack(status, statusData)
 	if CLIENT then return end
-	local bullet = ents.Create("obj_vj_horde_bullet")
-	bullet:SetPos(self:GetAttachment(self:LookupAttachment("muzzle")).Pos)
-	bullet:SetAngles(self:GetOwner():GetAngles())
-	bullet:SetOwner(self:GetOwner())
-	bullet:Activate()
-	bullet:Spawn()
-	bullet.DirectDamage = 5
-	
-	local phy = bullet:GetPhysicsObject()
-	if phy:IsValid() then
-		local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
-		dir:Normalize()
-		dir = dir + VectorRand() * 0.03
-		dir:Normalize()
-		phy:ApplyForceCenter(dir * 4000)
+	if status == "Init" then
+		if SERVER then
+			local fireSd = VJ.PICK(self.Primary.Sound)
+			if fireSd != false then
+				self:EmitSound(fireSd, self.Primary.SoundLevel, math.random(self.Primary.SoundPitch.a, self.Primary.SoundPitch.b), self.Primary.SoundVolume, CHAN_WEAPON, 0, 0, VJ_RecipientFilter)
+				//EmitSound(fireSd, owner:GetPos(), owner:EntIndex(), CHAN_WEAPON, 1, 140, 0, 100, 0, filter)
+				//sound.Play(fireSd, owner:GetPos(), self.Primary.SoundLevel, math.random(self.Primary.SoundPitch.a, self.Primary.SoundPitch.b), self.Primary.SoundVolume)
+			end
+			if self.Primary.HasDistantSound then
+				local fireFarSd = VJ.PICK(self.Primary.DistantSound)
+				if fireFarSd != false then
+					-- Use "CHAN_AUTO" instead of "CHAN_WEAPON" otherwise it will override primary firing sound because it's also "CHAN_WEAPON"
+					self:EmitSound(fireFarSd, self.Primary.DistantSoundLevel, math.random(self.Primary.DistantSoundPitch.a, self.Primary.DistantSoundPitch.b), self.Primary.DistantSoundVolume, CHAN_AUTO, 0, 0, VJ_RecipientFilter)
+				end
+			end
+		end
+		local bullet = ents.Create("obj_vj_horde_bullet")
+		bullet:SetPos(self:GetAttachment(self:LookupAttachment("muzzle")).Pos)
+		bullet:SetAngles(self:GetOwner():GetAngles())
+		bullet:SetOwner(self:GetOwner())
+		bullet:Activate()
+		bullet:Spawn()
+		bullet.DirectDamage = 5
+		
+		local phy = bullet:GetPhysicsObject()
+		if phy:IsValid() then
+			local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
+			dir:Normalize()
+			dir = dir + VectorRand() * 0.03
+			dir:Normalize()
+			phy:ApplyForceCenter(dir * 4000)
+		end
+		return true
 	end
 end

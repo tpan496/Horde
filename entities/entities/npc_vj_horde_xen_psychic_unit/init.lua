@@ -8,27 +8,9 @@ ENT.StartHealth = 7000
 ENT.HullType = HULL_MEDIUM_TALL
 
 ENT.SightDistance = 10000 -- How far it can see
-ENT.SightAngle = 100 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
-ENT.TurningSpeed = 40 -- How fast it can turn
-ENT.MaxJumpLegalDistance = VJ_Set(400, 550) -- The max distance the NPC can jump (Usually from one node to another) | ( UP, DOWN )
-
+ENT.SightAngle = 360 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
 -- AI
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
-ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
-ENT.ConstantlyFaceEnemy_IfAttacking = true -- Should it face the enemy when attacking?
-ENT.ConstantlyFaceEnemy_Postures = "Standing" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
-ENT.ConstantlyFaceEnemyDistance = 2000 -- How close does it have to be until it starts to face the enemy?
-ENT.NoChaseAfterCertainRange = false -- Should the SNPC not be able to chase when it's between number x and y?
-ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance" -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance" -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_Type = "OnlyRange" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it's able to range attack
-ENT.InvestigateSoundDistance = 100 -- How far away can the SNPC hear sounds? | This number is timed by the calculated volume of the detectable sound.
-
-ENT.AttackProps = true -- Should it attack props when trying to move?
-ENT.PushProps = true -- Should it push props when trying to move?
-ENT.PropAP_MaxSize = 2 -- This is a scale number for the max size it can attack/push | x < 1  = Smaller props & x > 1  = Larger props | Default base value: 1
-ENT.FindEnemy_CanSeeThroughWalls = true -- Should it be able to see through walls and objects? | Can be useful if you want to make it know where the enemy is at all times
-
 -- Damage/Injured
 ENT.BloodColor = "Red"
 ENT.Immune_Dissolve = true
@@ -38,28 +20,25 @@ ENT.Immune_Physics = true
 ENT.CanFlinch = 0 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.NextFlinchTime = 2
 ENT.AnimTbl_Flinch = {ACT_FLINCH_PHYSICS} -- If it uses normal based animation, use this
-ENT.RunAwayOnUnknownDamage = false
-ENT.CallForBackUpOnDamage = false
 
 -- Melee
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {"attack1", "attack2"} -- Melee Attack Animations
-ENT.MeleeAttackDistance = 60 -- How close does it have to be until it attacks?
-ENT.MeleeAttackDamageDistance = 105 -- How close does it have to be until it attacks?
+ENT.MeleeAttackDistance = 60
+ENT.MeleeAttackDamageDistance = 105
 ENT.TimeUntilMeleeAttackDamage = 0.5 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 30
 
 -- Ranged
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
-ENT.RangeAttackEntityToSpawn = "obj_gonome_acid_cold" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_horde_homing_lightning" -- The entity that is spawned when range attacking
 ENT.RangeDistance = 3000 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 180 -- How close does it have to be until it uses melee?
-ENT.TimeUntilRangeAttackProjectileRelease = false -- How much time until the projectile code is ran?
+ENT.NextRangeAttackTime = VJ.SET(6, 8)
+ENT.TimeUntilRangeAttackProjectileRelease = 0.1 -- How much time until the projectile code is ran?
 ENT.RangeAttackPos_Up = 65
+ENT.DisableDefaultRangeAttackCode = true
 ENT.RangeAttackPos_Forward = 65
-ENT.NextRangeAttackTime = 5 -- How much time until it can use a range attack?
-ENT.NextRangeAttackTime_DoRand = 7 -- False = Don't use random time | Number = Picks a random number between the regular timer and this timertack
-ENT.RangeAttackPos_Right = -20 -- Right/Left spawning position for range attack
 
 -- Knockback
 ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
@@ -93,6 +72,35 @@ ENT.NextChangeCooldown = 15
 -- Melee Mode: Shield, increased movement speed
 ENT.Combat_Mode = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
+
+function ENT:MaintainAlertBehavior(alwaysChase) -- alwaysChase = Override to always make the NPC chase
+	alwaysChase = true
+	local curTime = CurTime()
+	local selfData = self:GetTable()
+	if selfData.NextChaseTime > curTime or selfData.Dead or selfData.VJ_IsBeingControlled or selfData.Flinching or self:GetState() == VJ_STATE_ONLY_ANIMATION_CONSTANT then return end
+	local ene = self:GetEnemy()
+	local moveType = selfData.MovementType
+	if !IsValid(ene) or selfData.TakingCoverT > curTime or (selfData.AttackAnimTime > curTime && moveType != VJ_MOVETYPE_AERIAL && moveType != VJ_MOVETYPE_AQUATIC) then return end
+	
+	-- Not melee attacking yet but it is in range, so don't chase the enemy!
+	local eneData = selfData.EnemyData
+	if selfData.HasMeleeAttack && eneData.DistanceNearest < selfData.MeleeAttackDistance && eneData.Visible && (self:GetHeadDirection():Dot((ene:GetPos() - self:GetPos()):GetNormalized()) > math_cos(math_rad(selfData.MeleeAttackAngleRadius))) then
+		if moveType == VJ_MOVETYPE_AERIAL or moveType == VJ_MOVETYPE_AQUATIC then
+			self:AA_StopMoving()
+		end
+		self:SCHEDULE_IDLE_STAND()
+		return
+	end
+	
+
+	-- If the enemy is not reachable then wander around
+	self:SCHEDULE_ALERT_CHASE()
+	
+	-- Set the next chase time
+	if selfData.NextChaseTime > curTime then return end -- Don't set it if it's already set!
+	selfData.NextChaseTime = curTime + 0.1 -- If the enemy is far, increase the delay!
+end
+
 function ENT:CustomOnInitialize()
     self:SetCollisionBounds(Vector(35, 35, 110),Vector(-35, -35, 0))
     self:AddRelationship("npc_headcrab_poison D_LI 99")
@@ -125,7 +133,6 @@ ENT.Critical = nil
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     if not self.Critical and (self:Health() < self:GetMaxHealth() * 0.6) then
         self.Critical = true
-
 		self.NextRangeAttackTime = 4 -- How much time until it can use a range attack?
 		self.NextRangeAttackTime_DoRand = 6 -- False = Don't use random time | Number = Picks a random number between the regular timer and this timertack
     end
@@ -137,72 +144,10 @@ function ENT:CustomRangeAttackCode_AfterProjectileSpawn(projectile)
 	projectile.Target = self:GetEnemy()
 end
 
-function ENT:MultipleRangeAttacks()
-	local p = math.random()
-	if self.Combat_Mode == 0 and self:GetEnemy():IsValid() then
-		if p <= 0.5 or self.Horde_Blasting then
-			self.RangeDistance = 2000
-			self.RangeAttackEntityToSpawn = "obj_vj_horde_homing_lightning"
-			self.TimeUntilRangeAttackProjectileRelease = 0.5
-			self.DisableRangeAttackAnimation = false
-			self.DisableDefaultRangeAttackCode = false
-			self.SoundTbl_BeforeRangeAttack = {}
-		else
-			-- Lightning blast
-			self.RangeDistance = 2000
-			self.TimeUntilRangeAttackProjectileRelease = false
-			self.DisableRangeAttackAnimation = false
-			self.DisableDefaultRangeAttackCode = true
-			--self.ChargeSound = VJ_CreateSound(self, "npc/strider/charging.wav")
-			self:VJ_ACT_PLAYACTIVITY("attack_beam_start1", true, 1, false)
-			local pos = self:GetEnemy():GetPos()
-			self.Horde_Blasting = true
-			timer.Simple(0.5, function ()
-				if !IsValid(self) or !IsValid(self:GetEnemy()) then return end
-				local tr = util.TraceLine({
-					start = self:GetPos() + self:GetUp() * 60,
-					endpos = self:GetEnemy():GetPos(),
-					filter = {self}
-				})
-				pos = tr.HitPos
-				util.ParticleTracerEx("Weapon_Combine_Ion_Cannon", self:GetPos() + self:GetUp() * 60, pos, true, self:EntIndex(), -1)
-				sound.Play("beams/beamstart5.wav", pos, 100, math.random(90, 110))
-
-				timer.Simple(0.7, function ()
-					if !IsValid(self) then return end
-					local dmg = DamageInfo()
-					dmg:SetDamage(70)
-					dmg:SetDamageType(DMG_SHOCK)
-					dmg:SetAttacker(self)
-					dmg:SetInflictor(self)
-					dmg:SetDamagePosition(pos)
-					util.BlastDamageInfo(dmg, pos, 200)
-
-					if self.Critical then
-						local fire = ents.Create("horde_lightning_homing_fire")
-						fire:SetOwner(self)
-						fire:SetPos(pos)
-						fire:Spawn()
-					end
-	
-					HORDE:ApplyDebuffInRadius(HORDE.Status_Shock, pos, 200, 10, self)
-	
-					ParticleEffect("Weapon_Combine_Ion_Cannon_Explosion", pos, Angle(0,0,0), nil)
-	
-					sound.Play("ambient/explosions/explode_5.ogg", pos, 100, math.random(90, 110))
-					
-					self:VJ_ACT_PLAYACTIVITY("run")
-					self.Horde_Blasting = nil
-					--self:RangeAttackCode_DoFinishTimers()
-					self.AlreadyDoneRangeAttackFirstProjectile = true
-				end)
-			end)
-		end
-	end
-end
-
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	-- Ability to see through walls
+	local selfData = self:GetTable()
+
 	if CurTime() > self.NextChangeTime and self.Critical then
 		self.Combat_Mode = self.Combat_Mode + 1
 		if self.Combat_Mode > 1 then
@@ -221,7 +166,7 @@ function ENT:CustomOnThink()
 
 	if self.Combat_Mode == 1 and self:IsOnGround() then
 		self:SetLocalVelocity(self:GetMoveVelocity() * 6)
-		self.AnimationPlaybackRate = 1.25
+		self:SetPlaybackRate(1.25)
 	end
 
 	if self:IsOnFire() then
@@ -241,176 +186,94 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	end
 end
 
-local attackTimers = {
-	[VJ.ATTACK_TYPE_MELEE] = function(self, skipStopAttacks)
-		if !skipStopAttacks then
-			timer.Create("attack_melee_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Melee, self.TimeUntilMeleeAttackDamage, self.AttackAnimDuration), 1, function()
-				self:StopAttacks()
-				self:MaintainAlertBehavior()
-			end)
-		end
-		timer.Create("attack_melee_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextMeleeAttackTime), 1, function()
-			self.IsAbleToMeleeAttack = true
-		end)
-	end,
-	[VJ.ATTACK_TYPE_RANGE] = function(self, skipStopAttacks)
-		if !skipStopAttacks then
-			timer.Create("attack_range_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Range, self.TimeUntilRangeAttackProjectileRelease, self.AttackAnimDuration), 1, function()
-				self:StopAttacks()
-				self:MaintainAlertBehavior()
-			end)
-		end
-		timer.Create("attack_range_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextRangeAttackTime), 1, function()
-			self.IsAbleToRangeAttack = true
-		end)
-	end,
-	[VJ.ATTACK_TYPE_LEAP] = function(self, skipStopAttacks)
-		if !skipStopAttacks then
-			timer.Create("attack_leap_reset" .. self:EntIndex(), self:GetAttackTimer(self.NextAnyAttackTime_Leap, self.TimeUntilLeapAttackDamage, self.AttackAnimDuration), 1, function()
-				self:StopAttacks()
-				self:MaintainAlertBehavior()
-			end)
-		end
-		timer.Create("attack_leap_reset_able" .. self:EntIndex(), self:GetAttackTimer(self.NextLeapAttackTime), 1, function()
-			self.IsAbleToLeapAttack = true
-		end)
-	end
-}
-
-function ENT:ExecuteRangeAttack()
+function ENT:CustomRangeAttackCode()
 	local selfData = self:GetTable()
-	if selfData.Dead or selfData.PauseAttacks or selfData.Flinching or selfData.AttackType == VJ.ATTACK_TYPE_MELEE then return end
-	local ene = self:GetEnemy()
-	local eneValid = IsValid(ene)
-	if eneValid then
-		selfData.AttackType = VJ.ATTACK_TYPE_RANGE
-		//self:PointAtEntity(ene)
-		-- Create projectile
-		if !self:OnRangeAttackExecute("Init", ene) then
-			local projectileClass = selfData.RangeAttackEntityToSpawn
-			if projectileClass then
-				local projectile = ents.Create(self.RangeAttackEntityToSpawn)
-				local target_pos = self:GetEnemy():GetPos()
-				projectile:SetPos(self:GetAttachment(1).Pos)
-				projectile:SetAngles((target_pos - projectile:GetPos()):Angle())
-				projectile:SetOwner(self)
-				projectile:SetPhysicsAttacker(self)
-				projectile:Spawn()
-				projectile:Activate()
-				//constraint.NoCollide(self, projectile, 0, 0)
-				local phys = projectile:GetPhysicsObject()
-				if IsValid(phys) then
-					phys:Wake()
-					--local vel = self:RangeAttackProjVel(projectile)
-					local vel = (self:GetEnemy():GetPos() - projectile:GetPos())
-					if self.RangeAttackEntityToSpawn == "obj_vj_horde_homing_lightning" then
-						vel:Normalize()
-						vel = vel * 200
-						if self.Critical then
-							timer.Simple(0.2, function ()
-								if !IsValid(self) then return end
-								local projectile2 = ents.Create("obj_vj_horde_homing_lightning")
-								projectile2:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
-								projectile2:SetAngles((self:GetEnemy():GetPos() - projectile2:GetPos()):Angle())
-								projectile2:SetOwner(self)
-								projectile2:SetPhysicsAttacker(self)
-								projectile2:Spawn()
-								projectile2:Activate()
-								local phys2 = projectile2:GetPhysicsObject()
-								if IsValid(phys2) then
-									phys2:Wake()
-									local vel2 = (self:GetEnemy():GetPos() - projectile2:GetPos())
-									vel2:Normalize()
-									vel2 = vel2 * 200
-									phys:SetVelocity(vel2)
-								end
-								self:CustomRangeAttackCode_AfterProjectileSpawn(projectile2)
-							end)
-						end
+	-- Create projectile
+	local p = math.random()
+	if p <= 0.5 or self.Horde_Blasting then
+		local projectile = ents.Create(selfData.RangeAttackEntityToSpawn)
+		local target_pos = self:GetEnemy():GetPos()
+		projectile:SetPos(self:GetPos() + self:GetUp()*selfData.RangeAttackPos_Up + self:GetForward()*selfData.RangeAttackPos_Forward)
+		projectile:SetAngles((target_pos - projectile:GetPos()):Angle())
+		projectile:SetOwner(self)
+		projectile:SetPhysicsAttacker(self)
+		projectile:Spawn()
+		projectile:Activate()
+		local phys = projectile:GetPhysicsObject()
+		if IsValid(phys) then
+			phys:Wake()
+			local vel = (self:GetEnemy():GetPos() - projectile:GetPos())
+			vel:Normalize()
+			vel = vel * 200
+			if self.Critical then
+				timer.Simple(0.2, function ()
+					if !IsValid(self) then return end
+					local projectile2 = ents.Create("obj_vj_horde_homing_lightning")
+					projectile2:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
+					projectile2:SetAngles((self:GetEnemy():GetPos() - projectile2:GetPos()):Angle())
+					projectile2:SetOwner(self)
+					projectile2:SetPhysicsAttacker(self)
+					projectile2:Spawn()
+					projectile2:Activate()
+					local phys2 = projectile2:GetPhysicsObject()
+					if IsValid(phys2) then
+						phys2:Wake()
+						local vel2 = (self:GetEnemy():GetPos() - projectile2:GetPos())
+						vel2:Normalize()
+						vel2 = vel2 * 200
+						phys:SetVelocity(vel2)
 					end
-					phys:SetVelocity(vel)
-					projectile:SetAngles(vel:GetNormal():Angle())
-				else
-					local vel = self:RangeAttackProjVel(projectile)
-					projectile:SetVelocity(vel)
-					projectile:SetAngles(vel:GetNormal():Angle())
-				end
-				self:OnRangeAttackExecute("PostSpawn", ene, projectile)
+					self:CustomRangeAttackCode_AfterProjectileSpawn(projectile2)
+				end)
 			end
+			phys:SetVelocity(vel)
+			projectile:SetAngles(vel:GetNormal():Angle())
+			self:CustomRangeAttackCode_AfterProjectileSpawn(projectile)
 		end
-	end
-	if selfData.AttackState < VJ.ATTACK_STATE_EXECUTED then
-		if eneValid then -- Play range attack only once, otherwise it will spam it for every projectile!
-			self:PlaySoundSystem("RangeAttack")
-		end
-		selfData.AttackState = VJ.ATTACK_STATE_EXECUTED
-		if selfData.TimeUntilRangeAttackProjectileRelease then
-			attackTimers[VJ.ATTACK_TYPE_RANGE](self)
-		end
+	else
+		-- Lightning blast
+		--self.ChargeSound = VJ_CreateSound(self, "npc/strider/charging.wav")
+		--self:VJ_ACT_PLAYACTIVITY("attack_beam_start1", true, 1, false)
+		local pos = self:GetEnemy():GetPos()
+		self.Horde_Blasting = true
+		timer.Simple(0.5, function ()
+			if !IsValid(self) or !IsValid(self:GetEnemy()) then return end
+			local tr = util.TraceLine({
+				start = self:GetPos() + self:GetUp() * 60,
+				endpos = self:GetEnemy():GetPos(),
+				filter = {self}
+			})
+			pos = tr.HitPos
+			util.ParticleTracerEx("Weapon_Combine_Ion_Cannon", self:GetPos() + self:GetUp() * 60, pos, true, self:EntIndex(), -1)
+			sound.Play("beams/beamstart5.wav", pos, 100, math.random(90, 110))
+
+			timer.Simple(0.7, function ()
+				if !IsValid(self) then return end
+				local dmg = DamageInfo()
+				dmg:SetDamage(70)
+				dmg:SetDamageType(DMG_SHOCK)
+				dmg:SetAttacker(self)
+				dmg:SetInflictor(self)
+				dmg:SetDamagePosition(pos)
+				util.BlastDamageInfo(dmg, pos, 200)
+
+				if self.Critical then
+					local fire = ents.Create("horde_lightning_homing_fire")
+					fire:SetOwner(self)
+					fire:SetPos(pos)
+					fire:Spawn()
+				end
+
+				HORDE:ApplyDebuffInRadius(HORDE.Status_Shock, pos, 200, 10, self)
+
+				ParticleEffect("Weapon_Combine_Ion_Cannon_Explosion", pos, Angle(0,0,0), nil)
+				sound.Play("ambient/explosions/explode_5.ogg", pos, 100, math.random(90, 110))
+				self:VJ_ACT_PLAYACTIVITY("run")
+				
+				self.Horde_Blasting = nil
+			end)
+		end)
 	end
 end
-
-
--- function ENT:RangeAttackCode()
--- 	if self.Dead == true or self.vACT_StopAttacks == true or self.Flinching == true or self.MeleeAttacking == true then return end
--- 	if IsValid(self:GetEnemy()) then
--- 		self.RangeAttacking = true
--- 		self:PlaySoundSystem("RangeAttack")
--- 		if self.RangeAttackAnimationStopMovement == true then self:StopMoving() end
--- 		if self.RangeAttackAnimationFaceEnemy == true then self:FaceCertainEntity(self:GetEnemy(), true) end
--- 		self:CustomRangeAttackCode()
--- 		-- Default projectile code
--- 		local projectile = ents.Create(self.RangeAttackEntityToSpawn)
--- 		projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
--- 		projectile:SetAngles((self:GetEnemy():GetPos() - projectile:GetPos()):Angle())
--- 		projectile:SetOwner(self)
--- 		projectile:SetPhysicsAttacker(self)
--- 		projectile:Spawn()
--- 		projectile:Activate()
--- 		local phys = projectile:GetPhysicsObject()
--- 		if IsValid(phys) then
--- 			phys:Wake()
--- 			local vel = (self:GetEnemy():GetPos() - projectile:GetPos())
---             if self.RangeAttackEntityToSpawn == "obj_vj_horde_homing_lightning" then
---                 vel:Normalize()
---                 vel = vel * 200
--- 				if self.Critical then
--- 					timer.Simple(0.2, function ()
--- 						if !IsValid(self) then return end
--- 						local projectile2 = ents.Create("obj_vj_horde_homing_lightning")
--- 						projectile2:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
--- 						projectile2:SetAngles((self:GetEnemy():GetPos() - projectile2:GetPos()):Angle())
--- 						projectile2:SetOwner(self)
--- 						projectile2:SetPhysicsAttacker(self)
--- 						projectile2:Spawn()
--- 						projectile2:Activate()
--- 						local phys2 = projectile2:GetPhysicsObject()
--- 						if IsValid(phys2) then
--- 							phys2:Wake()
--- 							local vel2 = (self:GetEnemy():GetPos() - projectile2:GetPos())
--- 							vel2:Normalize()
--- 							vel2 = vel2 * 200
--- 							phys:SetVelocity(vel2)
--- 						end
--- 						self:CustomRangeAttackCode_AfterProjectileSpawn(projectile2)
--- 					end)
--- 				end
---             end
--- 			phys:SetVelocity(vel)
--- 			--projectile:SetAngles(vel:GetNormal():Angle())
--- 		end
--- 		if self.Critical then
--- 			projectile.OwnerCritical = true
--- 		end
--- 		self:CustomRangeAttackCode_AfterProjectileSpawn(projectile)
--- 	end
--- 	self.AlreadyDoneRangeAttackFirstProjectile = true
--- 	if self.AttackStatus < VJ_ATTACK_STATUS_EXECUTED then
--- 		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED
--- 		if self.TimeUntilRangeAttackProjectileRelease != false then
--- 			finishAttack[VJ_ATTACK_RANGE](self)
--- 		end
--- 	end
--- end
 
 VJ.AddNPC("Xen Psychic Unit","npc_vj_horde_xen_psychic_unit", "Zombies")

@@ -60,6 +60,17 @@ function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
 	end
 end
 
+function ENT:TranslateActivity(act)
+    -- throw1 idle, throw2 walk, throw3 run
+    if (act == ACT_WALK or act == ACT_RUN) then
+		if self:Health() <= self:GetMaxHealth() * 0.5 then
+			return ACT_RUN
+		end
+        return ACT_WALK
+    end
+    return self.BaseClass.TranslateActivity(self, act)
+end
+
 local attackTimers = {
 	[VJ.ATTACK_TYPE_MELEE] = function(self, skipStopAttacks)
 		if !skipStopAttacks then

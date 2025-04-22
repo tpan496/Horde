@@ -22,23 +22,12 @@ ENT.HasBloodPool = false -- Does it have a blood pool?
 ENT.Flinches = 1 -- 0 = No Flinch | 1 = Flinches at any damage | 2 = Flinches only from certain damages
 ENT.FlinchingChance = 12 -- chance of it flinching from 1 to x | 1 will make it always flinch
 ENT.FlinchingSchedules = {SCHED_FLINCH_PHYSICS} -- If self.FlinchUseACT is false the it uses this | Common: SCHED_BIG_FLINCH, SCHED_SMALL_FLINCH, SCHED_FLINCH_PHYSICS
-ENT.MoveWhenDamagedByEnemy = false -- Should the SNPC move when being damaged by an enemy?
-ENT.MoveWhenDamagedByEnemySCHED1 = SCHED_FORCED_GO_RUN -- The schedule it runs when MoveWhenDamagedByEnemy code is ran | The first # in math.random
-ENT.MoveWhenDamagedByEnemySCHED2 = SCHED_FORCED_GO_RUN -- The schedule it runs when MoveWhenDamagedByEnemy code is ran | The second # in math.random
-ENT.NextMoveWhenDamagedByEnemy1 = 3 -- Next time it moves when getting damaged | The first # in math.random
-ENT.NextMoveWhenDamagedByEnemy2 = 3.5 -- Next time it moves when getting damaged | The second # in math.random
 ENT.HasAllies = true -- Put to false if you want it not to have any allies
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.HasGrenadeAttack = false -- Should the SNPC have a grenade attack?
-ENT.NextThrowGrenadeTime1 = 10 -- Time until it runs the throw grenade code again | The first # in math.random
-ENT.NextThrowGrenadeTime2 = 15 -- Time until it runs the throw grenade code again | The second # in math.random
+ENT.Weapon_MaxDistance  = 80
 ENT.ThrowGrenadeChance = 1 -- Chance that it will throw the grenade | Set to 1 to throw all the time
 ENT.GrenadeAttackThrowDistance = 1000 -- How far it can throw grenades
 ENT.GrenadeAttackThrowDistanceClose = 500 -- How close until it stops throwing grenades
-ENT.AnimTbl_GrenadeAttack = {"grenThrow"} -- Grenade Attack Animations
-ENT.GrenadeAttackAnimationDelay = 0 -- It will wait certain amount of time before playing the animation
-ENT.GrenadeAttackAnimationStopAttacks = true -- Should it stop attacks for a certain amount of time?
-ENT.GrenadeAttackEntity = "npc_grenade_frag" -- The entity that the SNPC throws | Half Life 2 Grenade: "npc_grenade_frag"
 ENT.FootStepTimeRun = 0.3 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.5 -- Next foot step sound when it is walking
 ENT.CallForBackUpOnDamage = false -- Should the SNPC call for help when damaged? (Only happens if the SNPC hasn't seen a enemy)
@@ -77,7 +66,7 @@ ENT.DisableCritical = nil
 ENT.EntitiesToNoCollide = {"npc_vj_horde_platoon_heavy", "npc_vj_horde_platoon_berserker", "npc_vj_horde_platoon_demolitionist"}
 
 
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetModelScale(1.25)
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
@@ -103,27 +92,30 @@ function ENT:CustomOnInitialize()
 	self.model:Spawn()
 	self.model:SetParent(self, attach_id)
 	self.model:SetModelScale(1.5)
+	timer.Create("Equip", 0.5, 0, function() self.Weapon_MaxDistance = 80 end)
 
 	self:EmitSound("npc/combine_gunship/see_enemy.wav", 3000, 100, 2, CHAN_STATIC)
 end
 
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	dmginfo:ScaleDamage(0.9)
-	local p = math.random()
-	if HORDE:IsPhysicalDamage(dmginfo) and p <= 0.25 then
-		local e = EffectData()
-        if dmginfo:GetDamagePosition() ~= Vector(0,0,0) then
-            e:SetOrigin(dmginfo:GetDamagePosition())
-        else
-            e:SetOrigin(self:GetPos() + self:OBBCenter() + self:GetForward() * 25)
-        end
-		dmginfo:ScaleDamage(0.75)
-		util.Effect("horde_platoon_parry", e, true, true)
-		sound.Play("horde/gadgets/guard" .. tostring(math.random(1,2)) ..".ogg", self:GetPos(), 125, 100, 1, CHAN_AUTO)
-	end
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "Init" then
+		dmginfo:ScaleDamage(0.9)
+		local p = math.random()
+		if HORDE:IsPhysicalDamage(dmginfo) and p <= 0.25 then
+			local e = EffectData()
+			if dmginfo:GetDamagePosition() ~= Vector(0,0,0) then
+				e:SetOrigin(dmginfo:GetDamagePosition())
+			else
+				e:SetOrigin(self:GetPos() + self:OBBCenter() + self:GetForward() * 25)
+			end
+			dmginfo:ScaleDamage(0.75)
+			util.Effect("horde_platoon_parry", e, true, true)
+			sound.Play("horde/gadgets/guard" .. tostring(math.random(1,2)) ..".ogg", self:GetPos(), 125, 100, 1, CHAN_AUTO)
+		end
 
-	if (not self.DisableCritical) and self:Health() <= self:GetMaxHealth() * 0.5 then
-		self.Critical = true
+		if (not self.DisableCritical) and self:Health() <= self:GetMaxHealth() * 0.5 then
+			self.Critical = true
+		end
 	end
 end
 

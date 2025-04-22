@@ -4,8 +4,7 @@ AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
 function ENT:Initialize()
-	self:SetModel("models/props_junk/watermelon01_chunk02c.mdl")
-	self:SetMaterial("invis")
+	self:SetModel("models/dav0r/hoverball.mdl")
 	self:SetMoveCollide(3)
 	self:DrawShadow(false)
 	self:PhysicsInit(SOLID_VPHYSICS)
@@ -22,7 +21,7 @@ function ENT:Initialize()
 	end
 
     self:SetRenderMode(RENDERMODE_TRANSCOLOR)
-    self:SetColor(Color(0,0,0,0))
+    self:SetColor(Color(255,255,255,1))
 	
 	self.delayRemove = CurTime() + 60
 	if self:GetScale() > 1 then self.deploy = CurTime() +0.2 end

@@ -179,7 +179,7 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
         self.Critical = true
         self.HasRangeAttack = false
         self.HasLeapAttack = true
-        self.AnimationPlaybackRate = 1.75
+        self:SetPlaybackRate(1.75)
         self:SetColor(Color(255,0,0))
         self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     end

@@ -52,6 +52,7 @@ ENT.WeaponAttackSecondaryTimeUntilFire = 2
 ENT.EntitiesToNoCollide = {"npc_vj_horde_zombine", "npc_vj_horde_plague_soldier"}
 ENT.CallForHelp = false
 ENT.CanInvestigate = false
+ENT.AnimTbl_WeaponAttackSecondary = ACT_RANGE_ATTACK1
 
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",
@@ -115,8 +116,8 @@ ENT.ZBoss_NextMiniBossSpawnT = 0
 function ENT:CustomOnThink_AIEnabled()
 	if IsValid(self:GetEnemy()) && CurTime() > self.ZBoss_NextMiniBossSpawnT && (!IsValid(self.MiniBoss1) || !IsValid(self.MiniBoss2)) then
 		self:VJ_ACT_PLAYACTIVITY("vjseq_releasecrab", true, false, false)
-		ParticleEffect("aurora_shockwave_debris", self:GetPos(), defAng, nil)
-		ParticleEffect("aurora_shockwave", self:GetPos(), defAng, nil)
+		ParticleEffect("vj_aurora_floaters", self:GetPos(), defAng, nil)
+		ParticleEffect("vj_aurora_shockwave", self:GetPos(), defAng, nil)
 		self:EmitSound("horde/plague_elite/summon.ogg")
 		
 		if (!IsValid(self.MiniBoss1)) then
