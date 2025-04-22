@@ -6,6 +6,7 @@ include('autorun/vj_controls.lua')
 ENT.Model = {"models/horde/gonome/gonome.mdl"}
 ENT.StartHealth = 7500
 ENT.HullType = HULL_MEDIUM_TALL
+ENT.KnockbackImmune = true
 
 ENT.SightDistance = 10000 -- How far it can see
 ENT.SightAngle = 100 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
@@ -87,65 +88,8 @@ ENT.MeleeAttackKnockBack_Up2 = 10 -- How far it will push you up | Second in mat
 ENT.MeleeAttackKnockBack_Right1 = 0 -- How far it will push you right | First in math.random
 ENT.MeleeAttackKnockBack_Right2 = 0 -- How far it will push you right | Second in math.random
 
-ENT.FootStepTimeRun = 1 -- Next foot step sound when it is running
-ENT.FootStepTimeWalk = 1 -- Next foot step sound when it is walking
-ENT.PushProps = true -- Should it push props when trying to move?
-ENT.FootStepPitch1 = 100
-ENT.FootStepPitch2 = 100
-ENT.BreathSoundPitch1 = 100
-ENT.BreathSoundPitch2 = 100
-ENT.IdleSoundPitch1 = "UseGeneralPitch"
-ENT.IdleSoundPitch2 = "UseGeneralPitch"
-ENT.CombatIdleSoundPitch1 = "UseGeneralPitch"
-ENT.CombatIdleSoundPitch2 = "UseGeneralPitch"
-ENT.OnReceiveOrderSoundPitch1 = "UseGeneralPitch"
-ENT.OnReceiveOrderSoundPitch2 = "UseGeneralPitch"
-ENT.FollowPlayerPitch1 = "UseGeneralPitch"
-ENT.FollowPlayerPitch2 = "UseGeneralPitch"
-ENT.UnFollowPlayerPitch1 = "UseGeneralPitch"
-ENT.UnFollowPlayerPitch2 = "UseGeneralPitch"
-ENT.BeforeHealSoundPitch1 = "UseGeneralPitch"
-ENT.BeforeHealSoundPitch2 = "UseGeneralPitch"
-ENT.AfterHealSoundPitch1 = 100
-ENT.AfterHealSoundPitch2 = 100
-ENT.OnPlayerSightSoundPitch1 = "UseGeneralPitch"
-ENT.OnPlayerSightSoundPitch2 = "UseGeneralPitch"
-ENT.AlertSoundPitch1 = "UseGeneralPitch"
-ENT.AlertSoundPitch2 = "UseGeneralPitch"
-ENT.CallForHelpSoundPitch1 = "UseGeneralPitch"
-ENT.CallForHelpSoundPitch2 = "UseGeneralPitch"
-ENT.BecomeEnemyToPlayerPitch1 = "UseGeneralPitch"
-ENT.BecomeEnemyToPlayerPitch2 = "UseGeneralPitch"
-ENT.BeforeMeleeAttackSoundPitch1 = "UseGeneralPitch"
-ENT.BeforeMeleeAttackSoundPitch2 = "UseGeneralPitch"
-ENT.MeleeAttackSoundPitch1 = "UseGeneralPitch"
-ENT.MeleeAttackSoundPitch2 = "UseGeneralPitch"
-ENT.ExtraMeleeSoundPitch1 = 100
-ENT.ExtraMeleeSoundPitch2 = 100
-ENT.MeleeAttackMissSoundPitch1 = 100
-ENT.MeleeAttackMissSoundPitch2 = 100
-ENT.BeforeRangeAttackPitch1 = "UseGeneralPitch"
-ENT.BeforeRangeAttackPitch2 = "UseGeneralPitch"
-ENT.RangeAttackPitch1 = "UseGeneralPitch"
-ENT.RangeAttackPitch2 = "UseGeneralPitch"
-ENT.BeforeLeapAttackSoundPitch1 = "UseGeneralPitch"
-ENT.BeforeLeapAttackSoundPitch2 = "UseGeneralPitch"
-ENT.LeapAttackJumpSoundPitch1 = "UseGeneralPitch"
-ENT.LeapAttackJumpSoundPitch2 = "UseGeneralPitch"
-ENT.LeapAttackDamageSoundPitch1 = "UseGeneralPitch"
-ENT.LeapAttackDamageSoundPitch2 = "UseGeneralPitch"
-ENT.LeapAttackDamageMissSoundPitch1 = "UseGeneralPitch"
-ENT.LeapAttackDamageMissSoundPitch2 = "UseGeneralPitch"
-ENT.OnKilledEnemySoundPitch1 = "UseGeneralPitch"
-ENT.OnKilledEnemySoundPitch2 = "UseGeneralPitch"
-ENT.PainSoundPitch1 = "UseGeneralPitch"
-ENT.PainSoundPitch2 = "UseGeneralPitch"
-ENT.ImpactSoundPitch1 = 100
-ENT.ImpactSoundPitch2 = 100
-ENT.DamageByPlayerPitch1 = "UseGeneralPitch"
-ENT.DamageByPlayerPitch2 = "UseGeneralPitch"
-ENT.DeathSoundPitch1 = "UseGeneralPitch"
-ENT.DeathSoundPitch2 = "UseGeneralPitch"
+ENT.FootStepTimeRun = 0.3 -- Next foot step sound when it is running
+ENT.FootStepTimeWalk = 0.3 -- Next foot step sound when it is walking
 
     -- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
@@ -259,7 +203,7 @@ end
 
 function ENT:Horde_SpawnIce(right)
     local projectile = ents.Create(self.RangeAttackEntityToSpawn)
-    projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
+    projectile:SetPos(self:GetPos() + self:GetUp()*(self.RangeAttackPos_Up or 20) + self:GetForward()*(self.RangeAttackPos_Forward or 0) + self:GetRight()*(self.RangeAttackPos_Right or 0))
     projectile:SetOwner(self)
     projectile:SetPhysicsAttacker(self)
     projectile:Spawn()
@@ -283,12 +227,15 @@ function ENT:Horde_SpawnIce(right)
     end
 end
 
+ENT.RangeAttackCooldown = 0
 function ENT:CustomRangeAttackCode_BeforeProjectileSpawn(projectile2)
     if true then
         if not self.Critical then
             self:Horde_SpawnIce(true)
             self:Horde_SpawnIce()
         end
+		self.RangeAttackCooldown = CurTime() + self.NextRangeAttackTime
+		self.HasRangeAttack = false
     end
 end
 
@@ -342,6 +289,10 @@ function ENT:CustomOnThink()
                 end)
             end
         end
+	else
+		if self.RangeAttackCooldown < CurTime() then
+			self.HasRangeAttack = true
+		end
 	end
 
     if self:IsOnGround() and self.Horde_Gamma_Invis == true then

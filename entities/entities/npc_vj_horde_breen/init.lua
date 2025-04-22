@@ -329,7 +329,7 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
         self.Critical = true
 		self.AnimTbl_Walk = ACT_RUN
 		self.AnimTbl_Run = ACT_RUN
-		self.AnimationPlaybackRate = 1.25
+		self:SetPlaybackRate(1.25)
     end
 	self.DamageReceived = self.DamageReceived + dmginfo:GetDamage()
 end

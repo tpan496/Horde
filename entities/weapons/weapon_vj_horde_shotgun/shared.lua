@@ -34,8 +34,8 @@ SWEP.Primary.Cone = 12 -- How accurate is the bullet? (Players)
 SWEP.Primary.Delay = 0.8 -- Time until it can shoot again
 SWEP.Primary.Automatic = true -- Is it automatic?
 SWEP.Primary.Ammo = "Buckshot" -- Ammo type
-SWEP.Primary.Sound = {"vj_weapons/hl2_shotgun/shotgun_single1.wav"}
-SWEP.Primary.DistantSound = {"vj_weapons/hl2_shotgun/shotgun_single_dist.wav"}
+SWEP.Primary.Sound = {"vj_base/weapons/spas12/single1.wav"}
+SWEP.Primary.DistantSound = {"vj_base/weapons/spas12/single1.wav"}
 SWEP.PrimaryEffects_MuzzleAttachment = 1
 SWEP.PrimaryEffects_ShellAttachment = 2
 SWEP.PrimaryEffects_ShellType = "VJ_Weapon_ShotgunShell1"
@@ -49,42 +49,58 @@ SWEP.Reload_TimeUntilAmmoIsSet = 0.3 -- Time until ammo is set to the weapon
 SWEP.Primary.Tracer = 0
 SWEP.Primary.DisableBulletCode = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnPrimaryAttack_AfterShoot()
-	local owner = self:GetOwner()
-	if IsValid(owner) && owner:IsPlayer() then
-		timer.Simple(0.2, function()
-			if IsValid(self) && IsValid(owner) && owner:IsPlayer() then
-				self:EmitSound(Sound("weapons/shotgun/shotgun_cock.wav"), 80, 100)
-				local animTime = VJ_GetSequenceDuration(owner:GetViewModel(), ACT_SHOTGUN_PUMP)
-				self:SendWeaponAnim(ACT_SHOTGUN_PUMP)
-				self.NextIdleT = CurTime() + animTime
-				self.NextReloadT = CurTime() + animTime
-			end
-		end)
-	end
-end
+-- function SWEP:CustomOnPrimaryAttack_AfterShoot()
+-- 	local owner = self:GetOwner()
+-- 	if IsValid(owner) && owner:IsPlayer() then
+-- 		timer.Simple(0.2, function()
+-- 			if IsValid(self) && IsValid(owner) && owner:IsPlayer() then
+-- 				self:EmitSound(Sound("weapons/shotgun/shotgun_cock.wav"), 80, 100)
+-- 				local animTime = VJ_GetSequenceDuration(owner:GetViewModel(), ACT_SHOTGUN_PUMP)
+-- 				self:SendWeaponAnim(ACT_SHOTGUN_PUMP)
+-- 				self.NextIdleT = CurTime() + animTime
+-- 				self.NextReloadT = CurTime() + animTime
+-- 			end
+-- 		end)
+-- 	end
+-- end
 
-function SWEP:CustomOnPrimaryAttack_BeforeShoot()
+function SWEP:OnPrimaryAttack(status, statusData)
 	if CLIENT then return end
-	for i = 1, 6 do
-		local bullet = ents.Create("obj_vj_horde_bullet")
-		bullet:SetPos(self:GetAttachment(self:LookupAttachment("muzzle")).Pos)
-		bullet:SetAngles(self:GetOwner():GetAngles())
-		bullet:SetOwner(self:GetOwner())
-		bullet:Activate()
-		bullet:Spawn()
-		bullet.DirectDamage = 4
-		
-		local phy = bullet:GetPhysicsObject()
-		if phy:IsValid() then
-			local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
-			dir:Normalize()
-			dir = dir + VectorRand() * 0.06
-			dir:Normalize()
-			phy:ApplyForceCenter(dir * 4000)
+	if status == "Init" then
+		if SERVER then
+			local fireSd = VJ.PICK(self.Primary.Sound)
+			if fireSd != false then
+				self:EmitSound(fireSd, self.Primary.SoundLevel, math.random(self.Primary.SoundPitch.a, self.Primary.SoundPitch.b), self.Primary.SoundVolume, CHAN_WEAPON, 0, 0, VJ_RecipientFilter)
+				//EmitSound(fireSd, owner:GetPos(), owner:EntIndex(), CHAN_WEAPON, 1, 140, 0, 100, 0, filter)
+				//sound.Play(fireSd, owner:GetPos(), self.Primary.SoundLevel, math.random(self.Primary.SoundPitch.a, self.Primary.SoundPitch.b), self.Primary.SoundVolume)
+			end
+			if self.Primary.HasDistantSound then
+				local fireFarSd = VJ.PICK(self.Primary.DistantSound)
+				if fireFarSd != false then
+					-- Use "CHAN_AUTO" instead of "CHAN_WEAPON" otherwise it will override primary firing sound because it's also "CHAN_WEAPON"
+					self:EmitSound(fireFarSd, self.Primary.DistantSoundLevel, math.random(self.Primary.DistantSoundPitch.a, self.Primary.DistantSoundPitch.b), self.Primary.DistantSoundVolume, CHAN_AUTO, 0, 0, VJ_RecipientFilter)
+				end
+			end
+		end
+		for i = 1, 6 do
+			local bullet = ents.Create("obj_vj_horde_bullet")
+			bullet:SetPos(self:GetAttachment(self:LookupAttachment("muzzle")).Pos)
+			bullet:SetAngles(self:GetOwner():GetAngles())
+			bullet:SetOwner(self:GetOwner())
+			bullet:Activate()
+			bullet:Spawn()
+			bullet.DirectDamage = 4
+			
+			local phy = bullet:GetPhysicsObject()
+			if phy:IsValid() then
+				local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
+				dir:Normalize()
+				dir = dir + VectorRand() * 0.06
+				dir:Normalize()
+				phy:ApplyForceCenter(dir * 4000)
+			end
 		end
 	end
-	
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------------------

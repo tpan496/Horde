@@ -68,7 +68,7 @@ function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	if self:IsOnFire() then
 		self.AnimTbl_Walk = {self:GetSequenceActivity(self:LookupSequence("FireWalk"))}
 		self.AnimTbl_Run = {self:GetSequenceActivity(self:LookupSequence("FireWalk"))}

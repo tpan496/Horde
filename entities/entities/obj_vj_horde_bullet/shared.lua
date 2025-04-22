@@ -44,8 +44,8 @@ function ENT:CustomOnInitialize()
 	--self:SetMaterial("models/effects/vol_light001.mdl")
 	self:DrawShadow(false)
 	self:SetRenderMode(RENDERMODE_TRANSCOLOR)
-	self:SetColor(Color(255,255,255,0))
-	util.SpriteTrail(self, 0, self.TracerColor, false, self.TracerWidth, self.TracerWidth, 0.1, 1/(8+8)*0.5, "VJ_Base/sprites/vj_trial1.vmt")
+	self:SetColor(Color(255,255,255,1))
+	util.SpriteTrail(self, 0, self.TracerColor, false, self.TracerWidth, self.TracerWidth, 0.1, 1/(8+8)*0.5, "vj_base/sprites/trail.vmt")
 
 	timer.Simple(4, function ()
 		if !IsValid(self) then return end
@@ -54,6 +54,9 @@ function ENT:CustomOnInitialize()
 end
 
 function ENT:CustomOnDoDamage_Direct(data, phys, hitEnt)
+	if not hitEnt then
+		return
+	end
 	if hitEnt:IsNPC() then
 		local damagecode = DamageInfo()
 		damagecode:SetDamage(self.DirectDamage / 2)

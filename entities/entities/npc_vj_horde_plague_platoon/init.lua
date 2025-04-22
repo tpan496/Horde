@@ -31,8 +31,8 @@ function ENT:CustomOnInitialize()
 	self:SetRenderMode(RENDERMODE_TRANSCOLOR)
 	self:SetColor(Color(0,0,0,0))
 	timer.Simple(1, function ()
-		ParticleEffect("aurora_shockwave_debris", self:GetPos(), Angle(0,0,0), nil)
-		ParticleEffect("aurora_shockwave", self:GetPos(), Angle(0,0,0), nil)
+		ParticleEffect("vj_aurora_floaters", self:GetPos(), Angle(0,0,0), nil)
+		ParticleEffect("vj_aurora_shockwave", self:GetPos(), Angle(0,0,0), nil)
 		self.MiniBoss1 = ents.Create("npc_vj_horde_platoon_heavy")
 		self.MiniBoss1:SetPos(self:GetPos())
 		self.MiniBoss1:SetAngles(self:GetAngles())
@@ -125,7 +125,7 @@ function ENT:CustomOnThink_AIEnabled()
 		end
 		if self.MiniBoss2 and IsValid(self.MiniBoss2) then
 			self.MiniBoss2.Critical = true
-			self.AnimationPlaybackRate = 1.25
+			self:SetPlaybackRate(1.25)
 		end
 		if self.MiniBoss3 and IsValid(self.MiniBoss3) then
 			self.MiniBoss3.Critical = true

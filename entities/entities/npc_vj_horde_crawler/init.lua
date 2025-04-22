@@ -102,3 +102,4 @@ function ENT:OnLeapAttack(status, enemy)
 		return VJ.CalculateTrajectory(self, enemy, "Curve", self:GetPos() + self:OBBCenter(), enemy:GetPos() + enemy:OBBCenter(), 25) + self:GetForward() * 80
 	end
 end
+VJ.AddNPC("Crawler","npc_vj_horde_crawler", "Zombies")

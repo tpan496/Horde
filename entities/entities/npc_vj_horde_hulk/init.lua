@@ -5,7 +5,7 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_zombies/hulk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = {"models/horde/hulk/hulk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 1200
 ENT.HullType = HULL_MEDIUM_TALL
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ function ENT:TranslateActivity(act)
 		if self:IsOnFire() then
 			return ACT_WALK_ON_FIRE
 		-- Run if we are half health
-		elseif act == ACT_RUN && self.Critical  then
+		elseif act == ACT_RUN && self.Critical then
 			return ACT_RUN
 		end
 		return ACT_WALK
@@ -104,7 +104,7 @@ ENT.Critical = false
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     if not self.Critical and self:Health() < self:GetMaxHealth() / 2 then
         self.Critical = true
-        self.AnimationPlaybackRate = 1.5
+        self:SetPlaybackRate(1.5)
         self:SetColor(Color(255,0,0))
         self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     end

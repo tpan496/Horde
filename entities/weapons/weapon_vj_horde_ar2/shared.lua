@@ -18,11 +18,11 @@ SWEP.NPC_HasSecondaryFire = true -- Can the weapon have a secondary fire?
 SWEP.NPC_SecondaryFireEnt = "obj_vj_horde_cball"
 SWEP.NPC_SecondaryFireDistance = 3000 -- How close does the owner's enemy have to be for it to fire?
 SWEP.NPC_SecondaryFireChance = 1 -- Chance that the secondary fire is used | 1 = always
-SWEP.NPC_SecondaryFireNext = VJ_Set(15, 18) -- How much time until the secondary fire can be used again?
+SWEP.NPC_SecondaryFireNext = VJ_Set(1, 3) -- How much time until the secondary fire can be used again?
 SWEP.NPC_SecondaryFireSoundLevel = 100
 SWEP.NPC_NextPrimaryFire = 3 -- Next time it can use primary fire
 SWEP.NPC_TimeUntilFire = 0.1 -- How much time until the bullet/projectile is fired?
-SWEP.NPC_TimeUntilFireExtraTimers = {0.1, 0.2, 0.3, 0.4, 0.5} -- Extra timers, which will make the gun fire again! | The seconds are counted after the self.NPC_TimeUntilFire!
+SWEP.NPC_TimeUntilFireExtraTimers = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6} -- Extra timers, which will make the gun fire again! | The seconds are counted after the self.NPC_TimeUntilFire!
 	-- Main Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.ViewModel = "models/weapons/c_irifle.mdl"
 SWEP.WorldModel = "models/weapons/w_irifle.mdl"
@@ -54,18 +54,44 @@ SWEP.Primary.Tracer = 0
 SWEP.Primary.DisableBulletCode = true
 SWEP.Secondary.Ammo = "AR2AltFire" -- Ammo type
 ---------------------------------------------------------------------------------------------------------------------------------------------
+-- function SWEP:NPC_SecondaryFire_BeforeTimer(eneEnt, fireTime)
+-- 	VJ_EmitSound(self, "weapons/cguard/charging.wav", 100)
+-- 	local myPos = self:GetOwner():GetPos()
+-- 	effects.BeamRingPoint(myPos, 1.5, 0, 200, 10, 64, Color( 255, 255, 255 ) )
+-- 	effects.BeamRingPoint(myPos, 1.5, 0, 200, 10, 64, Color( 255, 255, 255 ) )
+-- end
+-- ---------------------------------------------------------------------------------------------------------------------------------------------
+-- function SWEP:NPC_SecondaryFire()
+-- 	local owner = self:GetOwner()
+-- 	local pos = self:GetNW2Vector("VJ_CurBulletPos")
+-- 	local proj = ents.Create(self.NPC_SecondaryFireEnt)
+-- 	print("spawn proj")
+-- 	proj:SetPos(pos)
+-- 	proj:SetAngles(owner:GetAngles())
+-- 	proj:SetOwner(owner)
+-- 	proj:Spawn()
+-- 	proj:Activate()
+-- 	local phys = proj:GetPhysicsObject()
+-- 	if IsValid(phys) then
+-- 		phys:Wake()
+-- 		phys:SetVelocity(owner:CalculateProjectile("Line", pos, owner.EnemyData.LastVisiblePos, 1000))
+-- 	end
+
+-- 	VJ_CreateSound(self, "weapons/irifle/irifle_fire2.wav", 100)
+-- end
+
 function SWEP:NPC_SecondaryFire_BeforeTimer(eneEnt, fireTime)
-	VJ_EmitSound(self, "weapons/cguard/charging.wav", 100)
+	VJ.EmitSound(self, "weapons/cguard/charging.wav", 100)
 	local myPos = self:GetOwner():GetPos()
 	effects.BeamRingPoint(myPos, 1.5, 0, 200, 10, 64, Color( 255, 255, 255 ) )
 	effects.BeamRingPoint(myPos, 1.5, 0, 200, 10, 64, Color( 255, 255, 255 ) )
 end
----------------------------------------------------------------------------------------------------------------------------------------------
+
 function SWEP:NPC_SecondaryFire()
 	local owner = self:GetOwner()
-	local pos = self:GetNW2Vector("VJ_CurBulletPos")
 	local proj = ents.Create(self.NPC_SecondaryFireEnt)
-	proj:SetPos(pos)
+	print("spawn proj")
+	proj:SetPos(owner:GetShootPos())
 	proj:SetAngles(owner:GetAngles())
 	proj:SetOwner(owner)
 	proj:Spawn()
@@ -73,35 +99,8 @@ function SWEP:NPC_SecondaryFire()
 	local phys = proj:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:Wake()
-		phys:SetVelocity(owner:CalculateProjectile("Line", pos, owner.EnemyData.LastVisiblePos, 1000))
+		phys:SetVelocity(owner:GetAimVector() * 1000)
 	end
-
-	VJ_CreateSound(self, "weapons/irifle/irifle_fire2.wav", 100)
-end
-
-
-function SWEP:NPCAbleToShoot()
-	local owner = self:GetOwner()
-	if IsValid(owner) && owner:IsNPC() then
-		local ene = owner:GetEnemy()
-		if owner:GetActivity() != nil && ((owner.DoingWeaponAttack == true && ((owner.CurrentWeaponAnimation == owner:GetActivity()) or (owner:GetActivity() == owner:TranslateToWeaponAnim(owner.CurrentWeaponAnimation)) or (!owner.DoingWeaponAttack_Standing)))) then
-			-- For VJ Humans only, ammo check
-			if owner.AllowWeaponReloading == true && self:Clip1() <= 0 then -- No ammo!
-				if self.IsMeleeWeapon == false && self.HasDryFireSound == true && CurTime() > self.NextNPCDrySoundT then
-					local sdtbl = VJ_PICK(self.DryFireSound)
-					if sdtbl != false then owner:EmitSound(sdtbl, 80, math.random(self.DryFireSoundPitch.a, self.DryFireSoundPitch.b)) end
-					if self.NPC_NextPrimaryFire != false then
-						self.NextNPCDrySoundT = CurTime() + self.NPC_NextPrimaryFire
-					end
-				end
-				return false
-			end
-			if IsValid(ene) then
-				return true
-			end
-		end
-	end
-	return false
 end
 
 function SWEP:NPCShoot_Primary()
@@ -109,68 +108,93 @@ function SWEP:NPCShoot_Primary()
 	if !IsValid(owner) then return end
 	local ene = owner:GetEnemy()
 	if !owner.VJ_IsBeingControlled && (!IsValid(ene) or (!owner:Visible(ene))) then return end
-	if owner.IsVJBaseSNPC == true then
-		owner:DoPoseParameterLooking()
+	if owner.IsVJBaseSNPC then
+		owner:UpdatePoseParamTracking()
 	end
 	
 	-- Secondary Fire
-	if self.NPC_HasSecondaryFire == true && owner.CanUseSecondaryOnWeaponAttack && !self.NPC_SecondaryFirePerforming && CurTime() > self.NPC_SecondaryFireNextT && ene:GetPos():Distance(owner:GetPos()) <= self.NPC_SecondaryFireDistance then
-		if math.random(1, self.NPC_SecondaryFireChance) == 1 then
-			local secAnim = VJ_PICK(owner.AnimTbl_WeaponAttackSecondary)
-			owner:VJ_ACT_PLAYACTIVITY(secAnim, true, false, true)
-			self.NPC_SecondaryFirePerforming = true
-			self:NPC_SecondaryFire_BeforeTimer(ene, owner.WeaponAttackSecondaryTimeUntilFire)
-			timer.Simple(owner.WeaponAttackSecondaryTimeUntilFire, function()
-				if IsValid(self) then
-					self.NPC_SecondaryFirePerforming = false
-					if IsValid(owner) && IsValid(owner:GetEnemy()) && CurTime() > self.NPC_SecondaryFireNextT then
-						self:NPC_SecondaryFire()
-						if self.NPC_HasSecondaryFireSound == true then VJ_EmitSound(owner, self.NPC_SecondaryFireSound, self.NPC_SecondaryFireSoundLevel) end
-						if self.NPC_SecondaryFireNext != false then -- Support for animation events
-							self.NPC_SecondaryFireNextT = CurTime() + math.Rand(self.NPC_SecondaryFireNext.a, self.NPC_SecondaryFireNext.b)
-						end
+	if self.NPC_HasSecondaryFire && owner.Weapon_CanSecondaryFire && CurTime() > self.NPC_SecondaryFireNextT && ene:GetPos():Distance(owner:GetPos()) <= self.NPC_SecondaryFireDistance then
+		local anim, animDur, animType = owner:PlayAnim(owner.AnimTbl_WeaponAttackSecondary, true, false, true)
+		if animType != VJ.ANIM_TYPE_GESTURE then
+			animDur = animDur - 0.5
+		end
+		local fireTime = (anim == ACT_INVALID and 0) or owner.Weapon_SecondaryFireTime or animDur
+		self.NPC_SecondaryFireNextT = CurTime() + fireTime + 0.5 -- Prevent attempting to fire again
+		self:NPC_SecondaryFire_BeforeTimer(ene, fireTime)
+		timer.Simple(fireTime, function()
+			if IsValid(self) && IsValid(owner) && IsValid(owner:GetEnemy()) then -- ONLY check for cur anim IF it even had one!
+				self:NPC_SecondaryFire()
+				if self.NPC_HasSecondaryFireSound then
+					local fireSd = VJ.PICK(self.NPC_SecondaryFireSound)
+					if fireSd != false then
+						self:EmitSound(fireSd, self.NPC_SecondaryFireSoundLevel, math.random(90, 110), 1, CHAN_WEAPON, 0, 0, VJ_RecipientFilter)
 					end
 				end
-			end)
-			return
-		else
-			self.NPC_SecondaryFireNextT = CurTime() + math.Rand(self.NPC_SecondaryFireNext.a, self.NPC_SecondaryFireNext.b)
-		end
+				self.NPC_SecondaryFireNextT = CurTime() + math.Rand(self.NPC_SecondaryFireNext.a, self.NPC_SecondaryFireNext.b)
+			end
+		end)
+		return
 	end
 	
 	-- Primary Fire
 	timer.Simple(self.NPC_TimeUntilFire, function()
-		if IsValid(self) && IsValid(owner) && self:NPCAbleToShoot() == true && CurTime() > self.NPC_NextPrimaryFireT then
+		if !IsValid(self) then return end
+		local curTime = CurTime()
+		owner = self:GetOwner()
+		if IsValid(owner) && owner:IsNPC() && self:NPC_CanFire() && curTime > self.NPC_NextPrimaryFireT then
 			self:PrimaryAttack()
+			owner.WeaponLastShotTime = curTime
 			if self.NPC_NextPrimaryFire != false then -- Support for animation events
-				self.NPC_NextPrimaryFireT = CurTime() + self.NPC_NextPrimaryFire
+				self.NPC_NextPrimaryFireT = curTime + self.NPC_NextPrimaryFire
 				for _, tv in ipairs(self.NPC_TimeUntilFireExtraTimers) do
-					timer.Simple(tv, function() if IsValid(self) && IsValid(owner) && self:NPCAbleToShoot() == true then self:PrimaryAttack() end end)
+					timer.Simple(tv, function()
+						if !IsValid(self) then return end
+						owner = self:GetOwner()
+						if IsValid(owner) && owner:IsNPC() && self:NPC_CanFire() then
+							self:PrimaryAttack()
+						end
+					end)
 				end
 			end
-			if owner.IsVJBaseSNPC == true then owner.Weapon_TimeSinceLastShot = CurTime() end
 		end
 	end)
 end
 
-function SWEP:CustomOnPrimaryAttack_BeforeShoot()
+function SWEP:OnPrimaryAttack(status, statusData)
 	if CLIENT then return end
-	local bullet = ents.Create("obj_vj_horde_bullet")
-	bullet:SetPos(self:GetAttachment(self:LookupAttachment("muzzle")).Pos)
-	bullet:SetAngles(self:GetOwner():GetAngles())
-	bullet:SetOwner(self:GetOwner())
-	bullet:Activate()
-	bullet.TracerColor = Color(0, 191, 255)
-	bullet.TracerWidth = 20
-	bullet:Spawn()
-	bullet.DirectDamage = 8
-	
-	local phy = bullet:GetPhysicsObject()
-	if phy:IsValid() then
-		local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
-		dir:Normalize()
-		dir = dir + VectorRand() * 0.02
-		dir:Normalize()
-		phy:ApplyForceCenter(dir * 4250)
+	if status == "Init" then
+		if SERVER then
+			local fireSd = VJ.PICK(self.Primary.Sound)
+			if fireSd != false then
+				self:EmitSound(fireSd, self.Primary.SoundLevel, math.random(self.Primary.SoundPitch.a, self.Primary.SoundPitch.b), self.Primary.SoundVolume, CHAN_WEAPON, 0, 0, VJ_RecipientFilter)
+				//EmitSound(fireSd, owner:GetPos(), owner:EntIndex(), CHAN_WEAPON, 1, 140, 0, 100, 0, filter)
+				//sound.Play(fireSd, owner:GetPos(), self.Primary.SoundLevel, math.random(self.Primary.SoundPitch.a, self.Primary.SoundPitch.b), self.Primary.SoundVolume)
+			end
+			if self.Primary.HasDistantSound then
+				local fireFarSd = VJ.PICK(self.Primary.DistantSound)
+				if fireFarSd != false then
+					-- Use "CHAN_AUTO" instead of "CHAN_WEAPON" otherwise it will override primary firing sound because it's also "CHAN_WEAPON"
+					self:EmitSound(fireFarSd, self.Primary.DistantSoundLevel, math.random(self.Primary.DistantSoundPitch.a, self.Primary.DistantSoundPitch.b), self.Primary.DistantSoundVolume, CHAN_AUTO, 0, 0, VJ_RecipientFilter)
+				end
+			end
+		end
+		local bullet = ents.Create("obj_vj_horde_bullet")
+		bullet:SetPos(self:GetAttachment(self:LookupAttachment("muzzle")).Pos)
+		bullet:SetAngles(self:GetOwner():GetAngles())
+		bullet:SetOwner(self:GetOwner())
+		bullet:Activate()
+		bullet.TracerColor = Color(0, 191, 255)
+		bullet.TracerWidth = 20
+		bullet:Spawn()
+		bullet.DirectDamage = 8
+		
+		local phy = bullet:GetPhysicsObject()
+		if phy:IsValid() then
+			local dir = (self:GetOwner():GetEnemy():GetPos() - self:GetOwner():GetPos())
+			dir:Normalize()
+			dir = dir + VectorRand() * 0.02
+			dir:Normalize()
+			phy:ApplyForceCenter(dir * 4250)
+		end
 	end
 end

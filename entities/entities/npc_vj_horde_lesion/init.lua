@@ -83,6 +83,18 @@ function ENT:Rage()
     end)
 end
 
+
+function ENT:TranslateActivity(act)
+    -- throw1 idle, throw2 walk, throw3 run
+    if (act == ACT_WALK or act == ACT_RUN) then
+		if self.Raged then
+			return ACT_RUN
+        end
+        return ACT_WALK
+    end
+    return self.BaseClass.TranslateActivity(self, act)
+end
+
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(13, 13, 50), Vector(-13, -13, 0))
     self:SetModelScale(1.75)
