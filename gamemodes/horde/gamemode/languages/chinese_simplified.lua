@@ -118,40 +118,40 @@ LANGUAGE["Infusion_Ruination"] = "毁灭"
 
 LANGUAGE["Game_Preparing..."] = "准备中..."
 LANGUAGE["Infusion_Description_Hemo"] = [[
-转换75%武器伤害为利器伤害。
+转换85%武器伤害为利器伤害。
 
 武器只能造成利器伤害。
 
 武器伤害对敌人累积出血值。
 ]]
 LANGUAGE["Infusion_Description_Concussive"] = [[
-转换75%武器伤害为钝器伤害。
+转换85%武器伤害为钝器伤害。
 
 武器只能造成钝器伤害。
 
 武器伤害对敌人累积眩晕值。
 ]]
 LANGUAGE["Infusion_Description_Septic"] = [[
-转换75%武器伤害为毒素伤害。
+转换85%武器伤害为毒素伤害。
 
 武器只能造成剧毒伤害。
 
 武器伤害对敌人累积毒爆值。
 ]]
 LANGUAGE["Infusion_Description_Flaming"] = [[
-转换75%武器伤害为火焰伤害。
+转换85%武器伤害为火焰伤害。
 
 武器只能造成火焰伤害。
 ]]
 LANGUAGE["Infusion_Description_Arctic"] = [[
-转换75%武器伤害为寒冰伤害。
+转换85%武器伤害为寒冰伤害。
 
 武器只能造成寒冰伤害。
 
 武器伤害对敌人累积霜冻值。
 ]]
 LANGUAGE["Infusion_Description_Galvanizing"] = [[
-转换75%武器伤害为雷电伤害。
+转换85%武器伤害为雷电伤害。
 
 武器只能造成雷电伤害。
 
@@ -204,11 +204,11 @@ Increases weapon damage the longer the weapon is being held by the user.
 减少20%武器伤害。
 ]]
 LANGUAGE["Infusion_Description_Ruination"] = [[
-根据玩家当前的即死累积值提升武器伤害。
+根据玩家当前的衰退累积值提升武器伤害。
 
-每10即死累计值，提升5%武器伤害。
+每10衰退累计值，提升5%武器伤害。
 
-持有当前武器时，每秒钟玩家会获得10即死累计值。
+持有当前武器时，每秒钟玩家会获得10衰退累计值。
 ]]
 
 -- Class Panel
@@ -1814,6 +1814,8 @@ LANGUAGE["Gadget_Desc_gadget_resistance_booster"] = [[
 LANGUAGE["Gadget_gadget_agility_booster"] = [[敏捷提升]]
 LANGUAGE["Gadget_Desc_gadget_agility_booster"] = [[
 提升 {1} 移动速度。
+提升 {2} 跳跃高度。
+提升 {3} 闪避概率
 ]]
 
 LANGUAGE["Gadget_gadget_ultimate_booster"] = [[极限提升]]

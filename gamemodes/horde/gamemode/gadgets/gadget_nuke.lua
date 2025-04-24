@@ -1,6 +1,6 @@
 GADGET.PrintName = "Nuke"
 GADGET.Description =
-[[Bombards an area with 5 large explosions after a 10 second delay.
+[[Bombards an area with 8 large explosions after a 10 second delay.
 Finishes off with a Nuke detonation dealing massive Blast damage.
 
 Leaves behind Decay for 60 seconds.]]
@@ -61,7 +61,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     flare:Spawn()
     timer.Simple(9, function ()
         flare:Remove()
-        local flashpower = 5000
+        local flashpower = 2000
         local targets = ents.FindInSphere(pos, flashpower)
         for _, k in pairs(targets) do
             if k:IsPlayer() and k:VisibleVec( pos ) then
@@ -74,21 +74,21 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         local attacker = ply
         if not ply:IsValid() then attacker = Entity(0) end
 
-        for i = 1, 5 do
+        for i = 1, 8 do
             timer.Simple(0.2 * i, function ()
                 if not ply:IsValid() then attacker = Entity(0) end
                 local angle = math.random() * math.pi * 2
-                local distance = math.random(300, 600)
+                local distance = math.random(200, 600)
                 local x = math.cos(angle) * distance
                 local y = math.sin(angle) * distance
                 local blast_pos = pos + Vector(x, y, 0)
-                Blast(attacker, ent, blast_pos, 1200, 800, "explosion_huge", "ambient/explosions/explode_" .. math.random(1, 9) .. ".wav")
+                Blast(attacker, ent, blast_pos, 1000, 800, "explosion_huge", "ambient/explosions/explode_" .. math.random(1, 9) .. ".wav")
             end )
         end
 
-        timer.Simple(1.5, function ()
+        timer.Simple(2, function ()
             if not ply:IsValid() then attacker = Entity(0) end
-            Blast(attacker, ent, pos, 2000, 1500, "explosion_huge", "ambient/explosions/explode_1.wav")
+            Blast(attacker, ent, pos, 1600, 1500, "explosion_huge", "ambient/explosions/explode_1.wav")
         end )
 
         HORDE:CreateTimer("NukeDecay", 1, 60, function ()

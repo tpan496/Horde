@@ -129,46 +129,38 @@ LANGUAGE["Infusion_Chrono"] = "Chrono"
 LANGUAGE["Infusion_Ruination"] = "Ruination"
 
 LANGUAGE["Infusion_Description_Hemo"] = [[
-Convert 75% weapon damage into Slashing damage.
-
-Weapon deals only Slashing damage.
-
 Weapon damage increases Bleeding buildup.
+
+15% less weapon damage.
 ]]
 LANGUAGE["Infusion_Description_Concussive"] = [[
-Convert 75% weapon damage into Blunt damage.
-
-Weapon deals only Blunt damage.
-
 Weapon damage increases Stun buildup.
+
+15% less weapon damage.
 ]]
 LANGUAGE["Infusion_Description_Septic"] = [[
-Convert 75% weapon damage into Poison damage.
+Converts weapon damage into Poison damage.
+25% of weapon damage increases Break buildup.
 
-Weapon deals only Poison damage.
-
-Weapon damage increases Break buildup.
+15% less weapon damage.
 ]]
 LANGUAGE["Infusion_Description_Flaming"] = [[
-Convert 75% weapon damage into Fire damage.
+Converts weapon damage into Fire damage.
+Dealing Fire damage ignites enemies.
 
-Weapon deals only Fire damage.
-
-Weapon ignites enemies on hit.
+15% less weapon damage.
 ]]
 LANGUAGE["Infusion_Description_Arctic"] = [[
-Convert 75% weapon damage into Cold damage.
+Converts weapon damage into Cold damage.
+25% of weapon damage increases Frostbite buildup.
 
-Weapon deals only Cold damage.
-
-Weapon damage increases Frostbite buildup.
+15% less weapon damage.
 ]]
 LANGUAGE["Infusion_Description_Galvanizing"] = [[
-Convert 75% weapon damage into Lightning damage.
+Converts weapon damage into Lightning damage.
+25% of weapon damage increases Shock buildup.
 
-Weapon deals only Lightning damage.
-
-Weapon damage increases Shock buildup.
+15% less weapon damage.
 ]]
 LANGUAGE["Infusion_Description_Quality"] = [[
 20% increased weapon damage.
@@ -215,10 +207,10 @@ Increase caps at 50%.
 20% decreased weapon damage.
 ]]
 LANGUAGE["Infusion_Description_Ruination"] = [[
-Increases weapon damage based on your current Necrosis buildup.
-5% damage increase per 10 Necrosis buildup, up to 25%.
+Increases weapon damage based on your current Decay buildup.
+5% damage increase per 10 Decay buildup, up to 25%.
 
-Gain 10 Necrosis buildup per second while holding this weapon.
+Gain 10 Decay buildup per second while holding this weapon.
 ]]
 
 -- Classes

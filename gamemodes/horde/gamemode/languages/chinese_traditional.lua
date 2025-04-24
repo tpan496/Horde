@@ -131,40 +131,40 @@ LANGUAGE["Infusion_Chrono"] = "時間"
 LANGUAGE["Infusion_Ruination"] = "毀滅"
 
 LANGUAGE["Infusion_Description_Hemo"] = [[
-轉換 75% 武器傷害為利器傷害。
+轉換 85% 武器傷害為利器傷害。
 
 武器只能造成利器傷害。
 
 武器傷害對敵人累積出血值。
 ]]
 LANGUAGE["Infusion_Description_Concussive"] = [[
-轉換 75% 武器傷害為鈍器傷害。
+轉換 85% 武器傷害為鈍器傷害。
 
 武器只能造成鈍器傷害。
 
 武器傷害對敵人累積眩暈值。
 ]]
 LANGUAGE["Infusion_Description_Septic"] = [[
-轉換 75% 武器傷害為毒素傷害。
+轉換 85% 武器傷害為毒素傷害。
 
 武器只能造成劇毒傷害。
 
 武器傷害對敵人累積毒爆值。
 ]]
 LANGUAGE["Infusion_Description_Flaming"] = [[
-轉換 75% 武器傷害為火焰傷害。
+轉換 85% 武器傷害為火焰傷害。
 
 武器只能造成火焰傷害。
 ]]
 LANGUAGE["Infusion_Description_Arctic"] = [[
-轉換 75% 武器傷害為寒冰傷害。
+轉換 85% 武器傷害為寒冰傷害。
 
 武器只能造成寒冰傷害。
 
 武器傷害對敵人累積霜凍值。
 ]]
 LANGUAGE["Infusion_Description_Galvanizing"] = [[
-轉換 75% 武器傷害為雷電傷害。
+轉換 85% 武器傷害為雷電傷害。
 
 武器只能造成雷電傷害。
 
@@ -216,11 +216,11 @@ LANGUAGE["Infusion_Description_Chrono"] = [[
 減少 20% 武器傷害。
 ]]
 LANGUAGE["Infusion_Description_Ruination"] = [[
-根據玩家當前的即死累積值提升武器傷害。
+根據玩家當前的衰退累積值提升武器傷害。
 
-每 10 即死累計值，提升 5% 武器傷害。
+每 10 衰退累計值，提升 5% 武器傷害。
 
-持有當前武器時，每秒玩家會獲得 10 即死累計值。
+持有當前武器時，每秒玩家會獲得 10 衰退累計值。
 ]]
 
 -- Classes 
