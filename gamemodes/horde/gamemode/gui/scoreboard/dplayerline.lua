@@ -307,22 +307,34 @@ end
 function PANEL:DoRightClick()
 	self.SubMenu = DermaMenu()
 	local subMenu = self.SubMenu
-	subMenu:AddOption( "Copy SteamID", function() SetClipboardText( self:GetPlayer():SteamID() ) end )
-	subMenu:AddOption( "Copy SteamID64", function() SetClipboardText( self:GetPlayer():SteamID64() ) end )
-	subMenu:AddOption( "Copy Name", function() SetClipboardText( self:GetPlayer():Name() ) end )
-	subMenu:AddOption( "Copy Profile URL", function() SetClipboardText( "https://steamcommunity.com/profiles/" .. self:GetPlayer():SteamID64() ) end )
+
+	local ply = self:GetPlayer()
+	subMenu:AddOption( "Copy SteamID", function() SetClipboardText( ply:SteamID() ) end )
+	subMenu:AddOption( "Copy SteamID64", function() SetClipboardText( ply:SteamID64() ) end )
+	subMenu:AddOption( "Copy Name", function() SetClipboardText( ply:Name() ) end )
+	subMenu:AddOption( "Copy Profile URL", function() SetClipboardText( "https://steamcommunity.com/profiles/" .. ply:SteamID64() ) end )
 	subMenu:AddSpacer()
-	subMenu:AddOption( "Mute", function()
-		local muted = self:GetPlayer():IsMuted()
-		self:GetPlayer():SetMuted( not muted )
-		if not  muted then
-			self.m_Avatar:SetAlpha( 100 )
-		else
-			self.m_Avatar:SetAlpha( 255 )
-		end
-	end )
+
+	if ply ~= LocalPlayer() then
+		local str = ply:IsMuted() and "Unmute" or "Mute"
+		subMenu:AddOption( str, function()
+			local muted = ply:IsMuted()
+			ply:SetMuted( not muted )
+			if not muted then
+				self.m_Avatar:SetAlpha( 100 )
+			else
+				self.m_Avatar:SetAlpha( 255 )
+			end
+		end )
+	end
 
 	subMenu:Open()
 end
+
+hook.Add( "OnPlayerChat", "Horde_MutePlayer", function( ply )
+	if ply:IsMuted() then
+		return true
+	end
+end )
 
 vgui.Register( "DPlayerLine", PANEL, "DButton" )
