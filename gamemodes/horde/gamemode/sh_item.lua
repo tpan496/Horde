@@ -679,7 +679,7 @@ function HORDE:GetDefaultItemsData()
     Manipulates negative energy fields.]],
     {Demolition=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_PHYSICAL}, nil, {"Warlock"}, true)
 
-    HORDE:CreateItem("Special",    "Carcass Biosystem",   "horde_carcass",   0,  13,
+    HORDE:CreateItem("Special",    "Carcass Biosystem",   "horde_carcass",   0,  12,
     [[Only usable by Carcass subclass!
     Advanced combat biosystem that completely screws up the appearance of its user.
     Leaves behind an unpleasant stench.
@@ -688,7 +688,7 @@ function HORDE:GetDefaultItemsData()
     Hold for a charged punch that deals increased damage in an area.]],
     {Heavy=true}, -1, -1, nil, nil, nil, nil, {HORDE.DMG_PHYSICAL}, nil, {"Carcass"}, true)
 
-    HORDE:CreateItem("Special",    "Pheropod",   "horde_pheropod",   0,  11,
+    HORDE:CreateItem("Special",    "Pheropod",   "horde_pheropod",   0,  9,
     [[Only usable by Hatcher subclass!
     Pheropods that can hatch and control alien Antlions.
 

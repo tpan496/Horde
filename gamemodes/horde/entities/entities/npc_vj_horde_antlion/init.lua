@@ -119,9 +119,13 @@ end
 
 function ENT:UpgradeReset()
 	self.level = self.properties.level
+	local anthp = self.Base_Health
+	if self.Owner:IsValid() and self.Owner:Horde_GetPerk("hatcher_natural_selection") then
+		anthp = self.Base_Health * 1.2
+	end
 	if self.Evolve_Stage == 2 then
 		self:SetSkin(1)
-		self:SetMaxHealth(self.Base_Health * 1.5 + self.level * 9)
+		self:SetMaxHealth(anthp * 1.5 + self.level * 10)
 		self:SetHealth(self:GetMaxHealth())
 		self:SetModelScale(0.75)
 		self.MeleeAttackDamage = 45 + self.level * 6
@@ -129,7 +133,7 @@ function ENT:UpgradeReset()
 		self.NextRangeAttackTime = 2
 	elseif self.Evolve_Stage == 3 then
 		self:SetSkin(3)
-		self:SetMaxHealth(self.Base_Health * 2 + self.level * 25)
+		self:SetMaxHealth(anthp * 2 + self.level * 25)
 		self:SetHealth(self:GetMaxHealth())
 		self:SetModelScale(1)
 		self.MeleeAttackDamage = 60 + self.level * 10
@@ -141,7 +145,7 @@ function ENT:UpgradeReset()
 		self:SetModelScale(1)
 		self.Model = "models/antlion_guard.mdl"
 		self:SetModel(self.Model)
-		self:SetMaxHealth(self.Base_Health * 4 + self.level * 50)
+		self:SetMaxHealth(anthp * 4 + self.level * 50)
 		self:SetHealth(self:GetMaxHealth())
 		self.MeleeAttackDamage = 70 + self.level * 15
 		self.RangeAttackDamage = 45 + self.level * 8
@@ -178,10 +182,14 @@ function ENT:Horde_Evolve(health)
 	if self.Owner:IsValid() and self.Owner:Horde_GetPerk("hatcher_metamorphosis") then
 		max_stage = 4
 	end
+	local anthp = self.Base_Health
+	if self.Owner:IsValid() and self.Owner:Horde_GetPerk("hatcher_natural_selection") then
+		anthp = self.Base_Health * 1.2
+	end
 	self.Evolve_Stage = math.min(max_stage, self.Evolve_Stage + 1)
 	if self.Evolve_Stage == 2 then
 		self:SetSkin(1)
-		self:SetMaxHealth(self.Base_Health * 1.5 + self.level * 9)
+		self:SetMaxHealth(anthp * 1.5 + self.level * 10)
 		self:SetHealth(self:GetMaxHealth())
 		self:SetModelScale(0.75)
 		self.MeleeAttackDamage = 45 + self.level * 6
@@ -189,7 +197,7 @@ function ENT:Horde_Evolve(health)
 		self.NextRangeAttackTime = 2
 	elseif self.Evolve_Stage == 3 then
 		self:SetSkin(3)
-		self:SetMaxHealth(self.Base_Health * 2 + self.level * 25)
+		self:SetMaxHealth(anthp * 2 + self.level * 25)
 		self:SetHealth(self:GetMaxHealth())
 		self:SetModelScale(1)
 		self.MeleeAttackDamage = 60 + self.level * 10
@@ -201,7 +209,7 @@ function ENT:Horde_Evolve(health)
 		self:SetModelScale(1)
 		self.Model = "models/antlion_guard.mdl"
 		self:SetModel(self.Model)
-		self:SetMaxHealth(self.Base_Health * 3 + self.level * 50)
+		self:SetMaxHealth(anthp * 4 + self.level * 50)
 		self:SetHealth(self:GetMaxHealth())
 		self.MeleeAttackDamage = 70 + self.level * 15
 		self.RangeAttackDamage = 45 + self.level * 8
@@ -355,9 +363,10 @@ function ENT:BugPulse()
 			else
 				hook.Run("Horde_OnAntlionPulse", healer, self, ent)
 			end
-			local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.05, healer=healer})
+			local pulseheal = ent:GetMaxHealth() * (0.04 + (self.Evolve_Stage * 0.01))
+			local healinfo = HealInfo:New({amount=pulseheal, healer=healer})
 			HORDE:OnPlayerHeal(ent, healinfo)
-			self:SetHealth(math.min(self:GetMaxHealth(), self:Health() + self:GetMaxHealth() * 0.05))
+			self:SetHealth(math.min(self:GetMaxHealth(), self:Health() + pulseheal))
 		end
 	end
 
