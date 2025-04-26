@@ -313,9 +313,10 @@ function PANEL:DoRightClick()
 	subMenu:AddOption( "Copy SteamID64", function() SetClipboardText( ply:SteamID64() ) end )
 	subMenu:AddOption( "Copy Name", function() SetClipboardText( ply:Name() ) end )
 	subMenu:AddOption( "Copy Profile URL", function() SetClipboardText( "https://steamcommunity.com/profiles/" .. ply:SteamID64() ) end )
-	subMenu:AddSpacer()
 
 	if ply ~= LocalPlayer() then
+		subMenu:AddSpacer()
+
 		local str = ply:IsMuted() and "Unmute" or "Mute"
 		subMenu:AddOption( str, function()
 			local muted = ply:IsMuted()
