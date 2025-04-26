@@ -4,7 +4,7 @@ function entmeta:Horde_AddHemorrhage(inflictor)
     if self:IsPlayer() then
         local id = self:GetCreationID()
         timer.Create("Horde_HemorrhageLoop" .. id, 0.5, 0, function ()
-            if not self:IsValid() or not self:Alive() or self.Horde_Debuff_Active[HORDE.Status_Bleeding] then
+            if not self:IsValid() or not self:Alive() or self.Horde_Debuff_Active[HORDE.Status_Bleeding] or not IsValid( inflictor ) then
                 timer.Remove(id)
                 return
             end
