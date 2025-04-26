@@ -120,7 +120,7 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
         end
 
         self:DeathEffects()
-        self:Remove()
+		SafeRemoveEntityDelayed(self, 0)
     end
 end
 
