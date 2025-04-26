@@ -102,41 +102,44 @@ function ENT:IsAlly(ent)
 end
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnCollideWithoutRemove(data, phys)
+	if self.Colliding then return end
+	self.Colliding = true
+	phys:Sleep()
 
-	local hitent = data.HitEntity
+	timer.Simple( 0, function()
+		local hitent = data.HitEntity
 
-	if self:IsAlly(hitent) then
-        SafeRemoveEntityDelayed( self, 0 )
-		return
-	end
+		if self:IsAlly(hitent) then
+			self:Remove()
+			return
+		end
 
-	if hitent:IsWorld() then
-		self:EmitSound("snpc/hunterarc/flechette_impact_stick" .. math.random(1, 5) .. ".wav" , 85, math.random(90, 110))
+		if hitent:IsWorld() then
+			self:EmitSound("snpc/hunterarc/flechette_impact_stick" .. math.random(1, 5) .. ".wav" , 85, math.random(90, 110))
 
-		self:SetPos(data.HitPos)
-        timer.Simple( 0, function()
-            self:SetMoveType(MOVETYPE_NONE)
-            self:SetSolid(SOLID_NONE)
-        end )
+			self:SetPos(data.HitPos)
+			self:SetMoveType(MOVETYPE_NONE)
+			self:SetSolid(SOLID_NONE)
 
-		self:Explode()
+			self:Explode()
 
-		self:FireBullets({
-			Src = self:GetPos(),
-			Dir = self:GetForward(),
-			Tracer = 0,
-			Damage = 0,
-			Distance = 25,
-		})
-	else
-        self:EmitSound("snpc/hunterarc/flechette_flesh_impact" .. math.random(1, 4) .. ".wav" , 85, math.random(90, 110))
+			self:FireBullets({
+				Src = self:GetPos(),
+				Dir = self:GetForward(),
+				Tracer = 0,
+				Damage = 0,
+				Distance = 25,
+			})
+		else
+			self:EmitSound("snpc/hunterarc/flechette_flesh_impact" .. math.random(1, 4) .. ".wav" , 85, math.random(90, 110))
 
-        if hitent:GetClass() == "func_breakable_surf" then
-            hitent:Fire("Shatter")
-        end
-        self:DeathEffects()
-        SafeRemoveEntityDelayed( self, 0 )
-	end
+			if hitent:GetClass() == "func_breakable_surf" then
+				hitent:Fire("Shatter")
+			end
+			self:DeathEffects()
+			self:Remove()
+		end
+	end )
 end
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
