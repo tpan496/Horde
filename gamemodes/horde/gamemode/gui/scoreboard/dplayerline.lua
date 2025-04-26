@@ -5,7 +5,7 @@ local PANEL = {}
 
 PANEL.m_Player = NULL
 PANEL.NextRefresh = 0
-PANEL.RefreshTime = 1
+PANEL.RefreshTime = 0.25
 
 local draw_RoundedBox = draw.RoundedBox
 
