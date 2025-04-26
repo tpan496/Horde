@@ -51,22 +51,24 @@ function ENT:Think()
     end
 end
 
-function ENT:PhysicsCollide(coldata, collider)
+function ENT:PhysicsCollide( coldata, collider )
     if SERVER then
-        self:SetMoveType( MOVETYPE_NONE )
-        self:SetSolid( SOLID_NONE )
-        self:PhysicsInit( SOLID_NONE )
-
+        if self.Colliding then return end
+        self.Colliding = true
         -- Fixes horde_sticky_bomb[362]: Changing collision rules within a callback is likely to cause crashes! spam
         timer.Simple( 0, function()
-            if IsValid( self ) then
-                self:SetCollisionGroup( COLLISION_GROUP_PLAYER_MOVEMENT )
+            if not IsValid( self ) then return end
+
+            self:SetMoveType( MOVETYPE_NONE )
+            self:SetSolid( SOLID_NONE )
+            self:PhysicsInit( SOLID_NONE )
+
+            self:SetCollisionGroup( COLLISION_GROUP_PLAYER_MOVEMENT )
+
+            if coldata.HitEntity and coldata.HitEntity:IsValid() and coldata.HitEntity:IsNPC() then
+                self:SetParent( coldata.HitEntity, 0 )
             end
         end )
-
-        if coldata.HitEntity and coldata.HitEntity:IsValid() and coldata.HitEntity:IsNPC() then
-            self:SetParent(coldata.HitEntity, 0)
-        end
     end
 end
 
