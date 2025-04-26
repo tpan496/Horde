@@ -13,23 +13,14 @@ GADGET.Params = {
 }
 GADGET.Hooks = {}
 
-GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
+GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run, bonus_jump)
     if ply:Horde_GetGadget() ~= "gadget_agility_booster" then return end
     bonus_walk.increase = bonus_walk.increase + 0.25
     bonus_run.increase = bonus_run.increase + 0.25
+    bonus_jump.increase = bonus_jump.increase + 0.3
 end
 
 GADGET.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
     if ply:Horde_GetGadget() ~= "gadget_agility_booster" then return end
     bonus.evasion = bonus.evasion + 0.2
-end
-
-GADGET.Hooks.Horde_OnSetGadget = function(ply, gadget)
-    if gadget ~= "gadget_agility_booster" then return end
-    ply:SetJumpPower( 150 * ( 1 + 0.3 ) )
-end
-
-GADGET.Hooks.Horde_OnUnsetGadget = function(ply, gadget)
-    if gadget ~= "gadget_agility_booster" then return end
-    ply:SetJumpPower( 150 )
 end

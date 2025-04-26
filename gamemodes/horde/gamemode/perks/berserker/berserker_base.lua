@@ -5,7 +5,8 @@ Complexity: HIGH
 
 {1} increased Slashing and Blunt damage. ({2} per level, up to {3}).
 {1} increased Global damage resistance. ({2} per level, up to {3}).
-{4} increased Movement Speed and +{5} damage block.
+{4} increased Movement Speed and Jump height
++{5} damage block.
 
 Aerial Parry: Jump to reduce Physical damage taken by {6}.]]
 PERK.Params = {
@@ -50,8 +51,9 @@ PERK.Hooks.Horde_PrecomputePerkLevelBonus = function ( ply )
     end
 end
 
-hook.Add("Horde_PlayerMoveBonus", "Horde_BerserkerSpeed", function (ply, bonus_walk, bonus_run)
+hook.Add("Horde_PlayerMoveBonus", "Horde_BerserkerSpeed", function (ply, bonus_walk, bonus_run, bonus_jump)
     if not ply:Horde_GetPerk("berserker_base") then return end
     bonus_walk.increase = bonus_walk.increase + 0.2
     bonus_run.increase = bonus_run.increase + 0.2
+    bonus_jump.increase = bonus_jump.increase + 0.2
 end)

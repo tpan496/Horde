@@ -1,5 +1,5 @@
 GADGET.PrintName = "Agility Shard"
-GADGET.Description = "{1} increased movement speed for 30 seconds."
+GADGET.Description = "{1} increased movement speed for 30 seconds.\n{1} increased jump height for 30 seconds."
 GADGET.Icon = "items/gadgets/agility_shard.png"
 GADGET.Droppable = true
 GADGET.Once = true
@@ -22,9 +22,10 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     end)
 end
 
-GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
+GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run, bonus_jump)
     if ply.Horde_Has_Agility_Shard then
         bonus_walk.increase = bonus_walk.increase + 0.2
         bonus_run.increase = bonus_run.increase + 0.2
+        bonus_jump.increase = bonus_jump.increase + 0.2
     end
 end

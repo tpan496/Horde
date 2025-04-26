@@ -63,7 +63,7 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     end
 end
 
-PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
+PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run, bonus_jump)
     if not ply:Horde_GetPerk("specops_base") then return end
     if ply.Horde_In_Tactical_Mode then
         local b = ply:Horde_GetPerkLevelBonus("specops_base")

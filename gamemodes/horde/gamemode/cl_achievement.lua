@@ -152,7 +152,8 @@ function HORDE:SaveMapAchievements()
         and GetConVarNumber("horde_start_money") <= 1000
         and GetConVarNumber("horde_round_bonus") <= 500
         and GetConVarNumber("horde_base_walkspeed") <= 180
-        and GetConVarNumber("horde_base_runspeed") <= 220 then
+        and GetConVarNumber("horde_base_runspeed") <= 220
+        and GetConVarNumber("horde_base_jumpheight") <= 150 then
             HORDE.achievements_map[map].config = 1
         else
             HORDE.achievements_map[map].config = math.max(0, HORDE.achievements_map[map].config)

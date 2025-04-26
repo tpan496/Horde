@@ -688,21 +688,23 @@ end )
 
 hook.Add("Move", "Horde_PlayerMove", function (ply, mv)
     if ply:Horde_GetClass() then
-        ply:SetJumpPower(150)
         local bonus_walk = {more = 1, increase = 0}
         local bonus_run = {more = 1, increase = 0}
-        hook.Run("Horde_PlayerMoveBonus", ply, bonus_walk, bonus_run)
+        local bonus_jump = {more = 1, increase = 0}
+        hook.Run("Horde_PlayerMoveBonus", ply, bonus_walk, bonus_run, bonus_jump)
         ply:SetWalkSpeed(ply:Horde_GetClass().movespd * bonus_walk.more * (1 + bonus_walk.increase))
         ply:SetRunSpeed(ply:Horde_GetClass().sprintspd * bonus_run.more * (1 + bonus_run.increase))
+        ply:SetJumpPower(ply:Horde_GetClass().jumppwr * bonus_jump.more * (1 + bonus_jump.increase))
     end
 end)
 
-hook.Add("Horde_PlayerMoveBonus", "Horde_PlayerPayloadMove", function (ply, bonus_walk, bonus_run)
+hook.Add("Horde_PlayerMoveBonus", "Horde_PlayerPayloadMove", function ( ply, bonus_walk, bonus_run, bonus_jump )
     if ply:Horde_HasPayload() then
         local mass = ply.Horde_Payload_Spawn.Horde_Payload_Mass
         if mass and mass > 0 then
             bonus_walk.more = bonus_walk.more * (1 - math.max(0.1, mass/100))
             bonus_run.more = bonus_run.more * (1 - math.max(0.1, mass/100))
+            bonus_jump.more = bonus_jump.more * (1 - math.max(0.1, mass/100))
         end
     end
 end)

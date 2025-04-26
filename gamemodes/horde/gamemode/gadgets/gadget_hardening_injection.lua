@@ -32,7 +32,7 @@ GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     end
 end
 
-GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
+GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run, bonus_jump)
     if ply:Horde_GetGadget() ~= "gadget_hardening_injection" then return end
     if not ply.Horde_In_Hardening_Injection then return end
     bonus_walk.more = bonus_walk.more * 0.5

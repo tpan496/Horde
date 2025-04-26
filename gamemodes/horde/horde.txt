@@ -83,7 +83,7 @@
 		10
 		{
 			"name"		"horde_break_time"
-			"text"		"Break time between waves (>10)"
+			"text"		"Time between waves (>10)"
 			"type"		"Numeric"
 			"default"	"90"
 			"singleplayer" ""
@@ -139,7 +139,7 @@
 		17
 		{
 			"name"		"horde_max_spawn_distance"
-			"text"		"Maximum enenmy respawn distance."
+			"text"		"Max enemy respawn distance."
 			"type"		"Numeric"
 			"default"	"2000"
 			"singleplayer" ""
@@ -147,7 +147,7 @@
 		18
 		{
 			"name"		"horde_min_spawn_distance"
-			"text"		"Minimum enenmy respawn distance."
+			"text"		"Min. enemy respawn distance."
 			"type"		"Numeric"
 			"default"	"400"
 			"singleplayer" ""
@@ -155,7 +155,7 @@
 		19
 		{
 			"name"		"horde_max_spawn_z_distance"
-			"text"		"Maximum enemy spawn height difference."
+			"text"		"Max enemy height diff."
 			"type"		"Numeric"
 			"default"	"500"
 			"singleplayer" ""
@@ -186,10 +186,10 @@
 		}
 		23
 		{
-			"name"		"horde_total_enemies_scaling"
-			"text"		"Forced enemy scaling multiplier"
+			"name"		"horde_base_jumpheight"
+			"text"		"Base Jump Height."
 			"type"		"Numeric"
-			"default"	"0"
+			"default"	"150"
 			"singleplayer" ""
 		}
 		24
@@ -214,6 +214,14 @@
 			"text"		"(ArcCW Only) Free Attachments"
 			"type"		"CheckBox"
 			"default"	"1"
+			"singleplayer" ""
+		}
+		27
+		{
+			"name"		"horde_total_enemies_scaling"
+			"text"		"Forced enemy scaling multi."
+			"type"		"Numeric"
+			"default"	"0"
 			"singleplayer" ""
 		}
 	}

@@ -176,8 +176,9 @@ net.Receive("Horde_GetStats", function (len, ply)
 
     local bonus_walk = {increase = 0, more = 1}
     local bonus_run = {increase = 0, more = 1}
-    hook.Run("Horde_PlayerMoveBonus", ply, bonus_walk, bonus_run)
-    stats["speed"] = math.max(bonus_walk.more + bonus_walk.increase, bonus_run.more + bonus_walk.increase)
+    local bonus_jump = {increase = 0, more = 1}
+    hook.Run("Horde_PlayerMoveBonus", ply, bonus_walk, bonus_run, bonus_jump)
+    stats["speed"] = math.max(bonus_walk.more + bonus_walk.increase, bonus_run.more + bonus_run.increase, bonus_jump.more + bonus_jump.increase)
 
     HORDE:CalcImmunity(ply, stats, HORDE.Status_Bleeding)
     HORDE:CalcImmunity(ply, stats, HORDE.Status_Ignite)

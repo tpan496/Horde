@@ -277,7 +277,7 @@ LANGUAGE["Perk_assault_base"] = [[
 The Assault class is an all-purpose fighter with high mobility and a focus on Adrenaline stacks.
 Complexity: EASY
 
-{1} more movement speed. ({2} per level, up to {3}).
+{1} more movement speed and jump height ({2} per level, up to {3}).
 {5} increased Ballistic damage. ({6} per level, up to {7}).
 
 Gain Adrenaline when you kill an enemy.

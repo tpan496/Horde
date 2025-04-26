@@ -29,11 +29,12 @@ function plymeta:Horde_GetHaste()
     return self.Horde_Haste or 0
 end
 
-hook.Add("Horde_PlayerMoveBonus", "Horde_HasteMovespeed", function(ply, bonus_walk, bonus_run)
+hook.Add("Horde_PlayerMoveBonus", "Horde_HasteMovespeed", function(ply, bonus_walk, bonus_run, bonus_jump)
     if ply:Horde_GetHaste() == 1 then
         local bonus2 = 0.15 * (1 + ply:Horde_GetApplyBuffMore())
         bonus_walk.increase = bonus_walk.increase + bonus2
         bonus_run.increase = bonus_run.increase + bonus2
+        bonus_jump.increase = bonus_jump.increase + bonus2
     end
 end)
 

@@ -10,7 +10,7 @@ PERK.Params = {
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
+PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run, bonus_jump)
     if not ply:Horde_GetPerk("gunslinger_elusive") then return end
     local wpn = HORDE:GetCurrentWeapon(ply)
     if not wpn:IsValid() then return end

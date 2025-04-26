@@ -1,5 +1,5 @@
 GADGET.PrintName = "Ultimate Booster"
-GADGET.Description = [[{1} increased movement speed.
+GADGET.Description = [[{1} increased movement speed and jump height.
 {2} increased maximum health. {1} increased Global damage.
 {1} increased Global damage resistance.
 {2} less debuff buildup.]]
@@ -12,10 +12,11 @@ GADGET.Params = {
 }
 GADGET.Hooks = {}
 
-GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
+GADGET.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run, bonus_jump)
     if ply:Horde_GetGadget() ~= "gadget_ultimate_booster" then return end
     bonus_walk.increase = bonus_walk.increase + 0.15
     bonus_run.increase = bonus_run.increase + 0.15
+    bonus_jump.increase = bonus_jump.increase + 0.15
 end
 
 GADGET.Hooks.Horde_OnSetMaxHealth = function (ply, bonus)

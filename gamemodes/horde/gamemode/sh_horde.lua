@@ -27,6 +27,7 @@ CreateConVar("horde_corpse_cleanup", 1, nil, "Remove corpses.")
 
 CreateConVar("horde_base_walkspeed", 180, nil, "Base walkspeed.")
 CreateConVar("horde_base_runspeed", 220, nil, "Base runspeed.")
+CreateConVar("horde_base_jumpheight", 150, nil, "Base jump height.")
 
 CreateConVar("horde_difficulty", 1, nil, "Difficulty.")
 CreateConVar("horde_disable_difficulty_voting", 0, nil, "Disable difficulty voting.")

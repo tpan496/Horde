@@ -19,7 +19,7 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
+PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run, bonus_jump)
     if not ply:Horde_GetPerk("ghost_ghost_veil") or not ply:Horde_GetCamoflagueEnabled() then return end
     if ply:Horde_GetCamoflague() == 1 then
         bonus_walk.increase = bonus_walk.increase + 0.15

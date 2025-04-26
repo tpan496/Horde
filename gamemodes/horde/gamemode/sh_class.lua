@@ -13,14 +13,15 @@ HORDE.Class_Warden = "Warden"
 HORDE.Class_Cremator = "Cremator"
 
 -- Creates a Horde class
-function HORDE:CreateClass(name, extra_description, max_hp, movespd, sprintspd, base_perk, perks, order, display_name, model, icon, subclasses)
+function HORDE:CreateClass(name, extra_description, base_perk, perks, order, subclasses)
     if name == nil or name == "" then return end
     local class = {}
     class.name = name
     class.extra_description = extra_description
-    class.max_hp = max_hp
-    class.movespd = movespd
-    class.sprintspd = sprintspd
+    class.max_hp = 100
+    class.movespd = GetConVar("horde_base_walkspeed"):GetInt()
+    class.sprintspd = GetConVar("horde_base_runspeed"):GetInt()
+    class.jumppwr = GetConVar("horde_base_jumpheight"):GetInt()
     class.base_perk = base_perk
     class.perks = perks
     class.order = order
@@ -94,9 +95,6 @@ function HORDE:GetDefaultClassesData()
     HORDE:CreateClass(
         HORDE.Class_Survivor,
         "Has access to all weapons except for exclusive and special weapons.\n\nLimited access to attachments.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "survivor_base",
         {
             [1] = {title = "Survival", choices = {"medic_antibiotics", "assault_charge"}},
@@ -104,16 +102,13 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Imprinting", choices = {"heavy_liquid_armor", "cremator_entropy_shield"}},
             [4] = {title = "Inspired Learning", choices = {"ghost_headhunter", "specops_flare"}},
         },
-        0,nil,nil,nil,
+        0,
         {HORDE.Class_Survivor}
     )
 
     HORDE:CreateClass(
         HORDE.Class_Assault,
         "Has full access to assault rifles.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "assault_base",
         {
             [1] = {title = "Maneuverability", choices = {"assault_ambush", "assault_charge"}},
@@ -121,16 +116,13 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Aggression", choices = {"assault_cardiac_resonance", "assault_cardiac_overload"}},
             [4] = {title = "Conditioning", choices = {"assault_heightened_reflex", "assault_merciless_assault"}},
         },
-        1,nil,nil,nil,
+        1,
         {HORDE.Class_Assault}
     )
 
     HORDE:CreateClass(
         HORDE.Class_Heavy,
         "Has full access to machine guns and high weight weapons.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "heavy_base",
         {
             [1] = {title = "Suppression", choices = {"heavy_sticky_compound", "heavy_crude_casing"}},
@@ -138,16 +130,13 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Armor Protection", choices = {"heavy_liquid_armor", "heavy_reactive_armor"}},
             [4] = {title = "Technology", choices = {"heavy_nanomachine", "heavy_ballistic_shock"}},
         },
-        2,nil,nil,nil,
+        2,
         {HORDE.Class_Heavy}
     )
 
     HORDE:CreateClass(
         HORDE.Class_Medic,
         "Has acesss to most light weapons and medical tools.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "medic_base",
         {
             [1] = {title = "Medicine", choices = {"medic_antibiotics", "medic_painkillers"}},
@@ -155,16 +144,13 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Enhancement", choices = {"medic_purify", "medic_haste"}},
             [4] = {title = "Natural Selection", choices = {"medic_cellular_implosion", "medic_xcele"}},
         },
-        3,nil,nil,nil,
+        3,
         {HORDE.Class_Medic}
     )
 
     HORDE:CreateClass(
         HORDE.Class_Demolition,
         "Has full access to explosive weapons.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "demolition_base",
         {
             [1] = {title = "Grenade", choices = {"demolition_frag_impact", "demolition_frag_cluster"}},
@@ -172,16 +158,13 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Approach", choices = {"demolition_fragmentation", "demolition_knockout"}},
             [4] = {title = "Destruction", choices = {"demolition_chain_reaction", "demolition_pressurized_warhead"}},
         },
-        4,nil,nil,nil,
+        4,
         {HORDE.Class_Demolition}
     )
 
     HORDE:CreateClass(
         HORDE.Class_Ghost,
         "Has access to sniper rifles and selected light weapons.\n\nHave access to suppressors and sniper scopes.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "ghost_base",
         {
             [1] = {title = "Tactics", choices = {"ghost_headhunter", "ghost_sniper"}},
@@ -189,16 +172,13 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Trajectory", choices = {"ghost_brain_snap", "ghost_kinetic_impact"}},
             [4] = {title = "Disposal", choices = {"ghost_coup", "ghost_decapitate"}},
         },
-        5,nil,nil,nil,
+        5,
         {HORDE.Class_Ghost}
     )
 
     HORDE:CreateClass(
         HORDE.Class_Engineer,
         "Has access to special weapons and equipment.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "engineer_base",
         {
             [1] = {title = "Craftsmanship", choices = {"engineer_tinkerer", "engineer_pioneer"}},
@@ -206,16 +186,13 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Manipulation", choices = {"engineer_antimatter_shield", "engineer_displacer"}},
             [4] = {title = "Experimental", choices = {"engineer_symbiosis", "engineer_kamikaze"}},
         },
-        6,nil,nil,nil,
+        6,
         {HORDE.Class_Engineer}
     )
 
     HORDE:CreateClass(
         HORDE.Class_Berserker,
         "Only has access to melee weapons.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "berserker_base",
         {
             [1] = {title = "Fundamentals", choices = {"berserker_breathing_technique", "berserker_bloodlust"}},
@@ -223,16 +200,13 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Parry", choices = {"berserker_graceful_guard", "berserker_unwavering_guard"}},
             [4] = {title = "Combat Arts", choices = {"berserker_phalanx", "berserker_rip_and_tear"}},
         },
-        7,nil,nil,nil,
+        7,
         {HORDE.Class_Berserker}
     )
 
     HORDE:CreateClass(
         HORDE.Class_Warden,
         "Has full access to shotguns and watchtowers (horde_watchtower).",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "warden_base",
         {
             [1] = {title = "Sustain", choices = {"warden_bulwark", "warden_vitality"}},
@@ -240,16 +214,13 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Escort", choices = {"warden_rejection_pulse", "warden_energize"}},
             [4] = {title = "Coverage", choices = {"warden_ex_machina", "warden_resonance_cascade"}},
         },
-        8,nil,nil,nil,
+        8,
         {HORDE.Class_Warden}
     )
 
     HORDE:CreateClass(
         HORDE.Class_Cremator,
         "Has access to heat-based weaponry.",
-        100,
-        GetConVar("horde_base_walkspeed"):GetInt(),
-        GetConVar("horde_base_runspeed"):GetInt(),
         "cremator_base",
         {
             [1] = {title = "Chemicals", choices = {"cremator_methane", "cremator_napalm"}},
@@ -257,7 +228,7 @@ function HORDE:GetDefaultClassesData()
             [3] = {title = "Heat Manipulation", choices = {"cremator_hyperthermia", "cremator_ionization"}},
             [4] = {title = "Energy Discharge", choices = {"cremator_firestorm", "cremator_incineration"}},
         },
-        9,nil,nil,nil,
+        9,
         {HORDE.Class_Cremator}
     )
 end

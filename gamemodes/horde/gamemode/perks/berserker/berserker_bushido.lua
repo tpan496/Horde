@@ -15,8 +15,9 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     end
 end
 
-PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run)
+PERK.Hooks.Horde_PlayerMoveBonus = function(ply, bonus_walk, bonus_run, bonus_jump)
     if not ply:Horde_GetPerk("berserker_bushido") then return end
     bonus_walk.increase = bonus_walk.increase + 0.2
     bonus_run.increase = bonus_run.increase + 0.2
+    bonus_jump.increase = bonus_jump.increase + 0.2
 end

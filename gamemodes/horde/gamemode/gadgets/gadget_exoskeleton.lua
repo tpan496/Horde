@@ -23,7 +23,7 @@ GADGET.Hooks.Horde_OnPlayerDamageTaken = function ( ply, dmginfo, bonus )
     bonus.resistance = bonus.resistance + 0.2
 end
 
-GADGET.Hooks.Horde_PlayerMoveBonus = function ( ply, bonus_walk, bonus_run )
+GADGET.Hooks.Horde_PlayerMoveBonus = function ( ply, bonus_walk, bonus_run, bonus_jump )
     if ply:Horde_GetGadget() ~= "gadget_exoskeleton"  then return end
     bonus_run.more = bonus_run.more * 0.8
 end

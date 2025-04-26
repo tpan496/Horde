@@ -76,7 +76,7 @@ hook.Add("Horde_OnPlayerDamage", "Horde_AdrenalineStackDamage", function (ply, n
     end
 end)
 
-hook.Add("Horde_PlayerMoveBonus", "Horde_AdrenalineStackMovespeed", function(ply, bonus_walk, bonus_run)
+hook.Add("Horde_PlayerMoveBonus", "Horde_AdrenalineStackMovespeed", function(ply, bonus_walk, bonus_run, bonus_jump)
     if ply:Horde_GetAdrenalineStack() > 0 then
         local bonus2 = ply:Horde_GetAdrenalineStack() * 0.06
         bonus_walk.increase = bonus_walk.increase + bonus2

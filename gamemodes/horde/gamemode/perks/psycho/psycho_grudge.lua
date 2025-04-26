@@ -18,7 +18,7 @@ PERK.Hooks.Horde_OnPlayerCriticalCheck = function (ply, npc, bonus, hitgroup, dm
     end
 end
 
-PERK.Hooks.Horde_PlayerMoveBonus = function (ply, bonus_walk, bonus_run)
+PERK.Hooks.Horde_PlayerMoveBonus = function (ply, bonus_walk, bonus_run, bonus_jump)
     if ply:Horde_GetPerk("psycho_grudge") then
         local increase = math.min(0.5, math.max(0, (1 - ply:Health() / ply:GetMaxHealth())))
         bonus_walk.increase = bonus_walk.increase + increase
