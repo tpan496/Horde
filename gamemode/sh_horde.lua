@@ -54,6 +54,8 @@ CreateConVar("horde_enable_health_gui", 1, FCVAR_ARCHIVE, "Enables health UI.")
 CreateConVar("horde_enable_ammo_gui", 1, FCVAR_ARCHIVE, "Enables ammo UI.")
 
 CreateConVar("horde_enable_class_models", 1, FCVAR_ARCHIVE, "Enables ammo UI.")
+CreateConVar("horde_testing_attachment_copy", 0, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "Make everything available in attachment menu and right click to copy attachment class")
+CreateConVar("horde_testing_render_hitboxes", 0, FCVAR_SERVER_CAN_EXECUTE, "Renders hitboxes for enemies. For testing purposes only.")
 CreateClientConVar("horde_disable_default_gadget_use_key", 0, FCVAR_ARCHIVE, "Disable default key bind for active gadgets.")
 CreateClientConVar("horde_disable_default_quick_grenade_key", 0, FCVAR_ARCHIVE, "Disable default key bind for quick grenade.")
 
@@ -75,7 +77,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "1.1.2.1"
+HORDE.version = "2.1"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -142,6 +144,7 @@ HORDE.enable_ammobox = GetConVar("horde_enable_ammobox"):GetInt()
 -- the network.
 HORDE.player_drop_entities = {}
 HORDE.player_ready = {}
+HORDE.player_skip_check = {}
 HORDE.player_damage = {}
 HORDE.player_damage_taken = {}
 HORDE.player_heal = {}
@@ -172,15 +175,33 @@ if ArcCWInstalled then
         ArcCW.AttachmentBlacklistTable["go_perk_refund"] = true
         ArcCW.AttachmentBlacklistTable["go_perk_slow"] = true
         ArcCW.AttachmentBlacklistTable["go_m249_mag_12g_45"] = true
+        --Disable default attachments that have no benefit--
+        ArcCW.AttachmentBlacklistTable["go_ammo_tr"] = true
+        ArcCW.AttachmentBlacklistTable["go_ammo_blanks"] = true
+        --[[
+        --Disable default shotgun ammo to use modified Horde version--
+        ArcCW.AttachmentBlacklistTable["go_ammo_sg_triple"] = true
+        ArcCW.AttachmentBlacklistTable["go_ammo_sg_sabot"] = true
+        ArcCW.AttachmentBlacklistTable["go_ammo_sg_slug"] = true
+        ArcCW.AttachmentBlacklistTable["go_ammo_sg_scatter"] = true
+        ArcCW.AttachmentBlacklistTable["go_ammo_sg_magnum"] = true
+        --Disable default shotgun mods to use modified Horde version--
+        ArcCW.AttachmentBlacklistTable["go_m1014_mag_4"] = true
+        ArcCW.AttachmentBlacklistTable["go_m1014_mag_8"] = true
+        ArcCW.AttachmentBlacklistTable["go_mag7_mag_3"] = true
+        ArcCW.AttachmentBlacklistTable["go_nova_mag_8"] = true
+        ArcCW.AttachmentBlacklistTable["go_870_mag_4"] = true
+        ArcCW.AttachmentBlacklistTable["go_870_mag_8"] = true
+        ]]
     end
 end
 
 
 -- Disable Godmode
 RunConsoleCommand("sbox_godmode", "0")
-RunConsoleCommand("vj_npc_addfrags", "0")
-RunConsoleCommand("vj_npc_knowenemylocation", "1")
-RunConsoleCommand("vj_npc_bleedenemyonmelee", "0")
+RunConsoleCommand("vj_npc_ply_frag", "0")
+RunConsoleCommand("vj_npc_sight_xray", "1")
+RunConsoleCommand("vj_npc_melee_bleed", "0")
 
 -- Util functions
 function HORDE:GiveAmmo(ply, wpn, count)
@@ -370,13 +391,13 @@ end
 -- This is a SHARED file, you need to separate the codes for server and client
 if(SERVER) then -- Codes for serverside
     util.AddNetworkString("Horde_ScreenEffect")
-
+    
     function HORDE.SendBorderEffect(ply, data)
         net.Start("Horde_ScreenEffect")
         net.WriteTable(data)
         net.Send(ply)
     end
-	--[[
+    --[[
 	function HORDE.SetOldWeapons(player)
         player.OldWeapons = {}
         for k,v in ipairs(player:GetWeapons()) do
