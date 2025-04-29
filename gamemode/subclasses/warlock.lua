@@ -3,8 +3,9 @@ SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Demolition -- Required for any new classes
 SUBCLASS.Icon = "subclasses/warlock.png" -- Required
 SUBCLASS.Description = [[
-Demolition subclass.
-A slow caster that uses destructive spells.]] -- Required
+Offensive charge based AoE spell caster.
+Casts destructive spells dealing damage in 
+a massive area depending on charge level.]] -- Required
 SUBCLASS.BasePerk = "warlock_base"
 SUBCLASS.Perks = {
     [1] = {title = "Transfigure", choices = {"warlock_meditate", "warlock_quickcast"}},

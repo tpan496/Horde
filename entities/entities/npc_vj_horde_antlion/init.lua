@@ -11,13 +11,14 @@ ENT.MoveType = MOVETYPE_STEP
 ENT.HullType = HULL_LARGE
 
 ENT.SightDistance = 10000 -- How far it can see
-ENT.SightAngle = 180 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
+ENT.SightAngle = 360 -- Initial field of view | To retrieve: "self:GetFOV()" | To change: "self:SetFOV(degree)" | 360 = See all around
+ENT.EnemyXRayDetection = true -- Can it detect enemies through walls & objects?
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_COMBINE"} -- NPCs with the same class will be friendly to each other | Combine: CLASS_COMBINE, Zombie: CLASS_ZOMBIE, Antlions = CLASS_ANTLION
-ENT.CustomBlood_Particle = {"striderbuster_smoke"} -- Particle that the SNPC spawns when it's damaged
+ENT.CustomBlood_Particle = {} -- Particle that the SNPC spawns when it's damaged
 ENT.BloodDecal = {"YellowBlood"} -- Leave blank for none | Commonly used: Red = Blood, Yellow Blood = YellowBlood
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
+ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack =  {ACT_MELEE_ATTACK1} -- Melee Attack Animations
 ENT.MeleeAttackDistance = 100 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 120 -- How far does the damage go?
@@ -26,11 +27,10 @@ ENT.NextAnyAttackTime_Melee = false -- How much time until it can use a attack a
 ENT.MeleeAttackDamage = 30
 ENT.MeleeAttackDamageType = DMG_SLASH -- Type of Damage
 
-ENT.NextAnyAttackTime_Range = 0.6 -- How much time until it can use a attack again? | Counted in Seconds
 ENT.Immune_CombineBall = false
 ENT.HasDeathAnimation = false -- Does it play an animation when it dies?
 ENT.HasExtraMeleeAttackSounds = true-- Set to true to use the extra melee attack sounds
-ENT.SlowPlayerOnMeleeAttack = true -- If true, then the player will slow down
+ENT.SlowPlayerOnMeleeAttack = false -- If true, then the player will slow down
 ENT.SlowPlayerOnMeleeAttack_WalkSpeed = 50 -- Walking Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttack_RunSpeed = 70 -- Running Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttackTime = 10
@@ -53,12 +53,17 @@ ENT.LeapAttackVelocityForward = 100 -- How much forward force should it apply?
 ENT.LeapAttackVelocityUp = 300 -- How much upward force should it apply?
 ENT.LeapAttackVelocityRight = 0 -- How much right force should it apply?
 ENT.IsGuard = false
+ENT.DisableChasingEnemy = true
+ENT.DisableWandering = true
+ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
+ENT.ConstantlyFaceEnemy_IfVisible = true -- Should it only face the enemy if it's visible?
+ENT.ConstantlyFaceEnemy_IfAttacking = true -- Should it face the enemy when attacking?
 
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.AnimTbl_RangeAttack = {"vjseq_charge_end"} -- Range Attack Animations
 ENT.RangeAttackEntityToSpawn = "projectile_horde_antlion_bile" -- The entity that is spawned when range attacking
 ENT.RangeDistance = 2000 -- This is how far away it can shoot
-ENT.RangeToMeleeDistance = 100 -- How close does it have to be until it uses melee?
+ENT.RangeToMeleeDistance = 0 -- How close does it have to be until it uses melee?
 ENT.TimeUntilRangeAttackProjectileRelease = 0.3 -- How much time until the projectile code is ran?
 ENT.NextRangeAttackTime = 3 -- How much time until it can use a range attack?
 ENT.NextAnyAttackTime_Range = 0.4 -- How much time until it can use a attack again? | Counted in Seconds
@@ -80,10 +85,11 @@ ENT.SoundTbl_Impact = {"npc/antlion/shell_impact1.wav","npc/antlion/shell_impact
 ENT.PulseInterval = 5
 ENT.LastPulse = CurTime()
 
-ENT.FollowMinDistance = 50
+ENT.FollowMinDistance = 150
 ENT.NextFollowUpdateTime = 0.2
-ENT.FollowPlayer = true
+ENT.FollowPlayer = false
 ENT.TurningSpeed = 40
+ENT.CanChatMessage = false
 
 ENT.AnimTbl_Walk = {ACT_RUN} -- Set the walking animations | Put multiple to let the base pick a random animation when it moves
 ENT.AnimTbl_Run = {ACT_RUN}
@@ -93,17 +99,18 @@ ENT.Evolve_Health = 0
 ENT.Evolve_Health_Max = 100
 
 ENT.LastEvolve = CurTime()
-
+ENT.Horde_Immune_Status_All = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetSkin(0)
 	self.NextRangeAttackTime = 2
 	self.LastPulse = CurTime()
 	self.Owner = self:GetNWEntity("HordeOwner")
-	self:Follow(self.Owner)
 	self.level = self.properties.level 
 	self:SetMaxHealth(self.Base_Health + self.level * 5)
 	self:SetModelScale(0.5)
+    self:SetModel(self.Model)
+    self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 	self:SetHealth(self:GetMaxHealth())
 	self.MeleeAttackDamage = 30 + self.level * 2
 	self.RangeAttackDamage = 25 + self.level
@@ -114,16 +121,40 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
 	self:AddRelationship("npc_vj_horde_rocket_turret D_LI 99")
 	self:AddRelationship("npc_vj_horde_spectre D_LI 99")
-	self:SetCollisionBounds(Vector(0, 0, 0), Vector(0, 0, 0))
+	--self:SetCollisionBounds(Vector(0, 0, 0), Vector(0, 0, 0))
+    timer.Simple(0.5, function()
+        if not self:IsValid() then return end
+        self:Follow(self.Owner)
+    end)
+    if self.evolutionmaximum then
+        local max_stage = 2
+        if self.Owner:Horde_GetPerk("hatcher_metamorphosis") then
+            max_stage = 3
+        end
+        self.Evolve_Stage = max_stage
+        self.Evolve_Health = 100
+    end
 end
 
-function ENT:UpgradeReset()
-	self.level = self.properties.level
+function ENT:Horde_Evolve(health)
+    local max_stage = 3
+    if self.Owner:IsValid() and self.Owner:Horde_GetPerk("hatcher_metamorphosis") then
+        max_stage = 4
+    end
+    if self.Evolve_Stage == max_stage then return end
+    
+    self.Evolve_Health = self.Evolve_Health + health
+    
+    if self.Evolve_Health < self.Evolve_Health_Max then return end
+    self.Evolve_Stage = math.min(max_stage, self.Evolve_Stage + 1)
+    
 	if self.Evolve_Stage == 2 then
 		self:SetSkin(1)
 		self:SetMaxHealth(self.Base_Health * 1.5 + self.level * 9)
 		self:SetHealth(self:GetMaxHealth())
 		self:SetModelScale(0.75)
+        self:SetModel(self.Model)
+        self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 		self.MeleeAttackDamage = 45 + self.level * 6
 		self.RangeAttackDamage = 35 + self.level * 4
 		self.NextRangeAttackTime = 2
@@ -132,31 +163,36 @@ function ENT:UpgradeReset()
 		self:SetMaxHealth(self.Base_Health * 2 + self.level * 25)
 		self:SetHealth(self:GetMaxHealth())
 		self:SetModelScale(1)
+        self:SetModel(self.Model)
+        self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 		self.MeleeAttackDamage = 60 + self.level * 10
 		self.RangeAttackDamage = 45 + self.level * 8
-		self.NextRangeAttackTime = 1
 		self.Horde_Immune_Break = true
+		self.NextRangeAttackTime = 1
 	elseif self.Evolve_Stage == 4 then
 		self:SetSkin(0)
 		self:SetModelScale(1)
 		self.Model = "models/antlion_guard.mdl"
 		self:SetModel(self.Model)
+        self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 		self:SetMaxHealth(self.Base_Health * 4 + self.level * 50)
 		self:SetHealth(self:GetMaxHealth())
 		self.MeleeAttackDamage = 70 + self.level * 15
 		self.RangeAttackDamage = 45 + self.level * 8
-		self.Horde_Immune_Status_All = true
 		self.NextRangeAttackTime = 1
-		if self.Owner then
+		self.Horde_Immune_Status_All = true
+		--[[
+        if self.Owner then
 			self:PlaySoundSystem("UnFollowPlayer")
 			self:CustomOnUnFollowPlayer(self.Owner)
 		end
+        ]]
 		self:StopMoving()
 		self.NextWanderTime = CurTime() + 2
 		if !self:BusyWithActivity() then
 			self:VJ_TASK_FACE_X("TASK_FACE_TARGET")
 		end
-		self:FollowReset()
+		--self:FollowReset()
 		self:Activate()
 
 		self.SoundTbl_Idle = {"npc/antlion_guard/growl_idle.wav"}
@@ -168,67 +204,7 @@ function ENT:UpgradeReset()
 		self.SoundTbl_Death = {"npc/antlion_guard/antlion_guard_die1.wav","npc/antlion_guard/antlion_guard_die2.wav"}
 		self.SoundTbl_FootStep = {"npc/antlion_guard/foot_heavy1.wav","npc/antlion_guard/foot_heavy2.wav"}
 	end
-	self:SetHealth(self:GetMaxHealth())
-end
-
-function ENT:Horde_Evolve(health)
-	self.Evolve_Health = self.Evolve_Health + health
-	if self.Evolve_Health < self.Evolve_Health_Max then return end
-	local max_stage = 3
-	if self.Owner:IsValid() and self.Owner:Horde_GetPerk("hatcher_metamorphosis") then
-		max_stage = 4
-	end
-	self.Evolve_Stage = math.min(max_stage, self.Evolve_Stage + 1)
-	if self.Evolve_Stage == 2 then
-		self:SetSkin(1)
-		self:SetMaxHealth(self.Base_Health * 1.5 + self.level * 9)
-		self:SetHealth(self:GetMaxHealth())
-		self:SetModelScale(0.75)
-		self.MeleeAttackDamage = 45 + self.level * 6
-		self.RangeAttackDamage = 35 + self.level * 4
-		self.NextRangeAttackTime = 2
-	elseif self.Evolve_Stage == 3 then
-		self:SetSkin(3)
-		self:SetMaxHealth(self.Base_Health * 2 + self.level * 25)
-		self:SetHealth(self:GetMaxHealth())
-		self:SetModelScale(1)
-		self.MeleeAttackDamage = 60 + self.level * 10
-		self.RangeAttackDamage = 45 + self.level * 8
-		self.Horde_Immune_Break = true
-		self.NextRangeAttackTime = 1
-	elseif self.Evolve_Stage == 4 then
-		self:SetSkin(0)
-		self:SetModelScale(1)
-		self.Model = "models/antlion_guard.mdl"
-		self:SetModel(self.Model)
-		self:SetMaxHealth(self.Base_Health * 3 + self.level * 50)
-		self:SetHealth(self:GetMaxHealth())
-		self.MeleeAttackDamage = 70 + self.level * 15
-		self.RangeAttackDamage = 45 + self.level * 8
-		self.NextRangeAttackTime = 1
-		self.Horde_Immune_Status_All = true
-		if self.Owner then
-			self:PlaySoundSystem("UnFollowPlayer")
-			self:CustomOnUnFollowPlayer(self.Owner)
-		end
-		self:StopMoving()
-		self.NextWanderTime = CurTime() + 2
-		if !self:BusyWithActivity() then
-			self:VJ_TASK_FACE_X("TASK_FACE_TARGET")
-		end
-		self:FollowReset()
-		self:Activate()
-
-		self.SoundTbl_Idle = {"npc/antlion_guard/growl_idle.wav"}
-		self.SoundTbl_Alert = {"npc/antlion_guard/angry1.wav","npc/antlion_guard/angry2.wav","npc/antlion_guard/angry3.wav"}
-		self.SoundTbl_MeleeAttack = {"npc/antlion_guard/shove1.wav"}
-		self.SoundTbl_MeleeAttackMiss = {""}
-		self.SoundTbl_RangeAttack = {"npc/antlion_guard/angry1.wav"}
-		self.SoundTbl_Pain = {""}
-		self.SoundTbl_Death = {"npc/antlion_guard/antlion_guard_die1.wav","npc/antlion_guard/antlion_guard_die2.wav"}
-		self.SoundTbl_FootStep = {"npc/antlion_guard/foot_heavy1.wav","npc/antlion_guard/foot_heavy2.wav"}
-	end
-	self.Evolve_Health = 0
+	self.Evolve_Health = self.Evolve_Health - self.Evolve_Health_Max
 end
 
 function ENT:Horde_IsStage(x)
@@ -269,6 +245,7 @@ local attackTimers = {
 		end)
 	end
 }
+--[[
 function ENT:OnTakeDamage(dmginfo)
 	--self:MeleeAttackCode(false, self.MeleeAttackDistance)
 	--self:SetPlaybackRate(1)
@@ -303,11 +280,12 @@ function ENT:OnTakeDamage(dmginfo)
 			dissolve:SetDamageType(DMG_DISSOLVE)
 			self:TakeDamageInfo(dissolve)
 		end
-		self:PriorToKilled(dmginfo, hitgroup)
+		--self:PriorToKilled(dmginfo, hitgroup)
 	end
 	return 1
 end
-
+]]
+--[[
 function ENT:Follow(ent, stopIfFollowing)
 	if !IsValid(ent) or self.Dead or GetConVar("ai_disabled"):GetInt() == 1 or self == ent then return false end
 	local isPly = ent:IsPlayer()
@@ -344,6 +322,7 @@ function ENT:Follow(ent, stopIfFollowing)
 	end
 	return false
 end
+]]
 
 function ENT:BugPulse()
 	local r = {190, 190 * 1.5, 190 * 2, 190 * 2}
@@ -375,6 +354,28 @@ function ENT:CustomOnMeleeAttack_BeforeChecks()
 		end
 	end)
 end
+
+ENT.NextUnstuckCheck = 0
+function ENT:OverrideMove(inv)
+    if(self.NextUnstuckCheck < CurTime() && self:GetMoveVelocity() == vector_origin) then
+        local origin = self:GetPos()
+        local result = util.TraceHull({
+            start = origin,
+            endpos = origin,
+            mins = self:OBBMins(),
+            maxs = self:OBBMaxs(),
+            filter = self,
+            ignoreworld = true,
+        })
+        local ent = result.Entity
+        if(IsValid(ent) && ent:GetClass() == self:GetClass() && ent:GetMoveVelocity() == vector_origin) then -- Colliding with another antlion
+            self:SetPos(self:GetOwner():GetPos())
+            ent.NextUnstuckCheck = CurTime() + 1
+        end
+        self.NextUnstuckCheck = CurTime() + 0.2
+    end
+end
+
 function ENT:CustomOnThink()
 	if self.LastPulse <= CurTime() then
 		local d = self:GetPos():DistToSqr(self.Owner:GetPos())
@@ -443,7 +444,6 @@ function ENT:CustomRangeAttackCode_BeforeProjectileSpawn(projectile)
 end
 
 function ENT:RangeAttackP(pos)
-	print("force range")
 	local selfData = self:GetTable()
 	if selfData.Dead or selfData.PauseAttacks or selfData.Flinching or selfData.AttackType == VJ.ATTACK_TYPE_MELEE then return end
 	local ene = self:GetEnemy()
@@ -469,11 +469,11 @@ function ENT:RangeAttackP(pos)
 			--local vel = self:RangeAttackProjVel(projectile)
 			local vel = (target_pos - self:GetAttachment(1).Pos) * 1.5
 			phys:SetVelocity(vel)
-			projectile:SetAngles(vel:GetNormal():Angle())
+			projectile:SetAngles(vel:GetNormalized():Angle())
 		else
 			local vel = self:RangeAttackProjVel(projectile)
 			projectile:SetVelocity(vel)
-			projectile:SetAngles(vel:GetNormal():Angle())
+			projectile:SetAngles(vel:GetNormalized():Angle())
 		end
 		self:OnRangeAttackExecute("PostSpawn", ene, projectile)
 	end

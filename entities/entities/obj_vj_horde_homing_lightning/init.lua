@@ -102,8 +102,9 @@ function ENT:PhysicsCollide(data, physobj)
     end
     
     timer.Simple(1, function ()
-        if !IsValid(self) or !IsValid(self.entOwner) then return end
-        if IsValid(ent) && (ent:IsPlayer() || ent:IsNPC()) then
+        if !IsValid(self) then return end
+        if !IsValid(self.entOwner) then self:StopSound("npc/stalker/laser_burn.wav") self:Remove() return end
+        if IsValid(ent) && HORDE:IsPlayerOrMinion(ent) then
             local dmg = DamageInfo()
             dmg:SetDamage(self:GetScale() * 2)
             dmg:SetDamageType(DMG_SHOCK)
@@ -111,13 +112,15 @@ function ENT:PhysicsCollide(data, physobj)
             dmg:SetInflictor(self)
             dmg:SetDamagePosition(data.HitPos)
             util.BlastDamageInfo(dmg, self:GetPos(), 150)
-            ParticleEffect("vj_explosionspark1", self:GetPos(), Angle(0,0,0), nil)
-            ParticleEffect("vj_explosionspark2", self:GetPos(), Angle(0,0,0), nil)
-            ParticleEffect("vj_explosionspark3", self:GetPos(), Angle(0,0,0), nil)
 
-            HORDE:ApplyDebuffInRadius(HORDE.Status_Shock, self:GetPos(), 150, 20, self)
+            --HORDE:ApplyDebuffInRadius(HORDE.Status_Shock, self:GetPos(), 150, 20, self)
         end
-        self:EmitSound("horde/kingpin/electro4.wav", 75, 100)
+        ParticleEffect("vj_explosionspark1", self:GetPos(), Angle(0,0,0), nil)
+        ParticleEffect("vj_explosionspark2", self:GetPos(), Angle(0,0,0), nil)
+        ParticleEffect("vj_explosionspark3", self:GetPos(), Angle(0,0,0), nil)
+        
+        self:EmitSound("horde/kingpin/electro4.ogg", 75, 100)
+        self:StopSound("npc/stalker/laser_burn.wav")
         self:Remove()
     end)
 end

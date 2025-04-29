@@ -8,7 +8,7 @@ end
 
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Melee" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Katana"
@@ -39,7 +39,7 @@ SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
 SWEP.MeleeDamage = 100
-SWEP.Melee2Damage = 150
+SWEP.Melee2Damage = 200
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
@@ -54,6 +54,22 @@ SWEP.Melee2Range = 80
 SWEP.Melee2AttackTime = 0.5
 SWEP.Melee2Time = 1.25
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
+
+SWEP.MaximumDurability = 1200
+SWEP.MaxHits = 3 -- Change this number to change maximum target hits on the swep
+SWEP.MaxHitsSecondary = 5
+SWEP.MeleeBoundingBox = { -- If weapon has no bounding box, it will scale length based on MeleeRange and Melee2Range
+    primary = {
+        wide = 32,
+        tall = 32,
+        length = 95, -- 75 length ~ 2.5 meters and MeleeRange = 80 ~ 121 length
+    },
+    secondary = {
+        wide = 32,
+        tall = 32,
+        length = 95,
+    },
+}
 
 SWEP.MeleeSwingSound = {
     "horde/weapons/katana/katana_swing_miss1.ogg",
@@ -121,3 +137,32 @@ SWEP.BashAng = Angle(35, -30, 0)
 
 SWEP.HolsterPos = Vector(0, -3, -2)
 SWEP.HolsterAng = Angle(-10, 0, 0)
+
+function SWEP:Hook_PostBash(info)
+    if not SERVER then return end
+    local attacker = self:GetOwner()
+    if !IsValid(attacker) then return end
+    local enemy_tr = info.tr.Entity
+    local headshot = info.tr.HitGroup
+    local melee2 = info.melee2
+
+    if IsValid(enemy_tr) and enemy_tr:IsNPC() and headshot == 1 and melee2 then
+        if enemy_tr:Health() <= 0 then return end
+        if enemy_tr.katana_ministunned then return end
+        if enemy_tr.Horde_Stunned then return end
+        enemy_tr.katana_ministunned = true
+        
+        if not enemy_tr.Base then
+            enemy_tr:NextThink(CurTime() + 0.5)
+        elseif enemy_tr.Base == "npc_vj_creature_base" or enemy_tr.Base == "npc_vj_human_base" then
+            enemy_tr:SetSchedule(SCHED_NPC_FREEZE)
+            enemy_tr:NextThink(CurTime() + 0.5)
+            enemy_tr.Horde_Stunned = true
+            timer.Create("Horde_RemoveStun" .. enemy_tr:GetCreationID(), 0.5, 1, function()
+                if not enemy_tr:IsValid() then return end
+                enemy_tr:SetCondition(68)
+                enemy_tr.Horde_Stunned = nil
+            end)
+        end
+    end
+end

@@ -1,10 +1,12 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
+include('autorun/vj_controls.lua')
 
 -- Core
 ENT.Model = {"models/horde/gonome/gonome.mdl"}
 ENT.StartHealth = 7500
 ENT.HullType = HULL_MEDIUM_TALL
+ENT.KnockbackImmune = true
 
 ENT.SightDistance = 10000 -- How far it can see
 ENT.SightAngle = 100 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
@@ -12,7 +14,7 @@ ENT.TurningSpeed = 40 -- How fast it can turn
 ENT.MaxJumpLegalDistance = VJ_Set(400, 550) -- The max distance the NPC can jump (Usually from one node to another) | ( UP, DOWN )
 
 -- AI
-ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
+ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"}
 ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
 ENT.ConstantlyFaceEnemy_IfAttacking = true -- Should it face the enemy when attacking?
 ENT.ConstantlyFaceEnemy_Postures = "Standing" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
@@ -89,63 +91,6 @@ ENT.MeleeAttackKnockBack_Right2 = 0 -- How far it will push you right | Second i
 ENT.FootStepTimeRun = 1 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 1 -- Next foot step sound when it is walking
 ENT.PushProps = true -- Should it push props when trying to move?
-ENT.FootStepPitch1 = 100
-ENT.FootStepPitch2 = 100
-ENT.BreathSoundPitch1 = 100
-ENT.BreathSoundPitch2 = 100
-ENT.IdleSoundPitch1 = "UseGeneralPitch"
-ENT.IdleSoundPitch2 = "UseGeneralPitch"
-ENT.CombatIdleSoundPitch1 = "UseGeneralPitch"
-ENT.CombatIdleSoundPitch2 = "UseGeneralPitch"
-ENT.OnReceiveOrderSoundPitch1 = "UseGeneralPitch"
-ENT.OnReceiveOrderSoundPitch2 = "UseGeneralPitch"
-ENT.FollowPlayerPitch1 = "UseGeneralPitch"
-ENT.FollowPlayerPitch2 = "UseGeneralPitch"
-ENT.UnFollowPlayerPitch1 = "UseGeneralPitch"
-ENT.UnFollowPlayerPitch2 = "UseGeneralPitch"
-ENT.BeforeHealSoundPitch1 = "UseGeneralPitch"
-ENT.BeforeHealSoundPitch2 = "UseGeneralPitch"
-ENT.AfterHealSoundPitch1 = 100
-ENT.AfterHealSoundPitch2 = 100
-ENT.OnPlayerSightSoundPitch1 = "UseGeneralPitch"
-ENT.OnPlayerSightSoundPitch2 = "UseGeneralPitch"
-ENT.AlertSoundPitch1 = "UseGeneralPitch"
-ENT.AlertSoundPitch2 = "UseGeneralPitch"
-ENT.CallForHelpSoundPitch1 = "UseGeneralPitch"
-ENT.CallForHelpSoundPitch2 = "UseGeneralPitch"
-ENT.BecomeEnemyToPlayerPitch1 = "UseGeneralPitch"
-ENT.BecomeEnemyToPlayerPitch2 = "UseGeneralPitch"
-ENT.BeforeMeleeAttackSoundPitch1 = "UseGeneralPitch"
-ENT.BeforeMeleeAttackSoundPitch2 = "UseGeneralPitch"
-ENT.MeleeAttackSoundPitch1 = "UseGeneralPitch"
-ENT.MeleeAttackSoundPitch2 = "UseGeneralPitch"
-ENT.ExtraMeleeSoundPitch1 = 100
-ENT.ExtraMeleeSoundPitch2 = 100
-ENT.MeleeAttackMissSoundPitch1 = 100
-ENT.MeleeAttackMissSoundPitch2 = 100
-ENT.BeforeRangeAttackPitch1 = "UseGeneralPitch"
-ENT.BeforeRangeAttackPitch2 = "UseGeneralPitch"
-ENT.RangeAttackPitch1 = "UseGeneralPitch"
-ENT.RangeAttackPitch2 = "UseGeneralPitch"
-ENT.BeforeLeapAttackSoundPitch1 = "UseGeneralPitch"
-ENT.BeforeLeapAttackSoundPitch2 = "UseGeneralPitch"
-ENT.LeapAttackJumpSoundPitch1 = "UseGeneralPitch"
-ENT.LeapAttackJumpSoundPitch2 = "UseGeneralPitch"
-ENT.LeapAttackDamageSoundPitch1 = "UseGeneralPitch"
-ENT.LeapAttackDamageSoundPitch2 = "UseGeneralPitch"
-ENT.LeapAttackDamageMissSoundPitch1 = "UseGeneralPitch"
-ENT.LeapAttackDamageMissSoundPitch2 = "UseGeneralPitch"
-ENT.OnKilledEnemySoundPitch1 = "UseGeneralPitch"
-ENT.OnKilledEnemySoundPitch2 = "UseGeneralPitch"
-ENT.PainSoundPitch1 = "UseGeneralPitch"
-ENT.PainSoundPitch2 = "UseGeneralPitch"
-ENT.ImpactSoundPitch1 = 100
-ENT.ImpactSoundPitch2 = 100
-ENT.DamageByPlayerPitch1 = "UseGeneralPitch"
-ENT.DamageByPlayerPitch2 = "UseGeneralPitch"
-ENT.DeathSoundPitch1 = "UseGeneralPitch"
-ENT.DeathSoundPitch2 = "UseGeneralPitch"
-
     -- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {"horde/gonome/gonome_step1.ogg","horde/gonome/gonome_step2.ogg","horde/gonome/gonome_step3.ogg","horde/gonome/gonome_step4.ogg"}
@@ -167,10 +112,22 @@ end
 function ENT:RangeAttackCode_GetShootPos(TheProjectile)
     return (self:GetEnemy():GetPos() - self:LocalToWorld(Vector(math.random(-30,30),math.random(-30,30),math.random(20,30))))*2 + self:GetUp()*300
 end
+
+ENT.RangeAttackCooldown = 0
+function ENT:CustomRangeAttackCode_BeforeProjectileSpawn(projectile2)
+    if true then
+		self.RangeAttackCooldown = CurTime() + self.NextRangeAttackTime
+		self.HasRangeAttack = false
+    end
+end
+
 function ENT:CustomOnThink()
 	if self.Critical and self:IsOnGround() then
-		self:SetLocalVelocity(self:GetMoveVelocity() * 1.5)
+		self:SetLocalVelocity(self:GetMoveVelocity() * 1.8)
 	end
+    if self.RangeAttackCooldown < CurTime() and not self.Critical then
+        self.HasRangeAttack = true
+    end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Critical = nil
@@ -179,7 +136,7 @@ function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
         self.Critical = true
         self.HasRangeAttack = false
         self.HasLeapAttack = true
-        self:SetPlaybackRate(1.75)
+        self:SetPlaybackRate(1.4)
         self:SetColor(Color(255,0,0))
         self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     end

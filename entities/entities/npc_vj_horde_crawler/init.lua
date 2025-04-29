@@ -76,6 +76,7 @@ function ENT:Init()
 	self:SetCollisionBounds(Vector(13, 13, 50), Vector(-13, -13, 0))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+--[[
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:PlayFootstepSound()
@@ -83,6 +84,7 @@ function ENT:OnInput(key, activator, caller, data)
 		self:ExecuteMeleeAttack()
 	end
 end
+]]
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)
 	if act == ACT_IDLE then

@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Melee" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Bayonet"
@@ -42,11 +42,28 @@ SWEP.MeleeGesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_KNIFE
 SWEP.MeleeAttackTime = 0.1
 
 SWEP.Melee2 = true
-SWEP.Melee2Damage = 50
+SWEP.Melee2Damage = 60
 SWEP.Melee2Range = 32
 SWEP.Melee2Time = 1
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE
 SWEP.Melee2AttackTime = 0.1
+
+SWEP.SpeedMult = 1
+
+SWEP.MaximumDurability = 200
+SWEP.MaxHits = 1
+SWEP.MeleeBoundingBox = {
+    primary = {
+        wide = 4,
+        tall = 4,
+        length = 90, -- 75 ~ 2.5 meters
+    },
+    secondary = {
+        wide = 4,
+        tall = 4,
+        length = 90,
+    },
+}
 
 SWEP.MeleeSwingSound = {
     "arccw_go/knife/knife_slash1.wav",
@@ -111,3 +128,13 @@ SWEP.BashAng = Angle(10, -10, 0)
 
 SWEP.HolsterPos = Vector(0, -1, 2)
 SWEP.HolsterAng = Angle(-15, 0, 0)
+
+hook.Add("Horde_PlayerMoveBonus", "Horde_ArcCWKnife_MovementSpeed", function(ply, bonus_walk, bonus_run)
+    if not ply:HasWeapon("arccw_horde_knife") then return end
+    if not ply:IsValid() then return end
+    if ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon():GetClass() == "arccw_horde_knife" then
+        local knifespeed = 1.25
+        bonus_walk.more = bonus_walk.more * knifespeed
+        bonus_run.more = bonus_run.more * knifespeed
+    end
+end)

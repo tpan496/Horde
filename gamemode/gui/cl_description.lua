@@ -137,6 +137,16 @@ function PANEL:Init()
     function self.subclass_btn:DoClick()
         self:GetParent():GetParent():SubclassDoClick()
     end
+    
+    self.perk_description_panel = vgui.Create("DScrollPanel", self)
+    self.perk_description_panel:Dock(FILL)
+    self.perk_description_panel:SetVisible(false)
+
+    self.perk_description_text = vgui.Create("DPanel", self.perk_description_panel)
+    self.perk_description_text:Dock(FILL)
+    
+    self.perk_description_text.Paint = function() end
+
 
     self.perk_panel = vgui.Create("DPanel", self)
     self.perk_panel:Dock(FILL)
@@ -242,10 +252,11 @@ function PANEL:SellDoClick()
         if self.perk_panel:IsVisible() then
             self.subclass_panel:SetVisible(false)
         end
+        self.perk_description_panel:SetVisible(not self.perk_panel:IsVisible())
         return
     end
     if not MySelf:Alive() then return end
-    if MySelf:HasWeapon(self.item.class) or (self.item.entity_properties and (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP or self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET)) then
+    if MySelf:HasWeapon(self.item.class) or (self.item.entity_properties and (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP or self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET or self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE)) then
         Derma_Query("Sell Item?!", "Sell",
                 "Yes",
                 function()
@@ -266,6 +277,7 @@ function PANEL:SubclassDoClick()
         -- Toggle subclasses
         self.perk_panel:SetVisible(false)
         self.subclass_panel:SetVisible(not self.subclass_panel:IsVisible())
+        self.perk_description_panel:SetVisible(not self.subclass_panel:IsVisible())
         return
     end
 end
@@ -276,6 +288,7 @@ function PANEL:SetData(item)
     if self.perk_layout then for _, v in pairs(self.perk_layout:GetChildren()) do v:Remove() end end
     if self.subclass_layout then for _, v in pairs(self.subclass_layout:GetChildren()) do v:Remove() end end
     self.perk_panel:SetVisible(false)
+    self.perk_description_panel:SetVisible(false)
     self.subclass_btn:SetVisible(false)
     self.item = item
     if self.item and self.item.Mind then
@@ -386,6 +399,10 @@ function PANEL:SetData(item)
         self.exp_diff = MySelf:Horde_GetExp(self.item.subclass.PrintName)
         self.exp_total = HORDE:GetExpToNextLevel(MySelf:Horde_GetLevel(self.item.subclass.PrintName) + 1)
         if GetConVar("horde_enable_perk"):GetInt() ~= 1 then return end
+        if not self.perk_description_scroll_panel then
+            self.perk_description_scroll_panel = vgui.Create("DScrollPanel", self.perk_description_panel)
+            self.perk_description_scroll_panel:SetSize(self:GetWide(), self:GetTall() + 80)
+        end
         if not self.perk_scroll_panel then
             self.perk_scroll_panel = vgui.Create("DScrollPanel", self.perk_panel)
             self.perk_scroll_panel:SetSize(self:GetWide(), self:GetTall() - 80)
@@ -526,6 +543,7 @@ function PANEL:IsUpgraded()
 end
 
 local mind_icon = Material("status/mind.png", "mips smooth")
+local star = Material("star.png", "mips smooth")
 function PANEL:Paint()
     surface.SetDrawColor(HORDE.color_hollow)
     surface.DrawRect(0, 0, self:GetWide(), self:GetTall())
@@ -550,7 +568,7 @@ function PANEL:Paint()
 
                 self.sell_btn:SetVisible(true)
                 self.sell_btn:SetTextColor(Color(255,255,255))
-                self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.25)) .. "$")
+                self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.75)) .. "$")
                 self.sell_btn.Paint = function ()
                     surface.SetDrawColor(HORDE.color_crimson)
                     surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -593,7 +611,6 @@ function PANEL:Paint()
                             draw.SimpleText(rank_level, "Trebuchet18", start_pos - 5, y + 20, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                         else
                             if rank_level > 0 then
-                                local star = Material("star.png", "mips smooth")
                                 surface.SetMaterial(star)
                                 local y_pos = y + 32
                                 for i = 0, rank_level - 1 do
@@ -753,8 +770,13 @@ function PANEL:Paint()
 
         elseif self.item.extra_description then
             self.class_progress:SetVisible(not self.perk_panel:IsVisible())
+            if self.perk_panel:IsVisible() or self.subclass_panel:IsVisible() then
+                self.perk_description_panel:SetVisible(false)
+            else
+                self.perk_description_panel:SetVisible(true)
+            end
             local loc_name = translate.Get("Class_" .. self.item.subclass.PrintName) or self.item.subclass.PrintName
-            draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.subclass.PrintName) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+            --draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.subclass.PrintName) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
 
             local loc_desc = translate.Get("Class_Description_" .. self.item.subclass.PrintName) or self.item.extra_description
             if GetConVar("horde_enable_perk"):GetInt() == 1 then
@@ -775,18 +797,28 @@ function PANEL:Paint()
                         ::cont::
                     end
                 end
-                if self.item.subclass.ParentClass then
-                    draw.DrawText(loc_perk_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
-                else
-                    draw.DrawText(loc_perk_desc .. "\n\n" .. loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                local mt = multlinetext(loc_perk_desc, self.perk_description_scroll_panel:GetWide() - 50, 'Content')
+                self.perk_description_text.Paint = function()
+                    if self.item.subclass.ParentClass then
+                        draw.DrawText(mt, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                    else
+                        draw.DrawText(mt .. "\n\n" .. loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
+                    end
+                    local mat = Material(self.item.subclass.Icon or self.item.icon, "mips smooth")
+                    surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
+                    surface.SetMaterial(mat) -- Use our cached material
+                    draw.DrawText(loc_name, "Title", self:GetWide() / 2 - string.len(self.item.subclass.PrintName) - 20, 32, Color(255, 255, 255), TEXT_ALIGN_CENTER)
+                    surface.DrawTexturedRect(self:GetWide() / 2 + string.len(loc_name) * 2 + 20, 28, 40, 40)
                 end
+                local text_w, text_h = surface.GetTextSize(mt)
+                self.perk_description_scroll_panel:SetTall(text_h + 100)
             else
                 draw.DrawText(loc_desc, "Content", 50, 80, Color(200, 200, 200), TEXT_ALIGN_LEFT)
             end
-            surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-            local mat = Material(self.item.subclass.Icon or self.item.icon, "mips smooth")
-            surface.SetMaterial(mat) -- Use our cached material
-            surface.DrawTexturedRect(self:GetWide() / 2 + string.len(loc_name) * 2 + 20, 28, 40, 40)
+            --surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
+            --local mat = Material(self.item.subclass.Icon or self.item.icon, "mips smooth")
+            --surface.SetMaterial(mat) -- Use our cached material
+            --surface.DrawTexturedRect(self:GetWide() / 2 + string.len(loc_name) * 2 + 20, 28, 40, 40)
 
             self.class_progress.Paint = function()
                 draw.SimpleText(translate.Get("Rank_" .. MySelf:Horde_GetRank(self.item.subclass.PrintName)) .. " " .. MySelf:Horde_GetRankLevel(self.item.subclass.PrintName), "Content", 0, 5, color_white, TEXT_ALIGN_LEFT)
@@ -906,7 +938,7 @@ function PANEL:Paint()
             return
         end
 
-        if MySelf:HasWeapon(self.item.class) or (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET and MySelf:Horde_GetGadget() == self.item.class) then
+        if MySelf:HasWeapon(self.item.class) or (self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET and MySelf:Horde_GetGadget() == self.item.class) or (MySelf.Horde_Special_Upgrades and MySelf.Horde_Special_Upgrades[self.item.class]) then
             self.buy_btn:SetTextColor(Color(255,255,255))
             self.buy_btn:SetText("OWNED")
             self.buy_btn.Paint = function ()
@@ -916,7 +948,7 @@ function PANEL:Paint()
 
             self.sell_btn:SetVisible(true)
             self.sell_btn:SetTextColor(Color(255,255,255))
-            self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.25)) .. "$")
+            self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.75)) .. "$")
             self.sell_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -1026,7 +1058,6 @@ function PANEL:Paint()
                         draw.SimpleText(rank_level, "Trebuchet18", start_pos - 5, y + 20, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                     else
                         if rank_level > 0 then
-                            local star = Material("star.png", "mips smooth")
                             surface.SetMaterial(star)
                             local y_pos = y + 32
                             for i = 0, rank_level - 1 do
@@ -1065,7 +1096,7 @@ function PANEL:Paint()
                 if drop_entities[self.item.class] then
                     self.sell_btn:SetVisible(true)
                     self.sell_btn:SetTextColor(Color(255,255,255))
-                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class])) .. "$")
+                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.75 * drop_entities[self.item.class])) .. "$")
                     self.sell_btn.Paint = function ()
                         surface.SetDrawColor(HORDE.color_crimson)
                         surface.DrawRect(0, 0, self:GetWide(), 200)
@@ -1084,7 +1115,7 @@ function PANEL:Paint()
                     self.buy_btn:SetText(translate.Get("Shop_Buy_Item") .. " " .. drop_entities[self.item.class] .. "/" .. self.item.entity_properties.limit)
                     self.sell_btn:SetVisible(true)
                     self.sell_btn:SetTextColor(Color(255,255,255))
-                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.25 * drop_entities[self.item.class])) .. "$")
+                    self.sell_btn:SetText(translate.Get("Shop_Sell_All_For") .. " " .. tostring(math.floor(self.item.price * 0.75 * drop_entities[self.item.class])) .. "$")
                     self.sell_btn.Paint = function ()
                         surface.SetDrawColor(HORDE.color_crimson)
                         surface.DrawRect(0, 0, self:GetWide(), 200)

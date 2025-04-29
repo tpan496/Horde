@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - SMG" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "MP40"
@@ -21,8 +21,8 @@ SWEP.Slot = 2
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/vj_weapons/c_mp40.mdl"
-SWEP.WorldModel = "models/vj_weapons/w_mp40.mdl"
+SWEP.ViewModel = "models/vj_base/weapons/c_mp40.mdl"
+SWEP.WorldModel = "models/vj_base/weapons/w_mp40.mdl"
 SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "000000000000"
@@ -72,10 +72,10 @@ SWEP.MagID = "mp40" -- the magazine pool this gun draws from
 SWEP.ShootVol = 110 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.FirstShootSound = "vj_weapons/mp_40/mp40_single.wav"
-SWEP.ShootSound = "vj_weapons/mp_40/mp40_single.wav"
+SWEP.FirstShootSound = "VJ.Weapon_MP40.Single"
+SWEP.ShootSound = "VJ.Weapon_MP40.Single"
 SWEP.ShootSoundSilenced = "arccw_go/mp5/mp5_01.wav"
-SWEP.DistantShootSound = "vj_weapons/mp_40/mp40_single_dist.wav"
+SWEP.DistantShootSound = "VJ.Weapon_MP40.Single"
 
 SWEP.MeleeSwingSound = "arccw_go/m249/m249_draw.wav"
 SWEP.MeleeMissSound = "weapons/iceaxe/iceaxe_swing1.wav"

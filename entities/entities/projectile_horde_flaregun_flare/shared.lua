@@ -9,8 +9,8 @@ ENT.Spawnable 			= false
 AddCSLuaFile()
 
 ENT.Model = "models/crossbow_bolt.mdl"
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER
 ENT.Removing = nil
 
 function ENT:Draw()
@@ -43,11 +43,6 @@ function ENT:Initialize()
         self.ENVFlare:Spawn()
 
         --self:EmitSound(self.IdleSound1, 75)
-
-        timer.Simple(0, function()
-            if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
-        end)
 
         timer.Simple(2,function()
             if IsValid(self) then

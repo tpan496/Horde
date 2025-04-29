@@ -50,12 +50,24 @@ local function DrawStatus(status, stack, displacement)
             surface.SetMaterial(mat)
             surface.SetDrawColor(color_white)
             surface.DrawTexturedRect(ScreenScale(1 + displacement), ScreenScale(5/4), ScreenScale(13), ScreenScale(13))
-    
+            
+            --Perk skill queueing / buffering
             local cd = MySelf:Horde_GetPerkInternalCooldown()
             if cd > 0 then
                 draw.RoundedBox(10, ScreenScale(displacement), 0, status_icon_s, status_icon_s, Color(40,40,40,200))
                 surface.SetDrawColor(color_white)
                 draw.SimpleText(cd, "Horde_Cd", ScreenScale(displacement + 7.5), ScreenScale(7), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            elseif MySelf:Horde_GetPerkCooldown() >= 1 then
+                local binded = input.LookupBinding("horde_use_perk_skill")
+                local keydown = (input.IsKeyDown(KEY_E) and input.IsKeyDown(KEY_LSHIFT)) || ((binded && input.IsKeyDown(input.GetKeyCode(binded))) || (binded && input.IsButtonDown(input.GetKeyCode(binded))))
+                if(!MySelf.NextAutoPerkSkillExecutionTime) then
+                    MySelf.NextAutoPerkSkillExecutionTime = 0
+                end
+
+                if(MySelf.NextAutoPerkSkillExecutionTime < CurTime() && keydown) then
+                    MySelf:ConCommand("horde_use_perk_skill")
+                    MySelf.NextAutoPerkSkillExecutionTime = CurTime() + 0.2
+                end
             end
 
             local charge = MySelf:Horde_GetPerkCharges()
@@ -280,6 +292,7 @@ local hp = Material("status/hp.png", "smooth")
 local armor = Material("status/armor.png", "mips smooth")
 local mind = Material("status/mind.png", "mips smooth")
 local weight = Material("weight.png")
+local star = Material("star.png", "mips smooth")
 local grenadeui = Material("status/grenade_ui.png", "smooth")
 local vhp = 0
 local varmor = 0
@@ -326,7 +339,6 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
             draw.SimpleText(rank_level, "Trebuchet18", class_icon_x, class_icon_y, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         else
             if rank_level > 0 then
-                local star = Material("star.png", "mips smooth")
                 surface.SetMaterial(star)
                 local x_pos = class_icon_x
                 local y_pos = class_icon_y + ScreenScale(12)
@@ -501,7 +513,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
                     local c2 = color_white
                     if wpn:Clip1() == 0 then c1 = Color(100,0,0) end
                     if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
-                    draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55) - 25, icon_y + ScreenScale(17), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                     draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
                     draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
                 elseif (wpn:GetMaxClip2() > 0 or wpn:Clip2() > 0) then
@@ -509,7 +521,7 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
                     local c2 = color_white
                     if wpn:Clip2() == 0 then c1 = Color(100,0,0) end
                     if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
-                    draw.SimpleText(tostring(wpn:Clip2()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(tostring(wpn:Clip2()), font, ScrW() - ScreenScale(55) - 25, icon_y + ScreenScale(17), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
                     draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetSecondaryAmmoType())), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), c2, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
                     draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
                 elseif wpn:GetPrimaryAmmoType() > 0 then
@@ -519,6 +531,14 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
                     if MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType()) == 0 then c2 = Color(100,0,0) end
                     --draw.SimpleText(tostring(wpn:Clip1()), font, ScrW() - ScreenScale(55), icon_y + ScreenScale(17), c1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
                     draw.SimpleText(tostring(MySelf:GetAmmoCount(wpn:GetPrimaryAmmoType())), font2, ScrW() - ScreenScale(45), icon_y + ScreenScale(17), c2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+                --Melee Durability UI display
+                elseif wpn.UseHordeDurability and HORDE.enable_ammobox == 1 then
+                    local c1 = color_white
+                    local durability = wpn:GetNWFloat("HORDE_Durability", wpn.MaximumDurability)
+                    if wpn:GetNWFloat("HORDE_Durability") == 0 then c1 = Color(100,0,0) end
+                    draw.SimpleText(tostring(durability), font, ScrW() - ScreenScale(55) - 25, icon_y + ScreenScale(17), c1, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(tostring(wpn.MaximumDurability), font2, ScrW() - ScreenScale(20), icon_y + ScreenScale(17), color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
                     draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(82), icon_y + ScreenScale(3), color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
                 else
                     draw.SimpleText(wpn:GetPrintName(), font3, ScrW() - ScreenScale(47), icon_y + ScreenScale(15), color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -533,11 +553,11 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
             local str = MySelf:GetAmmoCount("Grenade")
             local imageSize = ScreenScale(15)
             local wx = ScrW() - airgap - ScreenScale(80)
-            local wy = ScrH() - ScreenScale(61.5) - airgap
+            local wy = ScrH() - ScreenScale(61.75) - airgap
             local textWide, textTall = surface.GetTextSize(str)
             local barWide = textWide + imageSize - 5
 
-            draw.RoundedBox(10, ScrW() - airgap - (ScreenScale(8.5) + barWide), ScrH() - ScreenScale(59.5) - airgap, airgap + barWide, ScreenScale(15), Color(40,40,40,150))
+            draw.RoundedBox(10, ScrW() - airgap - (ScreenScale(8.5) + barWide), ScrH() - ScreenScale(59.75) - airgap, airgap + barWide, ScreenScale(15), Color(40,40,40,150))
             surface.SetMaterial(grenadeui)
             surface.SetDrawColor(255, 255, 255, 255)
             surface.DrawTexturedRect(wx + ScreenScale(62.5), wy + ScreenScale(2.25), imageSize, imageSize)
@@ -576,11 +596,24 @@ hook.Add("HUDPaint", "Horde_DrawHud", function ()
                 surface.SetDrawColor(color_white)
             end
             surface.DrawTexturedRect(x - ScreenScale(14), y + ScreenScale(1), ScreenScale(60), ScreenScale(30))
-
+            
+            --Gadget queueing / buffering
             if cd > 0 then
                 draw.RoundedBox(10, x, y, s, s, Color(40,40,40,225))
                 surface.SetDrawColor(color_white)
                 draw.SimpleText(cd, font, x + s/2, y + s/2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            elseif MySelf:Horde_GetGadgetCooldown() >= 1 then
+                local binded = input.LookupBinding("horde_use_gadget")
+                local keydown = (GetConVar("horde_disable_default_gadget_use_key"):GetInt() == 0 && input.IsKeyDown(KEY_T)) || ((binded && input.IsKeyDown(input.GetKeyCode(binded))) || (binded && input.IsButtonDown(input.GetKeyCode(binded))))
+                if(!MySelf.NextAutoGadgetExecutionTime) then
+                    MySelf.NextAutoGadgetExecutionTime = 0
+                end
+
+                if(MySelf.NextAutoGadgetExecutionTime < CurTime() && keydown) then
+                    --print(MySelf:Horde_GetGadgetCooldown())
+                    MySelf:ConCommand("horde_use_gadget")
+                    MySelf.NextAutoGadgetExecutionTime = CurTime() + 0.2
+                end
             end
 
             if charge >= 0 then
@@ -688,5 +721,13 @@ if CLIENT then
 
     net.Receive("Horde_RenderBarrier", function ()
         MySelf.Horde_BarrierStack = net.ReadUInt(32)
+    end)
+    
+    net.Receive("Horde_PerkCooldownCheck", function ()
+        MySelf:Horde_SetPerkCooldown(net.ReadInt(8))
+    end)
+    
+    net.Receive("Horde_GadgetCooldownCheck", function ()
+        MySelf:Horde_SetGadgetCooldown(net.ReadInt(8))
     end)
 end

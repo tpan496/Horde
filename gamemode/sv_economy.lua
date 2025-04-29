@@ -4,14 +4,15 @@ end)
 
 concommand.Add("horde_drop_weapon", function (ply, cmd, args)
     local cannotdropbase = {
-    horde_spell_weapon_base = "horde_spell_weapon_base",
-    arccw_horde_base_nade = "arccw_horde_base_nade",}
+        horde_spell_weapon_base = true,
+        arccw_horde_base_nade = true,}
     local cannotdropclass = {
-    horde_pheropod = "horde_pheropod",
-    horde_carcass = "horde_carcass",
-    weapon_horde_medkit = "weapon_horde_medkit",
-    horde_slam = "horde_slam",}
-    if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and (ply:GetActiveWeapon():GetClass() == cannotdropclass[ply:GetActiveWeapon():GetClass()] or ply:GetActiveWeapon().Base == cannotdropbase[ply:GetActiveWeapon().Base]) then
+        horde_pheropod = true,
+        horde_carcass = true,
+        weapon_horde_medkit = true,
+        horde_slam = true,}
+    if ply:GetActiveWeapon() and ply:GetActiveWeapon():IsValid() and (cannotdropbase[ply:GetActiveWeapon().Base] or cannotdropclass[ply:GetActiveWeapon():GetClass()]) then
+        HORDE:SendNotification("You can't drop this!", 1, ply)
         ply:EmitSound("player/suit_denydevice.wav")
         return
     end
@@ -31,6 +32,8 @@ util.AddNetworkString("Horde_SyncEconomy")
 util.AddNetworkString("Horde_SyncDifficulty")
 util.AddNetworkString("Horde_RemoveReadyPanel")
 util.AddNetworkString("Horde_SyncMaxWeight")
+util.AddNetworkString("Horde_IsInBuyZone")
+util.AddNetworkString("Horde_IsInBreakTime")
 
 local plymeta = FindMetaTable("Player")
 
@@ -74,8 +77,10 @@ function plymeta:Horde_SetMaxWeight(weight)
         if self.Horde_max_weight > weight then
             local old_max_weight = self:Horde_GetMaxWeight()
             self.Horde_max_weight = weight
-            self:Horde_RecalcWeight()
             self.Horde_weight = math.min(weight, self:Horde_GetWeight() - (old_max_weight - weight))
+            timer.Simple(0, function()
+                self:Horde_RecalcWeight()
+            end)
             self:Horde_SyncEconomy()
         else
             self.Horde_weight = math.min(weight, self:Horde_GetWeight() + weight - self:Horde_GetMaxWeight())
@@ -105,6 +110,11 @@ function plymeta:Horde_SetInBuyZone(can_buy)
         else
             net.WriteUInt(0, 8)
         end
+    net.Send(self)
+    
+    --network this so arccw attachments know you're in buy zone
+    net.Start("Horde_IsInBuyZone")
+        net.WriteBool(can_buy)
     net.Send(self)
 end
 
@@ -178,7 +188,7 @@ function plymeta:Horde_RemoveMinionsAndDrops()
                 local eClass = ent:GetClass()
                 local item = HORDE.items[eClass]
                 if item then
-                    self:Horde_AddMoney(math.floor(0.25 * item.price))
+                    self:Horde_AddMoney(math.floor(0.75 * item.price))
                 end
                 ent:Remove()
                 if self.Horde_drop_entities and self.Horde_drop_entities[eClass] then
@@ -289,7 +299,11 @@ function plymeta:Horde_RecalcWeight()
     for _, wpn in pairs(self:GetWeapons()) do
         if not HORDE.items[wpn:GetClass()] then goto cont end
         local wpn_weight = HORDE.items[wpn:GetClass()].weight
-        if weight + wpn_weight > self:Horde_GetMaxWeight() then
+        local gadget_weight = 0
+        if self:Horde_GetGadget() then
+            gadget_weight = HORDE.items[self:Horde_GetGadget()].weight
+        end
+        if weight + gadget_weight + wpn_weight > self:Horde_GetMaxWeight() then
             self:DropWeapon(wpn)
         else
             weight = weight + wpn_weight
@@ -364,6 +378,15 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
         else
             net.WriteUInt(0, 8)
         end
+        net.Send(ply)
+        
+        --network this so arccw attachments know you're in buy zone
+        net.Start("Horde_IsInBuyZone")
+            if HORDE.current_break_time > 0 then
+                net.WriteBool(true)
+            else
+                net.WriteBool(false)
+            end
         net.Send(ply)
     end
 end)
@@ -659,6 +682,17 @@ net.Receive("Horde_BuyItem", function (len, ply)
                 ply:Horde_AddMoney(-price)
                 ply:Horde_AddSkullTokens(-skull_tokens)
                 ply:Horde_SyncEconomy()
+            
+            --Experimental Upgrade System
+            elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE then
+                ply:Horde_SetSpecialUpgrade(item.class)
+                --ply:Horde_SetMaxHealth()
+                --ply:Horde_SetMaxArmor()
+                ply:Horde_AddMoney(-price)
+                ply:Horde_AddSkullTokens(-skull_tokens)
+                ply:Horde_SyncEconomy()
+                hook.Run("Horde_OnSpecialUpgradeBuySell", ply)
+                
             elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 ply:Horde_UnsetGadget()
                 ply:Horde_SetGadget(item.class)
@@ -755,7 +789,7 @@ net.Receive("Horde_SellItem", function (len, ply)
     end
     if ply:HasWeapon(class) then
         local item = HORDE.items[class]
-        ply:Horde_AddMoney(math.floor(item.price * 0.25))
+        ply:Horde_AddMoney(math.floor(item.price * 0.75))
         ply:StripWeapon(class)
         ply:Horde_SyncEconomy()
     else
@@ -763,7 +797,7 @@ net.Receive("Horde_SellItem", function (len, ply)
         if item.entity_properties.type == HORDE.ENTITY_PROPERTY_DROP then
             local drop_entities = ply:Horde_GetDropEntities()
             if drop_entities and drop_entities[class] then
-                ply:Horde_AddMoney(math.floor(0.25 * item.price * drop_entities[class]))
+                ply:Horde_AddMoney(math.floor(0.75 * item.price * drop_entities[class]))
                 -- Remove all the drop entiies of this player
                 for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
                     if ent:IsValid() and ent:GetClass() == class then
@@ -785,11 +819,17 @@ net.Receive("Horde_SellItem", function (len, ply)
                 end
                 ply:Horde_SyncEconomy()
             end
+        --Experimental Upgrade System
+        elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE then
+            ply:Horde_UnsetSpecialUpgrade(item.class)
+            ply:Horde_SyncEconomy()
+            hook.Run("Horde_OnSpecialUpgradeBuySell", ply)
+            
         elseif item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
             if ply:Horde_GetGadget() == nil then return end
             ply:Horde_UnsetGadget()
             -- Sell value function in sh_gadget for plymeta:Horde_unsetGadget() for timing
-            --ply:Horde_AddMoney(math.floor(0.25 * item.price))
+            --ply:Horde_AddMoney(math.floor(0.75 * item.price))
             ply:Horde_SyncEconomy()
         end
     end
@@ -853,6 +893,12 @@ net.Receive("Horde_SelectClass", function (len, ply)
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
 
+    -- Sell and remove all upgrades
+    if ply.Horde_Special_Upgrades then
+        for upgrades in pairs(ply.Horde_Special_Upgrades) do
+            ply:Horde_UnsetSpecialUpgrade(upgrades)
+        end
+    end
 
     -- Remove all entities
     if HORDE.player_drop_entities[ply:SteamID()] then
@@ -861,7 +907,7 @@ net.Receive("Horde_SelectClass", function (len, ply)
                 local eClass = ent:GetClass()
                 local item = HORDE.items[eClass]
                 if item then
-                    ply:Horde_AddMoney(math.floor(0.25 * item.price))
+                    ply:Horde_AddMoney(math.floor(0.75 * item.price))
                 end
                 ent:Remove()
                 if ply.Horde_drop_entities and ply.Horde_drop_entities[eClass] then -- Remove them from here too

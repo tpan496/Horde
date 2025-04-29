@@ -10,10 +10,17 @@ MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
                 e:SetOrigin(ent:GetPos())
                 e:SetEntity(ent)
             util.Effect("fume", e, true, true)
+            ent.Horde_Mutation["fume"] = true
 
             local id = ent:GetCreationID()
             timer.Create("Horde_Mutation_Fume" .. id, 0.5, 0, function()
-                if not ent:IsValid() or not ent.Horde_Mutation then timer.Remove("Horde_Mutation_Fume" .. id) return end
+                if not ent:IsValid() or not ent.Horde_Mutation or not ent.Horde_Mutation["fume"] then
+                    timer.Remove("Horde_Mutation_Fume" .. id)
+                    if ent:IsValid() then
+                        --remove particle effect
+                    end
+                    return
+                end
                 for _, e1 in pairs(ents.FindInSphere(ent:GetPos(), 175)) do
                     if HORDE:IsPlayerOrMinion(e1) == true then
                         e1:Horde_AddDebuffBuildup(HORDE.Status_Bleeding, 10, ent)

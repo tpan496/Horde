@@ -44,6 +44,8 @@ ENT.SoundTbl_FootStep = {}
 ENT.CanTurnWhileStationary = false
 ENT.HasOnPlayerSight = true
 
+ENT.Horde_Immune_Status_All = true
+
 -- ====== Sounds ====== --
 ENT.HasSounds = true
 ENT.SoundTbl_CombatIdle = {

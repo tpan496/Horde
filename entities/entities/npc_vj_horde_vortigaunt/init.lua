@@ -43,7 +43,9 @@ ENT.FootStepTimeRun = 0.4 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.5 -- Next foot step sound when it is walking
 ENT.FootStepSoundLevel = 60
 ENT.RunAwayOnUnknownDamage = false -- Should run away on damage
- 
+
+ENT.Horde_Immune_Status_All = true
+
 	-- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {"npc/vort/vort_foot1.wav","npc/vort/vort_foot2.wav","npc/vort/vort_foot3.wav","npc/vort/vort_foot4.wav"}

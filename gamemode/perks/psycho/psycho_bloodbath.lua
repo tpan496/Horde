@@ -1,6 +1,6 @@
 PERK.PrintName = "Bloodbath"
 PERK.Description = [[
-Adds {1} Critical Hit chance.
+Adds {1} Base Critical Hit chance.
 Leech 1 health on Critical Hit.]]
 PERK.Icon = "materials/perks/psycho/bloodbath.png"
 PERK.Params = {

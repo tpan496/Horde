@@ -57,7 +57,15 @@ function Start(ply)
 end
 
 function Ready(ply)
-    if HORDE.current_wave > 0 then return end
+    if HORDE.current_wave > 0 then SkipTraderTime(ply) return end
+    if HORDE.current_break_time <= 10 then
+        HORDE:SendNotification(translate.Get("Game_F4_Starting"), 1, ply)
+        return
+    end
+    if HORDE.player_ready[ply] == 1 then
+        HORDE:SendNotification(translate.Get("Game_F4_Readied"), 1, ply)
+        return
+    end
     if not ply:Alive() then
         HORDE:SendNotification("You can't get ready when you are dead!", 1, ply)
         return
@@ -87,6 +95,46 @@ function Ready(ply)
 
     if HORDE.start_game and HORDE.current_wave > 0 then return end
     HORDE:BroadcastPlayersReadyMessage(tostring(ready_count) .. "/" .. tostring(total_player))
+end
+
+--Skip trader time--
+function SkipTraderTime(ply)
+    if HORDE.current_wave <= 0 then return end
+    if not HORDE:InBreak() then 
+        HORDE:SendNotification(translate.Get("Game_F4_CannotSkip"), 1, ply)
+        return
+    end
+    if HORDE.current_break_time <= 10 then
+        HORDE:SendNotification(translate.Get("Game_F4_Starting"), 1, ply)
+        return
+    end
+    if HORDE.player_ready[ply] == 1 then
+        HORDE:SendNotification(translate.Get("Game_F4_Readied"), 1, ply)
+        return
+    end
+    if not ply:Alive() then
+        HORDE:SendNotification("You can't dab when you are dead!", 1, ply)
+        return
+    end
+    
+    
+    HORDE.player_ready[ply] = 1
+    local skip_count = 0
+    local total_player = 0
+    for _, skip_ply in pairs(player.GetAll()) do
+        if HORDE.player_ready[skip_ply] == 1 then
+            skip_count = skip_count + 1
+        end
+        total_player = total_player + 1
+    end
+    
+    if skip_count >= total_player then
+        HORDE.current_break_time = math.min(HORDE.current_break_time, 0)
+    end
+
+    net.Start("Horde_PlayerReadySync")
+        net.WriteTable(HORDE.player_ready)
+    net.Broadcast()
 end
 
 function End(ply)
@@ -120,6 +168,11 @@ function Shop(ply)
     ply:Horde_RecalcWeight()
     net.Start("Horde_ToggleShop")
     net.Send(ply)
+    for _, wpn in pairs(ply:GetWeapons()) do
+        if wpn.IsHordeMelee then
+            wpn:SetNWFloat("HORDE_Durability", wpn.MaximumDurability)
+        end
+    end
 end
 
 function ItemConfig(ply)
@@ -203,6 +256,7 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     if text[1] == "!help" then
         ply:PrintMessage(HUD_PRINTTALK, "'!ready' - Get ready")
         ply:PrintMessage(HUD_PRINTTALK, "'!shop' - Open shop")
+        ply:PrintMessage(HUD_PRINTTALK, "'!skip' - Skip trader time")
         ply:PrintMessage(HUD_PRINTTALK, "'!drop' - Drop weapon")
         ply:PrintMessage(HUD_PRINTTALK, "'!throwmoney <amount>' - Drop money")
         ply:PrintMessage(HUD_PRINTTALK, "'!rtv' -Initiate a map change vote")
@@ -210,6 +264,8 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         Start(ply)
     elseif text[1] == "!ready" then
         Ready(ply)
+    elseif text[1] == "!skip" then
+        SkipTraderTime(ply)
     elseif text[1] == "!end" then
         End(ply)
     elseif text[1] == "!shop" then
@@ -244,6 +300,10 @@ end)
 
 concommand.Add("horde_ready", function (ply, cmd, args)
     Ready(ply)
+end)
+
+concommand.Add("horde_skip_trader", function (ply, cmd, args)
+    SkipTraderTime(ply)
 end)
 
 concommand.Add("horde_end", function (ply, cmd, args)
@@ -430,8 +490,14 @@ concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
         else
             scale = math.min(8, horde_players_count)
             add = 0.60
+            if scale > 4 then
+                add = 0.55
+            end
         end
-        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() * math.max(1, scale * (add + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
+        spawned_enemy:SetMaxHealth(spawned_enemy:GetMaxHealth() *
+            math.max(HORDE.difficulty_elite_health_scale_multiplier[HORDE.difficulty],
+                scale * HORDE.difficulty_elite_health_scale_multiplier[HORDE.difficulty] *
+                (add + HORDE.difficulty_elite_health_scale_add[HORDE.difficulty])))
     end
 
     if enemy.health_scale then

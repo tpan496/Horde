@@ -11,7 +11,5 @@ if (CLIENT) then
     local Name = "Projection"
     local LangName = "npc_vj_horde_overlord_projection"
     language.Add(LangName, Name)
-    killicon.Add(LangName, "HUD/killicons/default", Color(255, 80, 0, 255))
-    language.Add("#" .. LangName, Name)
-    killicon.Add("#" .. LangName, "HUD/killicons/default", Color(255, 80, 0, 255))
+    killicon.Add(LangName, "materials/perks/overlord/juxtapose.png", Color(255, 255, 255, 255))
 end

@@ -10,7 +10,7 @@ if (CLIENT) then
 	local Name = "Projectile"
 	local LangName = "obj_vj_horde_platoon_rpg_projectile"
 	language.Add(LangName, Name)
-	killicon.Add(LangName,"HUD/killicons/default",Color(255,80,0,255))
+	killicon.AddAlias(LangName, "arccw_horde_rpg7")
 	language.Add("#"..LangName, Name)
-	killicon.Add("#"..LangName,"HUD/killicons/default",Color(255,80,0,255))
+	killicon.AddAlias("#"..LangName, "arccw_horde_rpg7")
 end

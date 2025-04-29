@@ -13,7 +13,7 @@ ENT.LeapAttackVelocityUp = 150 -- How much upward force should it apply?
 ENT.NextLeapAttackTime = 5 -- How much time until it can use a leap attack?
 ENT.NextAnyAttackTime_Leap = 1 -- How much time until it can use any attack again? | Counted in Seconds
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.HasMeleeAttack = false
+ENT.HasMeleeAttack = true
 ENT.MeleeAttackDamage = 1
 ENT.HasLeapAttack = true
 ENT.LeapAttackDamage = 1

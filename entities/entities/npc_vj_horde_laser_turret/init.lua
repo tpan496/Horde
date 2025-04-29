@@ -45,6 +45,8 @@ ENT.CanTurnWhileStationary = false
 ENT.HasOnPlayerSight = true
 ENT.LastLaser = CurTime()
 
+ENT.Horde_Immune_Status_All = true
+
 -- ====== Sounds ====== --
 ENT.HasSounds = true
 ENT.SoundTbl_CombatIdle = {

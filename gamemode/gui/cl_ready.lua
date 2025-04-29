@@ -70,7 +70,7 @@ end
 local tip = ""
 HORDE.TipPanel = vgui.Create("DPanel")
 HORDE.TipPanel:SetSize(ScrW() * 2 / 5, ScreenScale(15))
-HORDE.TipPanel:SetPos(ScrW() / 2 - ScrW() * 2 / 10, ScreenScale(6))
+HORDE.TipPanel:SetPos(ScrW() / 2 - ScrW() * 2 / 10, ScreenScale(6) + (ScrH() * 0.1))
 HORDE.TipPanel.Paint = function (w,h)
     if tip == nil or tip == "" then return end
     draw.RoundedBox(10, 0, 0, ScrW() * 2 / 5, ScreenScale(15),  Color(40,40,40,200))
@@ -83,8 +83,11 @@ net.Receive("Horde_SyncTip", function()
         HORDE.TipPanel:SetVisible(false)
     else
         HORDE.TipPanel:SetVisible(true)
-        HORDE:ShowLeaderboardThenFadeOut()
     end
+end)
+
+net.Receive("Horde_ShowLeaderboardsTemporarily", function()
+    HORDE:ShowLeaderboardThenFadeOut()
 end)
 
 net.Receive("Horde_PlayerReadySync", function ()
@@ -112,13 +115,15 @@ net.Receive("Horde_PlayerReadySync", function ()
     for _, ply in pairs(ready_players) do
         if ply:IsValid() then
             HORDE.PlayerReadyPanel:CreateReadyPanel(ply, 1)
+            local rand = math.Rand(80, 110)
+            ply:EmitSound("buttons/button3.wav", 100, rand, .4, CHAN_AUTO)
         end
     end
 end)
 
 net.Receive("Horde_RemoveReadyPanel", function()
     if HORDE.PlayerReadyPanel then
-        HORDE.PlayerReadyPanel:Remove()
+        HORDE.PlayerReadyPanel:SetVisible(false)
         HORDE.HelpPanel:SetVisible(false)
     end
 end)

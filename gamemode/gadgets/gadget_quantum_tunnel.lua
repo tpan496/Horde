@@ -24,6 +24,8 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         else
             return true
         end
+    else
+        return true
     end
 
     sound.Play("weapons/physcannon/physcannon_drop.wav", ply:GetPos())

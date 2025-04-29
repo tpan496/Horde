@@ -1,6 +1,7 @@
 SUBCLASS.PrintName = HORDE.Class_Engineer
 SUBCLASS.Description = [[
-Default.
-Specializes in minions.]]
+Deploys sentries, turrets, and controls minions.
+Can focus on setting up a miniature base or 
+a more mobile active playstyle.]]
 SUBCLASS.Perks = {}
 SUBCLASS.Icon = "Engineer.png"

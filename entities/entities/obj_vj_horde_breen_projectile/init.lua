@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"effects/combineball.mdl"} -- The models it should spawn with | Picks a random one from the table
-ENT.DoesRadiusDamage = true -- Should it do a blast damage when it hits something?
+ENT.DoesRadiusDamage = false -- Should it do a blast damage when it hits something?
 ENT.RadiusDamageRadius = 140 -- How far the damage go? The farther away it's from its enemy, the less damage it will do | Counted in world units
 ENT.RadiusDamage = 60 -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
 ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the enemy is from the position that the projectile hit?
@@ -103,22 +103,28 @@ function ENT:DeathEffects(data,phys)
 	self:DeleteOnRemove(self.ExplosionLight1)
 end
 
-function ENT:CustomOnPhysicsCollide(data, phys)
-	self.Dead = true
+function ENT:OnCollision(data, phys)
+	if not self.Owner:IsValid() then self:Remove() return true end
 	local dmg = DamageInfo()
 	dmg:SetAttacker(self.Owner)
 	dmg:SetInflictor(self)
 	dmg:SetDamageType(DMG_BLAST)
-	dmg:SetDamage(40)
+	dmg:SetDamage(30)
 	util.BlastDamageInfo(dmg, self:GetPos(), 150)
-	dmg = DamageInfo()
-	dmg:SetAttacker(self.Owner)
-	dmg:SetInflictor(self)
-	dmg:SetDamageType(DMG_RADIATION)
-	dmg:SetDamage(40)
-	util.BlastDamageInfo(dmg, self:GetPos(), 150)
+	dmg2 = DamageInfo()
+	dmg2:SetAttacker(self.Owner)
+	dmg2:SetInflictor(self)
+	dmg2:SetDamageType(DMG_CLUB)
+	dmg2:SetDamage(30)
+	util.BlastDamageInfo(dmg2, self:GetPos(), 150)
 
+    local breen = self.Owner
 	local self_pos = self:GetPos()
+    
+    local eff = EffectData()
+        eff:SetOrigin(self_pos)
+    util.Effect("explosion", eff, true, true)
+    
 	if self.OwnerCritical then
 		for i =0,10 do
             timer.Simple(0.5 + i * 0.2, function ()
@@ -127,10 +133,13 @@ function ENT:CustomOnPhysicsCollide(data, phys)
                 local pos = self_pos + rand * math.Rand(10, 50)
                 for _, e1 in pairs(ents.FindInSphere(pos, 150)) do
                     if (HORDE:IsPlayerOrMinion(e1) == true) then
+                        if not breen:IsValid() then
+                            breen = Entity(0)
+                        end
                         local dmginfo = DamageInfo()
                         dmginfo:SetDamage(math.max(10, 0.1 * e1:GetMaxHealth()))
-                        dmginfo:SetAttacker(Entity(0))
-                        dmginfo:SetInflictor(Entity(0))
+                        dmginfo:SetAttacker(breen)
+                        dmginfo:SetInflictor(breen)
                         dmginfo:SetDamagePosition(pos)
                         dmginfo:SetDamageType(DMG_BLAST)
                         e1:TakeDamageInfo(dmginfo)
@@ -143,7 +152,8 @@ function ENT:CustomOnPhysicsCollide(data, phys)
             end)
         end
     end
-	self:OnCollideSoundCode()
+	--[[
+    self:OnCollideSoundCode()
 	if self.PaintDecalOnDeath == true && VJ_PICK(self.DecalTbl_DeathDecals) != false && self.AlreadyPaintedDeathDecal == false then 
 		self.AlreadyPaintedDeathDecal = true 
 		util.Decal(VJ_PICK(self.DecalTbl_DeathDecals), data.HitPos + data.HitNormal, data.HitPos - data.HitNormal)
@@ -160,6 +170,7 @@ function ENT:CustomOnPhysicsCollide(data, phys)
 	else
 		self:Remove()
 	end
+    ]]
 	return false
 end
 /*-----------------------------------------------

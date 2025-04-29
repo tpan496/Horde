@@ -63,6 +63,12 @@ function PANEL:DoClick()
         Derma_Query("Change Subclass?", "Change Subclass",
                 "Yes",
                 function()
+                    if self.info.subclass.PrintName == MySelf:Horde_GetCurrentSubclass() then
+                        net.Start("Horde_SelectSameSubclass")
+                            net.WriteString(self.info.subclass.PrintName)
+                        net.SendToServer()
+                        return
+                    end
                     HORDE:SendSavedPerkChoices(self.info.subclass.PrintName)
                     MySelf:Horde_SetSubclass(self.info.class, self.info.subclass.PrintName)
                     HORDE:ToggleShop()

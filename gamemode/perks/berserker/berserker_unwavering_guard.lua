@@ -1,12 +1,15 @@
 PERK.PrintName = "Unwavering Guard"
-PERK.Description = [[On successful Aerial Parry:
-    - {1} increased Physical damage for {3} seconds.
-    - {2} less damage taken for {3} seconds.]]
+PERK.Description = [[
+Your Aerial Parry works against all damage types.
+{1} increased melee damage for {2} seconds on successful Aerial Parry.
+{3} less damage taken for {4} seconds on successful Aerial Parry.]]
+
 PERK.Icon = "materials/perks/unwavering_guard.png"
 PERK.Params = {
     [1] = {value = 0.25, percent = true},
-    [2] = {value = 0.25, percent = true},
-    [3] = {value = 5},
+    [2] = {value = 10},
+    [3] = {value = 0.25, percent = true},
+    [4] = {value = 10},
 }
 
 PERK.Hooks = {}
@@ -23,7 +26,8 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
 end
 
 PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
-    if ply.HasUnwaveringGuardBuff then
+    if not ply:Horde_GetPerk("berserker_unwavering_guard") then return end
+    if ply.HasUnwaveringGuardBuff and (HORDE:IsMeleeDamage(dmginfo) or HORDE:IsCurrentWeapon(dmginfo, "Melee") == true) then
         bonus.increase = bonus.increase + 0.25
     end
 end

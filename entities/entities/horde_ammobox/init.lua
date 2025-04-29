@@ -2,6 +2,7 @@ AddCSLuaFile("shared.lua")
 AddCSLuaFile("cl_init.lua")
 include("shared.lua")
 ENT.CleanupPriority = 2
+ENT.DurabilityRestoreAmount = 0.2 --Max Percentage Restored
 
 function ENT:Initialize()
 
@@ -24,6 +25,7 @@ function ENT:StartTouch(entity)
     if not self.Removing and entity:IsPlayer() and entity:Alive() and not entity:IsBot() then
         local given_ammo = false
         local given_ammo2 = false
+        local given_durability = false
         local ply = entity
         for _, wpn in pairs(entity:GetWeapons()) do
             local ammo_id = wpn:GetPrimaryAmmoType()
@@ -36,6 +38,12 @@ function ENT:StartTouch(entity)
             elseif ammo_id2 >= 1 then
                 clip_size2 = 1
             end
+            
+            -- Melee durability
+            if wpn.IsHordeMelee and wpn:GetNWFloat("HORDE_Durability") < wpn.MaximumDurability then
+                wpn:SetNWFloat("HORDE_Durability", math.min(wpn:GetNWFloat("HORDE_Durability", 0) + (wpn.MaximumDurability * self.DurabilityRestoreAmount), wpn.MaximumDurability))
+				given_durability = true
+			end
             
             -- Primary ammo
             if wpn.Primary and wpn.Primary.MaxAmmo then

@@ -171,7 +171,7 @@ function SWEP:DrawHUD()
     cam.Start3D(self.Owner:EyePos(), self.Owner:EyeAngles())
     local size = 5
     render.SetMaterial(Material("Sprites/light_glow02_add_noz"))
-    render.DrawQuadEasy(tr.HitPos, (self.Owner:EyePos() - tr.HitPos):GetNormal(), size, size, self.AimColor, 0)
+    render.DrawQuadEasy(tr.HitPos, (self.Owner:EyePos() - tr.HitPos):GetNormalized(), size, size, self.AimColor, 0)
     cam.End3D()
     end
 end

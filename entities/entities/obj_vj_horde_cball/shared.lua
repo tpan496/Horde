@@ -104,7 +104,8 @@ local sdHit = {"weapons/physcannon/energy_disintegrate4.wav", "weapons/physcanno
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCollision(data, phys)
 	local owner = self:GetOwner()
-	local hitEnt = data.HitEntity
+	--[[
+    local hitEnt = data.HitEntity
 	if IsValid(owner) then
 		if (VJ_IsProp(hitEnt)) or (owner:IsNPC() && owner:CheckRelationship(hitEnt) == D_HT && (hitEnt != owner) or true) then
 			VJ.CreateSound(self, VJ_PICK(sdHit), 80)
@@ -126,7 +127,7 @@ function ENT:OnCollision(data, phys)
 		dmgInfo:SetDamagePosition(data.HitPos)
 		hitEnt:TakeDamageInfo(dmgInfo, self)
 	end
-
+    ]]
 	local dataF = EffectData()
 	dataF:SetOrigin(data.HitPos)
 	util.Effect("cball_bounce", dataF)
@@ -166,7 +167,8 @@ function ENT:GravGunPunt(ply)
 end
 
 function ENT:DeathEffects()
-	local dataF = EffectData()
+	--[[
+    local dataF = EffectData()
 	dataF:SetOrigin(data.HitPos)
 	util.Effect("cball_bounce", dataF)
 
@@ -175,6 +177,7 @@ function ENT:DeathEffects()
 	dataF:SetNormal(data.HitNormal)
 	dataF:SetScale(50)
 	util.Effect("AR2Impact", dataF)
+    ]]
 
     local myPos = self:GetPos()
 	effects.BeamRingPoint(myPos, 0.2, 12, 512, 64, 0, color1, {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
@@ -193,6 +196,8 @@ function ENT:DeathEffects()
     dmg:SetDamageType(DMG_GENERIC)
     dmg:SetDamage(60)
     util.BlastDamageInfo(dmg, self:GetPos(), 150)
+    
+    self:Remove()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------

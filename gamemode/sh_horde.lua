@@ -483,4 +483,106 @@ else -- Codes for clientside
             surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
         end
     end)
+    
+    ---------Experimental Circle Paint----------------
+    local clr = Color(0, 0, 0, 0)
+    function HORDE.MaskedSphereRing(pos, radius, steps, thickness, color)
+        cam.IgnoreZ(false)
+        render.SetStencilEnable(true)
+        render.SetStencilCompareFunction(STENCIL_ALWAYS)
+        render.SetStencilPassOperation(STENCIL_KEEP)
+        render.SetStencilFailOperation(STENCIL_KEEP)
+        render.SetStencilZFailOperation(STENCIL_KEEP)
+        render.SetStencilReferenceValue(1)
+        render.SetStencilTestMask(255)
+        render.SetStencilWriteMask(255)
+        render.ClearStencil()
+        render.SetColorMaterial()
+
+        local r1, r2 = radius, radius + thickness
+
+        render.SetStencilCompareFunction(STENCIL_ALWAYS)
+        render.SetStencilZFailOperation(STENCIL_INCRSAT)
+        render.DrawSphere(pos, -r2, steps, steps, clr)
+        render.SetStencilZFailOperation(STENCIL_DECR)
+        render.DrawSphere(pos, r2, steps, steps, clr)
+        render.SetStencilZFailOperation(STENCIL_INCR)
+        render.DrawSphere(pos, -r1, steps, steps, clr)
+        render.SetStencilZFailOperation(STENCIL_DECR)
+        render.DrawSphere(pos, r1, steps, steps, clr)
+
+        local dir = LocalPlayer():EyeAngles():Forward()
+
+        render.SetStencilCompareFunction( STENCIL_EQUAL )
+        render.SetStencilReferenceValue( 1 )
+        render.DrawQuadEasy(EyePos() + dir * 10, -dir, 200, 200, color, 0)
+
+        render.SetStencilEnable(false)
+    end
+    --[[
+    net.Receive("Horde_GetPerkLevelBonus", function()
+        local ply = net.ReadEntity()
+        local perk = net.ReadString()
+        local bonus = net.ReadFloat()
+        if not ply:IsValid() then return end
+        ply:Horde_SetPerkLevelBonus(perk, bonus)
+    end)
+    ]]
+    
+    --network this so arccw attachments know you're in trader zone
+    net.Receive("Horde_IsInBuyZone", function()
+        local int = net.ReadBool()
+        local ply = LocalPlayer()
+        if not ply:IsValid() then return end
+        ply.Horde_CanBuy = int
+    end)
+    
+    --network this so arccw attachments know you're in trader time
+    net.Receive("Horde_IsInBreakTime", function()
+        local int = net.ReadBool()
+        local ply = LocalPlayer()
+        if not ply:IsValid() then return end
+        ply.Horde_IsInBreakTime = int
+    end)
+    
+    ---------- highlighted text test ---------------------------------------------------------
+    --[[
+    local label = vgui.Create("RichText", ui)
+    label:SetPos(imggap, title:GetY() + title:GetTall() + imggap)
+    label:SetSize(maxwide, ui:GetTall())
+    label:SetFontInternal("ZScenario-UISmall2x")
+    label:InsertColorChange(255, 255, 255, 255)
+    local clr = color_white
+    local expected_tag, expected_endtag, expecting_endtag = "<clr>", "<clr>", false
+    local skipTo = -1
+    local tmp = ""
+    for i = 1, #str do
+        local f = string.sub(str, i, i + 4)
+        if(!expecting_endtag) then
+            if(f == expected_tag) then
+                expecting_endtag = true
+                local r, g, b = 255, 255, 255
+                local hex = string.sub(str, i + 6, i + 11)
+                label:InsertColorChange(tonumber(string.sub(hex, 1, 2), 16), tonumber(string.sub(hex, 3, 4), 16), tonumber(string.sub(hex, 5, 6), 16), 255)
+                skipTo = i + 12
+            end
+        else
+            if(f == expected_tag) then
+                expecting_endtag = false
+                label:InsertColorChange(255, 255, 255, 255)
+                skipTo = i + 4
+            end
+        end
+        if(i > skipTo) then
+            label:AppendText(str[i])
+        end
+    end
+    ]]
+    ------------------------------------------------------------------------
+    
+    hook.Add("PreDrawOpaqueRenderables", "Horde_Circle_Preview_Range", function(depth, skybox, skybox3d)
+        hook.Run("PreDraw_ImmersionBreakingCircles")
+    end)
+    
+    
 end

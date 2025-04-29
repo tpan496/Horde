@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - MW2"
+SWEP.Category = "Horde - Pistol"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
@@ -48,6 +48,9 @@ SWEP.RecoilPunch = 2.5
 SWEP.Delay = 0.079 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
+    {
+        Mode = 2,
+    },
     {
         Mode = 1,
     },
@@ -218,11 +221,11 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo"
     },
     {
         PrintName = "Perk",
-        Slot = "perk"
+        Slot = "go_perk"
     },
     {
         PrintName = "Akimbotest",
@@ -258,6 +261,21 @@ function SWEP:Hook_OnDeploy()
         if !IsValid(self) then return end
         self:Attach(9, "horde_akimbo_m9")
     end)
+end
+
+DEFINE_BASECLASS(SWEP.Base)
+
+function SWEP:PrimaryAttack(...)
+    if self:GetOwner():KeyDown(IN_ATTACK) and self:GetCurrentFiremode().Mode == 2 and self.Attachments[8].Installed == "horde_akimbo_m9" then
+        timer.Simple(self.Delay / 2, function()
+            self:SetInUBGL(true)
+            self:ShootUBGL()
+            timer.Simple(self.Delay / 2, function()
+                self:SetInUBGL(false)
+            end)
+        end)
+    end
+    BaseClass.PrimaryAttack(self, ...)
 end
 
 SWEP.Animations = {

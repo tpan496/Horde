@@ -4,10 +4,11 @@ if (CLIENT) then
     SWEP.DrawWeaponInfoBox	= false
     SWEP.BounceWeaponIcon = false
 	killicon.Add("arccw_horde_flaregun", "vgui/hud/arccw_horde_flaregun", color_white)
+    killicon.Add("projectile_horde_flaregun_flare", "vgui/hud/arccw_horde_flaregun", color_white)
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Pistol" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Flare Gun"
@@ -74,9 +75,9 @@ SWEP.Primary.Ammo = "357" -- what ammo type the gun uses
 SWEP.ShootVol = 100 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound = "vj_weapons/flare/fire.wav"
-SWEP.ShootSoundSilenced = "vj_weapons/flare/fire_dist.wav"
-SWEP.DistantShootSound = "vj_weapons/flare/fire_dist.wav"
+SWEP.ShootSound = "VJ.Weapon_FlareGun.Single"
+SWEP.ShootSoundSilenced = "VJ.Weapon_FlareGun.Single"
+SWEP.DistantShootSound = "VJ.Weapon_FlareGun.Single"
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"
 SWEP.ShellModel = "models/shells/shell_9mm.mdl"

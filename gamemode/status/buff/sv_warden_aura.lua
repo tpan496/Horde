@@ -6,12 +6,15 @@ function entmeta:Horde_AddWardenAura()
     local ent = ents.Create("horde_warden_aura")
     ent:SetPos(self:GetPos())
     ent:SetParent(self)
+    
+    local ply = self
     if self:GetNWEntity("HordeOwner"):IsPlayer() then
-        ent:Horde_SetAuraRadius(self:GetNWEntity("HordeOwner"):Horde_GetWardenAuraRadius() * self:GetNWEntity("HordeOwner"):Horde_GetPerkLevelBonus("warden_base"))
-    else
-        ent:Horde_SetAuraRadius(self:Horde_GetWardenAuraRadius() * self:Horde_GetPerkLevelBonus("warden_base"))
-        timer.Simple(0, function() self:Horde_AddWardenAuraEffects(self) end)
+        ply = self:GetNWEntity("HordeOwner")
+    elseif self:GetOwner():IsPlayer() then
+        ply = self:GetOwner()
     end
+    ent:Horde_SetAuraRadius(ply:Horde_GetWardenAuraRadius() * ply:Horde_GetPerkLevelBonus("warden_base"))
+
     ent:Spawn()
     self.Horde_WardenAura = ent
 end
@@ -33,7 +36,7 @@ function plymeta:Horde_SetWardenAuraRadius(radius)
 end
 
 function plymeta:Horde_GetWardenAuraRadius()
-    return (self.Horde_WardenAuraRadius or 160)
+    return (self.Horde_WardenAuraRadius or 205)
 end
 
 function plymeta:Horde_SetEnableWardenAuraHealthRegen(enable)
@@ -69,7 +72,7 @@ function plymeta:Horde_GetEnableWardenAuraBuffBonus()
 end
 
 function plymeta:Horde_AddWardenAuraEffects(provider)
-    if not provider or not provider:Alive() then return end
+    if not provider or not provider:IsValid() then return end
     if HORDE:IsWatchTower(provider) then
         self.Horde_WardenAuraProvider = provider:GetNWEntity("HordeOwner")
     else
@@ -101,17 +104,19 @@ function plymeta:Horde_RemoveWardenAuraEffects()
         net.WriteUInt(HORDE.Status_WardenAura, 8)
         net.WriteUInt(0, 8)
     net.Send(self)
+    --[[
     if self.Horde_WardenAura then
         self:Horde_AddWardenAuraEffects(self)
     end
+    ]]
 end
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_WardenAuraDamageTaken", function(ply, dmginfo, bonus)
     if ply.Horde_WardenAuraDamageBlock then
         if ply.Horde_WardenAuraProvider.Horde_EnableWardenAuraBuffBonus then
-            bonus.block = 3
+            bonus.block = bonus.block + 3
         else
-            bonus.block = 2
+            bonus.block = bonus.block + 2
         end
     end
 end)

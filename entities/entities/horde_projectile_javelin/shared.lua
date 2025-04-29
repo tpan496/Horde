@@ -70,11 +70,11 @@ function ENT:CustomOnThink()
 
 		local phys = self:GetPhysicsObject()
 		if (!IsValid( phys )) then self:Remove() return end
-		phys:ApplyForceCenter(self:GetForward() * 500)
+		phys:ApplyForceCenter(self:GetForward() * 5000)
 	else
 		local phys = self:GetPhysicsObject()
 		if (!IsValid( phys )) then self:Remove() return end
-		phys:ApplyForceCenter(self:GetForward() * 500)
+		phys:ApplyForceCenter(self:GetForward() * 5000)
 	end
 end
 

@@ -3,6 +3,7 @@ util.AddNetworkString("Horde_DeathMarkHighlight")
 util.AddNetworkString("Horde_HunterMarkHighlight")
 util.AddNetworkString("Horde_RemoveDeathMarkHighlight")
 util.AddNetworkString("Horde_RemoveHunterMarkHighlight")
+util.AddNetworkString("Horde_MarkRemainingEnemies")
 util.AddNetworkString("Horde_GameEnd")
 
 local horde_players_count = 0
@@ -177,13 +178,13 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
                 HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
             end
         end
-
+        --[[
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
             net.Start("Horde_HighlightEntities")
             net.WriteUInt(HORDE.render_highlight_enemies, 3)
             net.Broadcast()
         end
-
+        ]]
         if not HORDE.horde_has_active_objective then
             if HORDE.endless == 1 then
                 if HORDE.horde_boss and HORDE.horde_boss:IsValid() and HORDE.horde_boss:Health() > 0 then
@@ -984,7 +985,7 @@ function HORDE:StartBreak()
             HORDE.current_break_time = HORDE.current_break_time - 1
         end
 
-        if HORDE.current_break_time == 0 then
+        if HORDE.current_break_time <= 0 then
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
             net.Start("Horde_SyncGameInfo")
@@ -1115,12 +1116,17 @@ function HORDE:WaveStart()
     net.Start("Horde_ForceCloseShop")
     net.Broadcast()
 
-    if not HORDE.has_buy_zone then
+    --if not HORDE.has_buy_zone then
         net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanBuy, 8)
         net.WriteUInt(0, 8)
         net.Broadcast()
-    end
+        
+        --network this so arccw attachments know you're in buy zone
+        net.Start("Horde_IsInBuyZone")
+            net.WriteBool(false)
+        net.Broadcast()
+    --end
 
     -- Get objectives, if there are any
     if not has_boss then
@@ -1190,6 +1196,7 @@ function HORDE:WaveEnd()
     horde_boss_properties = nil
     horde_boss_reposition = false
     horde_boss_critical = false
+    HORDE.player_ready = {}
 
     HORDE:StartBreak()
     local enemies = HORDE:ScanEnemies()
@@ -1216,14 +1223,6 @@ function HORDE:WaveEnd()
     else
         HORDE:BroadcastBreakCountDownMessage(0, true)
         HORDE:SendNotification("Wave Completed!", 0)
-
-        -- Send Tips
-        local tip = HORDE:GetTip()
-        if tip then
-            net.Start("Horde_SyncTip")
-            net.WriteString(HORDE:GetTip())
-            net.Broadcast()
-        end
     end
 
     net.Start("Horde_HighlightEntities")
@@ -1234,6 +1233,31 @@ function HORDE:WaveEnd()
         if not ply:Alive() then ply:Spawn() end
         HORDE.player_class_changed[ply:SteamID()] = false
         HORDE.player_ready[ply] = 0
+        
+        net.Start("Horde_PlayerReadySync")
+            net.WriteTable(HORDE.player_ready)
+        net.Broadcast()
+        
+        if (HORDE.current_wave < HORDE.max_waves and (HORDE.endless == 0)) or (HORDE.endless == 1) then
+            -- Show Leaderboards
+            net.Start("Horde_ShowLeaderboardsTemporarily")
+            net.Send(ply)
+
+            -- Send Tips
+            local tip = HORDE:GetTip()
+            if tip then
+                net.Start("Horde_SyncTip")
+                    net.WriteString(HORDE:GetTip())
+                net.Send(ply)
+                local id = ply:SteamID()
+                timer.Create("Horde_TipsTimer" .. id, 10, 0, function()
+                    if not HORDE:InBreak() or HORDE.current_break_time <= 10 then timer.Remove("Horde_TipsTimer" .. id) return end
+                    net.Start("Horde_SyncTip")
+                        net.WriteString(HORDE:GetTip())
+                    net.Send(ply)
+                end)
+            end
+        end
     end
 
     if GetConVarNumber("horde_npc_cleanup") == 1 then
@@ -1282,6 +1306,11 @@ function HORDE:WaveEnd()
         net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanBuy, 8)
         net.WriteUInt(1, 8)
+        net.Broadcast()
+        
+        --network this so arccw attachments know you're in buy zone
+        net.Start("Horde_IsInBuyZone")
+            net.WriteBool(true)
         net.Broadcast()
     end
 
@@ -1415,6 +1444,17 @@ function HORDE:Direct()
                 HORDE:SpawnAmmoboxes(valid_nodes)
             end
         end
+    end
+
+    if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
+        local remaining = {}
+        for _, enemy in ipairs(enemies) do
+            remaining[enemy] = enemy:GetPos()
+        end
+        
+        net.Start("Horde_MarkRemainingEnemies")
+            net.WriteTable(remaining)
+        net.Broadcast()
     end
 
     if HORDE.total_enemies_this_wave <= 0 and HORDE.alive_enemies_this_wave <= 0 then

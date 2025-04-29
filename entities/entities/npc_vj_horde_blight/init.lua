@@ -9,7 +9,7 @@ ENT.HullType = HULL_HUMAN
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.MeleeAttackDistance = 32 -- How close does it have to be until it attacks?
+ENT.MeleeAttackDistance = 45 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 65 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = 0.8
 ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
@@ -25,7 +25,7 @@ ENT.SoundTbl_FootStep = {"npc/zombie/foot1.wav","npc/zombie/foot2.wav","npc/zomb
 ENT.SoundTbl_Idle = {"npc/zombie/zombie_voice_idle1.wav","npc/zombie/zombie_voice_idle2.wav","npc/zombie/zombie_voice_idle3.wav","npc/zombie/zombie_voice_idle4.wav","npc/zombie/zombie_voice_idle5.wav","npc/zombie/zombie_voice_idle6.wav"}
 ENT.SoundTbl_Alert = {"npc/zombie/zombie_alert1.wav","npc/zombie/zombie_alert2.wav","npc/zombie/zombie_alert3.wav"}
 ENT.SoundTbl_MeleeAttack = {"npc/zombie/zo_attack1.wav","npc/zombie/zo_attack2.wav"}
-ENT.SoundTbl_MeleeAttackMiss = {"zsszombie/miss1.wav","zsszombie/miss2.wav","zsszombie/miss3.wav","zsszombie/miss4.wav"}
+ENT.SoundTbl_MeleeAttackMiss = {"vj_zombies/slow/miss1.wav", "vj_zombies/slow/miss2.wav", "vj_zombies/slow/miss3.wav", "vj_zombies/slow/miss4.wav"}
 ENT.SoundTbl_Pain = {"npc/zombie/zombie_pain1.wav","npc/zombie/zombie_pain2.wav","npc/zombie/zombie_pain3.wav","npc/zombie/zombie_pain4.wav","npc/zombie/zombie_pain5.wav","npc/zombie/zombie_pain6.wav"}
 ENT.SoundTbl_Death = {"npc/zombie/zombie_die1.wav","npc/zombie/zombie_die2.wav","npc/zombie/zombie_die3.wav"}
 
@@ -47,7 +47,8 @@ function ENT:CustomOnInitialize()
 end
 
 function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
-    if hitgroup == HITGROUP_HEAD then
+    local HordeMelee_HeadshotCheck = dmginfo:GetInflictor().WasHeadshot
+    if hitgroup == HITGROUP_HEAD or HordeMelee_HeadshotCheck then
         self.HasDeathRagdoll = true
         return
     end
@@ -62,11 +63,12 @@ function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
     dmg:SetDamage(50)
     util.BlastDamageInfo(dmg, self:GetPos(), 300)
 
-    sound.Play("vj_acid/acid_splat.wav", self:GetPos())
+    sound.Play("vj_base/ambience/acid_splat.wav", self:GetPos())
 end
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-    if hitgroup == HITGROUP_HEAD then
+    local HordeMelee_HeadshotCheck = dmginfo:GetInflictor().WasHeadshot
+    if hitgroup == HITGROUP_HEAD or HordeMelee_HeadshotCheck then
         self.HeadHealth = self.HeadHealth - dmginfo:GetDamage()
         if self.HeadHealth <= 0 then
             self:SetHealth(1)

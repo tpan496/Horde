@@ -1,10 +1,15 @@
 PERK.PrintName = "Phalanx"
-PERK.Description = "Gain 1 Phalanx stack every 2 seconds, up to {1}.\nEach stack increases {2} physical damage resistance and {3} melee damage.\nLose stacks when you attack."
+PERK.Description = [[
+Gain {1} Phalanx stack when you hit an enemy, up to {2} stacks.
+Each stack increases global damage resistance by {3}.
+Each stack lasts {4} seconds and falls off consecutively.]]
+
 PERK.Icon = "materials/perks/phalanx.png"
 PERK.Params = {
-    [1] = {value = 5},
-    [2] = {value = 0.06, percent = true},
+    [1] = {value = 1},
+    [2] = {value = 5},
     [3] = {value = 0.06, percent = true},
+    [4] = {value = 5},
 }
 
 PERK.Hooks = {}

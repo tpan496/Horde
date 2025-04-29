@@ -1,6 +1,7 @@
 if not ArcCWInstalled then return end
 if CLIENT then
     SWEP.WepSelectIcon = surface.GetTextureID("arccw/weaponicons/arccw_horde_nade_emp")
+    language.Add("arccw_thr_emp", "EMP Grenade")
     killicon.Add("arccw_horde_nade_emp", "arccw/weaponicons/arccw_horde_nade_emp", Color(0, 0, 0, 255))
     killicon.Add("arccw_thr_emp", "arccw/weaponicons/arccw_horde_nade_emp", Color(0, 0, 0, 255))
 end

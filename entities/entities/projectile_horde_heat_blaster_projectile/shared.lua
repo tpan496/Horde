@@ -12,8 +12,8 @@ AddCSLuaFile()
 ENT.Model = "models/items/ar2_grenade.mdl"
 ENT.Ticks = 0
 ENT.FuseTime = 10
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER
 ENT.Removing = nil
 ENT.Horde_Charged = 0
 function ENT:Draw()
@@ -47,6 +47,7 @@ function ENT:Initialize()
 	self.StartGlow1:SetKeyValue( "model","sprites/orangeglow1.spr" )
 	self.StartGlow1:SetKeyValue( "spawnflags","0" )
     timer.Simple(0, function ()
+        if not self:IsValid() then return end
         if self:GetCharged() == true then
             self.StartGlow1:SetKeyValue( "scale","2" )
         else

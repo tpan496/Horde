@@ -3,8 +3,9 @@ SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Medic -- Required for any new classes
 SUBCLASS.Icon = "subclasses/hatcher.png" -- Required
 SUBCLASS.Description = [[
-Medic subclass.
-Support class that relies on Antlions to support teammates.]] -- Required
+Minion based support class that uses Antlions.
+Antlions heals and buffs allies while attacking
+enemies as you fire down range with your gun.]] -- Required
 SUBCLASS.BasePerk = "hatcher_base"
 SUBCLASS.Perks = {
     [1] = {title = "Stage I", choices = {"hatcher_natural_selection", "hatcher_growth_hormone"}},

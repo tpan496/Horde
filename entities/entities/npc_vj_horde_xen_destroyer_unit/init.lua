@@ -33,12 +33,12 @@ ENT.CallForBackUpOnDamage = false
 
 -- Melee
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDamage = 30 -- How close does it have to be until it attacks?
+ENT.TimeUntilMeleeAttackDamage = 0.8 -- This counted in seconds | This calculates the time until it hits something
+ENT.MeleeAttackDamage = 30
 ENT.MeleeAttackDamageType = DMG_CLUB -- How close does it have to be until it attacks?
 ENT.MeleeAttackDistance = 65 -- How close does it have to be until it attacks?
-ENT.MeleeAttackDamageDistance = 100 -- How far does the damage go?
-ENT.SlowPlayerOnMeleeAttack = true -- If true, then the player will slow down
+ENT.MeleeAttackDamageDistance = 120 -- How far does the damage go?
+ENT.SlowPlayerOnMeleeAttack = false -- If true, then the player will slow down
 ENT.SlowPlayerOnMeleeAttack_WalkSpeed = 100 -- Walking Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttack_RunSpeed = 100 -- Running Speed when Slow Player is on
 ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
@@ -50,7 +50,7 @@ ENT.MeleeAttackWorldShakeOnMissAmplitude = 8
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.RangeAttackEntityToSpawn = "obj_vj_horde_gonome_acid_cold" -- The entity that is spawned when range attacking
 ENT.RangeDistance = 2000 -- This is how far away it can shoot
-ENT.RangeToMeleeDistance = 80 -- How close does it have to be until it uses melee?
+ENT.RangeToMeleeDistance = 250 -- How close does it have to be until it uses melee?
 ENT.NextRangeAttackTime = 5 -- How much time until it can use a range attack?
 ENT.TimeUntilRangeAttackProjectileRelease = 0.1
 ENT.RangeAttackPos_Up = 10 -- Up/Down spawning position for range attack
@@ -76,8 +76,8 @@ ENT.SoundTbl_FootStep = {"horde/gargantua/gar_step1.ogg","horde/gargantua/gar_st
 ENT.SoundTbl_Breath = {"horde/gargantua/gar_breathe1.ogg","horde/gargantua/gar_breathe2.ogg","horde/gargantua/gar_breathe3.ogg"}
 ENT.SoundTbl_Idle = {"horde/gargantua/gar_idle1.ogg","horde/gargantua/gar_idle2.ogg","horde/gargantua/gar_idle3.ogg"}
 ENT.SoundTbl_Alert = {"horde/gargantua/gar_alert1.ogg","horde/gargantua/gar_alert2.ogg","horde/gargantua/gar_alert3.ogg"}
-ENT.SoundTbl_BeforeMeleeAttack = {"horde/gargantua/gar_attack1.ogg","horde/gargantua/gar_attack2.ogg","horde/gargantua/gar_attack3.ogg"}
-ENT.SoundTbl_MeleeAttackMiss = {"zsszombie/miss1.wav","zsszombie/miss2.wav","zsszombie/miss3.wav","zsszombie/miss4.wav"}
+ENT.SoundTbl_BeforeMeleeAttack = "" --{"horde/gargantua/gar_attack1.ogg","horde/gargantua/gar_attack2.ogg","horde/gargantua/gar_attack3.ogg"}
+ENT.SoundTbl_MeleeAttackMiss = {"vj_zombies/slow/miss1.wav", "vj_zombies/slow/miss2.wav", "vj_zombies/slow/miss3.wav", "vj_zombies/slow/miss4.wav"}
 ENT.SoundTbl_Pain = {"horde/gargantua/gar_pain1.ogg","horde/gargantua/gar_pain2.ogg","horde/gargantua/gar_pain3.ogg"}
 ENT.SoundTbl_Death = {"horde/gargantua/gar_die1.ogg"}
 
@@ -316,27 +316,37 @@ function ENT:OnThinkActive()
 	ParticleEffectAttach("vj_rocket_idle1_flare", PATTACH_POINT_FOLLOW, self, 1)
 end
 
+ENT.FlamethrowerCD = 0
 function ENT:OnThinkAttack(isAttacking, enemy)
-	local eneData = self.EnemyData
-	local eneVisible = eneData.Visible
-	local range = 550
-	if eneVisible && self.AttackType == VJ.ATTACK_TYPE_NONE && eneData.DistanceNearest <= range && eneData.DistanceNearest > self.MeleeAttackDistance then
-		self.Garg_CanFlame = true
-		self:SetTurnTarget(enemy, -1)
-		-- Make it constantly delay the range attack timer by 1 second (Which will also successfully play the flame-end sound)
-		timer.Create("garg_flame_reset" .. self:EntIndex(), 1, 0, function()
-			self:Garg_ResetFlame()
-		end)
-	else
-		self:Garg_ResetFlame()
-	end
+    local eneData = self.EnemyData
+    local eneVisible = eneData.Visible
+    local range = 550
+    if eneVisible && self.AttackType == VJ.ATTACK_TYPE_NONE && eneData.DistanceNearest <= range && eneData.DistanceNearest > self.RangeToMeleeDistance && self.FlamethrowerCD < CurTime() then
+        self.Garg_CanFlame = true
+        self.HasRangeAttack = false
+        self:SetTurnTarget(enemy, -1)
+        -- Make it constantly delay the range attack timer by 1 second (Which will also successfully play the flame-end sound)
+        local id = self:EntIndex()
+        if self.Garg_FlameLevel == 2 then
+            timer.Create("garg_flame_reset" .. id, 1, 0, function()
+                if not self:IsValid() then timer.Remove("garg_flame_reset" .. id) return end
+                self:Garg_ResetFlame()
+                self.HasRangeAttack = true
+                self.FlamethrowerCD = CurTime() + 5
+                timer.Remove("garg_flame_reset" .. id)
+            end)
+        end
+    else
+        self:Garg_ResetFlame()
+    end
 end
 
 ENT.DisableDefaultRangeAttackCode = true
 function ENT:CustomRangeAttackCode()
 	local range = 400
+    local eneData = self.EnemyData
 	local selfData = self:GetTable()
-	if self.Garg_NextStompAttackT < CurTime() then -- Laser stomp attack
+	if self.Garg_NextStompAttackT < CurTime() and eneData.DistanceNearest > self.RangeToMeleeDistance then -- Laser stomp attack
 		selfData.RangeDistance = 2000
 		selfData.AnimTbl_RangeAttack = {"stomp"}
 		selfData.SoundTbl_BeforeRangeAttack = {}
@@ -349,7 +359,7 @@ function ENT:CustomRangeAttackCode()
 		local start = 0
 		local i = 0
 		timer.Simple(1.5, function ()
-			if !IsValid(self) and !IsValid(self:GetEnemy()) then return end
+			if !IsValid(self) or !IsValid(self:GetEnemy()) then return end
 			local tr = util.TraceLine({
 				start = self:GetPos(),
 				endpos = self:GetEnemy():GetPos(),

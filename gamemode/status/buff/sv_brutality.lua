@@ -59,15 +59,13 @@ end
 
 hook.Add("Horde_OnPlayerCriticalCheck", "Horde_BrutalityStackDamage", function (ply, npc, bonus, hitgroup, dmginfo, crit_bonus)
     if ply:Horde_GetBrutalityStack() > 0 then
-        crit_bonus.add = crit_bonus.add + 0.1 * ply:Horde_GetBrutalityStack()
-        if HORDE:IsMeleeDamage(dmginfo) then
-             bonus.increase = bonus.increase + 0.1 * ply:Horde_GetBrutalityStack()
-        end
+        crit_bonus.add = crit_bonus.add + 0.05 * ply:Horde_GetBrutalityStack()
+        --bonus.increase = bonus.increase + ply.BrutalityCritDamageCheck * ply:Horde_GetBrutalityStack()
     end
 end)
 
 hook.Add("Horde_OnPlayerDamagePost", "Horde_BrutalityApply", function(ply, npc, bonus, hitgroup, dmginfo)
-    if ply:Horde_GetPerk("psycho_brutality") and HORDE:IsMeleeDamage(dmginfo) then
+    if ply:Horde_GetPerk("psycho_base") and (HORDE:IsMeleeDamage(dmginfo) or HORDE:IsCurrentWeapon(dmginfo, "Melee") == true) then
         ply:Horde_AddBrutalityStack()
     end
 end)
@@ -75,6 +73,6 @@ end)
 hook.Add("Horde_ResetStatus", "Horde_BrutalityReset", function(ply)
     ply.Horde_BrutalityStack = 0
     ply.Horde_MaxBrutalityStack = 0
-    ply.Horde_BrutalityStackDuration = 5
+    --ply.Horde_BrutalityStackDuration = 5
     ply.Horde_BrutalityStackAdded = nil
 end)

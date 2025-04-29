@@ -7,7 +7,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Melee" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Fireaxe"
@@ -38,7 +38,7 @@ SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
 SWEP.MeleeDamage = 80
-SWEP.Melee2Damage = 140
+SWEP.Melee2Damage = 160
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
@@ -53,6 +53,21 @@ SWEP.Melee2Range = 80
 SWEP.Melee2AttackTime = 0.6
 SWEP.Melee2Time = 1.25
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
+
+SWEP.MaximumDurability = 1000
+SWEP.MaxHits = 2
+SWEP.MeleeBoundingBox = {
+    primary = {
+        wide = 32,
+        tall = 32,
+        length = 85, -- 75 length ~ 2.5 meters and MeleeRange = 80 ~ 121 length
+    },
+    secondary = {
+        wide = 16,
+        tall = 32,
+        length = 100,
+    },
+}
 
 SWEP.MeleeSwingSound = {
     "horde/weapons/fireaxe/fireaxe_fire01.ogg",
@@ -123,3 +138,21 @@ SWEP.BashAng = Angle(35, -30, 0)
 
 SWEP.HolsterPos = Vector(0, -3, -2)
 SWEP.HolsterAng = Angle(-10, 0, 0)
+
+function SWEP:Hook_PostBash(info)
+    if not SERVER then return end
+    local attacker = self:GetOwner()
+    if !IsValid(attacker) then return end
+    local enemy_tr = info.tr.Entity
+    local headshot = info.tr.HitGroup
+    local melee2 = info.melee2
+
+    if IsValid(enemy_tr) and enemy_tr:IsNPC() and headshot == 1 and melee2 then
+        if enemy_tr:Health() <= 0 then return end
+        if enemy_tr.fireaxe_stunned then return end
+        if enemy_tr.Horde_Debuff_Cooldown and enemy_tr.Horde_Debuff_Cooldown[HORDE.Status_Stun] then return end
+        if enemy_tr.Horde_Stunned then return end
+        enemy_tr.fireaxe_stunned = true
+        enemy_tr:Horde_AddDebuffBuildup(HORDE.Status_Stun, 500, attacker)
+    end
+end

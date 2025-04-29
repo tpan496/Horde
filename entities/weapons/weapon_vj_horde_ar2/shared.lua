@@ -18,7 +18,7 @@ SWEP.NPC_HasSecondaryFire = true -- Can the weapon have a secondary fire?
 SWEP.NPC_SecondaryFireEnt = "obj_vj_horde_cball"
 SWEP.NPC_SecondaryFireDistance = 3000 -- How close does the owner's enemy have to be for it to fire?
 SWEP.NPC_SecondaryFireChance = 1 -- Chance that the secondary fire is used | 1 = always
-SWEP.NPC_SecondaryFireNext = VJ_Set(1, 3) -- How much time until the secondary fire can be used again?
+SWEP.NPC_SecondaryFireNext = VJ_Set(15, 18) -- How much time until the secondary fire can be used again?
 SWEP.NPC_SecondaryFireSoundLevel = 100
 SWEP.NPC_NextPrimaryFire = 3 -- Next time it can use primary fire
 SWEP.NPC_TimeUntilFire = 0.1 -- How much time until the bullet/projectile is fired?
@@ -37,7 +37,7 @@ SWEP.Primary.Delay = 0.1 -- Time until it can shoot again
 SWEP.Primary.TracerType = "None" -- Tracer type (Examples: AR2, laster, 9mm)
 SWEP.Primary.Automatic = true -- Is it automatic?
 SWEP.Primary.Ammo = "AR2" -- Ammo type
-SWEP.Primary.Sound = {"vj_weapons/hl2_ar2/ar2_single1.wav","vj_weapons/hl2_ar2/ar2_single2.wav","vj_weapons/hl2_ar2/ar2_single3.wav"}
+SWEP.Primary.Sound = "VJ.Weapon_AR2.Single"
 SWEP.Primary.DistantSound = {"^weapons/ar1/ar1_dist1.wav","^weapons/ar1/ar1_dist2.wav"}
 SWEP.PrimaryEffects_MuzzleParticles = {"vj_rifle_full_blue"}
 SWEP.PrimaryEffects_SpawnShells = false
@@ -90,12 +90,12 @@ end
 function SWEP:NPC_SecondaryFire()
 	local owner = self:GetOwner()
 	local proj = ents.Create(self.NPC_SecondaryFireEnt)
-	print("spawn proj")
 	proj:SetPos(owner:GetShootPos())
 	proj:SetAngles(owner:GetAngles())
 	proj:SetOwner(owner)
 	proj:Spawn()
 	proj:Activate()
+    VJ_EmitSound(self, "weapons/ar2/ar2_altfire.wav", 85)
 	local phys = proj:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:Wake()
@@ -194,7 +194,7 @@ function SWEP:OnPrimaryAttack(status, statusData)
 			dir:Normalize()
 			dir = dir + VectorRand() * 0.02
 			dir:Normalize()
-			phy:ApplyForceCenter(dir * 4250)
+			phy:ApplyForceCenter(dir * 1250)
 		end
 	end
 end

@@ -1,7 +1,7 @@
 if not ArcCWInstalled then return end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Horde - Shotguns"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
@@ -26,17 +26,29 @@ SWEP.MirrorVMWM = false
 SWEP.WorldModel = "models/weapons/w_shot_m3super90.mdl"
 SWEP.ViewModelFOV = 65
 
+--SWEP.Horde_Locational_DMG = true
+SWEP.BodyDamageMults = {
+    [HITGROUP_HEAD] = 2,
+    [HITGROUP_CHEST] = 1,
+    [HITGROUP_STOMACH] = 1,
+    [HITGROUP_LEFTARM] = 0.75,
+    [HITGROUP_RIGHTARM] = 0.75,
+    [HITGROUP_LEFTLEG] = 0.5,
+    [HITGROUP_RIGHTLEG] = 0.5,
+}
+
 SWEP.Damage = 33
-SWEP.DamageMin = 10
-SWEP.Range = 800 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.DamageMin = 11
+SWEP.Range = 30  -- GAME UNITS * 0.025 = METRES
+SWEP.RangeMin = 5  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 1
 SWEP.DamageType = DMG_BURN
 SWEP.ShootEntity = nil -- entity to fire, if any
 
 
 SWEP.ChamberSize = 0
-SWEP.Primary.ClipSize = 6 -- DefaultClip is automatically set.
-SWEP.ExtendedClipSize = 6
+SWEP.Primary.ClipSize = 8 -- DefaultClip is automatically set.
+SWEP.ExtendedClipSize = 8
 SWEP.ReducedClipSize = 4
 
 SWEP.VisualRecoilMult = 0
@@ -61,8 +73,8 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_shotgun"
 SWEP.NPCWeight = 125
 
-SWEP.AccuracyMOA = 80 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 350 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 50 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 100 -- inaccuracy added by moving. Applies in sights as well! Walking speed is considered as "maximum".
 SWEP.SightsDispersion = 0 -- dispersion that remains even in sights
 
@@ -183,7 +195,8 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_shotgun"
+        Slot = "horde_go_shotgun_ammo", --go_ammo
+        DefaultAttName = "Dragon Breath",
     },
     {
         PrintName = "Perk",
@@ -284,6 +297,12 @@ SWEP.Animations = {
         LHIKOut = 0,
     },
     ["sgreload_finish"] = {
+        Source = "end_reload",
+        LHIK = true,
+        LHIKIn = 0,
+        LHIKOut = 0.8,
+    },
+    ["sgreload_finish_empty"] = {
         Source = "reload_finish",
         Time = 22/30,
         SoundTable = {{s = "weapons/fesiugmw2/foley/wpfoly_winchester_reload_pump_v1.wav", 		t = 8/30}},

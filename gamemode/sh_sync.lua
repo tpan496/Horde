@@ -47,15 +47,31 @@ function HORDE:SyncToLocal()
 					end
 				end
             end
-
-			-- Write subclass data
-			for subclass_name, subclass in pairs(HORDE.subclasses) do
-				if not subclass.ParentClass then goto cont end
-				strm:WriteULong(HORDE.subclass_name_to_crc[subclass.PrintName])
-				strm:WriteLong(ply:Horde_GetExp(subclass.PrintName))
-				strm:WriteShort(ply:Horde_GetLevel(subclass.PrintName))
+            
+            -- Read subclass data
+			while not strm:EndOfFile() do
+				local order = strm:ReadULong()
+				local exp = strm:ReadLong()
+				local level = strm:ReadShort()
+				if order == nil then
+				else
+					local class_name = HORDE.order_to_subclass_name[tostring(order)]
+					if class_name then
+						local_levels[class_name] = level
+						local_exps[class_name] = exp
+					end
+				end
 				::cont::
 			end
+            -- Is this suppose to be here?
+			-- Write subclass data
+			--for subclass_name, subclass in pairs(HORDE.subclasses) do
+			--	if not subclass.ParentClass then goto cont end
+			--	strm:WriteULong(HORDE.subclass_name_to_crc[subclass.PrintName])
+			--	strm:WriteLong(ply:Horde_GetExp(subclass.PrintName))
+			--	strm:WriteShort(ply:Horde_GetLevel(subclass.PrintName))
+			--	::cont::
+			--end
 		else
 			for _, class in pairs(HORDE.classes) do
                 local_levels[class.name] = 0

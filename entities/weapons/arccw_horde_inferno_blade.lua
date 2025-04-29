@@ -8,7 +8,7 @@ end
 
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Melee" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Inferno"
@@ -54,6 +54,21 @@ SWEP.Melee2Range = 65
 SWEP.Melee2AttackTime = 0.1
 SWEP.Melee2Time = 0.5
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
+
+SWEP.MaximumDurability = 1600
+SWEP.MaxHits = 3 -- Change this number to change maximum target hits on the swep
+SWEP.MeleeBoundingBox = { -- If weapon has no bounding box, it will scale length based on MeleeRange and Melee2Range
+    primary = {
+        wide = 12,
+        tall = 12,
+        length = 110, -- 75 length ~ 2.5 meters and MeleeRange = 80 ~ 121 length
+    },
+    secondary = {
+        wide = 12,
+        tall = 12,
+        length = 110,
+    },
+}
 
 SWEP.MeleeSwingSound = {
     "horde/weapons/inferno_blade/swing_00.ogg",
@@ -211,21 +226,58 @@ net.Receive("Horde_DemonicEdgeCharge", function ()
 end)
 
 function SWEP:Hook_PostBash(info)
-    if not self.Charged or not info.tr.Hit then return end
-    if SERVER then
-        for _, ent in pairs(ents.FindInSphere(info.tr.HitPos, 75)) do
-            if (HORDE:IsPlayerOrMinion(ent) == true) then
-            elseif ent:IsNPC() then
-                local dmg = DamageInfo()
-                dmg:SetDamage(50)
-                dmg:SetDamageType(DMG_BURN)
-                dmg:SetAttacker(self.Owner)
-                dmg:SetInflictor(self)
-                dmg:SetDamagePosition(info.tr.HitPos)
-                ent:TakeDamageInfo(dmg)
+    if not SERVER then return end
+    if not self.Charged then return end
+    local attacker = self:GetOwner()
+    if !IsValid(attacker) then return end
+    local enemy_tr = info.tr.Entity
+    local cleave = info.cleave
+    local headshot = info.tr.HitGroup
+    
+    local fire_dmg = 50
+    if cleave[1] ~= nil then
+        for _, entities in ipairs(cleave) do
+            if entities:IsNPC() and entities ~= enemy_tr then
+                self:LSS(entities:GetPos() + entities:OBBCenter())
+            end
+            for _, ent in pairs(ents.FindInSphere(entities:GetPos(), 75)) do
+                if HORDE:IsPlayerOrMinion(ent) == true then continue end
+                if ent:IsNPC() and ent ~= enemy_tr then
+                    if ent.hit_by_fire_dmg_aoe then continue end
+                    local dmg = DamageInfo()
+                        dmg:SetDamage(fire_dmg)
+                        dmg:SetDamageType(DMG_BURN)
+                        dmg:SetAttacker(attacker)
+                        dmg:SetInflictor(self)
+                        dmg:SetDamagePosition(ent:GetPos() + ent:OBBCenter())
+                        dmg:SetDamageCustom(HORDE.DMG_SPLASH)
+                    ent:TakeDamageInfo(dmg)
+                    
+                    ent.hit_by_fire_dmg_aoe = true
+                    timer.Simple(0, function()
+                        --if not ent:IsValid() then return end
+                        ent.hit_by_fire_dmg_aoe = nil
+                    end)
+                end
             end
         end
-        self:LSS(info.tr.HitPos)
+    end
+    if headshot == 1 then
+        fire_dmg = fire_dmg * 2
+    end
+    if IsValid(enemy_tr) and enemy_tr:IsNPC() then
+        local enemy_pos = info.tr.HitPos
+        local dmginfo = DamageInfo()
+            dmginfo:SetAttacker(attacker)
+            dmginfo:SetInflictor(self)
+            dmginfo:SetDamageForce(attacker:GetRight() * -4912 + attacker:GetForward() * 9989)
+            dmginfo:SetDamageType(DMG_BURN)
+            dmginfo:SetDamagePosition(enemy_pos)
+            dmginfo:SetDamage(fire_dmg)
+            dmginfo:SetDamageCustom(HORDE.DMG_SPLASH)
+        enemy_tr:TakeDamageInfo(dmginfo)
+        
+        self:LSS(enemy_pos)
     end
 end
 
@@ -239,13 +291,16 @@ function SWEP:Hook_Think()
             self.ChargeLoopCooldown = CurTime() + 10
         end
         if SERVER and self.Immolate_Last <= CurTime() and self.Owner and self.Owner:IsValid() then
+            --[[
             local dmg = DamageInfo()
-            dmg:SetDamage(1)
+            dmg:SetDamage(1) 
             dmg:SetDamageType(DMG_BURN)
             dmg:SetAttacker(self.Owner)
             dmg:SetInflictor(self)
             dmg:SetDamagePosition(self:GetPos())
             self.Owner:TakeDamageInfo(dmg)
+            ]]
+            self.Owner:SetHealth(math.max(1, self.Owner:Health() - 1))
             self.Immolate_Last = CurTime() + 1
         end
     end

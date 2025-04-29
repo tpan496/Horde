@@ -8,7 +8,7 @@ end
 
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Melee" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Crowbar"
@@ -33,7 +33,7 @@ SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
 SWEP.MeleeDamage = 60
-SWEP.Melee2Damage = 90
+SWEP.Melee2Damage = 120
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
@@ -48,6 +48,21 @@ SWEP.Melee2Range = 80
 SWEP.Melee2AttackTime = 0.15
 SWEP.Melee2Time = 1
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
+
+SWEP.MaximumDurability = 600
+SWEP.MaxHits = 2
+SWEP.MeleeBoundingBox = {
+    primary = {
+        wide = 8,
+        tall = 8,
+        length = 110, -- 75 ~ 2.5 meters
+    },
+    secondary = {
+        wide = 8,
+        tall = 8,
+        length = 110,
+    },
+}
 
 SWEP.MeleeSwingSound = {
     "horde/weapons/crowbar/cbar_miss1.wav",

@@ -40,6 +40,7 @@ function ENT:StartTouch(ent)
         ent:Horde_AddSkullTokens(1)
 		ent:Horde_SyncEconomy()
         sound.Play("items/battery_pickup.wav", self:GetPos())
+        HORDE:SendNotification("Skull token found!", 0, ent)
         self:Remove()
     end
 end

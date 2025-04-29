@@ -8,7 +8,7 @@ if (CLIENT) then
 end
 SWEP.Base = "arccw_horde_gl_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Explosive" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Heat Blaster"
@@ -27,8 +27,8 @@ SWEP.Spawnable = true
 
 SWEP.UseHands = true
 
-SWEP.ViewModel = "models/vj_weapons/c_e5.mdl"
-SWEP.WorldModel = "models/vj_weapons/w_e5.mdl"
+SWEP.ViewModel = "models/vj_base/weapons/c_e5.mdl"
+SWEP.WorldModel = "models/vj_base/weapons/w_e5.mdl"
 SWEP.ViewModelFOV = 60
 
 SWEP.Damage = 500

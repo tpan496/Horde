@@ -70,6 +70,39 @@ PERK.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)
     end
 end
 
+if not game.SinglePlayer() then -- This hud doesn't update too well in single player
+    local function nv_center(ent)
+        return ent:LocalToWorld((ent:OBBCenter() * 1.5) - (ent:OBBMins() + ent:OBBMaxs()))
+    end
+
+    local function nv_color()
+        return Color(120, 255, 120, 255)
+    end
+
+    local function nv_ents()
+        local entities = {}
+        for k, v in pairs(ents.FindByClass("npc_vj_horde_antlion")) do
+            if v:IsValid() and v:GetNWEntity("HordeOwner") == MySelf then
+                table.insert(entities, v)
+            end
+        end
+        return entities
+    end
+
+    PERK.Hooks.HUDPaint = function()
+        local ply = MySelf
+        if not ply:IsValid() then return end
+        if not ply:Horde_GetPerk("hatcher_base") then return end
+        surface.SetDrawColor(Color(nv_color().r,nv_color().g,nv_color().b,math.random(255)))
+        for id, ent in pairs(nv_ents()) do
+            local pos = nv_center(ent):ToScreen()
+            surface.DrawCircle(pos.x, pos.y, 30)
+            draw.DrawText(ent:Health(), "Trebuchet24",
+            pos.x - 15, pos.y - 15, nv_color(), TEXT_ALIGN_LEFT)
+        end
+    end
+end
+
 PERK.Hooks.DoPlayerDeath = function (ply)
     if ply:Horde_GetPerk("hatcher_base") then
         if not HORDE.player_drop_entities[ply:SteamID()] then return end

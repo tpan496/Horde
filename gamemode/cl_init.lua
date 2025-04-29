@@ -18,6 +18,7 @@ include("sh_sync.lua")
 include("sh_misc.lua")
 include("sh_objective.lua")
 include("sh_spells.lua")
+include("sh_attachments.lua")
 
 include("cl_economy.lua")
 include("cl_achievement.lua")
@@ -45,6 +46,7 @@ include("gui/cl_3d2d.lua")
 include("gui/cl_subclassbutton.lua")
 include("gui/cl_perkbutton.lua")
 include("gui/cl_leaderboard.lua")
+include("gui/cl_arccwcustomize.lua")
 
 include("status/sh_mind.lua")
 include("gui/scoreboard/dpingmeter.lua")
@@ -57,9 +59,29 @@ include("arccw/attachments/horde_akimbo_glock.lua")
 include("arccw/attachments/horde_ubgl_medic.lua")
 include("arccw/attachments/horde_ammo_ap.lua")
 include("arccw/attachments/horde_ammo_sabot.lua")
+include("arccw/attachments/horde_ubgl_m203.lua")
+
+include("arccw/attachments/horde_go_perk_burst_fire.lua")
+include("arccw/attachments/horde_go_perk_agile_maneuver.lua")
+include("arccw/attachments/horde_go_perk_auto_reload.lua")
+
+--Shotgun ammo attachments--
+include("arccw/attachments/horde_go_ammo_sg_triple.lua")
+include("arccw/attachments/horde_go_ammo_sg_sabot.lua")
+include("arccw/attachments/horde_go_ammo_sg_slug.lua")
+include("arccw/attachments/horde_go_ammo_sg_scatter.lua")
+include("arccw/attachments/horde_go_ammo_sg_magnum.lua")
+
+include("arccw/attachments/horde_go_nova_mag_8.lua")
+include("arccw/attachments/horde_go_mag7_mag_3.lua")
+include("arccw/attachments/horde_go_mag7_mag_7.lua")
+include("arccw/attachments/horde_go_870_mag_4.lua")
+include("arccw/attachments/horde_go_870_mag_8.lua")
+include("arccw/attachments/horde_go_m1014_mag_4.lua")
+include("arccw/attachments/horde_go_m1014_mag_8.lua")
 
 -- Some users report severe lag with halo
-CreateConVar("horde_enable_halo", 1, FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
+CreateConVar("horde_enable_halo", 1, FCVAR_ARCHIVE + FCVAR_LUA_CLIENT, "Enables highlight for last 10 enemies.")
 
 MySelf = MySelf or NULL
 hook.Add("InitPostEntity", "GetLocal", function()
@@ -295,6 +317,66 @@ net.Receive("Horde_RemoveHunterMarkHighlight", function(len,ply)
     hook.Remove("PreDrawHalos", "Horde_HunterMarkHalo" .. net.ReadEntity():EntIndex())
 end)
 
+-- Performance friendly highlights (maybe)
+local mark_remaining_enemies = {}
+net.Receive("Horde_MarkRemainingEnemies", function()
+    mark_remaining_enemies = net.ReadTable()
+end)
+
+local remaining_mat = Material("skull.png", "mips smooth")
+local mat_white = Material("models/debug/debugwhite") -- Put this outside of rendering hook
+hook.Add("PostDrawTranslucentRenderables", "Horde_MarkRemainingEnemies", function()
+    if not mark_remaining_enemies then return end
+    
+    cam.IgnoreZ(true)
+    render.SuppressEngineLighting(true)
+    render.MaterialOverride(mat_white)
+    render.SetColorModulation(1, 0.2, 0.2) -- 0 - 1
+    
+    for ent, _ in pairs(mark_remaining_enemies) do
+        local entity = IsValid(ent)
+
+        if !entity then
+            mark_remaining_enemies[ent] = nil
+            continue
+        end
+
+        local ply = LocalPlayer()
+        local sData = {
+        checkmode = 2,
+        originVector = ply:EyePos(),
+        targetEntity = ent,
+        --advancedCheck = true,
+        }
+        if HORDE.IsInSight(sData) then continue end
+
+        ent:DrawModel()
+    end
+    
+    render.SetColorModulation(1, 1, 1)
+    render.MaterialOverride()
+    render.SuppressEngineLighting(false)
+    cam.IgnoreZ(false)
+end)
+
+-- Hitbox wireframe for debugging only --
+hook.Add("PostDrawOpaqueRenderables", "renderhitbox", function()
+    if GetConVar("horde_testing_render_hitboxes"):GetInt() == 0 then return end
+    render.SetColorMaterial()
+    for _, ent in ipairs(ents.FindByClass("npc_*")) do
+        for hitgroup = 0, ent:GetHitBoxGroupCount() - 1 do
+            for hitbox = 0, ent:GetHitBoxCount(hitgroup) - 1 do
+                local mins, maxs = ent:GetHitBoxBounds(hitbox, hitgroup)
+                local matrix = ent:GetBoneMatrix(ent:GetHitBoxBone(hitbox, hitgroup))
+                if(matrix) then
+                    local pos = matrix:GetTranslation()
+                    render.DrawWireframeBox(pos, matrix:GetAngles(), mins, maxs, Color(0, 255, 255))
+                end
+            end
+        end
+    end
+end)
+
 net.Receive("Horde_ToggleShop", function ()
     HORDE:ToggleShop()
 end)
@@ -442,5 +524,3 @@ killicon.Add("arccw_nade_medic", "arccw/weaponicons/arccw_nade_medic", Color(0, 
 killicon.Add("npc_turret_floor", "vgui/hud/npc_turret_floor", Color(0, 0, 0, 255))
 killicon.AddAlias("npc_vj_horde_shotgun_turret", "npc_turret_floor")
 killicon.AddAlias("npc_vj_horde_sniper_turret", "npc_turret_floor")
-killicon.Add("npc_vj_horde_antlion", "vgui/hud/antlion", Color(0, 0, 0, 255))
-killicon.AddAlias("projectile_horde_antlion_bile", "npc_vj_horde_antlion")

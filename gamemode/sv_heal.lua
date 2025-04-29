@@ -93,7 +93,7 @@ function HORDE:OnPlayerHeal(ply, healinfo, silent)
         time = 0.3,
         alpha = 50,
     })
-    if healer ~= ply then
+    if healer ~= ply and HORDE.start_game and HORDE.current_break_time <= 0 then
         healer:Horde_AddMoney(3)
         healer:Horde_SyncEconomy()
         net.Start("Horde_RenderHealer")

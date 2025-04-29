@@ -9,7 +9,7 @@ ENT.ShakeWorldOnDeathRadius = 500 -- How far the screen shake goes, in world uni
 ENT.ShakeWorldOnDeathDuration = 1 -- How long the screen shake will last, in seconds
 ENT.ShakeWorldOnDeathFrequency = 200 -- The frequency
 -- ====== Radius Damage Variables ====== --
-ENT.DoesRadiusDamage = true -- Should it do a blast damage when it hits something?
+ENT.DoesRadiusDamage = false -- Should it do a blast damage when it hits something?
 ENT.RadiusDamageRadius = 100 -- How far the damage go? The farther away it's from its enemy, the less damage it will do | Counted in world units
 ENT.RadiusDamageUseRealisticRadius = false -- Should the damage decrease the farther away the enemy is from the position that the projectile hit?
 ENT.RadiusDamage = 20  -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
@@ -26,7 +26,8 @@ function ENT:CustomPhysicsObjectOnInitialize(phys)
 	phys:Wake()
 	phys:SetBuoyancyRatio(0)
 	phys:EnableDrag(false)
-	phys:EnableGravity(false)
+    phys:SetMass(1)
+	phys:EnableGravity(true)
 	timer.Simple(1.5, function ()
 		if self:IsValid() then self:Remove() end
 	end)
@@ -38,12 +39,31 @@ function ENT:CustomOnInitialize()
 	--ParticleEffectAttach("vj_rocket_idle2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+--[[
 function ENT:CustomOnThink()
 end
+]]
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DeathEffects(data,phys)
 	local effectdata = EffectData()
 	effectdata:SetOrigin(data.HitPos)
 	effectdata:SetScale(2)
 	util.Effect("m2_flame_explosion",effectdata)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnPhysicsCollide(data, phys)
+	if self.Dead then return end
+	self.Dead = true
+	local dmg = DamageInfo()
+	if self.Owner:IsValid() then
+		dmg:SetAttacker(self.Owner)
+	else
+		dmg:SetAttacker(self)
+	end
+	dmg:SetInflictor(self)
+	dmg:SetDamageType(DMG_BURN)
+	dmg:SetDamage(20)
+	util.BlastDamageInfo(dmg, self:GetPos(), 150)
+
+	self:Remove()
 end

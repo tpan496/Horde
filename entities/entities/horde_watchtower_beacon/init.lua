@@ -11,6 +11,7 @@ function ENT:Initialize()
     self:SetCollisionGroup(COLLISION_GROUP_WORLD)
     self:SetTrigger(true)
     self:UseTriggerBounds(true, 150)
+    
     local phys = self:GetPhysicsObject()
     if phys:IsValid() then
         phys:Wake()
@@ -29,12 +30,19 @@ function ENT:Initialize()
     self.Horde_ShockAttackInterval = 1
     self:SetColor(Color(0, 255, 0))
 
-    if self.Horde_Owner:Horde_GetPerk("warden_restock") then
+    local ply = self.Horde_Owner
+    if ply:Horde_GetPerk("warden_restock") then
         self.Horde_ThinkInterval = 15
     end
-    if self.Horde_Owner:Horde_GetPerk("warden_ex_machina") then
-        self:Horde_AddWardenAura()
+    
+    if ply:Horde_GetPerk("warden_rejection_pulse") then
         self.Horde_EnableShockwave = true
+    end
+    
+    if ply:Horde_GetPerk("warden_ex_machina") then
+        timer.Simple(0.1, function()
+            self:Horde_AddWardenAura()
+        end)
     end
 
     self.Horde_PlayersInZone = {}

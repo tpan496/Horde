@@ -70,6 +70,7 @@ function PANEL:SetData(class, description_panel)
     self.choose_btn = btn
 end
 
+local star = Material("star.png", "mips smooth")
 function PANEL:Paint()
     if self.class ~= nil then
         surface.SetDrawColor(self.bg_color)
@@ -89,7 +90,6 @@ function PANEL:Paint()
         end
         
         surface.SetDrawColor(HORDE.Rank_Colors[rank])
-        local star = Material("star.png", "mips smooth")
         if ScrW() <= 1280 then
             surface.DrawTexturedRect(self:GetWide() / 2 - 135, 0, 40, 40)
             if level <= 0 then return end

@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Horde - Shotguns"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
@@ -32,9 +32,21 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 65
 
+--SWEP.Horde_Locational_DMG = true
+SWEP.BodyDamageMults = {
+    [HITGROUP_HEAD] = 2,
+    [HITGROUP_CHEST] = 1,
+    [HITGROUP_STOMACH] = 1,
+    [HITGROUP_LEFTARM] = 0.75,
+    [HITGROUP_RIGHTARM] = 0.75,
+    [HITGROUP_LEFTLEG] = 0.5,
+    [HITGROUP_RIGHTLEG] = 0.5,
+}
+
 SWEP.Damage = 25
 SWEP.DamageMin = 15
-SWEP.Range = 600 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Range = 30  -- GAME UNITS * 0.025 = METRES
+SWEP.RangeMin = 5  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 1
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -52,7 +64,7 @@ SWEP.RecoilSide = 2
 SWEP.ShotgunReload = true
 
 SWEP.Delay = 60 / 350 -- 60 / RPM.
-SWEP.Num = 6 -- number of shots per trigger pull.
+SWEP.Num = 8 -- number of shots per trigger pull.
 SWEP.RunawayBurst = false
 SWEP.Firemodes = {
     {
@@ -69,8 +81,8 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_shotgun"
 SWEP.NPCWeight = 125
 
-SWEP.AccuracyMOA = 125 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 300 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 75 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 175
 
 SWEP.Primary.Ammo = "buckshot" -- what ammo type the gun uses
@@ -215,7 +227,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "go_ammo",
+        Slot = "horde_go_shotgun_ammo", --go_ammo
         DefaultAttName = "Buckshot Shells"
     },
     {
@@ -286,7 +298,7 @@ SWEP.Animations = {
     },
     ["sgreload_start"] = {
         Source = "reload_start",
-        Time = 43/40,
+        Time = 13/40,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
         SoundTable = {
                         {s = "weapons/fesiugmw2/foley/wpfoly_striker_reload_lift_v1.wav", 		t = 0},

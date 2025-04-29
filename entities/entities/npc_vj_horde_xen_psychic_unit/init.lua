@@ -39,6 +39,7 @@ ENT.TimeUntilRangeAttackProjectileRelease = 0.1 -- How much time until the proje
 ENT.RangeAttackPos_Up = 65
 ENT.DisableDefaultRangeAttackCode = true
 ENT.RangeAttackPos_Forward = 65
+ENT.RangeAttackPos_Right = 65
 
 -- Knockback
 ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
@@ -62,7 +63,7 @@ ENT.SoundTbl_Alert = {"horde/kingpin/kingpin_alert.mp3"}
 ENT.SoundTbl_BeforeMeleeAttack = {"horde/kingpin/kingpin_melee.ogg"}
 ENT.SoundTbl_MeleeAttackMiss = {"horde/kingpin/kingpin_meleemiss01.ogg","horde/kingpin/kingpin_meleemiss02.ogg"}
 ENT.SoundTbl_Pain = {"horde/kingpin/kingpin_injured01.mp3","horde/kingpin/kingpin_injured02.mp3","horde/kingpin/kingpin_injured03.mp3"}
-ENT.SoundTbl_Death = {"horde/kingpin/kingpin_death01.ogg"}
+ENT.SoundTbl_Death = {"horde/kingpin/kingpin_death01.mp3"}
 
 
 ENT.NextChangeTime = CurTime() + 15
@@ -190,7 +191,7 @@ function ENT:CustomRangeAttackCode()
 	local selfData = self:GetTable()
 	-- Create projectile
 	local p = math.random()
-	if p <= 0.5 or self.Horde_Blasting then
+	if p <= 0.5 and not self.Horde_Blasting then
 		local projectile = ents.Create(selfData.RangeAttackEntityToSpawn)
 		local target_pos = self:GetEnemy():GetPos()
 		projectile:SetPos(self:GetPos() + self:GetUp()*selfData.RangeAttackPos_Up + self:GetForward()*selfData.RangeAttackPos_Forward)
@@ -232,6 +233,8 @@ function ENT:CustomRangeAttackCode()
 		end
 	else
 		-- Lightning blast
+        local EnemyDistance = self.EnemyData.Distance
+        if self:GetEnemy() and EnemyDistance <= 250 then return end
 		--self.ChargeSound = VJ_CreateSound(self, "npc/strider/charging.wav")
 		--self:VJ_ACT_PLAYACTIVITY("attack_beam_start1", true, 1, false)
 		local pos = self:GetEnemy():GetPos()
@@ -264,10 +267,10 @@ function ENT:CustomRangeAttackCode()
 					fire:Spawn()
 				end
 
-				HORDE:ApplyDebuffInRadius(HORDE.Status_Shock, pos, 200, 10, self)
+				--HORDE:ApplyDebuffInRadius(HORDE.Status_Shock, pos, 200, 10, self)
 
 				ParticleEffect("Weapon_Combine_Ion_Cannon_Explosion", pos, Angle(0,0,0), nil)
-				sound.Play("ambient/explosions/explode_5.ogg", pos, 100, math.random(90, 110))
+				sound.Play("ambient/explosions/explode_5.wav", pos, 100, math.random(90, 110))
 				self:VJ_ACT_PLAYACTIVITY("run")
 				
 				self.Horde_Blasting = nil
