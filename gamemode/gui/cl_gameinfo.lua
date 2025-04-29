@@ -39,6 +39,7 @@ end)
 
 local wave_str
 local corner_panel = vgui.Create("DPanel")
+local ammo_mat = Material("materials/ammo.png", "mips smooth")
 corner_panel:SetSize(width, height)
 corner_panel:SetPos(ScreenScale(6), ScreenScale(6))
 corner_panel.Paint = function () end
@@ -60,8 +61,7 @@ timer.Simple(5, function ()
             draw.RoundedBox(10, width - height, height * (1 - ammobox_refresh_count / HORDE.ammobox_refresh_interval), height, height * (ammobox_refresh_count / HORDE.ammobox_refresh_interval), HORDE.color_crimson_dark)
         end
         surface.SetDrawColor(255, 255, 255, 255) -- Set the drawing color
-        local mat = Material("materials/ammo.png", "mips smooth")
-        surface.SetMaterial(mat) -- Use our cached material
+        surface.SetMaterial(ammo_mat) -- Use our cached material
         surface.DrawTexturedRect(width - height + ScreenScale(2), ScreenScale(2), ScreenScale(10), ScreenScale(10))
     end
 end)
@@ -102,9 +102,9 @@ local ok_mat = Material("ok.png", "mips smooth")
 function HORDE:PlayNotification(text, type, icon, col)
     if not type then type = 0 end
     if not text then return end
-    local s = string.len(text) * ScreenScale(3) + ScreenScale(20)
+    local s = string.len(text) * ScreenScale(3) + ScreenScale(24)
     local main = vgui.Create("DPanel")
-    local y_start = ScrH() - ScreenScale(40) - HORDE.Notifications_Count * ScreenScale(18)
+    local y_start = ScrH() - ScreenScale(54) - HORDE.Notifications_Count * ScreenScale(18)
     main:SetSize(s, ScreenScale(15))
     main:SetPos(ScrW() - s, y_start)
     local mat
@@ -311,7 +311,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
     if num then
         if num >= 0 and num <= 10 then
             if HORDE.PlayerReadyPanel then
-                HORDE.PlayerReadyPanel:Remove()
+                HORDE.PlayerReadyPanel:SetVisible(false)
                 HORDE.HelpPanel:SetVisible(false)
                 HORDE.TipPanel:SetVisible(false)
                 HORDE.leader_board:SetVisible(false)
@@ -327,6 +327,7 @@ net.Receive("Horde_RenderBreakCountDown", function()
             end
         elseif num > 0 then
             if not HORDE.HelpPanel:IsVisible() then
+                HORDE.PlayerReadyPanel:SetVisible(true)
                 HORDE.HelpPanel:SetVisible(true)
                 HORDE.TipPanel:SetVisible(true)
                 HORDE:ShowLeaderboardThenFadeOut()

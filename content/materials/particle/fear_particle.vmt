@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+    "$basetexture" "particle/fear_particle"
+    "$translucent" "1"
+    "$vertexcolor" 1
+    "$vertexalpha" 1
+}

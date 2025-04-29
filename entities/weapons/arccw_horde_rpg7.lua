@@ -8,7 +8,7 @@ if (CLIENT) then
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Explosive" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "RPG7"
@@ -102,7 +102,7 @@ SWEP.ProceduralIronFire = false
 SWEP.CaseBones = {}
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-3, 0, 2),
+    Pos = Vector(-2.75, 0, -0.2),
     Ang = Angle(-0, 0, 0),
     Magnification = 1.3,
 }
@@ -153,7 +153,7 @@ SWEP.Animations = {
         Time = 0.1,
         SoundTable = {
             {
-            s = "weapons/arccw/draw_secondary.wav",
+            s = "arccw_go/ak47/ak47_draw.wav",
             t = 0
             }
         },

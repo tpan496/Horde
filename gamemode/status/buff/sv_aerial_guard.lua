@@ -41,53 +41,79 @@ end
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_AerialGuardDamageTaken", function (ply, dmginfo, bonus, silent)
     if ply:Horde_GetAerialGuardEnabled() == 0 then return end
-    if ply.HasUnwaveringGuardBuff then
-        bonus.less = bonus.less * 0.75
-    end
-    if ply:Horde_GetAerialGuard() == 1 and HORDE:IsPhysicalDamage(dmginfo) then
-        bonus.less = bonus.less * 0.35
-        local e = EffectData()
-        if dmginfo:GetDamagePosition() ~= Vector(0,0,0) then
-            e:SetOrigin(dmginfo:GetDamagePosition())
-        else
-            e:SetOrigin(ply:GetPos() + Vector(0,0,30))
-        end
+    if dmginfo:GetDamage() <= 0 then return end
+    
+    if HORDE:IsPhysicalDamage(dmginfo) or ply:Horde_GetPerk("berserker_unwavering_guard") then
+        if ply:Horde_GetAerialGuard() == 1 or ply.Horde_In_Steadfast_Parry then
+            bonus.less = bonus.less * 0.35
             
-        util.Effect("horde_aerial_parry", e, true, true)
-        if not silent then
-            sound.Play("horde/gadgets/guard" .. tostring(math.random(1,2)) ..".ogg", ply:GetPos(), 125, 100, 1, CHAN_AUTO)
-        end
-
-        if ply:Horde_GetGracefulGuardEnabled() then
-            timer.Simple(0, function()
-                if not ply:IsValid() then return end
-                for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
-                    ply:Horde_RemoveDebuff(debuff)
-                    ply:Horde_ReduceDebuffBuildup(debuff, buildup)
-                end
-            end)
-            local healinfo = HealInfo:New({amount=10, healer=ply})
-            HORDE:OnPlayerHeal(ply, healinfo)
-        elseif ply:Horde_GetUnwaveringGuardEnabled() then
+            if ply.Horde_In_Steadfast_Parry then
+                ply.Horde_Steadfast_Parry_Penalty = 0
+                ply:Horde_SetPerkCooldown(0)
+                ply:Horde_SetPerkInternalCooldown(ply:Horde_GetPerkCooldown())
+                net.Start("Horde_PerkStartCooldown")
+                    net.WriteUInt(ply:Horde_GetPerkCooldown(), 8)
+                net.Send(ply)
+            end
+            
             local id = ply:SteamID()
-            timer.Remove("Horde_UnwaveringGuardBuff" .. id)
-            timer.Create("Horde_UnwaveringGuardBuff" .. id, 5, 1, function ()
-                if ply:IsValid() then
-                    ply.HasUnwaveringGuardBuff = nil
+            if timer.Exists("Horde_Steadfast_Parry_Effect" .. id) then
+                timer.Adjust("Horde_Steadfast_Parry_Effect" .. id, 0.5, nil, nil)
+            end
+            
+            local e = EffectData()
+            if dmginfo:GetDamagePosition() ~= Vector(0,0,0) then
+                e:SetOrigin(dmginfo:GetDamagePosition())
+            else
+                e:SetOrigin(ply:GetPos() + Vector(0,0,30))
+            end
+                
+            util.Effect("horde_aerial_parry", e, true, true)
+            if not silent then
+                sound.Play("horde/gadgets/guard" .. tostring(math.random(1,2)) ..".ogg", ply:GetPos(), 125, 100, 1, CHAN_AUTO)
+            end
+
+            if ply:Horde_GetGracefulGuardEnabled() then
+                timer.Simple(0, function()
+                    if not ply:IsValid() then return end
+                    for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
+                        ply:Horde_RemoveDebuff(debuff)
+                        ply:Horde_ReduceDebuffBuildup(debuff, buildup)
+                    end
+                end)
+                local healinfo = HealInfo:New({amount=10, healer=ply})
+                HORDE:OnPlayerHeal(ply, healinfo)
+                local id = ply:SteamID()
+                timer.Remove("Horde_GracefulGuardBuff" .. id)
+                timer.Create("Horde_GracefulGuardBuff" .. id, 1, 10, function ()
+                    local healinfo = HealInfo:New({amount=1, healer=ply})
+                    HORDE:OnPlayerHeal(ply, healinfo)
+                end)
+            elseif ply:Horde_GetUnwaveringGuardEnabled() then
+                local id = ply:SteamID()
+                timer.Remove("Horde_UnwaveringGuardBuff" .. id)
+                timer.Create("Horde_UnwaveringGuardBuff" .. id, 10, 1, function ()
+                    if ply:IsValid() then
+                        ply.HasUnwaveringGuardBuff = nil
+                        net.Start("Horde_SyncStatus")
+                            net.WriteUInt(HORDE.Status_Unwavering_Guard, 8)
+                            net.WriteUInt(0, 8)
+                        net.Send(ply)
+                    end
+                end)
+
+                if not ply.HasUnwaveringGuardBuff then
+                    ply.HasUnwaveringGuardBuff = true
                     net.Start("Horde_SyncStatus")
                         net.WriteUInt(HORDE.Status_Unwavering_Guard, 8)
-                        net.WriteUInt(0, 8)
+                        net.WriteUInt(1, 8)
                     net.Send(ply)
                 end
-            end)
-
-            if ply.HasUnwaveringGuardBuff then return end
-            ply.HasUnwaveringGuardBuff = true
-            net.Start("Horde_SyncStatus")
-                net.WriteUInt(HORDE.Status_Unwavering_Guard, 8)
-                net.WriteUInt(1, 8)
-            net.Send(ply)
+            end
         end
+    end
+    if ply.HasUnwaveringGuardBuff then
+        bonus.less = bonus.less * 0.75
     end
 end)
 

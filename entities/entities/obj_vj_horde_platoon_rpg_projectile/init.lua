@@ -45,7 +45,7 @@ end
 if !SERVER then return end
 
 ENT.Model = {"models/weapons/w_missile_launch.mdl"} -- The models it should spawn with | Picks a random one from the table
-ENT.DoesRadiusDamage = true -- Should it do a blast damage when it hits something?
+ENT.DoesRadiusDamage = false -- Should it do a blast damage when it hits something?
 ENT.RadiusDamageRadius = 250 -- How far the damage go? The farther away it's from its enemy, the less damage it will do | Counted in world units
 ENT.RadiusDamage = 50 -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
 ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the enemy is from the position that the projectile hit?
@@ -101,4 +101,21 @@ function ENT:DeathEffects(data, phys)
 	expLight:Activate()
 	expLight:Fire("TurnOn", "", 0)
 	self:DeleteOnRemove(expLight)
+end
+
+function ENT:CustomOnPhysicsCollide(data, phys)
+    if self.Dead then return end
+    self.Dead = true
+    local dmg = DamageInfo()
+    if self.Owner:IsValid() then
+        dmg:SetAttacker(self.Owner)
+    else
+        dmg:SetAttacker(self)
+    end
+    dmg:SetInflictor(self)
+    dmg:SetDamageType(self.RadiusDamageType)
+    dmg:SetDamage(self.RadiusDamage)
+    util.BlastDamageInfo(dmg, self:GetPos(), self.RadiusDamageRadius)
+    
+    self:Remove()
 end

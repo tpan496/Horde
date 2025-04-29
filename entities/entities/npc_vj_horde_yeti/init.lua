@@ -5,7 +5,7 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_zombies/hulk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = {"models/horde/hulk/hulk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 1350
 ENT.HullType = HULL_MEDIUM_TALL
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -60,6 +60,17 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 
+function ENT:TranslateActivity(act)
+    if act == ACT_RUN or act == ACT_WALK then
+        if self:IsOnFire() then
+            return ACT_WALK_ON_FIRE
+        else
+            return ACT_WALK
+        end
+    end
+    return self.BaseClass.TranslateActivity(self, act)
+end
+
 function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
 	if HORDE:IsColdDamage(dmginfo) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
@@ -69,13 +80,6 @@ function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-	if self:IsOnFire() then
-		self.AnimTbl_Walk = {self:GetSequenceActivity(self:LookupSequence("FireWalk"))}
-		self.AnimTbl_Run = {self:GetSequenceActivity(self:LookupSequence("FireWalk"))}
-	else
-		self.AnimTbl_Walk = {ACT_WALK}
-		self.AnimTbl_Run = {ACT_RUN}
-	end
 	if self.Critical then
 		if SERVER then
 			if CurTime() >= self.NextTick then

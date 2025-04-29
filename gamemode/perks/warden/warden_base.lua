@@ -17,15 +17,15 @@ PERK.Params = {
 PERK.Hooks = {}
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "warden_base" then
-        ply:Horde_AddWardenAura()
+        timer.Simple(0.1, function()
+            ply:Horde_AddWardenAura()
+        end)
     end
 end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "warden_base" then
         ply:Horde_RemoveWardenAura()
-        -- Removes and sells Warden towers (for subclass swapping)
-        --ply:Horde_RemoveMinionsAndDrops()
     end
 end
 
@@ -33,4 +33,25 @@ PERK.Hooks.Horde_PrecomputePerkLevelBonus = function (ply)
     if SERVER then
         ply:Horde_SetPerkLevelBonus("warden_base", 1 + math.min(0.25, 0.01 * ply:Horde_GetLevel(HORDE.Class_Warden)))
     end
+end
+
+PERK.Hooks.DoPlayerDeath = function (ply)
+    if not ply:Horde_GetPerk("warden_base") then return end
+    if not HORDE.player_drop_entities[ply:SteamID()] then return end
+    for _, ent in pairs(HORDE.player_drop_entities[ply:SteamID()])  do
+        if HORDE:IsWatchTower(ent) then
+            ent:Horde_RemoveWardenAura()
+        end
+    end
+
+    if ply.Horde_Extra_Watchtower and ply.Horde_Extra_Watchtower:IsValid() then
+        ply.Horde_Extra_Watchtower:Horde_RemoveWardenAura()
+    end
+    --[[
+    for _, ent in pairs(ents.FindByClass("horde_warden_aura")) do
+        if ent:GetPlayerParent() == ply then
+            ent:Remove()
+        end
+    end
+    ]]
 end

@@ -51,6 +51,10 @@ ENT.Horde_Plague_Soldier = true
 ENT.CallForHelp = false
 ENT.CanInvestigate = false
 
+    -- ====== Item Drops On Death Variables ====== --
+ENT.HasItemDropsOnDeath = false -- Should it drop items on death?
+ENT.DropWeaponOnDeath = false -- Should it drop its weapon on death?
+
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",
 "npc/combine_soldier/pain2.wav",
@@ -69,7 +73,7 @@ ENT.SoundTbl_FootStep = {
 "npc/combine_soldier/gear5.wav",
 "npc/combine_soldier/gear6.wav"}
 
-ENT.SoundTbl_Alert = {"zsszombine/alert1.wav","zsszombine/alert2.wav","zsszombine/alert3.wav","zsszombine/alert4.wav","zsszombine/alert5.wav","zsszombine/alert6.wav"}
+ENT.SoundTbl_Alert = {"vj_zombies/zombine/alert1.wav", "vj_zombies/zombine/alert2.wav", "vj_zombies/zombine/alert3.wav", "vj_zombies/zombine/alert4.wav", "vj_zombies/zombine/alert5.wav", "vj_zombies/zombine/alert6.wav"}
 
 
 	-- ====== Sound Pitch ====== --

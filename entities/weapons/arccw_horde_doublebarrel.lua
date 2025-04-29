@@ -1,7 +1,7 @@
 if not ArcCWInstalled then return end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - MW2"
+SWEP.Category = "Horde - Shotguns"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
@@ -30,10 +30,21 @@ SWEP.WorldModelOffset = {
 }
 SWEP.ViewModelFOV = 65
 
+--SWEP.Horde_Locational_DMG = true
+SWEP.BodyDamageMults = {
+    [HITGROUP_HEAD] = 2,
+    [HITGROUP_CHEST] = 1,
+    [HITGROUP_STOMACH] = 1,
+    [HITGROUP_LEFTARM] = 0.75,
+    [HITGROUP_RIGHTARM] = 0.75,
+    [HITGROUP_LEFTLEG] = 0.5,
+    [HITGROUP_RIGHTLEG] = 0.5,
+}
+
 SWEP.Damage = 50
 SWEP.DamageMin = 25
-SWEP.Range = 400 * 0.025  -- GAME UNITS * 0.025 = METRES
-SWEP.RangeMin = 100 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Range = 30  -- GAME UNITS * 0.025 = METRES
+SWEP.RangeMin = 5  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 1
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -46,7 +57,7 @@ SWEP.ReducedClipSize = 2
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 6
-SWEP.RecoilSide = 4
+SWEP.RecoilSide = 3
 
 SWEP.Delay = 0.009 -- 60 / RPM.
 SWEP.Num = 6 -- number of shots per trigger pull.
@@ -56,15 +67,16 @@ SWEP.Firemodes = {
     },
     {
         Mode = 3,
-        PrintName = "Double Shot"
+        PrintName = "Double Shot",
+        RunAwayBurst = true
     },
 }
 
 SWEP.NPCWeaponType = "weapon_shotgun"
 SWEP.NPCWeight = 125
 
-SWEP.AccuracyMOA = 1000 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 250 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 80 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 50 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 50 -- inaccuracy added by moving. Applies in sights as well! Walking speed is considered as "maximum".
 SWEP.SightsDispersion = 0 -- dispersion that remains even in sights
 
@@ -188,7 +200,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "go_ammo",
+        Slot = "horde_go_shotgun_ammo", --go_ammo
         DefaultAttName = "Buckshot Shells"
     },
     {
@@ -287,14 +299,27 @@ SWEP.Inaccuracy_Add_ADS			= 0
 SWEP.Inaccuracy_Add_Hip			= 0
 SWEP.Inaccuracy_Add_Move		= 0.1
 
-
+--[[
 function SWEP:Hook_ShouldNotFireFirst()
     if self:GetCurrentFiremode().Mode == 3 then
-        self.AccuracyMOA = 200
+        self.Num = 16
+        self.AmmoPerShot = 2
     else
-        self.AccuracyMOA = 100
+        self.Num = 8
+        self.AmmoPerShot = 1
     end
 end
+
+function SWEP:Hook_ModifyRecoil()
+    if self:GetCurrentFiremode().Mode == 3 then
+        self.Recoil = 8
+        self.RecoilSide = 4
+    else
+        self.Recoil = 6
+        self.RecoilSide = 3
+    end
+end
+]]
 
 function SWEP:Hook_ShouldNotFire()
     if CLIENT then return end

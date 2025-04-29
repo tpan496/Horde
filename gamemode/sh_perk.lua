@@ -9,6 +9,7 @@ HORDE.perks = HORDE.perks or {}
 if SERVER then
 util.AddNetworkString("Horde_PerkStartCooldown")
 util.AddNetworkString("Horde_PerkChargesUpdate")
+util.AddNetworkString("Horde_PerkCooldownCheck")
 end
 
 if CLIENT then
@@ -245,6 +246,11 @@ end
 
 function plymeta:Horde_SetPerkCooldown(cd)
     self.Horde_PerkCooldown = cd
+    if SERVER then
+        net.Start("Horde_PerkCooldownCheck")
+            net.WriteInt(cd, 8)
+        net.Send(self)
+    end
 end
 
 function plymeta:Horde_SetPerkInternalCooldown(cd)
@@ -282,32 +288,54 @@ end
 
 
 if SERVER then
-    function HORDE:UsePerkSkill(ply)
-        if ply:Horde_GetSpamPerkCooldown() <= CurTime() and ply:Horde_GetPerkInternalCooldown() <= 0 and ply:Alive() then
-            local res = hook.Run("Horde_UseActivePerk", ply)
-            if res then return end
-            ply:Horde_SetPerkInternalCooldown(ply:Horde_GetPerkCooldown())
-            net.Start("Horde_PerkStartCooldown")
-                net.WriteUInt(ply:Horde_GetPerkCooldown(), 8)
-            net.Send(ply)
-        end
-    end
-
     function HORDE:RefreshPerkCooldown(ply)
         ply:Horde_SetPerkInternalCooldown(0)
         net.Start("Horde_PerkStartCooldown")
             net.WriteUInt(0, 8)
         net.Send(ply)
     end
+    
+    local think_t = 0.5
+    local BufferTime = 0.5 -- +-0.25s
+    function HORDE:UsePerkSkill(ply, auto)
+        if ply:Horde_GetSpamPerkCooldown() <= CurTime() and ply:Alive() then
+            local cd = ply:Horde_GetPerkInternalCooldown()
+            if(cd > 0 && !auto) then
+                if(cd <= BufferTime) and ply:Horde_GetPerkCooldown() >= 1 then
+                    ply.QueuedPerkSkill = true
+                end
+                return
+            end
+            local res = hook.Run("Horde_UseActivePerk", ply)
+            if res then return end
+            ply:Horde_SetPerkInternalCooldown(ply:Horde_GetPerkCooldown())
+            ply:Horde_SetPerkNextThink(CurTime() + think_t)
+            net.Start("Horde_PerkStartCooldown")
+                net.WriteUInt(ply:Horde_GetPerkCooldown(), 8)
+            net.Send(ply)
+        end
+    end
 
     hook.Add("PlayerPostThink", "Horde_PerkCooldown", function(ply)
         if CurTime() >= ply:Horde_GetPerkNextThink() then
-            if ply:Horde_GetPerkInternalCooldown() <= 0 then return end
-            ply:Horde_SetPerkInternalCooldown(ply:Horde_GetPerkInternalCooldown() - 1)
-            ply:Horde_SetPerkNextThink(CurTime() + 1)
+            ply:Horde_SetPerkNextThink(CurTime() + think_t)
+            local cd = ply:Horde_GetPerkInternalCooldown()
+            local newcd = cd - think_t
+            if(newcd <= 0) then
+                if(ply.QueuedPerkSkill) then
+                    newcd = 0
+                    HORDE:UsePerkSkill(ply, true)
+                    ply.QueuedPerkSkill = false
+                    return
+                end
+            end
+            if(cd <= 0) then
+                return
+            end
+            ply:Horde_SetPerkInternalCooldown(newcd)
         end
     end)
-	
+
     -- Quick Grenade. It's hand crafted for now so it won't work with workshop subclasses.
     function HORDE:UseQuickGrenade(ply)
         if ply:HasWeapon("horde_carcass") or ply:HasWeapon("horde_astral_relic") or ply:HasWeapon("horde_void_projector") or ply:HasWeapon("horde_solar_seal") then return end

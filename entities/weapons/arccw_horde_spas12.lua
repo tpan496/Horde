@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Horde - Shotguns"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 
@@ -27,10 +27,21 @@ SWEP.WorldModelOffset = {
 SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.ViewModelFOV = 65
 
+--SWEP.Horde_Locational_DMG = true
+SWEP.BodyDamageMults = {
+    [HITGROUP_HEAD] = 2,
+    [HITGROUP_CHEST] = 1,
+    [HITGROUP_STOMACH] = 1,
+    [HITGROUP_LEFTARM] = 0.75,
+    [HITGROUP_RIGHTARM] = 0.75,
+    [HITGROUP_LEFTLEG] = 0.5,
+    [HITGROUP_RIGHTLEG] = 0.5,
+}
+
 SWEP.Damage = 35
 SWEP.DamageMin = 20
-SWEP.RangeMin = 300 * 0.025  -- GAME UNITS * 0.025 = METRES
-SWEP.Range = 700 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.RangeMin = 10  -- GAME UNITS * 0.025 = METRES
+SWEP.Range = 60  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 1
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -43,7 +54,7 @@ SWEP.ReducedClipSize = 4
 
 SWEP.VisualRecoilMult = 0
 SWEP.Recoil = 3
-SWEP.RecoilSide = 3
+SWEP.RecoilSide = 2
 
 SWEP.ShotgunReload = true
 SWEP.ManualAction = true
@@ -63,8 +74,8 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_shotgun"
 SWEP.NPCWeight = 100
 
-SWEP.AccuracyMOA = 100 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 250 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 50 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 75 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 50 -- inaccuracy added by moving. Applies in sights as well! Walking speed is considered as "maximum".
 SWEP.SightsDispersion = 0 -- dispersion that remains even in sights
 
@@ -204,7 +215,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "go_ammo",
+        Slot = "horde_go_shotgun_ammo", --go_ammo
         DefaultAttName = "Standard Ammo"
     },
     {
@@ -279,8 +290,8 @@ SWEP.Animations = {
     },
     ["cycle"] = {
         Source = "rechamber",
-        Time = 28/30,
-		MinProgress = 0.55,
+        Time = 25.2/30,
+		MinProgress = 0.495,
         SoundTable = {
 						--{s = "weapons/fesiugmw2/foley/wpfoly_spas12_reload_lift_v1.wav", 	t = 0/30},
 						{s = "weapons/fesiugmw2/foley/wpfoly_spas12_reload_open_v1.wav", 	t = 4/30},
@@ -290,8 +301,8 @@ SWEP.Animations = {
     },
     ["cycle_iron"] = {
         Source = "rechamber_ads",
-        Time = 28/30,
-		MinProgress = 0.6,
+        Time = 25.2/30,
+		MinProgress = 0.54,
         SoundTable = {
 						--{s = "weapons/fesiugmw2/foley/wpfoly_spas12_reload_lift_v1.wav", 	t = 0/30},
 						{s = "weapons/fesiugmw2/foley/wpfoly_spas12_reload_open_v1.wav", 	t = 1/30},

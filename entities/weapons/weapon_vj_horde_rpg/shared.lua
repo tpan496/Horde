@@ -1,4 +1,7 @@
 if (!file.Exists("autorun/vj_base_autorun.lua","LUA")) then return end
+if CLIENT then
+    killicon.AddAlias("weapon_vj_horde_rpg", "arccw_horde_rpg7")
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Base 						= "weapon_vj_base"
 SWEP.PrintName					= "RPG"
@@ -16,7 +19,7 @@ end
 	-- NPC Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.NPC_NextPrimaryFire 		= 7 -- Next time it can use primary fire
 SWEP.NPC_TimeUntilFire	 		= 0.8 -- How much time until the bullet/projectile is fired?
-SWEP.NPC_ReloadSound			= {"vj_weapons/reload_rpg.wav"}
+SWEP.NPC_ReloadSound			= "vj_base/weapons/reload_rpg.wav"
 SWEP.NPC_BulletSpawnAttachment = "missile" -- The attachment that the bullet spawns on, leave empty for base to decide!
 SWEP.NPC_FiringDistanceScale = 2.5 -- Changes how far the NPC can fire | 1 = No change, x < 1 = closer, x > 1 = farther
 SWEP.NPC_StandingOnly = true -- If true, the weapon can only be fired if the NPC is standing still
@@ -55,7 +58,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	local proj = ents.Create("obj_vj_horde_platoon_rpg_projectile")
 	local ply_Ang = owner:GetAimVector():Angle()
 	local ply_Pos = owner:GetShootPos() + ply_Ang:Forward()*-20 + ply_Ang:Up()*-9 + ply_Ang:Right()*10
-	if owner:IsPlayer() then proj:SetPos(ply_Pos) else proj:SetPos(self:GetNW2Vector("VJ_CurBulletPos")) end
+	if owner:IsPlayer() then proj:SetPos(ply_Pos) else proj:SetPos(self:GetAttachment(1).Pos) end
 	if owner:IsPlayer() then proj:SetAngles(ply_Ang) else proj:SetAngles(owner:GetAngles()) end
 	proj:SetOwner(owner)
 	proj:Activate()
@@ -66,7 +69,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 		if owner:IsPlayer() then
 			phys:SetVelocity(owner:GetAimVector() * 2500)
 		else
-			phys:SetVelocity(owner:CalculateProjectile("Line", self:GetNW2Vector("VJ_CurBulletPos"), owner:GetEnemy():GetPos() + owner:GetEnemy():OBBCenter(), 2500))
+			phys:SetVelocity(owner:CalculateProjectile("Line", self:GetAttachment(1).Pos, owner:GetEnemy():GetPos() + owner:GetEnemy():OBBCenter(), 2500))
 		end
 	end
 	

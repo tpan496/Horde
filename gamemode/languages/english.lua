@@ -49,6 +49,10 @@ LANGUAGE["Game_Most_Heal"] = "Team Healer"
 LANGUAGE["Game_Healed"] = "Healed"
 LANGUAGE["Game_Healed_You"] = "healed you"
 
+-- Readying up
+LANGUAGE["Game_F4_CannotSkip"] = "You can't skip right now!"
+LANGUAGE["Game_F4_Starting"] = "Next wave is starting!"
+LANGUAGE["Game_F4_Readied"] = "You are already readied up!"
 
 -- Ranks
 LANGUAGE["Rank_Novice"] = "Novice"
@@ -239,6 +243,18 @@ LANGUAGE["Class_Berserker"] = "Berserker"
 LANGUAGE["Class_Warden"] = "Warden"
 LANGUAGE["Class_Cremator"] = "Cremator"
 
+-- Subclasses
+LANGUAGE["Class_Psycho"] = "Psycho"
+LANGUAGE["Class_SpecOps"] = "SpecOps"
+LANGUAGE["Class_Carcass"] = "Carcass"
+LANGUAGE["Class_Hatcher"] = "Hatcher"
+LANGUAGE["Class_Warlock"] = "Warlock"
+LANGUAGE["Class_Gunslinger"] = "Gunslinger"
+LANGUAGE["Class_Necromancer"] = "Necromancer"
+LANGUAGE["Class_Samurai"] = "Samurai"
+LANGUAGE["Class_Overlord"] = "Overlord"
+LANGUAGE["Class_Artificer"] = "Artificer"
+
 -- Gadgets
 LANGUAGE["Gadget_Activation"] = "Press T to activate."
 LANGUAGE["Gadget_Cooldown"] = "Cooldown"
@@ -271,7 +287,7 @@ LANGUAGE["Class_Description_Engineer"] = [[
 Has access to special weapons and equipment.]]
 
 LANGUAGE["Class_Description_Berserker"] = [[
-Only has access to melee weapons.]]
+Has access to melee weapons and some ranged equipment.]]
 
 LANGUAGE["Class_Description_Warden"] = [[
 Has full access to shotguns and watchtowers (horde_watchtower).]]
@@ -298,39 +314,77 @@ Gain Adrenaline when you kill an enemy.
 Adrenaline increases damage and speed by {4}.]]
 
 LANGUAGE["Perk_heavy_base"] = [[
-The Heavy class is a tank class that provides strong suppression firepower.
-Complexity: EASY
+The Heavy class is a tank class that focuses on armor while also providing strong suppression 
+firepower that either reduces enemy’s damage dealt or increases their damage taken.
 
 {6} increased maximum armor. ({7} per level, up to {8}).
 
 Regenerate {1} armor per second.
-Regenerate up to {2} armor. ({3} + {4} per level, up to {5})]]
+Regenerate up to {2} armor. ({3} + {4} per level, up to {5})
+
+Shift + E to activate Energy Barrier to gain temporary armor.
+(Recommended to bind, “horde_use_perk_skill” to a key / mouse button)
+
+While Energy Barrier is active, 
+Adds 25% of maximum armor as temporary armor.
+Energy Barrier lasts for 5 seconds.
+Energy Barrier has a 25 second cooldown.
+
+Temporary armor also counts as armor.
+Temporary armor is removed after Energy Barrier duration ends.
+Temporary armor granted by Energy Barrier does not contribute to your maximum armor.
+Temporary armor granted by Energy Barrier does not contribute to your maximum armor regeneration.]]
 
 LANGUAGE["Perk_medic_base"] = [[
 The Medic class is a durable support class that focuses on healing and buffing teammates.
 Complexity: MEDIUM
 
-Amplifies healing by {1}. ({2} per level, up to {3}).
+Increases healing potency by {1}. ({2} per level, up to {3}).
 
-Regenerate {4} health per second.]]
+SHIFT+E to fire a healing dart at your crosshair that explodes on impact.
+Also fires another healing dart straight down that is centered on you.
+Healing darts will heal allies and deal poison damage to enemies.
+(Recommended to bind, “horde_use_perk_skill” to a key / mouse button)
+
+Healing darts have {4} charges that refresh once every 2 seconds.
+Healing darts deal {5} poison damage.
+Healing darts restores {6} health.
+Centered healing darts have {7} less healing effectiveness.
+Centered healing darts deal {8} less poison damage.]]
 
 LANGUAGE["Perk_demolition_base"] = [[
 The Demolition class is a crowd-control class that can also provide high single target damage.
 Complexity: MEDIUM
 
-{7} increased Blast damage. ({8} per level, up to {9}).
-{1} increased Blast damage resistance. ({2} + {3} per level, up to {4}).
+{1} increased blast damage. ({2} per level, up to {3}).
+{4} increased blast damage resistance. ({5} + {6} per level, up to {7}).
+80% less damage taken from your own explosives.
 
-Regenerate {5} frag grenade every {6} seconds, if you do not have one.]]
+Regenerate {8} SLAM and grenade every {9} seconds.
+Maximum SLAM and grenade regeneration capacity is {10}.
+
+Increases to blast damage also increases your blunt damage.
+Your blunt damage is also considered blast damage.
+
+Shift + E to detonate all your placed SLAM that aren’t tripmines.
+(Recommended to bind, “horde_use_perk_skill” to a key / mouse button)]]
 
 LANGUAGE["Perk_ghost_base"] = [[
-The Ghost class is focused on taking down boss enemies using Camoflague.
+The Ghost class is focused on taking down elite enemies and bosses using high 
+damaging weapons and using their evasion through their Camouflage ability.
 Complexity: HIGH
 
-{1} more headshot damage. ({2} per level, up to {3}).
+{1} more ballistic damage on headshot. ({2} per level, up to {3}).
 
-Crouch to activate Camoflague, granting {4} evasion.
-Attacking or Running REMOVES Camoflague.]]
+Gain Camouflage after 1 second if you have crouched.
+Camouflage grants {4} chance to evade.
+Attacking or running removes Camouflage.
+
+Gain True Evasion buildup while you have Camouflage.
+You cannot inherently evade hits while you have Camouflage.
+Gain True Evasion buildup equal to your chance to evade when you take a hit.
+On 100% buildup, negates that attack as if you were to successfully evade.
+True Evasion buildup has no buildup cooldown or decay.]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 The Engineer class is a minion-centered class that deals damage through minions.
@@ -344,10 +398,26 @@ LANGUAGE["Perk_berserker_base"] = [[
 The Berserker class is a melee-centered class that can be played both offensively and defensively.
 Complexity: HIGH
 
-{1} increased Slashing and Blunt damage. ({2} per level, up to {3}).
-{4} increased Global damage resistance. ({5} per level, up to {6}).
+{1} increased melee damage. ({2} per level, up to {3}).
+{4} increased global damage resistance. ({5} per level, up to {6}).
 
-Aerial Parry: Jump to reduce Physical damage taken by {7}.]]
+While on the ground, jump to gain Aerial Parry.
+{7} less physical damage taken while Aerial Parry or Active Parry is active.
+Lose Aerial Parry when you land on the ground.
+
+Modifiers to Aerial Parry also apply to Active Parry.
+Modifiers to melee damage also apply to slashing and blunt damage.
+
+Shift + E to perform Active Parry while airborne or grounded.
+Active Parry lasts for {8} second.
+Duration is refreshed on successful Active Parry.
+Active Parry initially has no cooldown.
+Cooldown is increased by {9} second every unsuccessful Active Parry after the first attempt.
+Cooldown is reset after successful Active Parry.
+Cooldown is reset if you haven’t used Active Parry in the past {10} seconds.
+
+(Recommended to bind, “horde_use_perk_skill” to a key or mouse button)
+]]
 
 LANGUAGE["Perk_warden_base"] = [[
 The Warden is a support class that uses aura effects and structures to buff teammates.
@@ -367,6 +437,60 @@ Complexity: EASY
 Attacks have {5} chance to Ignite enemies.
 Ignite base duration is {6} and deals damage over time based on hit damage.
 Fire damage has {7} Ignite chance.]]
+
+
+-- Default subclasses
+LANGUAGE["Perk_psycho_base"] = [[
+The Psycho class focuses on dealing critical damage with both melee and ranged weapons.
+
+Adds {1} Base Critical Hit chance. ({2} + {3} per level, up to {4}).
+You deal {5} more damage on Critical Hit.
+
+Gain Brutality by hitting enemies with melee attacks, up to {6} stacks.
+Each Brutality stack adds {7} Base Critical Hit chance.
+
+Press Shift + E to toggle Frenzy Mode.
+Lose {8} health every {9} seconds in Frenzy Mode, down to {10} health.
+{11} increased Critical Hit chance in Frenzy Mode.
+{12} increased health recovery in Frenzy Mode.
+
+(Recommended to bind, “horde_use_perk_skill” to a key or mouse button)
+]]
+
+LANGUAGE["Perk_overlord_base"] = [[
+The Overlord class focuses on debilitating enemies with their intimidating presence 
+causing them to take more damage and deal less damage.
+
+{1} increased damage with Shotguns ({2} per level, up to {3})
+{4} increased presence radius ({5} per level, up to {6}).
+
+Enemies in your presence are afflicted with Fear.
+Enemies afflicted with Fear are also afflicted with Agony and Suffering
+
+Enemies afflicted with Agony take {7} more damage.
+Enemies afflicted with Suffering deal {8} less damage.
+
+Maximum Fear stacks is {9}.
+Fear lasts for {10} seconds and stacks fall off sequentially.
+Maximum Fear stacks is increased by {11} for every perk skill tier unlocked.
+
+Has access to Shotguns and Watchtower Modules that augment your presence.
+
+Shift + E to use Dark Energy Blast which fires a Combine energy ball at your enemies that 
+deals damage in an area of effect proportional to the amount of Fear stacks.
+
+Dark Energy Blast -
+Cannot headshot.
+Deals {12} physical damage per Fear stack.
+Blast radius is equal to your presence.
+Presence lingers for {13} seconds.
+Has a {14} second cooldown.
+
+(Recommended to bind, “horde_use_perk_skill” to a key or mouse button)
+]]
+
+
+--LANGUAGE["Perk_gunslinger_base"] = [[]]
 
 -- Default Perks: Survivor
 LANGUAGE["Perk_Title_Survivor_Tier_1"] = [[Survival]]
@@ -424,12 +548,12 @@ LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Suppression]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Sticky Compound]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
 Enemies you hit with Ballistic damage are Hindered.
-Hindered enemies deal {1} reduced Physical damage.]]
+Hindered enemies deal {1} reduced damage.]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Crude Casing]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 Enemies you hit with Ballistic damage are Weakened.
-Weakened enemies receive {1} increased Physical damage.]]
+Weakened enemies take {1} increased damage.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Backup]]
 LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[Repair Catalyst]]
@@ -438,18 +562,19 @@ Adds {1} to maximum armor regeneration.]]
 
 LANGUAGE["Perk_Title_heavy_floating_carrier"] = [[Floating Carrier]]
 LANGUAGE["Perk_heavy_floating_carrier"] = [[
-Adds 5 to maximum weight.]]
+Adds {1} to maximum weight.
+{2} increased Ballistic damage for each weight currently used.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[Armor Protection]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[Liquid Armor]]
 LANGUAGE["Perk_heavy_liquid_armor"] = [[
-While you have at least {1} armor:
-  {2} less Physical damage taken.]]
+{1} Less Physical damage taken while you have armor.
+{2} Less Physical damage taken while you have no armor]]
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[Reactive Armor]]
-LANGUAGE["Perk_heavy_reactive_armor"] = [[Gain a reactive armor that negates critical damage taken.
-Activates on taking more than {1} damage and recharges after {2} seconds.
-Uses {3} of your maximum armor when triggered.]]
+LANGUAGE["Perk_heavy_reactive_armor"] = [[Upon taking Physical damage,
+{1} Less Physical damage taken for {2} seconds.
+Requires and uses 20 armor when triggered. Cooldown: {3} seconds.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_4"] = [[Technology]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[Nanomachine]]
@@ -458,14 +583,14 @@ LANGUAGE["Perk_heavy_nanomachine"] = [[
 
 LANGUAGE["Perk_Title_heavy_ballistic_shock"] = [[Ballistic Shock]]
 LANGUAGE["Perk_heavy_ballistic_shock"] = [[
-{1} increased Ballistic damage.
-Debuffs you apply have {2} increased effect.]]
+Debuffs you apply have {1} increased effect.]]
 
 -- Default Perks: Medic
 LANGUAGE["Perk_Title_Medic_Tier_1"] = [[Medicine]]
 LANGUAGE["Perk_Title_medic_antibiotics"] = [[Antibiotics]]
 LANGUAGE["Perk_medic_antibiotics"] = [[
-Your healing is amplified by {1}.]]
+Increases healing potency by {1}.
+Adds {2} charges to your healing dart skill.]]
 
 LANGUAGE["Perk_Title_medic_painkillers"] = [[Painkillers]]
 LANGUAGE["Perk_medic_painkillers"] = [[
@@ -475,7 +600,7 @@ LANGUAGE["Perk_Title_Medic_Tier_2"] = [[Bio-Engineering]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[Berserk]]
 LANGUAGE["Perk_medic_berserk"] = [[
 Players you heal have Berserk for {1} seconds.
-{2} increased damage while you have Berserk.]]
+{2} more damage while you have Berserk.]]
 
 LANGUAGE["Perk_Title_medic_fortify"] = [[Fortify]]
 LANGUAGE["Perk_medic_fortify"] = [[
@@ -490,12 +615,14 @@ Your healing directly decreases buildup for Bleeding, Break and Necrosis.]]
 LANGUAGE["Perk_Title_medic_haste"] = [[Haste]]
 LANGUAGE["Perk_medic_haste"] = [[
 Players you heal have Haste for {1} seconds.
-{2} increased movement speed while you have Haste.]]
+{2} more movement speed while you have Haste.]]
 
 LANGUAGE["Perk_Title_Medic_Tier_4"] = [[Natural Selection]]
-LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[Cellular Implosion]]
-LANGUAGE["Perk_medic_cellular_implosion"] = [[
-Enemies you killed have {1} chance to generate a healing cloud.]]
+LANGUAGE["Perk_Title_medic_injection"] = [[Injection]]
+LANGUAGE["Perk_medic_injection"] = [[
+Centered healing darts instead have {1} less healing effectiveness.
+Centered healing darts have {2} increased area of effect.
+Direct Medic dart hits do an additional {3} times the poison damage.]]
 
 LANGUAGE["Perk_Title_medic_xcele"] = [[Accelerated Healing Factor]]
 LANGUAGE["Perk_medic_xcele"] = [[
@@ -506,92 +633,103 @@ Buffs you apply have {2} increased duration.]]
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Grenade]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[Impact Grenade]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
-{1} increased Grenade damage on impact.
 Grenades explode on impact.
-Grenade and SLAM explosions increase Stun buildup.]]
+SLAM and grenades deal {1} more damage.
+SLAM and grenade explosions increase Stun buildup.]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[Cluster Grenade]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[
-Grenades and SLAMs spawn {1} mini-nades on detonation.
-Mini-nades do {2} less damage.]]
+SLAM and grenades split into {1} bomblets on detonation.
+Bomblets created by grenades deal {2} less damage.
+Bomblets created by SLAM deal {3} less damage.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[Weaponry]]
 LANGUAGE["Perk_Title_demolition_direct_hit"] = [[Direct Hit]]
 LANGUAGE["Perk_demolition_direct_hit"] = [[
-{1} increased Blast damage against enemies close to explosions.
-{1} increased Blunt damage.]]
+{1} increased blast damage.
+{2} increased minimum fall off range from centered explosions.]]
 
 LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[Seismic Wave]]
-LANGUAGE["Perk_demolition_seismic_wave"] = [[Blast damage generates a delayed explosion.
-Delayed explosion deals {1} explosion damage as Physical damage.
-Only activates when damage is greater than {2}.]]
+LANGUAGE["Perk_demolition_seismic_wave"] = [[
+Blast damage generates a delayed explosion centered on enemies hit.
+Delayed explosion deals {1} physical damage in an area of effect.
+Only activates when blast damage is greater than {2}.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Approach]] --
 LANGUAGE["Perk_Title_demolition_fragmentation"] = [[Fragmentation]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
-{1} increased Blast damage.]]
+{1} increased blast damage.
+Minimum fall off damage from explosions is capped at {2}.]]
 
 LANGUAGE["Perk_Title_demolition_knockout"] = [[Knockout]]
-LANGUAGE["Perk_demolition_knockout"] = [[Blast damage increases Stun buildup.
-Enemies affected by Stun is paralyzed for {1} seconds.
+LANGUAGE["Perk_demolition_knockout"] = [[
+Blast damage increases Stun buildup against enemies.
+Enemies affected by Stun are paralyzed for {1} seconds.
 Stun cooldown is {2} seconds.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[Destruction]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Pressurized Warhead]]
-LANGUAGE["Perk_demolition_pressurized_warhead"] = [[{1} increased Blast damage against elites.
-{2} more Blast and Blunt damage on headshot.]]
+LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
+{1} increased blast damage against elites.
+{2} more blast damage on headshot.
+Blast damage deals {3} of the enemy's maximum health, once.]]
 
-LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Chain Reaction]]
-LANGUAGE["Perk_demolition_chain_reaction"] = [[Explosions deals up to {1} of an enemy's current health as extra Blast damage.
-Damage increase is capped at {2}.]]
+LANGUAGE["Perk_Title_demolition_saboteur"] = [[Saboteur]]
+LANGUAGE["Perk_demolition_saboteur"] = [[
+{1} faster SLAM and grenade regeneration rate.
+{2} increased SLAM and grenade throwing speed and distance.
+Adds {3} to your maximum SLAM and grenade regeneration capacity.]]
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[Tactics]]
 LANGUAGE["Perk_Title_ghost_headhunter"] = [[Headhunter]]
 LANGUAGE["Perk_ghost_headhunter"] = [[
-Headshot damage stacks up to 5 times.
-Each stack increases 8% headshot damage.]]
+Each headshot increases your stacks up to {1} times.
+{2} increased ballistic damage per stack on headshot.
+Each stack lasts {3} seconds and falls off consecutively.]]
 
 LANGUAGE["Perk_Title_ghost_sniper"] = [[Sniper]]
 LANGUAGE["Perk_ghost_sniper"] = [[
-25% increased Ballistic damage while crouching.]]
+{1} increased ballistic damage while crouching.]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposition]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Phase Walk]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
-Running does not cancel Camoflague.
-{1} increased movement speed when you have Camoflague.
-Adds {2} evasion when you have Camoflague.]]
+Running does not remove your Camouflage.
+{1} increased movement speed while Camouflaged.
+Adds {2} chance to evade while Camouflaged.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Ghost Veil]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
-Attacking does not cancel Camoflague.
-{1} increased walk speed when you have Camoflague.
-{2} increased Ballistic damage when you have Camoflague.]]
+Attacking does not remove your Camouflage.
+{1} increased movement speed while Camouflaged.
+{2} increased ballistic damage while Camouflaged.]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Trajectory]]
 LANGUAGE["Perk_Title_ghost_brain_snap"] = [[Brain Snap]]
 LANGUAGE["Perk_ghost_brain_snap"] = [[
-Headshots increases Freeze buildup based on weapon damage.
-Enemies affected by Freeze has drastically reduced action speed for {1} seconds.
-Freeze cooldown is {2} seconds.]]
+Headshot increases Freeze buildup against enemies.
+Enemies affected by Freeze are paralyzed for {1} seconds.
+Headshot extends Freeze duration and Freeze cooldown is {2} seconds.]]
 
 LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[Kinetic Impact]]
 LANGUAGE["Perk_ghost_ghost_kinetic_impact"] = [[
-Increases Ballistic damage based on distance.
-Increases {1} damage for each {2} units.
-Increase caps at {3}.]]
+Increases ballistic damage the further away enemies are.
+{1} increased ballistic damage for each {2} units.
+Increased ballistic damage caps at {3}.]]
 
-LANGUAGE["Perk_Title_Ghost_Tier_4"] = [[Disposal]]
-LANGUAGE["Perk_Title_ghost_coup"] = [[Coup De Grace]]
-LANGUAGE["Perk_ghost_coup"] = [[
-Instantly kills enemies with less than 20% health.]]
+LANGUAGE["Perk_Title_Ghost_Tier_4"] = [[Assassina]]
+LANGUAGE["Perk_Title_ghost_dance_with_death"] = [[Dance with Death]]
+LANGUAGE["Perk_ghost_dance_with_death"] = [[
+You always have Camouflage.
+{1} of damage taken is taken as health damage over {2} seconds.
+Adds {3} True Evasion buildup every second up to {4}.]]
 
 LANGUAGE["Perk_Title_ghost_decapitate"] = [[Decapitate]]
 LANGUAGE["Perk_ghost_decapitate"] = [[
-When you have Camoflague:
-  {1} increased Ballistic damage.
-  {2} increased headshot damage against elites.]]
+{1} increased ballistic damage on headshot.
+{2} increased ballistic damage against elites on headshot.
+Culls enemies that were brought down to {3} health on headshot.]]
 
 -- Default Perks: Engineer
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[Craftsmanship]]
@@ -641,50 +779,49 @@ Minions deal {1} of their max health as Blast damage on death.]]
 LANGUAGE["Perk_Title_Berserker_Tier_1"] = [[Fundamentals]]
 LANGUAGE["Perk_Title_berserker_breathing_technique"] = [[Breathing Technique]]
 LANGUAGE["Perk_berserker_breathing_technique"] = [[
-Regenerate {1} health per second.
-Immune to Poison damage.]]
+Regenerate {1} of maximum health per second.
+Immune to poison damage and Break buildup.]]
 
 LANGUAGE["Perk_Title_berserker_bloodlust"] = [[Bloodlust]]
 LANGUAGE["Perk_berserker_bloodlust"] = [[
-Leech {1} of melee damage dealt, up to {2} hp per hit.
-Immune to Bleeding.]]
+Leech {1} of melee damage dealt up to {2} health per hit.
+Immune to Bleeding buildup.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_2"] = [[Technique]]
 LANGUAGE["Perk_Title_berserker_bushido"] = [[Bushido]]
 LANGUAGE["Perk_berserker_bushido"] = [[
-{1} increased Slashing damage.
-{2} increased movement speed.]]
+{1} increased movement speed.
+{2} increased melee damage.]]
 
 LANGUAGE["Perk_Title_berserker_savagery"] = [[Savagery]]
 LANGUAGE["Perk_berserker_savagery"] = [[
-{1} increased Blunt damage.
-{2} increased maximum health.]]
+{1} increased maximum health.
+{2} increased melee damage.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_3"] = [[Parry]]
 LANGUAGE["Perk_Title_berserker_graceful_guard"] = [[Graceful Guard]]
 LANGUAGE["Perk_berserker_graceful_guard"] = [[
-On successful Aerial Parry:
-  - Removes all debuff and debuff buildups.
-  - Recover {1} health.]]
+Removes all debuffs and debuff buildups on successful Aerial Parry.
+Recover {1} health and regenerate {2} of maximum health per second 
+for {3} seconds on successful Aerial Parry.]]
 
 LANGUAGE["Perk_Title_berserker_unwavering_guard"] = [[Unwavering Guard]]
 LANGUAGE["Perk_berserker_unwavering_guard"] = [[
-On successful Aerial Parry:
-  - {1} increased Physical damage for {3} seconds.
-  - {2} less damage taken for {3} seconds.]]
+Your Aerial Parry works against all damage types.
+{1} increased melee damage for {2} seconds on successful Aerial Parry.
+{3} less damage taken for {4} seconds on successful Aerial Parry.]]
 
 LANGUAGE["Perk_Title_Berserker_Tier_4"] = [[Combat Arts]]
 LANGUAGE["Perk_Title_berserker_phalanx"] = [[Phalanx]]
 LANGUAGE["Perk_berserker_phalanx"] = [[
-Gain 1 Phalanx stack every 2 seconds, up to {1}.
-Each stack increases {2} Physical damage resistance and {3} melee damage.
-Lose stacks when you attack.]]
+Gain {1} Phalanx stack when you hit an enemy, up to {2} stacks.
+Each stack increases global damage resistance by {3}.
+Each stack lasts {4} seconds and falls off consecutively.]]
 
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[Rip and Tear]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
 {1} more melee damage.
-Your melee attack can splash.
-Splash damage is {2} of your melee damage.]]
+Melee weapons that don’t cleave deal {2} damage to surrounding targets.]]
 
 -- Default Perks: Warden
 LANGUAGE["Perk_Title_Warden_Tier_1"] = [[Sustain]]
@@ -769,35 +906,267 @@ LANGUAGE["Perk_cremator_incineration"] = [[
 {1} increased Ignite damage.]]
 
 
+-- Default Subclasses
+-- Default Perk Psycho
+LANGUAGE["Perk_Title_Overlord_Tier_1"] = [[Sadism]]
+LANGUAGE["Perk_Title_psycho_bloodbath"] = [[Bloodbath]]
+LANGUAGE["Perk_psycho_bloodbath"] = [[
+Adds {1} Base Critical Hit chance.
+Leech 1 health on Critical Hit.]]
+
+LANGUAGE["Perk_Title_psycho_savor"] = [[Savor]]
+LANGUAGE["Perk_psycho_savor"] = [[
+{1} increased Critical Hit damage.
+Leech {2} of damage dealt when you land a Melee hit.
+Leech caps at {3} health per hit or {4} health per Critical Hit.]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_2"] = [[Violence]]
+LANGUAGE["Perk_Title_psycho_ferocity"] = [[Ferocity]]
+LANGUAGE["Perk_psycho_ferocity"] = [[
+Adds {1} Base Critical Hit chance.
+{2} increased Critical Hit chance per {3} health missing.]]
+
+LANGUAGE["Perk_Title_psycho_disembowel"] = [[Disembowel]]
+LANGUAGE["Perk_psycho_disembowel"] = [[
+{1} increased Critical Hit damage.
+Melee attacks remove Nemesis mutation from enemies.]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_3"] = [[Fatality]]
+LANGUAGE["Perk_Title_psycho_skewering"] = [[Skewering]]
+LANGUAGE["Perk_psycho_skewering"] = [[
+Enemies you hit with headshots are Skewered.
+Players have +{1} Base Critical Hit chance when they hit Skewered enemies.]]
+
+LANGUAGE["Perk_Title_psycho_brutality"] = [[Brutality]]
+LANGUAGE["Perk_psycho_brutality"] = [[
+Brutality adds an additional {1} Base Critical Hit chance.
+Brutality also increases Critical Hit damage by {2}.
+Brutality stacks decay {3} slower.]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_4"] = [[Psychosis]]
+LANGUAGE["Perk_Title_psycho_grudge"] = [[Grudge]]
+LANGUAGE["Perk_psycho_grudge"] = [[
+{1} increased movement speed per {2} health missing, up to {3}.
+{4} increased Critical Hit damage per {5} health missing. Tripled with melee crits.
+You are considered at {6} health while above {7} health.]]
+
+LANGUAGE["Perk_Title_psycho_bestial_wrath"] = [[Bestial Wrath]]
+LANGUAGE["Perk_psycho_bestial_wrath"] = [[
+{1} increased Critical Hit damage.
+Melee weapons that don’t cleave deal {2} damage to surrounding targets.
+{3} slower health decay in Frenzy Mode.]]
+
+
+-- Default Perk: Overlord
+LANGUAGE["Perk_Title_Overlord_Tier_1"] = [[Buildup]]
+LANGUAGE["Perk_Title_overlord_inverse_filter"] = [[Inverse Filter]]
+LANGUAGE["Perk_overlord_inverse_filter"] = [[
+{1} less debuff buildup received.
+Restores {2} health whenever you receive any debuff buildup.]]
+
+LANGUAGE["Perk_Title_overlord_dispersion"] = [[Dispersion]]
+LANGUAGE["Perk_overlord_dispersion"] = [[
+Applying Fear reduces your debuff buildup by {1}.]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_2"] = [[Presence]]
+LANGUAGE["Perk_Title_overlord_militant"] = [[Militant]]
+LANGUAGE["Perk_overlord_militant"] = [[
+{1} increased effectiveness of Agony.]]
+
+LANGUAGE["Perk_Title_overlord_oppressor"] = [[Oppressor]]
+LANGUAGE["Perk_overlord_oppressor"] = [[
+{1} increased effectiveness of Suffering.]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_3"] = [[Spatial Manipulation]]
+LANGUAGE["Perk_Title_overlord_dark_energy_blast"] = [[Dark Energy Blast]]
+LANGUAGE["Perk_overlord_dark_energy_blast"] = [[
+Dark Energy Blast deals {1} more damage.
+Dark Energy Blast has {2} reduced cooldown.]]
+
+LANGUAGE["Perk_Title_overlord_juxtapose"] = [[Juxtapose]]
+LANGUAGE["Perk_overlord_juxtapose"] = [[
+Dark Energy Blast Perk skill is replaced with Summon Projection Clone.
+Projection Clone has {1} health and uses a pump shotgun.
+Projection Clone lasts for {2} seconds and has a {3} second cooldown.]]
+
+LANGUAGE["Perk_Title_Overlord_Tier_4"] = [[Requiem]]
+LANGUAGE["Perk_Title_overlord_doomed_presence"] = [[Doomed Presence]]
+LANGUAGE["Perk_overlord_doomed_presence"] = [[
+Fear duration is infinite.
+Enemies you hit gain {1} Fear stack.]]
+
+LANGUAGE["Perk_Title_overlord_deatheater"] = [[Deatheater]]
+LANGUAGE["Perk_overlord_deatheater"] = [[
+Enemies in your presence are always at maximum Fear.]]
+
+
+
 -- Default Config Shop Items
 -- Optional
-LANGUAGE["Item_Stunstick"] = [[Stunstick]]
-LANGUAGE["Item_Desc_Stunstick"] = [[
-Electric baton.
+-- Melee Category --
+LANGUAGE["Item_Combat_Knife"] = [[Combat Knife]]
+LANGUAGE["Item_Desc_Combat_Knife"] = [[
+A reliable bayonet.
+
+25% more movement speed while wielding this weapon.
+
+LMB - Light attack
+Cleave - 1
+
+RMB - Heavy attack
+Cleave - 1
 ]]
 
 LANGUAGE["Item_Crowbar"] = [[Crowbar]]
 LANGUAGE["Item_Desc_Crowbar"] = [[
 A rusty crowbar.
+
+LMB - Light attack
+Cleave - 2
+
+RMB - Heavy attack
+Cleave - 2
 ]]
 
-LANGUAGE["Item_Combat Knife"] = [[Combat Knife]]
-LANGUAGE["Item_Desc_Combat Knife"] = [[
-A reliable bayonet.
-RMB to deal a heavy slash.
+LANGUAGE["Item_Stunstick"] = [[Stunstick]]
+LANGUAGE["Item_Desc_Stunstick"] = [[
+Electric baton.
+
+Deals extra lightning damage.
+80% of extra lightning damage dealt contributes to shock buildup.
+
+LMB - Light attack
+Cleave - 1
+Lightning damage - 25
+
+RMB - Heavy attack
+Cleave - 2
+Lightning damage - 35
 ]]
 
-LANGUAGE["Item_Katana"] = [[Katana]]
-LANGUAGE["Item_Desc_Katana"] = [[
-Ninja sword.
-Long attack range and fast attack speed.
+LANGUAGE["Item_Machete"] = [[Machete]]
+LANGUAGE["Item_Desc_Machete"] = [[
+A large machete.
+
+Heavy attack has a wider cleaving area.
+
+LMB - Light attack
+Cleave - 2
+
+RMB - Heavy attack
+Cleave - 3
+]]
+
+LANGUAGE["Item_Fireaxe"] = [[Fireaxe]]
+LANGUAGE["Item_Desc_Fireaxe"] = [[
+A fire axe. Heavy, but can chops most enemies in half.
+
+Heavy attack headshot always stuns the enemy for the 
+first time it has ever been stunned by the fire axe.
+
+LMB - Light attack
+Cleave - 2
+
+RMB - Heavy attack
+Cleave - 2
 ]]
 
 LANGUAGE["Item_Bat"] = [[Bat]]
 LANGUAGE["Item_Desc_Bat"] = [[
-Sturdy baseball bat.
-Hits like a truck.
+A sturdy baseball bat. Hits like a truck.
+
+LMB - Light attack
+Cleave - 3
+
+RMB - Heavy attack
+Cleave - 3
 ]]
+
+LANGUAGE["Item_Katana"] = [[Katana]]
+LANGUAGE["Item_Desc_Katana"] = [[
+Ninja sword. Long attack range and fast attack speed.
+
+LMB - Light attack
+Cleave - 3
+
+RMB - Heavy attack
+Cleave - 5
+]]
+
+LANGUAGE["Item_Chainsaw"] = [[Chainsaw]]
+LANGUAGE["Item_Desc_Chainsaw"] = [[
+Brrrrrrrrrrrrrrrr. 
+
+Deals more damage when consuming ammo.
+Heavy attacks require ammo to use.
+
+LMB - Light attack
+Cleave - 3
+
+RMB - Heavy attack
+Cleave - 3
+]]
+
+LANGUAGE["Item_Inferno"] = [[Inferno]]
+LANGUAGE["Item_Desc_Inferno"] = [[
+A blazing curved sword with hidden power.
+
+While toggled on: 
+You take 1 fire damage per second.
+Weapon deals extra fire damage.
+Weapon hits emits a fire blast hitting nearby enemies.
+
+LMB - Light attack
+Cleave - 3
+
+RMB - Toggle charge effect
+Fire damage - 50
+]]
+
+LANGUAGE["Item_Jotunn"] = [[Jötunn]]
+LANGUAGE["Item_Desc_Jotunn"] = [[
+A cursed spiked mace forged with permafrost material.
+
+Weapon deals extra cold damage.
+Heavy attacks emit an ice blast hitting nearby enemies.
+15% of extra cold damage dealt contributes to Frostbite buildup with heavy attacks.
+You take 15 Frostbite buildup whenever an ice blast is emitted.
+
+LMB - Light attack
+Cleave - 3
+Cold damage - 35
+
+RMB - Heavy attack
+Cleave - 3
+Cold damage - 150
+]]
+
+LANGUAGE["Item_Mjolnir"] = [[Mjölnir]]
+LANGUAGE["Item_Desc_Mjolnir"] = [[
+A warhammer imbued with electric energy.
+
+While charged: 
+Weapon deals extra lightning damage.
+Weapon hit emits a lightning storm hitting nearby enemies.
+
+LMB - Light attack
+Cleave - 3
+
+RMB - Activate charge effect
+Lightning damage - 150
+]]
+--translate.Get("Item_Desc_Zweihander")
+LANGUAGE["Item_Zweihander"] = [[Zweihänder]]
+LANGUAGE["Item_Desc_Zweihander"] = [[
+A heavy, large two-handed longsword. Can easily decapitate enemies in a full swing.
+
+LMB - Light attack
+Cleave - 10
+
+RMB - Heavy attack
+Cleave - 10
+]]
+
 
 
 LANGUAGE["Item_9mm"] = [[9mm]]
@@ -1195,10 +1564,11 @@ A grenade that releases contiuous bursts of detoxication clouds.
 Heals players and damages enemies.
 ]]
 
-LANGUAGE["Item_Throwing Knives"] = [[Throwing Knives]]
-LANGUAGE["Item_Desc_Throwing Knives"] = [[
-Ranged throwing knives.
-Thrown blades are retrievable.
+LANGUAGE["Item_Throwing_Knives"] = [[Throwing Knives]] 
+LANGUAGE["Item_Desc_Throwing_Knives"] = [[
+Throwing knives that deal slashing damage and are considered melee weapons.
+Can be picked up again upon hitting surfaces and doesn't stick to walls or ceilings.
+Enemies drop all impaled throwing knives upon defeating them.
 ]]
 
 LANGUAGE["Item_Watchtower"] = [[Watchtower]]
@@ -1279,21 +1649,6 @@ Press B or ZOOM to fire healing darts.
 Healing dart heals 12 health and has a 1.5 second cooldown.
 ]]
 
-LANGUAGE["Item_Chainsaw"] = [[Chainsaw]]
-LANGUAGE["Item_Desc_Chainsaw"] = [[
-Brrrrrrrrrrrrrrrr.
-
-Hold RMB to saw through enemies.
-]]
-
-LANGUAGE["Item_Mjollnir"] = [[Mjollner]]
-LANGUAGE["Item_Desc_Mjollnir"] = [[
-A warhammer embued with electric energy.
-
-Press RMB to charge the weapon.
-Charged Mjollnir creates a lightning explosion on impact.
-]]
-
 LANGUAGE["Item_Double Barrel"] = [[Double Barrel]]
 LANGUAGE["Item_Desc_Double Barrel"] = [[
 Double Barrel Shotgun.
@@ -1351,7 +1706,8 @@ LANGUAGE["Item_Bulldozer Suit"] = [[Bulldozer Suit]]
 LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
 Distinguished Heavy armor.
 
-Fills up 125% of your armor bar.
+Fills up 125% of your maximum armor.
+10% increased maximum armor.
 ]]
 
 LANGUAGE["Item_Hazmat Suit"] = [[Hazmat Suit]]
@@ -1562,19 +1918,33 @@ LANGUAGE["Gadget_Desc_gadget_gunslinger"] = [[
 -- Demolition Gadgets
 LANGUAGE["Gadget_gadget_proximity_defense"] = [[Proximity Defense]]
 LANGUAGE["Gadget_Desc_proximity_defense"] = [[
-Triggers an explosion that Stuns nearby enemies.
+Active:
+Triggers a non lethal explosion that stuns nearby enemies around you.
+Proximity Defense stun lasts for {1} seconds.
+Proximity Defense ignores all stun cooldowns.
+Proximity Defense also casts your Sigil if you have one.
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[Projectile Launcher (Blast)]]
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
-Shoots an explosive projectile.
-Projectile deals 100 Blast damage.
-Generates 3 extra explosions after a short delay.
+Passive:
+Explosive projectile used is also considered a grenade.
+Explosive projectile used is also considered a Meteor.
+Each explosion cascade is considered {1} spell charge level higher.
+Cooldown can be bypassed by spending {2} Mind power.
+Cooldown reduction affects this gadget’s cooldown.
+Grenade regeneration rate affects this gadget’s cooldown.
+
+Active:
+Throws an explosive projectile that explodes on impact depending on your perk.
+Generates {3} extra explosive projectiles that cascade outwards.
 ]]
 
 LANGUAGE["Gadget_nitrous_propellor"] = [[Nitrous Propellor]]
 LANGUAGE["Gadget_Desc_gadget_nitrous_propellor"] = [[
-Propells you forward and upward with a chemical explosion.
+Active Gadget:
+Propels you upward and in the direction you are moving in.
+{1} reduced fall damage taken until you land on the ground.
 ]]
 
 LANGUAGE["Gadget_ied"] = [[IED]]
@@ -1681,80 +2051,408 @@ Each gib restores 5 health.
 ]]
 
 -- Dank Patch notes
-LANGUAGE["Game_Dank_Patch_Notes"] = [[Dank Update 2.0.0]]
+LANGUAGE["Game_Dank_Patch_Notes"] = [[Dank Update 2.1.0]]
 LANGUAGE["Game_Dank_Patch_Notes_Info"] = [[
--- New Framework and Mechanics --
+TL:DR
+• Dank skip trader by pressing Alt + F4, Perk skill queueing and buffering, Melee weapon base changes, ArcCW attachments menu, Overlord overhauled, Warden, Shotguns, Berserker, Psycho, Hatcher, Engineer, Gunslinger, VDank update for zambies and bosses, fixed joining other servers potentially deranking your single player save if your rank was lower.
+
+Gameplay Changes
+Perk skill and Gadget queueing and buffering
+• Players can now queue up or buffer their next Perk skill or Gadget if used while on cooldown. If used 0.5 second too early, the game will wait until it’s off cooldown to use said Perk skill or Gadget.
+• Players can now hold down their key/button to queue up their next Perk skill or Gadget. As long as the player is holding down their key/button, the game will immediately use said Perk skill or Gadget whenever it’s off cooldown.
+• Queueing and buffering doesn’t work on Perk skills or Gadgets that have less than 1 second cooldown.
+
+Dank Skip Timer
+• Players can now skip trader time by hitting F4, typing “!skip” or “!ready”, or typing in the console, “horde_skip_trader” (you can also bind it to a key or button too if).
+
+Remaining Enemies
+• Last 10 remaining enemies no longer display a glowing halo and now instead display them in full solid color. This is a million times more performance friendly and shouldn’t need to be turned off, hopefully.
+
+Single Player Save File
+• Your local single player rank save file will no longer incorrectly sync subclasses levels when joining other servers (You can still potentially derank subclasses if you play on a server with an older version of Horde, so be sure to copy your rank file if you play single player).
+
+ArcCW Attachments Shop Changes
+• Players can now buy Horde attachments through the ArcCW attachments window. Players can also still buy attachments through the Horde attachments shop.
+• Fixed and removed all default whitelist for ArcCW attachments making it so players can now buy certain attachments that were previously not available before.
+• Players can use, “horde_testing_attachment_copy“ and right click the attachments in the ArcCW attachments window to copy the correct ArcCW attachment name to make their own whitelist if they’re crazy enough to do so.
+
+Hit Groups
+• Player’s minions will now always do 100% of their damage no matter the body part they hit (headshots still do 200% of their damage). This makes it so things like turrets aren’t punished for shooting at zombie’s legs or arms dealing 25% of their damage due to only being able to aim center mass.
+• Melee Weapons will now always do 100% of their damage vs limbs. This makes it so meleeing enemies doesn’t feel like hot doo doo as you actually did more damage by missing the enemy to not get penalized by the 25% limb damage. Headshots still do 200% damage.
+• Shotguns will now deal 75% of their damage vs arms and 50% of their damage vs legs. This change only affects default Horde shotguns and not new shotguns added in via item config.
+
+Melee Weapon Framework Changes
+• Melee weapons now use their own hitbox system fixing multiple bugs and unintended interactions.
+• Slightly fixed phantom hits from happening whenever players would hit at the edge of the enemy’s hull box (It’s still there but a lot less common now).
+• Fixed the omega dank sniper rifle melee bug. May you rest in pepperonis, my dank bug.
+• Melee weapons can now cleave multiple enemies depending on their weapon type and have different hitbox and reach distances.
+• Melee weapons now have durability and will deal half damage when at zero durability. (This only affects Horde melee weapons)
+• One durability is consumed per enemy hit with that melee weapon. Special effects do not consume durability (example: Mjolnir’s right click charged attack).
+• Power attacks (right mouse click) will consume double the durability.
+• Durability can be restored by opening up the Horde shop or picking up ammo boxes which will restore 20% of the weapon’s max durability.
+• If you have Horde ammo boxes disabled, melee weapon durability will also be disabled.
+
+Skull tokens
+• Notification is now sent to the player when they pick up a skull token
+• Skull tokens now spawn on top of the player rather than at the enemy’s location.
+
+General
+• Players will no longer drop their weapons at the end of each wave due to being over default maximum carry weight.
+• Gadgets are now taken into account for maximum carry weight from weight modification skills.
+• Item sell value is increased from 25% to 75% of the original price value.
+• Players can no longer gain money from healing other players while the game has not started or during break time.
 
 
+Perks
+Overlord
+• Overlord has been slightly reworked/improved.
+• Fixed base Perk levels not being calculated.
+• Overlord now gains +1 Fear stack for every wave that unlocks a new perk tier. This also removes all perk skills that increase Fear stacks to accommodate this change.
+• Fixed a lot of internal things that nobody will care about (This is mainly how your presence works).
+• Enemies and allies now immediately get debuffed or buffed the moment they go into your presence instead of once every 0.5 second.
+• Overlord now starts with Dark Energy Blast but has a 30 second cooldown.
+• Fixed Dark Energy Blast being way too dank, hitting and exploding multiple times.
+• Overlord now has a faint sphere rendered around the player to display their presence area.
+• Overlord now has their own special array of Gadgets and special upgrades that can be viewed from the shop.
+• Fixed and removed Militant having leftover code causing you to heal 1 health whenever you receive any debuff buildup. 
+• Inverse Filter now heals 3 health instead of 2 health whenever you receive any buildup (Moved the health gained on debuff buildup from Militant to Inverse Filter).
+• Fixed Dispersion not working at all.
+• Militant has new effects.
+• Oppressor has new effects.
+• Dark Energy Blast perk skill has new effects.
+• Juxtaposition has new effects. It now instead creates a Combine minion with its own shotgun and will only shoot at enemies equal to your presence range. This also fixes weapons that can’t be duplicated to make custom configs more friendly.
+• Doomed Presence has new effects.
+• Death Eater has new effects.
 
--- Perks that have access to their special grenades can now throw their grenades via the quicknade hotkey, “G” by default. Or bind, “horde_use_quick_grenade” to a key/button. You can also disable the default quick grenade key by typing, “"horde_disable_default_quick_grenade_key 1" into the console command.
+Warden
+• Warden Aura now uses a different base (similar to Overlord) for aura effect and should fix some rare scenarios where it doesn’t get applied to players.
+• Warden Aura is now a sphere rather than a cube.
+• Warden now has a faint sphere rendered around the player to display their aura.
+• Warden Aura units increased from 160 to 205 to compensate for the loss of area.
+• Fixed Warden’s block not adding to existing block value.
 
--- Classes and Subclasses now use their own whitelist pools giving them their own unique shop config. If you use your own custom config, you’ll have to set them up again for the subclasses unfortunately.
+Hatcher
+• Fixed Antlion AI from breaking causing them to stop attacking and just staring at you.
+• Antlions now follow you a lot better and will teleport to you if multiple Antlions get stuck on each other.
+• Fixed Antlion’s hitbox allowing you to target it (example: healing it with medkit or target it with gadgets). This also fixes Antlions clumping up together due to not having a collision bounding box.
+• Fixed Antlions not adjusting their stats when upgrading your Pheropod while they are alive.
+• Antlions can no longer use melee attacks and will only use ranged attacks.
+• Antlions now lead enemies with their ranged attacks.
+• Fix a bug where Antlions would continue evolving at max evolution, resetting their health back to maximum health.
+• Antlions are now immune to all status effects.
+• Fixed Antlion’s ranged attacks not healing themselves. Ranged attacks now heal themselves for 5% of their max health (this healing doesn’t evolve them and is similar to their Bug Pulse healing).
+• Antlion’s evolution value will carry over to the next evolution if any.
+• Added Hatcher’s Pheropods the ability to regenerate charges while holstered at 1/4th the regeneration speed (1 ammo every 1 second).
+• Fixed Antlion’s ranged attacks not being affected by their owner’s outgoing healing effects (Example: Amplified healing).
+• Antlions now use the new dank explosion code for their ranged attacks. This allows them to do their full damage adding a minimum damage range formula. This roughly gives them 25% more damage. It also fixes the number damage position too.
+• Increased Antlion Guardian (Stage 4) maximum health from 800 to 900.
+• HUD now shows Antlion's health while not in single player (Similar to SpecOps or Medic HUD).
 
--- Screen effects now use a border hud like system for the base framework (it currently only affects when being healing, as other screen effects will come in future perk updates such as Psycho’s Frenzy Mode screen effect).
+SpecOps
+• Fixed Neuron Stabilizer being able to transfer to other perks. Rest in pepperonis, Neuron Stabilizer. My favorite unintended interaction, you were too beautiful for this world.
 
--- Area of effects such as explosions now use a different formula that allows better control over drop off damage and entity detection (only the framework is here and is meant for future perk updates).
+Berserker
+• Now has a perk skill, Active Parry, which will perform a parry that is similar to Aerial Parry.
+• Updated Berserker’s base description to be slightly more confusing.
+• Bloodlust now correctly calculates headshot damage for leeching values
+• Bushido increases all melee damage instead of only slashing damage.
+• Savagery increases all melee damage instead of only blunt damage.
+• Graceful Guard tooltip fixed to display the correct healing value.
+• Graceful Guard now also heals 10 health over 10 seconds but does not stack.
+• Unwavering Guard now applies the damage resistance buff for the hit that triggered it.
+• Increased Unwavering Guard buff duration from 5 seconds to 10 seconds.
+• Phalanx reworked.
+• Rip and Tear splash damage now only works for weapons that don’t innately use the new melee cleave mechanic.
+• Rip and Tear now uses a new dank aoe damage formula.
+• Fixed Rip and Tear tooltip value.
 
--- Items and Gadgets that are automatically stripped (swapping classes) are now instead automatically sold. Gadgets that are purchased while you already have a gadget are now automatically sold (you’ll still need to have the amount of money to buy it but the correct amount of money will be deducted or refunded after purchase).
+Psycho
+• Updated Psycho’s base description to be slightly more confusing.
+• Changed Frenzy to be a Perk skill rather than a flashlight skill so you can toggle it on or off independently from the flashlight.
+• Frenzy now uses the new screen effect to prevent you from self blinding yourself while in Frenzy mode.
+• Added half of Brutality as a base skill.
+• Changed the position of Bloodbath.
+• Savor can now also leech partial health on non critical hits.
+• Ferocity position changed and reworked.
+• Fixed Brutality having tooltip errors.
+• Grudge reworked.
+• Bestial Wrath now also slows down Frenzy’s health drain.
+• Bestial Wrath splash damage now only works for weapons that don’t innately use the new melee cleave mechanic.
+• Bestial Wrath now uses a new dank aoe damage formula.
+
+Engineer
+• (I’ll fix Engineer later when I do a deeper dive into Engineer. Most of these are band aid fixes or indirect fixes due to fixing other perks or adding new features.)
+• Displacer perk skill now requires a target in order to be used. (This skill is still very buggy, don’t use it.)
+• Quantum Tunnel Gadget now requires a target in order to be used.
+• All default turrets and minions are now immune to all status buildups.
+
+Gunslinger
+• Money dropped from Hunter’s Mark now drops on top of you instead of at the enemy’s location.
+
+Samurai
+• Flesh Bloom now applies its bleed buildup in an area of effect on entities hit rather than around the user.
 
 
+Weapons
+Shotguns
+• All shotguns have their own unique range profile and identity. Can be viewed by inspecting your weapon through the ArcCW attachments window on the right side.
+• Removed reload penalty from any shotgun that has the extended tube attachment (magazine fed shotguns are unaffected).
+• Shotguns that can reduce their magazine capacity can cycle 10% faster.
+• All shotgun ammo cost has been reduced to 1 dollar per shotgun shell similar to the starter shotgun.
 
--- Gameplay Changes --
+ArcCW Shotgun Ammo attachments
+• All shotgun ammo attachments have been changed. Can be viewed by inspecting your weapon through the ArcCW attachments window and selecting ammo type or through Horde’s attachments shop tab.
+
+Pump Shotgun
+• Improved recoil control and reloading speed (reloading speed changes allows players to instantly reload the first shell rather than having to wait).
+• Fixed pump sound effect for immersion.
+
+Nova Shotgun
+• Improved recoil control and removed recoil kick.
+
+Swag7 Shotgun
+• Damage increased from (15 to 5) x 10 to (18 to 9) x 10
+• Improved recoil control and removed recoil kick.
+• Faster pump cycle time by 26%.
+• Moving and jumping no longer reduces its accuracy.
+
+870 Pump Shotgun
+• Damage increased from (14 to 5) x 8 to (18 to 13) x 8.
+• Improved recoil control and removed recoil kick.
+• Tighter pellets spread from 45 moa to 35 moa.
+
+M1014 Shotgun
+• Damage increased from (13 to 6) x 8 to (18 to 13) x 8.
+• Improved recoil control, hip fire spread, and removed recoil kick.
+• Significantly improved the reload speed and responsiveness for reloading.
+• Tighter pellets spread from 50 moa to 25 moa.
+
+Double Barrel Shotgun
+• Damage improved from (50 to 25) x 6 to (40 to 20) x 8.
+• Double Shot firing mode will now truly fire both barrels.
+• Improved horizontal recoil control and hip fire control.
+• Tighter pellets spread from 100 moa to 80 moa.
+• Spread will always be 80 moa no matter the firing mode instead of being 200 moa in Double Shot mode.
+
+Trench Shotgun
+• Damage improved from (33 to 10) x 8 to (33 to 11) x 8.
+• Increased magazine capacity from 6 to 8.
+• Improved hip fire control.
+• Tighter pellets spread from 80 moa to 50 moa.
+• Fixed pump animation from playing for immersion.
+
+Spas-12 Pump Shotgun
+• Improved horizontal recoil control and hip fire control.
+• Tighter pellets spread from 100 moa to 50 moa.
+• Faster pump cycle time by 10%.
+
+Striker Shotgun
+• Damage improved from (25 to 15) x 6 to (25 to 15) x 8.
+• Improved horizontal recoil control and hip fire control.
+• Tighter pellets spread from 125 moa to 75 moa.
+• Significantly improved the responsiveness for reloading.
+
+AA-12 Shotgun
+• Improved hip fire control and significantly improved horizontal recoil control to not be omega cringe.
+• Tighter pellets spread from 100 moa to 50 moa.
+
+Lockpick Shotgun
+• Added a new 10 weight double barrel shotgun that is mega dank but slows you down by 20%.
 
 
--- Ammo boxes will now restore secondary ammo reserves (secondary ammo reserves are ammunition used by equipment like underbarrel grenade launchers).
+Explosives
+• Javelin Rocket Launcher
+• Mouse sensitivity reduced by half whenever scoped in
+• Locking on doesn’t require pixel perfect aim and now locks onto the target’s hull instead of the model.
+• Reduced recoil by 80%.
+• Rocket speed increased by 1000%
+
+Spore Launcher
+• Changed Spore Launcher from SWEP slot 5 to 3
 
 
+Melee Weapons
+• All melee weapons have had their damage changed to accommodate for the durability mechanic. This makes it so melee weapons can feel more impactful without just blatantly adding more zeros at the end of everything.
+• All melee weapons have their own hurtbox. It’s hard to describe how it works since I fine tuned it, so if any weapon feels bad, just scream.
 
--- Weapon Changes --
+Knife
+• Increased heavy attack damage from 50 to 60.
+• Holding the knife out now gives you 25% more movement speed. For the Counter Strike and Killing Floor enjoyers.
+
+Crowbar
+• Increased heavy attack damage from 90 to 120.
+
+Machete
+• Increased heavy attack damage from 105 to 110.
+
+Stunstick
+• Normal attack shock damage reduced from 35 to 25
+• Heavy attack shock damage increased from 25 to 35
+• Extra shock damage from direct hits is now affected by headshots.
+• Extra shock damage can now inflict shock buildup at 80% of its damage dealt.
+
+Fire axe
+• Increased heavy attack damage from 140 to 160.
+• Power attack headshot now always stun the enemy for the first time it has ever been stunned by the Fire axe as long as the enemy’s stun buildup isn’t on cooldown. For the Killing Floor enjoyers.
+
+Bat
+• Increased heavy attack damage from 160 to 240.
+
+Katana
+• Increased heavy attack damage from 150 to 200.
+• Power attack headshot now always mini stun the enemy for the first time it has ever been mini stunned by the Katana (0.5 second stun if the enemy isn’t stunned and bypasses all stun cooldowns). For the Killing Floor enjoyers.
+
+Inferno Blade
+• Can now cleave multiple enemies to create multiple explosions from charged attacks to extend area of effect range but does not overlap damage.
+• No longer deals 1 fire damage to the user and now instead removes 1 health as non lethal damage from the user.
+
+Chainsaw
+• Doesn’t use the new durability system.
+
+Jotuun
+• Extra frost damage from direct hits is now affected by headshots.
+• Extra frost damage can now inflict frostbite buildup at 15% of its damage dealt.
+• Can now cleave multiple enemies to create multiple explosions from power attacks to extend area of effect range but does not overlap damage.
+
+Mjolnir
+• Extra shock damage from charged attacks is now combined into one hit instead of three separate hits.
+• Extra shock damage from charged attacks from direct hits is now affected by headshots.
+• Can now cleave multiple enemies to create multiple explosions from charged attacks to extend area of effect range but does not overlap damage.
+
+Zweihander
+• Has the largest hurtbox range and can cleave up to 10 enemies.
 
 
+Pistols
+Throwing Knife
+• Added a new weapon for Berserker, Samurai, Survivor, Psycho, and Gunslinger.
 
--- Medkit --
+Dual M9
+• Now has an additional fully automatic firing mode which will fire both pistols by holding your primary fire button (default: left mouse button).
+• Fixed the Dual M9 not having attachments for perks or ammo.
 
--- Medkit will now consume up to 20 charges to heal up to 20% of your maximum health and scale accordingly to how much charges are remaining instead of requiring a flat 20 charges to heal a flat 20 amount of health.
+Dual Glocks
+• Now has an additional fully automatic firing mode which will fire both pistols by holding your primary fire button (default: left mouse button).
 
--- Medkit now works while holding your fire button so you don’t have to spam it.
-
--- Medkit now requires you to have a target in order to heal your target (this means that you can hold your left mouse and flick your mouse and it will instantly heal your target if there is an eligible target.
-
--- Medkit weight is now 0.
-
--- Medkit purchase cost is now 0.
-
--- Every class now starts with a Medkit.
-
--- You cannot drop Medkits and swapping classes no longer drops it (you can still sell it to get rid of it).
-
--- Medkit is destroyed upon dropping it.
-
--- You can no longer use Medkit if you’re at 100% maximum health or at maximum overhealed health (this prevents you from wasting Medkit charges).
-
--- Fixed ammo boxes being eaten due to Medkits never having a full ammo reserve.
+Dual Deagles
+• Now has an additional fully automatic firing mode which will fire both pistols by holding your primary fire button (default: left mouse button).
 
 
+Machine guns
+Gau
+• Vertical recoil reduced from 0.8 to 0.2
+• Horizontal recoil reduced from 0.5 to 0.3
+• SWEP slot moved from 4 to 3
+• Movement speed multiplier while holding this weapon changed from 0.875 to 0.8.
 
--- Grenades --
 
--- Throwing your last grenade never gets rid of your grenade, allowing you to still pick up ammo boxes to refill your grenades. You’ll still have a grenade in your hand while having zero grenades so rip your immersion.
+Special
+Pheropod
+• Reduced weight from 11 to 0.
+• Moved from SWEP slot position 2 to 3 
+• Hatcher no longer has access to these weapons (Hatcher never could use these weapons due to the old weight limit)
+    MP5K Medic PDW
+    MP7A1 Medic PDW
+    MP9 Medic PDW
+    Vector Medic PDW
+    AR15
+    SSG Medic SR
+    ACR Medic AR
+    Spore Launcher 
 
--- Grenades now have 2 different throwing modes.
+Welder
+• Reduced weight from 2 to 0.
 
--- Primary fire (default - left mouse button) will not cook your grenade and throw your grenade at full velocity while having full bounce effect.
 
--- Secondary fire (default - right mouse) will cook your grenade and throw your grenade at full velocity while having a dampened effect, which will backspin your grenade causing it to cancel most of its momentum.
+Gadgets
+Omnislash
+• Fixed the gadget so that it returns you in the direction you’re facing instead of it always facing you south.
+• Reduced the activation range from 95 meters to 6 meters (no more Omnislash sniping).
+• Fixed the dankest bug to ever exist in the history of Horde.
 
--- Quick grenades will throw grenades at a significantly lower velocity while having a dampened effect. 
+Ultimate Booster
+• Fixed rounding errors for health so now you’ll have 115 health instead of 114 health.
 
--- Grenades can no longer be dropped (you can still sell it to get rid of it)
 
--- Grenades are destroyed upon dropping it.
+Spells
+Floating Chaos
+• Added a new icon for it.
 
--- Maximum special grenade reserve capacity limited to 9 grenades
+Ice Coffin
+• Fixed the spell so that it returns you in the direction you’re facing instead of it always facing you south.
 
--- Most grenades have had their fuse time set to 2 seconds with the exception of stun grenades which have 1.25 seconds.
 
--- Assault and SpecOps stun grenades no longer flashbangs yourself or others, destroy your ears or other ears, nor deal damage to yourself or enemies.
+Debuff Buildups
+Frostbite
+• Players - No longer halves the player’s run speed while sprinting while afflicted with Frostbite (It was better to walk instead of sprint to move faster, which seems unintuitive).
+• Enemies - Now also slows their movement speed by roughly 30%
 
--- Stun grenades now always have full stun buildup power (this means it will always stun the enemy no matter the difficulty as long as their internal stun cooldown is off cooldown).
+
+Enemies
+VJ Base Zambies
+• VJ Base got updated and everything got bricked. Scream if something is bricked.
+• All enemies and elites are affected in some way due to the VJ base update changing their AI, but should be roughly the same. I’ll only mention the most noticeable changes.
+
+Vomitter
+• Now lobs their meatballs and is affected by gravity instead of it being a straight shot
+• Now has a deadzone while within melee range (200 units) where it will not use its ranged attacks.
+
+Scorcher
+• Now lobs their meatballs and is affected by gravity instead of it being a straight shot
+• Now has a deadzone while within melee range (200 units) where it will not use its ranged attacks.
+• Meatballs now have aoe damage dropoff.
+
+Weeper
+• No longer can melee attack
+
+Hulk
+• VDank base has gifted us with a sick running animation that will be used while it’s raged.
+
+Lesion
+• When raged, Lesion will now only use their leap attack if you’re not in melee range (250 units)
+• Leap attack cooldown reduced from 10 seconds to 3 seconds.
+
+Plague Solder
+• Fixed a bug where their SMG or Shotgun projectiles can hit the player multiple times causing players to take more damage than intended.
+• Removed prop damage dealt from the projectiles they shoot causing them to deal potentially additional damage to the player (their props did 10 non scalable damage if they collided fast enough to the player, which was mostly all the time).
+
+Plague Elite
+• Fixed a bug where their AR2 and Combine Ball projectiles can hit the player multiple times causing players to take more damage than intended.
+• Removed prop damage dealt from the projectiles they shoot causing them to deal potentially additional damage to the player (their props did 10 non scalable damage if they collided fast enough to the player, which was mostly all the time).
+• Combine Ball no longer does direct hit damage and only does area of effect damage to also prevent the issue described from above.
+• These fixes make the meatball blast deal only 114 on Apocalypse difficulty if you directly get hit by it. Before it could potentially do up to 437 damage on direct hit.
+
+Bosses
+General
+• All bosses are affected in some way due to the VJ base update changing their AI, but should be roughly the same. I’ll only mention the most noticeable changes.
+
+Hell Knight
+• When raged, Lesion will now only use their leap attack if you’re not in melee range (250 units)
+• Leap attack cooldown reduced from 10 seconds to 3 seconds.
+
+Mutated Hulk
+• VDank base has gifted us with a sick running animation that will be used while it’s raged.
+
+Xen Host Unit
+• Baby spooders now deal 1 damage
+
+Plague Demolition
+• RPG now has aoe damage dropoff.
+
+Gamma Gonome
+• Meatballs now have aoe damage dropoff
+
+Alpha Gonome
+• Meatballs now have aoe damage dropoff
+• Reduced animation speed from 1.75 times to 1.4 times while it is raged.
+• Increased movement speed from 1.5 times to 1.8 times while it is raged.
+
+Xen Destroyer Unit
+• Now properly cancels its flamethrower attack while in its deadzone
+
 ]]
+
+
+-- Dank tips (not used yet)
+LANGUAGE["HordeGameTips_0000"] = "Head to the trader zone to open shop"
+LANGUAGE["HordeGameTips_0001"] = "Press F3 to open shop"

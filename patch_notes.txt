@@ -1,3 +1,408 @@
+Dank Patch Notes 2.1.0
+
+TL:DR
+• Dank skip trader by pressing Alt + F4, Perk skill queueing and buffering, Melee weapon base changes, ArcCW attachments menu, Overlord overhauled, Warden, Shotguns, Berserker, Psycho, Hatcher, Engineer, Gunslinger, VDank update for zambies and bosses, fixed joining other servers potentially deranking your single player save if your rank was lower.
+
+Gameplay Changes
+Perk skill and Gadget queueing and buffering
+• Players can now queue up or buffer their next Perk skill or Gadget if used while on cooldown. If used 0.5 second too early, the game will wait until it’s off cooldown to use said Perk skill or Gadget.
+• Players can now hold down their key/button to queue up their next Perk skill or Gadget. As long as the player is holding down their key/button, the game will immediately use said Perk skill or Gadget whenever it’s off cooldown.
+• Queueing and buffering doesn’t work on Perk skills or Gadgets that have less than 1 second cooldown.
+
+Dank Skip Timer
+• Players can now skip trader time by hitting F4, typing “!skip” or “!ready”, or typing in the console, “horde_skip_trader” (you can also bind it to a key or button too if).
+
+Remaining Enemies
+• Last 10 remaining enemies no longer display a glowing halo and now instead display them in full solid color. This is a million times more performance friendly and shouldn’t need to be turned off, hopefully.
+
+Single Player Save File
+• Your local single player rank save file will no longer incorrectly sync subclasses levels when joining other servers (You can still potentially derank subclasses if you play on a server with an older version of Horde, so be sure to copy your rank file if you play single player).
+
+ArcCW Attachments Shop Changes
+• Players can now buy Horde attachments through the ArcCW attachments window. Players can also still buy attachments through the Horde attachments shop.
+• Fixed and removed all default whitelist for ArcCW attachments making it so players can now buy certain attachments that were previously not available before.
+• Players can use, “horde_testing_attachment_copy“ and right click the attachments in the ArcCW attachments window to copy the correct ArcCW attachment name to make their own whitelist if they’re crazy enough to do so.
+
+Hit Groups
+• Player’s minions will now always do 100% of their damage no matter the body part they hit (headshots still do 200% of their damage). This makes it so things like turrets aren’t punished for shooting at zombie’s legs or arms dealing 25% of their damage due to only being able to aim center mass.
+• Melee Weapons will now always do 100% of their damage vs limbs. This makes it so meleeing enemies doesn’t feel like hot doo doo as you actually did more damage by missing the enemy to not get penalized by the 25% limb damage. Headshots still do 200% damage.
+• Shotguns will now deal 75% of their damage vs arms and 50% of their damage vs legs. This change only affects default Horde shotguns and not new shotguns added in via item config.
+
+Melee Weapon Framework Changes
+• Melee weapons now use their own hitbox system fixing multiple bugs and unintended interactions.
+• Slightly fixed phantom hits from happening whenever players would hit at the edge of the enemy’s hull box (It’s still there but a lot less common now).
+• Fixed the omega dank sniper rifle melee bug. May you rest in pepperonis, my dank bug.
+• Melee weapons can now cleave multiple enemies depending on their weapon type and have different hitbox and reach distances.
+• Melee weapons now have durability and will deal half damage when at zero durability. (This only affects Horde melee weapons)
+• One durability is consumed per enemy hit with that melee weapon. Special effects do not consume durability (example: Mjolnir’s right click charged attack).
+• Power attacks (right mouse click) will consume double the durability.
+• Durability can be restored by opening up the Horde shop or picking up ammo boxes which will restore 20% of the weapon’s max durability.
+• If you have Horde ammo boxes disabled, melee weapon durability will also be disabled.
+
+Skull tokens
+• Notification is now sent to the player when they pick up a skull token
+• Skull tokens now spawn on top of the player rather than at the enemy’s location.
+
+General
+• Players will no longer drop their weapons at the end of each wave due to being over default maximum carry weight.
+• Gadgets are now taken into account for maximum carry weight from weight modification skills.
+• Item sell value is increased from 25% to 75% of the original price value.
+• Players can no longer gain money from healing other players while the game has not started or during break time.
+
+
+Perks
+Overlord
+• Overlord has been slightly reworked/improved.
+• Fixed base Perk levels not being calculated.
+• Overlord now gains +1 Fear stack for every wave that unlocks a new perk tier. This also removes all perk skills that increase Fear stacks to accommodate this change.
+• Fixed a lot of internal things that nobody will care about (This is mainly how your presence works).
+• Enemies and allies now immediately get debuffed or buffed the moment they go into your presence instead of once every 0.5 second.
+• Overlord now starts with Dark Energy Blast but has a 30 second cooldown.
+• Fixed Dark Energy Blast being way too dank, hitting and exploding multiple times.
+• Overlord now has a faint sphere rendered around the player to display their presence area.
+• Overlord now has their own special array of Gadgets and special upgrades that can be viewed from the shop.
+• Fixed and removed Militant having leftover code causing you to heal 1 health whenever you receive any debuff buildup. 
+• Inverse Filter now heals 3 health instead of 2 health whenever you receive any buildup (Moved the health gained on debuff buildup from Militant to Inverse Filter).
+• Fixed Dispersion not working at all.
+• Militant has new effects.
+• Oppressor has new effects.
+• Dark Energy Blast perk skill has new effects.
+• Juxtaposition has new effects. It now instead creates a Combine minion with its own shotgun and will only shoot at enemies equal to your presence range. This also fixes weapons that can’t be duplicated to make custom configs more friendly.
+• Doomed Presence has new effects.
+• Death Eater has new effects.
+
+Warden
+• Warden Aura now uses a different base (similar to Overlord) for aura effect and should fix some rare scenarios where it doesn’t get applied to players.
+• Warden Aura is now a sphere rather than a cube.
+• Warden now has a faint sphere rendered around the player to display their aura.
+• Warden Aura units increased from 160 to 205 to compensate for the loss of area.
+• Fixed Warden’s block not adding to existing block value.
+
+Hatcher
+• Fixed Antlion AI from breaking causing them to stop attacking and just staring at you.
+• Antlions now follow you a lot better and will teleport to you if multiple Antlions get stuck on each other.
+• Fixed Antlion’s hitbox allowing you to target it (example: healing it with medkit or target it with gadgets). This also fixes Antlions clumping up together due to not having a collision bounding box.
+• Fixed Antlions not adjusting their stats when upgrading your Pheropod while they are alive.
+• Antlions can no longer use melee attacks and will only use ranged attacks.
+• Antlions now lead enemies with their ranged attacks.
+• Fix a bug where Antlions would continue evolving at max evolution, resetting their health back to maximum health.
+• Antlions are now immune to all status effects.
+• Fixed Antlion’s ranged attacks not healing themselves. Ranged attacks now heal themselves for 5% of their max health (this healing doesn’t evolve them and is similar to their Bug Pulse healing).
+• Antlion’s evolution value will carry over to the next evolution if any.
+• Added Hatcher’s Pheropods the ability to regenerate charges while holstered at 1/4th the regeneration speed (1 ammo every 1 second).
+• Fixed Antlion’s ranged attacks not being affected by their owner’s outgoing healing effects (Example: Amplified healing).
+• Antlions now use the new dank explosion code for their ranged attacks. This allows them to do their full damage adding a minimum damage range formula. This roughly gives them 25% more damage. It also fixes the number damage position too.
+• Increased Antlion Guardian (Stage 4) maximum health from 800 to 900.
+• HUD now shows Antlion's health while not in single player (Similar to SpecOps or Medic HUD).
+
+SpecOps
+• Fixed Neuron Stabilizer being able to transfer to other perks. Rest in pepperonis, Neuron Stabilizer. My favorite unintended interaction, you were too beautiful for this world.
+
+Berserker
+• Now has a perk skill, Active Parry, which will perform a parry that is similar to Aerial Parry.
+• Updated Berserker’s base description to be slightly more confusing.
+• Bloodlust now correctly calculates headshot damage for leeching values
+• Bushido increases all melee damage instead of only slashing damage.
+• Savagery increases all melee damage instead of only blunt damage.
+• Graceful Guard tooltip fixed to display the correct healing value.
+• Graceful Guard now also heals 10 health over 10 seconds but does not stack.
+• Unwavering Guard now applies the damage resistance buff for the hit that triggered it.
+• Increased Unwavering Guard buff duration from 5 seconds to 10 seconds.
+• Phalanx reworked.
+• Rip and Tear splash damage now only works for weapons that don’t innately use the new melee cleave mechanic.
+• Rip and Tear now uses a new dank aoe damage formula.
+• Fixed Rip and Tear tooltip value.
+
+Psycho
+• Updated Psycho’s base description to be slightly more confusing.
+• Changed Frenzy to be a Perk skill rather than a flashlight skill so you can toggle it on or off independently from the flashlight.
+• Frenzy now uses the new screen effect to prevent you from self blinding yourself while in Frenzy mode.
+• Added half of Brutality as a base skill.
+• Changed the position of Bloodbath.
+• Savor can now also leech partial health on non critical hits.
+• Ferocity position changed and reworked.
+• Fixed Brutality having tooltip errors.
+• Grudge reworked.
+• Bestial Wrath now also slows down Frenzy’s health drain.
+• Bestial Wrath splash damage now only works for weapons that don’t innately use the new melee cleave mechanic.
+• Bestial Wrath now uses a new dank aoe damage formula.
+
+Engineer
+• (I’ll fix Engineer later when I do a deeper dive into Engineer. Most of these are band aid fixes or indirect fixes due to fixing other perks or adding new features.)
+• Displacer perk skill now requires a target in order to be used. (This skill is still very buggy, don’t use it.)
+• Quantum Tunnel Gadget now requires a target in order to be used.
+• All default turrets and minions are now immune to all status buildups.
+
+Gunslinger
+• Money dropped from Hunter’s Mark now drops on top of you instead of at the enemy’s location.
+
+Samurai
+• Flesh Bloom now applies its bleed buildup in an area of effect on entities hit rather than around the user.
+
+
+Weapons
+Shotguns
+• All shotguns have their own unique range profile and identity. Can be viewed by inspecting your weapon through the ArcCW attachments window on the right side.
+• Removed reload penalty from any shotgun that has the extended tube attachment (magazine fed shotguns are unaffected).
+• Shotguns that can reduce their magazine capacity can cycle 10% faster.
+• All shotgun ammo cost has been reduced to 1 dollar per shotgun shell similar to the starter shotgun.
+
+ArcCW Shotgun Ammo attachments
+• All shotgun ammo attachments have been changed. Can be viewed by inspecting your weapon through the ArcCW attachments window and selecting ammo type or through Horde’s attachments shop tab.
+
+Pump Shotgun
+• Improved recoil control and reloading speed (reloading speed changes allows players to instantly reload the first shell rather than having to wait).
+• Fixed pump sound effect for immersion.
+
+Nova Shotgun
+• Improved recoil control and removed recoil kick.
+
+Swag7 Shotgun
+• Damage increased from (15 to 5) x 10 to (18 to 9) x 10
+• Improved recoil control and removed recoil kick.
+• Faster pump cycle time by 26%.
+• Moving and jumping no longer reduces its accuracy.
+
+870 Pump Shotgun
+• Damage increased from (14 to 5) x 8 to (18 to 13) x 8.
+• Improved recoil control and removed recoil kick.
+• Tighter pellets spread from 45 moa to 35 moa.
+
+M1014 Shotgun
+• Damage increased from (13 to 6) x 8 to (18 to 13) x 8.
+• Improved recoil control, hip fire spread, and removed recoil kick.
+• Significantly improved the reload speed and responsiveness for reloading.
+• Tighter pellets spread from 50 moa to 25 moa.
+
+Double Barrel Shotgun
+• Damage improved from (50 to 25) x 6 to (40 to 20) x 8.
+• Double Shot firing mode will now truly fire both barrels.
+• Improved horizontal recoil control and hip fire control.
+• Tighter pellets spread from 100 moa to 80 moa.
+• Spread will always be 80 moa no matter the firing mode instead of being 200 moa in Double Shot mode.
+
+Trench Shotgun
+• Damage improved from (33 to 10) x 8 to (33 to 11) x 8.
+• Increased magazine capacity from 6 to 8.
+• Improved hip fire control.
+• Tighter pellets spread from 80 moa to 50 moa.
+• Fixed pump animation from playing for immersion.
+
+Spas-12 Pump Shotgun
+• Improved horizontal recoil control and hip fire control.
+• Tighter pellets spread from 100 moa to 50 moa.
+• Faster pump cycle time by 10%.
+
+Striker Shotgun
+• Damage improved from (25 to 15) x 6 to (25 to 15) x 8.
+• Improved horizontal recoil control and hip fire control.
+• Tighter pellets spread from 125 moa to 75 moa.
+• Significantly improved the responsiveness for reloading.
+
+AA-12 Shotgun
+• Improved hip fire control and significantly improved horizontal recoil control to not be omega cringe.
+• Tighter pellets spread from 100 moa to 50 moa.
+
+Lockpick Shotgun
+• Added a new 10 weight double barrel shotgun that is mega dank but slows you down by 20%.
+
+
+Explosives
+• Javelin Rocket Launcher
+• Mouse sensitivity reduced by half whenever scoped in
+• Locking on doesn’t require pixel perfect aim and now locks onto the target’s hull instead of the model.
+• Reduced recoil by 80%.
+• Rocket speed increased by 1000%
+
+Spore Launcher
+• Changed Spore Launcher from SWEP slot 5 to 3
+
+
+Melee Weapons
+• All melee weapons have had their damage changed to accommodate for the durability mechanic. This makes it so melee weapons can feel more impactful without just blatantly adding more zeros at the end of everything.
+• All melee weapons have their own hurtbox. It’s hard to describe how it works since I fine tuned it, so if any weapon feels bad, just scream.
+
+Knife
+• Increased heavy attack damage from 50 to 60.
+• Holding the knife out now gives you 25% more movement speed. For the Counter Strike and Killing Floor enjoyers.
+
+Crowbar
+• Increased heavy attack damage from 90 to 120.
+
+Machete
+• Increased heavy attack damage from 105 to 110.
+
+Stunstick
+• Normal attack shock damage reduced from 35 to 25
+• Heavy attack shock damage increased from 25 to 35
+• Extra shock damage from direct hits is now affected by headshots.
+• Extra shock damage can now inflict shock buildup at 80% of its damage dealt.
+
+Fire axe
+• Increased heavy attack damage from 140 to 160.
+• Power attack headshot now always stun the enemy for the first time it has ever been stunned by the Fire axe as long as the enemy’s stun buildup isn’t on cooldown. For the Killing Floor enjoyers.
+
+Bat
+• Increased heavy attack damage from 160 to 240.
+
+Katana
+• Increased heavy attack damage from 150 to 200.
+• Power attack headshot now always mini stun the enemy for the first time it has ever been mini stunned by the Katana (0.5 second stun if the enemy isn’t stunned and bypasses all stun cooldowns). For the Killing Floor enjoyers.
+
+Inferno Blade
+• Can now cleave multiple enemies to create multiple explosions from charged attacks to extend area of effect range but does not overlap damage.
+• No longer deals 1 fire damage to the user and now instead removes 1 health as non lethal damage from the user.
+
+Chainsaw
+• Doesn’t use the new durability system.
+
+Jotuun
+• Extra frost damage from direct hits is now affected by headshots.
+• Extra frost damage can now inflict frostbite buildup at 15% of its damage dealt.
+• Can now cleave multiple enemies to create multiple explosions from power attacks to extend area of effect range but does not overlap damage.
+
+Mjolnir
+• Extra shock damage from charged attacks is now combined into one hit instead of three separate hits.
+• Extra shock damage from charged attacks from direct hits is now affected by headshots.
+• Can now cleave multiple enemies to create multiple explosions from charged attacks to extend area of effect range but does not overlap damage.
+
+Zweihander
+• Has the largest hurtbox range and can cleave up to 10 enemies.
+
+
+Pistols
+Throwing Knife
+• Added a new weapon for Berserker, Samurai, Survivor, Psycho, and Gunslinger.
+
+Dual M9
+• Now has an additional fully automatic firing mode which will fire both pistols by holding your primary fire button (default: left mouse button).
+• Fixed the Dual M9 not having attachments for perks or ammo.
+
+Dual Glocks
+• Now has an additional fully automatic firing mode which will fire both pistols by holding your primary fire button (default: left mouse button).
+
+Dual Deagles
+• Now has an additional fully automatic firing mode which will fire both pistols by holding your primary fire button (default: left mouse button).
+
+
+Machine guns
+Gau
+• Vertical recoil reduced from 0.8 to 0.2
+• Horizontal recoil reduced from 0.5 to 0.3
+• SWEP slot moved from 4 to 3
+• Movement speed multiplier while holding this weapon changed from 0.875 to 0.8.
+
+
+Special
+Pheropod
+• Reduced weight from 11 to 0.
+• Moved from SWEP slot position 2 to 3 
+• Hatcher no longer has access to these weapons (Hatcher never could use these weapons due to the old weight limit)
+    MP5K Medic PDW
+    MP7A1 Medic PDW
+    MP9 Medic PDW
+    Vector Medic PDW
+    AR15
+    SSG Medic SR
+    ACR Medic AR
+    Spore Launcher 
+
+Welder
+• Reduced weight from 2 to 0.
+
+
+Gadgets
+Omnislash
+• Fixed the gadget so that it returns you in the direction you’re facing instead of it always facing you south.
+• Reduced the activation range from 95 meters to 6 meters (no more Omnislash sniping).
+• Fixed the dankest bug to ever exist in the history of Horde.
+
+Ultimate Booster
+• Fixed rounding errors for health so now you’ll have 115 health instead of 114 health.
+
+
+Spells
+Floating Chaos
+• Added a new icon for it.
+
+Ice Coffin
+• Fixed the spell so that it returns you in the direction you’re facing instead of it always facing you south.
+
+
+Debuff Buildups
+Frostbite
+• Players - No longer halves the player’s run speed while sprinting while afflicted with Frostbite (It was better to walk instead of sprint to move faster, which seems unintuitive).
+• Enemies - Now also slows their movement speed by roughly 30%
+
+
+Enemies
+VJ Base Zambies
+• VJ Base got updated and everything got bricked. Scream if something is bricked.
+• All enemies and elites are affected in some way due to the VJ base update changing their AI, but should be roughly the same. I’ll only mention the most noticeable changes.
+
+Vomitter
+• Now lobs their meatballs and is affected by gravity instead of it being a straight shot
+• Now has a deadzone while within melee range (200 units) where it will not use its ranged attacks.
+
+Scorcher
+• Now lobs their meatballs and is affected by gravity instead of it being a straight shot
+• Now has a deadzone while within melee range (200 units) where it will not use its ranged attacks.
+• Meatballs now have aoe damage dropoff.
+
+Weeper
+• No longer can melee attack
+
+Hulk
+• VDank base has gifted us with a sick running animation that will be used while it’s raged.
+
+Lesion
+• When raged, Lesion will now only use their leap attack if you’re not in melee range (250 units)
+• Leap attack cooldown reduced from 10 seconds to 3 seconds.
+
+Plague Solder
+• Fixed a bug where their SMG or Shotgun projectiles can hit the player multiple times causing players to take more damage than intended.
+• Removed prop damage dealt from the projectiles they shoot causing them to deal potentially additional damage to the player (their props did 10 non scalable damage if they collided fast enough to the player, which was mostly all the time).
+
+Plague Elite
+• Fixed a bug where their AR2 and Combine Ball projectiles can hit the player multiple times causing players to take more damage than intended.
+• Removed prop damage dealt from the projectiles they shoot causing them to deal potentially additional damage to the player (their props did 10 non scalable damage if they collided fast enough to the player, which was mostly all the time).
+• Combine Ball no longer does direct hit damage and only does area of effect damage to also prevent the issue described from above.
+• These fixes make the meatball blast deal only 114 on Apocalypse difficulty if you directly get hit by it. Before it could potentially do up to 437 damage on direct hit.
+
+Bosses
+General
+• All bosses are affected in some way due to the VJ base update changing their AI, but should be roughly the same. I’ll only mention the most noticeable changes.
+
+Hell Knight
+• When raged, Lesion will now only use their leap attack if you’re not in melee range (250 units)
+• Leap attack cooldown reduced from 10 seconds to 3 seconds.
+
+Mutated Hulk
+• VDank base has gifted us with a sick running animation that will be used while it’s raged.
+
+Xen Host Unit
+• Baby spooders now deal 1 damage
+
+Plague Demolition
+• RPG now has aoe damage dropoff.
+
+Gamma Gonome
+• Meatballs now have aoe damage dropoff
+
+Alpha Gonome
+• Meatballs now have aoe damage dropoff
+• Reduced animation speed from 1.75 times to 1.4 times while it is raged.
+• Increased movement speed from 1.5 times to 1.8 times while it is raged.
+
+Xen Destroyer Unit
+• Now properly cancels its flamethrower attack while in its deadzone
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Dank Update 2.0.0
 
 

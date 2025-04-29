@@ -8,7 +8,7 @@ end
 
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Melee" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Bat"
@@ -40,7 +40,7 @@ SWEP.DefaultSkin = 0
 SWEP.DefaultWMSkin = 0
 
 SWEP.MeleeDamage = 120
-SWEP.Melee2Damage = 160
+SWEP.Melee2Damage = 240
 
 SWEP.PrimaryBash = true
 SWEP.CanBash = true
@@ -55,6 +55,22 @@ SWEP.Melee2Range = 75
 SWEP.Melee2AttackTime = 0.6
 SWEP.Melee2Time = 1.35
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
+
+SWEP.MaximumDurability = 1200
+SWEP.MaxHits = 3 -- Change this number to change maximum target hits on the swep
+SWEP.MeleeBoundingBox = { -- If weapon has no bounding box, it will scale length based on MeleeRange and Melee2Range
+    primary = {
+        wide = 32,
+        tall = 32,
+        length = 85, -- 75 length ~ 2.5 meters and MeleeRange = 80 ~ 121 length
+    },
+    secondary = {
+        wide = 16,
+        tall = 32,
+        length = 100,
+    },
+}
+
 
 SWEP.MeleeSwingSound = {
     "horde/weapons/bat/bat_swing_miss1.mp3",

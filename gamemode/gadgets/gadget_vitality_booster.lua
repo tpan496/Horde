@@ -12,4 +12,5 @@ GADGET.Hooks.Horde_OnSetMaxHealth = function (ply, bonus)
     if CLIENT then return end
     if ply:Horde_GetGadget() ~= "gadget_vitality_booster" then return end
     bonus.add = bonus.add + 25
+    --bonus.increase = bonus.increase + 0.25
 end

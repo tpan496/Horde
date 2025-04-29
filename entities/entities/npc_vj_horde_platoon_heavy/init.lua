@@ -50,6 +50,10 @@ ENT.WeaponReload_FindCover = false
 ENT.Horde_Plague_Soldier = true
 ENT.EntitiesToNoCollide = {"npc_vj_horde_platoon_heavy", "npc_vj_horde_platoon_berserker", "npc_vj_horde_platoon_demolitionist"}
 
+    -- ====== Item Drops On Death Variables ====== --
+ENT.HasItemDropsOnDeath = false -- Should it drop items on death?
+ENT.DropWeaponOnDeath = false -- Should it drop its weapon on death?
+
 ENT.SoundTbl_Pain = {
 "npc/combine_soldier/pain1.wav",
 "npc/combine_soldier/pain2.wav",
@@ -62,8 +66,8 @@ ENT.SoundTbl_FootStep = {
 	"npc/combine_soldier/gear4.wav",
 	"npc/combine_soldier/gear5.wav",
 	"npc/combine_soldier/gear6.wav"}
-ENT.SoundTbl_Idle = {"zsszombine/idle1.wav","zsszombine/idle2.wav","zsszombine/idle3.wav","zsszombine/idle4.wav","zsszombine/idle5.wav"}
-ENT.SoundTbl_Alert = {"zsszombine/alert1.wav","zsszombine/alert2.wav","zsszombine/alert3.wav","zsszombine/alert4.wav","zsszombine/alert5.wav","zsszombine/alert6.wav"}
+ENT.SoundTbl_Idle = {"vj_zombies/zombine/idle1.wav", "vj_zombies/zombine/idle2.wav", "vj_zombies/zombine/idle3.wav", "vj_zombies/zombine/idle4.wav", "vj_zombies/zombine/idle5.wav"}
+ENT.SoundTbl_Alert = {"vj_zombies/zombine/alert1.wav", "vj_zombies/zombine/alert2.wav", "vj_zombies/zombine/alert3.wav", "vj_zombies/zombine/alert4.wav", "vj_zombies/zombine/alert5.wav", "vj_zombies/zombine/alert6.wav"}
 
 	-- ====== Sound Pitch ====== --
 -- Higher number = Higher pitch | Lower number = Lower pitch

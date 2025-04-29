@@ -34,8 +34,9 @@ SWEP.Primary.Cone = 12 -- How accurate is the bullet? (Players)
 SWEP.Primary.Delay = 0.8 -- Time until it can shoot again
 SWEP.Primary.Automatic = true -- Is it automatic?
 SWEP.Primary.Ammo = "Buckshot" -- Ammo type
-SWEP.Primary.Sound = {"vj_base/weapons/spas12/single1.wav"}
-SWEP.Primary.DistantSound = {"vj_base/weapons/spas12/single1.wav"}
+SWEP.Primary.Sound = "VJ.Weapon_SPAS12.Single"
+SWEP.Primary.DistantSound = "VJ.Weapon_SPAS12.Single"
+SWEP.NPC_ExtraFireSound = "vj_base/weapons/cycle_shotgun_pump.wav"
 SWEP.PrimaryEffects_MuzzleAttachment = 1
 SWEP.PrimaryEffects_ShellAttachment = 2
 SWEP.PrimaryEffects_ShellType = "VJ_Weapon_ShotgunShell1"
@@ -97,7 +98,7 @@ function SWEP:OnPrimaryAttack(status, statusData)
 				dir:Normalize()
 				dir = dir + VectorRand() * 0.06
 				dir:Normalize()
-				phy:ApplyForceCenter(dir * 4000)
+				phy:ApplyForceCenter(dir * 1000)
 			end
 		end
 	end

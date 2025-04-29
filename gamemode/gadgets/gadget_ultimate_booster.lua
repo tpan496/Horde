@@ -20,7 +20,8 @@ end
 GADGET.Hooks.Horde_OnSetMaxHealth = function (ply, bonus)
     if CLIENT then return end
     if ply:Horde_GetGadget() ~= "gadget_ultimate_booster" then return end
-    bonus.increase = bonus.increase + 0.15
+    bonus.add = bonus.add + 15
+    --bonus.increase = bonus.increase + 0.15
 end
 
 GADGET.Hooks.Horde_OnPlayerDamage = function (ply, npc, bonus, hitgroup, dmginfo)

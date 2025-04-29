@@ -242,7 +242,7 @@ end
 function ENT:CustomOnThink()
 	if self.Critical then
         if not self:GetEnemy() then return end
-        local EnemyDistance = self.NearestPointToEnemyDistance
+        local EnemyDistance = self.EnemyData.Distance
         if EnemyDistance < 800 then
             if CurTime() > self.NextBlastTime then
                 sound.Play("horde/gonome/gonome_jumpattack.ogg", self:GetPos(), 100, 30)

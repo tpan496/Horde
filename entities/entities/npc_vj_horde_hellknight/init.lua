@@ -15,17 +15,17 @@ ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
 ENT.MeleeAttackDistance = 32 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 85 -- How far does the damage go?
-ENT.TimeUntilMeleeAttackDamage = 0.2 -- This counted in seconds | This calculates the time until it hits something
+ENT.TimeUntilMeleeAttackDamage = 0.4 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 30
 ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
 ENT.NextAnyAttackTime_Melee = 0.6
 ENT.HasLeapAttack = true -- Should the SNPC have a leap attack?
 ENT.AnimTbl_LeapAttack = {"leapstrike"} -- Melee Attack Animations
 ENT.LeapDistance = 400 -- The distance of the leap, for example if it is set to 500, when the SNPC is 500 Unit away, it will jump
-ENT.LeapToMeleeDistance = 150 -- How close does it have to be until it uses melee?
+ENT.LeapToMeleeDistance = 250 -- How close does it have to be until it uses melee?
 ENT.TimeUntilLeapAttackDamage = 0.2 -- How much time until it runs the leap damage code?
-ENT.NextLeapAttackTime = 10 -- How much time until it can use a leap attack?
-ENT.NextAnyAttackTime_Leap = 0.4 -- How much time until it can use any attack again? | Counted in Seconds
+ENT.NextLeapAttackTime = 3 -- How much time until it can use a leap attack?
+ENT.NextAnyAttackTime_Leap = 1 -- How much time until it can use any attack again? | Counted in Seconds
 ENT.LeapAttackExtraTimers = {0.4,0.6,0.8,1} -- Extra leap attack timers | it will run the damage code after the given amount of seconds
 ENT.TimeUntilLeapAttackVelocity = 0.2 -- How much time until it runs the velocity code?
 ENT.LeapAttackVelocityForward = 300 -- How much forward force should it apply?
@@ -34,35 +34,46 @@ ENT.LeapAttackDamage = 40
 ENT.LeapAttackDamageDistance = 100 -- How far does the damage go?
 ENT.FootStepTimeRun = 0.4 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.6 -- Next foot step sound when it is walking
+
+ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
+ENT.MeleeAttackKnockBack_Forward1 = 100 -- How far it will push you forward | First in math.random
+ENT.MeleeAttackKnockBack_Forward2 = 130 -- How far it will push you forward | Second in math.random
+
 	-- ====== Sound File Paths ====== --
 -- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {"npc/fast_zombie/foot1.wav", "npc/fast_zombie/foot2.wav", "npc/fast_zombie/foot3.wav", "npc/fast_zombie/foot4.wav"}
 ENT.SoundTbl_Breath = "npc/fast_zombie/breathe_loop1.wav"
 ENT.SoundTbl_Alert = {"npc/fast_zombie/fz_alert_close1.wav", "npc/fast_zombie/fz_alert_far1.wav"}
-ENT.SoundTbl_MeleeAttack = false -- HL2 fast zombie does NOT have a melee attack sound!
+ENT.SoundTbl_MeleeAttack = {"npc/zombie/claw_strike1.wav", "npc/zombie/claw_strike2.wav", "npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav", "npc/zombie/claw_strike2.wav", "npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"vj_zombies/slow/miss1.wav", "vj_zombies/slow/miss2.wav", "vj_zombies/slow/miss3.wav", "vj_zombies/slow/miss4.wav"}
-ENT.SoundTbl_LeapAttackJump = "npc/fast_zombie/fz_scream1.wav"
+ENT.SoundTbl_LeapAttackJump = "" --"npc/fast_zombie/fz_scream1.wav"
 ENT.SoundTbl_LeapAttackDamage = {"npc/fast_zombie/claw_strike1.wav", "npc/fast_zombie/claw_strike2.wav", "npc/fast_zombie/claw_strike3.wav"}
 ENT.SoundTbl_Pain = {"npc/fast_zombie/idle1.wav", "npc/fast_zombie/idle2.wav", "npc/fast_zombie/idle3.wav"}
 ENT.SoundTbl_Death = "npc/fast_zombie/wake1.wav"
 
-ENT.GeneralSoundPitch1 = 70
-ENT.GeneralSoundPitch2 = 75
+ENT.GeneralSoundPitch1 = 50
+ENT.GeneralSoundPitch2 = 50
 
 ENT.Raging = nil
 ENT.Raged = nil
 ENT.DamageReceived = 0
+--ENT.Immune_Fire = true
+
+ENT.HasWorldShakeOnMove = true -- Should the world shake when it's moving?
+ENT.WorldShakeOnMoveAmplitude = 6 -- How much the screen will shake | From 1 to 16, 1 = really low 16 = really high
+ENT.WorldShakeOnMoveRadius = 300 -- How far the screen shake goes, in world units
+ENT.WorldShakeOnMoveDuration = 0.4 -- How long the screen shake will last, in seconds
+ENT.WorldShakeOnMoveFrequency = 100 -- Just leave it to 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Rage()
     if self.Raging or self.Raged then return end
     self.Raging = true
     self:Ignite(99999999)
-    sound.Play("npc/fast_zombie/fz_frenzy1.wav", self:GetPos())
-    self:VJ_ACT_PLAYACTIVITY("BR2_Roar", true, 1.5, false)
+    sound.Play("horde/lesion/lesion_enrage.ogg", self:GetPos(), 100, 50)
+    self:VJ_ACT_PLAYACTIVITY("BR2_Roar", true, 1.5, true)
     timer.Simple(1.5, function ()
         if not IsValid(self) then return end
-        self.AnimTbl_Run = ACT_RUN
         self.HasLeapAttack = true
         self.Raged = true
         self.Raging = false
@@ -82,9 +93,11 @@ function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(13, 13, 50), Vector(-13, -13, 0))
     self:SetModelScale(1.75)
     self.HasLeapAttack = false
-    self.AnimTbl_Run = ACT_WALK
     self:SetColor(Color(25, 25, 25))
-    self:Ignite(99999999)
+    timer.Simple(2, function()
+        if not self:IsValid() then return end
+        self:Ignite(99999999)
+    end)
 
     local id = self:GetCreationID()
     timer.Remove("Horde_FlayerRage" .. id)
@@ -96,12 +109,42 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 
+function ENT:TranslateActivity(act)
+    if act == ACT_RUN or act == ACT_WALK then
+        if self.Raging or self.Raged then
+			return ACT_RUN
+		else
+            return ACT_WALK
+        end
+	end
+	return self.BaseClass.TranslateActivity(self, act)
+end
+
 function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
     if isProp then return end
-    if not self.Raged then return end
     if hitEnt and IsValid(hitEnt) and hitEnt:IsPlayer() then
         self:UnRage()
         hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 35, self)
+    elseif not self.Raging then
+        -- Reset rage timer if not raging and hitting
+        local id = self:GetCreationID()
+        timer.Remove("Horde_FlayerRage" .. id)
+        timer.Create("Horde_FlayerRage" .. id, 10, 1, function ()
+            if not IsValid(self) then return end
+            self:Rage()
+        end)
+    end
+end
+
+function ENT:CustomOnMeleeAttack_Miss()
+    if not self.Raging then
+        -- Reset rage timer if not raging and hitting
+        local id = self:GetCreationID()
+        timer.Remove("Horde_FlayerRage" .. id)
+        timer.Create("Horde_FlayerRage" .. id, 10, 1, function ()
+            if not IsValid(self) then return end
+            self:Rage()
+        end)
     end
 end
 
@@ -110,7 +153,6 @@ function ENT:UnRage()
     self.Raging = nil
     self.DamageReceived = 0
     self.HasLeapAttack = false
-    self.AnimTbl_Run = ACT_WALK
     self:SetColor(Color(25, 25, 25))
     local id = self:GetCreationID()
     timer.Remove("Horde_FlayerRage" .. id)
@@ -120,10 +162,14 @@ function ENT:UnRage()
     end)
 end
 
+function ENT:CustomOnLeapAttack_BeforeChecks(hitEnt, isProp)
+    self:EmitSound("horde/lesion/lesion_leap.ogg", 75, 75)
+end
+
 function ENT:CustomOnLeapAttack_AfterChecks(hitEnt, isProp)
     if isProp then return end
     if not self.Raged then return end
-    if hitEnt and IsValid(hitEnt) and hitEnt:IsPlayer() then
+    if hitEnt and IsValid(hitEnt) and (HORDE:IsPlayerOrMinion(hitEnt) == true) then
         self:UnRage()
         hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Ignite, 50, self)
     end

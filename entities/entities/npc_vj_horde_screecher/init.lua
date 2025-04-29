@@ -5,7 +5,7 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_zombies/stalker.mdl"
+ENT.Model = "models/horde/infected_stalker/infected_stalker.mdl"
 ENT.StartHealth = 200
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ ENT.AnimTbl_Run = {ACT_WALK}
 ENT.SoundTbl_FootStep = {"npc/stalker/stalker_footstep_left1.wav", "npc/stalker/stalker_footstep_left2.wav", "npc/stalker/stalker_footstep_right1.wav", "npc/stalker/stalker_footstep_right2.wav"}
 ENT.SoundTbl_Breath = "npc/stalker/breathing3.wav"
 ENT.SoundTbl_Idle = {"vj_zombies/special/zmisc_idle1.wav", "vj_zombies/special/zmisc_idle2.wav", "vj_zombies/special/zmisc_idle3.wav", "vj_zombies/special/zmisc_idle4.wav", "vj_zombies/special/zmisc_idle5.wav", "vj_zombies/special/zmisc_idle6.wav"}
-ENT.SoundTbl_Alert = "npc/stalker/go_alert2a.wav"
+ENT.SoundTbl_Alert = "" --"npc/stalker/go_alert2a.wav" me freaking ears
 ENT.SoundTbl_MeleeAttack = {"npc/zombie/claw_strike1.wav", "npc/zombie/claw_strike2.wav", "npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"vj_zombies/slow/miss1.wav", "vj_zombies/slow/miss2.wav", "vj_zombies/slow/miss3.wav", "vj_zombies/slow/miss4.wav"}
 ENT.SoundTbl_Pain = {"vj_zombies/special/zmisc_pain1.wav", "vj_zombies/special/zmisc_pain2.wav", "vj_zombies/special/zmisc_pain3.wav", "vj_zombies/special/zmisc_pain4.wav", "vj_zombies/special/zmisc_pain5.wav", "vj_zombies/special/zmisc_pain6.wav"}
@@ -47,6 +47,17 @@ function ENT:CustomOnInitialize()
 	--self:SetModelScale(1.25, 0)
 	self:AddRelationship("npc_headcrab_poison D_LI 99")
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
+end
+
+function ENT:TranslateActivity(act)
+    if act == ACT_RUN or act == ACT_WALK then
+        if self.Critical then
+            return ACT_RUN
+        else
+            return ACT_WALK
+        end
+    end
+    return self.BaseClass.TranslateActivity(self, act)
 end
 
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
@@ -84,29 +95,29 @@ end
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
 	if not self.Critical and self:Health() < self:GetMaxHealth() / 2 then
         self.Critical = true
-		self.AnimTbl_Run = {ACT_RUN}
     end
 end
 
 function ENT:CustomOnThink()
-	if not self:GetEnemy() then return end
-	local EnemyDistance = self.NearestPointToEnemyDistance
-	if EnemyDistance < 250 then
-		if CurTime() > self.NextBlastTime then
-			sound.Play("npc/stalker/go_alert2.wav", self:GetPos())
-			self:VJ_ACT_PLAYACTIVITY("podconvulse", true, 1.5, false)
-			self:ShockAttack(1.5)
-			self:ShockAttack(1.7)
-			self:ShockAttack(1.9)
-			self:ShockAttack(2.1)
-			self:ShockAttack(2.3)
-			self.NextBlastTime = CurTime() + self.NextBlastCooldown
-			timer.Simple(2.5, function ()
-				if not self:IsValid() then return end
-				self:VJ_ACT_PLAYACTIVITY("walk")
-			end)
-		end
-	end
+    local enemy = self:GetEnemy()
+    if not enemy then return end
+    local EnemyDistance = self.EnemyData.Distance
+    if EnemyDistance < 300 then
+        if CurTime() > self.NextBlastTime then
+            sound.Play("npc/stalker/go_alert2.wav", self:GetPos())
+            self:VJ_ACT_PLAYACTIVITY("podconvulse", true, 1.5, false)
+            self:ShockAttack(1.5)
+            self:ShockAttack(1.7)
+            self:ShockAttack(1.9)
+            self:ShockAttack(2.1)
+            self:ShockAttack(2.3)
+            self.NextBlastTime = CurTime() + self.NextBlastCooldown
+            timer.Simple(2.5, function ()
+                if not self:IsValid() then return end
+                self:VJ_ACT_PLAYACTIVITY("walk")
+            end)
+        end
+    end
 end
 
 VJ.AddNPC("Screecher","npc_vj_horde_screecher", "Zombies")

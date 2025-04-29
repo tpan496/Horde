@@ -45,9 +45,9 @@ ENT.CallForBackUpOnDamage = false
 -- Melee
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {"claw", "claw_2", "claw_3"} -- Melee Attack Animations
-ENT.MeleeAttackDistance = 60 -- How close does it have to be until it attacks?
+ENT.MeleeAttackDistance = 100 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 150 -- How close does it have to be until it attacks?
-ENT.TimeUntilMeleeAttackDamage = 0.5 -- This counted in seconds | This calculates the time until it hits something
+ENT.TimeUntilMeleeAttackDamage = 0.7 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 30
 
 -- Ranged
@@ -80,13 +80,13 @@ ENT.SoundTbl_FootStep = {"horde/gonarch/gon_step1.ogg","horde/gonarch/gon_step2.
 --ENT.SoundTbl_Idle = {"horde/gonarch/gon_sack1.ogg","horde/gonarch/gon_sack2.ogg","horde/gonarch/gon_sack3.ogg"}
 ENT.SoundTbl_Alert = {"horde/gonarch/gon_alert1.ogg","horde/gonarch/gon_alert2.ogg","horde/gonarch/gon_alert3.ogg"}
 ENT.SoundTbl_BeforeMeleeAttack = {"horde/gonarch/gon_attack1.ogg","horde/gonarch/gon_attack2.ogg","horde/gonarch/gon_attack3.ogg"}
-ENT.SoundTbl_MeleeAttackMiss = {"zsszombie/miss1.wav","zsszombie/miss2.wav","zsszombie/miss3.wav","zsszombie/miss4.wav"}
+ENT.SoundTbl_MeleeAttackMiss = {"vj_zombies/slow/miss1.wav", "vj_zombies/slow/miss2.wav", "vj_zombies/slow/miss3.wav", "vj_zombies/slow/miss4.wav"}
 ENT.SoundTbl_BeforeRangeAttack = {"horde/gonarch/gon_attack1.ogg","horde/gonarch/gon_attack2.ogg","horde/gonarch/gon_attack3.ogg"}
 ENT.SoundTbl_RangeAttack = {"horde/gonarch/gon_sack1.ogg","horde/gonarch/gon_sack2.ogg","horde/gonarch/gon_sack3.ogg"}
 ENT.SoundTbl_Pain = {"horde/gonarch/gon_pain1.ogg","horde/gonarch/gon_pain2.ogg","horde/gonarch/gon_pain3.ogg"}
 ENT.SoundTbl_Death = {"horde/gonarch/gon_die1.ogg"}
 local sdBirth = {"horde/gonarch/gon_birth1.ogg", "horde/gonarch/gon_birth2.ogg", "horde/gonarch/gon_birth3.ogg"}
-local sdBabyDeath = {"horde/gonarch/gon_childdie1.ogg", "horde/gonarch/gon_childdie2.ogg", "horde/gonarch/gonarch/gon_childdie3.ogg"}
+local sdBabyDeath = {"horde/gonarch/gon_childdie1.ogg", "horde/gonarch/gon_childdie2.ogg", "horde/gonarch/gon_childdie3.ogg"} 
 
 ENT.Gonarch_NumBabies = 0
 ENT.Gonarch_BabyLimit = 20
@@ -133,7 +133,7 @@ end
 
 function ENT:CustomOnThink_AIEnabled()
 	-- Create baby headcrabs
-	if self.Critical and self.Dead == false && IsValid(self:GetEnemy()) && self.PlayingAttackAnimation == false && CurTime() > self.Gonarch_NextBirthT && self.Gonarch_NumBabies < self.Gonarch_BabyLimit then
+	if self.Critical and IsValid(self:GetEnemy()) && CurTime() > self.Gonarch_NextBirthT && self.Gonarch_NumBabies < self.Gonarch_BabyLimit then
 		self:VJ_ACT_PLAYACTIVITY(ACT_SPECIAL_ATTACK1, true, false, true)
 
 		for i = 1, 3 do

@@ -13,9 +13,9 @@ ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"} -- NPCs with the same class wit
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {"bite"} -- Melee Attack Animations
-ENT.MeleeAttackDistance = 32 -- How close does it have to be until it attacks?
+ENT.MeleeAttackDistance = 40 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 85 -- How far does the damage go?
-ENT.TimeUntilMeleeAttackDamage = 1 -- This counted in seconds | This calculates the time until it hits something
+ENT.TimeUntilMeleeAttackDamage = 0.8 -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 30
 ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
 ENT.FootStepTimeRun = 0.5 -- Next foot step sound when it is running
@@ -27,7 +27,7 @@ ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.AnimTbl_RangeAttack = {"range"} -- Range Attack Animations
 ENT.RangeAttackEntityToSpawn = "obj_vj_horde_vomitter_projectile" -- The entity that is spawned when range attacking
 ENT.RangeDistance = 850 -- This is how far away it can shoot
-ENT.RangeToMeleeDistance = 100 -- How close does it have to be until it uses melee?
+ENT.RangeToMeleeDistance = 200 -- How close does it have to be until it uses melee?
 ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
 ENT.RangeUseAttachmentForPosID = "attach_mouth" -- The attachment used on the range attack if RangeUseAttachmentForPos is set to true
 ENT.TimeUntilRangeAttackProjectileRelease = 0.5 -- How much time until the projectile code is ran?
@@ -39,7 +39,7 @@ ENT.SoundTbl_FootStep = {"npc/zombie/foot1.wav","npc/zombie/foot2.wav","npc/zomb
 --ENT.SoundTbl_Breath = {"npc/zombie_poison/pz_breathe_loop1.ogg"}
 ENT.SoundTbl_Alert = {"horde/bloodsquid/bc_attackgrowl1.ogg","horde/bloodsquid/bc_attackgrowl2.ogg","horde/bloodsquid/bc_attackgrowl3.ogg"}
 ENT.SoundTbl_MeleeAttack = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
-ENT.SoundTbl_MeleeAttackMiss = {"zsszombie/miss1.wav","zsszombie/miss2.wav","zsszombie/miss3.wav","zsszombie/miss4.wav"}
+ENT.SoundTbl_MeleeAttackMiss = {"vj_zombies/slow/miss1.wav", "vj_zombies/slow/miss2.wav", "vj_zombies/slow/miss3.wav", "vj_zombies/slow/miss4.wav"}
 ENT.SoundTbl_Pain = {"horde/bloodsquid/bc_pain1.ogg","horde/bloodsquid/bc_pain2.ogg","horde/bloodsquid/bc_pain3.ogg"}
 ENT.SoundTbl_Death = {"horde/bloodsquid/bc_die1.ogg","horde/bloodsquid/bc_die2.ogg"}
 
@@ -54,21 +54,17 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 
+function ENT:TranslateActivity(act)
+    if act == ACT_RUN or act == ACT_WALK then
+        return ACT_WALK
+	end
+	return self.BaseClass.TranslateActivity(self, act)
+end
+
 function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
 	if HORDE:IsPoisonDamage(dmginfo) then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 0.25)
 	end
-end
-
-function ENT:TranslateActivity(act)
-    -- throw1 idle, throw2 walk, throw3 run
-    if (act == ACT_WALK or act == ACT_RUN) then
-		if self:Health() <= self:GetMaxHealth() * 0.5 then
-			return ACT_RUN
-		end
-        return ACT_WALK
-    end
-    return self.BaseClass.TranslateActivity(self, act)
 end
 
 local attackTimers = {
@@ -108,48 +104,51 @@ local attackTimers = {
 }
 
 function ENT:ExecuteRangeAttack()
-	local selfData = self:GetTable()
-	if selfData.Dead or selfData.PauseAttacks or selfData.Flinching or selfData.AttackType == VJ.ATTACK_TYPE_MELEE then return end
-	local ene = self:GetEnemy()
-	local eneValid = IsValid(ene)
-	if eneValid then
-		selfData.AttackType = VJ.ATTACK_TYPE_RANGE
-		//self:PointAtEntity(ene)
-		-- Create projectile
-		if !self:OnRangeAttackExecute("Init", ene) then
-			local projectile = ents.Create(self.RangeAttackEntityToSpawn)
-			local target_pos = self:GetEnemy():GetPos()
-			projectile:SetPos(self:GetAttachment(1).Pos)
-			projectile:SetAngles((target_pos - projectile:GetPos()):Angle())
-			projectile:SetOwner(self)
-			projectile:SetPhysicsAttacker(self)
-			projectile:Spawn()
-			projectile:Activate()
-			//constraint.NoCollide(self, projectile, 0, 0)
-			local phys = projectile:GetPhysicsObject()
-			if IsValid(phys) then
-				phys:Wake()
-				--local vel = self:RangeAttackProjVel(projectile)
-				local vel = (target_pos - self:GetAttachment(1).Pos) * 1.5
-				phys:SetVelocity(vel)
-				projectile:SetAngles(vel:GetNormal():Angle())
-			else
-				local vel = self:RangeAttackProjVel(projectile)
-				projectile:SetVelocity(vel)
-				projectile:SetAngles(vel:GetNormal():Angle())
-			end
-			self:OnRangeAttackExecute("PostSpawn", ene, projectile)
-		end
-	end
-	if selfData.AttackState < VJ.ATTACK_STATE_EXECUTED then
-		if eneValid then -- Play range attack only once, otherwise it will spam it for every projectile!
-			self:PlaySoundSystem("RangeAttack")
-		end
-		selfData.AttackState = VJ.ATTACK_STATE_EXECUTED
-		if selfData.TimeUntilRangeAttackProjectileRelease then
-			attackTimers[VJ.ATTACK_TYPE_RANGE](self)
-		end
-	end
+	if self.EnemyData.Distance <= self.RangeDistance and self.EnemyData.Distance >= self.RangeToMeleeDistance then
+        local selfData = self:GetTable()
+        if selfData.Dead or selfData.PauseAttacks or selfData.Flinching or selfData.AttackType == VJ.ATTACK_TYPE_MELEE then return end
+        local ene = self:GetEnemy()
+        local eneValid = IsValid(ene)
+        if eneValid then
+            selfData.AttackType = VJ.ATTACK_TYPE_RANGE
+            //self:PointAtEntity(ene)
+            -- Create projectile
+            if !self:OnRangeAttackExecute("Init", ene) then
+                local projectile = ents.Create(self.RangeAttackEntityToSpawn)
+                local EnemyDistanceAngle = math.max(150, self.EnemyData.Distance * 0.2)
+                local target_pos = self:GetEnemy():GetPos() + Vector(0, 0, EnemyDistanceAngle)
+                projectile:SetPos(self:GetAttachment(1).Pos)
+                projectile:SetAngles((target_pos - projectile:GetPos()):Angle())
+                projectile:SetOwner(self)
+                projectile:SetPhysicsAttacker(self)
+                projectile:Spawn()
+                projectile:Activate()
+                //constraint.NoCollide(self, projectile, 0, 0)
+                local phys = projectile:GetPhysicsObject()
+                if IsValid(phys) then
+                    phys:Wake()
+                    --local vel = self:RangeAttackProjVel(projectile)
+                    local vel = (target_pos - self:GetAttachment(1).Pos) * 1.5
+                    phys:SetVelocity(vel)
+                    projectile:SetAngles(vel:GetNormal():Angle())
+                else
+                    local vel = self:RangeAttackProjVel(projectile)
+                    projectile:SetVelocity(vel)
+                    projectile:SetAngles(vel:GetNormal():Angle())
+                end
+                self:OnRangeAttackExecute("PostSpawn", ene, projectile)
+            end
+        end
+        if selfData.AttackState < VJ.ATTACK_STATE_EXECUTED then
+            if eneValid then -- Play range attack only once, otherwise it will spam it for every projectile!
+                self:PlaySoundSystem("RangeAttack")
+            end
+            selfData.AttackState = VJ.ATTACK_STATE_EXECUTED
+            if selfData.TimeUntilRangeAttackProjectileRelease then
+                attackTimers[VJ.ATTACK_TYPE_RANGE](self)
+            end
+        end
+    end
 end
 
 /*-----------------------------------------------

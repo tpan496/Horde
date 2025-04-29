@@ -8,7 +8,7 @@ end
 
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Melee" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Stunstick"
@@ -49,6 +49,22 @@ SWEP.Melee2Range = 50
 SWEP.Melee2AttackTime = 0.15
 SWEP.Melee2Time = 1
 SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE2
+
+SWEP.MaximumDurability = 600
+SWEP.MaxHits = 1
+SWEP.MaxHitsSecondary = 2
+SWEP.MeleeBoundingBox = {
+    primary = {
+        wide = 8,
+        tall = 8,
+        length = 100, -- 75 length ~ 2.5 meters and MeleeRange = 80 ~ 121 length
+    },
+    secondary = {
+        wide = 8,
+        tall = 8,
+        length = 100,
+    },
+}
 
 SWEP.MeleeSwingSound = {
     "weapons/stunstick/stunstick_swing1.wav",
@@ -122,46 +138,55 @@ SWEP.BashAng = Angle(35, -30, 0)
 SWEP.HolsterPos = Vector(0, -3, -2)
 SWEP.HolsterAng = Angle(-10, 0, 0)
 
-function SWEP:Hook_PostBash(t)
-    local filter = {self:GetOwner()}
+function SWEP:Hook_PostBash(info)
+    if not SERVER then return end
+    local attacker = self:GetOwner()
+    if !IsValid(attacker) then return end
+    local enemy_tr = info.tr.Entity
+    local cleave = info.cleave
+    local headshot = info.tr.HitGroup
+    local melee2 = info.melee2
 
-    table.Add(filter, self.Shields)
-
-    local tr = util.TraceLine({
-        start = self:GetOwner():GetShootPos(),
-        endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 55,
-        filter = filter,
-        mask = MASK_SHOT_HULL
-    })
-
-    if (!IsValid(tr.Entity)) then
-        tr = util.TraceHull({
-            start = self:GetOwner():GetShootPos(),
-            endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 55,
-            filter = filter,
-            mins = Vector(-16, -16, -8),
-            maxs = Vector(16, 16, 8),
-            mask = MASK_SHOT_HULL
-        })
+    local shock_dmg = 25
+    if melee2 then
+        shock_dmg = 35
+    end
+    local shock_buildup = shock_dmg * 0.8
+    if cleave[1] ~= nil then
+        for _, entities in ipairs(cleave) do
+            if HORDE:IsPlayerOrMinion(entities) == true then continue end
+            if entities:IsNPC() and entities ~= enemy_tr then
+                entities:Horde_AddDebuffBuildup(HORDE.Status_Shock, shock_buildup, attacker)
+                
+                local dmg = DamageInfo()
+                    dmg:SetDamage(shock_dmg)
+                    dmg:SetDamageType(DMG_SHOCK)
+                    dmg:SetAttacker(attacker)
+                    dmg:SetInflictor(self)
+                    dmg:SetDamagePosition(entities:GetPos() + entities:OBBCenter())
+                    dmg:SetDamageCustom(HORDE.DMG_SPLASH)
+                entities:TakeDamageInfo(dmg)
+            end
+        end
+    end
+    if headshot == 1 then
+        shock_dmg = shock_dmg * 2
+        shock_buildup = shock_buildup * 2
     end
 
-    if SERVER and IsValid(tr.Entity) and (tr.Entity:IsNPC() or tr.Entity:IsPlayer() or tr.Entity:Health() > 0) then
-        local attacker = self:GetOwner()
-        if !IsValid(attacker) then attacker = self end
-
+    if IsValid(enemy_tr) and enemy_tr:IsNPC() then
+        enemy_tr:Horde_AddDebuffBuildup(HORDE.Status_Shock, shock_buildup, attacker)
+        
+        local enemy_pos = info.tr.HitPos
         local dmginfo = DamageInfo()
-        if t.melee2 then
-            dmginfo:SetDamage(25)
-        else
-            dmginfo:SetDamage(35)
-        end
-
-        dmginfo:SetAttacker(self:GetOwner())
-        dmginfo:SetInflictor(self)
-        dmginfo:SetDamageForce(self:GetOwner():GetRight() * -4912 + self:GetOwner():GetForward() * 9989)
-        dmginfo:SetDamageType(DMG_SHOCK)
-        dmginfo:SetDamagePosition(tr.HitPos)
-        tr.Entity:TakeDamageInfo(dmginfo)
+            dmginfo:SetAttacker(attacker)
+            dmginfo:SetInflictor(self)
+            dmginfo:SetDamageForce(attacker:GetRight() * -4912 + attacker:GetForward() * 9989)
+            dmginfo:SetDamageType(DMG_SHOCK)
+            dmginfo:SetDamagePosition(enemy_pos)
+            dmginfo:SetDamage(shock_dmg)
+            dmginfo:SetDamageCustom(HORDE.DMG_SPLASH)
+        enemy_tr:TakeDamageInfo(dmginfo)
     end
 end
 

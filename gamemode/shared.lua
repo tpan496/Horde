@@ -14,6 +14,9 @@ function GM:Initialize()
         name = "arccw_nade_medic_ubgl"
     })
     game.AddAmmoType({
+        name = "horde_arccw_knives"
+    })
+    game.AddAmmoType({
         name = "horde_mine",
     })
     if SERVER then

@@ -71,8 +71,6 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
         ply:Horde_SetMind(0)
         ply:Horde_SetMindRegenTick(0)
         ply:SetMaxArmor(100)
-        -- Removes minions (for subclass swapping)
-        --ply:Horde_RemoveMinionsAndDrops()
     end
 end
 

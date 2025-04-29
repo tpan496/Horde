@@ -9,7 +9,7 @@ ENT.ShakeWorldOnDeathRadius = 500 -- How far the screen shake goes, in world uni
 ENT.ShakeWorldOnDeathDuration = 1 -- How long the screen shake will last, in seconds
 ENT.ShakeWorldOnDeathFrequency = 200 -- The frequency
 -- ====== Radius Damage Variables ====== --
-ENT.DoesRadiusDamage = true -- Should it do a blast damage when it hits something?
+ENT.DoesRadiusDamage = false -- Should it do a blast damage when it hits something?
 ENT.RadiusDamageRadius = 250 -- How far the damage go? The farther away it's from its enemy, the less damage it will do | Counted in world units
 ENT.RadiusDamageUseRealisticRadius = false -- Should the damage decrease the farther away the enemy is from the position that the projectile hit?
 ENT.RadiusDamage = 25  -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
@@ -19,7 +19,7 @@ ENT.RadiusDamageForce_Up = false -- How much up force should it have? | false = 
 ENT.RadiusDamageDisableVisibilityCheck = false -- Should it disable the visibility check? | true = Disables the visibility check
     -----------------------------------------------------
 ENT.DecalTbl_DeathDecals = {"VJ_AcidSlime1"}
-ENT.SoundTbl_Idle = {"vj_acid/acid_idle1.wav"}
+ENT.SoundTbl_Idle = {"vj_base/ambience/acid_idle.wav"}
 ENT.SoundTbl_OnCollide = {"horde/status/frostbite_buildup.ogg"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomPhysicsObjectOnInitialize(phys)
@@ -45,4 +45,21 @@ function ENT:DeathEffects(data,phys)
 	effectdata:SetOrigin(data.HitPos)
 	effectdata:SetScale( 2 )
 	util.Effect("frostcloud", effectdata, true, true)
+end
+
+function ENT:CustomOnPhysicsCollide(data, phys)
+    if self.Dead then return end
+    self.Dead = true
+    local dmg = DamageInfo()
+    if self.Owner:IsValid() then
+        dmg:SetAttacker(self.Owner)
+    else
+        dmg:SetAttacker(self)
+    end
+    dmg:SetInflictor(self)
+    dmg:SetDamageType(self.RadiusDamageType)
+    dmg:SetDamage(self.RadiusDamage)
+    util.BlastDamageInfo(dmg, self:GetPos(), self.RadiusDamageRadius)
+    
+    self:Remove()
 end

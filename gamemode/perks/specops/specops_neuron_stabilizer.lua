@@ -12,3 +12,8 @@ PERK.Params = {
 }
 
 PERK.Hooks = {}
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
+    if SERVER and perk == "specops_neuron_stabilizer" then
+        ply:Horde_SetNeuronStabilizerEnabled(nil)
+    end
+end

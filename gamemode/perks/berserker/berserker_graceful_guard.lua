@@ -1,10 +1,14 @@
 PERK.PrintName = "Graceful Guard"
-PERK.Description = [[On successful Aerial Parry:
-    - Removes all debuff and debuff buildups.
-    - Recover {1} health.]]
+PERK.Description = [[
+Removes all debuffs and debuff buildups on successful Aerial Parry.
+Recover {1} health and regenerate {2} of maximum health per second 
+for {3} seconds on successful Aerial Parry.]]
+
 PERK.Icon = "materials/perks/graceful_guard.png"
 PERK.Params = {
-    [1] = {value = 20},
+    [1] = {value = 10},
+    [2] = {value = 0.01, percent = true},
+    [3] = {value = 10},
 }
 
 PERK.Hooks = {}

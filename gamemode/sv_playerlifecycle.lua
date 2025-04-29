@@ -10,6 +10,7 @@ util.AddNetworkString("Horde_SyncGameInfo")
 util.AddNetworkString("Horde_SaveAchievements")
 util.AddNetworkString("Horde_SaveExtraAchievements")
 util.AddNetworkString("Horde_SyncClientExps")
+util.AddNetworkString("Horde_ShowLeaderboardsTemporarily")
 
 HORDE.vote_remaining_time = 60
 HORDE.game_end = nil
@@ -371,11 +372,28 @@ function HORDE:PlayerInit(ply)
         net.Start("Horde_Disable_Levels")
         net.Send(ply)
     end
-    if not HORDE.start_game then
+    if not HORDE.start_game or HORDE:InBreak() then
         HORDE.player_ready[ply] = 0
         net.Start("Horde_PlayerReadySync")
             net.WriteTable(HORDE.player_ready)
         net.Broadcast()
+        
+        net.Start("Horde_ShowLeaderboardsTemporarily")
+        net.Send(ply)
+        
+        local tip = HORDE:GetTip()
+        if tip then
+            net.Start("Horde_SyncTip")
+                net.WriteString(HORDE:GetTip())
+            net.Send(ply)
+            local id = ply:SteamID()
+            timer.Create("Horde_TipsTimer" .. id, 10, 0, function()
+                if HORDE.start_game or HORDE.current_break_time <= 10 then timer.Remove("Horde_TipsTimer" .. id) return end
+                net.Start("Horde_SyncTip")
+                    net.WriteString(HORDE:GetTip())
+                net.Send(ply)
+            end)
+        end
     end
 
     if HORDE.start_game then
@@ -396,12 +414,14 @@ function HORDE:PlayerInit(ply)
             net.Send(ply)
         end
 
+        --[[
         local tip = HORDE:GetTip()
         if tip and (not HORDE.horde_boss) then
             net.Start("Horde_SyncTip")
                 net.WriteString(HORDE:GetTip())
             net.Send(ply)
         end
+        ]]
 
         if HORDE.horde_active_holdzones then
             for id, zone in pairs(HORDE.horde_active_holdzones) do
@@ -532,6 +552,15 @@ function HORDE:PlayerInit(ply)
         else
             net.WriteUInt(0, 8)
         end
+        net.Send(ply)
+        
+        --network this so arccw attachments know you're in buy zone
+        net.Start("Horde_IsInBuyZone")
+            if HORDE.current_break_time > 0 then
+                net.WriteBool(true)
+            else
+                net.WriteBool(false)
+            end
         net.Send(ply)
     end
 
@@ -823,11 +852,4 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     end
     HORDE:SendNotification("You are dead. You will respawn next wave.", 1, victim)
     HORDE:CheckAlivePlayers()
-
-    local tip = HORDE:GetTip()
-    if tip and (not HORDE.horde_boss) then
-        net.Start("Horde_SyncTip")
-            net.WriteString(HORDE:GetTip())
-        net.Send(victim)
-    end
 end)

@@ -3,8 +3,9 @@ SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Ghost -- Required for any new classes
 SUBCLASS.Icon = "subclasses/gunslinger.png" -- Required
 SUBCLASS.Description = [[
-Ghost subclass.
-Specializes in pistols, marks and profits.]] -- Required
+Specializes in pistols and upgrading them.
+Marks enemies to deal more damage and gain 
+profits from defeated enemies.]] -- Required
 SUBCLASS.BasePerk = "gunslinger_base"
 SUBCLASS.Perks = {
     [1] = {title = "Precision", choices = {"gunslinger_deadeye", "gunslinger_puncture"}},

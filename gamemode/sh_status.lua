@@ -46,6 +46,7 @@ HORDE:RegisterStatus("Flare", "materials/perks/specops/flare.png", nil, nil, tru
 HORDE:RegisterStatus("AAS_Perfume", "materials/perks/carcass/AAS_Perfume.png", nil, nil, true)
 HORDE:RegisterStatus("Juxtapose", "materials/perks/overlord/juxtapose.png", nil, nil, true)
 HORDE:RegisterStatus("DarkEnergyBlast", "materials/perks/overlord/dark_energy_blast.png", nil, nil, true)
+HORDE:RegisterStatus("Steadfast_Parry", "materials/perks/bushido.png", nil, nil, true)
 
 HORDE:RegisterStatus("Tactical_Mode", "materials/status/tactical_mode.png")
 HORDE:RegisterStatus("Camoflague", "materials/status/camoflague.png")
@@ -132,7 +133,7 @@ HORDE.Status_Trigger_Sounds[HORDE.Status_Bleeding] = "horde/status/bleeding_trig
 HORDE.Status_Trigger_Sounds[HORDE.Status_Frostbite] = "horde/status/frostbite_trigger.ogg"
 HORDE.Status_Trigger_Sounds[HORDE.Status_Shock] = "horde/status/shock_trigger.ogg"
 HORDE.Status_Trigger_Sounds[HORDE.Status_Break] = "horde/status/break_trigger.ogg"
-HORDE.Status_Trigger_Sounds[HORDE.Status_Necrosis] = "horde/status/necrosis_trigger.ogg"
+HORDE.Status_Trigger_Sounds[HORDE.Status_Necrosis] = "" --"horde/status/necrosis_trigger.ogg"
 
 HORDE.Debuff_Notifications = {
     [HORDE.Status_Bleeding] = "You are inflicted by Bleeding.\nYour health is removed over time.",

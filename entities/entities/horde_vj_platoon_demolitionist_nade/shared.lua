@@ -1,3 +1,7 @@
+if CLIENT then
+    killicon.AddAlias("horde_vj_platoon_demolitionist_nade", "arccw_horde_m67")
+end
+
 ENT.Type = "anim"
 ENT.Base = "base_entity"
 ENT.PrintName = "Frag Grenade"

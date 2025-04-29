@@ -44,7 +44,7 @@ function ENT:Initialize()
 
         timer.Simple(0.1, function()
             if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+            self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
         end)
     end
 
@@ -64,6 +64,7 @@ end
 
 function ENT:Think()
     if SERVER and self.DamageTime <= CurTime() then
+        if not self.Owner:IsValid() then self:Remove() return end
         for _, ent in pairs(ents.FindInSphere(self:GetPos(), self.DamageRadius)) do
             if HORDE:IsPlayerOrMinion(ent) then
                 local dmg = DamageInfo()

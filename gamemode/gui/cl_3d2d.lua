@@ -124,6 +124,7 @@ net.Receive("Horde_SyncEscapeEnd", function ()
 end)
 
 local shldmat = Material('models/horde/antimatter_shield/wall')
+local star = Material("star.png", "mips smooth")
 local function Render(bdepth, bskybox)
     if bskybox then return end
 
@@ -185,7 +186,6 @@ local function Render(bdepth, bskybox)
                 draw.SimpleText(loc_class, "Icon", len + 8, 0, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
                 if rank_level > 0 then
-                    local star = Material("star.png", "mips smooth")
                     surface.SetMaterial(star)
                     local y_pos = 15
                     for i = 0, rank_level - 1 do

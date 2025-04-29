@@ -58,7 +58,7 @@ SWEP.Primary.ClipSize = 1 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 1
 SWEP.ReducedClipSize = 1
 
-SWEP.Recoil = 15
+SWEP.Recoil = 3
 SWEP.RecoilSide = 1
 SWEP.VisualRecoilMult = 1
 SWEP.RecoilRise = 2
@@ -228,6 +228,12 @@ sound.Add({
 })
 SWEP.LockSound = Sound("JAVELIN_LOCK")
 
+function SWEP:AdjustMouseSensitivity()
+    if self.Owner:KeyDown(IN_ATTACK2) then
+        return 0.5
+    end
+end
+
 function SWEP:Hook_Think()
     if self.Owner:KeyDown(IN_ATTACK2) then
         self.Owner:SetFOV(25, 0)
@@ -235,7 +241,7 @@ function SWEP:Hook_Think()
         self.Scoped = true
         self.SpeedMult = 0.5
 
-        local tr = util.TraceLine({
+        local tr = util.TraceHull({
             start = self.Owner:GetShootPos(),
             endpos = self.Owner:GetShootPos() + self:GetOwner():GetAimVector() * 10000,
             filter = {self, self.Owner},

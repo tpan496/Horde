@@ -3,8 +3,9 @@ SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Heavy -- Required for any new classes
 SUBCLASS.Icon = "subclasses/carcass.png" -- Required
 SUBCLASS.Description = [[
-Heavy subclass.
-An abomination with high health and mobility.]] -- Required
+An abomination with high health and mobility.
+A melee only based class that uses their 
+body to pummel enemies at high speed.]] -- Required
 SUBCLASS.BasePerk = "carcass_base"
 SUBCLASS.Perks = {
     [1] = {title = "Bowel", choices = {"carcass_grappendix", "carcass_bio_thruster"}},

@@ -23,7 +23,7 @@ SWEP.Trivia_Country = "United States"
 SWEP.Trivia_Year = 1982
 end
 
-SWEP.Slot = 4
+SWEP.Slot = 3
 
 SWEP.UseHands = true
 
@@ -52,8 +52,8 @@ SWEP.ExtendedClipSize = 150
 SWEP.ReducedClipSize = 150
 
 SWEP.VisualRecoilMult = 0
-SWEP.Recoil = 0.8
-SWEP.RecoilSide = 0.5
+SWEP.Recoil = 0.2
+SWEP.RecoilSide = 0.3
 SWEP.RecoilRise = 0
 
 SWEP.Delay = 60 / 1300 -- lazy, fix this l8r btich -- 60 / RPM.
@@ -94,7 +94,7 @@ SWEP.ShellRotateAngle = Angle(0, 90, 0)
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
 
-SWEP.SpeedMult = 0.875
+SWEP.SpeedMult = 0.8
 SWEP.SightedSpeedMult = 0.35
 SWEP.SightTime = 0.25
 SWEP.IronSightStruct = false
@@ -248,7 +248,7 @@ function SWEP:Hook_Think()
         end
         self.SpeedMult = 0.5
     else
-        self.SpeedMult = 0.875
+        self.SpeedMult = 0.8
         if self.revved then
             self:EmitSound(self.unrevSound)
         end

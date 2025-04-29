@@ -15,9 +15,9 @@ ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
 ENT.MeleeAttackDistance = 35 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 95 -- How far does the damage go?
-ENT.TimeUntilMeleeAttackDamage = 0.8 -- This counted in seconds | This calculates the time until it hits something
+ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 57
-ENT.SlowPlayerOnMeleeAttack = true -- If true, then the player will slow down
+ENT.SlowPlayerOnMeleeAttack = false -- If true, then the player will slow down
 ENT.SlowPlayerOnMeleeAttack_WalkSpeed = 100 -- Walking Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttack_RunSpeed = 100 -- Running Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttackTime = 5 -- How much time until player's Speed resets
@@ -58,9 +58,9 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 	self:SetMoveVelocity(Vector(0,0,0))
 
-	self:EmitSound("zsszombie/vj_bossz_call.wav", 1500, 90, 1, CHAN_STATIC)
+	self:EmitSound("npc/zombie_poison/pz_call1.wav", 1500, 90, 1, CHAN_STATIC)
 end
-
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:PlayFootstepSound()
@@ -68,7 +68,6 @@ function ENT:OnInput(key, activator, caller, data)
 		self:ExecuteMeleeAttack()
 	end
 end
-
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)
 	if act == ACT_RUN or act == ACT_WALK then
@@ -88,23 +87,25 @@ function ENT:OnFootstepSound(moveType, sdFile)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
-	if self:IsOnFire() then
-		self.AnimTbl_Walk = {self:GetSequenceActivity(self:LookupSequence("FireWalk"))}
-		self.AnimTbl_Run = {self:GetSequenceActivity(self:LookupSequence("FireWalk"))}
-	else
-		self.AnimTbl_Walk = {ACT_WALK}
-		self.AnimTbl_Run = {ACT_RUN}
-	end
 	if self.Critical and self:IsOnGround() then
 		self:SetLocalVelocity(self:GetMoveVelocity() * 1.5)
 	end
+    --[[ -- finish this later
+    -- Holy VJank base
+    if self.Horde_Frostbite then
+        self:SetPlaybackRate(0.6)
+    elseif self.Critical and not self.Horde_Frostbite then
+        self:SetPlaybackRate(1.5)
+    else
+        self:SetPlaybackRate(1)
+    end
+    ]]
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Critical = false
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
     if not self.Critical and self:Health() < self:GetMaxHealth() / 2 then
         self.Critical = true
-        self:SetPlaybackRate(1.5)
         self:SetColor(Color(255,0,0))
         self:SetRenderMode(RENDERMODE_TRANSCOLOR)
     end

@@ -441,6 +441,49 @@ hook.Add("ScaleNPCDamage", "Horde_BossHeadshotDamage", function(npc, hitgroup, d
     end
 end)
 
+--Controls limb damage multipliers relative to default limb damage multipliers for weapon types and NPC/Minion damage
+local HitGroups = { -- https://wiki.facepunch.com/gmod/Enums/HITGROUP
+    [0] = 1, -- Generic, aka other
+    [1] = 1, -- Head
+    [2] = 1, -- Chest
+    [3] = 1, -- Stomach
+    [4] = 1, -- Left Arm
+    [5] = 1, -- Right Arm
+    [6] = 1, -- Left Leg
+    [7] = 1, -- Right Leg
+    [10] = 1, -- Gear(?), Somewhere near belt
+}
+local MeleeHitGroups = { -- Also used for Minion damage to ignore limb multipliers
+    [0] = 1, -- Generic, aka other
+    [1] = 1, -- Head
+    [2] = 1, -- Chest
+    [3] = 1, -- Stomach
+    [4] = 4, -- Left Arm    -- 25% * 4 = 100% damage vs limb
+    [5] = 4, -- Right Arm
+    [6] = 4, -- Left Leg
+    [7] = 4, -- Right Leg
+    [10] = 1, -- Gear(?), Somewhere near belt
+}
+hook.Add("ScaleNPCDamage", "Horde_Locational_Damage", function(npc, hitgroup, dmginfo)
+    local attacker = dmginfo:GetAttacker()
+    if (!IsValid(attacker)) then return end
+    if (attacker:IsPlayer() and not attacker:GetActiveWeapon().Horde_Use_Locational_DMG) --[[or not (attacker.Horde_Use_Locational_DMG)]] then return end
+    local scale = HitGroups[hitgroup] || 1
+    if attacker:IsPlayer() and not HORDE:IsPlayerMinion(attacker) then --Player damage and not minion damage
+        --[[
+        if HORDE:IsCurrentWeapon(dmginfo, "Melee") == true then --Melee damage
+            scale = MeleeHitGroups[hitgroup] || 1
+        end
+        ]]
+    elseif HORDE:IsPlayerMinion(attacker) then --Minion damage
+        scale = MeleeHitGroups[hitgroup] || 1
+    else
+        scale = 1 --Scale nothing
+    end
+    dmginfo:ScaleDamage(scale)
+end)
+
+
 -- New dank explosion code
 --[[
     <entity> attacker = attacker
@@ -471,6 +514,7 @@ local defaults = { -- Default variables
     ignoreattacker = false,
     origin = Vector(0, 0, 0),
     damagetype = 64, -- DMG_BLAST
+    damagecustomtype = nil
 }
 function HORDE.RadiusDamageExtra(data)
     if(!data || !IsValid(data.attacker)) then return end -- check is data table and attacker is valid or not
@@ -494,8 +538,8 @@ function HORDE.RadiusDamageExtra(data)
 
     -- local variables will be faster than table-lookup in the for loop
     local attacker = data.attacker
-    local inflictor = attacker
-    if(attacker:IsPlayer() && IsValid(attacker:GetActiveWeapon())) then inflictor = attacker:GetActiveWeapon() end
+    local inflictor = data.inflictor -- || attacker
+    --if(attacker:IsPlayer() && IsValid(attacker:GetActiveWeapon())) then inflictor = attacker:GetActiveWeapon() end
     local radius = data.radius
     local fradius = data.falloffradius
     local fradius_min = math.max(radius - fradius, 0)
@@ -511,6 +555,7 @@ function HORDE.RadiusDamageExtra(data)
     local skip_attacker = data.ignoreattacker
 
     local pos = data.origin
+    local dmgcustom = data.damagecustomtype
 
     local base_dmg = dmg * basedmg_scale
     local scalable_dmg = dmg * math.max(1 - basedmg_scale, 0) -- Just in case if you got basedmg_scale > 1
@@ -531,6 +576,9 @@ function HORDE.RadiusDamageExtra(data)
             dmginfo:SetInflictor(inflictor)
             dmginfo:SetDamagePosition(ent:GetPos())
             dmginfo:SetDamageType(dmgtype)
+            if dmgcustom then
+                dmginfo:SetDamageCustom(dmgcustom)
+            end
 
         if(dst <= fradius) then
             dmginfo:SetDamage(dmg)

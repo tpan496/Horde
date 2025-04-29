@@ -153,9 +153,9 @@ if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_r
 				if p < 0.01 or (p < 0.1 and killer:Horde_GetGadget() == "gadget_corporate_mindset") then
 					-- Drop a skull token
 					local ent = ents.Create("horde_skull_token")
-					local pos = victim:GetPos()
+					local pos = killer:GetPos()
 					local drop_pos = pos
-					drop_pos = drop_pos + VectorRand() * 5
+					drop_pos = drop_pos --+ VectorRand() * 5
 					drop_pos.z = pos.z + 15
 					ent:SetPos(drop_pos)
 					ent.Owner = killer

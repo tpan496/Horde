@@ -54,6 +54,8 @@ ENT.Sentry_CurrentParameter = 0
 ENT.Sentry_NextAlarmT = 0
 ENT.Sentry_ControllerStatus = 0 -- Current status of the controller, 0 = Idle | 1 = Alerted
 
+ENT.Horde_Immune_Status_All = true
+
 -- ====== Sounds ====== --
 ENT.HasSounds = true
 ENT.SoundTbl_CombatIdle = {

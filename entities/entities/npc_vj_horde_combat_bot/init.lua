@@ -67,6 +67,8 @@ ENT.NextRangeAttackTime = 5 -- How much time until it can use a range attack?
 ENT.HasFootStepSound = true
 ENT.SoundTbl_FootStep = {"npc/dog/dog_footstep_run1.wav","npc/dog/dog_footstep_run2.wav","npc/dog/dog_footstep_run3.wav","npc/dog/dog_footstep_run4.wav","npc/dog/dog_footstep_run5.wav","npc/dog/dog_footstep_run6.wav","npc/dog/dog_footstep_run7.wav","npc/dog/dog_footstep_run8.wav"}
 
+ENT.Horde_Immune_Status_All = true
+
 -- ====== Sounds ====== --
 ENT.SoundTbl_MeleeAttackSlowPlayer = {}
 ENT.SoundTbl_MeleeAttack = {

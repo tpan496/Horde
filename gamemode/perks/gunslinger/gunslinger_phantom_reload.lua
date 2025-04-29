@@ -11,6 +11,8 @@ PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "gunslinger_phantom_reload" then
+        local id = ply:SteamID()
+        timer.Remove("Horde_Phantom_Reload_Remove" .. id)
         net.Start("Horde_SyncStatus")
             net.WriteUInt(HORDE.Status_Phantom_Reload, 8)
             net.WriteUInt(1, 3)
@@ -21,10 +23,16 @@ end
 
 PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     if SERVER and perk == "gunslinger_phantom_reload" then
-        net.Start("Horde_SyncStatus")
-            net.WriteUInt(HORDE.Status_Phantom_Reload, 8)
-            net.WriteUInt(0, 3)
-        net.Send(ply)
+        local id = ply:SteamID()
+        timer.Create("Horde_Phantom_Reload_Remove" .. id, 1, 1, function()
+            net.Start("Horde_SyncStatus")
+                net.WriteUInt(HORDE.Status_Phantom_Reload, 8)
+                net.WriteUInt(0, 3)
+            net.Send(ply)
+        end)
+        timer.Simple(0, function()
+            timer.Remove("Horde_Phantom_Reload_Delay" .. id)
+        end)
         ply.Horde_Has_Phantom_Reload = nil
     end
 end
@@ -33,6 +41,7 @@ PERK.Hooks.PlayerSwitchWeapon = function(ply, old_wpn, new_wpn)
     if CLIENT then return end
     if not ply:Horde_GetPerk("gunslinger_phantom_reload") then return end
     if old_wpn == new_wpn then return end
+    if new_wpn:GetMaxClip1() <= 0 then return end
     if new_wpn:IsValid() and HORDE:IsPistolItem(new_wpn:GetClass()) then
         if not ply.Horde_Has_Phantom_Reload then
            return
@@ -47,19 +56,23 @@ PERK.Hooks.PlayerSwitchWeapon = function(ply, old_wpn, new_wpn)
         ply:RemoveAmmo(give2, new_wpn:GetSecondaryAmmoType())
         new_wpn:SetClip1(give1)
         new_wpn:SetClip2(give2)
-        ply.Horde_Has_Phantom_Reload = nil
+        
         net.Start("Horde_SyncStatus")
             net.WriteUInt(HORDE.Status_Phantom_Reload, 8)
             net.WriteUInt(0, 8)
         net.Send(ply)
-        timer.Simple(3, function ()
-            if ply:IsValid() then
-                net.Start("Horde_SyncStatus")
-                    net.WriteUInt(HORDE.Status_Phantom_Reload, 8)
-                    net.WriteUInt(1, 8)
-                net.Send(ply)
-                ply.Horde_Has_Phantom_Reload = true
-            end
+        ply.Horde_Has_Phantom_Reload = nil
+        
+        local id = ply:SteamID()
+        timer.Remove("Horde_Phantom_Reload_Delay" .. id)
+        timer.Create("Horde_Phantom_Reload_Delay" .. id, 3, 1, function()
+            if not ply:IsValid() then return end
+            if not ply:Horde_GetPerk("gunslinger_phantom_reload") then return end
+            net.Start("Horde_SyncStatus")
+                net.WriteUInt(HORDE.Status_Phantom_Reload, 8)
+                net.WriteUInt(1, 8)
+            net.Send(ply)
+            ply.Horde_Has_Phantom_Reload = true
         end)
     end
 end

@@ -13,15 +13,16 @@ GADGET.Params = {
 GADGET.Hooks = {}
 
 local function SpawnPlayer(ply, ply_pos, ply_angles, armor)
-    if !IsValid(ply) then return end
-    if ply:GetNoDraw() == false then return end
+    --if !IsValid(ply) then return end
+    --if ply:GetNoDraw() == false then return end
     local health = ply:Health()
+    local ply_eyeangles = ply:EyeAngles()
     ply:UnSpectate()
     ply:DrawViewModel(true)
     ply:Spawn()
     ply.Horde_Fake_Respawn = nil
     ply:SetPos(ply_pos)
-    ply:SetAngles(ply_angles)
+    ply:SetEyeAngles(ply_eyeangles)
     ply:SetNoTarget(false)
     ply.Horde_Invincible = nil
     ply:SetNoDraw(false)
@@ -47,10 +48,8 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     
     local ent = tr.Entity
 	
-	if not ent:IsValid() then
-	ply:EmitSound("items/suitchargeno1.wav")
-	ply:Horde_SetGadgetCooldown(1)
-	return end
+	if not ent:IsValid() then return true end
+    if ent:GetPos():DistToSqr(ply:GetPos()) > 100000 then return true end
 	
     if HORDE:IsEnemy(ent) then
 		ply:Horde_SetGadgetCooldown(15)

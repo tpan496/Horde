@@ -7,7 +7,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Melee" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Chainsaw"
@@ -59,6 +59,21 @@ SWEP.Melee2Gesture = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
 SWEP.Primary.Ammo = "Battery"
 SWEP.Primary.ClipSize = 100
 SWEP.Primary.DefaultClip = 100
+
+SWEP.UseHordeDurability = false
+SWEP.MaxHits = 3 -- Change this number to change maximum target hits on the swep
+SWEP.MeleeBoundingBox = { -- If weapon has no bounding box, it will scale length based on MeleeRange and Melee2Range
+    primary = {
+        wide = 16,
+        tall = 32,
+        length = 105, -- 75 length ~ 2.5 meters and MeleeRange = 80 ~ 121 length
+    },
+    secondary = {
+        wide = 2,
+        tall = 8,
+        length = 135,
+    },
+}
 
 SWEP.MeleeSwingSound = ""
 SWEP.MeleeMissSound = {
@@ -255,16 +270,18 @@ end
 
 function SWEP:Reload()
     if self:Clip1() >= self:GetMaxClip1() then return end
-    --self:EmitSound(Sound(self.ReloadSound))
+    if self.Is_Reloading then return end
     self.Weapon:SendWeaponAnim(ACT_VM_HOLSTER)
-	self:SetNextPrimaryFire(CurTime() + 1)
-	timer.Simple(1, function ()
-		if !IsValid(self.Weapon) then return end
-		self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
-		local ammo = self.Owner:GetAmmoCount(self.Primary.Ammo)
-		local clip = math.min(self.Primary.ClipSize, ammo + self:Clip1())
-		local diff = clip - self:Clip1()
-		self.Owner:SetAmmo(ammo - diff, self.Primary.Ammo)
-		self.Weapon:SetClip1(clip)
-	end)
+    self:SetNextPrimaryFire(CurTime() + 1)
+    self.Is_Reloading = true
+    timer.Simple(1, function ()
+        if !IsValid(self.Weapon) or !self.Owner:IsValid() or self.Owner:GetActiveWeapon():GetClass() ~= "arccw_horde_chainsaw" then self.Is_Reloading = nil return end
+        self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
+        local ammo = self.Owner:GetAmmoCount(self.Primary.Ammo)
+        local clip = math.min(self.Primary.ClipSize, ammo + self:Clip1())
+        local diff = clip - self:Clip1()
+        self.Owner:SetAmmo(ammo - diff, self.Primary.Ammo)
+        self.Weapon:SetClip1(clip)
+        self.Is_Reloading = nil
+    end)
 end

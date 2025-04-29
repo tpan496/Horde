@@ -3,8 +3,9 @@ SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Assault -- Required for any new classes
 SUBCLASS.Icon = "subclasses/specops.png" -- Required
 SUBCLASS.Description = [[
-Assault subclass.
-Plays around a unique mode switch mechanic.]] -- Required
+Slow defensive based firearms class.
+Utilizes Tactical Mode and special grenades
+to methodically take down enemies.]] -- Required
 SUBCLASS.BasePerk = "specops_base"
 SUBCLASS.Perks = {
     [1] = {title = "Utility", choices = {"specops_smokescreen", "specops_flare"}},

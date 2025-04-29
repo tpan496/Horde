@@ -66,7 +66,7 @@ PERK.Hooks.Horde_OnEnemyKilled = function(victim, killer, wpn)
     local p = math.random()
     if p <= 0.5 then
         local money = ents.Create("horde_money")
-        local pos = victim:GetPos()
+        local pos = killer:GetPos()
         local drop_pos = pos
         drop_pos.z = pos.z + 15
         money:SetPos(drop_pos)

@@ -169,7 +169,7 @@ function PANEL:Paint()
 
             self.sell_btn:SetVisible(true)
             self.sell_btn:SetTextColor(Color(255,255,255))
-            self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.25)) .. "$")
+            self.sell_btn:SetText(translate.Get("Shop_Sell_For") .. " " .. tostring(math.floor(self.item.price * 0.75)) .. "$")
             self.sell_btn.Paint = function ()
                 surface.SetDrawColor(HORDE.color_crimson)
                 surface.DrawRect(0, 0, self:GetWide(), 200)

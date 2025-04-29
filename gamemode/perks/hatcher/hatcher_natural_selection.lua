@@ -10,5 +10,5 @@ PERK.Hooks = {}
 
 PERK.Hooks.Horde_OnAntlionSelfEvolve = function(ply, npc, bonus)
     if not ply:Horde_GetPerk("hatcher_natural_selection") then return end
-    bonus.increase = 0.5
+    bonus.increase = bonus.increase + 0.5
 end

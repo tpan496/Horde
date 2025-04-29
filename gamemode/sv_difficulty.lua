@@ -29,7 +29,7 @@ HORDE.difficulty_shock_damage_increase = { 0.15, 0.20, 0.25, 0.25, 0.30 }
 HORDE.difficulty_frostbite_slow = { 0.40, 0.45, 0.50, 0.50, 0.55 }
 
 -- Flat modifiers
-HORDE.difficulty_elite_health_scale_add = { 0, 0.1, 0.075, 0.100, 0.125, 0.15 }
+HORDE.difficulty_elite_health_scale_add = { 0.025, 0.05, 0.075, 0.100, 0.125 }
 HORDE.difficulty_elite_health_scale_multiplier = { 1, 1, 1, 1.1, 1.2 }
 HORDE.difficulty_additional_pack = { 0, 1, 2, 2, 3 }
 HORDE.difficulty_additional_ammoboxes = { 2, 1, 0, 0, 0 }

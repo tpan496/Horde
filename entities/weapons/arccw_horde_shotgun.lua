@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "Arccw - Horde" -- edit this if you like
+SWEP.Category = "Horde - Shotguns" -- ArcCW -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Pump-Action"
@@ -32,10 +32,22 @@ SWEP.WorldModelOffset = {
 
 SWEP.DefaultBodygroups = "000000000000"
 
+--SWEP.Horde_Locational_DMG = true
+SWEP.BodyDamageMults = {
+    [HITGROUP_HEAD] = 2,
+    [HITGROUP_CHEST] = 1,
+    [HITGROUP_STOMACH] = 1,
+    [HITGROUP_LEFTARM] = 0.75,
+    [HITGROUP_RIGHTARM] = 0.75,
+    [HITGROUP_LEFTLEG] = 0.5,
+    [HITGROUP_RIGHTLEG] = 0.5,
+}
+
 SWEP.Damage = 8
 SWEP.DamageMin = 4 -- damage done at maximum range
 SWEP.Num = 6
-SWEP.Range = 31 -- in METRES
+SWEP.Range = 30 -- in METRES
+SWEP.RangeMin = 5
 SWEP.Penetration = 1
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -45,9 +57,9 @@ SWEP.Primary.ClipSize = 6 -- DefaultClip is automatically set.
 SWEP.PhysBulletMuzzleVelocity = 350
 
 SWEP.Recoil = 3
-SWEP.RecoilSide = 3
+SWEP.RecoilSide = 2
 SWEP.RecoilRise = 0.1
-SWEP.RecoilPunch = 2
+--SWEP.RecoilPunch = 2
 
 SWEP.ManualAction = true
 SWEP.ShotgunReload = true
@@ -134,7 +146,7 @@ SWEP.MirrorVMWM = true
 SWEP.Attachments = {
     {
         PrintName = "Ammo Type",
-        Slot = "go_ammo",
+        Slot = "horde_go_shotgun_ammo", --go_ammo
         DefaultAttName = "Buckshot Shells"
     },
     {
@@ -158,6 +170,9 @@ SWEP.Animations = {
     ["cycle"] = {
         Source = "pump",
         Time = 0.5,
+        SoundTable = {
+            {s = "weapons/shotgun/shotgun_cock.wav", t = 0},
+        },
     },
     ["sgreload_start"] = {
         Source = "reload1",
@@ -165,6 +180,7 @@ SWEP.Animations = {
         LHIK = true,
         LHIKIn = 0.5,
         LHIKOut = 0,
+        Time = 0.2,
     },
     ["sgreload_insert"] = {
         Source = "reload2",
@@ -183,15 +199,15 @@ SWEP.Animations = {
         LHIK = true,
         LHIKIn = 0,
         LHIKOut = 1,
-        SoundTable = {
-            {s = "weapons/shotgun/shotgun_cock.wav", t = 0},
-        },
     },
     ["sgreload_finish_empty"] = {
         Source = "reload3",
         LHIK = true,
         LHIKIn = 0,
         LHIKOut = 1,
+        SoundTable = {
+            {s = "weapons/shotgun/shotgun_cock.wav", t = 0},
+        },
     },
 }
 

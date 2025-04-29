@@ -8,7 +8,7 @@ end
 
 SWEP.Base = "arccw_horde_base_melee"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - Horde" -- edit this if you like
+SWEP.Category = "Horde - Melee" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Zweihander"
@@ -52,6 +52,21 @@ SWEP.Melee2 = true
 SWEP.Melee2Range = 90
 SWEP.Melee2AttackTime = 0.75
 SWEP.Melee2Time = 1.5
+
+SWEP.MaximumDurability = 3000
+SWEP.MaxHits = 10 -- Change this number to change maximum target hits on the swep
+SWEP.MeleeBoundingBox = { -- If weapon has no bounding box, it will scale length based on MeleeRange and Melee2Range
+    primary = {
+        wide = 64,
+        tall = 32,
+        length = 60, -- 75 length ~ 2.5 meters and MeleeRange = 80 ~ 121 length
+    },
+    secondary = {
+        wide = 24,
+        tall = 48,
+        length = 100,
+    },
+}
 
 SWEP.MeleeSwingSound = {
     "horde/weapons/zweihander/swing_hard_1.ogg",

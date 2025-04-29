@@ -26,12 +26,19 @@ function ENT:Initialize()
     self.Horde_ShockwaveInterval = 2
     self.Horde_WatchTower = true
 
-    if self.Horde_Owner:Horde_GetPerk("warden_restock") then
+    local ply = self.Horde_Owner
+    if ply:Horde_GetPerk("warden_restock") then
         self.Horde_ThinkInterval = 15
     end
-    if self.Horde_Owner:Horde_GetPerk("warden_ex_machina") then
-        self:Horde_AddWardenAura()
+    
+    if ply:Horde_GetPerk("warden_rejection_pulse") then
         self.Horde_EnableShockwave = true
+    end
+    
+    if ply:Horde_GetPerk("warden_ex_machina") then
+        timer.Simple(0.1, function()
+            self:Horde_AddWardenAura()
+        end)
     end
 end
 
@@ -84,13 +91,53 @@ hook.Add("PlayerUse", "PickUpWatchtower", function(ply, ent)
                 end
             end
         end
+        
+        if not ply.Horde_WatchTowers_PickedUp_Recently then
+            ply.Horde_WatchTowers_PickedUp_Recently = {}
+        end
+        
         local p = ent:GetPos()
-        p.z = ply:GetPos().z + 12
+        p.z = ply:GetPos().z + 50
         ent:SetPos(p)
         local a = ply:GetAngles()
         ent:SetAngles(Angle(0, a.y, 0))
+        
+        if ply:Horde_GetPerk("warden_ex_machina") then
+            local id = ent:GetCreationID()
+            timer.Remove("Horde_DisplayWardenAuraCircle" .. id)
+            ent.Horde_WardenAura:SetIsDisplayingCircleRadius(1)
+            ply.Horde_WardenAura:SetIsDisplayingCircleRadius(0)
+            ply.Horde_WatchTowers_PickedUp_Recently[ent] = true
+        end
+        
+        ent:GetPhysicsObject():EnableMotion(true)
         ply:PickupObject(ent)
+        
         ent.Horde_WatchtowerPickedUp = ply
         ent.Horde_WatchtowerPickupCd = CurTime() + 0.5
+    end
+end)
+
+hook.Add("OnPlayerPhysicsDrop", "Horde_WatchTowerDrop", function (ply, ent, thrown)
+    if HORDE:IsWatchTower(ent) and ent:GetNWEntity("HordeOwner"):IsValid() and ent:GetNWEntity("HordeOwner") == ply then
+        local a = ent:GetAngles()
+        ent:SetAngles(Angle(0, a.y, 0))
+        
+        ent:DropToFloor()
+        HORDE:DropTurret(ent)
+        
+        if ply:Horde_GetPerk("warden_ex_machina") then
+            local id = ent:GetCreationID()
+            timer.Create("Horde_DisplayWardenAuraCircle" .. id, 4, 1, function()
+                if not ply.Horde_WardenAura or not ent.Horde_WardenAura then ply.Horde_WatchTowers_PickedUp_Recently = {} return end
+                ent.Horde_WardenAura:SetIsDisplayingCircleRadius(0)
+                
+                ply.Horde_WatchTowers_PickedUp_Recently[ent] = nil
+                if next(ply.Horde_WatchTowers_PickedUp_Recently) == nil then
+                    ply.Horde_WardenAura:SetIsDisplayingCircleRadius(1)
+                end
+                PrintTable(ply.Horde_WatchTowers_PickedUp_Recently)
+            end)
+        end
     end
 end)

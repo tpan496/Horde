@@ -22,13 +22,14 @@ SWEP.AdminSpawnable				= false
 	-- NPC Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.NPC_HasSecondaryFire = false -- Can the weapon have a secondary fire?
 SWEP.NPC_SecondaryFireSound = {"weapons/ar2/ar2_altfire.wav"} -- The sound it plays when the secondary fire is used
+SWEP.NPC_ReloadSound = "vj_base/weapons/smg1/reload.wav"
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Primary.Damage				= 0 -- Damage
 SWEP.Primary.ClipSize			= 30 -- Max amount of bullets per clip
 SWEP.Primary.Delay				= 0.09 -- Time until it can shoot again
 SWEP.Primary.Automatic			= true -- Is it automatic?
 SWEP.Primary.Ammo				= "SMG1" -- Ammo type
-SWEP.Primary.Sound				= {"vj_weapons/hl2_smg1/smg1_single1.wav","vj_weapons/hl2_smg1/smg1_single2.wav","vj_weapons/hl2_smg1/smg1_single3.wav"}
+SWEP.Primary.Sound				= "VJ.Weapon_SMG1.Single"
 SWEP.Primary.DistantSound		= {"Weapon_SMG1.NPC_Single"}
 SWEP.NPC_TimeUntilFireExtraTimers = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6} -- Extra timers, which will make the gun fire again! | The seconds are counted after the self.NPC_TimeUntilFire!
 SWEP.PrimaryEffects_MuzzleAttachment = 1
@@ -95,7 +96,7 @@ function SWEP:OnPrimaryAttack(status, statusData)
 			dir:Normalize()
 			dir = dir + VectorRand() * 0.03
 			dir:Normalize()
-			phy:ApplyForceCenter(dir * 4000)
+			phy:ApplyForceCenter(dir * 1000)
 		end
 		return true
 	end

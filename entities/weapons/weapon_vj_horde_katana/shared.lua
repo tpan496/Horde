@@ -1,4 +1,7 @@
 if (!file.Exists("autorun/vj_base_autorun.lua","LUA")) then return end
+if CLIENT then
+    killicon.AddAlias("weapon_vj_horde_katana", "arccw_horde_katana")
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Base = "weapon_vj_base"
 SWEP.PrintName = "Katana"

@@ -8,10 +8,13 @@ ENT.HullType = HULL_WIDE_HUMAN
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE", "CLASS_XEN"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK2
+ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackDamage = 25
 ENT.MeleeAttackDistance = 30 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 70 -- How far does the damage go?
-ENT.SlowPlayerOnMeleeAttack = true -- If true, then the player will slow down
+ENT.MeleeAttackDamageAngleRadius = 180 -- We need this because its eye position ends up rotating too much on melee!
+ENT.SlowPlayerOnMeleeAttack = false -- If true, then the player will slow down
 ENT.SlowPlayerOnMeleeAttack_RunSpeed = 100 -- Running Speed when Slow Player is on
 ENT.SlowPlayerOnMeleeAttackTime = 5 -- How much time until player's Speed resets
 ENT.MeleeAttackBleedEnemy = false -- Should the player bleed when attacked by melee
@@ -47,55 +50,56 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_headcrab_fast D_LI 99")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnInput(key, activator, caller, data)
+	if key == "step" then
+		self:PlayFootstepSound()
+	elseif key == "melee" then
+		self:ExecuteMeleeAttack()
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Controller_IntMsg(ply)
 	ply:ChatPrint("JUMP: To Pull Grenade (One time event!)")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
-	local ene = self:GetEnemy()
-	
-	-- Pull out the grenade
-	if self.Zombine_GrenadeOut == false && ((self.VJ_IsBeingControlled == true && self.VJ_TheController:KeyDown(IN_JUMP)) or (self.VJ_IsBeingControlled == false)) then
-		if self.VJ_IsBeingControlled == true then
-			self.VJ_TheController:PrintMessage(HUD_PRINTCENTER, "Pulling Grenade Out!")
-			self:Zombine_CreateGrenade()
-		elseif IsValid(ene) && self.LatestEnemyDistance <= 400 && self:Health() <= 50 then
-			self:Zombine_CreateGrenade()
-		end
-	end
-	
-	-- Animation Control
-	-- Has grenade
-	if IsValid(self.Zombine_Grenade) == true then
-		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"idle_grenade")}
-		if IsValid(ene) then
-			if self.LatestEnemyDistance < 1000 then
-				self.AnimTbl_Walk = {VJ_SequenceToActivity(self,"run_all_grenade")}
-				self.AnimTbl_Run = {VJ_SequenceToActivity(self,"run_all_grenade")}
-			else
-				self.AnimTbl_Walk = {VJ_SequenceToActivity(self,"walk_all_grenade")}
-				self.AnimTbl_Run = {VJ_SequenceToActivity(self,"walk_all_grenade")}
-			end
-		else
-			self.AnimTbl_Walk = {VJ_SequenceToActivity(self,"walk_all_grenade")}
-			self.AnimTbl_Run = {VJ_SequenceToActivity(self,"run_all_grenade")}
-		end
-	-- NO grenade
-	else
-		self.AnimTbl_IdleStand = {ACT_IDLE}
-		if IsValid(ene) then
-			if self.LatestEnemyDistance < 1000 then
-				self.AnimTbl_Walk = {ACT_RUN}
-				self.AnimTbl_Run = {ACT_RUN}
-			else
-				self.AnimTbl_Walk = {ACT_WALK}
-				self.AnimTbl_Run = {ACT_WALK}
-			end
-		else
-			self.AnimTbl_Walk = {ACT_WALK}
-			self.AnimTbl_Run = {ACT_RUN}
-		end
-	end
+function ENT:TranslateActivity(act)
+    -- We have an active grenade
+    if IsValid(self.Zombine_Grenade) then
+        if act == ACT_IDLE then
+            return ACT_HANDGRENADE_THROW1
+        elseif (act == ACT_WALK or act == ACT_RUN) && IsValid(self:GetEnemy()) then
+            if self.EnemyData.Distance < 1024 then -- Make it run when close to the enemy
+                return ACT_HANDGRENADE_THROW3
+            else
+                return ACT_HANDGRENADE_THROW2
+            end
+        end
+    elseif (act == ACT_WALK or act == ACT_RUN) then
+        if self:IsOnFire() then
+            return ACT_WALK_ON_FIRE
+        elseif IsValid(self:GetEnemy()) then
+            if self.EnemyData.Distance < 640 then -- Make it run when close to the enemy
+                return ACT_RUN
+            else
+                return ACT_WALK
+            end
+        end
+    end
+    return self.BaseClass.TranslateActivity(self, act)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnThinkActive()
+    -- Pull out the grenade
+    if !self.Zombine_GrenadeOut then
+        if self.VJ_IsBeingControlled then
+            if  self.VJ_TheController:KeyDown(IN_JUMP) then
+                self.VJ_TheController:PrintMessage(HUD_PRINTCENTER, "Pulling Grenade Out!")
+                self:Zombine_CreateGrenade()
+            end
+        elseif IsValid(self:GetEnemy()) && self.EnemyData.Distance <= 384 && self:Health() <= 65 then
+            self:Zombine_CreateGrenade()
+        end
+    end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Zombine_CreateGrenade()
@@ -115,11 +119,13 @@ function ENT:Zombine_CreateGrenade()
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+--[[
 function ENT:MultipleMeleeAttacks()
     self.AnimTbl_MeleeAttack = {"vjseq_fastattack"}
     self.TimeUntilMeleeAttackDamage = 0.4
     self.MeleeAttackDamage = 25
 end
+]]
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnKilled(dmginfo,hitgroup)
 	if IsValid(self.Zombine_Grenade) then

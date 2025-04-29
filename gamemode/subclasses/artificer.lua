@@ -3,8 +3,9 @@ SUBCLASS.UnlockCost = 100
 SUBCLASS.ParentClass = HORDE.Class_Cremator -- Required for any new classes
 SUBCLASS.Icon = "subclasses/artificer.png" -- Required
 SUBCLASS.Description = [[
-Cremator subclass.
-Fire/lightning damage caster.]] -- Required
+Offensive AoE and single target spell caster.
+Weaves fire and lightning spells to shock 
+and ignite enemies to maximize damage.]] -- Required
 SUBCLASS.BasePerk = "artificer_base"
 SUBCLASS.Perks = {
     [1] = {title = "Inner Strength", choices = {"artificer_solar_flux", "artificer_purge"}},

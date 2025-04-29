@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "ArcCW - GSO (SGs)" -- edit this if you like
+SWEP.Category = "Horde - Shotguns" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "M1014"
@@ -27,10 +27,22 @@ SWEP.ViewModelFOV = 60
 
 SWEP.DefaultBodygroups = "001000000000"
 
+--SWEP.Horde_Locational_DMG = true
+SWEP.BodyDamageMults = {
+    [HITGROUP_HEAD] = 2,
+    [HITGROUP_CHEST] = 1,
+    [HITGROUP_STOMACH] = 1,
+    [HITGROUP_LEFTARM] = 0.75,
+    [HITGROUP_RIGHTARM] = 0.75,
+    [HITGROUP_LEFTLEG] = 0.5,
+    [HITGROUP_RIGHTLEG] = 0.5,
+}
+
 SWEP.Damage = 18
 SWEP.DamageMin = 13 -- damage done at maximum range
 SWEP.Num = 8
 SWEP.Range = 60 -- in METRES
+SWEP.RangeMin = 10
 SWEP.Penetration = 1
 SWEP.DamageType = DMG_BUCKSHOT
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -39,8 +51,8 @@ SWEP.Primary.ClipSize = 6 -- DefaultClip is automatically set.
 
 SWEP.PhysBulletMuzzleVelocity = 350
 
-SWEP.Recoil = 4
-SWEP.RecoilSide = 2
+SWEP.Recoil = 2.5
+SWEP.RecoilSide = 1.25
 SWEP.RecoilRise = 0.1
 
 SWEP.ShotgunReload = true
@@ -57,8 +69,8 @@ SWEP.Firemodes = {
 SWEP.NPCWeaponType = "weapon_shotgun"
 SWEP.NPCWeight = 100
 
-SWEP.AccuracyMOA = 50 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
+SWEP.AccuracyMOA = 25 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 75 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 25
 
 SWEP.Primary.Ammo = "buckshot" -- what ammo type the gun uses
@@ -157,6 +169,16 @@ SWEP.AttachmentElements = {
         }
     },
     ["go_m1014_mag_7"] = {
+        VMBodygroups = {
+            {ind = 3, bg = 2}
+        }
+    },
+    ["horde_go_m1014_mag_4"] = {
+        VMBodygroups = {
+            {ind = 3, bg = 1}
+        }
+    },
+    ["horde_go_m1014_mag_8"] = {
         VMBodygroups = {
             {ind = 3, bg = 2}
         }
@@ -284,7 +306,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Magazine",
-        Slot = "go_m1014_mag",
+        Slot = "horde_go_m1014_mag",
         DefaultAttName = "6-Round 12-Gauge Tube"
     },
     {
@@ -299,7 +321,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "go_ammo",
+        Slot = "horde_go_shotgun_ammo", --go_ammo
         DefaultAttName = "Buckshot Shells"
     },
     {
@@ -352,6 +374,7 @@ SWEP.Animations = {
         LHIK = true,
         LHIKIn = 0.5,
         LHIKOut = 0,
+        Time = 0.4 --0.8,
     },
     ["sgreload_insert"] = {
         Source = "insert",
@@ -360,18 +383,21 @@ SWEP.Animations = {
         LHIK = true,
         LHIKIn = 0,
         LHIKOut = 0,
+        Time = 0.5 --0.6,
     },
     ["sgreload_finish"] = {
         Source = "end_reload",
         LHIK = true,
         LHIKIn = 0,
         LHIKOut = 0.2,
+        Time = 0.2 --0.4,
     },
     ["sgreload_finish_empty"] = {
         Source = "end_reload_empty",
         LHIK = true,
         LHIKIn = 0,
         LHIKOut = 0.2,
+        Time = 0.7 --1,
     },
 }
 
