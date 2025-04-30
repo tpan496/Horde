@@ -314,77 +314,39 @@ Gain Adrenaline when you kill an enemy.
 Adrenaline increases damage and speed by {4}.]]
 
 LANGUAGE["Perk_heavy_base"] = [[
-The Heavy class is a tank class that focuses on armor while also providing strong suppression 
-firepower that either reduces enemy’s damage dealt or increases their damage taken.
+The Heavy class is a tank class that provides strong suppression firepower.
+Complexity: EASY
 
 {6} increased maximum armor. ({7} per level, up to {8}).
 
 Regenerate {1} armor per second.
-Regenerate up to {2} armor. ({3} + {4} per level, up to {5})
-
-Shift + E to activate Energy Barrier to gain temporary armor.
-(Recommended to bind, “horde_use_perk_skill” to a key / mouse button)
-
-While Energy Barrier is active, 
-Adds 25% of maximum armor as temporary armor.
-Energy Barrier lasts for 5 seconds.
-Energy Barrier has a 25 second cooldown.
-
-Temporary armor also counts as armor.
-Temporary armor is removed after Energy Barrier duration ends.
-Temporary armor granted by Energy Barrier does not contribute to your maximum armor.
-Temporary armor granted by Energy Barrier does not contribute to your maximum armor regeneration.]]
+Regenerate up to {2} armor. ({3} + {4} per level, up to {5})]]
 
 LANGUAGE["Perk_medic_base"] = [[
 The Medic class is a durable support class that focuses on healing and buffing teammates.
 Complexity: MEDIUM
 
-Increases healing potency by {1}. ({2} per level, up to {3}).
+Amplifies healing by {1}. ({2} per level, up to {3}).
 
-SHIFT+E to fire a healing dart at your crosshair that explodes on impact.
-Also fires another healing dart straight down that is centered on you.
-Healing darts will heal allies and deal poison damage to enemies.
-(Recommended to bind, “horde_use_perk_skill” to a key / mouse button)
-
-Healing darts have {4} charges that refresh once every 2 seconds.
-Healing darts deal {5} poison damage.
-Healing darts restores {6} health.
-Centered healing darts have {7} less healing effectiveness.
-Centered healing darts deal {8} less poison damage.]]
+Regenerate {4} health per second.]]
 
 LANGUAGE["Perk_demolition_base"] = [[
 The Demolition class is a crowd-control class that can also provide high single target damage.
 Complexity: MEDIUM
 
-{1} increased blast damage. ({2} per level, up to {3}).
-{4} increased blast damage resistance. ({5} + {6} per level, up to {7}).
-80% less damage taken from your own explosives.
+{7} increased Blast damage. ({8} per level, up to {9}).
+{1} increased Blast damage resistance. ({2} + {3} per level, up to {4}).
 
-Regenerate {8} SLAM and grenade every {9} seconds.
-Maximum SLAM and grenade regeneration capacity is {10}.
-
-Increases to blast damage also increases your blunt damage.
-Your blunt damage is also considered blast damage.
-
-Shift + E to detonate all your placed SLAM that aren’t tripmines.
-(Recommended to bind, “horde_use_perk_skill” to a key / mouse button)]]
+Regenerate {5} frag grenade every {6} seconds, if you do not have one.]]
 
 LANGUAGE["Perk_ghost_base"] = [[
-The Ghost class is focused on taking down elite enemies and bosses using high 
-damaging weapons and using their evasion through their Camouflage ability.
+The Ghost class is focused on taking down boss enemies using Camoflague.
 Complexity: HIGH
 
-{1} more ballistic damage on headshot. ({2} per level, up to {3}).
+{1} more headshot damage. ({2} per level, up to {3}).
 
-Gain Camouflage after 1 second if you have crouched.
-Camouflage grants {4} chance to evade.
-Attacking or running removes Camouflage.
-
-Gain True Evasion buildup while you have Camouflage.
-You cannot inherently evade hits while you have Camouflage.
-Gain True Evasion buildup equal to your chance to evade when you take a hit.
-On 100% buildup, negates that attack as if you were to successfully evade.
-True Evasion buildup has no buildup cooldown or decay.]]
+Crouch to activate Camoflague, granting {4} evasion.
+Attacking or Running REMOVES Camoflague.]]
 
 LANGUAGE["Perk_engineer_base"] = [[
 The Engineer class is a minion-centered class that deals damage through minions.
@@ -548,12 +510,12 @@ LANGUAGE["Perk_Title_Heavy_Tier_1"] = [[Suppression]]
 LANGUAGE["Perk_Title_heavy_sticky_compound"] = [[Sticky Compound]]
 LANGUAGE["Perk_heavy_sticky_compound"] = [[
 Enemies you hit with Ballistic damage are Hindered.
-Hindered enemies deal {1} reduced damage.]]
+Hindered enemies deal {1} reduced Physical damage.]]
 
 LANGUAGE["Perk_Title_heavy_crude_casing"] = [[Crude Casing]]
 LANGUAGE["Perk_heavy_crude_casing"] = [[
 Enemies you hit with Ballistic damage are Weakened.
-Weakened enemies take {1} increased damage.]]
+Weakened enemies receive {1} increased Physical damage.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_2"] = [[Backup]]
 LANGUAGE["Perk_Title_heavy_repair_catalyst"] = [[Repair Catalyst]]
@@ -562,19 +524,18 @@ Adds {1} to maximum armor regeneration.]]
 
 LANGUAGE["Perk_Title_heavy_floating_carrier"] = [[Floating Carrier]]
 LANGUAGE["Perk_heavy_floating_carrier"] = [[
-Adds {1} to maximum weight.
-{2} increased Ballistic damage for each weight currently used.]]
+Adds 5 to maximum weight.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_3"] = [[Armor Protection]]
 LANGUAGE["Perk_Title_heavy_liquid_armor"] = [[Liquid Armor]]
 LANGUAGE["Perk_heavy_liquid_armor"] = [[
-{1} Less Physical damage taken while you have armor.
-{2} Less Physical damage taken while you have no armor]]
+While you have at least {1} armor:
+  {2} less Physical damage taken.]]
 
 LANGUAGE["Perk_Title_heavy_reactive_armor"] = [[Reactive Armor]]
-LANGUAGE["Perk_heavy_reactive_armor"] = [[Upon taking Physical damage,
-{1} Less Physical damage taken for {2} seconds.
-Requires and uses 20 armor when triggered. Cooldown: {3} seconds.]]
+LANGUAGE["Perk_heavy_reactive_armor"] = [[Gain a reactive armor that negates critical damage taken.
+Activates on taking more than {1} damage and recharges after {2} seconds.
+Uses {3} of your maximum armor when triggered.]]
 
 LANGUAGE["Perk_Title_Heavy_Tier_4"] = [[Technology]]
 LANGUAGE["Perk_Title_heavy_nanomachine"] = [[Nanomachine]]
@@ -583,14 +544,14 @@ LANGUAGE["Perk_heavy_nanomachine"] = [[
 
 LANGUAGE["Perk_Title_heavy_ballistic_shock"] = [[Ballistic Shock]]
 LANGUAGE["Perk_heavy_ballistic_shock"] = [[
-Debuffs you apply have {1} increased effect.]]
+{1} increased Ballistic damage.
+Debuffs you apply have {2} increased effect.]]
 
 -- Default Perks: Medic
 LANGUAGE["Perk_Title_Medic_Tier_1"] = [[Medicine]]
 LANGUAGE["Perk_Title_medic_antibiotics"] = [[Antibiotics]]
 LANGUAGE["Perk_medic_antibiotics"] = [[
-Increases healing potency by {1}.
-Adds {2} charges to your healing dart skill.]]
+Your healing is amplified by {1}.]]
 
 LANGUAGE["Perk_Title_medic_painkillers"] = [[Painkillers]]
 LANGUAGE["Perk_medic_painkillers"] = [[
@@ -600,7 +561,7 @@ LANGUAGE["Perk_Title_Medic_Tier_2"] = [[Bio-Engineering]]
 LANGUAGE["Perk_Title_medic_berserk"] = [[Berserk]]
 LANGUAGE["Perk_medic_berserk"] = [[
 Players you heal have Berserk for {1} seconds.
-{2} more damage while you have Berserk.]]
+{2} increased damage while you have Berserk.]]
 
 LANGUAGE["Perk_Title_medic_fortify"] = [[Fortify]]
 LANGUAGE["Perk_medic_fortify"] = [[
@@ -615,14 +576,12 @@ Your healing directly decreases buildup for Bleeding, Break and Necrosis.]]
 LANGUAGE["Perk_Title_medic_haste"] = [[Haste]]
 LANGUAGE["Perk_medic_haste"] = [[
 Players you heal have Haste for {1} seconds.
-{2} more movement speed while you have Haste.]]
+{2} increased movement speed while you have Haste.]]
 
 LANGUAGE["Perk_Title_Medic_Tier_4"] = [[Natural Selection]]
-LANGUAGE["Perk_Title_medic_injection"] = [[Injection]]
-LANGUAGE["Perk_medic_injection"] = [[
-Centered healing darts instead have {1} less healing effectiveness.
-Centered healing darts have {2} increased area of effect.
-Direct Medic dart hits do an additional {3} times the poison damage.]]
+LANGUAGE["Perk_Title_medic_cellular_implosion"] = [[Cellular Implosion]]
+LANGUAGE["Perk_medic_cellular_implosion"] = [[
+Enemies you killed have {1} chance to generate a healing cloud.]]
 
 LANGUAGE["Perk_Title_medic_xcele"] = [[Accelerated Healing Factor]]
 LANGUAGE["Perk_medic_xcele"] = [[
@@ -633,103 +592,92 @@ Buffs you apply have {2} increased duration.]]
 LANGUAGE["Perk_Title_Demolition_Tier_1"] = [[Grenade]]
 LANGUAGE["Perk_Title_demolition_frag_impact"] = [[Impact Grenade]]
 LANGUAGE["Perk_demolition_frag_impact"] = [[
+{1} increased Grenade damage on impact.
 Grenades explode on impact.
-SLAM and grenades deal {1} more damage.
-SLAM and grenade explosions increase Stun buildup.]]
+Grenade and SLAM explosions increase Stun buildup.]]
 
 LANGUAGE["Perk_Title_demolition_frag_cluster"] = [[Cluster Grenade]]
 LANGUAGE["Perk_demolition_frag_cluster"] = [[
-SLAM and grenades split into {1} bomblets on detonation.
-Bomblets created by grenades deal {2} less damage.
-Bomblets created by SLAM deal {3} less damage.]]
+Grenades and SLAMs spawn {1} mini-nades on detonation.
+Mini-nades do {2} less damage.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_2"] = [[Weaponry]]
 LANGUAGE["Perk_Title_demolition_direct_hit"] = [[Direct Hit]]
 LANGUAGE["Perk_demolition_direct_hit"] = [[
-{1} increased blast damage.
-{2} increased minimum fall off range from centered explosions.]]
+{1} increased Blast damage against enemies close to explosions.
+{1} increased Blunt damage.]]
 
 LANGUAGE["Perk_Title_demolition_seismic_wave"] = [[Seismic Wave]]
-LANGUAGE["Perk_demolition_seismic_wave"] = [[
-Blast damage generates a delayed explosion centered on enemies hit.
-Delayed explosion deals {1} physical damage in an area of effect.
-Only activates when blast damage is greater than {2}.]]
+LANGUAGE["Perk_demolition_seismic_wave"] = [[Blast damage generates a delayed explosion.
+Delayed explosion deals {1} explosion damage as Physical damage.
+Only activates when damage is greater than {2}.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_3"] = [[Approach]] --
 LANGUAGE["Perk_Title_demolition_fragmentation"] = [[Fragmentation]]
 LANGUAGE["Perk_demolition_fragmentation"] = [[
-{1} increased blast damage.
-Minimum fall off damage from explosions is capped at {2}.]]
+{1} increased Blast damage.]]
 
 LANGUAGE["Perk_Title_demolition_knockout"] = [[Knockout]]
-LANGUAGE["Perk_demolition_knockout"] = [[
-Blast damage increases Stun buildup against enemies.
-Enemies affected by Stun are paralyzed for {1} seconds.
+LANGUAGE["Perk_demolition_knockout"] = [[Blast damage increases Stun buildup.
+Enemies affected by Stun is paralyzed for {1} seconds.
 Stun cooldown is {2} seconds.]]
 
 LANGUAGE["Perk_Title_Demolition_Tier_4"] = [[Destruction]]
 LANGUAGE["Perk_Title_demolition_pressurized_warhead"] = [[Pressurized Warhead]]
-LANGUAGE["Perk_demolition_pressurized_warhead"] = [[
-{1} increased blast damage against elites.
-{2} more blast damage on headshot.
-Blast damage deals {3} of the enemy's maximum health, once.]]
+LANGUAGE["Perk_demolition_pressurized_warhead"] = [[{1} increased Blast damage against elites.
+{2} more Blast and Blunt damage on headshot.]]
 
-LANGUAGE["Perk_Title_demolition_saboteur"] = [[Saboteur]]
-LANGUAGE["Perk_demolition_saboteur"] = [[
-{1} faster SLAM and grenade regeneration rate.
-{2} increased SLAM and grenade throwing speed and distance.
-Adds {3} to your maximum SLAM and grenade regeneration capacity.]]
+LANGUAGE["Perk_Title_demolition_chain_reaction"] = [[Chain Reaction]]
+LANGUAGE["Perk_demolition_chain_reaction"] = [[Explosions deals up to {1} of an enemy's current health as extra Blast damage.
+Damage increase is capped at {2}.]]
 
 -- Default Perks: Ghost
 LANGUAGE["Perk_Title_Ghost_Tier_1"] = [[Tactics]]
 LANGUAGE["Perk_Title_ghost_headhunter"] = [[Headhunter]]
 LANGUAGE["Perk_ghost_headhunter"] = [[
-Each headshot increases your stacks up to {1} times.
-{2} increased ballistic damage per stack on headshot.
-Each stack lasts {3} seconds and falls off consecutively.]]
+Headshot damage stacks up to 5 times.
+Each stack increases 8% headshot damage.]]
 
 LANGUAGE["Perk_Title_ghost_sniper"] = [[Sniper]]
 LANGUAGE["Perk_ghost_sniper"] = [[
-{1} increased ballistic damage while crouching.]]
+25% increased Ballistic damage while crouching.]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_2"] = [[Reposition]]
 LANGUAGE["Perk_Title_ghost_phase_walk"] = [[Phase Walk]]
 LANGUAGE["Perk_ghost_phase_walk"] = [[
-Running does not remove your Camouflage.
-{1} increased movement speed while Camouflaged.
-Adds {2} chance to evade while Camouflaged.]]
+Running does not cancel Camoflague.
+{1} increased movement speed when you have Camoflague.
+Adds {2} evasion when you have Camoflague.]]
 
 LANGUAGE["Perk_Title_ghost_ghost_veil"] = [[Ghost Veil]]
 LANGUAGE["Perk_ghost_ghost_veil"] = [[
-Attacking does not remove your Camouflage.
-{1} increased movement speed while Camouflaged.
-{2} increased ballistic damage while Camouflaged.]]
+Attacking does not cancel Camoflague.
+{1} increased walk speed when you have Camoflague.
+{2} increased Ballistic damage when you have Camoflague.]]
 
 LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Trajectory]]
 LANGUAGE["Perk_Title_ghost_brain_snap"] = [[Brain Snap]]
 LANGUAGE["Perk_ghost_brain_snap"] = [[
-Headshot increases Freeze buildup against enemies.
-Enemies affected by Freeze are paralyzed for {1} seconds.
-Headshot extends Freeze duration and Freeze cooldown is {2} seconds.]]
+Headshots increases Freeze buildup based on weapon damage.
+Enemies affected by Freeze has drastically reduced action speed for {1} seconds.
+Freeze cooldown is {2} seconds.]]
 
 LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[Kinetic Impact]]
 LANGUAGE["Perk_ghost_ghost_kinetic_impact"] = [[
-Increases ballistic damage the further away enemies are.
-{1} increased ballistic damage for each {2} units.
-Increased ballistic damage caps at {3}.]]
+Increases Ballistic damage based on distance.
+Increases {1} damage for each {2} units.
+Increase caps at {3}.]]
 
-LANGUAGE["Perk_Title_Ghost_Tier_4"] = [[Assassina]]
-LANGUAGE["Perk_Title_ghost_dance_with_death"] = [[Dance with Death]]
-LANGUAGE["Perk_ghost_dance_with_death"] = [[
-You always have Camouflage.
-{1} of damage taken is taken as health damage over {2} seconds.
-Adds {3} True Evasion buildup every second up to {4}.]]
+LANGUAGE["Perk_Title_Ghost_Tier_4"] = [[Disposal]]
+LANGUAGE["Perk_Title_ghost_coup"] = [[Coup De Grace]]
+LANGUAGE["Perk_ghost_coup"] = [[
+Instantly kills enemies with less than 20% health.]]
 
 LANGUAGE["Perk_Title_ghost_decapitate"] = [[Decapitate]]
 LANGUAGE["Perk_ghost_decapitate"] = [[
-{1} increased ballistic damage on headshot.
-{2} increased ballistic damage against elites on headshot.
-Culls enemies that were brought down to {3} health on headshot.]]
+When you have Camoflague:
+  {1} increased Ballistic damage.
+  {2} increased headshot damage against elites.]]
 
 -- Default Perks: Engineer
 LANGUAGE["Perk_Title_Engineer_Tier_1"] = [[Craftsmanship]]
@@ -1706,8 +1654,7 @@ LANGUAGE["Item_Bulldozer Suit"] = [[Bulldozer Suit]]
 LANGUAGE["Item_Desc_Bulldozer Suit"] = [[
 Distinguished Heavy armor.
 
-Fills up 125% of your maximum armor.
-10% increased maximum armor.
+Fills up 125% of your armor bar.
 ]]
 
 LANGUAGE["Item_Hazmat Suit"] = [[Hazmat Suit]]
@@ -1918,33 +1865,19 @@ LANGUAGE["Gadget_Desc_gadget_gunslinger"] = [[
 -- Demolition Gadgets
 LANGUAGE["Gadget_gadget_proximity_defense"] = [[Proximity Defense]]
 LANGUAGE["Gadget_Desc_proximity_defense"] = [[
-Active:
-Triggers a non lethal explosion that stuns nearby enemies around you.
-Proximity Defense stun lasts for {1} seconds.
-Proximity Defense ignores all stun cooldowns.
-Proximity Defense also casts your Sigil if you have one.
+Triggers an explosion that Stuns nearby enemies.
 ]]
 
 LANGUAGE["Gadget_gadget_projectile_launcher_blast"] = [[Projectile Launcher (Blast)]]
 LANGUAGE["Gadget_Desc_gadget_projectile_launcher_blast"] = [[
-Passive:
-Explosive projectile used is also considered a grenade.
-Explosive projectile used is also considered a Meteor.
-Each explosion cascade is considered {1} spell charge level higher.
-Cooldown can be bypassed by spending {2} Mind power.
-Cooldown reduction affects this gadget’s cooldown.
-Grenade regeneration rate affects this gadget’s cooldown.
-
-Active:
-Throws an explosive projectile that explodes on impact depending on your perk.
-Generates {3} extra explosive projectiles that cascade outwards.
+Shoots an explosive projectile.
+Projectile deals 100 Blast damage.
+Generates 3 extra explosions after a short delay.
 ]]
 
 LANGUAGE["Gadget_nitrous_propellor"] = [[Nitrous Propellor]]
 LANGUAGE["Gadget_Desc_gadget_nitrous_propellor"] = [[
-Active Gadget:
-Propels you upward and in the direction you are moving in.
-{1} reduced fall damage taken until you land on the ground.
+Propells you forward and upward with a chemical explosion.
 ]]
 
 LANGUAGE["Gadget_ied"] = [[IED]]

@@ -15,7 +15,7 @@ end
 	-- NPC Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.NPC_NextPrimaryFire = 0.8 -- Next time it can use primary fire
 SWEP.NPC_CustomSpread = 2.5 -- This is added on top of the custom spread that's set inside the SNPC! | Starting from 1: Closer to 0 = better accuracy, Farther than 1 = worse accuracy
-SWEP.NPC_ExtraFireSound = {"vj_weapons/perform_shotgunpump.wav"} -- Plays an extra sound after it fires (Example: Bolt action sound)
+SWEP.NPC_ExtraFireSound = {"weapons/shotgun/shotgun_cock.wav"} -- Plays an extra sound after it fires (Example: Bolt action sound)
 SWEP.NPC_FiringDistanceScale = 0.08 -- Changes how far the NPC can fire | 1 = No change, x < 1 = closer, x > 1 = farther
 	-- Main Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
@@ -33,8 +33,8 @@ SWEP.Primary.Cone = 12 -- How accurate is the bullet? (Players)
 SWEP.Primary.Delay = 0.8 -- Time until it can shoot again
 SWEP.Primary.Automatic = true -- Is it automatic?
 SWEP.Primary.Ammo = "Buckshot" -- Ammo type
-SWEP.Primary.Sound = {"vj_weapons/hl2_shotgun/shotgun_single1.wav"}
-SWEP.Primary.DistantSound = {"vj_weapons/hl2_shotgun/shotgun_single_dist.wav"}
+SWEP.Primary.Sound = {"weapons/shotgun/shotgun_fire6.wav", "weapons/shotgun/shotgun_fire7.wav"}
+SWEP.Primary.DistantSound = "arccw_go/sawedoff/sawedoff-1-distant.wav"
 SWEP.PrimaryEffects_MuzzleAttachment = 1
 SWEP.PrimaryEffects_ShellAttachment = 2
 SWEP.PrimaryEffects_ShellType = "VJ_Weapon_ShotgunShell1"
