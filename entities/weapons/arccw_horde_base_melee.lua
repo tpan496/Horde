@@ -20,7 +20,7 @@ function SWEP.Initialize(self, ...)
 end
 
 local IsValidEntity = function(owner, ent)
-    return (IsValid(ent) && (ent != owner) && ((ent:IsNPC() || ent:IsNextBot())))
+    return (IsValid(ent) && (ent != owner) && !ent:GetNWEntity("HordeOwner"):IsPlayer() && ((ent:IsNPC() || ent:IsNextBot())))
 end
 
 local VisCheck = function(owner, pos)
@@ -56,6 +56,7 @@ function SWEP:MeleeAttack(melee2)
     local owner = self:GetOwner()
     local reach = 32 + self:GetBuff_Add("Add_MeleeRange") + self.MeleeRange
     local dmg = self:GetBuff_Override("Override_MeleeDamage", self.MeleeDamage) or 20
+    local dmgtype = self:GetBuff_Override("Override_MeleeDamageType") or self.MeleeDamageType or DMG_CLUB
 
     if melee2 then
         reach = 32 + self:GetBuff_Add("Add_MeleeRange") + self.Melee2Range
@@ -115,7 +116,7 @@ function SWEP:MeleeAttack(melee2)
                 dmginfo:SetAttacker(owner)
                 dmginfo:SetInflictor(self)
                 dmginfo:SetDamage(dmg)
-                dmginfo:SetDamageType(self:GetBuff_Override("Override_MeleeDamageType") or self.MeleeDamageType or DMG_CLUB)
+                dmginfo:SetDamageType(dmgtype)
                 dmginfo:SetDamagePosition(preHit:NearestPoint(preTr.HitPos))
             
             if(preTr.HitGroup == 1) then
@@ -170,7 +171,7 @@ function SWEP:MeleeAttack(melee2)
                     dmginfo:SetAttacker(owner)
                     dmginfo:SetInflictor(self)
                     dmginfo:SetDamage(dmg)
-                    dmginfo:SetDamageType(self:GetBuff_Override("Override_MeleeDamageType") or self.MeleeDamageType or DMG_CLUB)
+                    dmginfo:SetDamageType(dmgtype)
                     dmginfo:SetDamagePosition(target:GetPos() + target:OBBCenter())
                 target:TakeDamageInfo(dmginfo)
             end

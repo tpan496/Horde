@@ -6,6 +6,8 @@ causing them to take more damage and deal less damage.
 {1} increased damage with Shotguns ({2} per level, up to {3})
 {4} increased presence radius ({5} per level, up to {6}).
 
+Your active perk skill also has your presence.
+
 Enemies in your presence are afflicted with Fear.
 Enemies afflicted with Fear are also afflicted with Agony and Suffering
 
@@ -13,7 +15,7 @@ Enemies afflicted with Agony take {7} more damage.
 Enemies afflicted with Suffering deal {8} less damage.
 
 Maximum Fear stacks is {9}.
-Fear lasts for {10} seconds and stacks fall off sequentially.
+Fear lasts for {10} seconds and stacks fall off consecutively.
 Maximum Fear stacks is increased by {11} for every perk skill tier unlocked.
 
 Has access to Shotguns and Watchtower Modules that augment your presence.

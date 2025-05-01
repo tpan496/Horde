@@ -97,7 +97,7 @@ hook.Add("Horde_OnPlayerDamage", "Horde_HeadhunterDamage", function (ply, npc, b
 end)
 ]]
 hook.Add("Horde_OnPlayerDebuffApply", "Horde_HysteriaBuildupResist", function (ply, debuff, bonus, inflictor)
-    if not ply:Horde_GetHysteriaEnabled() then return end
+    --if not ply:Horde_GetHysteriaEnabled() then return end
     if ply:Horde_GetHysteriaStack() > 0 then
         bonus.less = bonus.less * math.max(0, (1 - (0.1 * ply:Horde_GetHysteriaStack())))
     end

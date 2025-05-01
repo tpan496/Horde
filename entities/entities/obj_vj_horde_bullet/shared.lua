@@ -1,4 +1,5 @@
 if CLIENT then
+    language.Add("obj_vj_horde_bullet", "Boolet")
     killicon.Add("obj_vj_horde_bullet", "attachments/horde_ammo_sabot.png", color_white)
 end
 
@@ -66,16 +67,21 @@ function ENT:CustomOnDoDamage_Direct(data, phys, hitEnt)
 	if not hitEnt then
 		return
 	end
+    --[[
+    local owner = self.Owner
+    if not owner:IsValid() then
+        owner = self
+    end
 	if hitEnt:IsNPC() then
 		local damagecode = DamageInfo()
 		damagecode:SetDamage(self.DirectDamage / 2)
 		damagecode:SetDamageType(self.DirectDamageType)
-		damagecode:SetAttacker(self.Owner)
+		damagecode:SetAttacker(owner)
 		damagecode:SetInflictor(self)
 		damagecode:SetDamagePosition(self:GetPos())
 		hitEnt:TakeDamageInfo(damagecode, self)
 	end
-
+    ]]
 	if self.Weaken then
 		hitEnt:Horde_AddWeaken(self, 3, 1)
 	elseif self.Hinder then

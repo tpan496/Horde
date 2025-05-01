@@ -17,11 +17,13 @@ ENT.VJ_IsDetectableDanger = true
 
 if CLIENT then
 	local Name = "Combine Ball"
-	local LangName = "obj_vj_combineball"
+	local LangName = "obj_vj_horde_cball"
 	language.Add(LangName, Name)
-	killicon.Add(LangName,"HUD/killicons/default",Color(255,80,0,255))
+	--killicon.Add(LangName,"HUD/killicons/default",Color(255,80,0,255))
+    killicon.AddAlias(LangName, "projectile_horde_hyperblast_projectile")
 	language.Add("#"..LangName, Name)
-	killicon.Add("#"..LangName,"HUD/killicons/default",Color(255,80,0,255))
+	--killicon.Add("#"..LangName,"HUD/killicons/default",Color(255,80,0,255))
+    killicon.AddAlias("#"..LangName, "projectile_horde_hyperblast_projectile")
 
 	function ENT:Draw()
 		self:DrawModel()
@@ -137,7 +139,7 @@ function ENT:OnCollision(data, phys)
 	dataF:SetNormal(data.HitNormal)
 	dataF:SetScale(50)
 	util.Effect("AR2Impact", dataF)
-
+    --[[
     local myPos = self:GetPos()
 	effects.BeamRingPoint(myPos, 0.2, 12, 512, 64, 0, color1, {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
 	effects.BeamRingPoint(myPos, 0.5, 12, 512, 64, 0, color2, {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
@@ -158,6 +160,8 @@ function ENT:OnCollision(data, phys)
 	--util.VJ_SphereDamage(self, self, myPos, 250, 100, DMG_BLAST, true, true, {DisableVisibilityCheck=true, Force=80})
 
 	self:Remove()
+    ]]
+    self:DeathEffects()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:GravGunPunt(ply)
@@ -189,11 +193,16 @@ function ENT:DeathEffects()
 
 	VJ_EmitSound(self, "weapons/physcannon/energy_sing_explosion2.wav", 150)
 	util.ScreenShake(myPos, 20, 150, 1, 500)
-
+    
+    local owner = self.Owner
+    if not IsValid(owner) then
+        owner = self
+    end
+    
     local dmg = DamageInfo()
-    dmg:SetAttacker(self.Owner)
+    dmg:SetAttacker(owner)
     dmg:SetInflictor(self)
-    dmg:SetDamageType(DMG_GENERIC)
+    dmg:SetDamageType(DMG_CLUB)
     dmg:SetDamage(60)
     util.BlastDamageInfo(dmg, self:GetPos(), 150)
     
