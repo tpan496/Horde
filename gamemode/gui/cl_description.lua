@@ -319,7 +319,7 @@ function PANEL:SetData(item)
         if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_WPN then
             self.wpn = MySelf:GetWeapon(self.item.class)
         end
-        if GetConVar("horde_default_item_config"):GetInt() == 1 then
+        --if GetConVar("horde_default_item_config"):GetInt() == 1 then
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
                 self.loc_desc = translate.Get("Gadget_Desc_" .. self.item.class) or HORDE.gadgets[self.item.class].Description
@@ -360,6 +360,7 @@ function PANEL:SetData(item)
                 self.loc_name = translate.Get("Item_" .. self.item.name) or self.item.name
                 self.loc_desc = translate.Get("Item_Desc_" .. self.item.name) or self.item.description
             end
+        --[[ -- Is this needed here?
         else
             if self.item.entity_properties.type == HORDE.ENTITY_PROPERTY_GADGET then
                 self.loc_name = translate.Get("Gadget_" .. self.item.class) or HORDE.gadgets[self.item.class].PrintName
@@ -385,6 +386,7 @@ function PANEL:SetData(item)
                 self.loc_name = self.item.name
             end
         end
+        ]]
     end
     if not self.item then return end
     if not self.item.class then

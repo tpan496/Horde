@@ -218,6 +218,45 @@ function HORDE:GetDefaultGadgets()
     HORDE:CreateGadgetItem("gadget_emergency_reload", 3000, 3, { Overlord = true, }, { Overlord = 20 })
     HORDE:CreateGadgetItem("gadget_death_incarnate", 3500, 4, { Overlord = true, }, { Overlord = 25 })
 
+    --Overlord Watchtower Modules
+    --Watchtower Module: Agony
+    HORDE:CreateItem("Special", translate.Get("Module_WM_Agony"), "module_agony", 800, 1, 
+        translate.Get("Module_Desc_WM_Agony"),
+        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
+        { Overlord = 1 }, nil, nil, nil, nil)
+    --Watchtower Module: Suffering
+    HORDE:CreateItem("Special", translate.Get("Module_WM_Suffering"), "module_suffering", 800, 1,
+        translate.Get("Module_Desc_WM_Suffering"),
+        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
+        { Overlord = 1 }, nil, nil, nil, nil)
+    --Watchtower Module: Terror
+    HORDE:CreateItem("Special", translate.Get("Module_WM_Terror"), "module_terror", 2000, 2,
+        translate.Get("Module_Desc_WM_Terror"),
+        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
+        { Overlord = 3 }, nil, nil, nil, nil)
+    --Watchtower Module: Paranoia
+    HORDE:CreateItem("Special", translate.Get("Module_WM_Paranoia"), "module_paranoia", 1500, 2,
+        translate.Get("Module_Desc_WM_Paranoia"),
+        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
+        { Overlord = 2 }, nil, nil, nil, nil)
+    --Watchtower Module: Nightmare
+    HORDE:CreateItem("Special", translate.Get("Module_WM_Nightmare"), "module_nightmare", 3000, 3,
+        translate.Get("Module_Desc_WM_Nightmare"),
+        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
+        { Overlord = 4 }, nil, nil, nil, nil)
+    --Watchtower Module: Hysteria
+    HORDE:CreateItem("Special", translate.Get("Module_WM_Hysteria"), "module_hysteria", 3500, 3,
+        translate.Get("Module_Desc_WM_Hysteria"),
+        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
+        { Overlord = 5 }, nil, nil, nil, nil)
+    --[[
+    --Dank Bait
+    HORDE:CreateItem("Combine Issued", "Watchtower Module: Pure Agony", "upgrade_pureagony", 1000, 0,
+        "Suffering is converted into Agony.",
+        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
+        { Overlord = 5 }, 3, nil, nil, nil)
+    ]]
+
     HORDE:CreateGadgetItem("gadget_butane_can", 2000, 1, { Cremator = true, Artificer = true, }, { Cremator = 5 }, { HORDE.DMG_FIRE })
     HORDE:CreateGadgetItem("gadget_projectile_launcher_fire", 2500, 2, { Cremator = true, Artificer = true, }, { Cremator = 10 },
         { HORDE.DMG_FIRE })
@@ -840,42 +879,6 @@ function HORDE:GetDefaultItemsData()
         { Warden = true }, 10, -1, { type = HORDE.ENTITY_PROPERTY_DROP, x = 50, z = 15, yaw = 0, limit = 2 },
         "items/horde_watchtower.png", { Warden = 5 }, nil, nil)
 
-    --Overlord Watchtower Modules
-    HORDE:CreateItem("Special", "Watchtower Module: Agony", "module_agony", 800, 1,
-        "25% increased effectiveness of Agony.",
-        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
-        { Overlord = 1 }, nil, nil, nil, nil)
-    HORDE:CreateItem("Special", "Watchtower Module: Suffering", "module_suffering", 800, 1,
-        "25% increased effectiveness of Suffering.",
-        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
-        { Overlord = 1 }, nil, nil, nil, nil)
-    HORDE:CreateItem("Special", "Watchtower Module: Terror", "module_terror", 2000, 2,
-        "Enemies in your presence receive 20 stun buildup per second.",
-        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
-        { Overlord = 3 }, nil, nil, nil, nil)
-    HORDE:CreateItem("Special", "Watchtower Module: Paranoia", "module_paranoia", 1500, 2,
-        "50% more presence radius.",
-        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
-        { Overlord = 2 }, nil, nil, nil, nil)
-    HORDE:CreateItem("Special", "Watchtower Module: Nightmare", "module_nightmare", 3000, 3,
-    [[Enemies in your presence take 8% of their maximum health as true damage, once.
-Enemies in your presence are culled while below 10% health.]],
-        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
-        { Overlord = 4 }, nil, nil, nil, nil)
-    HORDE:CreateItem("Special", "Watchtower Module: Hysteria", "module_hysteria", 3500, 3,
-    [[You and your allies in your presence are afflicted with Hysteria.
-Hysteria grants 10% less debuff buildup per stack up to 50%.
-Gain Hysteria no more than once every 3 seconds.
-Hysteria lasts for 5 seconds and falls off sequentially.]],
-        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
-        { Overlord = 5 }, nil, nil, nil, nil)
-    --Dank Bait
-    --[[
-    HORDE:CreateItem("Combine Issued", "Watchtower Module: Pure Agony", "upgrade_pureagony", 1000, 0,
-        "Suffering is converted into Agony.",
-        { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
-        { Overlord = 5 }, 3, nil, nil, nil)
-    ]]
     HORDE:CreateItem("Special", "Heat Crossbow", "arccw_horde_heat_crossbow", 1750, 4,
         "Improvised sniper weapon.\nHas two firemodes (Ballistic/Impact).\n\nDeals 300% headshot damage.",
         { Survivor = true, Psycho = true, Ghost = true }, 2, -1, nil, "items/hl2/weapon_crossbow.png", nil, nil, { HORDE.DMG_BALLISTIC })

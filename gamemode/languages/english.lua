@@ -426,6 +426,8 @@ causing them to take more damage and deal less damage.
 {1} increased damage with Shotguns ({2} per level, up to {3})
 {4} increased presence radius ({5} per level, up to {6}).
 
+Your active perk skill also has your presence.
+
 Enemies in your presence are afflicted with Fear.
 Enemies afflicted with Fear are also afflicted with Agony and Suffering
 
@@ -433,7 +435,7 @@ Enemies afflicted with Agony take {7} more damage.
 Enemies afflicted with Suffering deal {8} less damage.
 
 Maximum Fear stacks is {9}.
-Fear lasts for {10} seconds and stacks fall off sequentially.
+Fear lasts for {10} seconds and stacks fall off consecutively.
 Maximum Fear stacks is increased by {11} for every perk skill tier unlocked.
 
 Has access to Shotguns and Watchtower Modules that augment your presence.
@@ -1982,6 +1984,98 @@ LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
 Ignited enemies killed by you drop edible gibs.
 Each gib restores 5 health.
 ]]
+
+-- Subclass Gadgets
+
+-- Overlord Modules
+LANGUAGE["Module_WM_Agony"] = [[Watchtower Module: Agony]]
+LANGUAGE["Module_Desc_WM_Agony"] = [[
+25% increased effectiveness of Agony.
+]]
+
+LANGUAGE["Module_WM_Suffering"] = [[Watchtower Module: Suffering]]
+LANGUAGE["Module_Desc_WM_Suffering"] = [[
+25% increased effectiveness of Suffering.
+]]
+
+LANGUAGE["Module_WM_Terror"] = [[Watchtower Module: Terror]]
+LANGUAGE["Module_Desc_WM_Terror"] = [[
+Enemies in your presence receive 20 stun buildup per second.
+]]
+
+LANGUAGE["Module_WM_Paranoia"] = [[Watchtower Module: Paranoia]]
+LANGUAGE["Module_Desc_WM_Paranoia"] = [[
+50% more presence radius.
+]]
+
+LANGUAGE["Module_WM_Nightmare"] = [[Watchtower Module: Nightmare]]
+LANGUAGE["Module_Desc_WM_Nightmare"] = [[
+Enemies in your presence take 8% of their maximum health as true damage, once.
+Enemies in your presence are culled while below 10% of their maximum health.
+]]
+
+LANGUAGE["Module_WM_Hysteria"] = [[Watchtower Module: Hysteria]]
+LANGUAGE["Module_Desc_WM_Hysteria"] = [[
+You and your allies in your presence are afflicted with Hysteria.
+Hysteria grants 10% less debuff buildup per stack up to 50%.
+Gain Hysteria no more than once every 3 seconds.
+Hysteria lasts for 5 seconds and falls off consecutively.
+]]
+
+-- Overlord Gadgets
+LANGUAGE["Gadget_gadget_shotgun_surgeon"] = [[Shotgun Surgeon]]
+LANGUAGE["Gadget_Desc_gadget_shotgun_surgeon"] = [[
+Active Gadget:
+Throw a healing vial in front of you.
+Healing vial restores {1} health.
+Healing vial expires after {2} seconds.
+
+Passive Effect:
+Dark Energy Blast restores {3} health to you and your allies in its blast radius.
+Dark Energy Blast also detonates on allies and minions.
+
+While you have a Projection Clone active:
+You and your allies restore {4} of their own maximum health per second while in your presence.
+]]
+
+LANGUAGE["Gadget_gadget_twinned_underbarrel"] = [[Twinned Underbarrel]]
+LANGUAGE["Gadget_Desc_gadget_twinned_underbarrel"] = [[
+Active Gadget:
+Fires a Lesser Combine energy ball in front of you.
+
+Inherits properties from Dark Energy Blast perk skill.
+Deals {1} less damage if you have Dark Energy Blast perk skill.
+Cooldown is fixed.
+]]
+
+LANGUAGE["Gadget_gadget_reinforcements"] = [[Reinforcements]]
+LANGUAGE["Gadget_Desc_gadget_reinforcements"] = [[
+Active Gadget:
+Summons a lesser Projection Clone with a pump shotgun.
+
+Inherits properties from Juxtaposition perk skill.
+Lesser Projection Clone has {1} less health.
+]]
+
+LANGUAGE["Gadget_gadget_emergency_reload"] = [[Emergency Reload]]
+LANGUAGE["Gadget_Desc_gadget_emergency_reload"] = [[
+Active Gadget:
+Instantly reloads your held weapon to maximum magazine capacity.
+Also instantly reloads any secondary attachments to maximum magazine capacity.
+]]
+
+LANGUAGE["Gadget_gadget_death_incarnate"] = [[Death Incarnate]]
+LANGUAGE["Gadget_Desc_gadget_gadget_death_incarnate"] = [[
+Active Gadget:
+Your presence ignores line of sight.
+Enemies in your presence have Necrosis.
+
+Passive Effect:
+Immune to Necrosis.
+]]
+
+
+
 
 -- Dank Patch notes
 LANGUAGE["Game_Dank_Patch_Notes"] = [[Dank Update 2.1.0]]

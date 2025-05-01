@@ -42,13 +42,22 @@ function ENT:Initialize()
 		phys:EnableGravity(false)
 	end
 
-	timer.Simple(1.5, function() if IsValid(self) then self:DeathEffects() end end)
+	--timer.Simple(1.5, function() if IsValid(self) then self:Remove() end end)
+    self.dt = CurTime() + 5
 
 	self:DrawShadow(false)
 	self:ResetSequence("idle")
 	self:SetCoreType(true)
 
 	util.SpriteTrail(self, 0, colorWhite, true, 15, 0, 0.1, 1 / 6 * 0.5, "sprites/combineball_trail_black_1.vmt")
+end
+
+function ENT:Think()
+    if SERVER then
+        if CurTime() >= self.dt then
+            self:Remove()
+        end
+    end
 end
 
 function ENT:SetCoreType(capture)

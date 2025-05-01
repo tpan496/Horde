@@ -20,8 +20,10 @@ PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
     end
 end
 
-PERK.Hooks.Horde_OnPlayerDebuffApply = function(ply, debuff, bonus, inflictor)
+PERK.Hooks.Horde_OnPlayerDebuffApply = function(ply, debuff, bonus, inflictor, buildup)
     if not ply:Horde_GetPerk("overlord_inverse_filter") then return end
     bonus.less = bonus.less * 0.5
-    HORDE:SelfHeal(ply, 3)
+    if buildup then
+        HORDE:SelfHeal(ply, 3)
+    end
 end

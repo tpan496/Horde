@@ -65,6 +65,7 @@ HORDE:RegisterStatus("Hypertrophy", "materials/status/hypertrophy.png", true)
 HORDE:RegisterStatus("SolarFlux", "materials/perks/artificer/solar_flux.png", true)
 HORDE:RegisterStatus("Bio_Thruster", "materials/perks/carcass/bio_thruster.png", true)
 HORDE:RegisterStatus("Twin_Heart", "materials/perks/carcass/twin_heart.png", true)
+HORDE:RegisterStatus("Hysteria", "materials/perks/overlord/despair.png", true)
 
 HORDE:RegisterStatus("Fortify", "materials/perks/fortify.png")
 HORDE:RegisterStatus("Berserk", "materials/perks/berserk.png")

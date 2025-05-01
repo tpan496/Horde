@@ -127,7 +127,7 @@ function ENT:Think()
     
     local radius = self.Area_of_Effect_Radius
     for _, ent in ipairs(ents.FindInSphere(self:GetPos(), radius)) do
-        if not ply:IsValid() then return end
+        if not IsValid(ply) then return end
         if self:LoSCheckType(ent) then continue end
         if HORDE:IsEnemy(ent) or ent:IsPlayer() then
             if(!ply.EntitiesInside[ent:EntIndex()]) and self:CheckCD(ent) then

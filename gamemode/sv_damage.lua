@@ -364,11 +364,11 @@ hook.Add("EntityTakeDamage", "Horde_ApplyMinionDamageTaken", function(target, dm
     if dmg:GetAttacker():IsPlayer() then return true end
     hook.Run("Horde_OnMinionDamageTaken", target, dmg)
     if dmg:GetDamage() <= 0.5 then return true end
-
+    --[[
     if dmg:GetAttacker():GetClass() == "npc_vj_horde_grigori" or dmg:GetAttacker().Horde_Plague_Soldier then
         dmg:ScaleDamage(2.5)
     end
-
+    ]]
     local debuff = nil
     local bonus = { more = 1 }
     if dmg:GetDamage() > 0 then

@@ -54,6 +54,5 @@ PERK.Hooks.Horde_UseActivePerk = function(ply)
     ply.Horde_overlord_juxtapose:SetAngles(ply:GetAngles())
     ply.Horde_overlord_juxtapose:SetNWEntity("HordeOwner", ply)
     ply.Horde_overlord_juxtapose:SetOwner(ply)
-    ply.Horde_overlord_juxtapose:Give("weapon_vj_horde_projection_shotgun")
     ply.Horde_overlord_juxtapose:Spawn()
 end
