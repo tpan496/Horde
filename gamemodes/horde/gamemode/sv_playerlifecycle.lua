@@ -876,3 +876,8 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
         net.Send(victim)
     end
 end)
+
+-- Prevents force killing on spawns https://github.com/Facepunch/garrysmod/blob/eedfd0de87da7617417a1361b899ca2366b7e78e/garrysmod/gamemodes/base/gamemode/player.lua#L347-L349
+function GM:IsSpawnpointSuitable( _ply, _spawnpointent, _makeSuitable )
+    return true
+end
