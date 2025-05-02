@@ -664,9 +664,10 @@ hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
     if ply:IsValid() then
         ply:SetCollisionGroup(15)
         ply:SetCanZoom(false)
-        ply:ConCommand([[mat_colorcorrection 1]])
-        ply:ConCommand([[cl_showhints 0]])
+        ply:ConCommand("mat_colorcorrection 1")
+        ply:ConCommand("cl_showhints 0")
         ply:SetMoveType(MOVETYPE_WALK)
+        ply:SetAvoidPlayers(false)
     end
 
     for _, ent in pairs( ents.GetAll() ) do
