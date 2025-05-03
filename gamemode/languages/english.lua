@@ -858,7 +858,7 @@ LANGUAGE["Perk_cremator_incineration"] = [[
 
 -- Default Subclasses
 -- Default Perk Psycho
-LANGUAGE["Perk_Title_Overlord_Tier_1"] = [[Sadism]]
+LANGUAGE["Perk_Title_Psycho_Tier_1"] = [[Sadism]]
 LANGUAGE["Perk_Title_psycho_bloodbath"] = [[Bloodbath]]
 LANGUAGE["Perk_psycho_bloodbath"] = [[
 Adds {1} Base Critical Hit chance.
@@ -870,7 +870,7 @@ LANGUAGE["Perk_psycho_savor"] = [[
 Leech {2} of damage dealt when you land a Melee hit.
 Leech caps at {3} health per hit or {4} health per Critical Hit.]]
 
-LANGUAGE["Perk_Title_Overlord_Tier_2"] = [[Violence]]
+LANGUAGE["Perk_Title_Psycho_Tier_2"] = [[Violence]]
 LANGUAGE["Perk_Title_psycho_ferocity"] = [[Ferocity]]
 LANGUAGE["Perk_psycho_ferocity"] = [[
 Adds {1} Base Critical Hit chance.
@@ -881,7 +881,7 @@ LANGUAGE["Perk_psycho_disembowel"] = [[
 {1} increased Critical Hit damage.
 Melee attacks remove Nemesis mutation from enemies.]]
 
-LANGUAGE["Perk_Title_Overlord_Tier_3"] = [[Fatality]]
+LANGUAGE["Perk_Title_Psycho_Tier_3"] = [[Fatality]]
 LANGUAGE["Perk_Title_psycho_skewering"] = [[Skewering]]
 LANGUAGE["Perk_psycho_skewering"] = [[
 Enemies you hit with headshots are Skewered.
@@ -893,7 +893,7 @@ Brutality adds an additional {1} Base Critical Hit chance.
 Brutality also increases Critical Hit damage by {2}.
 Brutality stacks decay {3} slower.]]
 
-LANGUAGE["Perk_Title_Overlord_Tier_4"] = [[Psychosis]]
+LANGUAGE["Perk_Title_Psycho_Tier_4"] = [[Psychosis]]
 LANGUAGE["Perk_Title_psycho_grudge"] = [[Grudge]]
 LANGUAGE["Perk_psycho_grudge"] = [[
 {1} increased movement speed per {2} health missing, up to {3}.

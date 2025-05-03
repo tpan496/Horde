@@ -57,7 +57,8 @@ function SWEP:MeleeAttack(melee2)
     local reach = 32 + self:GetBuff_Add("Add_MeleeRange") + self.MeleeRange
     local dmg = self:GetBuff_Override("Override_MeleeDamage", self.MeleeDamage) or 20
     local dmgtype = self:GetBuff_Override("Override_MeleeDamageType") or self.MeleeDamageType or DMG_CLUB
-
+    local ragdoll_force = owner:GetRight() * math.random(-4912, 4912) + owner:GetForward() * math.random(2048, 9989)
+    
     if melee2 then
         reach = 32 + self:GetBuff_Add("Add_MeleeRange") + self.Melee2Range
         dmg = self:GetBuff_Override("Override_MeleeDamage", self.Melee2Damage) or 20
@@ -117,6 +118,7 @@ function SWEP:MeleeAttack(melee2)
                 dmginfo:SetInflictor(self)
                 dmginfo:SetDamage(dmg)
                 dmginfo:SetDamageType(dmgtype)
+                dmginfo:SetDamageForce(ragdoll_force)
                 dmginfo:SetDamagePosition(preHit:NearestPoint(preTr.HitPos))
             
             if(preTr.HitGroup == 1) then
@@ -146,6 +148,15 @@ function SWEP:MeleeAttack(melee2)
                 self:MyEmitSound(self.MeleeHitSound, 75, 100, 1, CHAN_STATIC)
             end
             hitworldSD = true
+            -- To destroy destructible props
+            local dmginfo = DamageInfo()
+                dmginfo:SetAttacker(owner)
+                dmginfo:SetInflictor(self)
+                dmginfo:SetDamage(dmg)
+                dmginfo:SetDamageType(dmgtype)
+                dmginfo:SetDamageForce(ragdoll_force)
+                dmginfo:SetDamagePosition(preHit:NearestPoint(preTr.HitPos))
+            preHit:DispatchTraceAttack(dmginfo, tr)
         end
     end
     self:MyEmitSound(self.MeleeMissSound, 75, 100, 1, CHAN_STATIC)
@@ -172,6 +183,7 @@ function SWEP:MeleeAttack(melee2)
                     dmginfo:SetInflictor(self)
                     dmginfo:SetDamage(dmg)
                     dmginfo:SetDamageType(dmgtype)
+                    dmginfo:SetDamageForce(ragdoll_force)
                     dmginfo:SetDamagePosition(target:GetPos() + target:OBBCenter())
                 target:TakeDamageInfo(dmginfo)
             end
