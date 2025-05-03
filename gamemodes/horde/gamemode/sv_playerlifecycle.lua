@@ -666,6 +666,7 @@ hook.Add("PlayerSpawn", "Horde_PlayerInitialSpawn", function(ply)
         ply:SetCanZoom(false)
         ply:ConCommand("mat_colorcorrection 1")
         ply:ConCommand("cl_showhints 0")
+        ply:ConCommand("arccw_automaticreload 1")
         ply:SetMoveType(MOVETYPE_WALK)
         ply:SetAvoidPlayers(false)
     end
