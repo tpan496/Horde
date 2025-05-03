@@ -11,7 +11,7 @@ function plymeta:Horde_AddPhasing(duration, callback)
     if self.Horde_Phasing then return end
 
     self.Horde_Phasing = true
-    self:CollisionRulesChanged()
+    --self:CollisionRulesChanged()
     --[[net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Phasing, 8)
         net.WriteUInt(1, 8)
@@ -22,7 +22,7 @@ function plymeta:Horde_RemovePhasing()
     if not self:IsValid() then return end
     if !self.Horde_Phasing then return end
     self.Horde_Phasing = nil
-    self:CollisionRulesChanged()
+    --self:CollisionRulesChanged()
     --[[net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_Phasing, 8)
         net.WriteUInt(0, 8)
