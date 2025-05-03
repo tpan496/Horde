@@ -860,7 +860,7 @@ LANGUAGE["Perk_Title_Ghost_Tier_3"] = [[Траектория]]
 LANGUAGE["Perk_Title_ghost_brain_snap"] = [[Отключка мозга]]
 LANGUAGE["Perk_ghost_brain_snap"] = [[
 Выстрелы в голову увеличивают нарастание замораживания на основе урона.
-У врагов, подвергшихся замораживанию, значительно снижается скорость действия на {1} сек.
+Враги, подвергшиеся замораживанию, значительно замедляются на {1} сек.
 Перезарядка обморожения составляет {2} секунд.]]
 
 LANGUAGE["Perk_Title_ghost_kinetic_impact"] = [[Кинетический удар]]
@@ -1561,7 +1561,8 @@ LANGUAGE["Perk_overlord_doomed_presence"] = [[
 
 LANGUAGE["Perk_Title_overlord_deatheater"] = [[Пожиратель Смерти]]
 LANGUAGE["Perk_overlord_deatheater"] = [[
-На врагов в вашем присутствии сразу накладывается максимальное количество Страха.]]
+На врагов в вашем присутствии сразу 
+накладывается максимальное количество Страха.]]
 
 -- Default Config Shop Items
 -- Optional
@@ -3142,34 +3143,35 @@ LANGUAGE["Gadget_Desc_gadget_hydrogen_burner"] = [[
 
 -- Subclass Gadgets
 -- Overlord Modules
-LANGUAGE["Module_WM_Agony"] = [[Модуль сторожевой башни: Агония]]
-LANGUAGE["Module_Desc_WM_Agony"] = [[
+LANGUAGE["Item_Watchtower Module: Agony"] = [[Модуль сторожевой башни: Агония]]
+LANGUAGE["Item_Desc_Watchtower Module: Agony"] = [[
 Увеличивает эффективность Агонии на 25%.
 ]]
 
-LANGUAGE["Module_WM_Suffering"] = [[Модуль сторожевой башни: Страдание]]
-LANGUAGE["Module_Desc_WM_Suffering"] = [[
+LANGUAGE["Item_Watchtower Module: Suffering"] = [[Модуль сторожевой башни: Страдание]]
+LANGUAGE["Item_Desc_Watchtower Module: Suffering"] = [[
 Увеличивает эффективность Страдания на 25%.
 ]]
 
-LANGUAGE["Module_WM_Terror"] = [[Модуль сторожевой башни: Террор]]
-LANGUAGE["Module_Desc_WM_Terror"] = [[
+LANGUAGE["Item_Watchtower Module: Terror"] = [[Модуль сторожевой башни: Террор]]
+LANGUAGE["Item_Desc_Watchtower Module: Terror"] = [[
 Враги в вашем присутствии получают 20 единиц накопления оглушения в секунду.
 ]]
 
-LANGUAGE["Module_WM_Paranoia"] = [[Модуль сторожевой башни: Паранойя]]
-LANGUAGE["Module_Desc_WM_Paranoia"] = [[
+LANGUAGE["Item_Watchtower Module: Paranoia"] = [[Модуль сторожевой башни: Паранойя]]
+LANGUAGE["Item_Desc_Watchtower Module: Paranoia"] = [[
 Увеличен радиус присутствия на 50%.
 ]]
 
-LANGUAGE["Module_WM_Nightmare"] = [[Модуль сторожевой башни: Кошмар]]
-LANGUAGE["Module_Desc_WM_Nightmare"] = [[
-Враги в вашем присутствии единожды получают 8% от их максимального здоровья в качестве истинного урона.
+LANGUAGE["Item_Watchtower Module: Nightmare"] = [[Модуль сторожевой башни: Кошмар]]
+LANGUAGE["Item_Desc_Watchtower Module: Nightmare"] = [[
+Враги в вашем присутствии единожды получают 8% от их максимального здоровья
+в качестве истинного урона.
 Враги в вашем присутствии уничтожаются, если их максимальное здоровье ниже 10%.
 ]]
 
-LANGUAGE["Module_WM_Hysteria"] = [[Модуль сторожевой башни: Истерия]]
-LANGUAGE["Module_Desc_WM_Hysteria"] = [[
+LANGUAGE["Item_Watchtower Module: Hysteria"] = [[Модуль сторожевой башни: Истерия]]
+LANGUAGE["Item_Desc_Watchtower Module: Hysteria"] = [[
 Вы и ваши союзники в вашем присутствии одержимы Истерией.
 Истерия снижает накопление дебаффов на 10% за каждый стак, вплоть до 50%.
 Истерия выдается раз в каждые 3 секунды.
@@ -3185,11 +3187,13 @@ LANGUAGE["Gadget_Desc_gadget_shotgun_surgeon"] = [[
 Срок действия исцеляющего флакона истекает через {2} секунд.
 
 Пассивный эффект:
-Взрыв Тёмной Энергии восстанавливает вам и вашим союзникам {3} очков здоровья в радиусе взрыва.
+Взрыв Тёмной Энергии восстанавливает вам и вашим союзникам {3} очков здоровья 
+в радиусе взрыва.
 Взрыв Тёмной Энергии также поражает ваших союзников и миньонов.
 
 Пока ваш Проекционный Клон активирован:
-Вы и ваши союзники восстанавливают {4} очков здоровья от их максимального здоровья в секунду, пока находятся в вашем присутствии.
+Вы и ваши союзники восстанавливают {4} очков здоровья от их максимального здоровья 
+в секунду, пока находятся в вашем присутствии.
 ]]
 
 LANGUAGE["Gadget_gadget_twinned_underbarrel"] = [[Сдвоенный подствольник]]
@@ -3215,11 +3219,12 @@ LANGUAGE["Gadget_gadget_emergency_reload"] = [[Экстренная переза
 LANGUAGE["Gadget_Desc_gadget_emergency_reload"] = [[
 Активный гаджет:
 Мгновенно перезаряжает ваше оружие в руках до максимальной ёмкости магазина.
-Также мгновенно перезаряжает ваши вспомогательные приспособления до максимальной ёмкости магазина. 
+Также мгновенно перезаряжает ваши вспомогательные приспособления 
+до максимальной ёмкости магазина. 
 ]]
 
 LANGUAGE["Gadget_gadget_death_incarnate"] = [[Воплощенная смерть]]
-LANGUAGE["Gadget_Desc_gadget_gadget_death_incarnate"] = [[
+LANGUAGE["Gadget_Desc_gadget_death_incarnate"] = [[
 Активный гаджет:
 Ваше присутствие не попадает в поле зрения.
 Враги в вашем присутствии получают Некроз.
