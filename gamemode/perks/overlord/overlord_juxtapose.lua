@@ -50,7 +50,7 @@ PERK.Hooks.Horde_UseActivePerk = function(ply)
     sound.Play("horde/player/overlord/projection.mp3", ply:GetPos(), 100, math.random(80, 120))
     
     ply.Horde_overlord_juxtapose = ents.Create("npc_vj_horde_overlord_projection")
-    ply.Horde_overlord_juxtapose:SetPos(ply:GetPos() + ply:GetRight() * 45)
+    ply.Horde_overlord_juxtapose:SetPos(ply:GetPos() + ply:GetRight() * 45 + ply:GetForward() * 45 + Vector(0, 0, 20))
     ply.Horde_overlord_juxtapose:SetAngles(ply:GetAngles())
     ply.Horde_overlord_juxtapose:SetNWEntity("HordeOwner", ply)
     ply.Horde_overlord_juxtapose:SetOwner(ply)
