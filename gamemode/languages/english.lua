@@ -954,7 +954,7 @@ Enemies in your presence are always at maximum Fear.]]
 -- Default Config Shop Items
 -- Optional
 -- Melee Category --
-LANGUAGE["Item_Combat_Knife"] = [[Combat Knife]]
+LANGUAGE["Item_Combat Knife"] = [[Combat Knife]]
 LANGUAGE["Item_Desc_Combat_Knife"] = [[
 A reliable bayonet.
 
@@ -1007,7 +1007,7 @@ RMB - Heavy attack
 Cleave - 3
 ]]
 
-LANGUAGE["Item_Fireaxe"] = [[Fireaxe]]
+LANGUAGE["Item_Fire Axe"] = [[Fire Axe]]
 LANGUAGE["Item_Desc_Fireaxe"] = [[
 A fire axe. Heavy, but can chops most enemies in half.
 
@@ -1057,7 +1057,7 @@ RMB - Heavy attack
 Cleave - 3
 ]]
 
-LANGUAGE["Item_Inferno"] = [[Inferno]]
+LANGUAGE["Item_Inferno Blade"] = [[Inferno Blade]]
 LANGUAGE["Item_Desc_Inferno"] = [[
 A blazing curved sword with hidden power.
 
@@ -1105,7 +1105,7 @@ Cleave - 3
 RMB - Activate charge effect
 Lightning damage - 150
 ]]
---translate.Get("Item_Desc_Zweihander")
+
 LANGUAGE["Item_Zweihander"] = [[Zweihänder]]
 LANGUAGE["Item_Desc_Zweihander"] = [[
 A heavy, large two-handed longsword. Can easily decapitate enemies in a full swing.
@@ -1514,7 +1514,7 @@ A grenade that releases contiuous bursts of detoxication clouds.
 Heals players and damages enemies.
 ]]
 
-LANGUAGE["Item_Throwing_Knives"] = [[Throwing Knives]] 
+LANGUAGE["Item_Throwing Knives"] = [[Throwing Knives]] 
 LANGUAGE["Item_Desc_Throwing_Knives"] = [[
 Throwing knives that deal slashing damage and are considered melee weapons.
 Can be picked up again upon hitting surfaces and doesn't stick to walls or ceilings.
@@ -1988,33 +1988,34 @@ Each gib restores 5 health.
 -- Subclass Gadgets
 
 -- Overlord Modules
-LANGUAGE["Module_WM_Agony"] = [[Watchtower Module: Agony]]
+LANGUAGE["Item_Watchtower Module: Agony"] = [[Watchtower Module: Agony]]
 LANGUAGE["Module_Desc_WM_Agony"] = [[
 25% increased effectiveness of Agony.
 ]]
 
-LANGUAGE["Module_WM_Suffering"] = [[Watchtower Module: Suffering]]
+LANGUAGE["Item_Watchtower Module: Suffering"] = [[Watchtower Module: Suffering]]
 LANGUAGE["Module_Desc_WM_Suffering"] = [[
 25% increased effectiveness of Suffering.
 ]]
 
-LANGUAGE["Module_WM_Terror"] = [[Watchtower Module: Terror]]
+LANGUAGE["Item_Watchtower Module: Terror"] = [[Watchtower Module: Terror]]
 LANGUAGE["Module_Desc_WM_Terror"] = [[
-Enemies in your presence receive 20 stun buildup per second.
+Enemies in your presence receive 16% stun buildup or 40 stun buildup per second, whichever is less.
+50% less effective against bosses.
 ]]
 
-LANGUAGE["Module_WM_Paranoia"] = [[Watchtower Module: Paranoia]]
+LANGUAGE["Item_Watchtower Module: Paranoia"] = [[Watchtower Module: Paranoia]]
 LANGUAGE["Module_Desc_WM_Paranoia"] = [[
 50% more presence radius.
 ]]
 
-LANGUAGE["Module_WM_Nightmare"] = [[Watchtower Module: Nightmare]]
+LANGUAGE["Item_Watchtower Module: Nightmare"] = [[Watchtower Module: Nightmare]]
 LANGUAGE["Module_Desc_WM_Nightmare"] = [[
 Enemies in your presence take 8% of their maximum health as true damage, once.
 Enemies in your presence are culled while below 10% of their maximum health.
 ]]
 
-LANGUAGE["Module_WM_Hysteria"] = [[Watchtower Module: Hysteria]]
+LANGUAGE["Item_Watchtower Module: Hysteria"] = [[Watchtower Module: Hysteria]]
 LANGUAGE["Module_Desc_WM_Hysteria"] = [[
 You and your allies in your presence are afflicted with Hysteria.
 Hysteria grants 10% less debuff buildup per stack up to 50%.
@@ -2065,7 +2066,7 @@ Also instantly reloads any secondary attachments to maximum magazine capacity.
 ]]
 
 LANGUAGE["Gadget_gadget_death_incarnate"] = [[Death Incarnate]]
-LANGUAGE["Gadget_Desc_gadget_gadget_death_incarnate"] = [[
+LANGUAGE["Gadget_Desc_gadget_death_incarnate"] = [[
 Active Gadget:
 Your presence ignores line of sight.
 Enemies in your presence have Necrosis.
