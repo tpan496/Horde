@@ -239,13 +239,22 @@ function plymeta:Horde_PayPlayer(plyToPay, amount)
         return
     end
 
+    local searchName = string.lower(plyToPay)
+
     local plyForMoney
     local allPlys = player.GetAll()
     local Matches = {}
-    for _,v in ipairs(allPlys) do
-        local findString = string.find(string.lower(v:GetName()), string.lower(plyToPay))
-        if findString then
-            table.insert(Matches, v)
+
+    for _, v in ipairs( allPlys ) do
+        local lowerName = string.lower( v:GetName() )
+
+        if lowerName == searchName then
+            plyForMoney = v
+            break
+        end
+
+        if string.find( lowerName, searchName ) then
+            table.insert( Matches, v )
             plyForMoney = v
         end
     end
@@ -258,15 +267,18 @@ function plymeta:Horde_PayPlayer(plyToPay, amount)
         self:ChatPrint("Multiple players have given name:"..Names)
         return
     end
+
     if plyForMoney == nil then self:ChatPrint("Invalid player.") return end
-    if plyForMoney:SteamID() == self:SteamID() then return end -- Not that this really matters but it'd be a bit silly 
-    local amount = math.floor(amount)
+    if plyForMoney == self then self:ChatPrint("You can't pay yourself.") return end
+
+    amount = math.floor(amount)
     if not amount or amount <= 0 or self:Horde_GetMoney() < amount then return end
     self:Horde_AddMoney(-amount)
     self:Horde_SyncEconomy()
     plyForMoney:Horde_AddMoney(amount)
     plyForMoney:Horde_SyncEconomy()
     plyForMoney:ChatPrint(self:GetName().." has given you "..amount.."$")
+    self:ChatPrint("You have given "..plyForMoney:GetName().." "..amount.."$")
     self.nextPayTime = CurTime() + 1.5
 end
 
