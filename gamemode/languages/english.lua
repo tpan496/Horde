@@ -771,7 +771,7 @@ Each stack lasts {4} seconds and falls off consecutively.]]
 LANGUAGE["Perk_Title_berserker_rip_and_tear"] = [[Rip and Tear]]
 LANGUAGE["Perk_berserker_rip_and_tear"] = [[
 {1} more melee damage.
-Melee weapons that don’t cleave deal {2} damage to surrounding targets.]]
+Melee hits deal {2} damage to surrounding targets.]]
 
 -- Default Perks: Warden
 LANGUAGE["Perk_Title_Warden_Tier_1"] = [[Sustain]]
@@ -903,7 +903,7 @@ You are considered at {6} health while above {7} health.]]
 LANGUAGE["Perk_Title_psycho_bestial_wrath"] = [[Bestial Wrath]]
 LANGUAGE["Perk_psycho_bestial_wrath"] = [[
 {1} increased Critical Hit damage.
-Melee weapons that don’t cleave deal {2} damage to surrounding targets.
+Melee hits deal {2} damage to surrounding targets.
 {3} slower health decay in Frenzy Mode.]]
 
 
@@ -959,6 +959,8 @@ LANGUAGE["Item_Desc_Combat_Knife"] = [[
 A reliable bayonet.
 
 25% more movement speed while wielding this weapon.
+Movement speed scales down relative to your remaining weight to maximum weight.
+Caps at 5% more movement speed.
 
 LMB - Light attack
 Cleave - 1

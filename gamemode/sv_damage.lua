@@ -514,7 +514,8 @@ local defaults = { -- Default variables
     ignoreattacker = false,
     origin = Vector(0, 0, 0),
     damagetype = 64, -- DMG_BLAST
-    damagecustomtype = nil
+    damagecustomtype = nil,
+    antishotgun = nil,
 }
 function HORDE.RadiusDamageExtra(data)
     if(!data || !IsValid(data.attacker)) then return end -- check is data table and attacker is valid or not
@@ -556,12 +557,23 @@ function HORDE.RadiusDamageExtra(data)
 
     local pos = data.origin
     local dmgcustom = data.damagecustomtype
+    local no_shotgunning = data.antishotgun
 
     local base_dmg = dmg * basedmg_scale
     local scalable_dmg = dmg * math.max(1 - basedmg_scale, 0) -- Just in case if you got basedmg_scale > 1
 
     for _, ent in pairs(ents.FindInSphere(pos, radius)) do
         if(skip_attacker && ent == attacker) then continue end
+        if ent:IsPlayer() && ent != attacker then continue end
+        if HORDE:IsPlayerMinion(ent) == true then continue end
+        if ent.horde_splash_antishotgun then continue end
+        if no_shotgunning then
+            ent.horde_splash_antishotgun = true
+            timer.Simple(0, function()
+                --if not ent:IsValid() then return end
+                ent.horde_splash_antishotgun = nil
+            end)
+        end
         local dst = ent:GetPos():Distance(pos)
         if(dst > radius) then continue end -- Sometimes it returns entities with incorrect distance, filte it out
         local sData = {
@@ -571,18 +583,23 @@ function HORDE.RadiusDamageExtra(data)
             advancedCheck = true,
         }
         if(!HORDE.IsInSight(sData)) then continue end
+        local ragdoll_force = attacker:GetRight() * math.random(-4912, 4912) + attacker:GetForward() * math.random(2048, 9989)
         local dmginfo = DamageInfo()
             dmginfo:SetAttacker(attacker)
             dmginfo:SetInflictor(inflictor)
             dmginfo:SetDamagePosition(ent:GetPos())
             dmginfo:SetDamageType(dmgtype)
+            dmginfo:SetDamageForce(ragdoll_force)
             if dmgcustom then
                 dmginfo:SetDamageCustom(dmgcustom)
             end
 
         if(dst <= fradius) then
-            dmginfo:SetDamage(dmg)
-
+            if ent.donthitmeagain then
+                dmginfo:SetDamage(0)
+            else
+                dmginfo:SetDamage(dmg)
+            end
             ent:TakeDamageInfo(dmginfo)
         else
             local newdst = dst - fradius
@@ -595,8 +612,11 @@ function HORDE.RadiusDamageExtra(data)
             elseif(ftype == "linear_inverted") then
                 sdmg = sdmg * scale
             end
-            dmginfo:SetDamage(math.max(base_dmg + sdmg, fcap))
-
+            if ent.donthitmeagain then
+                dmginfo:SetDamage(0)
+            else
+                dmginfo:SetDamage(math.max(base_dmg + sdmg, fcap))
+            end
             ent:TakeDamageInfo(dmginfo)
         end
     end

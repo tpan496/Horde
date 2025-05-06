@@ -1,7 +1,7 @@
 PERK.PrintName = "Rip and Tear"
 PERK.Description = [[
 {1} more melee damage.
-Melee weapons that don’t cleave deal {2} damage to surrounding targets.]]
+Melee hits deal {2} damage to surrounding targets.]]
 
 PERK.Icon = "materials/perks/rip_and_tear.png"
 PERK.Params = {
@@ -37,7 +37,7 @@ PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmgin
             radius = 150,
             falloffradius = 50,
             falloff_cap = 0,
-            damage = dmginfo:GetDamage() / 2,
+            damage = dmginfo:GetDamage() / 4,
             basedamagemul = 0,
             fallofftype = "linear",
             falloff_speed = 1,
@@ -46,5 +46,40 @@ PERK.Hooks.Horde_OnPlayerDamagePost = function (ply, npc, bonus, hitgroup, dmgin
             damagetype = dmginfo:GetDamageType(),
             damagecustomtype = HORDE.DMG_SPLASH,
         })
+    end
+end
+
+---------------- For cleaving weapons below ------------------
+-- Splash damage now scales with damage increases
+PERK.Hooks.Hook_PostBash = function (wep, info)
+    if not SERVER then return end
+    local ply = info.ply
+    if not ply:Horde_GetPerk("berserker_rip_and_tear") then return end
+    if not ply:IsValid() then return end
+    if wep.splash_dmg_check == nil then return end
+    local enemy_tr = info.tr.Entity
+    local cleave = info.cleave
+    local headshot = info.tr.HitGroup
+    local dmg_type = info.dmgtype
+    local splash_dmg = wep.splash_dmg_check * 0.25
+    if cleave[1] ~= nil then
+        for _, entities in ipairs(cleave) do
+            entities.donthitmeagain = true
+            local id = entities:GetCreationID()
+            timer.Remove("Horde_donthitmeagain" .. id)
+            timer.Create("Horde_donthitmeagain" .. id, 1, 1, function()
+                --if not ent:IsValid() then return end
+                entities.donthitmeagain = nil
+            end)
+            
+            local ent = ents.Create("horde_splash_melee") 
+            ent:SetPos(entities:GetPos())
+            ent:SetOwner(ply)
+            ent.Owner = ply
+            ent.splash_dmg = splash_dmg
+            ent. dmg_type = dmg_type
+            ent:Spawn()
+            ent:Activate()
+        end
     end
 end

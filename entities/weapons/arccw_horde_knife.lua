@@ -133,7 +133,8 @@ hook.Add("Horde_PlayerMoveBonus", "Horde_ArcCWKnife_MovementSpeed", function(ply
     if not ply:HasWeapon("arccw_horde_knife") then return end
     if not ply:IsValid() then return end
     if ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon():GetClass() == "arccw_horde_knife" then
-        local knifespeed = 1.25
+        local percent = ply:Horde_GetWeight() / ply:Horde_GetMaxWeight()
+        local knifespeed = math.max(1.05, 1 + 0.25 * percent)
         bonus_walk.more = bonus_walk.more * knifespeed
         bonus_run.more = bonus_run.more * knifespeed
     end
