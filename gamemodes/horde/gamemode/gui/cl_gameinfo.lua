@@ -349,7 +349,7 @@ end)
 net.Receive("Horde_RenderEnemiesCount", function()
     local is_boss = net.ReadBool()
     wave_str = net.ReadString()
-    local count = net.ReadUInt(8)
+    local count = net.ReadUInt(12)
     if is_boss then
         center_panel_str = "|" .. HORDE.Difficulty[HORDE.CurrentDifficulty].name .. "|  " .. "BOSS"
     else

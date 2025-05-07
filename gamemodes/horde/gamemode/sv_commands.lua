@@ -32,7 +32,7 @@ function HORDE:BroadcastEnemiesCountMessage(is_boss, wave_str, count)
     net.Start("Horde_RenderEnemiesCount")
         net.WriteBool(is_boss)
         net.WriteString(wave_str)
-        net.WriteUInt(count, 8)
+        net.WriteUInt(count, 12)
     net.Broadcast()
 end
 
