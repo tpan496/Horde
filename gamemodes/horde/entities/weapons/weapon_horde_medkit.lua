@@ -373,9 +373,11 @@ if SERVER then
 	function SWEP:RevivePlayer( ply )
 		if not ply.Medkit_DeathPos then return end
 
+		ply.Medit_Respawning = true
 		ply:Spawn()
 		ply:SetPos( ply.Medkit_DeathPos )
 		ply.Medkit_DeathPos = nil
+		ply.Medit_Respawning = false
 
 		ply:EmitSound( "ambient/levels/labs/electric_explosion1.wav" )
 
@@ -383,6 +385,12 @@ if SERVER then
 		owner:Horde_AddMoney( 50 )
 		owner:Horde_SyncEconomy()
 	end
+
+	hook.Add( "Horde_OnPlayerShouldRespawnDuringWave", "HordeMedkitRevive", function( ply )
+		if ply.Medit_Respawning then
+			return true
+		end
+	end )
 end
 
 function SWEP:Regen( keepaligned )

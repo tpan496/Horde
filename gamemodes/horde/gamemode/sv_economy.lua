@@ -327,7 +327,7 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
 
     if HORDE.start_game and HORDE.current_break_time <= 0 then
         if ply:IsValid() then
-            local ret = hook.Run("Horde_OnPlayerShouldRespawnDuringWave")
+            local ret = hook.Run( "Horde_OnPlayerShouldRespawnDuringWave", ply )
             if not ret then
                 ply:KillSilent()
                 HORDE:SendNotification("You will respawn next wave.", 0, ply)
