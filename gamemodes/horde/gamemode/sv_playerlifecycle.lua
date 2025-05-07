@@ -99,7 +99,7 @@ end
 function HORDE:GetReadyPlayers()
     local ready_count = 0
     local countable_players = 0
-    for _, ply in pairs( player.GetAll() ) do
+    for _, ply in pairs( player.GetHumans() ) do
         local should_count = HORDE:ShouldCountPlayer( ply )
         if should_count ~= false then
             if HORDE.player_ready[ply] == 1 then
