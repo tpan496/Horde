@@ -3,7 +3,7 @@ AddCSLuaFile()
 
 SWEP.PrintName = "Medkit"
 SWEP.Author = "robotboy655, MaxOfS2D, code_gs"
-SWEP.Purpose = "Heal other people with primary attack, heal yourself with secondary attack."
+SWEP.Purpose = "Heal other people with primary attack, heal yourself with secondary attack, revive players with reload."
 
 SWEP.Slot = 5
 SWEP.SlotPos = 3
@@ -38,6 +38,17 @@ SWEP.HealRange = 64 -- Range in units at which healing works
 
 SWEP.AmmoRegenRate = 0.25 -- Number of seconds before each ammo regen
 SWEP.AmmoRegenAmount = 1 -- Amount of ammo refilled every AmmoRegenRate seconds
+
+SWEP.DeathSyncTime = 0.5 -- Time to wait before syncing dead players
+SWEP.NextDeathSync = 0
+SWEP.DeadPlayers = {}
+SWEP.ReviveProgress = 0
+SWEP.ReviveRange = 75
+SWEP.ReviveSpeed = 20 -- Amount of progress per second
+
+if SERVER then
+	util.AddNetworkString( "horde_medkit_deadplayers" )
+end
 
 function SWEP:Initialize()
 
@@ -74,6 +85,7 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:PrimaryAttack()
+	if self:GetOwner():KeyDown( IN_RELOAD ) then return end
 
 	local owner = self:GetOwner()
 	local dolagcomp = SERVER and owner:IsPlayer()
@@ -98,12 +110,61 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
+	if self:GetOwner():KeyDown( IN_RELOAD ) then return end
 
 	self:DoHeal( self:GetOwner() )
 
 end
 
 function SWEP:Reload()
+	if not IsFirstTimePredicted() then return end
+
+	-- Loop over dead players and find the closest one
+	local closestPlayer = nil
+	local closestPos = nil
+	local closestDistance = math.huge
+	for ply, pos in pairs( self.DeadPlayers ) do
+		if not IsValid( ply ) then continue end
+		if ply:Alive() then continue end
+
+		local distance = pos:Distance( self:GetOwner():GetPos() )
+		if distance < closestDistance then
+			closestDistance = distance
+			closestPlayer = ply
+			closestPos = pos
+		end
+	end
+
+	if not closestPlayer or closestDistance > self.ReviveRange then
+		self.RevivingPlayer = nil
+		self.ReviveProgress = 0
+		self.RevivingPos = nil
+		return
+	end
+
+	if self.RevivingPlayer == closestPlayer then
+		if self.ReviveProgress >= 100 then
+			if SERVER then
+				self:RevivePlayer( self.RevivingPlayer )
+			else
+				self.DeadPlayers[self.RevivingPlayer] = nil
+			end
+
+			self.RevivingPlayer = nil
+			self.ReviveProgress = 0
+			self.RevivingPos = nil
+			return
+		end
+
+		self.ReviveProgress = self.ReviveProgress + self.ReviveSpeed * ( CurTime() - self.LastReviveTime )
+		self.LastReviveTime = CurTime()
+		return
+	end
+
+	self.ReviveProgress = 0
+	self.RevivingPlayer = closestPlayer
+	self.RevivingPos = closestPos
+	self.LastReviveTime = CurTime()
 end
 
 local DAMAGE_YES = 2
@@ -215,6 +276,113 @@ function SWEP:Think()
 	-- Do idle anim
 	self:Idle()
 
+	if SERVER and self.NextDeathSync < CurTime() then
+		self.NextDeathSync = CurTime() + self.DeathSyncTime
+
+		local deadPlayers = {}
+		for _, ply in pairs( player.GetAll() ) do
+			if not ply:Alive() and ply.Medkit_DeathPos then
+				deadPlayers[ply] = ply.Medkit_DeathPos
+			end
+		end
+
+		self.DeadPlayers = deadPlayers
+
+		net.Start( "horde_medkit_deadplayers" )
+		net.WriteEntity( self )
+		net.WriteUInt( table.Count( deadPlayers ), 8 )
+		for ply, pos in pairs( deadPlayers ) do
+			net.WriteEntity( ply )
+			net.WriteVector( pos )
+		end
+		net.Send( self:GetOwner() )
+	end
+
+	if not self:GetOwner():KeyDown( IN_RELOAD ) then
+		self.RevivingPlayer = nil
+		self.ReviveProgress = 0
+		self.RevivingPos = nil
+	end
+end
+
+if CLIENT then
+	net.Receive( "horde_medkit_deadplayers", function()
+		local medkit = net.ReadEntity()
+		if not IsValid( medkit ) then return end
+
+		local deadPlayers = {}
+		local num = net.ReadUInt( 8 )
+		for _ = 1, num do
+			deadPlayers[net.ReadEntity()] = net.ReadVector()
+		end
+
+		medkit.DeadPlayers = deadPlayers
+	end )
+
+	-- Draw the dead players and revive progerss bar
+	function SWEP:DrawHUD()
+
+		for ply, pos in pairs( self.DeadPlayers ) do
+			if not IsValid( ply ) then continue end
+
+			surface.SetDrawColor( 255, 0, 0, 255 )
+			local drawPos = pos + Vector( 0, 0, 40 )
+			local screenpos = drawPos:ToScreen()
+
+			-- Holy cross
+			surface.DrawLine( screenpos.x - 30, screenpos.y, screenpos.x + 30, screenpos.y )
+			surface.DrawLine( screenpos.x - 30, screenpos.y + 1, screenpos.x + 30, screenpos.y + 1 )
+			surface.DrawLine( screenpos.x - 30, screenpos.y + 2, screenpos.x + 30, screenpos.y + 2 )
+
+			surface.DrawLine( screenpos.x, screenpos.y - 30, screenpos.x, screenpos.y + 80 )
+			surface.DrawLine( screenpos.x - 1, screenpos.y - 30, screenpos.x, screenpos.y + 80 )
+			surface.DrawLine( screenpos.x + 1, screenpos.y - 30, screenpos.x, screenpos.y + 80 )
+
+			-- Draw player name
+			draw.SimpleTextOutlined( ply:GetName(), "ChatFont", screenpos.x, screenpos.y + 90, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, color_black )
+
+			local isCloseEnough = pos:Distance( self:GetOwner():GetPos() ) <= self.ReviveRange
+			if isCloseEnough then
+				draw.SimpleTextOutlined( "Hold R to revive", "ChatFont", screenpos.x, screenpos.y + 115, Color( 0, 255, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, color_black )
+
+				-- Draw revive progress bar
+				if IsValid( self.RevivingPlayer ) and self.ReviveProgress > 0 then
+					local barWidth = 200
+					local barHeight = 20
+					local barX = screenpos.x - barWidth / 2
+					local barY = screenpos.y + 130
+
+					surface.SetDrawColor( 100, 100, 100, 255 )
+					surface.DrawRect( barX, barY, barWidth, barHeight )
+
+					surface.SetDrawColor( 0, 255, 0, 255 )
+					surface.DrawRect( barX, barY, ( self.ReviveProgress / 100 ) * barWidth, barHeight )
+				end
+			else
+				draw.SimpleTextOutlined( "Too far to revive", "ChatFont", screenpos.x, screenpos.y + 115, Color( 255, 0, 0 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+			end
+		end
+	end
+end
+
+if SERVER then
+	hook.Add( "PlayerDeath", "HordeMedkitRevive", function( ply )
+		ply.Medkit_DeathPos = ply:GetPos()
+	end )
+
+	function SWEP:RevivePlayer( ply )
+		if not ply.Medkit_DeathPos then return end
+
+		ply:Spawn()
+		ply:SetPos( ply.Medkit_DeathPos )
+		ply.Medkit_DeathPos = nil
+
+		ply:EmitSound( "ambient/levels/labs/electric_explosion1.wav" )
+
+		local owner = self:GetOwner()
+		owner:Horde_AddMoney( 50 )
+		owner:Horde_SyncEconomy()
+	end
 end
 
 function SWEP:Regen( keepaligned )

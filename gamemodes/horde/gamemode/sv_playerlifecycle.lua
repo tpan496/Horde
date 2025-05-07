@@ -866,7 +866,7 @@ hook.Add("DoPlayerDeath", "Horde_DoPlayerDeath", function(victim)
     end
     if (not HORDE.start_game) or (HORDE.current_break_time > 0) then
         timer.Simple(1, function() if victim:IsValid() then
-            victim:Spawn()
+           victim:Spawn()
         end end)
         return
     end
