@@ -31,7 +31,7 @@ SWEP.HealSound = Sound( "HealthKit.Touch" )
 SWEP.DenySound = Sound( "WallHealth.Deny" )
 
 SWEP.HealCooldown = 0.5 -- Time between successful heals
-SWEP.DenyCooldown = 1 -- Time between unsuccessful heals
+SWEP.DenyCooldown = 0.5 -- Time between unsuccessful heals
 
 SWEP.HealAmount = 20 -- Maximum heal amount per use
 SWEP.HealRange = 64 -- Range in units at which healing works
