@@ -25,12 +25,12 @@ net.Receive("Horde_SyncEconomy", function(length)
     if not IsValid( ply ) then return end
 
     local prev_money = ply.Horde_money or 0
-    ply.Horde_money = net.ReadInt(32)
+    ply.Horde_money = net.ReadInt(18)
     if MySelf == ply then
         HORDE:PlayMoneyNotification(ply.Horde_money - prev_money, ply.Horde_money)
     end
-    ply.Horde_skull_tokens = net.ReadInt(32)
-    ply.Horde_weight = net.ReadInt(32)
+    ply.Horde_skull_tokens = net.ReadInt(14)
+    ply.Horde_weight = net.ReadInt(6)
 
     local subclass = net.ReadString()
     local class = HORDE.subclasses_to_classes[subclass]
