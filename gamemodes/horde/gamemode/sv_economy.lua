@@ -18,7 +18,6 @@ util.AddNetworkString("Horde_BuySpell")
 util.AddNetworkString("Horde_SellItem")
 util.AddNetworkString("Horde_SelectClass")
 util.AddNetworkString("Horde_InitClass")
-util.AddNetworkString("Horde_SyncEconomy")
 util.AddNetworkString("Horde_SyncDifficulty")
 util.AddNetworkString("Horde_RemoveReadyPanel")
 util.AddNetworkString("Horde_SyncMaxWeight")
@@ -290,17 +289,64 @@ function plymeta:Horde_GetWeight()
     return self.Horde_weight or 0
 end
 
+util.AddNetworkString( "horde_sync_money" )
+util.AddNetworkString( "horde_sync_weight" )
+util.AddNetworkString( "horde_sync_skull_tokens" )
+util.AddNetworkString( "horde_sync_drop_entities" )
+util.AddNetworkString( "horde_sync_subclass" )
+
 function plymeta:Horde_SyncEconomy()
     if not self:IsValid() then return end
-    if not self.Horde_money or not self.Horde_weight or not self.Horde_class then return end
-    net.Start("Horde_SyncEconomy")
-        net.WriteEntity(self)
-        net.WriteInt(self.Horde_money, 18)
-        net.WriteInt(self.Horde_skull_tokens or 0, 14)
-        net.WriteInt(self.Horde_weight, 6)
-        net.WriteString(self:Horde_GetSubclass(self.Horde_class.name))
-        net.WriteTable(self.Horde_drop_entities)
-    net.Broadcast()
+
+    local selfTbl = self:GetTable()
+    if not selfTbl.Horde_money or not selfTbl.Horde_weight or not selfTbl.Horde_class then return end
+
+    if selfTbl.Horde_money ~= selfTbl.Horde_money_last then
+        selfTbl.Horde_money_last = selfTbl.Horde_money
+
+        net.Start( "horde_sync_money" )
+            net.WriteEntity( self )
+            net.WriteUInt( selfTbl.Horde_money, 16 )
+        net.Broadcast()
+    end
+
+    if selfTbl.Horde_weight ~= selfTbl.Horde_weight_last then
+        selfTbl.Horde_weight_last = selfTbl.Horde_weight
+
+        net.Start( "horde_sync_weight" )
+            net.WriteUInt( selfTbl.Horde_weight, 5 )
+        net.Send( self )
+    end
+
+    if selfTbl.Horde_skull_tokens ~= selfTbl.Horde_skull_tokens_last then
+        selfTbl.Horde_skull_tokens_last = selfTbl.Horde_skull_tokens
+
+        net.Start( "horde_sync_skull_tokens" )
+            net.WriteUInt( selfTbl.Horde_skull_tokens, 14 )
+        net.Send( self )
+    end
+
+    if #selfTbl.Horde_drop_entities ~= 0 then
+        local json = util.TableToJSON( selfTbl.Horde_drop_entities )
+        local crc = util.CRC( json )
+        if selfTbl.Horde_drop_entities_crc ~= crc then
+            selfTbl.Horde_drop_entities_crc = crc
+
+            net.Start( "horde_sync_drop_entities" )
+                net.WriteTable( selfTbl.Horde_drop_entities )
+            net.Send( self )
+        end
+    end
+
+    local subclass = self:Horde_GetSubclass( selfTbl.Horde_class.name )
+    if subclass ~= selfTbl.Horde_subclass then
+        selfTbl.Horde_subclass = subclass
+
+        net.Start( "horde_sync_subclass" )
+            net.WriteEntity( self )
+            net.WriteString( subclass )
+        net.Broadcast()
+    end
 end
 
 function plymeta:Horde_RecalcWeight()
