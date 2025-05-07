@@ -79,7 +79,7 @@ function Ready(ply)
     net.Broadcast()
 
     if HORDE.start_game and HORDE.current_wave > 0 then return end
-    HORDE:BroadcastPlayersReadyMessage(tostring(ready_count) .. "/" .. tostring(total_player))
+    HORDE:BroadcastPlayersReadyMessage(tostring(readyCount) .. "/" .. tostring(totalPlayers))
 end
 
 local function End(ply)
