@@ -447,11 +447,11 @@ function HORDE:GetDefaultItemsData()
     {Assault=true, Survivor=true}, 15, -1, nil, "arccw/weaponicons/arccw_go_bizon", {Assault=1, Medic=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("SMG",        "P90",            "arccw_horde_p90",      2000, 5, "ES C90.\nA Belgian bullpup PDW with a magazine of 50 rounds.",
     {Assault=true, Survivor=true}, 15, -1, nil, "arccw/weaponicons/arccw_go_p90", nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("SMG",        "MP5K Medic PDW",  "arccw_horde_mp5k",  2000, 5, "MP5K-PDW.\nA lighter solution to MP5 equipped with a healing dart launcher.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 10 health and has a 0.8 second cooldown.",
+    HORDE:CreateItem("SMG",        "MP5K Medic PDW",  "arccw_horde_mp5k",  2000, 4, "MP5K-PDW.\nA lighter solution to MP5 equipped with a healing dart launcher.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 10 health and has a 0.8 second cooldown.",
     {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
-    HORDE:CreateItem("SMG",        "MP9 Medic PDW",  "arccw_horde_mp9m",  2500, 6, "Brügger & Thomet MP9.\nManufactured in Switzerland,\nthe MP9 is favored by private security firms world-wide.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 10 health and has a 1 second cooldown.",
+    HORDE:CreateItem("SMG",        "MP9 Medic PDW",  "arccw_horde_mp9m",  2500, 4, "Brügger & Thomet MP9.\nManufactured in Switzerland,\nthe MP9 is favored by private security firms world-wide.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 10 health and has a 1 second cooldown.",
     {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
-    HORDE:CreateItem("SMG",        "MP7A1 Medic PDW","arccw_horde_mp7m"  ,2500, 6, "A modified version of MP7A1 for medical purposes.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 10 health and has a 1 second cooldown.",
+    HORDE:CreateItem("SMG",        "MP7A1 Medic PDW","arccw_horde_mp7m"  ,2500, 4, "A modified version of MP7A1 for medical purposes.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 10 health and has a 1 second cooldown.",
     {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
     HORDE:CreateItem("SMG",        "Vector Medic PDW","arccw_horde_vector",3000, 6, "KRISS Vector Gen I equipped with a medical dart launcher.\nUses an unconventional blowback system that results in its high firerate.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 20 health and has a 1.5 second cooldown.",
     {Medic=true}, 8, -1, nil, nil, {Medic=3}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
@@ -648,7 +648,7 @@ function HORDE:GetDefaultItemsData()
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png", {Warden=4}, nil, {HORDE.DMG_BLAST})
     HORDE:CreateItem("Special",    "Watchtower Type-Guardian",  "horde_watchtower_guardian", 2000,  4, "A watchtower that provides armor regeneration in an area.\nArmor regeneration does not stack with itself.\n(Entity Class: horde_watchtower_guardian)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/horde_watchtower.png", {Warden=5}, nil, nil)
-    HORDE:CreateItem("Special",    "Watchtower Type-Beacon",  "horde_watchtower_beacon", 2750,  5, "A watchtower that acts as a shop during waves.\nProvides additional lighting.\n(Entity Class: horde_watchtower_beacon)",
+    HORDE:CreateItem("Special",    "Watchtower Type-Beacon",  "horde_watchtower_beacon", 2000,  4, "A watchtower that acts as a shop during waves.\nProvides additional lighting.\n(Entity Class: horde_watchtower_beacon)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=1}, "items/horde_watchtower.png", nil, nil, nil)
 
     HORDE:CreateItem("Special",    "Heat Crossbow",  "arccw_horde_heat_crossbow", 1750,  4, "Improvised sniper weapon.\nHas two firemodes (Ballistic/Impact).\n\nDeals 300% headshot damage.",
