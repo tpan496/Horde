@@ -387,6 +387,8 @@ end)
 
 -- Player Spawn Initialize
 function HORDE:PlayerInit(ply)
+    if ply.Horde_Init_Complete then return end
+
     HORDE.current_players = player.GetAll()
     HORDE:LoadRank(ply)
 
