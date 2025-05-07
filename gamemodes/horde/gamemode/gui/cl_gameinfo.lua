@@ -95,6 +95,9 @@ end
 
 local warning_mat = Material("warning.png", "mips smooth")
 local ok_mat = Material("ok.png", "mips smooth")
+
+local materialCache = {}
+
 function HORDE:PlayNotification(text, type, icon, col)
     if not type then type = 0 end
     if not text then return end
@@ -110,7 +113,10 @@ function HORDE:PlayNotification(text, type, icon, col)
         mat = warning_mat
     end
     if icon then
-        mat = Material(icon, "mips smooth")
+        if not materialCache[icon] then
+            materialCache[icon] = Material(icon, "mips smooth")
+        end
+        mat = materialCache[icon]
     end
     local color = color_white
     if col then color = col end
@@ -217,7 +223,10 @@ function HORDE:DisplayObjective(text, type, icon, col)
         mat = warning_mat
     end
     if icon then
-        mat = Material(icon, "mips smooth")
+        if not materialCache[icon] then
+            materialCache[icon] = Material(icon, "mips smooth")
+        end
+        mat = materialCache[icon]
     end
     local color = color_white
     if col then color = col end
