@@ -282,3 +282,11 @@ function HORDE:SimpleParticleSystem(particle_name, pos, angles, parent)
     p:Fire( "start", "", 0 )
     return p
 end
+
+-- Only send player death notices
+GM._SendDeathNotice = GM._SendDeathNotice or GM.SendDeathNotice
+function GM:SendDeathNotice( attacker, inflictor, victim, flags )
+    if isstring( victim ) then return end
+
+    self:_SendDeathNotice( attacker, inflictor, victim, flags )
+end
