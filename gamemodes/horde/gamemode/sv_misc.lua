@@ -285,8 +285,9 @@ end
 
 -- Only send player death notices
 GM._SendDeathNotice = GM._SendDeathNotice or GM.SendDeathNotice
+local SendDeathNotice = GM._SendDeathNotice
 function GM:SendDeathNotice( attacker, inflictor, victim, flags )
     if isstring( victim ) then return end
 
-    self:_SendDeathNotice( attacker, inflictor, victim, flags )
+    SendDeathNotice( attacker, inflictor, victim, flags )
 end
