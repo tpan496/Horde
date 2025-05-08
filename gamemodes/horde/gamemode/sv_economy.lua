@@ -338,15 +338,10 @@ function plymeta:Horde_SyncEconomy()
         end
     end
 
-    local subclass = self:Horde_GetSubclass( selfTbl.Horde_class.name )
-    if subclass ~= selfTbl.Horde_subclass then
-        selfTbl.Horde_subclass = subclass
-
-        net.Start( "horde_sync_subclass" )
-            net.WriteEntity( self )
-            net.WriteString( subclass )
-        net.Broadcast()
-    end
+    net.Start( "horde_sync_subclass" )
+        net.WriteEntity( self )
+        net.WriteString( subclass )
+    net.Broadcast()
 end
 
 function plymeta:Horde_RecalcWeight()
