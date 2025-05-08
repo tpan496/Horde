@@ -290,25 +290,17 @@ concommand.Add("horde_stats", function (ply, cmd, args)
     StatsMenu(ply)
 end)
 
-concommand.Add("horde_testing_gorlami", function (ply, cmd, args)
-    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
-        HORDE:SendNotificationSandboxOnly(ply)
-        return
-    end
-    if ply:IsAdmin() then
-        RunConsoleCommand("horde_testing_free_perks", 0)
-        local amount = 500
-        ply:Horde_AddSkullTokens(amount)
-        ply:Horde_SyncEconomy()
-        RunConsoleCommand("horde_testing_disable_level_restrictions")
-    end
+concommand.Add("horde_testmode", function (ply, cmd, args)
+    if not ply:IsSuperAdmin() then HORDE:SendNotificationDenyAccess(ply) return end
+    RunConsoleCommand("horde_testing_free_perks", 0)
+    ply:Horde_AddSkullTokens(5000)
+    ply:Horde_AddMoney(50000)
+    ply:Horde_SyncEconomy()
+    RunConsoleCommand("horde_testing_disable_level_restrictions")
 end)
 
 concommand.Add("horde_testing_give_money", function (ply, cmd, args)
-    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
-        HORDE:SendNotificationSandboxOnly(ply)
-        return
-    end
+    if not ply:IsSuperAdmin() then HORDE:SendNotificationDenyAccess(ply) return end
 
     local amount = math.floor(tonumber(args[1]))
 
@@ -323,43 +315,28 @@ concommand.Add("horde_testing_give_money", function (ply, cmd, args)
 end)
 
 concommand.Add("horde_testing_free_perks", function (ply, cmd, args)
-    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
-        HORDE:SendNotificationSandboxOnly(ply)
-        return
-    end
-    if ply:IsAdmin() then
-        RunConsoleCommand("horde_perk_start_wave", 0)
-        RunConsoleCommand("horde_perk_scaling", 0)
-    end
+    if not ply:IsSuperAdmin() then HORDE:SendNotificationDenyAccess(ply) return end
+    RunConsoleCommand("horde_perk_start_wave", 0)
+    RunConsoleCommand("horde_perk_scaling", 0)
 end)
 
 concommand.Add("horde_testing_wave_goto", function (ply, cmd, args)
-    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
-        HORDE:SendNotificationSandboxOnly(ply)
-        return
-    end
-    if ply:IsAdmin() then
-        HORDE.start_game = true
-        HORDE.current_wave = tonumber(args[1])
-        HORDE:WaveStart()
-    end
+    if not ply:IsSuperAdmin() then HORDE:SendNotificationDenyAccess(ply) return end
+    HORDE.start_game = true
+    HORDE.current_wave = tonumber(args[1])
+    HORDE:WaveStart()
 end)
 
 concommand.Add("horde_testing_disable_level_restrictions", function (ply, cmd, args)
-    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
-        HORDE:SendNotificationSandboxOnly(ply)
-        return
-    end
+    if not ply:IsSuperAdmin() then HORDE:SendNotificationDenyAccess(ply) return end
     HORDE.disable_levels_restrictions = 1
     net.Start("Horde_Disable_Levels")
     net.Broadcast()
 end)
 
 concommand.Add("horde_testing_give_skull_tokens", function (ply, cmd, args)
-    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
-        HORDE:SendNotificationSandboxOnly(ply)
-        return
-    end
+    if not ply:IsSuperAdmin() then HORDE:SendNotificationDenyAccess(ply) return end
+
     local amount = math.floor(tonumber(args[1]))
     ply:Horde_AddSkullTokens(amount)
     ply:Horde_SyncEconomy()
