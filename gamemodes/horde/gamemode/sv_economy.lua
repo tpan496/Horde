@@ -326,7 +326,7 @@ function plymeta:Horde_SyncEconomy()
         net.Send( self )
     end
 
-    if #selfTbl.Horde_drop_entities ~= 0 then
+    if table.IsEmpty( selfTbl.Horde_drop_entities ) then
         local json = util.TableToJSON( selfTbl.Horde_drop_entities )
         local crc = util.CRC( json )
         if selfTbl.Horde_drop_entities_crc ~= crc then
