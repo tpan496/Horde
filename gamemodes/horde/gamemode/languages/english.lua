@@ -1603,6 +1603,7 @@ LANGUAGE["Gadget_Desc_gadget_berserk_armor"] = [[
 {1} increased damage.
 {2} increased Global damage resistance.
 {3} increased move speed.
+{4} increased jump height.
 ]]
 
 LANGUAGE["Gadget_gadget_flash"] = [[Flash]]

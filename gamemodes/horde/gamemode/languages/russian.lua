@@ -1180,7 +1180,8 @@ LANGUAGE["Perk_necromancer_energy_siphon"] = [[
 LANGUAGE["Perk_Title_necromancer_eldritch_protection"] = [[Сверхъестественная защита]]
 LANGUAGE["Perk_necromancer_eldritch_protection"] = [[
 На {1} увеличена регенерация маны.
-Вы получаете на {2} меньше урона от врагов, пораженные обморожением.
+Получаете щит каждые {2} секунд, который уменьшает получаемый урон на {3}.
+Создает взрыв урона от холода при попадании.
 ]]
 
 LANGUAGE["Perk_Title_Necromancer_Tier_3"] = [[Оккультизм]]

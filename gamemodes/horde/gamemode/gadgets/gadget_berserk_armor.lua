@@ -18,7 +18,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     sound.Play("horde/gadgets/berserk_on.ogg", ply:GetPos())
     sound.Play("horde/gadgets/berserk_in.ogg", ply:GetPos())
     ply.Horde_HasGuts = true
-    ply:ScreenFade(SCREENFADE.IN, Color(200, 50, 50, 50), 0.1, 10)
+    ply:ScreenFade(SCREENFADE.IN, Color(235, 25, 25, 20), 0.1, 10)
     timer.Simple(10, function()
         if ply:IsValid() then ply.Horde_HasGuts = nil end
     end)

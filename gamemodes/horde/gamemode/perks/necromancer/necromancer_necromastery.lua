@@ -9,24 +9,18 @@ PERK.Params = {
 }
 PERK.Hooks = {}
 
-PERK.Hooks.Horde_OnSetPerk = function( ply, perk )
-    if SERVER and perk == "necromancer_necromastery" then
-        ply.Horde_Spectre_Max_Count = ply.Horde_Spectre_Max_Count + 1
-        if ply.Horde_Spectre_Max_Count <= 1 then
-            ply.Horde_Spectre_Max_Count = 2
-        end
+PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
+    if CLIENT then return end
+    if perk == "necromancer_necromastery" then
+        UpdateSpectreMaxCount(ply)
     end
 end
 
-PERK.Hooks.Horde_OnUnsetPerk = function( ply, perk )
-    if SERVER and perk == "necromancer_necromastery" then
-
-        ply.Horde_Spectre_Max_Count = ply.Horde_Spectre_Max_Count - 1
-        if ply.Horde_Spectre_Max_Count <= 0 then
-            ply.Horde_Spectre_Max_Count = 1
-        end
-
-        HORDE:RemoveSpectres( ply )
+PERK.Hooks.Horde_OnUnsetPerk = function(ply, perk)
+    if CLIENT then return end
+    if perk == "necromancer_necromastery" then
+        HORDE:RemoveSpectres(ply)
+        UpdateSpectreMaxCount(ply)
     end
 end
 
