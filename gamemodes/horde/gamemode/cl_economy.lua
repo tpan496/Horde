@@ -17,7 +17,7 @@ function plymeta:Horde_GetMaxWeight()
 end
 
 function plymeta:Horde_GetDropEntities()
-    return self.Horde_drop_entities
+    return self.Horde_drop_entities or {}
 end
 
 net.Receive( "horde_sync_money", function()
