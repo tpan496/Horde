@@ -282,35 +282,3 @@ function HORDE:SimpleParticleSystem(particle_name, pos, angles, parent)
     p:Fire( "start", "", 0 )
     return p
 end
-
--- Only send player death notices
-function GM:SendDeathNotice( attacker, inflictor, victim, flags )
-    if isstring( victim ) then return end
-
-    net.Start( "DeathNoticeEvent" )
-        if ( isstring( attacker ) ) then
-            net.WriteUInt( 1, 2 )
-            net.WriteString( attacker )
-        elseif ( IsValid( attacker ) ) then
-            net.WriteUInt( 2, 2 )
-            net.WriteEntity( attacker )
-        else
-            -- TODO: game.GetWorld will be "written" here, because its not IsValid. Make it write a separate type?
-            net.WriteUInt( 0, 2 )
-        end
-
-        net.WriteString( inflictor )
-
-        if ( isstring( victim ) ) then
-            net.WriteUInt( 1, 2 )
-            net.WriteString( victim )
-        elseif ( IsValid( victim ) ) then
-            net.WriteUInt( 2, 2 )
-            net.WriteEntity( victim )
-        else
-            net.WriteUInt( 0, 2 )
-        end
-
-        net.WriteUInt( flags, 8 )
-    net.Broadcast()
-end
