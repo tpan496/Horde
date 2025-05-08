@@ -91,6 +91,10 @@ SWEP.Animations = {
     },
 }
 
+function SWEP:CustomInitialize()
+    self.Primary.Ammo = "horde_arccw_knives"
+end
+
 function SWEP:SecondaryAttack()
     if self:GetNextPrimaryFire() > CurTime() then return end
     if self:GetNextSecondaryFire() > CurTime() then return end

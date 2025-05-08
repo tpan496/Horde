@@ -44,7 +44,15 @@ function entmeta:Horde_AddFearStack(ply)
     end
     
     if ply.Horde_Special_Upgrades and ply.Horde_Special_Upgrades["module_terror"] then
-        self:Horde_AddDebuffBuildup(HORDE.Status_Stun, 10, ply, self:GetPos())
+        local stun_perc = 8
+        local is_boss = 1
+        if self:Horde_GetBossProperties() then
+            is_boss = 0.5
+        end
+        if self.Horde_Debuff_Threshold then
+            stun_perc = math.min(20, self.Horde_Debuff_Threshold * 0.08) * is_boss
+        end
+        self:Horde_AddDebuffBuildup(HORDE.Status_Stun, stun_perc, ply, self:GetPos())
     end
     
     if ply.Horde_Special_Upgrades and ply.Horde_Special_Upgrades["module_nightmare"] then

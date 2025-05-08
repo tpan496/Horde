@@ -334,7 +334,13 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
     if not ply:Horde_GetCurrentSubclass() then return end
     ply:Horde_SetMaxWeight(HORDE.max_weight)
     ply:Horde_ApplyPerksForClass()
-    ply:Horde_SetWeight(ply:Horde_GetMaxWeight())
+    local module_weight = 0
+    if ply.Horde_Special_Upgrades and next(ply.Horde_Special_Upgrades) ~= nil then
+        for spec_modules, _ in pairs(ply.Horde_Special_Upgrades) do
+            module_weight = module_weight - HORDE.items[spec_modules].weight 
+        end
+    end
+    ply:Horde_SetWeight(ply:Horde_GetMaxWeight() + module_weight)
     if ply.Horde_Special_Armor then
         net.Start("Horde_SyncSpecialArmor")
             net.WriteString(ply.Horde_Special_Armor)

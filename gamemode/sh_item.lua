@@ -220,32 +220,32 @@ function HORDE:GetDefaultGadgets()
 
     --Overlord Watchtower Modules
     --Watchtower Module: Agony
-    HORDE:CreateItem("Special", translate.Get("Module_WM_Agony"), "module_agony", 800, 1, 
+    HORDE:CreateItem("Special", "Watchtower Module: Agony", "module_agony", 800, 1, 
         translate.Get("Module_Desc_WM_Agony"),
         { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
         { Overlord = 1 }, nil, nil, nil, nil)
     --Watchtower Module: Suffering
-    HORDE:CreateItem("Special", translate.Get("Module_WM_Suffering"), "module_suffering", 800, 1,
+    HORDE:CreateItem("Special", "Watchtower Module: Suffering", "module_suffering", 800, 1,
         translate.Get("Module_Desc_WM_Suffering"),
         { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
         { Overlord = 1 }, nil, nil, nil, nil)
     --Watchtower Module: Terror
-    HORDE:CreateItem("Special", translate.Get("Module_WM_Terror"), "module_terror", 2000, 2,
+    HORDE:CreateItem("Special", "Watchtower Module: Terror", "module_terror", 2000, 2,
         translate.Get("Module_Desc_WM_Terror"),
         { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
         { Overlord = 3 }, nil, nil, nil, nil)
     --Watchtower Module: Paranoia
-    HORDE:CreateItem("Special", translate.Get("Module_WM_Paranoia"), "module_paranoia", 1500, 2,
+    HORDE:CreateItem("Special", "Watchtower Module: Paranoia", "module_paranoia", 1500, 2,
         translate.Get("Module_Desc_WM_Paranoia"),
         { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
         { Overlord = 2 }, nil, nil, nil, nil)
     --Watchtower Module: Nightmare
-    HORDE:CreateItem("Special", translate.Get("Module_WM_Nightmare"), "module_nightmare", 3000, 3,
+    HORDE:CreateItem("Special", "Watchtower Module: Nightmare", "module_nightmare", 3000, 3,
         translate.Get("Module_Desc_WM_Nightmare"),
         { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
         { Overlord = 4 }, nil, nil, nil, nil)
     --Watchtower Module: Hysteria
-    HORDE:CreateItem("Special", translate.Get("Module_WM_Hysteria"), "module_hysteria", 3500, 3,
+    HORDE:CreateItem("Special", "Watchtower Module: Hysteria", "module_hysteria", 3500, 3,
         translate.Get("Module_Desc_WM_Hysteria"),
         { Overlord = true, }, 10, -1, { type = HORDE.ENTITY_PROPERTY_SPECIAL_UPGRADE }, "items/module_upgrade.png",
         { Overlord = 5 }, nil, nil, nil, nil)
@@ -435,23 +435,23 @@ end
 function HORDE:GetDefaultItemsData()
     -- Melee Category --
     -- Combat Knife --
-    HORDE:CreateItem("Melee", translate.Get("Item_Combat_Knife"), "arccw_horde_knife", 100, 2,
+    HORDE:CreateItem("Melee", "Combat Knife", "arccw_horde_knife", 100, 2,
         translate.Get("Item_Desc_Combat_Knife"),
         nil, 10, -1, nil, nil, nil, nil, { HORDE.DMG_SLASH }, nil, { "Berserker", "Samurai" })
     -- Crowbar --
-    HORDE:CreateItem("Melee", translate.Get("Item_Crowbar"), "arccw_horde_crowbar", 1000, 3,
+    HORDE:CreateItem("Melee", "Crowbar", "arccw_horde_crowbar", 1000, 3,
         translate.Get("Item_Desc_Crowbar"),
         nil, 10, -1, nil, "items/hl2/weapon_crowbar.png", nil, nil, { HORDE.DMG_BLUNT })
     -- Machete --
-    HORDE:CreateItem("Melee", translate.Get("Item_Machete"), "arccw_horde_machete", 1000, 3,
+    HORDE:CreateItem("Melee", "Machete", "arccw_horde_machete", 1000, 3,
         translate.Get("Item_Desc_Machete"),
         nil, 10, -1, nil, nil, nil, nil, { HORDE.DMG_SLASH })
     -- Fire Axe --
-    HORDE:CreateItem("Melee", translate.Get("Item_Fireaxe"), "arccw_horde_axe", 1500, 5,
+    HORDE:CreateItem("Melee", "Fire Axe", "arccw_horde_axe", 1500, 5,
         translate.Get("Item_Desc_Fireaxe"),
         nil, 10, -1, nil, nil, nil, nil, { HORDE.DMG_SLASH })
     -- Stunstick --
-    HORDE:CreateItem("Melee", translate.Get("Item_Stunstick"), "arccw_horde_stunstick", 1500, 4,
+    HORDE:CreateItem("Melee", "Stunstick", "arccw_horde_stunstick", 1500, 4,
         translate.Get("Item_Desc_Stunstick"),
         nil, 10, -1, nil, "items/hl2/weapon_stunstick.png", nil, nil, { HORDE.DMG_BLUNT, HORDE.DMG_LIGHTNING })
     -- Katana --
@@ -459,28 +459,28 @@ function HORDE:GetDefaultItemsData()
         "Ninja sword.\nLong attack range and fast attack speed.",
         { Survivor = true, Psycho = true, Berserker = true, Samurai = true, }, 10, -1, nil, nil, nil, nil, { HORDE.DMG_SLASH })
     -- Bat --
-    HORDE:CreateItem("Melee", translate.Get("Item_Bat"), "arccw_horde_bat", 2000, 5,
+    HORDE:CreateItem("Melee", "Bat", "arccw_horde_bat", 2000, 5,
         translate.Get("Item_Desc_Bat"),
         { Survivor = true, Psycho = true, Berserker = true, Samurai = true, }, 10, -1, nil, nil, nil, nil, { HORDE.DMG_BLUNT })
     -- Chainsaw --
-    HORDE:CreateItem("Melee", translate.Get("Item_Chainsaw"), "arccw_horde_chainsaw", 2500, 8,
+    HORDE:CreateItem("Melee", "Chainsaw", "arccw_horde_chainsaw", 2500, 8,
         translate.Get("Item_Desc_Chainsaw"),
         { Berserker = true, Samurai = true, }, 10, -1, nil, nil, { Berserker = 2 }, nil, { HORDE.DMG_SLASH })
     -- Inferno Blade --
-    HORDE:CreateItem("Melee", translate.Get("Item_Inferno"), "arccw_horde_inferno_blade", 2500, 7,
+    HORDE:CreateItem("Melee", "Inferno Blade", "arccw_horde_inferno_blade", 2500, 7,
         translate.Get("Item_Desc_Inferno"),
         { Berserker = true, Samurai = true, Cremator = true }, 10, -1, nil, nil, { Berserker = 2, Cremator = 2 }, nil,
         { HORDE.DMG_SLASH, HORDE.DMG_FIRE })
     -- Jotunn or Jötunn --
-    HORDE:CreateItem("Melee", translate.Get("Item_Jotunn"), "arccw_horde_jotuun", 2500, 8,
+    HORDE:CreateItem("Melee", "Jotunn", "arccw_horde_jotuun", 2500, 8,
         translate.Get("Item_Desc_Jotunn"),
         { Berserker = true, Samurai = true, }, 10, -1, nil, nil, { Berserker = 4 }, nil, { HORDE.DMG_BLUNT, HORDE.DMG_COLD })
     -- Mjolnir or Mjölnir --
-    HORDE:CreateItem("Melee", translate.Get("Item_Mjolnir"), "arccw_horde_mjollnir", 3000, 8,
+    HORDE:CreateItem("Melee", "Mjolnir", "arccw_horde_mjollnir", 3000, 8,
         translate.Get("Item_Desc_Mjolnir"),
         { Berserker = true, Samurai = true, }, 10, -1, nil, nil, { Berserker = 3 }, nil, { HORDE.DMG_BLUNT, HORDE.DMG_LIGHTNING })
     -- Zweihander or Zweihänder --
-    HORDE:CreateItem("Melee", translate.Get("Item_Zweihander"), "arccw_horde_zweihander", 3000, 9,
+    HORDE:CreateItem("Melee", "Zweihander", "arccw_horde_zweihander", 3000, 9,
         translate.Get("Item_Desc_Zweihander"),
         { Berserker = true, Samurai = true, }, 10, -1, nil, nil, { Berserker = 5 }, nil, { HORDE.DMG_SLASH })
 
@@ -555,7 +555,7 @@ function HORDE:GetDefaultItemsData()
         { Gunslinger = true }, 5, -1, nil, nil, { Gunslinger = 1 }, nil, { HORDE.DMG_BALLISTIC })
     
     -- Throwing Knives
-    HORDE:CreateItem("Pistol", translate.Get("Item_Throwing_Knives"), "arccw_horde_kunai", 1000, 2,
+    HORDE:CreateItem("Pistol", "Throwing Knives", "arccw_horde_kunai", 1000, 2,
         translate.Get("Item_Desc_Throwing_Knives"),
         { Berserker = true, Samurai = true, Gunslinger = true }, 10, -1, nil, nil, nil, nil, { HORDE.DMG_SLASH })
     --Add projectile entity for category "Pistol" damage check--

@@ -215,9 +215,15 @@ function SWEP:MeleeAttack(melee2)
         self:SetNWFloat("HORDE_Durability", math.max(self:GetNWFloat("HORDE_Durability", self.MaximumDurability) - (cost * hits), 0))
     end
 
-    self:GetBuff_Hook("Hook_PostBash", {tr = preTr, dmg = dmg, melee2 = melee2, cleave = enemies_hit})
+    self:GetBuff_Hook("Hook_PostBash", {tr = preTr, dmg = dmg, melee2 = melee2, cleave = enemies_hit, ply = owner, dmgtype = dmgtype})
     owner:LagCompensation(false)
 end
+
+hook.Add("Horde_OnPlayerDamagePost", "Horde_Splash_DamageInfo", function(ply, npc, bonus, hitgroup, dmginfo)
+    if ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon().IsHordeMelee then
+        ply:GetActiveWeapon().splash_dmg_check = dmginfo:GetDamage()
+    end
+end)
 
 --[[
 -------Keep the oldge melee code just in case---------
