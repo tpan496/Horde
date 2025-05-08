@@ -45,6 +45,8 @@ end )
 
 net.Receive( "horde_sync_subclass", function()
     local ply = net.ReadEntity()
+    if not IsValid( ply ) then return end
+
     local subclass = net.ReadString()
     local class = HORDE.subclasses_to_classes[subclass]
     ply.Horde_class = HORDE.classes[class]
@@ -53,6 +55,6 @@ net.Receive( "horde_sync_subclass", function()
 end )
 
 net.Receive( "Horde_SyncMaxWeight", function()
-    local max_weight = net.ReadUInt(5)
+    local max_weight = net.ReadUInt( 5 )
     MySelf.Horde_max_weight = max_weight
 end )
