@@ -25,7 +25,7 @@ net.Receive( "horde_sync_money", function()
     if not IsValid( ply ) then return end
 
     local prev_money = ply.Horde_money or 0
-    ply.Horde_money = net.ReadInt( 16 )
+    ply.Horde_money = net.ReadUInt( 16 )
     if MySelf == ply then
         HORDE:PlayMoneyNotification( ply.Horde_money - prev_money, ply.Horde_money )
     end
