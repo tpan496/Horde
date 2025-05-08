@@ -338,6 +338,7 @@ function plymeta:Horde_SyncEconomy()
         end
     end
 
+    local subclass = self:Horde_GetSubclass( selfTbl.Horde_class.name )
     net.Start( "horde_sync_subclass" )
         net.WriteEntity( self )
         net.WriteString( subclass )
