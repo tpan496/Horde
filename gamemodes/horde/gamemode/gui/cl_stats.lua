@@ -623,33 +623,6 @@ function PANEL:Init()
         }, next_pos + 100)
     end
 
-    local donate_text_panel = vgui.Create("DPanel", description_panel)
-    donate_text_panel:SetSize(self:GetParent():GetWide(), 800)
-    donate_text_panel:SetVisible(false)
-    donate_text_panel.Paint = function () end
-
-    local paypal_btn = vgui.Create("DButton", donate_text_panel)
-    paypal_btn:SetSize(250, 80)
-    paypal_btn:Dock(TOP)
-    paypal_btn:SetText("")
-    paypal_btn.Paint = function ()
-        draw.SimpleText("Paypal", "Content", 50, 25, Color(51,102,187), TEXT_ALIGN_LEFT)
-    end
-    paypal_btn.DoClick = function ()
-        gui.OpenURL("https://steamcommunity.com/linkfilter/?url=https://www.paypal.com/donate?business=XSZEUMTKKC8ZU&no_recurring=0&item_name=Author+of+Horde+Gamemode&currency_code=USD")
-    end
-
-    local patreon_btn = vgui.Create("DButton", donate_text_panel)
-    patreon_btn:SetSize(250, 80)
-    patreon_btn:Dock(TOP)
-    patreon_btn:SetText("")
-    patreon_btn.Paint = function ()
-        draw.SimpleText("Patreon", "Content", 50, 25, Color(51,102,187), TEXT_ALIGN_LEFT)
-    end
-    patreon_btn.DoClick = function ()
-        gui.OpenURL("https://www.patreon.com/user?u=67559435")
-    end
-
     self.mechanic_btns = {}
     self.create_mechanic_btn = function (text, panel)
         local mechanic_btn = vgui.Create("DButton", mechanics_panel)
@@ -679,7 +652,6 @@ function PANEL:Init()
             damage_text_panel:SetVisible(false)
             debuff_text_panel:SetVisible(false)
             enemies_text_panel:SetVisible(false)
-            donate_text_panel:SetVisible(false)
             panel:SetVisible(true)
             surface.PlaySound("UI/buttonclick.wav")
         end
@@ -705,7 +677,6 @@ function PANEL:Init()
     if GetConVarNumber("horde_default_enemy_config") == 1 then
         self.create_mechanic_btn("Enemies", enemies_text_panel)
     end
-    self.create_mechanic_btn("Donate $", donate_text_panel)
 
     local basic_stats_panel = vgui.Create("DPanel", stats_panel)
     basic_stats_panel:Dock(LEFT)
@@ -1061,6 +1032,26 @@ function PANEL:Init()
     end
     discord_btn.DoClick = function ()
         gui.OpenURL("https://discord.gg/npc")
+    end
+
+    local donate_btn = vgui.Create("DButton", self)
+    local donate_activated = false
+    local donate_hovered = false
+    donate_btn:SetText("Donate")
+    donate_btn:SetTextColor(Color(255,255,255))
+    donate_btn:SetFont("Title")
+    donate_btn:SetSize(250, 50)
+    donate_btn:SetPos(1000, 0)
+    donate_btn.Paint = function ()
+        if donate_hovered then draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_crimson) return end
+        if donate_activated then
+            draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_crimson)
+        else
+            draw.RoundedBox(0, 0, 0, 250, 50, HORDE.color_hollow)
+        end
+    end
+    donate_btn.DoClick = function ()
+        gui.OpenURL("https://store.npcz.gg/")
     end
 
     local close_btn = vgui.Create("DButton", self)
