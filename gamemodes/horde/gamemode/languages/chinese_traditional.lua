@@ -223,7 +223,7 @@ LANGUAGE["Infusion_Description_Ruination"] = [[
 持有當前武器時，每秒玩家會獲得 10 衰退累計值。
 ]]
 
--- Classes 
+-- Classes
 LANGUAGE["Class_Survivor"] = "倖存者"
 LANGUAGE["Class_Assault"] = "突擊兵"
 LANGUAGE["Class_Heavy"] = "重裝兵"

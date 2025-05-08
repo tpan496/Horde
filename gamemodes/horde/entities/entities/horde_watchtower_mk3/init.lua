@@ -71,7 +71,7 @@ function ENT:Think()
         dmg:SetDamage(100)
         local pos = self:GetPos()
         local targets = ents.FindInSphere(pos, 200)
-        local nearest = nil 
+        local nearest = nil
         local nearestDist = math.huge
         for _, ent in pairs(targets) do
             local dist = ent:GetPos():DistToSqr(pos)

@@ -97,7 +97,7 @@ function PANEL:Init()
     self.ammo_secondary_ten_btn.OnCursorEntered = function ()
         surface.PlaySound("UI/buttonrollover.wav")
     end
-    
+
     self.upgrade_btn = vgui.Create("DButton", self)
     self.upgrade_btn:Dock(BOTTOM)
     self.upgrade_btn:DockMargin(5,2.5,5,2.5)

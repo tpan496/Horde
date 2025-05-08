@@ -262,7 +262,7 @@ function SWEP:TwinHeart()
 		ply.TwinHeartToggleOn = false
 		return
 	end
-	
+
 	if ply.TwinHeartToggleOn then
 	ply:EmitSound("items/suitchargeno1.wav")
 	else
@@ -356,12 +356,12 @@ function SWEP:StartAttack()
 	if SERVER and ply:Horde_GetPerk("carcass_bio_thruster") then
 		if not ply:IsValid() then return end
 		if self.LastThrust > CurTime() then return end
-		
+
        if (ply:Health() <= (ply:GetMaxHealth() * 0.05 * math.max(1, ply.Horde_Bio_Thruster_Stack))) then
 		self.LastThrust = CurTime() + self.ThrustInterval
 		ply:EmitSound( sndTooFar )
 		return end
-		
+
 		self.LastThrust = CurTime() + self.ThrustInterval
 		local id = ply:SteamID()
 		timer.Remove("Horde_BioThrusterDegen" .. id)
@@ -629,8 +629,8 @@ function SWEP:Think()
 		local ply = self.Owner
 		if ply.TwinHeartToggleOn and self.LastTransfer <= CurTime() then
 			if ply.TwinHeartToggleOn == true then
-			
-				
+
+
 				if ply.Horde_TwinHeartStack <= 0 or ply:Horde_HasDebuff(HORDE.Status_Decay) then
 					ply.TwinHeartToggleOn = false
 					ply:EmitSound("items/suitchargeno1.wav")

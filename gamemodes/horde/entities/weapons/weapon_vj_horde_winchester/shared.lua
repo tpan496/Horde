@@ -44,7 +44,7 @@ SWEP.Secondary.Ammo = nil -- Ammo type
 	-- Reload Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 	SWEP.ReloadSound				= {"weapons/shotgun/shotgun_reload1.wav","weapons/shotgun/shotgun_reload2.wav","weapons/shotgun/shotgun_reload3.wav"}
 	SWEP.Reload_TimeUntilAmmoIsSet	= 0.5 -- Time until ammo is set to the weapon
-	SWEP.Reload_TimeUntilFinished	= 0.5 -- How much time until the player can play idle animation, shoot, etc.	
+	SWEP.Reload_TimeUntilFinished	= 0.5 -- How much time until the player can play idle animation, shoot, etc.
 SWEP.Primary.Tracer = 0
 SWEP.Primary.DisableBulletCode = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ function SWEP:CustomOnDrawWorldModel()
 		-- render.SetMaterial(laser1mat)
 		-- render.SetShadowsDisabled(true)
 		-- render.DrawBeam(laserstartpos, lasertracer.HitPos, laserwidth, 0, 20)
-	
+
 		render.SetMaterial(laser2mat)
 		render.SetShadowsDisabled(true)
 		render.DrawBeam(laserstartpos, lasertracer.HitPos, laserwidth, 0, 1, Color(0,100,255))
@@ -172,7 +172,7 @@ function SWEP:CustomOnDrawWorldModel()
 		--self:SetRenderBounds(self.DefaultRenderBoxMins,self.DefaultRenderBoxMaxs)
 		--self.DefaultRenderBoundsSet = true
 		--print("default render bounds set: " .. tostring(self.DefaultRenderBoxMins) .. ", " .. tostring(self.DefaultRenderBoxMaxs))
-	
+
 	end
 
 	return true

@@ -64,7 +64,7 @@ SWEP.Hook_PostReload = function(wep)
     wep.SetNeedCycle(false)
 end
 
--- 
+--
 
 -- SWEP.Delay = 60 / 300 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.

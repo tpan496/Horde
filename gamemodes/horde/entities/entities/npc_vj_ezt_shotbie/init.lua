@@ -163,7 +163,7 @@ function ENT:MultipleMeleeAttacks()
 	self.MeleeAttackDamageType = DMG_SLASH
 end
 
----------------------------------------------------------------------------------------------------------------------------------------------	  
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, GetCorpse)
 	VJ_EmitSound(self, "npc/hevzombie/zvoxflatline.wav", 90, 100)
 end

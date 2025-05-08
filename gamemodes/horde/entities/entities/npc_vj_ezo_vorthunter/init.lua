@@ -167,7 +167,7 @@ function ENT:CustomOnFlinch_BeforeFlinch(dmginfo, hitgroup)
 				{"vjges_flinch_s", dpos:Distance(self:GetPos() + self:GetForward() * 25)}, --North; move back
 				{"vjges_flinch_w", dpos:Distance(self:GetPos() + self:GetRight() * 25)}, --East; move left
 				{"vjges_flinch_n", dpos:Distance(self:GetPos() - self:GetForward() * 25)}, --South; move forward
-				{"vjges_flinch_e", dpos:Distance(self:GetPos() - self:GetRight() * 25)} --West; move right	
+				{"vjges_flinch_e", dpos:Distance(self:GetPos() - self:GetRight() * 25)} --West; move right
 			}
 
 			table.sort(directions, function(a, b)
@@ -187,7 +187,7 @@ function ENT:CustomOnFlinch_BeforeFlinch(dmginfo, hitgroup)
 				{"staggerw", dpos:Distance(self:GetPos() + self:GetRight() * 25)}, --East; move left
 				{"staggern", dpos:Distance(self:GetPos() - self:GetForward() * 25)}, --South; move forward
 				{"staggere", dpos:Distance(self:GetPos() - self:GetRight() * 25)} --West; move right
-				
+
 			}
 
 			table.sort(directions, function(a, b)
@@ -409,7 +409,7 @@ function ENT:CustomOnThink()
 		if self.Charging == true then
 			for k, v in pairs(ents.FindInSphere(self:GetPos() + self:GetForward() * 100, 80)) do
 				if self:DoRelationshipCheck(v) == true and self:Visible(v) and IsValid(self) and self.Dead == false then
-					VJ_EmitSound(self, self.SoundTbl_MeleeAttack, 100, math.random(80, 100))	
+					VJ_EmitSound(self, self.SoundTbl_MeleeAttack, 100, math.random(80, 100))
 			--		v:TakeDamage(math.random(15, 30), self, self)
 					local d = DamageInfo()
 					d:SetDamage( 40 )
@@ -597,7 +597,7 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 			{"death_stagger_w", dpos:Distance(self:GetPos() + self:GetRight() * 25)}, --East; move left
 			{"death_stagger_w", dpos:Distance(self:GetPos() - self:GetForward() * 25)}, --South; move forward
 			{"death_stagger_e", dpos:Distance(self:GetPos() - self:GetRight() * 25)} --West; move right
-			
+
 		}
 
 		table.sort(directions, function(a, b)

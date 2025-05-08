@@ -45,7 +45,7 @@ function ENT:Initialize()
 	self.attack = {"npc/manhack/grind_flesh1.wav","npc/manhack/grind_flesh2.wav","npc/manhack/grind_flesh3.wav"}
 	//self:SetCollisionGroup(COLLISION_GROUP_NONE)
 	self:SetUseType(SIMPLE_USE)
-	self:SetHealth(self.StartHealth)	
+	self:SetHealth(self.StartHealth)
 	self.idlesd = VJ_CreateSound(self, self.IdleSd, 75, 100)
 	self.idle2sd = VJ_CreateSound(self, self.Idle2Sd, 75, 100)
 	self:SetBodygroup(1,1)
@@ -78,7 +78,7 @@ local lamp2 = ents.Create("env_sprite")
 					lamp2:Spawn()
 					lamp2:Activate()
 					lamp2:Fire("Kill","",0.2)
-					self:DeleteOnRemove(lamp2)	
+					self:DeleteOnRemove(lamp2)
 
 
 										local lamp = ents.Create("env_sprite")

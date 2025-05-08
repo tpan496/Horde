@@ -97,7 +97,7 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 		self:EmitSound("snpc/hunterarc/flechette_impact_stick" .. math.random(1, 5) .. ".wav" , 85, math.random(90, 110))
 
 		self:SetPos(data.HitPos)
-        
+
         timer.Simple( 0, function()
             if not IsValid( self ) then return end
             self:SetMoveType(MOVETYPE_NONE)

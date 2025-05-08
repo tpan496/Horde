@@ -5,13 +5,13 @@ local OpacityConvar = CreateClientConVar("horde_warden_aura_ring_opacity",
 	true,
 	false,
 	"Controls the Opacity of the Warden Aura Rings, the higher, the more opaque/visible, Set to 0 to disable Warden Aura rings from rendering",
-	0, 
+	0,
 	255
 )
 
 local opacity = OpacityConvar:GetInt()
 local col = Color(0,255,100,opacity)
-cvars.AddChangeCallback("horde_warden_aura_ring_opacity", function( convar_name, oldValue, newValue ) 
+cvars.AddChangeCallback("horde_warden_aura_ring_opacity", function( convar_name, oldValue, newValue )
 	opacity = tonumber(newValue)
 	col = Color(0,255,100,opacity)
 end)

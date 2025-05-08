@@ -6,16 +6,16 @@ include( 'shared.lua' )
 local physMin = Vector( -2, -2, -2 )
 local physMax = Vector( 2, 2, 2 )
 
-function ENT:Initialize()	
+function ENT:Initialize()
 	self:SetModel("models/crossbow_bolt.mdl")
 	self:PhysicsInitBox( physMin, physMax )
-	
+
 	self:SetMoveCollide(3)
 	self:DrawShadow(false)
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_CUSTOM)
-	self:SetHealth(1)	
+	self:SetHealth(1)
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:SetMass(1)
@@ -56,16 +56,16 @@ function ENT:OnRemove()
 end
 
 function ENT:Think()
-    if SERVER and not IsValid(self.entOwner) then 
+    if SERVER and not IsValid(self.entOwner) then
 	    self:Remove()
         return
     end
-	
+
     if SERVER and self.NextSound <= CurTime() and self:IsValid() then
         self:EmitSound("ambient/energy/whiteflash.wav")
         self.NextSound = self.NextSound + 3
     end
-	
+
     if self.NextScale < CurTime() and self:GetScale() < 6 then
         self:SetScale(self:GetScale() + 1)
         self.NextScale = CurTime() + 3
@@ -79,7 +79,7 @@ function ENT:Think()
         util.Effect( "horde_status_shock", data, true, true )
         return
     end
-	
+
     local phys = self:GetPhysicsObject()
     if self.Target and self.Target:IsValid() and phys:IsValid() then
         local ang = self:GetAngles()
@@ -88,7 +88,7 @@ function ENT:Think()
         self:SetAngles(desired)
         phys:ApplyForceCenter(self:GetForward() * 225)
     end
-	
+
 	if self.deploy && CurTime() >= self.deploy then
 		if IsValid(self.entOwner) then
 			local pos = self:GetPos()
@@ -100,7 +100,7 @@ function ENT:Think()
 			end
 		end
 	end
-	
+
 	if CurTime() < self.delayRemove then return end
 
     local dmg = DamageInfo()

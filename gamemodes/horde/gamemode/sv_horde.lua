@@ -119,7 +119,7 @@ hook.Add("InitPostEntity", "Horde_Init", function()
         HORDE.spawn_distribution = HORDE.SPAWN_PROXIMITY_NOISY
     end
 
-    HORDE.spawn_distribution = HORDE.MapSpawnDistributionOverrides[game.GetMap()] or HORDE.spawn_distribution 
+    HORDE.spawn_distribution = HORDE.MapSpawnDistributionOverrides[game.GetMap()] or HORDE.spawn_distribution
     -- Load economy
     for _, ent in pairs(ents.FindByClass("logic_horde_economy")) do
         ent:KeyValue("startingmoney", ent:GetInternalVariable("startingmoney"))

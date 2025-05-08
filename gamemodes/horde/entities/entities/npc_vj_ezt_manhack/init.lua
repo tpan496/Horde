@@ -10,7 +10,7 @@ ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
 ENT.HullType = HULL_TINY
 ENT.MovementType = VJ_MOVETYPE_AERIAL
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.HasDeathRagdoll = false 
+ENT.HasDeathRagdoll = false
 ENT.Aerial_TargetPos = Vector(4000,4000,4000)
 ENT.FindEnemy_CanSeeThroughWalls = true
 ENT.Aerial_ShouldBeFlying = true
@@ -169,7 +169,7 @@ function ENT:AerialMove_ChaseEnemy(ShouldPlayAnim,UseCalmVariables)
 		if math.abs(z_self - z_ene) >= 10 then
 			if Debug == true then print("Aerial: DOWN [CHASE]") end
 			getenemyz = "Down"
-			
+
 			//vel_up = -100
 		end
 	end
@@ -194,7 +194,7 @@ function ENT:AerialMove_ChaseEnemy(ShouldPlayAnim,UseCalmVariables)
 		self:SetLocalVelocity(vel_set)
 		if Debug == true then ParticleEffect("vj_impact1_centaurspit", self:GetEnemy():GetPos()+self:GetEnemy():OBBCenter(), Angle(0,0,0), self) end
 	else
-	
+
 		self:AerialMove_Stop()
 	end
 	//self.NextChaseTime = CurTime() + 0.1

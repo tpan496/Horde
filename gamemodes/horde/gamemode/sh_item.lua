@@ -425,7 +425,7 @@ function HORDE:GetDefaultItemsData()
     {Ghost=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Pistol",     "Dual Deagle",    "arccw_horde_akimbo_deagle",   2000,  6, "Dual Night Hawk .50C.\nAn iconic pistol that is diffcult to master.",
     {Ghost=true}, 5, -1, nil, nil, {Ghost=1}, nil, {HORDE.DMG_BALLISTIC})
-	
+
     HORDE:CreateItem("Pistol",     "Raygun Mark II",    "arccw_horde_raygun_mk2",   2500,  7, "Raygun Mark II.\nSecond iteration of the classic Ray Gun, now in the format of a burst-fire laser.",
     {Warden=true}, 5, -1, nil, nil, nil, nil, {HORDE.DMG_LIGHTNING})
 
@@ -455,7 +455,7 @@ function HORDE:GetDefaultItemsData()
     {Medic=true}, 8, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
     HORDE:CreateItem("SMG",        "Vector Medic PDW","arccw_horde_vector",3000, 5, "KRISS Vector Gen I equipped with a medical dart launcher.\nUses an unconventional blowback system that results in its high firerate.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 20 health and has a 1.5 second cooldown.",
     {Medic=true}, 8, -1, nil, nil, {Medic=3}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
-	
+
     HORDE:CreateItem("Shotgun",    "Medic Shotgun",        "arccw_horde_medic_shotgun",  2500, 6, "Modified Winchester 1897.\nFires special darts that heal players on hit.",
     {Medic=true, Warden=true}, 10, -1, nil, nil, {Medic=2}, nil, {HORDE.DMG_BALLISTIC})
 

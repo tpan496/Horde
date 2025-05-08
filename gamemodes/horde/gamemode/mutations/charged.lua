@@ -21,7 +21,7 @@ end
 
 MUTATION.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmg, bonus)
     if dmg:GetAttacker():IsNPC() and dmg:GetAttacker():Horde_HasMutation("charged") then
-        if not HORDE:IsLightningDamage(dmg) then 
+        if not HORDE:IsLightningDamage(dmg) then
         ply:Horde_AddDebuffBuildup(HORDE.Status_Shock, dmg:GetDamage() * 2)
         end
     end

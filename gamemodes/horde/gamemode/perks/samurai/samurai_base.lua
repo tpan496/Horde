@@ -63,7 +63,7 @@ PERK.Hooks.Horde_UseActivePerk = function (ply)
     for debuff, buildup in pairs(ply.Horde_Debuff_Buildup) do
         ply:Horde_ReduceDebuffBuildup(debuff, buildup*0.67)
     end
-    
+
     ply:Horde_SetSpamPerkCooldown(CurTime() + 0.25)
     local id = ply:SteamID()
 

@@ -101,7 +101,7 @@ local showLeaderConvar = GetConVar("horde_show_leaderboard")
 
 function HORDE:ShowLeaderboardThenFadeOut()
     HORDE.leader_board:SetVisible(true)
-    if not showLeaderConvar:GetBool() then 
+    if not showLeaderConvar:GetBool() then
         timer.Simple(10, function ()
             HORDE.leader_board:SetVisible(false)
         end)

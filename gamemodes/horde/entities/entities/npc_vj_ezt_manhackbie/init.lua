@@ -101,7 +101,7 @@ else
 self.AnimTbl_Run = {ACT_RUN}
 		self.AnimTbl_Walk = {ACT_WALK}
 		self.AnimTbl_IdleStand = {ACT_IDLE}
-end 
+end
 end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ function ENT:CustomOnKilled(dmginfo,hitgroup)
 		self.lion:SetPos(pos)
 		self.lion:SetAngles(self:GetAngles())
 		self.lion:Spawn()
-		self.lion:Activate() 
+		self.lion:Activate()
 		self.lion:SetOwner(self)
 	end
 	if IsValid(self.Manhack) then
@@ -128,7 +128,7 @@ function ENT:CustomOnKilled(dmginfo,hitgroup)
 		self.lion:SetPos(self:GetAttachment(self:LookupAttachment("lhand")).Pos)
 		self.lion:SetAngles(self:GetAngles())
 		self.lion:Spawn()
-		self.lion:Activate() 
+		self.lion:Activate()
 		self.lion:SetOwner(self)
 		self.lion:SetHealth(self.Manhack:Health())
 end

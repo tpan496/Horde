@@ -229,9 +229,9 @@ function HORDE:GetDefaultEnemiesData ()
 
         HORDE:CreateEnemy("Weeper","npc_vj_horde_weeper",                       0.05,  7, true, 1, 1, 1.5, 1, nil,nil,nil,nil,nil,nil,nil,1)
         HORDE:CreateEnemy("Yeti",   "npc_vj_horde_yeti",                        0.02,  7, true, 1, 1, 3, 1, nil,nil,nil,nil,nil,nil,nil,1)
-        
+
     end
-    
+
     HORDE:CreateEnemy("Walker", "npc_vj_horde_walker",                      1.00,  1, false, 1, 1, 1, 1)
     HORDE:CreateEnemy("Sprinter", "npc_vj_horde_sprinter",                  0.85,  1, false, 1, 1, 1, 1)
     HORDE:CreateEnemy("Headcrab Zombie Torso", "npc_zombie_torso",          0.30,  1, false, 1, 1, 1, 1)
@@ -308,7 +308,7 @@ function HORDE:GetDefaultEnemiesData ()
     HORDE:CreateEnemy("H.E.V. Zombie Shotgunner", "npc_vj_ezt_shotbie",      0.12,  6, false, 1, 1.05, 1.2, 1)
     HORDE:CreateEnemy("Lesser Hunter", "npc_vj_ezo_archunter",                  0.05,  6, true, 1, 1, 1.25, 1)
     HORDE:CreateEnemy("Manhackbie", "npc_vj_ezt_manhackbie",                    0.1,  6, false, 1, 1, 1, 1)
-    
+
 
     HORDE:CreateEnemy("Walker", "npc_vj_horde_walker",                      1.00,  7, false, 1, 1, 1, 1)
     HORDE:CreateEnemy("Sprinter", "npc_vj_horde_sprinter",                  0.80,  7, false, 1, 1, 1, 1)

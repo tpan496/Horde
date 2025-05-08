@@ -48,11 +48,11 @@ end
 
 function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
 
-    if hitgroup == HITGROUP_HEAD then 
+    if hitgroup == HITGROUP_HEAD then
 	self.HasDeathRagdoll = true
 	return
-    end 
-	
+    end
+
     local e = EffectData()
         e:SetOrigin(self:GetPos())
     util.Effect("blight_explosion", e, true, true)

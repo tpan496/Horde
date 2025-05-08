@@ -41,7 +41,7 @@ if SERVER then
     self:SetCollisionGroup(COLLISION_GROUP_PLAYER_MOVEMENT)
     self.StartPos = self:GetPos()
     self.ArmDistanceSqr = self.ArmDistance * self.ArmDistance
---start laser trail	
+--start laser trail
         if self:GetClass() == "horde_projectile_raygun_bolt" then
             util.SpriteTrail(self, 0, Color( 66 , 255 , 0 ), false, 3, 6, 0.1, 1, "effects/laser1.vmt")
         end
@@ -51,7 +51,7 @@ if SERVER then
     function ENT:Detonate(data)
         if !self:IsValid() then return end
         if self.Defused then return end
-		
+
 		if !self:IsValid() or self.Removing then return end
     local attacker = self
 

@@ -253,7 +253,7 @@ function ENT:MultipleMeleeAttacks()
 				end
 			end)
 		end
-	
+
 
 	local randAttack = math.random(1, 3)
 
@@ -458,14 +458,14 @@ function ENT:CustomOnThink()
 				if self:DoRelationshipCheck(v) == true and self:Visible(v) and IsValid(self) and self.Dead == false then
 					VJ_EmitSound(self, self.SoundTbl_MeleeAttack, 100, math.random(80, 100))
 			--		v:TakeDamage(math.random(15, 30), self, self)
-					
-					local d = DamageInfo()			
+
+					local d = DamageInfo()
 					d:SetDamage( 30 )
 					d:SetAttacker( self )
 					d:SetDamageType( DMG_CLUB )
 					d:SetInflictor( self )
 					v:TakeDamageInfo( d )
-					
+
 					v:SetVelocity(self:GetForward() * 300 + self:GetUp() * 200)
 					self:ChargeHit()
 				end

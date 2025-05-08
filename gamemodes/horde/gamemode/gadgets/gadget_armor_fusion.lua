@@ -11,7 +11,7 @@ GADGET.Hooks = {}
 GADGET.Hooks.Horde_UseActiveGadget = function (ply)
     if CLIENT then return end
     if ply:Horde_GetGadget() ~= "gadget_armor_fusion" then return end
-	
+
     local id = ply:SteamID()
     if ply.Horde_ArmorFusion then
         ply.Horde_ArmorFusion = nil
@@ -32,7 +32,7 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
                 ply.Horde_ArmorFusion = nil
                 return
             end
-			
+
         if ply:Health() > (ply:GetMaxHealth() * 0.5) and ply:Armor() < (ply:GetMaxArmor() * 0.5) then
         ply:SetHealth(ply:Health() - 1)
         if ply:Armor() <= (ply:GetMaxArmor() * 0.5) then

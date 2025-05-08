@@ -824,7 +824,7 @@ hook.Add("OnPlayerPhysicsDrop", "Horde_TurretDrop", function (ply, ent, thrown)
         if ent:GetClass() == "npc_vj_horde_rocket_turret" || ent:GetClass() == "npc_vj_horde_laser_turret" then
             ent:SetAngles(Angle(0,0,0))
         end
-        
+
         HORDE:DropTurret(ent)
     end
 end)
@@ -1025,7 +1025,7 @@ net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
         HORDE:SendNotification("You don't have this weapon!", 0, ply)
         return
     end
-    
+
     local price = HORDE.items[class].secondary_ammo_price * count
     if ply:Horde_GetMoney() >= price then
         ply:Horde_AddMoney(-price)

@@ -13,9 +13,9 @@ end
 function rings.AddSet(tbl, col)
 	local set = { zones = {}, color = col }
 	for _ , ring in ipairs(tbl) do
-		local t = { pos = ring[1]:GetPos(), 
-		inner_r = math.max(ring[2] - ring[3],0), 
-		outer_r = ring[2], 
+		local t = { pos = ring[1]:GetPos(),
+		inner_r = math.max(ring[2] - ring[3],0),
+		outer_r = ring[2],
 		detail = ring[4] }
 		table_insert( set.zones , t )
 	end

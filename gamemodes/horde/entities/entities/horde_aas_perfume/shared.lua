@@ -128,7 +128,7 @@ function ENT:Think()
                 ent:Horde_AddHypertrophyStack(true)
             end
         end
-		
+
         local dmg = DamageInfo()
         dmg:SetAttacker(self.Owner)
         dmg:SetInflictor(self)
