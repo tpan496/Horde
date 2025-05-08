@@ -139,6 +139,7 @@ function SWEP:Reload()
 		self.RevivingPlayer = nil
 		self.ReviveProgress = 0
 		self.RevivingPos = nil
+		self:EmitSound( "items/medcharge4.wav", nil, nil, nil, nil, SND_STOP )
 		return
 	end
 
@@ -153,11 +154,13 @@ function SWEP:Reload()
 			self.RevivingPlayer = nil
 			self.ReviveProgress = 0
 			self.RevivingPos = nil
+			self:EmitSound( "items/medcharge4.wav", nil, nil, nil, nil, SND_STOP )
 			return
 		end
 
 		self.ReviveProgress = self.ReviveProgress + self.ReviveSpeed * ( CurTime() - self.LastReviveTime )
 		self.LastReviveTime = CurTime()
+		self:EmitSound( "items/medcharge4.wav" )
 		return
 	end
 
@@ -165,6 +168,16 @@ function SWEP:Reload()
 	self.RevivingPlayer = closestPlayer
 	self.RevivingPos = closestPos
 	self.LastReviveTime = CurTime()
+	self:EmitSound( "items/medcharge4.wav", nil, nil, nil, nil, SND_STOP )
+end
+
+function SWEP:Holster()
+	self:EmitSound( "items/medcharge4.wav", nil, nil, nil, nil, SND_STOP )
+	self.RevivingPlayer = nil
+	self.ReviveProgress = 0
+	self.RevivingPos = nil
+
+	return true
 end
 
 local DAMAGE_YES = 2
@@ -302,6 +315,7 @@ function SWEP:Think()
 		self.RevivingPlayer = nil
 		self.ReviveProgress = 0
 		self.RevivingPos = nil
+		self:EmitSound( "items/medcharge4.wav", nil, nil, nil, nil, SND_STOP )
 	end
 end
 
@@ -380,6 +394,7 @@ if SERVER then
 		ply.Medit_Respawning = false
 
 		ply:EmitSound( "ambient/levels/labs/electric_explosion1.wav" )
+		ply:EmitSound( "items/suitchargeok1.wav" )
 
 		local owner = self:GetOwner()
 		owner:Horde_AddMoney( 50 )
