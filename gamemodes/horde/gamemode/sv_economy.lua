@@ -431,55 +431,13 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
 end)
 
 hook.Add("PlayerDroppedWeapon", "Horde_Economy_Drop", function (ply, wpn)
-    if not ply:IsValid() then return end
-    if ply:IsNPC() then return end
     local class = wpn:GetClass()
     if HORDE.items[class] then
         local item = HORDE.items[class]
         ply:Horde_AddWeight(item.weight)
         ply:Horde_SyncEconomy()
-
-        if item.starter_classes then
-            if (class == "horde_void_projector" and ply:Horde_GetCurrentSubclass() == "Necromancer") or
-               (class == "horde_solar_seal" and ply:Horde_GetCurrentSubclass() == "Artificer") or
-               (class == "horde_astral_relic" and ply:Horde_GetCurrentSubclass() == "Warlock") or
-               (class == "horde_carcass" and ply:Horde_GetCurrentSubclass() == "Carcass") or
-               (class == "horde_pheropod" and ply:Horde_GetCurrentSubclass() == "Hatcher") then
-                local c = wpn:GetClass()
-                if (wpn.Base == "horde_spell_weapon_base") then
-                    -- Store spell cooldowns
-                    local primary_next = wpn:GetNextPrimaryFire()
-                    local secondary_next = wpn:GetNextSecondaryFire()
-                    local utility_next = wpn:GetNextUtilityFire()
-                    local ultimate_next = wpn:GetNextUltimateFire()
-
-                    wpn:Remove()
-                    timer.Simple(0, function()
-                        if ply:Alive() then
-                            ply:Give(c)
-                            timer.Simple(0, function ()
-                                local w2 = ply:Horde_GetSpellWeapon()
-                                if w2 then
-                                    w2:SetNextPrimaryFire(primary_next)
-                                    w2:SetNextSecondaryFire(secondary_next)
-                                    w2:SetNextUtilityFire(utility_next)
-                                    w2:SetNextUltimateFire(ultimate_next)
-                                end
-                            end)
-                        end
-                    end)
-                else
-                    wpn:Remove()
-                    timer.Simple(0, function()
-                        if ply:Alive() then
-                            ply:Give(c)
-                        end
-                    end)
-                end
-            end
-        end
-
     end
+
     if ply:Horde_GetClass().name == HORDE.Class_Demolition and class == "weapon_frag" then
         wpn:Remove()
     end

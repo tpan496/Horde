@@ -221,7 +221,6 @@ function SWEP:Initialize()
         self:InitializeSpells()
     end)
 
-    self:SetNextUltimateFire(CurTime())
     self.NextUtilityFire = CurTime()
     self.NextChargeSound = CurTime()
 
@@ -229,6 +228,48 @@ function SWEP:Initialize()
     self.Secondary_Charge_Stage = 0
     self.Utility_Charge_Stage = 0
     self.Ultimate_Charge_Stage = 0
+end
+
+if SERVER then
+    function SWEP:Equip()
+        local function getCooldown( varname )
+            local owner = self:GetOwner()
+            if not IsValid( owner ) then return CurTime() end
+
+            local originalCooldown = owner[varname]
+            if originalCooldown and originalCooldown > CurTime() then
+                owner.Horde_NextSpellPrimary = nil
+                return originalCooldown
+            end
+
+            return CurTime()
+        end
+
+        self:SetNextPrimaryFire( getCooldown( "Horde_NextSpellPrimary" ) )
+        self:SetNextSecondaryFire( getCooldown( "Horde_NextSpellSecondary" ) )
+        self:SetNextUtilityFire( getCooldown( "Horde_NextSpellUtility" ) )
+        self:SetNextUltimateFire( getCooldown( "Horde_NextSpellUltimate" ) )
+    end
+
+    function SWEP:StoreCooldowns( owner )
+        owner = owner or self:GetOwner()
+
+        if not IsValid( owner ) then return end
+
+        owner.Horde_NextSpellPrimary = self:GetNextPrimaryFire()
+        owner.Horde_NextSpellSecondary = self:GetNextSecondaryFire()
+        owner.Horde_NextSpellUtility = self:GetNextUtilityFire()
+        owner.Horde_NextSpellUltimate = self:GetNextUltimateFire()
+    end
+
+    function SWEP:OnDrop( owner )
+        self:StoreCooldowns( owner )
+        SafeRemoveEntityDelayed( self, 0 )
+    end
+
+    function SWEP:OnRemove()
+        self:StoreCooldowns( self:GetOwner() )
+    end
 end
 
 function SWEP:Horde_GetSpellCharging()
@@ -1186,9 +1227,4 @@ if CLIENT then
 
     end
 
-end
-
-
-function SWEP:OnDrop()
-	self:Remove() -- You can't drop fists
 end
