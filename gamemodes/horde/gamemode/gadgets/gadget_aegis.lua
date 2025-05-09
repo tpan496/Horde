@@ -37,3 +37,17 @@ GADGET.Hooks.Horde_UseActiveGadget = function (ply)
         end
     end
 end
+
+GADGET.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmg, bonus)
+    if ply.Horde_Aegis then
+        dmg:SetDamage(0)
+        return true
+    end
+end
+
+GADGET.Hooks.Horde_OnPlayerDebuffApply = function (ply, debuff, bonus)
+    if ply.Horde_Aegis then
+        bonus.apply = 0
+        return true
+    end
+end
