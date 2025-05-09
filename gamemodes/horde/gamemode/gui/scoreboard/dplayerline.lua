@@ -333,6 +333,8 @@ function PANEL:DoRightClick()
 end
 
 hook.Add( "OnPlayerChat", "Horde_MutePlayer", function( ply )
+	if not IsValid( ply ) then return end
+
 	if ply:IsMuted() then
 		return true
 	end
