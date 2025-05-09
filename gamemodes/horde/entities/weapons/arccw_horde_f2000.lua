@@ -153,7 +153,7 @@ SWEP.AttachmentElements = {
         WMBodygroups = {},
     },
 
-            ["mw2_ubgl_m203"] = {
+            ["horde_ubgl_incendiary"] = {
                 VMBodygroups = {{ind = 2, bg = 1}},
             },
             ["mw2_ubgl_masterkey"] = {
@@ -187,7 +187,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Underbarrel",
-        Slot = {"foregrip", "bipod"},
+        Slot = {"foregrip", "bipod", "horde_ubgl_incendiary"},
         Bone = "tag_weapon",
         Offset = {
             vpos = Vector(10, 0, -1.04),
@@ -197,7 +197,7 @@ SWEP.Attachments = {
             vmin = Vector(8, 0, 0),
             vmax = Vector(11, 0, 0.8),
         },
-        InstalledEles = {"nocover"},
+        Installed = "horde_ubgl_incendiary",
     },
     {
         PrintName = "Tactical",
@@ -247,7 +247,7 @@ SWEP.Hook_TranslateAnimation = function(wep, anim)
 
 	-- m203 is 1, masterkey is 2, fgrip is 3
 	local attthing
-		if 		attached == "mw2_ubgl_m203" 		then attthing = 1
+		if 		attached == "horde_ubgl_incendiary" 		then attthing = 1
 		elseif 	attached == "mw2_ubgl_masterkey" 	then attthing = 2
 		elseif 	attached 							then attthing = 3
 		else 											 attthing = 0

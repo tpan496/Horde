@@ -22,7 +22,7 @@ end
 
 function ENT:StartTouch(ent)
     if ent:IsPlayer() then
-        local healinfo = HealInfo:New({amount=math.random( 5, 10 ), healer=self.Owner})
+        local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.1, healer=self.Owner})
         HORDE:OnPlayerHeal(ent, healinfo)
         sound.Play("horde/gadgets/yummy.ogg", self:GetPos())
         self:Remove()

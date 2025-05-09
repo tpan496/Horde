@@ -32,7 +32,7 @@ SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 
 SWEP.ViewModelFOV = 45
 
-SWEP.Damage = 25
+SWEP.Damage = 30
 SWEP.DamageMin = 15
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 2
@@ -76,7 +76,7 @@ SWEP.NPCWeight = 75
 
 SWEP.AccuracyMOA = 40 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
 SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 250
+SWEP.MoveDispersion = 100
 
 SWEP.Primary.Ammo = "buckshot" -- what ammo type the gun uses
 
@@ -357,6 +357,52 @@ hook.Add("Hook_BulletHit", "Horde_MedicShotgunHeal", function(wpn, data)
             emitter:Finish()
         end
 end)
+
+function SWEP:ChangeFiremode(pred)
+    if self:GetNextSecondaryFire() > CurTime() then return end
+    if not self.CanBash and not self:GetBuff_Override("Override_CanBash") then return end
+    if CLIENT then return end
+    local ply = self:GetOwner()
+    local filter = {self:GetOwner()}
+    local tr = util.TraceHull({
+        start = self:GetOwner():GetShootPos(),
+        endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 5000,
+        filter = filter,
+        mins = Vector(-16, -16, -8),
+        maxs = Vector(16, 16, 8),
+        mask = MASK_SHOT_HULL
+    })
+    if tr.Hit then
+        local effectdata = EffectData()
+        effectdata:SetOrigin(tr.HitPos)
+        effectdata:SetRadius(50)
+        util.Effect("horde_heal_mist", effectdata)
+
+        for _, ent in pairs(ents.FindInSphere(tr.HitPos, 100)) do
+            if ent:IsPlayer() then
+                local healinfo = HealInfo:New({amount = 10, healer = ply})
+                HORDE:OnPlayerHeal(ent, healinfo)
+            elseif ent:GetClass() == "npc_vj_horde_antlion" then
+                local healinfo = HealInfo:New({amount = 10, healer = ply})
+                HORDE:OnAntlionHeal(ent, healinfo)
+            elseif ent:IsNPC() then
+                local dmg = DamageInfo()
+                dmg:SetDamage(25)
+                dmg:SetDamageType(DMG_NERVEGAS)
+                dmg:SetAttacker(ply)
+                dmg:SetInflictor(self)
+                dmg:SetDamagePosition(tr.HitPos)
+                ent:TakeDamageInfo(dmg)
+            end
+        end
+    end
+
+    ply:EmitSound("horde/weapons/mp7m/heal.ogg", 125, 100, 1, CHAN_AUTO)
+
+    self:SetNextSecondaryFire(CurTime() + 1)
+    self:SetNextPrimaryFire(CurTime() + 0.25)
+    return true
+end
 
 sound.Add({
 	name = 			"KF_trench_pumpforward",

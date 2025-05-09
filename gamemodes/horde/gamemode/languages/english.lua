@@ -1043,12 +1043,16 @@ LANGUAGE["Item_F2000"] = [[F2000]]
 LANGUAGE["Item_Desc_F2000"] = [[
 FN F2000.
 An ambidextrous bullpup rifle developed by FN.
+Equipped with an M203 underbarrel incendiary grenade launcher.
+Press USE+RELOAD to equip M203.
 ]]
 
 LANGUAGE["Item_Tavor"] = [[Tavor]]
 LANGUAGE["Item_Desc_Tavor"] = [[
 IWI Tavor-21.
 Designed to maximize reliability, durability, and simplicity.
+Equipped with an M203 underbarrel shock grenade launcher.
+Press USE+RELOAD to equip M203.
 ]]
 
 

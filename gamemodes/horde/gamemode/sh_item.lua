@@ -208,7 +208,7 @@ function HORDE:GetDefaultGadgets()
 
     HORDE:CreateGadgetItem("gadget_butane_can", 2000, 1, {Cremator=true}, {Cremator=5}, {HORDE.DMG_FIRE})
     HORDE:CreateGadgetItem("gadget_projectile_launcher_fire", 2500, 2, {Cremator=true}, {Cremator=10}, {HORDE.DMG_FIRE})
-    HORDE:CreateGadgetItem("gadget_barbeque", 2750, 2, {Cremator=true}, {Cremator=15})
+    HORDE:CreateGadgetItem("gadget_barbeque", 2750, 1, {Cremator=true}, {Cremator=15})
     HORDE:CreateGadgetItem("gadget_hydrogen_burner", 3000, 3, {Cremator=true}, {Cremator=20})
     --HORDE:CreateGadgetItem("gadget_ion_cannon", 3000, 3, {Cremator=true}, {Cremator=25})
 
@@ -462,8 +462,8 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("SMG",        "Vector Medic PDW","arccw_horde_vector",3000, 5, "KRISS Vector Gen I equipped with a medical dart launcher.\nUses an unconventional blowback system that results in its high firerate.\n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 20 health and has a 1.5 second cooldown.",
     {Medic=true}, 8, -1, nil, nil, {Medic=3}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
 
-    HORDE:CreateItem("Shotgun",    "Medic Shotgun",        "arccw_horde_medic_shotgun",  2500, 6, "Modified Winchester 1897.\nFires special darts that heal players on hit.",
-    {Medic=true, Warden=true}, 10, -1, nil, nil, {Medic=2}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Shotgun",    "Medic Shotgun",        "arccw_horde_medic_shotgun",  2500, 6, "Modified Winchester 1897.\nFires special darts that heal players on hit. \n\nPress B or ZOOM to fire healing darts.\nHealing dart heals 10 health and has a 1 second cooldown.",
+    {Medic=true, Warden=true}, 10, -1, nil, nil, {Medic=2}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_POISON})
 
     HORDE:CreateItem("Shotgun",    "Pump-Action",    "arccw_horde_shotgun",100, 2, "A standard 12-gauge shotgun.",
     {Warden=true, Engineer=true, Cremator=true}, 2, -1, nil, "items/hl2/weapon_shotgun.png", nil, nil, {HORDE.DMG_BALLISTIC}, nil, {"Warden"})
@@ -502,12 +502,12 @@ function HORDE:GetDefaultItemsData()
     {Assault=true}, 10, -1, nil, nil, {Assault=2}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Rifle",      "AUG",            "arccw_horde_aug",      3000, 7, "Steyr AUG.\nAn Austrian bullpup assault rifle.",
     {Assault=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Rifle",      "F2000",          "arccw_horde_f2000", 3250, 7, "FN F2000.\nAn ambidextrous bullpup rifle developed by FN.",
-    {Assault=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Rifle",      "Tavor",          "arccw_horde_tavor", 3250, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity.",
-    {Assault=true}, 10, -1, nil, nil, {Assault=3}, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Rifle",      "SCAR-L",         "arccw_horde_scarl", 3500, 8, "FN SCAR-L.\nAn assault rifle developed by Belgian manufacturer FN Herstal.\nLight version, chambered in 5.56x45mm NATO.",
-    {Assault=true}, 15, -1, nil, nil, {Assault=4}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Rifle",      "F2000",          "arccw_horde_f2000", 3250, 7, "FN F2000.\nAn ambidextrous bullpup rifle developed by FN. \nEquipped with an M203 underbarrel incendiary grenade launcher.\nPress USE+RELOAD to equip M203.",
+    {Assault=true, Cremator=true}, 10, 10, nil, nil, {Assault=2, Cremator=2}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_FIRE})
+    HORDE:CreateItem("Rifle",      "Tavor",          "arccw_horde_tavor", 3250, 7, "IWI Tavor-21.\nDesigned to maximize reliability, durability, and simplicity. \nEquipped with an M203 underbarrel shock grenade launcher.\nPress USE+RELOAD to equip M203.",
+    {Assault=true, Warden=true}, 10, 10, nil, nil, {Assault=2, Warden=2}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_LIGHTNING})
+    HORDE:CreateItem("Rifle",      "SCAR-L",         "arccw_horde_scarl", 3500, 8, "FN SCAR-L.\nAn assault rifle developed by Belgian manufacturer FN Herstal.\nLight version, chambered in 5.56x45mm NATO. \nEquipped with an M203 underbarrel cryo grenade launcher.\nPress USE+RELOAD to equip M203.",
+    {Assault=true, Ghost=true}, 15, 10, nil, nil, {Assault=2, Ghost=2}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_COLD})
     HORDE:CreateItem("Rifle",      "OSIPR",          "arccw_horde_ar2",   3500, 9, "Overwatch Standard Issue Pulse Rifle.\n\nPress ZOOM or B to change firemode.\nFires regular ballistic ammo or energy balls.",
     {Assault=true}, 15, -1, nil, "items/hl2/weapon_ar2.png", {Assault=5}, nil, {HORDE.DMG_BALLISTIC})
 
@@ -538,7 +538,7 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Rifle",      "Barrett M99",    "arccw_horde_m99",  4000, 10, "Barrett M99. \nDeals a higher amount of damage than the Barrett AMR, but can only carry 1 round at a time.",
     {Ghost=true}, 5, -1, nil, nil, {Ghost=5}, nil, {HORDE.DMG_BALLISTIC})
 
-    HORDE:CreateItem("Rifle",      "Winchester Incendiary",         "arccw_horde_winchester_fire",  2500, 7, "Winchester 1894. \nUses incendiary rounds.",
+    HORDE:CreateItem("Rifle",      "Winchester Incendiary",         "arccw_horde_winchester_fire",  2500, 6, "Winchester 1894. \nUses incendiary rounds.",
     {Cremator=true}, 10, -1, nil, nil, {Ghost=1, Cremator=1}, nil, {HORDE.DMG_FIRE})
     HORDE:CreateItem("Rifle",      "Apollo",         "arccw_horde_apollo",  3000, 8, "Apollo incineration rifle.\nFires energy pellets that melt down enemies.",
     {Cremator=true}, 50, -1, nil, nil, {Cremator=5}, nil, {HORDE.DMG_FIRE})
@@ -665,7 +665,7 @@ function HORDE:GetDefaultItemsData()
 
     HORDE:CreateItem("Special",    "Heat Crossbow",  "arccw_horde_heat_crossbow", 1750,  4, "Improvised sniper weapon.\nHas two firemodes (Ballistic/Impact).\n\nDeals 300% headshot damage.",
     {Survivor=true, Ghost=true}, 2, -1, nil, "items/hl2/weapon_crossbow.png", nil, nil, {HORDE.DMG_BALLISTIC})
-    HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",            2500,  8, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
+    HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",            2500,  7, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
     {Cremator=true}, 50, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE})
     HORDE:CreateItem("Special",    "Tau Cannon",      "horde_tau",         3000,  7, "A device that uses electromagnetism to ionize particles.\nHold RMB to charge and release a powerful shot.\nDeals more damage as you charge.\nDevice explodes if you overcharge.",
     {Cremator=true}, 15, -1, nil, nil, {Cremator=3}, nil, {HORDE.DMG_FIRE})

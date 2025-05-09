@@ -31,8 +31,8 @@ SWEP.ViewModel = "models/horde/weapons/c_kf_winchester.mdl"
 SWEP.WorldModel = "models/weapons/w_annabelle.mdl"
 SWEP.ViewModelFOV = 45
 
-SWEP.Damage = 300
-SWEP.DamageMin = 300 -- damage done at maximum range
+SWEP.Damage = 400
+SWEP.DamageMin = 400 -- damage done at maximum range
 SWEP.Range = 50 -- in METRES
 SWEP.Penetration = 20
 SWEP.DamageType = DMG_BURN

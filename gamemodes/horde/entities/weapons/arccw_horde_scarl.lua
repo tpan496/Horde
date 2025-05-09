@@ -139,7 +139,7 @@ SWEP.AttachmentElements = {
     ["nomuzzle"] = {
         VMBodygroups = {{ind = 4, bg = 1}},
     },
-            ["mw2_ubgl_m203"] = {
+            ["horde_ubgl_cryo"] = {
                 VMBodygroups = {{ind = 3, bg = 1}},
             },
             ["mw2_ubgl_masterkey"] = {
@@ -197,7 +197,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Underbarrel",
-        Slot = {"foregrip", "ubgl", "bipod"},
+        Slot = {"foregrip", "horde_ubgl_cryo", "bipod"},
         Bone = "tag_weapon",
         Offset = {
             vpos = Vector(18.427, 0, -1.04),
@@ -205,6 +205,7 @@ SWEP.Attachments = {
             wpos = Vector(14.329, 0.602, -4.453),
             wang = Angle(-2.461, -6.525, 176.662)
         },
+            Installed = "horde_ubgl_cryo",
         SlideAmount = {
             vmin = Vector(8, 0, 0.4),
             vmax = Vector(11, 0, 0.4),
@@ -256,6 +257,44 @@ SWEP.Attachments = {
         },
     },
 }
+
+SWEP.Hook_TranslateAnimation = function(wep, anim)
+	local attached = wep.Attachments[3].Installed
+
+	-- m203 is 1, masterkey is 2, fgrip is 3
+	local attthing
+		if 		attached == "horde_ubgl_cryo" 		then attthing = 1
+		elseif 	attached == "mw2_ubgl_masterkey" 	then attthing = 2
+		elseif 	attached 							then attthing = 3
+		else 											 attthing = 0
+	end
+
+	-- when entering ubgl
+	if anim == "enter_ubgl" then
+		if attthing == 1 then
+			return "switch2_alt_m203"
+		elseif attthing == 2 then
+			return "switch2_alt_masterkey"
+		end
+	elseif anim == "exit_ubgl" then
+		if attthing == 1 then
+			return "switch2_gun_m203"
+		elseif attthing == 2 then
+			return "switch2_gun_masterkey"
+		end
+	end
+
+    if attthing == 1 and wep:GetInUBGL() then
+        return "alt_" .. anim .. "_m203"
+
+	elseif attthing == 2 and wep:GetInUBGL() then
+        return "alt_" .. anim .. "_masterkey"
+
+    elseif attthing == 3 then
+        return anim .. "_fgrip"
+
+    end
+end
 
 SWEP.Animations = {
 		["enter_ubgl"] = {

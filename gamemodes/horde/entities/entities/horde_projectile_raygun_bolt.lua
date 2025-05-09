@@ -4,7 +4,7 @@ ENT.Base 				= "horde_explosive_projectile_base"
 ENT.PrintName 			= "Raygun Bolt"
 ENT.Model = "models/props_phx/gibs/flakgib1.mdl"
 ENT.LifeTime = 10 -- Time to removal
-ENT.ProjectileDamage = 150 -- Projectile/explosion damage
+ENT.ProjectileDamage = 200 -- Projectile/explosion damage
 ENT.ProjectileDamageRadius = 125 -- Explosion radius
 ENT.ArmDistance = 0.00001 -- Safety distance
 
