@@ -494,3 +494,11 @@ killicon.AddAlias("npc_vj_horde_shotgun_turret", "npc_turret_floor")
 killicon.AddAlias("npc_vj_horde_sniper_turret", "npc_turret_floor")
 killicon.Add("npc_vj_horde_antlion", "vgui/hud/antlion", Color(0, 0, 0, 255))
 killicon.AddAlias("projectile_horde_antlion_bile", "npc_vj_horde_antlion")
+
+hook.Add( "CreateClientsideRagdoll", "HORDE_CleanupClientsideRagdolls", function( ent, ragdoll )
+    if not ent:IsNPC() and ent:GetClass() ~= "raggib" then return end
+    timer.Simple( 10, function()
+        if not IsValid( ragdoll ) then return end
+        ragdoll:SetSaveValue( "m_bFadingOut", true )
+    end )
+end )
