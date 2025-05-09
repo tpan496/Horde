@@ -15,9 +15,12 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
     net.Broadcast()
 end
 
-function GM:OnPlayerDeath( victim, _inflictor, attacker )
+hook.Add( "PlayerDeath", "Horde_PlayerDeath", function( victim, _, attacker )
+    if not IsValid( victim ) or not IsValid( attacker ) then return end
+
+    local attackerName = attacker:IsPlayer() and "suicide" or "#" .. attacker:GetClass()
     net.Start( "killfeed_player_died" )
         net.WriteEntity( victim )
-        net.WriteString( attacker:GetClass() )
+        net.WriteString( attackerName )
     net.Broadcast()
-end
+end )
