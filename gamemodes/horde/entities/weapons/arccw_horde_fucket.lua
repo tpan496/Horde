@@ -64,7 +64,7 @@ SWEP.Attachments = {
             wpos = Vector(13.762, 0.832, -6.102),
             wang = Angle(-10.393, 0, 180)
         },
-        InstalledEles = {"nors","mount"},
+        InstalledEles = "nors",
     },
     {
         PrintName = "Muzzle",
