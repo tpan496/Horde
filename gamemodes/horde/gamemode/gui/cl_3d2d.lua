@@ -126,6 +126,17 @@ net.Receive("Horde_SyncEscapeEnd", function ()
 end)
 
 local shldmat = Material('models/horde/antimatter_shield/wall')
+local matCache = {}
+local function getMaterialCached(name, flags)
+    local matname = name .. flags
+
+    if matCache[matname] then return matCache[matname] end
+    local mat = Material(name, flags)
+    matCache[matname] = mat
+
+    return mat
+end
+
 local function Render(bdepth, bskybox)
     if bskybox then return end
 
@@ -169,7 +180,7 @@ local function Render(bdepth, bskybox)
         if not subclass_name then return end
         local subclass = HORDE.subclasses[subclass_name]
         if not subclass then subclass = HORDE.subclasses["Survivor"] end
-        local mat = Material(subclass.Icon, "mips smooth")
+        local mat = getMaterialCached(subclass.Icon, "mips smooth")
         local loc_class = translate.Get("Class_" .. subclass.PrintName) or subclass.PrintName
         local len = string.len(loc_class) * 6
         local rank = ply:Horde_GetRank(subclass.PrintName) or HORDE.Rank_Novice
@@ -187,7 +198,7 @@ local function Render(bdepth, bskybox)
                 draw.SimpleText(loc_class, "Icon", len + 8, 0, HORDE.Rank_Colors[rank], TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             else
                 if rank_level > 0 then
-                    local star = Material("star.png", "mips smooth")
+                    local star = getMaterialCached("star.png", "mips smooth")
                     surface.SetMaterial(star)
                     local y_pos = 15
                     for i = 0, rank_level - 1 do
