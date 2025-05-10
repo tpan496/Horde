@@ -10,6 +10,8 @@ local function onPlayerDied()
 
     local npcClassName = net.ReadString()
 
+    chat.AddText( HORDE.color_crimson_dim, "[HORDE] ", ply, color_white, " died to ", Color( 255, 0, 0, 255 ), language.GetPhrase( npcClassName ) )
+
     table.insert( deaths, {
         left = npcClassName,
         right = plyName,
