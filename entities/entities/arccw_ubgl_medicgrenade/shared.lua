@@ -25,7 +25,7 @@ ENT.TouchedEntities = {}
 AddCSLuaFile()
 
 local entmeta = FindMetaTable("Entity")
-
+--[[
 function entmeta:Horde_AddEffect_MedicGrenade(ent)
     if self.horde_effect_medicgrenade then return end
     self.horde_effect_medicgrenade = true
@@ -56,7 +56,7 @@ function entmeta:Horde_RemoveEffect_MedicGrenade()
         self.horde_effect_medicgrenade = nil
     end
 end
-
+]]
 function ENT:SetupDataTables()
     self:NetworkVar( "Bool", 0, "Armed" )
 
@@ -87,7 +87,7 @@ function ENT:Initialize()
 
         timer.Simple(0, function()
             if !IsValid(self) then return end
-            self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+            self:SetCollisionGroup(COLLISION_GROUP_PLAYER)
         end)
     end
 end
@@ -103,7 +103,7 @@ function ENT:PhysicsCollide(data, physobj)
         self:Detonate()
     end
 end
-
+--[[
 function ENT:Touch(ent)
     if SERVER then
         if self.TouchedEntities[ent:GetCreationID()] and ent.horde_effect_medicgrenade then return end
@@ -121,13 +121,31 @@ function ENT:EndTouch(ent)
         ent:Horde_RemoveEffect_MedicGrenade()
     end
 end
-
+]]
 function ENT:Think()
     if !self.SpawnTime then self.SpawnTime = CurTime() end
 
     if self:GetArmed() == true then
         if SERVER then
             if self.NextDamageTick > CurTime() then return end
+            for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
+                if ent:IsPlayer() then
+                    local healinfo = HealInfo:New({amount=5, healer=self.Owner})
+                    HORDE:OnPlayerHeal(ent, healinfo)
+                elseif ent:GetClass() == "npc_vj_horde_antlion" then
+                    local healinfo = HealInfo:New({amount=5, healer=self.Owner})
+                    HORDE:OnAntlionHeal(ent, healinfo)
+                elseif ent:IsNPC() and (not ent:GetNWEntity("HordeOwner"):IsPlayer()) then
+                    local dmg = DamageInfo()
+                    dmg:SetDamage(25)
+                    dmg:SetDamageType(DMG_NERVEGAS)
+                    dmg:SetAttacker(self.Owner)
+                    dmg:SetInflictor(self)
+                    dmg:SetDamagePosition(self:GetPos())
+                    ent:TakeDamageInfo(dmg)
+                end
+            end
+
             self.NextDamageTick = CurTime() + 0.5
             self.ArcCW_Killable = false
         else
@@ -172,7 +190,7 @@ function ENT:Think()
 
     end
 end
-
+--[[
 function ENT:OnRemove()
     if SERVER then
         for _, ent in pairs(self.TouchedEntities) do
@@ -180,7 +198,7 @@ function ENT:OnRemove()
         end
     end
 end
-
+]]
 function ENT:Detonate()
     if !self:IsValid() then return end
     if self:GetArmed() == true then return end

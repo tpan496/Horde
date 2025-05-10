@@ -40,6 +40,8 @@ end
 
 PERK.Hooks.Horde_OnPlayerDamageTaken = function(ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("cremator_entropy_shield")  then return end
+    local attacker = dmginfo:GetAttacker()
+    if HORDE:IsPlayerOrMinion(attacker) or not ply:IsValid() then return end
     if ply.Horde_Entropy_Shield_Activated then
         bonus.resistance = bonus.resistance + 0.25
     else

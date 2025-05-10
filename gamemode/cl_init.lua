@@ -59,7 +59,7 @@ include("arccw/attachments/horde_akimbo_glock.lua")
 include("arccw/attachments/horde_ubgl_medic.lua")
 include("arccw/attachments/horde_ammo_ap.lua")
 include("arccw/attachments/horde_ammo_sabot.lua")
---include("arccw/attachments/horde_ubgl_m203.lua")
+include("arccw/attachments/horde_ubgl_m203.lua")
 
 --include("arccw/attachments/horde_go_perk_burst_fire.lua")
 --include("arccw/attachments/horde_go_perk_agile_maneuver.lua")

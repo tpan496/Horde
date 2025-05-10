@@ -28,6 +28,7 @@ end
 
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "warlock_base" then
+        ply:Flashlight(false)
         ply:Horde_SetMindRegenTick(0.25)
         ply:SetMaxArmor(0)
         if ply:HasWeapon("horde_astral_relic") == true then return end

@@ -444,6 +444,7 @@ sound.Add({
 })
 
 function SWEP:Hook_OnDeploy()
+    if GetConVar("horde_arccw_attinv_free"):GetInt() == 1 then return end
     timer.Simple(0, function ()
         if !IsValid(self) then return end
         self:Attach(1, "go_optic_awp")

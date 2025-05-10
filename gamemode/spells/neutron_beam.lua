@@ -7,7 +7,7 @@ SPELL.ChargeRelease   = nil
 SPELL.Cooldown        = 1
 SPELL.Upgrades        = 5
 SPELL.Slot            = HORDE.Spell_Slot_LMB
-SPELL.DamageType      = {HORDE.DMG_PHYSICAL, HORDE.DMG_LIGHTNING}
+SPELL.DamageType      = {HORDE.DMG_BALLISTIC}
 SPELL.Icon            = "spells/neutron_beam.png"
 SPELL.Type            = {HORDE.Spell_Type_Hitscan}
 SPELL.Description     = [[Fires a neutron beam at the target. The beam penetrates targets.]]
@@ -47,25 +47,25 @@ SPELL.Fire            = function (ply, wpn, charge_stage)
 	if charge_stage == 1 then
 		for i = 1, 3 do
 			timer.Simple((i-1) * 0.25, function ()
-				local pos = Hitscan(base_damage, nil, dir, src, ply, max_scount)
-				sound.Play("horde/spells/neutron_beam.ogg", src, 100, math.random(60, 80))
-				util.ParticleTracerEx("neutron_beam", src, pos, true, -1, -1)
+				local pos = Hitscan(base_damage, nil, ply:GetAimVector(), ply:GetShootPos() + ply:GetAimVector() * 10, ply, max_scount)
+				sound.Play("horde/spells/neutron_beam.ogg", ply:GetShootPos() + ply:GetAimVector() * 10, 100, math.random(60, 80))
+				util.ParticleTracerEx("neutron_beam", ply:GetShootPos() + ply:GetForward() * 150 + ply:GetRight() * 75 + Vector(0,0,50) + ply:GetAimVector() * 10, pos, true, -1, -1)
 			end)
 		end
 	elseif charge_stage == 2 then
 		for i = 1, 6 do
 			timer.Simple((i-1) * 0.25, function ()
-				local pos = Hitscan(base_damage, nil, dir, src, ply, max_scount)
-				sound.Play("horde/spells/neutron_beam.ogg", src, 100, math.random(60, 80))
-				util.ParticleTracerEx("neutron_beam", src, pos, true, -1, -1)
+				local pos = Hitscan(base_damage, nil, ply:GetAimVector(), ply:GetShootPos() + ply:GetAimVector() * 10, ply, max_scount)
+				sound.Play("horde/spells/neutron_beam.ogg", ply:GetShootPos() + ply:GetAimVector() * 10, 100, math.random(60, 80))
+				util.ParticleTracerEx("neutron_beam", ply:GetShootPos() + ply:GetForward() * 150 + ply:GetRight() * 75 + Vector(0,0,50) + ply:GetAimVector() * 10, pos, true, -1, -1)
 			end)
 		end
 	else
 		for i = 1, 9 do
 			timer.Simple((i-1) * 0.25, function ()
-				local pos = Hitscan(base_damage, nil, dir, src, ply, max_scount)
-				sound.Play("horde/spells/neutron_beam.ogg", src, 100, math.random(60, 80))
-				util.ParticleTracerEx("neutron_beam", src, pos, true, -1, -1)
+				local pos = Hitscan(base_damage, nil, ply:GetAimVector(), ply:GetShootPos() + ply:GetAimVector() * 10, ply, max_scount)
+				sound.Play("horde/spells/neutron_beam.ogg", ply:GetShootPos() + ply:GetAimVector() * 10, 100, math.random(60, 80))
+				util.ParticleTracerEx("neutron_beam", ply:GetShootPos() + ply:GetForward() * 150 + ply:GetRight() * 75 + Vector(0,0,50) + ply:GetAimVector() * 10, pos, true, -1, -1)
 			end)
 		end
 	end

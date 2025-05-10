@@ -557,3 +557,7 @@ concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
         timer.Simple(0.1, function() spawned_enemy:Horde_SetMutation(args[4]) end)
     end
 end)
+
+hook.Add( "OnDamagedByExplosion", "HordeDisableTinnitus", function()
+    return true
+end)

@@ -8,7 +8,7 @@ if (CLIENT) then
 end
 SWEP.Base = "arccw_base"
 SWEP.Spawnable = true -- this obviously has to be set to true
-SWEP.Category = "Horde - Pistol" -- edit this if you like
+SWEP.Category = "Horde - Pistols" -- edit this if you like
 SWEP.AdminOnly = false
 
 SWEP.PrintName = "Flare Gun"

@@ -5,6 +5,7 @@ if CLIENT then
     SWEP.BounceWeaponIcon = false
     killicon.Add( "horde_void_projector", "vgui/hud/horde_void_projector", Color( 255, 255, 255, 255 ) )
 	killicon.Add( "projectile_horde_void_projectile", "vgui/hud/horde_void_projector", Color( 255, 255, 255, 255 ) )
+    killicon.AddAlias( "projectile_horde_ice_arrow", "horde_void_projector" )
 end
 
 SWEP.PrintName 		= "Void Projector"

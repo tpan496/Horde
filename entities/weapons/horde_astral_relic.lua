@@ -5,6 +5,7 @@ if CLIENT then
     SWEP.DrawWeaponInfoBox = false
     SWEP.BounceWeaponIcon = false
     killicon.Add( "horde_astral_relic", "vgui/hud/horde_astral_relic", Color( 255, 255, 255, 255 ) )
+    killicon.AddAlias( "projectile_horde_meteor", "horde_astral_relic" )
 	killicon.Add( "projectile_horde_nether_star", "vgui/hud/horde_astral_relic", Color( 255, 255, 255, 255 ) )
 	killicon.Add( "projectile_horde_nether_mine", "vgui/hud/horde_astral_relic", Color( 255, 255, 255, 255 ) )
 end

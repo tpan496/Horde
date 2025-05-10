@@ -9,26 +9,25 @@ ENT.Spawnable 			= false
 
 AddCSLuaFile()
 
-ENT.Model = "models/props_lab/bigrock.mdl"
+--ENT.Model = "models/props_lab/bigrock.mdl"
+ENT.Model = "models/items/ar2_grenade.mdl"
 ENT.Models = {"models/props_wasteland/rockgranite03b.mdl"}
 ENT.Ticks = 0
 ENT.FuseTime = 5
-ENT.CollisionGroup = COLLISION_GROUP_PASSABLE_DOOR
-ENT.CollisionGroupType = COLLISION_GROUP_PASSABLE_DOOR
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER
 ENT.Removing = nil
 
 if SERVER then
 
 function ENT:CustomOnInitialize()
-    self:SetModel(self.Models[math.random(#self.Models)])
+    --self:SetModel(self.Models[math.random(#self.Models)])
+    self:SetModel(self.Model)
     self:SetMoveType( MOVETYPE_VPHYSICS )
     self:SetSolid( SOLID_VPHYSICS )
     self:PhysicsInit( SOLID_VPHYSICS )
-    self:SetCollisionGroup( COLLISION_GROUP_PASSABLE_DOOR )
+    self:SetCollisionGroup( COLLISION_GROUP_PLAYER )
     self:DrawShadow( false )
-    local a = Angle(0,0,0)
-    a:Random()
-    self:SetAngles(a)
 
     local phys = self:GetPhysicsObject()
     if phys:IsValid() then
@@ -38,14 +37,21 @@ function ENT:CustomOnInitialize()
         phys:SetMass(1)
         phys:EnableGravity(false)
     end
-
+    
+    self:SetModel(self.Models[math.random(#self.Models)])
+    local a = Angle(0,0,0)
+    a:Random()
+    self:SetAngles(a)
+    
+    local ply = self:GetOwner()
     timer.Simple(0, function ()
+        if not self:IsValid() then return end
         if self:GetCharged() >= 2 then
             self:Ignite(999)
             if self:GetCharged() == 2 then
-                HORDE:SimpleParticleSystem("vj_rocket_idle1", self:GetPos(), Angle(0,0,0), self)
+                HORDE:SimpleParticleSystem("vj_rocket_idle1", self:GetPos(), ply:EyeAngles(), self)
             else
-                HORDE:SimpleParticleSystem("vj_rocket_idle2", self:GetPos(), Angle(0,0,0), self)
+                HORDE:SimpleParticleSystem("vj_rocket_idle2", self:GetPos(), ply:EyeAngles(), self)
             end
         end
     end)
@@ -90,23 +96,20 @@ end
 
 end
 
-function ENT:Detonate()
-    if !self:IsValid() or self.Removing then return end
-    self:EmitSound("horde/spells/meteor_explode.ogg", 125, 100, 1, CHAN_AUTO)
+local function Shrapnel_Effect(hitpos)
     for i = 1, math.random(5,10) do
 		local debris = ents.Create("base_gmodentity")
-		local mat = "debris/debris" .. tostring(math.random(1, 4))
 		
-		debris:SetPos(self:GetPos())
+		debris:SetPos(hitpos)
 		debris:SetAngles(VectorRand():Angle())
 		debris:SetModel("models/props_junk/rock001a.mdl")
 		debris:PhysicsInit(SOLID_VPHYSICS)
-        debris:SetCollisionGroup(COLLISION_GROUP_WORLD)
-
+        debris:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+        --[[
         if self:GetCharged() == 3 then
             debris:Ignite(999)
         end
-        
+        ]]
 		
 		local physobj = debris:GetPhysicsObject()
 		local force = 1000
@@ -126,16 +129,22 @@ function ENT:Detonate()
 			end
 		end)
     end
+end
+
+function ENT:Detonate()
+    if !self:IsValid() then return end
+    self:EmitSound("horde/spells/meteor_explode.ogg", 125, 100, 1, CHAN_AUTO)
+
     local attacker = self
 
     if self.Owner:IsValid() then
         attacker = self.Owner
     end
-
+    --[[
     local dmg = DamageInfo()
 	dmg:SetAttacker(self.Owner)
 	dmg:SetInflictor(self)
-	dmg:SetDamageType(DMG_GENERIC)
+	dmg:SetDamageType(DMG_CLUB)
 	dmg:SetDamage(self:GetSpellBaseDamage(1) * (1 + 0.5 * (self:GetCharged() - 1)))
 	util.BlastDamageInfo(dmg, self:GetPos(), 200)
 
@@ -150,9 +159,9 @@ function ENT:Detonate()
         d2:SetInflictor(self)
         d2:SetDamageType(DMG_BLAST)
         d2:SetDamage(self:GetSpellBaseDamage(1) / 1.5)
-        util.BlastDamageInfo(dmg, self:GetPos(), 200)
+        util.BlastDamageInfo(d2, self:GetPos(), 200)
     end
-
+    
     self:FireBullets({
         Attacker = attacker,
         Damage = 0,
@@ -164,11 +173,59 @@ function ENT:Detonate()
             util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
         end
     })
-    self.Removing = true
+    ]]
+    
+    local spell_dmg = self:GetSpellBaseDamage(1) * (1 + 0.5 * (self:GetCharged() - 1))
+    HORDE.RadiusDamageExtra({
+        attacker = attacker,
+        inflictor = self,
+        radius = 200,
+        falloffradius = 100,
+        falloff_cap = 0,
+        damage = spell_dmg,
+        basedamagemul = 0,
+        fallofftype = "linear",
+        falloff_speed = 1,
+        ignoreattacker = false,
+        origin = self:GetPos(),
+        damagetype = DMG_BLAST,
+        --damagecustomtype = HORDE.DMG_SPLASH,
+        --antishotgun = true,
+    })
+
     self:Remove()
 end
 
 function ENT:PhysicsCollide(colData, collider)
+    if !self:IsValid() or self.Removing then return end
+    local attacker = self
+
+    if self.Owner:IsValid() then
+        attacker = self.Owner
+    end
+    local spell_dmg = self:GetSpellBaseDamage(1) * (1 + 0.5 * (self:GetCharged() - 1))
+    self:FireBullets({
+		Attacker = attacker,
+		Damage = spell_dmg,
+		Tracer = 0,
+		Distance = 400,
+		Dir = (colData.HitPos - self:GetPos()),
+		Src = self:GetPos(),
+		Callback = function(att, tr, dmg)
+			--if tr.HitGroup == HITGROUP_HEAD then
+				dmg:SetDamageType(DMG_CLUB)
+				dmg:SetAttacker(attacker)
+				dmg:SetInflictor(self)
+				--dmg:SetDamage(spell_dmg)
+                --hook.Run("Horde_OnExplosiveProjectileHeadshot", attacker, dmg)
+			--end
+            util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
+		end
+	})
+    
+    Shrapnel_Effect(colData.HitPos)
+    
+    self.Removing = true
     self:Detonate()
 end
 

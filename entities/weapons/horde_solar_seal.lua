@@ -5,7 +5,8 @@ if CLIENT then
     SWEP.DrawWeaponInfoBox = false
     SWEP.BounceWeaponIcon = false
     killicon.Add( "horde_solar_seal", "vgui/hud/horde_solar_seal", Color( 255, 255, 255, 255 ) )
-	killicon.Add( "projectile_horde_solar_projectile", "vgui/hud/horde_solar_seal", Color( 255, 255, 255, 255 ) )
+    killicon.AddAlias( "projectile_horde_solar_orb", "horde_solar_seal" )
+    killicon.AddAlias( "horde_solar_orb_fire", "horde_solar_seal" )
 end
 SWEP.PrintName 		= "Solar Seal"
 

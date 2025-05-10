@@ -5,9 +5,9 @@ if CLIENT then
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "ArcCW - Horde"
+SWEP.Category = "Horde - Rifles"
 SWEP.AdminOnly = false
-SWEP.CamAttachment = 3
+--SWEP.CamAttachment = 3
 
 SWEP.PrintName = "M16A4"
 SWEP.Trivia_Class = "Assault Rifle"
@@ -46,14 +46,19 @@ SWEP.Recoil = 0.5
 SWEP.RecoilSide = 0.4
 SWEP.RecoilRise = 0.1
 
-SWEP.Delay = 0.064 -- 60 / RPM.
+SWEP.Delay = 0.075 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
+    {
+        Mode = 2,
+    },
+    --[[
     {
         Mode = -3,
 		RunawayBurst = true,
         PostBurstDelay = 0.2,
     },
+    ]]
     {
         Mode = 1,
     },
@@ -71,7 +76,7 @@ SWEP.MoveDispersion = 150
 
 SWEP.Primary.Ammo = "smg1" -- what ammo type the gun uses
 
-SWEP.ShootVol = 110 -- volume of shoot sound
+SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
 SWEP.ShootSound =			"weapons/fesiugmw2/fire/m4.wav"
@@ -132,9 +137,11 @@ SWEP.AttachmentElements = {
         VMBodygroups = {{ind = 1, bg = 1}},
         WMBodygroups = {},
     },
+    --[[
     ["grip"] = {
         VMBodygroups = {{ind = 2, bg = 3}},
     },
+    ]]
     ["wepcamo-desert"]		= { VMSkin = 1 },
     ["wepcamo-arctic"]		= { VMSkin = 2 },
     ["wepcamo-woodland"]	= { VMSkin = 3 },
@@ -152,6 +159,9 @@ SWEP.AttachmentElements = {
             },
             ["mw2_ubgl_masterkey"] = {
                 VMBodygroups = {{ind = 2, bg = 2}},
+            },
+            ["horde_ubgl_m203"] = {
+                VMBodygroups = {{ind = 2, bg = 1}},
             },
 }
 
@@ -191,7 +201,7 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Underbarrel",
-        Slot = {"foregrip", "ubgl", "bipod",--[[] "foregrip_mw2exclusive",]] "mw2_ubgl"},
+        Slot = {"foregrip", "ubgl", "bipod",--[[] "foregrip_mw2exclusive",]] "demo_ubgl"},
         Bone = "tag_weapon",
         Offset = {
             vpos = Vector(18.427, 0, -1.04),
@@ -205,7 +215,7 @@ SWEP.Attachments = {
             wmin = Vector(20.996, -0.991, -3.837),
             wmax = Vector(13.661, -0.078, -3.837),
         },
-        Installed = "mw2_ubgl_m203",
+        Installed = "horde_ubgl_m203" -- It doesn't auto attach this for some reason, attach on deploy
     },
     {
         PrintName = "Tactical",
@@ -225,11 +235,11 @@ SWEP.Attachments = {
     },
     {
         PrintName = "Ammo Type",
-        Slot = "ammo_bullet"
+        Slot = "go_ammo"
     },
     {
         PrintName = "Perk",
-        Slot = {"go_perk"}
+        Slot = "go_perk"
     },
     {
         PrintName = "Camouflage",
@@ -258,7 +268,7 @@ SWEP.Hook_TranslateAnimation = function(wep, anim)
 	
 	-- m203 is 1, masterkey is 2, fgrip is 3
 	local attthing
-		if 		attached == "mw2_ubgl_m203" 		then attthing = 1
+		if 		attached == "mw2_ubgl_m203" or attached == "horde_ubgl_m203" then attthing = 1
 		elseif 	attached == "mw2_ubgl_masterkey" 	then attthing = 2
 		else 											 attthing = 0
 	end
@@ -280,14 +290,12 @@ SWEP.Hook_TranslateAnimation = function(wep, anim)
 
     if attthing == 1 and wep:GetInUBGL() then
         return "alt_" .. anim .. "_m203"
-		elseif attthing == 1 then
-			return anim .. "_m203"
-		
+    elseif attthing == 1 then
+        return anim .. "_m203"
 	elseif attthing == 2 and wep:GetInUBGL() then
         return "alt_" .. anim .. "_masterkey"
-		elseif attthing == 2 then
-			return anim .. "_masterkey"
-		
+    elseif attthing == 2 then
+        return anim .. "_masterkey"
     end
 end
 
@@ -638,3 +646,10 @@ SWEP.Animations = {
         Time = 25/30
     },
 }
+
+function SWEP:Hook_OnDeploy()
+    timer.Simple(0, function ()
+        if !IsValid(self) then return end
+        self:Attach(3, "horde_ubgl_m203")
+    end)
+end

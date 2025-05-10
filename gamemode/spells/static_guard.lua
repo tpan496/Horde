@@ -15,13 +15,15 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
     ply:EmitSound("horde/spells/static_guard.ogg")
     ply.Horde_Has_Static_Guard = true
     if charge_stage > 1 then
+        ply.Horde_Charged_Static_Guard = true
         timer.Simple(0.5, function ()
             if ply:IsValid() then
                 ply.Horde_Has_Static_Guard = nil
+                ply.Horde_Charged_Static_Guard = nil
             end
         end)
     else
-        timer.Simple(0.3, function ()
+        timer.Simple(0.5, function ()
             if ply:IsValid() then
                 ply.Horde_Has_Static_Guard = nil
             end
@@ -30,8 +32,9 @@ SPELL.Fire           = function (ply, wpn, charge_stage)
 end
 SPELL.Hooks = {}
 SPELL.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
-    if ply.Horde_Has_Static_Guard and dmginfo:GetDamage() >= 10 then
+    if ply.Horde_Has_Static_Guard and dmginfo:GetDamage() >= 10 and not ply.StaticGuardActive then
         bonus.less = bonus.less * 0.1
+        ply.StaticGuardActive = true
         ply:EmitSound("horde/spells/static_guard_retaliate.ogg")
         local e = EffectData()
         if dmginfo:GetDamagePosition() ~= Vector(0,0,0) then
@@ -39,15 +42,19 @@ SPELL.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
         else
             e:SetOrigin(ply:GetPos() + Vector(0,0,30))
         end
-            
+        
         util.Effect("horde_static_guard", e, true, true)
         if dmginfo:GetAttacker() then
+            local parry_dmg = 100
+            if ply.Horde_Charged_Static_Guard then
+                parry_dmg = 200
+            end
             local ent = dmginfo:GetAttacker()
             local dmg = DamageInfo()
             dmg:SetAttacker(ply)
             dmg:SetInflictor(ply)
             dmg:SetDamageType(DMG_SHOCK)
-            dmg:SetDamage(100 + dmginfo:GetDamage() * 2)
+            dmg:SetDamage(parry_dmg + dmginfo:GetDamage() * 2)
             dmg:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
             util.BlastDamageInfo(dmg, ent:GetPos(), 150)
             local LT = ents.Create("info_target")
@@ -72,6 +79,7 @@ SPELL.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
                 LA:SetPos(ply:GetPos() + ply:OBBCenter())
             end)
         end
+        ply.StaticGuardActive = nil
     end
 end
 SPELL.Price = 300
