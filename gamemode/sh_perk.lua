@@ -423,7 +423,6 @@ if SERVER then
                 grenadethrown = "projectile_horde_illuminate",
             },
         }
-        
         if classes[ply:Horde_GetCurrentSubclass()] == nil then return end
         
         if not ply.Horde_GrenadeSpamCooldown then
@@ -435,10 +434,14 @@ if SERVER then
         
         local nade = ply:GetActiveWeapon()
         
+        if classes[ply:Horde_GetCurrentSubclass()].grenadeclass ~= "the_illuminati_group" then
+            if ply:GetAmmoCount("Grenade") <= 0 or nade.Base == "arccw_horde_base_nade" or (!ply:HasWeapon(classes[ply:Horde_GetCurrentSubclass()].grenadeclass)) then 
+                ply:EmitSound("player/suit_denydevice.wav")
                 return 
             end
             ply:SetAmmo(ply:GetAmmoCount("Grenade") - 1, "Grenade")
             ply.GrenadeDampened = true
+        end
         
         local grenade = ents.Create(classes[ply:Horde_GetCurrentSubclass()].grenadethrown)
         local vel = 15
