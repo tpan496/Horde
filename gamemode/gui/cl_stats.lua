@@ -693,7 +693,7 @@ function PANEL:Init()
     description_panel:SetSize(self:GetParent():GetWide() - 266, self:GetParent():GetTall())
 
     local update_text_panel = vgui.Create("DPanel", description_panel)
-    update_text_panel:SetSize(self:GetParent():GetWide(), 10000)
+    update_text_panel:SetSize(self:GetParent():GetWide(), 11000)
     update_text_panel:SetVisible(true)
     local update_text = translate.Get("Game_Dank_Patch_Notes_Info")
 

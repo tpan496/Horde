@@ -2081,8 +2081,74 @@ Immune to Necrosis.
 
 
 -- Dank Patch notes
-LANGUAGE["Game_Dank_Patch_Notes"] = [[Dank Update 2.1.0]]
+LANGUAGE["Game_Dank_Patch_Notes"] = [[Dank Update 2.1.1]]
 LANGUAGE["Game_Dank_Patch_Notes_Info"] = [[
+Horde 2.1.1 mini update
+
+Secondary Ammo Purchasing and bug fixes
+• Was graciously donated code and yoinked them by The1337Gh0st and .kkrill
+• You can now buy 10x ammo for secondary weapons.
+
+Spell Caster Flashlight Power Creep
+• Warlock, Necromancer, and Artificer are now able to conjure light by using the grenade key which will fire a projectile at your crosshair. Upon hitting a surface, it will light a large area for 30 seconds.
+• Spellcasters will get looked at in the future cuz they’re way too dank. For now, these changes are aimed to make them less painful to play.
+
+Warlock
+• Meteor now goes through players and minions.
+• Meteor self damage is capped at 10 damage from 70 damage.
+• Meteor now does direct damage and explosion damage. The direct damage does blunt damage and can headshot. The explosion damage now utilizes the new dank aoe system.
+• Neutron Beam now follows you and tracks your crosshair.
+• Neutron Beam now spawns on the top right of the screen so it doesn’t blind you. Piercing hitbox is the same despite it looking visually different. 
+
+Necromancer
+• Void projectile and Ice Arrow now goes through players and minions.
+
+Artificer
+• Solar Orb and Dank Orb now goes through players and minions.
+
+Carcass
+• Increased melee range from 75 units to 90 units.
+• Fists are now fully automatic and will perform combo attacks while you’re in range of an enemy.
+• Charged attacks will automatically release their charge attack when in range and distance scales depending on how fast you’re moving.
+• Fists now deals full damage and isn’t affected by limb damage penalties.
+• You can’t reep yourself by overusing Grappendix or Bio Thruster.
+• Grappendix can now pull non elite enemies towards you if you walk backwards first before pulling.
+• Twin Heart will automatically turn off when you’re at full health
+
+Nearby Explosions
+• No longer makes your ears become way too dank.
+
+Combat Knife
+• Now scales movement speed based off of your remaining weight relative to your maximum weight, scaling from 25% more movement speed down to 5% more movement speed.
+
+• Psycho Bestial Wrath and Berserker Rip and Tear
+• Melee splash now works with cleaving but cannot splash hit the same targets or splash hit any cleaved targets.
+
+Overlord Terror Module
+• Fixed the scaling on the stun buildup per second. It now deals 16% of the enemy’s buildup threshold or 40 flat stun buildup per second whichever is less. It also has 50% less effectiveness vs bosses.
+• Non elites take 6.25 seconds to stun, nerfed from 2.5 seconds
+• Elites take 12.5 seconds to stun, buffed from 25 seconds.
+• Bosses remain unchanged taking 25 seconds to stun.
+
+Medic ACR
+• Underbarrel grenade launcher projectile now goes through players, preventing you from getting stuck on it.
+• Underbarrel grenade now heals the correct values.
+• Increased velocity for underbarrel grenades.
+
+M16 m203
+• Is now fully automatic instead of burst fire.
+• Lowered fire rate from 1200 RPM to 800 RPM.
+• Fixed it not being able to use ammo related attachments.
+• Increased velocity for underbarrel grenades.
+
+1911
+• Now has attachment support for ammo and perks.
+
+
+
+-----------------------------------------------------------------------------------------
+Dank Update 2.1.0
+
 TL:DR
 • Dank skip trader by pressing Alt + F4, Perk skill queueing and buffering, Melee weapon base changes, ArcCW attachments menu, Overlord overhauled, Warden, Shotguns, Berserker, Psycho, Hatcher, Engineer, Gunslinger, VDank update for zambies and bosses, fixed joining other servers potentially deranking your single player save if your rank was lower.
 
