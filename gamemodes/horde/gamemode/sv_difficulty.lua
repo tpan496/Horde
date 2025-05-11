@@ -4,7 +4,7 @@
 
 HORDE.CurrentDifficulty = GetConVar( "horde_difficulty" ):GetInt()
 if HORDE.Difficulty[HORDE.CurrentDifficulty] == nil then
-    HORDE.CurrentDifficulty = 2
+    HORDE.CurrentDifficulty = 6
 end
 
 HORDE.endless = GetConVar( "horde_endless" ):GetInt()
