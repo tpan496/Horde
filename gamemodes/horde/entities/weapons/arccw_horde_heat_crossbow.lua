@@ -51,12 +51,13 @@ SWEP.Primary.ClipSize = 1 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 1
 SWEP.ReducedClipSize = 1
 
-SWEP.Recoil = 1
-SWEP.RecoilSide = 1
-SWEP.VisualRecoilMult = 1
-SWEP.RecoilRise = 2
+SWEP.Recoil = 0
+SWEP.RecoilSide = 0
+SWEP.VisualRecoilMult = 0
+SWEP.RecoilRise = 0
+SWEP.RecoilPunch = 0
 
-SWEP.Delay = 60 / 600 -- 60 / RPM.
+SWEP.Delay = 0.75 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -65,16 +66,16 @@ SWEP.Firemodes = {
     },
     {
         Mode = 3,
-        PrintName = "Impact Mode"
+        PrintName = "Heat Mode"
     },
 }
 
 SWEP.NPCWeaponType = "weapon_crossbow"
 SWEP.NPCWeight = 75
 
-SWEP.AccuracyMOA = 10 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
-SWEP.MoveDispersion = 250
+SWEP.AccuracyMOA = 0 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
+SWEP.HipDispersion = 0 -- inaccuracy added by hip firing.
+SWEP.MoveDispersion = 0
 
 SWEP.Primary.Ammo = "XBowBolt" -- what ammo type the gun uses
 
@@ -196,4 +197,11 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
     surface.SetMaterial(self.WepSelectIconMat)
 
     surface.DrawTexturedRect(x, y, w, w / 2)
+end
+
+function SWEP:Hook_PostFireRocket(rocket)
+    if self.Owner:IsValid() and self.Owner:GetAmmoCount("XBowBolt") > 0 then
+    self:SetClip1(2)
+    self:GetOwner():SetAmmo(self.Owner:GetAmmoCount("XBowBolt") - 1, "XBowBolt")
+    end
 end

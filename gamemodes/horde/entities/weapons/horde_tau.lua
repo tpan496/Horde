@@ -189,6 +189,10 @@ function SWEP:PrimaryAttack()
     bullet.Callback = function (attacker, ttt, dmginfo)
         dmginfo:SetDamageType(DMG_BURN)
     end
+    if self.Owner:IsValid() and self.Owner:GetAmmoCount("GaussEnergy") > 0 then
+    self:SetClip1(31)
+    self:GetOwner():SetAmmo(self.Owner:GetAmmoCount("GaussEnergy") - 1, "GaussEnergy")
+    end
     bullet.Num = self.Primary.NumberofShots
     bullet.Src = self.Owner:GetShootPos()
     bullet.Dir = self.Owner:GetAimVector()
@@ -296,12 +300,24 @@ function SWEP:Think()
         self.Owner:SetAnimation( PLAYER_ATTACK1 )
         self.Owner:MuzzleFlash()
         if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
+            if self.Owner:IsValid() and self.Owner:GetAmmoCount("GaussEnergy") > 0 then
+            self:SetClip1(35)
+            self:GetOwner():SetAmmo(self.Owner:GetAmmoCount("GaussEnergy") - 5, "GaussEnergy")
+            end
             self:TakePrimaryAmmo(math.min(self.Weapon:Clip1(), self.Secondary.TakeAmmo ))
         end
         if self.SpinTimer > CurTime() + 6 and self.SpinTimer <= CurTime() + 6.5 then
+            if self.Owner:IsValid() and self.Owner:GetAmmoCount("GaussEnergy") > 0 then
+            self:SetClip1(35)
+            self:GetOwner():SetAmmo(self.Owner:GetAmmoCount("GaussEnergy") - 5, "GaussEnergy")
+            end
             self:TakePrimaryAmmo( math.min(self.Weapon:Clip1(), 5 ) )
         end
         if self.SpinTimer <= CurTime() + 6 then
+            if self.Owner:IsValid() and self.Owner:GetAmmoCount("GaussEnergy") > 0 then
+            self:SetClip1(40)
+            self:GetOwner():SetAmmo(self.Owner:GetAmmoCount("GaussEnergy") - 10, "GaussEnergy")
+            end
             self:TakePrimaryAmmo( math.min(self.Weapon:Clip1(), 10 ) )
         end
         self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )

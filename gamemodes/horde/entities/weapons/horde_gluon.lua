@@ -68,8 +68,8 @@ SWEP.Idle = 0
 SWEP.IdleTimer = CurTime()
 
 SWEP.Primary.Sound = Sound( "Weapon_HL_Gluon_Gun.Single" )
-SWEP.Primary.ClipSize = 50
-SWEP.Primary.DefaultClip = 50
+SWEP.Primary.ClipSize = 100
+SWEP.Primary.DefaultClip = 100
 SWEP.Primary.MaxAmmo = 9999
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "GaussEnergy"
@@ -178,6 +178,10 @@ function SWEP:PrimaryAttack()
         self.Owner:SetAnimation( PLAYER_ATTACK1 )
         self.Sound = 1
         self.SoundTimer = CurTime() + 2
+    end
+    if self.Owner:IsValid() and self.Owner:GetAmmoCount("GaussEnergy") > 0 then
+    self:SetClip1(101)
+    self:GetOwner():SetAmmo(self.Owner:GetAmmoCount("GaussEnergy") - 1, "GaussEnergy")
     end
     self:TakePrimaryAmmo( self.Primary.TakeAmmo )
     self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )

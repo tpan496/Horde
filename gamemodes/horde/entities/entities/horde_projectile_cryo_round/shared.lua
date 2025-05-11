@@ -59,3 +59,79 @@ function ENT:CustomOnExplode()
         self:EmitSound("horde/sound/horde/status/cold_explosion.ogg", 125, 100, 1, CHAN_AUTO)
     end
 end
+
+function ENT:Detonate(data)
+    if !self:IsValid() or self.Removing then return end
+    local attacker = self
+
+    if self.Owner:IsValid() then
+        attacker = self.Owner
+    end
+
+    local nodetonate = self:CustomOnPreDetonate(data)
+    local hitEnt = data.HitEntity
+    if nodetonate then self:Remove() return end
+
+    if (self.StartPos:DistToSqr(self:GetPos()) <= self.ArmDistanceSqr) or self.ProjectileSabotRound then
+        if self.ProjectileSabotRound then
+            self.ProjectileDamage = self.ProjectileDamage * 1.25
+        end
+        self:FireBullets({
+            Attacker = self.Owner,
+            Damage = self.ProjectileDamage * 0.85,
+            Tracer = 0,
+            Distance = 400,
+            Dir = (data.HitPos - self:GetPos()),
+            Src = self:GetPos(),
+            Callback = function(att, tr, dmg)
+                dmg:SetDamageType(self.ProjectileUnarmedDamageType)
+                dmg:SetAttacker(self.Owner)
+                dmg:SetInflictor(self)
+
+                hook.Run("Horde_OnExplosiveProjectileHeadshot", self.Owner, dmg)
+            end
+        })
+        self.Removing = true
+        self:Remove()
+        return
+    end
+
+    self:CustomOnExplode()
+
+    if self.Horde_Armor_Piercing then
+        self.ProjectileDamage = self.ProjectileDamage * 1.15
+        self.ProjectileDamageRadius = self.ProjectileDamageRadius * 0.7
+    end
+
+    self:FireBullets({
+		Attacker = self.Owner,
+		Damage = 0,
+		Tracer = 0,
+		Distance = 400,
+		Dir = (data.HitPos - self:GetPos()),
+		Src = self:GetPos(),
+		Callback = function(att, tr, dmg)
+			if tr.HitGroup == HITGROUP_HEAD then
+				dmg:SetDamageType(self.ProjectileExplosionDamageType)
+				dmg:SetAttacker(self.Owner)
+				dmg:SetInflictor(self)
+				dmg:SetDamage(self.ProjectileDamage / 2)
+                hook.Run("Horde_OnExplosiveProjectileHeadshot", self.Owner, dmg)
+			end
+
+            if self.Decal then
+                util.Decal(self.Decal, tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
+            end
+		end
+	})
+    local dmg2 = DamageInfo()
+    dmg2:SetDamageType(self.ProjectileExplosionDamageType)
+    dmg2:SetAttacker(attacker)
+    dmg2:SetInflictor(self)
+    dmg2:SetDamage(self.ProjectileDamage)
+    util.BlastDamageInfo(dmg2, self:GetPos(), self.ProjectileDamageRadius)
+    hook.Run("Horde_PostExplosiveProjectileExplosion", self.Owner, self, dmg2, self.ProjectileDamageRadius)
+    hitEnt:Horde_AddDebuffBuildup(HORDE.Status_Frostbite, dmg2:GetDamage() * 0.75, attacker, dmg2:GetDamagePosition())
+    self.Removing = true
+    self:Remove()
+end

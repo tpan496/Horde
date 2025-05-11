@@ -349,8 +349,9 @@ LANGUAGE["Perk_cremator_base"] = [[
 The Cremator builds its offense and defense around Fire damage.
 Complexity: EASY
 
-{8} increased Fire damage resistance.
+{8} increased Fire damage resistance and immune to Ignite.
 Attacks have {5} chance to Ignite enemies.
+Regenerate a Molotov every 45 seconds.
 {1} increased Ignite damage. ({3} per level, up to {4}).
 
 Ignite base duration is {6} and deals damage over time based on hit damage.
@@ -1170,7 +1171,7 @@ Shoots incendiary grenades the erupt into flames on impact.
 LANGUAGE["Item_Heat Crossbow"] = [[Heat Crossbow]]
 LANGUAGE["Item_Desc_Heat Crossbow"] = [[
 Improvised sniper weapon.
-Has two firemodes (Ballistic/Impact).
+Has two firemodes that can be swapped between to deal either Ballistic or Fire damage.
 
 Deals 300% headshot damage.
 ]]
@@ -1673,6 +1674,6 @@ Deals 20 base Ignite damage.
 
 LANGUAGE["Gadget_barbeque"] = [[Barbeque]]
 LANGUAGE["Gadget_Desc_gadget_barbeque"] = [[
+Dealing Fire damage heals you for {1} of your max health.
 Ignited enemies killed by you drop edible gibs.
-Each gib restores 5 health.
-]]
+Each gib restores {2} of your max health.]]

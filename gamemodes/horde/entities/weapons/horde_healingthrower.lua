@@ -64,6 +64,10 @@ end
 function SWEP:PrimaryAttack()
     local owner = self:GetOwner()
     if (not self:CanPrimaryAttack()) then return end
+    if self.Owner:IsValid() and self.Owner:GetAmmoCount("horde_m2_flamethrower") > 0 then
+    self:SetClip1(101)
+    self:GetOwner():SetAmmo(self.Owner:GetAmmoCount("horde_m2_flamethrower") - 1, "horde_m2_flamethrower")
+    end
     self:TakePrimaryAmmo(1)
     owner:MuzzleFlash()
     self:SetNextPrimaryFire( CurTime() + self.Delay )

@@ -508,8 +508,8 @@ function HORDE:GetDefaultItemsData()
     {Assault=true, Warden=true}, 10, 10, nil, nil, {Assault=2, Warden=2}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_LIGHTNING})
     HORDE:CreateItem("Rifle",      "SCAR-L",         "arccw_horde_scarl", 3500, 8, "FN SCAR-L.\nAn assault rifle developed by Belgian manufacturer FN Herstal.\nLight version, chambered in 5.56x45mm NATO. \nEquipped with an M203 underbarrel cryo grenade launcher.\nPress USE+RELOAD to equip M203.",
     {Assault=true, Ghost=true}, 15, 10, nil, nil, {Assault=2, Ghost=2}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_COLD})
-    HORDE:CreateItem("Rifle",      "OSIPR",          "arccw_horde_ar2",   3500, 9, "Overwatch Standard Issue Pulse Rifle.\n\nPress ZOOM or B to change firemode.\nFires regular ballistic ammo or energy balls.",
-    {Assault=true}, 15, -1, nil, "items/hl2/weapon_ar2.png", {Assault=5}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Rifle",      "OSIPR",          "arccw_horde_ar2",   3500, 9, "Overwatch Standard Issue Pulse Rifle.\n\nPress ZOOM or B to change firemode.\nFires regular ballistic ammo or energy balls that deal Lightning damage and builds up Shock.",
+    {Assault=true}, 15, -1, nil, "items/hl2/weapon_ar2.png", {Assault=5}, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_LIGHTNING})
 
     HORDE:CreateItem("Rifle",      "Winchester LAR",     "arccw_horde_winchester",1000, 4, "Winchester Lever Action Rifle.\nAn all-time classic.",
     {Survivor=true, Ghost=true}, 10, -1, nil, nil, nil, nil, {HORDE.DMG_BALLISTIC})
@@ -663,8 +663,8 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Special",    "Watchtower Type-Beacon",  "horde_watchtower_beacon", 2000,  4, "A watchtower that acts as a shop during waves.\nProvides additional lighting.\n(Entity Class: horde_watchtower_beacon)",
     {Warden=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=1}, "items/horde_watchtower.png", nil, nil, nil)
 
-    HORDE:CreateItem("Special",    "Heat Crossbow",  "arccw_horde_heat_crossbow", 1750,  4, "Improvised sniper weapon.\nHas two firemodes (Ballistic/Impact).\n\nDeals 300% headshot damage.",
-    {Survivor=true, Ghost=true}, 2, -1, nil, "items/hl2/weapon_crossbow.png", nil, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Special",    "Heat Crossbow",  "arccw_horde_heat_crossbow", 2000,  5, "Improvised sniper weapon.\nHas two firemodes that can be swapped between to deal either Ballistic or Fire damage.\n\nDeals 300% headshot damage.",
+    {Survivor=true, Ghost=true, Cremator=true}, 1, -1, nil, "items/hl2/weapon_crossbow.png", nil, nil, {HORDE.DMG_BALLISTIC, HORDE.DMG_FIRE})
     HORDE:CreateItem("Special",    "M2 Flamethrower", "horde_m2",            2500,  7, "M2-2 Flamethrower.\nAn American man-portable backpack flamethrower.",
     {Cremator=true}, 50, -1, nil, nil, nil, nil, {HORDE.DMG_FIRE})
     HORDE:CreateItem("Special",    "Tau Cannon",      "horde_tau",         3000,  7, "A device that uses electromagnetism to ionize particles.\nHold RMB to charge and release a powerful shot.\nDeals more damage as you charge.\nDevice explodes if you overcharge.",

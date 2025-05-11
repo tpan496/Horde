@@ -12,8 +12,8 @@ AddCSLuaFile()
 ENT.Model = "models/crossbow_bolt.mdl"
 ENT.Ticks = 0
 ENT.FuseTime = 10
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER_MOVEMENT
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER_MOVEMENT
 ENT.Removing = nil
 
 if SERVER then
@@ -32,7 +32,10 @@ function ENT:Initialize()
 
     self.SpawnTime = CurTime()
     self.HitEntitites = {}
-    self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+    self:SetCollisionGroup(COLLISION_GROUP_PLAYER_MOVEMENT)
+    if self:GetOwner():GetActiveWeapon():GetCurrentFiremode().Mode == 3 then
+    self:SetColor(Color(255,0,0))
+    end
 end
 
 function ENT:Think()
@@ -52,43 +55,39 @@ function ENT:Detonate(hitpos, hitent)
         attacker = self.Owner
     end
 
-    if self.Inflictor:GetCurrentFiremode().Mode == 2 then
-        self:FireBullets({
-            Attacker = attacker,
-            Inflictor = attacker,
-            Damage = 300,
-            Tracer = 0,
-            Distance = 400,
-            HullSize = 2,
-            Dir = (hitpos - self:GetPos()),
-            Src = self:GetPos(),
-            Callback = function(att, tr, dmg)
-                dmg:SetAttacker(attacker)
-                dmg:SetInflictor(attacker)
-
-                if tr.HitGroup == HITGROUP_HEAD then
-                    sound.Play("weapons/crossbow/bolt_skewer1.wav", hitpos)
-                    dmg:ScaleDamage(1.5)
-                end
-
-                util.Decal("Scorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
-            end
-        })
-        self.Removing = true
-        self:Remove()
-    else
-        if HORDE:IsEnemy(hitent) then
-            local dmg = DamageInfo()
-            dmg:SetDamage(300)
-            dmg:SetAttacker(attacker)
-            dmg:SetInflictor(attacker)
-            dmg:SetDamagePosition(self:GetPos())
-            dmg:SetDamageType(DMG_GENERIC)
-            hitent:TakeDamageInfo(dmg)
+    self:FireBullets({
+        Attacker = attacker,
+        Inflictor = attacker,
+        Damage = 200,
+        Tracer = 0,
+        Distance = 400,
+        HullSize = 2,
+        Dir = (hitpos - self:GetPos()),
+        Src = self:GetPos(),
+        Callback = function(att, tr, dmg)
+        dmg:SetAttacker(attacker)
+        dmg:SetInflictor(attacker)
+				
+        if self.Inflictor:GetCurrentFiremode().Mode == 2 then
+        dmg:SetDamageType(DMG_BULLET)
+        else
+        dmg:SetDamageType(DMG_BURN)
         end
-        self.Removing = true
-        self:Remove()
-    end
+
+        if tr.HitGroup == HITGROUP_HEAD then
+            sound.Play("weapons/crossbow/bolt_skewer1.wav", hitpos)
+            dmg:ScaleDamage(1.5)
+        end
+				
+        if self.Inflictor:GetCurrentFiremode().Mode == 3 then
+        local effectdata = EffectData()
+        effectdata:SetOrigin( self:GetPos() )
+        util.Decal("FadingScorch", tr.StartPos, tr.HitPos - (tr.HitNormal * 16), self)
+        end
+        end
+    })
+    self.Removing = true
+    self:Remove()
 end
 
 function ENT:PhysicsCollide(colData, collider)

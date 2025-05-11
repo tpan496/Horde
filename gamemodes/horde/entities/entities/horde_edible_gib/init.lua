@@ -13,7 +13,7 @@ function ENT:Initialize()
     self:PhysWake()
     self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 
-    timer.Simple(5, function ()
+    timer.Simple(15, function ()
         if self:IsValid() then
             self:Remove()
         end
@@ -22,6 +22,7 @@ end
 
 function ENT:StartTouch(ent)
     if ent:IsPlayer() then
+        if ent:Health() >= ent:GetMaxHealth() then return end
         local healinfo = HealInfo:New({amount=ent:GetMaxHealth() * 0.1, healer=self.Owner})
         HORDE:OnPlayerHeal(ent, healinfo)
         sound.Play("horde/gadgets/yummy.ogg", self:GetPos())

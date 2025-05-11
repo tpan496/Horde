@@ -3,7 +3,8 @@ PERK.Description = [[
 The Cremator builds its offense and defense around Fire damage.
 Complexity: EASY
 
-{8} increased Fire damage resistance.
+{8} increased Fire damage resistance and immune to Ignite.
+Regenerate a Molotov every 45 seconds.
 Attacks have {5} chance to Ignite enemies.
 {1} increased Ignite damage. ({3} per level, up to {4}).
 
