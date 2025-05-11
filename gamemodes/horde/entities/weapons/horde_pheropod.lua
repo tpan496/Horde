@@ -242,7 +242,7 @@ end
 function SWEP:Come()
 	if not HORDE.player_drop_entities[self:GetOwner():SteamID()] then return end
 	for id, ent in pairs(HORDE.player_drop_entities[self:GetOwner():SteamID()]) do
-		if ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
+		if IsValid( ent ) and ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
 			ent:SetLastPosition(self:GetOwner():GetPos())
 			ent:SetSchedule(SCHED_FORCED_GO_RUN)
 		end
