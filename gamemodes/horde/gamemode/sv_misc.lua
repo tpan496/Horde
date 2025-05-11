@@ -26,7 +26,7 @@ function HORDE:GetAntlionMinionsCount(ply)
     local count = 0
     if not HORDE.player_drop_entities[ply:SteamID()] then return 0 end
     for id, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-        if ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
+        if IsValid( ent ) and ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
             count = count + 1
         end
     end
