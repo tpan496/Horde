@@ -2,7 +2,7 @@ if not ArcCWInstalled then return end
 -- Referenced From GSO
 ENT.Type = "anim"
 ENT.Base = "base_entity"
-ENT.PrintName = "Medic Grenade"
+ENT.PrintName = "UBGL Medic Grenade"
 ENT.Author = ""
 ENT.Information = ""
 ENT.Spawnable = false
@@ -26,35 +26,36 @@ AddCSLuaFile()
 
 local entmeta = FindMetaTable("Entity")
 
-function entmeta:Horde_AddEffect_MedicGrenade(ent)
+function entmeta:Horde_AddEffect_UBGLMedicGrenade(ent)
     local owner = self:GetOwner()
-    if self.horde_effect_medicgrenade then return end
-    self.horde_effect_medicgrenade = true
+    if self.horde_effect_ubglmedicgrenade then return end
+    self.horde_effect_ubglmedicgrenade = true
     local id = self:GetCreationID()
-    timer.Create("Horde_MedicGrenadeEffect" .. id, 0.5, 0, function ()
-        if not self:IsValid() then timer.Remove("Horde_MedicGrenadeEffect" .. id) return end
+    timer.Create("Horde_UBGLMedicGrenadeEffect" .. id, 0.5, 0, function ()
+        if not self:IsValid() then timer.Remove("Horde_UBGLMedicGrenadeEffect" .. id) return end
         if self:IsPlayer() then
-            local healinfo = HealInfo:New({amount = 4, healer = ent.Owner})
+            local healinfo = HealInfo:New({amount = 15, healer = ent.Owner})
             HORDE:OnPlayerHeal(self, healinfo)
         elseif ent:GetClass() == "npc_vj_horde_antlion" then
-            local healinfo = HealInfo:New({amount = 4, healer = owner})
+            local healinfo = HealInfo:New({amount = 10, healer = owner})
             HORDE:OnAntlionHeal(ent, healinfo)
         elseif ent:IsValid() and ent.Owner:IsValid() and ent.Inflictor:IsValid() and self:IsNPC() and (not self:GetNWEntity("HordeOwner"):IsValid()) then
             local d = DamageInfo()
-            d:SetDamage(25)
+            d:SetDamage(20)
             d:SetAttacker(ent.Owner)
             d:SetInflictor(ent.Inflictor)
             d:SetDamageType(DMG_NERVEGAS)
             d:SetDamagePosition(self:GetPos())
             self:TakeDamageInfo(d)
+            self:Horde_AddDebuffBuildup(HORDE.Status_Break, d:GetDamage() * 0.8, ent:GetOwner(), self:GetPos())
         end
     end)
 end
 
-function entmeta:Horde_RemoveEffect_MedicGrenade()
-    if self.horde_effect_medicgrenade then
-        timer.Remove("Horde_MedicGrenadeEffect" .. self:GetCreationID())
-        self.horde_effect_medicgrenade = nil
+function entmeta:Horde_RemoveEffect_UBGLMedicGrenade()
+    if self.horde_effect_ubglmedicgrenade then
+        timer.Remove("Horde_UBGLMedicGrenadeEffect" .. self:GetCreationID())
+        self.horde_effect_ubglmedicgrenade = nil
     end
 end
 
@@ -109,10 +110,10 @@ end
 
 function ENT:Touch(ent)
     if SERVER then
-        if self.TouchedEntities[ent:GetCreationID()] and ent.horde_effect_medicgrenade then return end
+        if self.TouchedEntities[ent:GetCreationID()] and ent.horde_effect_ubglmedicgrenade then return end
         if self:GetArmed() and (ent:IsPlayer() or ent:IsNPC()) then
             self.TouchedEntities[ent:GetCreationID()] = ent
-            ent:Horde_AddEffect_MedicGrenade(self)
+            ent:Horde_AddEffect_UBGLMedicGrenade(self)
         end
     end
 end
@@ -121,7 +122,7 @@ function ENT:EndTouch(ent)
     if SERVER then
         if not (ent:IsNPC() or ent:IsPlayer()) then return end
         self.TouchedEntities[ent:GetCreationID()] = nil
-        ent:Horde_RemoveEffect_MedicGrenade()
+        ent:Horde_RemoveEffect_UBGLMedicGrenade()
     end
 end
 
@@ -179,7 +180,7 @@ end
 function ENT:OnRemove()
     if SERVER then
         for _, ent in pairs(self.TouchedEntities) do
-            if ent:IsValid() then ent:Horde_RemoveEffect_MedicGrenade() end
+            if ent:IsValid() then ent:Horde_RemoveEffect_UBGLMedicGrenade() end
         end
     end
 end
