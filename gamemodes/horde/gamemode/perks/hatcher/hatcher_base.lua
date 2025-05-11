@@ -69,7 +69,7 @@ PERK.Hooks.DoPlayerDeath = function (ply)
     if ply:Horde_GetPerk("hatcher_base") then
         if not HORDE.player_drop_entities[ply:SteamID()] then return end
         for id, ent in pairs(HORDE.player_drop_entities[ply:SteamID()]) do
-            if ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
+            if IsValid( ent ) and ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
                 ent:Remove()
             end
         end
