@@ -35,6 +35,7 @@ end
 
 PERK.Hooks.Horde_OnSetPerk = function(ply, perk)
     if SERVER and perk == "necromancer_base" then
+        ply:Flashlight(false)
         ply:Horde_SetMindRegenTick(0.25)
         ply:SetMaxArmor(0)
         if ply:HasWeapon("horde_void_projector") == true then return end

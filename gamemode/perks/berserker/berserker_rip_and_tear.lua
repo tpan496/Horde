@@ -51,7 +51,7 @@ end
 
 ---------------- For cleaving weapons below ------------------
 -- Splash damage now scales with damage increases
-PERK.Hooks.Hook_PostBash = function (wep, info)
+PERK.Hooks.Hook_HordePostCleaving = function (wep, info)
     if not SERVER then return end
     local ply = info.ply
     if not ply:Horde_GetPerk("berserker_rip_and_tear") then return end

@@ -9,8 +9,8 @@ AddCSLuaFile()
 
 if CLIENT then
 	SWEP.PrintName = "Welder"
-	SWEP.Slot = 2
-	SWEP.SlotPos = 1
+	SWEP.Slot = 3
+	SWEP.SlotPos = 3
 	SWEP.DrawAmmo = true
 	SWEP.DrawCrosshair = false
 end
@@ -727,17 +727,20 @@ end
 
 function SWEP:Reload()
     if self:Clip1() >= self:GetMaxClip1() then return end
+    if self.Is_Reloading then return end
     self:EmitSound(Sound(self.ReloadSound))
     self.Weapon:SendWeaponAnim(ACT_VM_HOLSTER)
 	self:SetNextPrimaryFire(CurTime() + 1)
-	timer.Simple(1, function ()
-		if !IsValid(self.Weapon) then return end
+    self.Is_Reloading = true
+    timer.Simple(1, function ()
+        if !IsValid(self.Weapon) or !self.Owner:IsValid() or self.Owner:GetActiveWeapon():GetClass() ~= "horde_welder" then self.Is_Reloading = nil return end
 		self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
 		local ammo = self.Owner:GetAmmoCount(self.Primary.Ammo)
 		local clip = math.min(self.Primary.ClipSize, ammo + self:Clip1())
 		local diff = clip - self:Clip1()
 		self.Owner:SetAmmo(ammo - diff, self.Primary.Ammo)
 		self.Weapon:SetClip1(clip)
+        self.Is_Reloading = nil
 	end)
 end
 

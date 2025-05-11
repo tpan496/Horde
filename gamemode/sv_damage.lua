@@ -417,13 +417,8 @@ end)
 
 hook.Add("Horde_OnPlayerDamageTaken", "Horde_MeteorDefense", function(ply, dmginfo, bonus)
     if ply:Horde_GetMaxMind() > 0 and IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor():GetClass() == "projectile_horde_meteor" then
-        if dmginfo:IsDamageType(DMG_BLAST) then
-            dmginfo:SetDamage(math.min(10, dmginfo:GetDamage()))
-            dmginfo:SetDamageType(DMG_DIRECT)
-        else
-            dmginfo:SetDamage(math.min(70, dmginfo:GetDamage()))
-            dmginfo:SetDamageType(DMG_DIRECT)
-        end
+        dmginfo:SetDamage(math.min(10, dmginfo:GetDamage()))
+        dmginfo:SetDamageType(DMG_DIRECT)
     end
 end)
 
@@ -470,11 +465,9 @@ hook.Add("ScaleNPCDamage", "Horde_Locational_Damage", function(npc, hitgroup, dm
     if (attacker:IsPlayer() and not attacker:GetActiveWeapon().Horde_Use_Locational_DMG) --[[or not (attacker.Horde_Use_Locational_DMG)]] then return end
     local scale = HitGroups[hitgroup] || 1
     if attacker:IsPlayer() and not HORDE:IsPlayerMinion(attacker) then --Player damage and not minion damage
-        --[[
-        if HORDE:IsCurrentWeapon(dmginfo, "Melee") == true then --Melee damage
+        if attacker:GetActiveWeapon().Horde_Use_Locational_DMG == "melee" then --Melee damage
             scale = MeleeHitGroups[hitgroup] || 1
         end
-        ]]
     elseif HORDE:IsPlayerMinion(attacker) then --Minion damage
         scale = MeleeHitGroups[hitgroup] || 1
     else

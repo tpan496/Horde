@@ -5,7 +5,7 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/combine_soldier.mdl" -- Leave empty if using more than one model
+ENT.Model = "models/combine_soldier_prisonguard.mdl" -- Leave empty if using more than one model
 ENT.StartHealth = 125
 ENT.VJ_NPC_Class = { "CLASS_COMBINE", "CLASS_PLAYER_ALLY" }
 ENT.MeleeAttackDamage = 30
@@ -82,9 +82,6 @@ function ENT:CustomOnInitialize()
     if self.Is_Reinforcements then
         self:SetMaxHealth(self.StartHealth * 0.5)
 		self:SetHealth(self:GetMaxHealth())
-		self.Model = "models/combine_soldier_prisonguard.mdl"
-        self:SetSkin(0)
-		self:SetModel(self.Model)
     end
     local ply = self:GetOwner()
     if ply:Horde_GetGadget() == "gadget_shotgun_surgeon" then

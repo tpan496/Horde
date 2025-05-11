@@ -157,7 +157,7 @@ function SWEP:SecondaryAttack()
 	self.Weapon:SetNextSecondaryFire(CurTime() + 1.5)
 end
 
-function SWEP:Hook_PostBash(info)
+function SWEP:Hook_HordePostCleaving(info)
     if not self.Charged then return end
     local attacker = self:GetOwner()
     if !IsValid(attacker) then return end

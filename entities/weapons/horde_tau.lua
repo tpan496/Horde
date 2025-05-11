@@ -91,8 +91,6 @@ SWEP.Spin = 0
 SWEP.SpinTimer = CurTime()
 SWEP.Idle = 0
 SWEP.IdleTimer = CurTime()
-SWEP.Recoil = 0
-SWEP.RecoilTimer = CurTime()
 
 SWEP.Primary.Sound = Sound( "Weapon_Horde_Tau_Cannon.Single" )
 SWEP.Primary.ClipSize = 30
@@ -148,8 +146,6 @@ function SWEP:Deploy()
     self.SpinTimer = CurTime()
     self.Idle = 0
     self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-    self.Recoil = 0
-    self.RecoilTimer = CurTime()
     return true
 end
 
@@ -158,8 +154,6 @@ function SWEP:Holster()
     self.SpinTimer = CurTime()
     self.Idle = 0
     self.IdleTimer = CurTime()
-    self.Recoil = 0
-    self.RecoilTimer = CurTime()
     self:StopSound( self.Secondary.Sound )
     if SERVER then
         self.Owner:StopSound( "Weapon_Horde_Tau_Cannon.Double_2" )
@@ -213,11 +207,6 @@ function SWEP:PrimaryAttack()
     self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
     self.Idle = 0
     self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-    if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
-        self.Recoil = 1
-        self.RecoilTimer = CurTime() + self.Primary.Delay
-        self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -3, 0, 0 ) )
-    end
 end
 
 function SWEP:SecondaryAttack()
@@ -320,9 +309,6 @@ function SWEP:Think()
         self.Spin = 0
         self.Idle = 0
         self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
-        self.Recoil = 1
-        self.RecoilTimer = CurTime() + self.Primary.Delay
-        self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( -3, 0, 0 ) )
         if self.SpinTimer > CurTime() + 6.5 and self.SpinTimer <= CurTime() + 7 then
             self.Owner:SetVelocity( self.Owner:GetForward() * -200 )
         end
@@ -331,14 +317,6 @@ function SWEP:Think()
         end
         if self.SpinTimer <= CurTime() + 6 then
             self.Owner:SetVelocity( self.Owner:GetForward() * -400 )
-        end
-    end
-    if ( CLIENT || game.SinglePlayer() ) and IsFirstTimePredicted() then
-        if self.Recoil == 1 and self.RecoilTimer <= CurTime() then
-            self.Recoil = 0
-        end
-        if self.Recoil == 1 then
-            self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle( 0.23, 0, 0 ) )
         end
     end
     if self.Idle == 0 and self.IdleTimer <= CurTime() then

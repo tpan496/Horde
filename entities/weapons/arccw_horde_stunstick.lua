@@ -138,7 +138,7 @@ SWEP.BashAng = Angle(35, -30, 0)
 SWEP.HolsterPos = Vector(0, -3, -2)
 SWEP.HolsterAng = Angle(-10, 0, 0)
 
-function SWEP:Hook_PostBash(info)
+function SWEP:Hook_HordePostCleaving(info)
     if not SERVER then return end
     local attacker = self:GetOwner()
     if !IsValid(attacker) then return end

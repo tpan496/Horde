@@ -314,7 +314,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_p250"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_r8"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_deagle"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_mw2_m1911"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_m1911"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_anaconda"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_cz75"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_m9"].infusions = ballistic_infusions_light
@@ -517,7 +517,7 @@ function HORDE:GetDefaultItemsData()
     HORDE:CreateItem("Pistol", "R8", "arccw_go_r8", 750, 2,
         "R8 Revolver.\nDelivers a highly accurate and powerful round,\nbut at the expense of a lengthy trigger-pull.",
         { Survivor = true, Psycho = true, Ghost = true, Gunslinger = true, }, 5, -1, nil, nil, nil, nil, { HORDE.DMG_BALLISTIC })
-    HORDE:CreateItem("Pistol", "M1911", "arccw_mw2_m1911", 750, 2,
+    HORDE:CreateItem("Pistol", "M1911", "arccw_horde_m1911", 750, 2,
         "Colt 1911.\nStandard-issue sidearm for the United States Armed Forces.",
         { Ghost = true, Gunslinger = true, }, 5, -1, nil, nil, nil, nil, { HORDE.DMG_BALLISTIC })
     HORDE:CreateItem("Pistol", "Deagle", "arccw_go_deagle", 750, 2,
@@ -559,7 +559,8 @@ function HORDE:GetDefaultItemsData()
         translate.Get("Item_Desc_Throwing_Knives"),
         { Berserker = true, Samurai = true, Gunslinger = true }, 10, -1, nil, nil, nil, nil, { HORDE.DMG_SLASH })
     --Add projectile entity for category "Pistol" damage check--
-    HORDE:CreateItem("Pistol", "Throwing Knife Projectile", "arccw_horde_thr_knife", 0, 0, "", 
+    HORDE:CreateItem("Pistol", "Throwing Knife Projectile (Hidden)", "arccw_horde_thr_knife", 0, 0,
+        "This item is only here in the Pistol category to calculate pistol damage.", 
         { Berserker = true, Samurai = true, Survivor = true, Psycho = true, Gunslinger = true }, 10, -1, { type = HORDE.ENTITY_PROPERTY_DROP, x = 50, z = 15, yaw = 0, limit = 0 }, 
         nil, nil, nil, { HORDE.DMG_SLASH }, nil, nil, true) --This must be hidden
 
@@ -716,7 +717,7 @@ function HORDE:GetDefaultItemsData()
         { Medic = true, }, 10, -1, nil, nil, { Medic = 2 }, nil, { HORDE.DMG_BALLISTIC })
     HORDE:CreateItem("Rifle", "ACR Medic AR", "arccw_horde_medic_acr", 3000, 8,
         "Remington Adaptive Combat Rifle.\nEquipped with healing dart and medic grenade launcher.\n\nPress USE+RELOAD to equip medic grenade launcher.\nPress B or ZOOM to fire healing dart.\nHealing dart heals 15 health and has a 1.5 second cooldown.",
-        { Medic = true, }, 10, 50, nil, nil, nil, nil, { HORDE.DMG_BALLISTIC })
+        { Medic = true, }, 10, 50, nil, nil, nil, nil, { HORDE.DMG_BALLISTIC, HORDE.DMG_POISON })
     HORDE:CreateItem("Rifle", "M16 M203", "arccw_horde_m16m203", 2250, 7,
         "M16A4 equipped with an M203 underbarrel grenade launcher.\nPress USE+RELOAD to equip M203.",
         { Assault = true, SpecOps = true, Demolition = true }, 10, 10, nil, nil, { Assault = 2, Demolition = 2 }, nil,

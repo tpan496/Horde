@@ -5,7 +5,7 @@ if CLIENT then
 end
 SWEP.Base = "arccw_mw2_abase"
 SWEP.Spawnable = true
-SWEP.Category = "Horde - Pistol"
+SWEP.Category = "Horde - Pistols"
 SWEP.AdminOnly = false
 SWEP.WeaponCamBone = tag_camera
 

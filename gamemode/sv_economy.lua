@@ -993,31 +993,33 @@ end)
 net.Receive("Horde_BuyItemAmmoSecondary", function (len, ply)
     if not ply:IsValid() or not ply:Alive() then return end
     local class = net.ReadString()
+    local count = net.ReadUInt(4)
     if not ply:HasWeapon(class) then
         HORDE:SendNotification("You don't have this weapon!", 0, ply)
         return
     end
     
     local wpn = ply:GetWeapon(class)
-    local clip_size = wpn:GetMaxClip2()
+    --local clip_size = wpn:GetMaxClip2()
     local ammo_id = wpn:GetSecondaryAmmoType()
     
     -- For Secondary ammo and ArcCW underbarrel attachments ammo limit
     if wpn.Secondary and wpn.Secondary.MaxAmmo and wpn.Secondary.MaxAmmo <= ply:GetAmmoCount(ammo_id) then return end
     if ply:GetAmmoCount(ammo_id) >= 9999 then return end
     
-    local price = HORDE.items[class].secondary_ammo_price
+    local price = HORDE.items[class].secondary_ammo_price * count
     if ply:Horde_GetMoney() >= price then
+        --[[
         -- Magazine size check
         if clip_size > 0 then
             clip_size = clip_size
         elseif ammo_id >= 1 then
             clip_size = 1
         end
-
+        ]]
         ply:Horde_AddMoney(-price)
         if ammo_id >= 0 then
-            ply:GiveAmmo(clip_size, ammo_id, false)
+            ply:GiveAmmo(count, ammo_id, false)
             ply:Horde_SyncEconomy()
         end
     end

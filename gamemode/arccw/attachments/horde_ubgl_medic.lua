@@ -29,8 +29,9 @@ att.UBGL_MuzzleEffect = "muzzleflash_m79"
 att.UBGL_ClipSize = 1
 att.UBGL_Ammo = "arccw_nade_medic_ubgl"
 att.UBGL_RPM = 1200
-att.UBGL_Recoil = 2 -- There's a animation error with your hand, please don't notice it ^-^
+att.UBGL_Recoil = 1 -- There's a animation error with your hand, please don't notice it ^-^
 att.UBGL_Capacity = 1
+att.Free = true
 
 att.Hook_ShouldNotSight = function(wep)
     return wep:GetInUBGL()
@@ -45,7 +46,7 @@ att.UBGL_Fire = function(wep, ubgl)
 
     wep:PlayAnimation("alt_fire_m203", 1, true, nil, nil, nil, true)
 
-    wep:FireRocket("arccw_ubgl_medicgrenade", 1000)
+    wep:FireRocket("arccw_ubgl_medicgrenade", 5000)
 
     if wep.MW2_M203isGP25 then
         wep:EmitSound("weapons/fesiugmw2/fire/gp25.wav", 100)

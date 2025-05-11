@@ -225,7 +225,7 @@ net.Receive("Horde_DemonicEdgeCharge", function ()
     end
 end)
 
-function SWEP:Hook_PostBash(info)
+function SWEP:Hook_HordePostCleaving(info)
     if not SERVER then return end
     if not self.Charged then return end
     local attacker = self:GetOwner()

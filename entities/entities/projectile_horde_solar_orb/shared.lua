@@ -11,8 +11,8 @@ AddCSLuaFile()
 
 ENT.Model = "models/items/ar2_grenade.mdl"
 ENT.Ticks = 0
-ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
-ENT.CollisionGroupType = COLLISION_GROUP_PROJECTILE
+ENT.CollisionGroup = COLLISION_GROUP_PLAYER
+ENT.CollisionGroupType = COLLISION_GROUP_PLAYER
 ENT.Removing = nil
 ENT.StartPos = nil
 ENT.PlaySoundTimer = 0
@@ -70,7 +70,7 @@ function ENT:CustomOnInitialize()
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
     
-    self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+    self:SetCollisionGroup(COLLISION_GROUP_PLAYER)
     self.ExplodeTimer = CurTime() + 0.4
 
     if self:GetCharged() == 1 then
@@ -197,7 +197,7 @@ function ENT:Detonate(hitpos, ent)
             if self.Draconic == true then
                 local dmg_splash = DamageInfo()
                 dmg_splash:SetAttacker(self.Owner)
-                dmg_splash:SetInflictor(tr.Entity)
+                dmg_splash:SetInflictor(self)
                 dmg_splash:SetDamageType(DMG_SHOCK)
                 dmg_splash:SetDamage(self:GetSpellBaseDamage(2) * dmg_mult)
                 dmg_splash:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
@@ -205,7 +205,7 @@ function ENT:Detonate(hitpos, ent)
             else
                 local dmg_splash = DamageInfo()
                 dmg_splash:SetAttacker(self.Owner)
-                dmg_splash:SetInflictor(tr.Entity)
+                dmg_splash:SetInflictor(self)
                 dmg_splash:SetDamageType(DMG_BURN)
                 dmg_splash:SetDamage(self:GetSpellBaseDamage(2) * dmg_mult)
                 dmg_splash:SetDamageCustom(HORDE.DMG_SPLASH)

@@ -59,6 +59,7 @@ end
 PERK.Hooks.Horde_OnPlayerDamageTaken = function (ply, dmginfo, bonus)
     if not ply:Horde_GetPerk("carcass_base") then return end
     if ply:Horde_GetMaxHypertrophyStack() <= 0 then return end
+    if dmginfo:GetDamage() <= 0 then return end
     ply:Horde_AddHypertrophyStack()
 end
 
