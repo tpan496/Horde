@@ -26,18 +26,18 @@ AddCSLuaFile()
 
 local entmeta = FindMetaTable("Entity")
 
-function entmeta:Horde_AddEffect_MedicGrenade(ent)
+function entmeta:Horde_AddEffect_RPGMedicGrenade(ent)
 	local owner = self:GetOwner()
-	if self.horde_effect_medicgrenade then return end
-	self.horde_effect_medicgrenade = true
+	if self.horde_effect_medicmissile then return end
+	self.horde_effect_medicmissile = true
 	local id = self:GetCreationID()
-	timer.Create("Horde_MedicGrenadeEffect" .. id, 0.5, 0, function ()
-		if not self:IsValid() then timer.Remove("Horde_MedicGrenadeEffect" .. id) return end
+	timer.Create("Horde_MedicRPGMedicGrenade" .. id, 0.5, 0, function ()
+		if not self:IsValid() then timer.Remove("Horde_RPGMedicGrenade" .. id) return end
 		if self:IsPlayer() then
-			local healinfo = HealInfo:New({amount = 7, healer = ent.Owner})
+			local healinfo = HealInfo:New({amount = 20, healer = ent.Owner})
 			HORDE:OnPlayerHeal(self, healinfo)
 		elseif ent:GetClass() == "npc_vj_horde_antlion" then
-			local healinfo = HealInfo:New({amount = 7, healer = owner})
+			local healinfo = HealInfo:New({amount = 15, healer = owner})
 			HORDE:OnAntlionHeal(ent, healinfo)
 		elseif ent:IsValid() and ent.Owner:IsValid() and ent.Inflictor:IsValid() and self:IsNPC() and (not self:GetNWEntity("HordeOwner"):IsValid()) then
 			local d = DamageInfo()
@@ -47,14 +47,15 @@ function entmeta:Horde_AddEffect_MedicGrenade(ent)
 			d:SetDamageType(DMG_NERVEGAS)
 			d:SetDamagePosition(self:GetPos())
 			self:TakeDamageInfo(d)
+			self:Horde_AddDebuffBuildup(HORDE.Status_Break, d:GetDamage() * 0.5, ent:GetOwner(), self:GetPos())
 		end
 	end)
 end
 
-function entmeta:Horde_RemoveEffect_MedicGrenade()
-	if self.horde_effect_medicgrenade then
-		timer.Remove("Horde_MedicGrenadeEffect" .. self:GetCreationID())
-		self.horde_effect_medicgrenade = nil
+function entmeta:Horde_RemoveEffect_RPGMedicGrenade()
+	if self.horde_effect_medicmissile then
+		timer.Remove("Horde_MedicRPGMedicGrenade" .. self:GetCreationID())
+		self.horde_effect_medicmissile = nil
 	end
 end
 
@@ -93,18 +94,6 @@ function ENT:Initialize()
 		end)
 	end
 end
-
-function ENT:PhysicsCollide(data, physobj)
-	if SERVER then
-		if data.Speed > 75 then
-			self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
-		elseif data.Speed > 25 then
-			self:EmitSound(Sound("physics/metal/metal_grenade_impact_soft" .. math.random(1,3) .. ".wav"))
-		end
-		self:Detonate()
-	end
-end
-
 
 function ENT:Think()
 	if not self.SpawnTime then self.SpawnTime = CurTime() end
@@ -155,7 +144,7 @@ end
 function ENT:OnRemove()
 	if SERVER then
 		for _, ent in pairs(self.TouchedEntities) do
-			if ent:IsValid() then ent:Horde_RemoveEffect_MedicGrenade() end
+			if ent:IsValid() then ent:Horde_RemoveEffect_RPGMedicGrenade() end
 		end
 	end
 end
@@ -165,51 +154,77 @@ function ENT:Detonate()
 	if not self:IsValid() then return end
 	if self:GetArmed() == true then return end
 	self:SetArmed(true)
-	 self.Armed = true
+	self.Armed = true
 	self:EmitSound("arccw_go/smokegrenade/smoke_emit.wav", 160, 100, 1, CHAN_AUTO)
---	self:EmitSound( "Weapon_HLOF_Spore_Launcher.Impact", 90, 100, 1, CHAN_AUTO )
-	timer.Simple(self.Duration, function()
+
+	timer.Simple(7.5, function()
 		if not IsValid(self) then return end
 		self:Remove()
 	end)
-	timer.Simple(0, function()
-			if not IsValid(self) then return end
-			self:SetMoveType(MOVETYPE_NONE)
-			self:SetSolid(SOLID_NONE)
-		end)
 
-	self:SetColor(Color(0,255,0,0))
-	self:SetRenderMode( RENDERMODE_TRANSCOLOR )
-	self:StopParticles()
 	if SERVER then
-		ParticleEffect("antlion_gib_01_juice", self:GetPos(), Angle(0,0,0), nil)
+		ParticleEffect("antlion_gib_01_juice", self:GetPos(), Angle(0, 0, 0), nil)
 		local e1 = EffectData()
 		e1:SetOrigin(self:GetPos())
 		e1:SetScale(2)
 		util.Effect("spore_explosion", e1, true, true)
-		ParticleEffect("antlion_gib_02_floaters", self:GetPos(), Angle(0,0,0), nil)
+		ParticleEffect("antlion_gib_02_floaters", self:GetPos(), Angle(0, 0, 0), nil)
+
 		local dmg = DamageInfo()
 		dmg:SetAttacker(owner)
-		dmg:SetInflictor(self)
+		dmg:SetInflictor(owner)
 		dmg:SetDamageType(DMG_NERVEGAS)
 		dmg:SetDamage(300)
 		dmg:SetDamageCustom(HORDE.DMG_PLAYER_FRIENDLY)
-		util.BlastDamageInfo(dmg, self:GetPos(), 150)
+		util.BlastDamageInfo(dmg, self:GetPos(), 200)
+
 		for _, ent in pairs(ents.FindInSphere(self:GetPos(), 200)) do
-			if self.TouchedEntities[ent:GetCreationID()] and ent.horde_effect_medicgrenade then return end
-				if self:GetArmed() and (ent:IsPlayer() or ent:IsNPC()) then
-					self.TouchedEntities[ent:GetCreationID()] = ent
-					ent:Horde_AddEffect_MedicGrenade(self)
 			if ent:IsPlayer() then
-				local healinfo = HealInfo:New({amount = 30, healer = owner})
-				HORDE:OnPlayerHeal(ent, healinfo)
+				self:ApplyHealingOverTime(ent, owner, 20)
 			elseif ent:GetClass() == "npc_vj_horde_antlion" then
-				local healinfo = HealInfo:New({amount = 30, healer = owner})
-				HORDE:OnAntlionHeal(ent, healinfo)
-				end
+				self:ApplyHealingOverTime(ent, owner, 15)
+			elseif ent:IsValid() and ent:IsNPC() then
+				self:ApplyDamageOverTime(ent, owner, 50)
+				ent:Horde_AddDebuffBuildup(HORDE.Status_Break, dmg:GetDamage(), owner, self:GetPos())
 			end
 		end
+		self:Remove()
 	end
+end
+
+function ENT:PhysicsCollide(data, physobj)
+	if SERVER then
+		if data.Speed > 75 then
+			self:EmitSound(Sound("physics/metal/metal_grenade_impact_hard" .. math.random(1,3) .. ".wav"))
+		elseif data.Speed > 25 then
+			self:EmitSound(Sound("physics/metal/metal_grenade_impact_soft" .. math.random(1,3) .. ".wav"))
+		end
+		self:Detonate()
+	end
+end
+
+function ENT:ApplyHealingOverTime(ent, healer, amount)
+	local id = ent:GetCreationID()
+	timer.Create("Horde_MedicMissile_Heal_" .. id, 0.5, 15, function()
+		if not IsValid(ent) then timer.Remove("Horde_MedicMissile_Heal_" .. id) return end
+		local healinfo = HealInfo:New({amount = amount, healer = healer})
+		HORDE:OnPlayerHeal(ent, healinfo)
+	end)
+end
+
+function ENT:ApplyDamageOverTime(ent, attacker, amount)
+	local id = ent:GetCreationID()
+	local inflictor = attacker
+	timer.Create("Horde_MedicMissile_Damage_" .. id, 0.5, 15, function()
+		if not IsValid(ent) or not IsValid(inflictor) then
+		timer.Remove("Horde_MedicMissile_Damage_" .. id) return end
+		local dmg = DamageInfo()
+		dmg:SetAttacker(attacker)
+		dmg:SetInflictor(inflictor)
+		dmg:SetDamageType(DMG_NERVEGAS)
+		dmg:SetDamage(amount)
+		ent:TakeDamageInfo(dmg)
+	end)
 end
 
 function ENT:DrawTranslucent()

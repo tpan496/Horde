@@ -290,6 +290,12 @@ function HORDE:RaiseSpectre(ply, param, p2)
         if HORDE.items["npc_manhack"] then
             ent:AddRelationship("npc_manhack D_LI 99")
         end
+        if HORDE.items["npc_vj_horde_class_survivor"] then
+            ent:AddRelationship("npc_vj_horde_class_survivor D_LI 99")
+        end
+        if HORDE.items["npc_vj_horde_class_assault"] then
+            ent:AddRelationship("npc_vj_horde_class_assault D_LI 99")
+        end
     end)
 
     -- Special case for turrets

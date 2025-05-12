@@ -108,6 +108,8 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_manhack D_LI 99")
 	self:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
 	self:AddRelationship("npc_vj_horde_rocket_turret D_LI 99")
+	self:AddRelationship("npc_vj_horde_class_survivor D_LI 99")
+	self:AddRelationship("npc_vj_horde_class_assault D_LI 99")
 	self:AddRelationship("npc_vj_horde_antlion D_LI 99")
     --self:EmitSound("horde/lesion/lesion_roar.ogg", 1500, 80, 1, CHAN_STATIC)
 end

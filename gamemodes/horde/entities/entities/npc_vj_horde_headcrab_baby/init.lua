@@ -54,6 +54,12 @@ function ENT:BecomeFriendlyToPlayers()
     if HORDE.items["npc_manhack"] then
         self:AddRelationship("npc_manhack D_LI 99")
     end
+    if HORDE.items["npc_vj_horde_class_survivor"] then
+        self:AddRelationship("npc_vj_horde_class_survivor D_LI 99")
+    end
+    if HORDE.items["npc_vj_horde_class_assault"] then
+        self:AddRelationship("npc_vj_horde_class_assault D_LI 99")
+    end
     self:AddRelationship("npc_vj_horde_spectre D_LI 99")
 end
 

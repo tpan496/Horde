@@ -130,6 +130,8 @@ function HORDE:SpawnManhack(ply, id)
         ent:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
         ent:AddRelationship("npc_vj_horde_combat_bot D_LI 99")
         ent:AddRelationship("npc_turret_floor D_LI 99")
+        ent:AddRelationship("npc_vj_horde_class_survivor D_LI 99")
+        ent:AddRelationship("npc_vj_horde_class_assault D_LI 99")
         ent.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
     end)
     ent:SetOwner(ply)

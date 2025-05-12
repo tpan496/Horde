@@ -56,7 +56,7 @@ function ENT:Think()
 end
 
 function ENT:Explode()
-    if !self:IsValid() then return end
+    if not self:IsValid() then return end
     self:EmitSound("ambient/levels/labs/electric_explosion1.wav", 100, 100, 1, CHAN_ITEM)
 
     local attacker = self
@@ -68,17 +68,17 @@ function ENT:Explode()
     for _, e in pairs(ents.FindInSphere(self:GetPos(), 200)) do
         if IsValid(e) and HORDE:IsEnemy(e) then
             for i = 1, 15 do
-                local dmginfo = DamageInfo()
-                dmginfo:SetDamage(8)
-                dmginfo:SetDamageType(DMG_SHOCK)
-                dmginfo:SetAttacker(attacker)
-                dmginfo:SetInflictor(self)
-                dmginfo:SetDamagePosition(e:GetPos())
-                e:TakeDamageInfo(dmginfo)
+                local dmg = DamageInfo()
+                dmg:SetDamage(10)
+                dmg:SetDamageType(DMG_SHOCK)
+                dmg:SetAttacker(attacker)
+                dmg:SetInflictor(self)
+                dmg:SetDamagePosition(e:GetPos())
+                e:TakeDamageInfo(dmg)
+                e:Horde_AddDebuffBuildup(HORDE.Status_Shock, dmg:GetDamage(), attacker, self:GetPos())
             end
         end
     end
-
 
     local ed = EffectData()
     ed:SetOrigin(self:GetPos())
@@ -86,9 +86,7 @@ function ENT:Explode()
 end
 
 function ENT:Detonate()
-    if !self:IsValid() then return end
-    if self.Detonated then return end
-    if !self.Armed then return end
+    if not self:IsValid() or self.Detonated or not self.Armed then return end
 
     self.Armed = false
     self.Detonated = true
