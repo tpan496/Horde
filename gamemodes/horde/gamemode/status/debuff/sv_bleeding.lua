@@ -6,7 +6,7 @@ function entmeta:Horde_AddBleedingEffect(inflictor)
         local d = self:GetMaxHealth() * 0.02
         local bones = self:GetBoneCount()
         timer.Create(id, 0.5, 0, function ()
-            if not self:IsValid() or not self.Horde_Debuff_Active[HORDE.Status_Bleeding] then timer.Remove(id) return end
+            if not self:IsValid() or not self.Horde_Debuff_Active[HORDE.Status_Bleeding] or not self:Alive() then timer.Remove(id) return end
             self:SetHealth(self:Health() - d)
             if self:Health() <= 0 then
                 local dmg = DamageInfo()
