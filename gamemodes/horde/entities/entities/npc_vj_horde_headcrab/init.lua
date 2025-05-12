@@ -23,11 +23,11 @@ ENT.GeneralSoundPitch2 = 120
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-	self:SetCollisionBounds(Vector(20, 20, 20), Vector(-20, -20, 0))
+    self:SetCollisionBounds(Vector(20, 20, 20), Vector(-20, -20, 0))
     self.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_COMBINE"}
-	self:AddRelationship("player D_LI 99")
+    self:AddRelationship("player D_LI 99")
     self:AddRelationship("ally D_LI 99")
-	if HORDE.items["npc_vj_horde_vortigaunt"] then
+    if HORDE.items["npc_vj_horde_vortigaunt"] then
         self:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
     end
     if HORDE.items["npc_vj_horde_combat_bot"] then
@@ -39,8 +39,14 @@ function ENT:CustomOnInitialize()
     if HORDE.items["npc_manhack"] then
         self:AddRelationship("npc_manhack D_LI 99")
     end
+    if HORDE.items["npc_vj_horde_class_survivor"] then
+        self:AddRelationship("npc_vj_horde_class_survivor D_LI 99")
+    end
+    if HORDE.items["npc_vj_horde_class_assault"] then
+        self:AddRelationship("npc_vj_horde_class_assault D_LI 99")
+    end
     self:AddRelationship("npc_vj_horde_spectre D_LI 99")
-	self:AddRelationship("npc_vj_horde_antlion D_LI 99")
+    self:AddRelationship("npc_vj_horde_antlion D_LI 99")
 end
 
 VJ.AddNPC("Headcrab","npc_vj_horde_headcrab", "Horde")

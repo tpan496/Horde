@@ -637,7 +637,11 @@ function HORDE:GetDefaultItemsData()
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_vortigaunt.png", {Engineer=2}, nil, {HORDE.DMG_LIGHTNING})
     HORDE:CreateItem("Special",    "Combat Bot",     "npc_vj_horde_combat_bot",   2750, 8, "A resilient humanoid robot designed to engage enemies head-on.\nUses powerful melee attacks and ranged boulder attacks.",
     {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=1}, "items/npc_combat_bot.png", {Engineer=3}, nil, {HORDE.DMG_BLUNT})
-
+    HORDE:CreateItem("Special",    "Survivor",     "npc_vj_horde_class_survivor",   1500, 3, "A Survivor class human that acts as a multipurpose fighter. \nUses an AR15 rifle and grenades.",
+    {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=2}, "items/npc_combat_bot.png", {Engineer=3}, nil, {HORDE.DMG_BALLISTIC})
+    HORDE:CreateItem("Special",    "Assault",     "npc_vj_horde_class_assault",   1750, 5, "An Assault class human that uses automatic rifles. \nUses an M16 rifle with M203 UBGL and stun grenades.",
+    {Engineer=true}, 10, -1, {type=HORDE.ENTITY_PROPERTY_DROP, x=50, z=15, yaw=0, limit=1}, "items/npc_combat_bot.png", {Engineer=3}, nil, {HORDE.DMG_BALLISTIC})
+    
     HORDE:CreateItem("Special",    "Hivehand",       "horde_hivehand",       2000,  5, "Organic weapon used by Xen soldiers.\nHas infinite ammo.\nPrimary fire generates homing ricocheting shots.\nSecondary fire rapidly unloads the entire weapon.",
     {Engineer=true}, 2, -1, nil, nil, {Engineer=4}, nil, {HORDE.DMG_BALLISTIC})
     HORDE:CreateItem("Special",    "Spore Launcher", "horde_spore_launcher", 1750,  6, "Improvised biological weapon.\nShoots out acidic projectiles that explodes after a short delay.\nHeals players and damages enemies.",

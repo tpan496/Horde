@@ -115,7 +115,7 @@ end
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(0, 0, 0), Vector(0, 0, 0))
 	self.AnimTbl_Run = ACT_RUN
-    if self.properties.abyssal_might == true then
+	if self.properties.abyssal_might == true then
 		local id = self:GetCreationID()
 		self.Abyssal_Roar = true
 		timer.Simple(0.5, function() self:Roar() end)
@@ -124,14 +124,14 @@ function ENT:CustomOnInitialize()
 			if not IsValid(self) then return end
 			self:Roar()
 		end)
-    end
+	end
 	local e = EffectData()
 		e:SetOrigin(self:GetPos())
 		e:SetNormal(Vector(0,0,1))
 		e:SetScale(0.25)
 	util.Effect("abyssal_roar", e, true, true)
-    self:SetRenderMode(RENDERMODE_TRANSCOLOR)
-    self:SetColor(Color(0, 0, 100, 200))
+	self:SetRenderMode(RENDERMODE_TRANSCOLOR)
+	self:SetColor(Color(0, 0, 100, 200))
 	self.MeleeAttackDamage = self.MeleeAttackDamage + 6 * self.properties.level
 	self:SetHealth(90 + 2 * 16 * self.properties.level)
 	self:AddRelationship("npc_turret_floor D_LI 99")
@@ -139,12 +139,14 @@ function ENT:CustomOnInitialize()
 	self:AddRelationship("npc_manhack D_LI 99")
 	self:AddRelationship("npc_vj_horde_vortigaunt D_LI 99")
 	self:AddRelationship("npc_vj_horde_rocket_turret D_LI 99")
+	self:AddRelationship("npc_vj_horde_class_survivor D_LI 99")
+	self:AddRelationship("npc_vj_horde_class_assault D_LI 99")
 	self:AddRelationship("npc_vj_horde_antlion D_LI 99")
-    --self:EmitSound("horde/lesion/lesion_roar.ogg", 1500, 80, 1, CHAN_STATIC)
+	--self:EmitSound("horde/lesion/lesion_roar.ogg", 1500, 80, 1, CHAN_STATIC)
 end
 
 function ENT:DoEntityRelationshipCheck()
-    if self.Behavior == VJ_BEHAVIOR_PASSIVE_NATURE then return false end
+	if self.Behavior == VJ_BEHAVIOR_PASSIVE_NATURE then return false end
 	local posEnemies = self.CurrentPossibleEnemies
 	if posEnemies == nil then return false end
 	self.ReachableEnemyCount = 0
