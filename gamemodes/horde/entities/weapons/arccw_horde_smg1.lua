@@ -23,7 +23,7 @@ SWEP.Slot = 2
 SWEP.UseHands = true
 
 SWEP.ViewModel = "models/weapons/c_smg1.mdl"
-SWEP.WorldModel = "models/weapons/w_smg_mp5.mdl"
+SWEP.WorldModel = "models/weapons/w_smg1.mdl"
 SWEP.ViewModelFOV = 65
 
 SWEP.DefaultBodygroups = "000000000000"
@@ -34,19 +34,19 @@ SWEP.Range = 30 -- in METRES
 SWEP.Penetration = 1
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
-SWEP.MuzzleVelocity = 1050 -- projectile or phys bullet muzzle velocity
+SWEP.MuzzleVelocity = 1000 -- projectile or phys bullet muzzle velocity
 -- IN M/S
-SWEP.ChamberSize = 0 -- how many rounds can be chambered.
-SWEP.Primary.ClipSize = 30 -- DefaultClip is automatically set.
+SWEP.ChamberSize = 1 -- how many rounds can be chambered.
+SWEP.Primary.ClipSize = 45 -- DefaultClip is automatically set.
 
 SWEP.PhysBulletMuzzleVelocity = 400
 
-SWEP.Recoil = 0.25
-SWEP.RecoilSide = 0.125
-SWEP.RecoilRise = 0.1
-SWEP.RecoilPunch = 2
+SWEP.Recoil = 0.15
+SWEP.RecoilSide = 0.105
+SWEP.RecoilRise = 0.05
+SWEP.RecoilPunch = 1.5
 
-SWEP.Delay = 60 / 800 -- 60 / RPM.
+SWEP.Delay = 60 / 600 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
 SWEP.Firemodes = {
     {
@@ -69,12 +69,12 @@ SWEP.MoveDispersion = 75
 
 SWEP.Primary.Ammo = "SMG1" -- what ammo type the gun uses
 
-SWEP.ShootVol = 75 -- volume of shoot sound
+SWEP.ShootVol = 80 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound = "weapons/smg1/smg1_fire1.wav"
-SWEP.ShootSoundSilenced = "arccw_go/mp5/mp5_01.wav"
-SWEP.DistantShootSound = "arccw_go/mp9/mp9-1-distant.wav"
+SWEP.ShootSound = ")weapons/smg1/smg1_fire1.wav"
+SWEP.DistantShootSound = "^weapons/smg1/npc_smg1_fire1.wav"
+SWEP.ShootSoundSilenced = ")weapons/tmp/tmp-1.wav"
 
 SWEP.MeleeSwingSound = "arccw_go/m249/m249_draw.wav"
 SWEP.MeleeMissSound = "weapons/iceaxe/iceaxe_swing1.wav"
@@ -82,9 +82,9 @@ SWEP.MeleeHitSound = "arccw_go/knife/knife_hitwall1.wav"
 SWEP.MeleeHitNPCSound = "physics/body/body_medium_break2.wav"
 
 SWEP.MuzzleEffect = "muzzleflash_smg"
-SWEP.ShellModel = "models/shells/shell_9mm.mdl"
+SWEP.ShellModel = "models/weapons/rifleshell.mdl"
 SWEP.ShellPitch = 100
-SWEP.ShellScale = 1.25
+SWEP.ShellScale = 0.5
 SWEP.ShellRotateAngle = Angle(0, 180, 0)
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
@@ -95,11 +95,12 @@ SWEP.SightedSpeedMult = 0.75
 SWEP.SightTime = 0.275
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-6.4, -5, 0.9),
-    Ang = Angle(0.75, 0.05, 0),
-    Magnification = 1.1,
+    Pos = Vector(0, 0, 0),
+    Ang = Angle(0, 0, 0),
+    Magnification = 1.5,
     SwitchToSound = "", -- sound that plays when switching to this sight
-    CrosshairInSights = false
+    ViewModelFOV = 40,
+    CrosshairInSights = true
 }
 
 SWEP.HoldtypeHolstered = "passive"
@@ -140,9 +141,29 @@ SWEP.WorldModelOffset = {
     ang = Angle(-10, 0, 180)
 }
 
-SWEP.MirrorVMWM = true
+SWEP.MirrorVMWM = false
 
 SWEP.Attachments = {
+    {
+        PrintName = "Tactical",
+        Slot = "tac",
+        Bone = "ValveBiped.base",
+        Offset = {
+            vpos = Vector(0.425, 0.345, 6.935),
+            vang = Angle(90, 0, 0),
+        },
+    },
+    {
+        PrintName = "Muzzle",
+        DefaultAttName = "Standard Muzzle",
+        Slot = "muzzle",
+        Bone = "ValveBiped.base",
+        Offset = {
+            vpos = Vector(0.05, -0.78, 13.5),
+            vang = Angle(90, 0, -90),
+        },
+        VMScale = Vector(0.8, 0.8, 0.8),
+    },
     {
         PrintName = "Ammo Type",
         Slot = "go_ammo",
@@ -158,9 +179,16 @@ SWEP.Animations = {
     ["idle"] = {
         Source = "idle01",
     },
+    ["fire"] = {
+        Source = "fire01",
+        ShellEjectAt = 0,
+    },
+    ["fire_iron"] = {
+        Source = "fire01",
+        ShellEjectAt = 0,
+    },
     ["draw"] = {
         Source = "draw",
-        FrameRate = 30,
     },
     ["reload"] = {
         Source = "reload",
@@ -168,20 +196,9 @@ SWEP.Animations = {
         SoundTable = {
             {s = "weapons/smg1/smg1_reload.wav", t = 0},
         },
-        Checkpoints = {16, 30},
-        FrameRate = 30,
         LHIK = true,
-        LHIKIn = 0.4,
-        LHIKOut = 0.4,
-    },
-    ["reload_empty"] = {
-        Source = "reload",
-        TPAnim = ACT_HL2MP_GESTURE_RELOAD_SMG1,
-        Checkpoints = {16, 30, 55},
-        FrameRate = 30,
-        LHIK = true,
-        LHIKIn = 0.4,
-        LHIKOut = 0.4,
+        LHIKIn = 0.25,
+        LHIKOut = 0.25,
     },
 }
 

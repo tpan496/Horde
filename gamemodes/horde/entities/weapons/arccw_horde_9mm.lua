@@ -38,15 +38,15 @@ SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
 
-SWEP.ChamberSize = 0
+SWEP.ChamberSize = 1
 SWEP.Primary.ClipSize = 18 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 18
 SWEP.ReducedClipSize = 18
 
 SWEP.Recoil = 0.400
 SWEP.RecoilSide = 0.125
-SWEP.RecoilRise = 0.1
-SWEP.RecoilPunch = 0
+SWEP.RecoilRise = 0.5
+SWEP.RecoilPunch = 1
 
 SWEP.Delay = 0.08 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
@@ -71,13 +71,13 @@ SWEP.Primary.Ammo = "Pistol" -- what ammo type the gun uses
 SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound =			{"weapons/pistol/pistol_fire2.wav"}
---SWEP.DistantShootSound =	"weapons/fesiugmw2/fire_distant/anaconda.wav"
-SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/usp45_sil.wav"
+SWEP.ShootSound =			")weapons/pistol/pistol_fire2.wav"
+SWEP.DistantShootSound =	"^weapons/pistol/pistol_fire3.wav"
+SWEP.ShootSoundSilenced =	")weapons/usp/usp1.wav"
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"
-SWEP.ShellModel = "models/shells/shell_9mm.mdl"
-SWEP.ShellScale = 1
+SWEP.ShellModel = "models/weapons/shell.mdl"
+SWEP.ShellScale = 0.5
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
@@ -87,10 +87,12 @@ SWEP.SightedSpeedMult = 0.8
 SWEP.SightTime = 0.125
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.5, -11, 3.2),
-    Ang = Angle(0, 0, 2),
-    ViewModelFOV = 65,
-    Magnification = 1,
+    Pos = Vector(0, 0, 0),
+    Ang = Angle(0, 0, 0),
+    Magnification = 1.5,
+    SwitchToSound = "", -- sound that plays when switching to this sight
+    ViewModelFOV = 40,
+    CrosshairInSights = true
 }
 
 SWEP.HoldType = "pistol"
@@ -126,6 +128,26 @@ SWEP.Attachments = {
         DefaultAttName = "Standard Ammo"
     },
     {
+        PrintName = "Muzzle",
+        DefaultAttName = "Standard Muzzle",
+        Slot = "muzzle",
+        Bone = "ValveBiped.Bip01_R_Hand",
+        Offset = {
+            vpos = Vector(12, 1.525, -3.69),
+            vang = Angle(0, 0, 180),
+        },
+        VMScale = Vector(1, 1, 1),
+    },
+    {
+        PrintName = "Tactical",
+        Slot = "tac",
+        Bone = "ValveBiped.Bip01_R_Hand",
+        Offset = {
+            vpos = Vector(8.950, 1.45, -2.285),
+            vang = Angle(0, 0, 180),
+        },
+    },
+    {
         PrintName = "Perk",
         Slot = {"go_perk", "go_perk_pistol"}
     },
@@ -137,29 +159,24 @@ SWEP.Animations = {
     },
     ["draw"] = {
         Source = "draw",
-        FrameRate = 30,
     },
     ["fire"] = {
         Source = {"fire1", "fire2", "fire3"},
-        Time = 12/30,
+        ShellEjectAt = 0,
     },
     ["fire_iron"] = {
-        Source = "idle",
-        Time = 12/30,
+        Source = {"fire1", "fire2", "fire3"},
+        ShellEjectAt = 0,
     },
     ["reload"] = {
         Source = "reload",
-        Time = 1,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
         SoundTable = {
-						{s = "weapons/pistol/pistol_reload1.wav", t = 0},
-					},
-        Checkpoints = {24, 97, 131},
-        FrameRate = 37,
+			{s = "weapons/pistol/pistol_reload1.wav", t = 0},
+		},
         LHIK = true,
-        LHIKIn = 0.5,
-        LHIKOut = 0.6,
-        LastClip1OutTime = 1.5,
+        LHIKIn = 0.25,
+        LHIKOut = 0.25,
     },
 }
 
@@ -169,3 +186,4 @@ function SWEP:DrawWeaponSelection(x, y, w, h, a)
 
     surface.DrawTexturedRect(x, y, w, w / 2)
 end
+

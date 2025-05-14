@@ -1,10 +1,10 @@
 if not ArcCWInstalled then return end
 if CLIENT then
-    SWEP.WepSelectIcon = surface.GetTextureID("items/weapon_medic_9mm.png")
-    SWEP.WepSelectIconMat = Material("items/weapon_medic_9mm.png")
+    SWEP.WepSelectIcon = surface.GetTextureID("items/hl2/weapon_pistol.png")
+    SWEP.WepSelectIconMat = Material("items/hl2/weapon_pistol.png")
     killicon.AddAlias("arccw_horde_medic_9mm", "weapon_9mm")
 end
-SWEP.Base = "arccw_mw2_abase"
+SWEP.Base = "arccw_base"
 SWEP.Spawnable = true
 SWEP.Category = "ArcCW - Horde"
 SWEP.AdminOnly = false
@@ -38,15 +38,15 @@ SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
 
 
-SWEP.ChamberSize = 0
+SWEP.ChamberSize = 1
 SWEP.Primary.ClipSize = 18 -- DefaultClip is automatically set.
 SWEP.ExtendedClipSize = 18
 SWEP.ReducedClipSize = 18
 
 SWEP.Recoil = 0.400
 SWEP.RecoilSide = 0.125
-SWEP.RecoilRise = 0.1
-SWEP.RecoilPunch = 0
+SWEP.RecoilRise = 0.5
+SWEP.RecoilPunch = 1
 
 SWEP.Delay = 0.08 -- 60 / RPM.
 SWEP.Num = 1 -- number of shots per trigger pull.
@@ -56,14 +56,14 @@ SWEP.Firemodes = {
     },
     {
         Mode = 0,
-    },
+    }
 }
 
 SWEP.NPCWeaponType = {"weapon_ar2", "weapon_smg1"}
 SWEP.NPCWeight = 150
 
 SWEP.AccuracyMOA = 0 -- accuracy in Minutes of Angle. There are 60 MOA in a degree.
-SWEP.HipDispersion = 150 -- inaccuracy added by hip firing.
+SWEP.HipDispersion = 50 -- inaccuracy added by hip firing.
 SWEP.MoveDispersion = 150
 
 SWEP.Primary.Ammo = "Pistol" -- what ammo type the gun uses
@@ -71,13 +71,13 @@ SWEP.Primary.Ammo = "Pistol" -- what ammo type the gun uses
 SWEP.ShootVol = 75 -- volume of shoot sound
 SWEP.ShootPitch = 100 -- pitch of shoot sound
 
-SWEP.ShootSound =			{"weapons/pistol/pistol_fire2.wav"}
---SWEP.DistantShootSound =	"weapons/fesiugmw2/fire_distant/anaconda.wav"
-SWEP.ShootSoundSilenced =	"weapons/fesiugmw2/fire/usp45_sil.wav"
+SWEP.ShootSound =           ")weapons/pistol/pistol_fire2.wav"
+SWEP.DistantShootSound =    "^weapons/pistol/pistol_fire3.wav"
+SWEP.ShootSoundSilenced =   ")weapons/usp/usp1.wav"
 
 SWEP.MuzzleEffect = "muzzleflash_pistol"
-SWEP.ShellModel = "models/shells/shell_9mm.mdl"
-SWEP.ShellScale = 1
+SWEP.ShellModel = "models/weapons/shell.mdl"
+SWEP.ShellScale = 0.5
 
 SWEP.MuzzleEffectAttachment = 1 -- which attachment to put the muzzle on
 SWEP.CaseEffectAttachment = 2 -- which attachment to put the case effect on
@@ -87,12 +87,15 @@ SWEP.SightedSpeedMult = 0.8
 SWEP.SightTime = 0.125
 
 SWEP.IronSightStruct = {
-    Pos = Vector(-5.5, -11, 3.2),
-    Ang = Angle(0, 0, 2),
-    ViewModelFOV = 65,
-    Magnification = 1,
+    Pos = Vector(0, 0, 0),
+    Ang = Angle(0, 0, 0),
+    Magnification = 1.5,
+    SwitchToSound = "", -- sound that plays when switching to this sight
+    ViewModelFOV = 40,
+    CrosshairInSights = true
 }
 
+SWEP.HoldType = "pistol"
 SWEP.HoldtypeHolstered = "normal"
 SWEP.HoldtypeActive = "pistol"
 SWEP.HoldtypeSights = "pistol"
@@ -118,44 +121,31 @@ SWEP.BarrelLength = 18
 
 SWEP.ExtraSightDist = 5
 
------[ Tactical knife sheet ]------
-SWEP.CanBash				= true -- Tac knife will save us
---SWEP.MeleeDamage			= 100
---SWEP.MeleeRange				= 16
---SWEP.MeleeDamageType		= DMG_CLUB
---SWEP.MeleeTime				= 0.8
-SWEP.MeleeGesture			= ACT_HL2MP_GESTURE_RANGE_ATTACK_KNIFE
---SWEP.MeleeAttackTime		= 0.079
-SWEP.MeleeMissSound			= ""
-SWEP.MeleeHitSound			= "MW2Common.Melee.HitWorld"
-SWEP.MeleeHitNPCSound		= "MW2Common.Melee.HitFleshy_Slice"
-
-SWEP.AttachmentElements = {
-    ["rail"] = {
-        VMElements = {
-            {
-                Model = "models/weapons/arccw_go/atts/pistol_rail.mdl",
-                Bone = "v_weapon.223_Parent",
-                Offset = {
-                    pos = Vector(-0.05, -1.6, 6),
-                    ang = Angle(90, 0, -90),
-                },
-                Scale = Vector(0.95, 0.95, 0.95)
-            }
-        },
-        AttPosMods = {
-            [2] = {
-                vpos = Vector(-0.05, -1.2, 6),
-            }
-        }
-    },
-}
-
 SWEP.Attachments = {
     {
         PrintName = "Ammo Type",
         Slot = "go_ammo",
         DefaultAttName = "Standard Ammo"
+    },
+    {
+        PrintName = "Muzzle",
+        DefaultAttName = "Standard Muzzle",
+        Slot = "muzzle",
+        Bone = "ValveBiped.Bip01_R_Hand",
+        Offset = {
+            vpos = Vector(12, 1.525, -3.69),
+            vang = Angle(0, 0, 180),
+        },
+        VMScale = Vector(1, 1, 1),
+    },
+    {
+        PrintName = "Tactical",
+        Slot = "tac",
+        Bone = "ValveBiped.Bip01_R_Hand",
+        Offset = {
+            vpos = Vector(8.950, 1.45, -2.285),
+            vang = Angle(0, 0, 180),
+        },
     },
     {
         PrintName = "Perk",
@@ -169,29 +159,24 @@ SWEP.Animations = {
     },
     ["draw"] = {
         Source = "draw",
-        FrameRate = 30,
     },
     ["fire"] = {
-        Source = "fire",
-        Time = 12/30,
+        Source = {"fire1", "fire2", "fire3"},
+        ShellEjectAt = 0,
     },
     ["fire_iron"] = {
-        Source = "idle",
-        Time = 12/30,
+        Source = {"fire1", "fire2", "fire3"},
+        ShellEjectAt = 0,
     },
     ["reload"] = {
         Source = "reload",
-        Time = 1,
         TPAnim = ACT_HL2MP_GESTURE_RELOAD_PISTOL,
         SoundTable = {
-						{s = "weapons/pistol/pistol_reload1.wav", t = 0},
-					},
-        Checkpoints = {24, 97, 131},
-        FrameRate = 37,
+            {s = "weapons/pistol/pistol_reload1.wav", t = 0},
+        },
         LHIK = true,
-        LHIKIn = 0.5,
-        LHIKOut = 0.6,
-        LastClip1OutTime = 1.5,
+        LHIKIn = 0.25,
+        LHIKOut = 0.25,
     },
 }
 
@@ -236,7 +221,7 @@ function SWEP:ChangeFiremode(pred)
 
     ply:EmitSound("horde/weapons/mp7m/heal.ogg", 100, 100, 1, CHAN_AUTO)
 
-    self:SetNextSecondaryFire(CurTime() + 1)
+    self:SetNextSecondaryFire(CurTime() + 0.5)
     return true
 end
 
