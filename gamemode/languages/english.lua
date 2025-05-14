@@ -1278,7 +1278,6 @@ Uses an unconventional blowback system that results in its high firerate.
 LANGUAGE["Item_Pump-Action"] = [[Pump-Action]]
 LANGUAGE["Item_Desc_Pump-Action"] = [[
 A standard 12-gauge shotgun.
-RMB to fire 2 shots at once.
 ]]
 
 LANGUAGE["Item_Nova"] = [[Nova]]

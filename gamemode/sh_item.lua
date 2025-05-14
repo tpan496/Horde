@@ -319,7 +319,7 @@ function HORDE:GetDefaultItemInfusions()
     HORDE.items["arccw_go_cz75"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_m9"].infusions = ballistic_infusions_light
     HORDE.items["arccw_go_fiveseven"].infusions = ballistic_infusions_light
-    HORDE.items["arccw_go_tec9"].infusions = ballistic_infusions_light
+    HORDE.items["arccw_horde_tec9"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_tmp"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_akimbo_glock17"].infusions = ballistic_infusions_light
     HORDE.items["arccw_horde_akimbo_m9"].infusions = ballistic_infusions_light
@@ -495,9 +495,14 @@ function HORDE:GetDefaultItemsData()
         "Colt python magnum pistol.\nUsed by Black Mesa security guards.",
         { Ghost = true, Gunslinger = true, }, 3, -1, nil, "items/hl2/weapon_357.png", nil, nil, { HORDE.DMG_BALLISTIC }, nil,
         { "Ghost", "Gunslinger" })
-    HORDE:CreateItem("Pistol", "Flare Gun", "arccw_horde_flaregun", 100, 4,
+    HORDE:CreateItem("Pistol", "Flare Gun", "arccw_horde_flaregun", 100, 2,
         "Orion Safety Flare Gun.\nIgnites enemies and deals Fire damage.",
-        { Cremator = true }, 3, -1, nil, nil, nil, nil, { HORDE.DMG_FIRE }, nil, { "Cremator" })
+        { Cremator = true }, 1, -1, nil, nil, nil, nil, { HORDE.DMG_FIRE }, nil, { "Cremator" })
+     --Add projectile entity for category "Pistol" damage check--
+    HORDE:CreateItem("Pistol", "Flare Gun (Hidden)", "projectile_horde_flaregun_flare", 0, 0,
+        "This item is only here in the Pistol category to calculate pistol damage.", 
+        { Cremator = true, Gunslinger = true }, 10, -1, { type = HORDE.ENTITY_PROPERTY_DROP, x = 50, z = 15, yaw = 0, limit = 0 }, 
+        nil, nil, nil, { HORDE.DMG_FIRE }, nil, nil, true) --This must be hidden
     HORDE:CreateItem("Pistol", "Glock", "arccw_go_glock", 750, 2,
         "Glock 18.\nSemi-automatic pistols manufactured in Austrian.",
         { Medic = true, Hatcher = true, Assault = true, SpecOps = true, Heavy = true, Demolition = true, Survivor = true, Psycho = true, Engineer = true, Warden = true, Overlord = true, Cremator = true },
@@ -539,7 +544,7 @@ function HORDE:GetDefaultItemsData()
         5, -1, nil, nil,
         { Medic = 1, Assault = 1, Heavy = 1, Demolition = 1, Survivor = 1, Engineer = 1, Warden = 1, Cremator = 1 },
         nil, { HORDE.DMG_BALLISTIC })
-    HORDE:CreateItem("Pistol", "Tec-9", "arccw_go_tec9", 1000, 3,
+    HORDE:CreateItem("Pistol", "Tec-9", "arccw_horde_tec9", 1000, 3,
         "A Swedish-made semi-automatic pistol.\nLethal in close quarters.",
         { Medic = true, Hatcher = true, Assault = true, SpecOps = true, Heavy = true, Survivor = true, Psycho = true, Engineer = true, Warden = true, Overlord = true, }, 8, -1, nil, nil,
         { Survivor = 2 }, nil, { HORDE.DMG_BALLISTIC })
@@ -893,7 +898,7 @@ function HORDE:GetDefaultItemsData()
         "Quantum Destabilizer.\nAn experimental weapon that fires a devastating laser.",
         { Cremator = true }, 40, -1, nil, nil, { Cremator = 4 }, nil, { HORDE.DMG_FIRE })
     HORDE:CreateItem("Special", "Heat Blaster", "arccw_horde_heat_blaster", 3000, 8,
-        "A projectile launcher that shoots flaming fireballs.\nHold RMB to charge a shot.",
+        "A projectile launcher that shoots flaming fireballs.\nPress B or ZOOM to swap between rapid-fire mode and charged mode.",
         { Cremator = true }, 50, -1, nil, nil, nil, nil, { HORDE.DMG_FIRE })
     --[[HORDE:CreateItem("Special",    "Taser",           "arccw_go_taser",      1000,  1, "Taser.",
     {Engineer=true}, 50, -1)]]

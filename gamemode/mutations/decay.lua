@@ -2,7 +2,7 @@ MUTATION.PrintName = "Decay"
 MUTATION.Description = "Adds Decay buildup based on hit damage. Decay status prevents healing for 5 seconds.\nOnly randomly occurs starting from wave 8."
 
 MUTATION.Hooks = {}
-MUTATION.Wave = 9
+MUTATION.Wave = 8
 
 MUTATION.Hooks.Horde_OnSetMutation = function(ent, mutation)
     if mutation == "decay" then
