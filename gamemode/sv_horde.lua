@@ -983,9 +983,7 @@ function HORDE:StartBreak()
 
         if 0 < HORDE.current_break_time then
             HORDE.current_break_time = HORDE.current_break_time - 1
-        end
-
-        if HORDE.current_break_time <= 0 then
+        elseif HORDE.current_break_time <= 0 then
             -- New round
             HORDE.current_wave = HORDE.current_wave + 1
             net.Start("Horde_SyncGameInfo")

@@ -642,13 +642,14 @@ function SWEP:Think()
 
 	if SERVER and self.Charging == 1 and (!self.Owner:KeyDown( IN_ATTACK ) or (self.Owner:KeyDown( IN_ATTACK ) and HORDE:IsEnemy(ent))) then
         self:SetNextPrimaryFire( CurTime() + self.Delay )
-        self.Charging = 0
-
-		if self.ChargingTimer <= CurTime() then
-			self:Punch(1)
-		else
-			self:Punch(0)
-		end
+        
+        if self.ChargingTimer <= CurTime() then
+            self:Punch(1)
+            self.Charging = 0
+        elseif !self.Owner:KeyDown( IN_ATTACK ) then
+            self:Punch(0)
+            self.Charging = 0
+        end
     end
 	
 	if SERVER and self.Charging == 1 then

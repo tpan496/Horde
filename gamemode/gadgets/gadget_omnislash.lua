@@ -14,7 +14,7 @@ GADGET.Hooks = {}
 
 local function SpawnPlayer(ply, ply_pos, ply_angles, armor)
     --if !IsValid(ply) then return end
-    --if ply:GetNoDraw() == false then return end
+    if ply:GetNoDraw() == false then ply.Horde_Invincible = nil return end
     local health = ply:Health()
     local ply_eyeangles = ply:EyeAngles()
     ply:UnSpectate()
