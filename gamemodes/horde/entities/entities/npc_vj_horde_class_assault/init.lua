@@ -7,7 +7,7 @@ include('shared.lua')
 -----------------------------------------------*/
 ENT.Model = {"models/Combine_Soldier_PrisonGuard.mdl"}
 
-ENT.StartHealth = 425
+ENT.StartHealth = 400
 ENT.Immune_AcidPoisonRadiation = true
 ENT.Horde_Immune_Status_All = true
 

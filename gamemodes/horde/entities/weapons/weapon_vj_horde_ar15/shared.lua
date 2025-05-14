@@ -17,7 +17,7 @@ SWEP.WorldModel_UseCustomPosition = true -- Should the gun use custom position? 
 SWEP.WorldModel_CustomPositionAngle = Angle(-10, 0, 180)
 SWEP.WorldModel_CustomPositionOrigin = Vector(-6, -11, 7)
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Primary.Damage				= 41 -- Damage
+SWEP.Primary.Damage				= 30 -- Damage
 SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
 SWEP.Primary.ClipSize			= 30 -- Max amount of bullets per clip
 SWEP.Primary.Ammo				= "smg1" -- Ammo type

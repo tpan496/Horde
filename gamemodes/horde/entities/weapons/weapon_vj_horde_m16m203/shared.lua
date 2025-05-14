@@ -14,7 +14,7 @@ SWEP.NPC_NextPrimaryFire 			= 0.064*6
 SWEP.WorldModel						= "models/weapons/w_rif_m4a1.mdl"
 SWEP.HoldType 						= "smg"
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Primary.Damage				= 47 -- Damage
+SWEP.Primary.Damage				= 40 -- Damage
 SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
 SWEP.Primary.ClipSize			= 30 -- Max amount of bullets per clip
 SWEP.Primary.Ammo				= "smg1" -- Ammo type
