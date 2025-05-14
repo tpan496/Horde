@@ -17,8 +17,8 @@ Hold for a charged punch that deals increased damage in an area.]]
 PERK.Icon = "materials/subclasses/carcass.png"
 PERK.Params = {
     [1] = {percent = true, base = 0, level = 0.02, max = 0.5, classname = "Carcass"},
-    [2] = {value = 0.01, percent = true},
-    [3] = {value = 0.25, percent = true},
+    [2] = {value = 0.02, percent = true},
+    [3] = {value = 0.5, percent = true},
     [4] = {value = 0.5, percent = true},
     [5] = {value = 0.75, percent = true},
     [6] = {value = 0.05, percent = true},
