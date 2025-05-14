@@ -99,7 +99,7 @@ ENT.DisableDefaultRangeAttackCode = true
 ENT.DisableMakingSelfEnemyToNPCs = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-    self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+    self:SetCollisionBounds(Vector(0,0,0), Vector(0,0,0))
 end
 
 function ENT:OnRemove()

@@ -37,7 +37,7 @@ ENT.SoundTbl_Death = {"player/pl_pain5.wav","player/pl_pain6.wav","player/pl_pai
 -----------------------------------------------*/
 function ENT:CustomOnInitialize()
 	self:Give("weapon_vj_horde_m16m203")
-	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+	self:SetCollisionBounds(Vector(0,0,0), Vector(0,0,0))
 end
 function ENT:DoRelationshipCheck(ent)
     if ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid() then return false end
