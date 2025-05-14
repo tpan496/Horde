@@ -24,6 +24,8 @@ ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should 
 ENT.AllowIgnition = false -- Can this SNPC be set on fire?
 ENT.Immune_AcidPoisonRadiation = false -- Immune to Acid, Poison and Radiation
 ENT.Immune_Electricity = true -- Immune to Electrical
+ENT.Immune_AcidPoisonRadiation = true
+ENT.Horde_Immune_Status_All = true
 ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
 ENT.MeleeAttackDistance = 35 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 90 -- How far does the damage go?
@@ -97,7 +99,7 @@ ENT.DisableDefaultRangeAttackCode = true
 ENT.DisableMakingSelfEnemyToNPCs = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-    self:SetCollisionBounds(Vector(0,0,0), Vector(0,0,0))
+    self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 end
 
 function ENT:OnRemove()

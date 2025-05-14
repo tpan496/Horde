@@ -14,10 +14,11 @@ SWEP.NPC_NextPrimaryFire 			= 0.064*6
 SWEP.WorldModel						= "models/weapons/w_rif_m4a1.mdl"
 SWEP.HoldType 						= "smg"
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Primary.Damage				= 21 -- Damage
+SWEP.Primary.Damage				= 47 -- Damage
 SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
 SWEP.Primary.ClipSize			= 30 -- Max amount of bullets per clip
 SWEP.Primary.Ammo				= "smg1" -- Ammo type
+SWEP.Primary.TakeAmmo = 0
 SWEP.Primary.Sound				= {")weapons/fesiugmw2/fire/m4.wav"}
 SWEP.PrimaryEffects_MuzzleParticles = {"muzzleflash_4"}
 SWEP.PrimaryEffects_MuzzleAttachment = 1
@@ -27,7 +28,7 @@ SWEP.PrimaryEffects_ShellType = "VJ_Weapon_RifleShell1"
 SWEP.NPC_HasSecondaryFire = true
 SWEP.NPC_SecondaryFireSound = {")weapons/fesiugmw2/fire/m203.wav"}
 SWEP.NPC_SecondaryFireChance = 1
-SWEP.NPC_SecondaryFireNext = VJ_Set(10, 15)
+SWEP.NPC_SecondaryFireNext = VJ_Set(5, 5)
 
 function SWEP:CustomOnSecondaryAttack()
 	local owner = self:GetOwner()
