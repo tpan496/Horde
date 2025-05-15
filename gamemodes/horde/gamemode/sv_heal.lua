@@ -39,7 +39,6 @@ end
 local plymeta = FindMetaTable("Player")
 
 function plymeta:Horde_AddHealAmount(amount)
-    if GetConVar("horde_enable_sandbox"):GetInt() == 1 then return end
     if not self.Horde_HealAmount then self.Horde_HealAmount = 0 end
     self.Horde_HealAmount = self.Horde_HealAmount + amount
     if self.Horde_HealAmount >= 100 then

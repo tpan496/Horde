@@ -112,7 +112,6 @@ function HORDE:GetMapAchievements(map)
 end
 
 function HORDE:SaveMapAchievements()
-    if GetConVarNumber("horde_enable_sandbox") == 1 then return end
     if HORDE.current_wave < 10 then return end
     local map = game.GetMap()
     local ply = MySelf

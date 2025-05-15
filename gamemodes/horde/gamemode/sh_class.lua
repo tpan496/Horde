@@ -451,7 +451,6 @@ function HORDE:LoadSubclassUnlocks(ply)
 end
 
 function HORDE:SaveSubclassUnlocks(ply)
-    if GetConVar("horde_enable_sandbox"):GetInt() == 1 then return end
     if not file.IsDir("horde/subclass_unlocks", "DATA") then
         file.CreateDir("horde/subclass_unlocks", "DATA")
     end

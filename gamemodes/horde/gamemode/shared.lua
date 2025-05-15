@@ -3,8 +3,6 @@ GM.Author = "tpan496"
 GM.Email = "N/A"
 GM.Website = "N/A"
 
-CreateConVar("horde_enable_sandbox", 0, FCVAR_SERVER_CAN_EXECUTE + FCVAR_REPLICATED, "Enables sandbox/cheat features.")
-
 DeriveGamemode("sandbox")
 
 function GM:Initialize()
@@ -57,92 +55,50 @@ end
 
 function GM:PlayerLoadout(ply) return true end
 
-if CLIENT then
-    AllowSandbox = false -- removed local so you can use this variable anywhere, if it's needed then add it back
+hook.Add("SpawnMenuOpen", "Horde_SpawnMenu", function() return false end)
 
-    net.Receive("Horde_SyncSBox", function()
-        AllowSandbox = net.ReadBool()
-    end)
-end
+function GM:CanProperty() return false end
 
-local function CheckAllowHook(hook_name)
-    if AllowSandbox then
-        hook.Call(hook_name)
-        return true
-    else
-        return false
-    end
-end
-
-if SERVER then
-util.AddNetworkString("Horde_SyncSBox")
-net.Start("Horde_SyncSBox")
-    local EnableSBox = false
-    if(GetConVar("horde_enable_sandbox"):GetInt() == 0) then -- read serverside's ConVar and broadcast to all clients
-        EnableSBox = false
-    else
-        EnableSBox = true
-    end
-    net.WriteBool( EnableSBox )
-net.Broadcast()
-end
-
-local function CheckAllowFeature()
-    if GetConVar("horde_enable_sandbox"):GetBool() then
-        return true
-    else
-        return false
-    end
-end
-
-hook.Add("SpawnMenuOpen", "Horde_SpawnMenu", CheckAllowFeature)
-
---function GM:OnSpawnMenuOpen() return CheckAllowHook("SpawnMenuOpen") end
-
-function GM:CanProperty() return CheckAllowFeature() end
-
-function GM:ContextMenuOpen() return CheckAllowHook("ContextMenuOpen") end
+function GM:ContextMenuOpen() return false end
 
 function GM:PlayerNoClip(ply,desiredState)
     if SERVER then
         ply:Horde_DropMoney()
     end
+
+    return false
 end
 
 function GM:PlayerDeathSound() return true end
 
 --function GM:DrawDeathNotice(x,y) return true end
 
-function GM:PlayerSpawnVehicle(ply,model,name,table) return CheckAllowFeature() end
+function GM:PlayerSpawnVehicle(ply,model,name,table) return false end
 
-function GM:PlayerSpawnSWEP(ply,weapon,info) return CheckAllowFeature() end
+function GM:PlayerSpawnSWEP(ply,weapon,info) return false end
 
-function GM:PlayerSpawnSENT(ply,class) return CheckAllowFeature() end
+function GM:PlayerSpawnSENT(ply,class) return false end
 
-function GM:PlayerSpawnRagdoll(ply,model) return CheckAllowFeature() end
+function GM:PlayerSpawnRagdoll(ply,model) return false end
 
-function GM:PlayerSpawnProp(ply,model) return CheckAllowFeature() end
+function GM:PlayerSpawnProp(ply,model) return false end
 
-function GM:PlayerSpawnObject(ply,model,skin) return CheckAllowFeature() end
+function GM:PlayerSpawnObject(ply,model,skin) return false end
 
-function GM:PlayerSpawnNPC(ply,npc_type,weapon) return CheckAllowFeature() end
+function GM:PlayerSpawnNPC(ply,npc_type,weapon) return false end
 
-function GM:PlayerSpawnEffect(ply,model) return CheckAllowFeature() end
+function GM:PlayerSpawnEffect(ply,model) return false end
 
-function GM:PlayerGiveSWEP(ply,weapon,swep) return CheckAllowFeature() end
+function GM:PlayerGiveSWEP(ply,weapon,swep) return false end
 
-function GM:HUDAmmoPickedUp(item, amount) return CheckAllowFeature() end
+function GM:HUDAmmoPickedUp(item, amount) return false end
 
 CreateConVar("horde_disable_f1", 0, FCVAR_ARCHIVE, "Disables F1 hotkey for stats menu.")
 
 if GetConVar("horde_disable_f1"):GetInt() == 0 then
-function GM:ShowHelp(ply)
-    if GetConVar("horde_enable_sandbox"):GetBool() then
-        ply:SendLua( "hook.Run( 'StartSearch' )" )
-    else
+    function GM:ShowHelp(ply)
         StatsMenu(ply)
     end
-end
 end
 
 function GM:ShowTeam(ply) ConfigMenu(ply) end

@@ -551,13 +551,6 @@ function HORDE:PlayerInit(ply)
     net.Start("Horde_SyncClientExps")
     net.Send(ply)
 
-    if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
-        net.Start("Horde_SyncStatus")
-            net.WriteUInt(HORDE.Status_ExpDisabled, 8)
-            net.WriteUInt(1, 8)
-        net.Send(ply)
-    end
-
     ply.Horde_Init_Complete = true
     local added = HORDE:TryAddTopTen(ply)
     if not added then

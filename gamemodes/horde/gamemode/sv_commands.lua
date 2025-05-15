@@ -351,10 +351,8 @@ concommand.Add("horde_use_perk_skill", function (ply, cmd, args)
 end)
 
 concommand.Add("horde_testing_spawn_enemy", function (ply, cmd, args)
-    if GetConVar("horde_enable_sandbox"):GetInt() == 0 then
-        HORDE:SendNotificationSandboxOnly(ply)
-        return
-    end
+    if not ply:IsSuperAdmin() then HORDE:SendNotificationDenyAccess(ply) return end
+
     local name = args[1]
     local wave = args[2]
     local mutation = args[3]

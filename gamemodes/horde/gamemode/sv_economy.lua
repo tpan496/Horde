@@ -411,13 +411,6 @@ hook.Add("PlayerSpawn", "Horde_Economy_Sync", function (ply)
         HORDE:GiveStarterWeapons(ply)
     end
 
-    if GetConVar("horde_enable_sandbox"):GetInt() == 1 then
-        net.Start("Horde_SyncStatus")
-            net.WriteUInt(HORDE.Status_ExpDisabled, 8)
-            net.WriteUInt(1, 8)
-        net.Send(ply)
-    end
-
     if not HORDE.has_buy_zone then
         net.Start("Horde_SyncStatus")
         net.WriteUInt(HORDE.Status_CanBuy, 8)

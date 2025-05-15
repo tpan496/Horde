@@ -2,7 +2,6 @@ local EXPECTED_HEADER = "Horde_Rank"
 local EXPECTED_HEADER_TOKENS = "Horde_Skull_Tokens"
 
 function HORDE:SaveSkullTokens(ply)
-	if GetConVar("horde_enable_sandbox"):GetInt() == 1 then return end
 	if not ply:IsValid() then return end
 	if not ply.Horde_Skull_Tokens_Loaded then return end
 
@@ -146,7 +145,7 @@ local startXpMult = HORDE.Difficulty[HORDE.CurrentDifficulty].xpMultiStart
 local endXpMult = HORDE.Difficulty[HORDE.CurrentDifficulty].xpMultiEnd
 local endMinusStartXp = endXpMult - startXpMult
 
-if GetConVar("horde_enable_sandbox"):GetInt() == 0 and GetConVar("horde_enable_rank"):GetInt() == 1 then
+if GetConVar("horde_enable_rank"):GetInt() == 1 then
 	hook.Add("Horde_OnEnemyKilled", "Horde_GiveExp", function(victim, killer, wpn)
 
 		local wavePercent = HORDE.current_wave / HORDE.max_waves
