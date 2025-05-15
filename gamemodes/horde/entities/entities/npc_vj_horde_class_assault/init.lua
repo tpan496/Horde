@@ -59,18 +59,7 @@ ENT.GrenadeAttackSoundChance = 5
 ENT.OnGrenadeSightSoundChance = 5
 
 function ENT:CustomOnInitialize()
-	local rareWeapon = math.random(1,3)
-	if math.random(1,5) == 5 then
-		if rareWeapon == 1 then
-			self:Give("weapon_vj_horde_assault_f2000")
-		elseif rareWeapon == 2 then
-			self:Give("weapon_vj_horde_assault_tavor")
-		elseif rareWeapon == 3 then
-			self:Give("weapon_vj_horde_assault_scarl")
-		end
-	else
-		self:Give("weapon_vj_horde_assault_m16m203")
-	end
+	self:Give("weapon_vj_horde_assault_m16m203")
 end
 
 function ENT:OnPlayCreateSound(sdData, sdFile)
