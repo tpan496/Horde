@@ -303,11 +303,7 @@ function HORDE:GameEnd(status)
     HORDE:BroadcastGameResultMessage(status, HORDE.current_wave)
 
     for _, ply in pairs(player.GetHumans()) do
-        if not ply:IsValid() then goto cont end
-        if GetConVar("horde_enable_rank"):GetInt() == 1 then
-            HORDE:SaveRank(ply)
-        end
-        ::cont::
+        HORDE:SaveRank(ply)
     end
 
     if _G.MapVote then

@@ -36,8 +36,6 @@ function HORDE:TryAddTopTen(ply)
 end
 
 function HORDE:SaveTopTen()
-	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
-
 	local path, strm
 
 	if not file.IsDir("horde/stats", "DATA") then
@@ -59,8 +57,6 @@ function HORDE:SaveTopTen()
 end
 
 function HORDE:LoadTopTen()
-	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
-
 	local path, strm
 
 	if not file.IsDir("horde/stats", "DATA") then

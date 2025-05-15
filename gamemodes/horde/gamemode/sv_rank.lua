@@ -20,7 +20,6 @@ function HORDE:SaveSkullTokens(ply)
 end
 
 function HORDE:SaveRank(ply)
-	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
 	if not ply:IsValid() then return end
 	if not ply.Horde_Rank_Loaded then return end
 
@@ -84,7 +83,6 @@ end
 
 function HORDE:LoadRank(ply)
 	if not ply:IsValid() then return end
-	if GetConVar("horde_enable_rank"):GetInt() == 0 then return end
 
 	local path, strm
 
@@ -145,25 +143,24 @@ local startXpMult = HORDE.Difficulty[HORDE.CurrentDifficulty].xpMultiStart
 local endXpMult = HORDE.Difficulty[HORDE.CurrentDifficulty].xpMultiEnd
 local endMinusStartXp = endXpMult - startXpMult
 
-if GetConVar("horde_enable_rank"):GetInt() == 1 then
-	hook.Add("Horde_OnEnemyKilled", "Horde_GiveExp", function(victim, killer, wpn)
+hook.Add("Horde_OnEnemyKilled", "Horde_GiveExp", function(victim, killer, wpn)
 
-		local wavePercent = HORDE.current_wave / HORDE.max_waves
-		local roundXpMulti = startXpMult + ( wavePercent * endMinusStartXp ) --This gets the xp multi number between min and max multi based on round
-		local expMulti = roundXpMulti * expMultiConvar:GetInt()
+	local wavePercent = HORDE.current_wave / HORDE.max_waves
+	local roundXpMulti = startXpMult + ( wavePercent * endMinusStartXp ) --This gets the xp multi number between min and max multi based on round
+	local expMulti = roundXpMulti * expMultiConvar:GetInt()
 
-		if HORDE.current_wave <= 0 or GetConVar("sv_cheats"):GetInt() == 1 then return end
-		if not killer:IsPlayer() or not killer:IsValid() or not killer:Horde_GetClass() then return end
-		local class_name = killer:Horde_GetCurrentSubclass()
-		if killer:Horde_GetLevel(class_name) >= HORDE.max_level then return end
-		if victim:Horde_IsElite() then
-			expMulti = expMulti * 2
-			local p = math.random()
-			if p < 0.01 or (p < 0.1 and killer:Horde_GetGadget() == "gadget_corporate_mindset") then
-                killer:Horde_AddSkullTokens(1)
-			end
+	if HORDE.current_wave <= 0 or GetConVar("sv_cheats"):GetInt() == 1 then return end
+	if not killer:IsPlayer() or not killer:IsValid() or not killer:Horde_GetClass() then return end
+	local class_name = killer:Horde_GetCurrentSubclass()
+	if killer:Horde_GetLevel(class_name) >= HORDE.max_level then return end
+	if victim:Horde_IsElite() then
+		expMulti = expMulti * 2
+		local p = math.random()
+		if p < 0.01 or (p < 0.1 and killer:Horde_GetGadget() == "gadget_corporate_mindset") then
+			killer:Horde_AddSkullTokens(1)
 		end
-		killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + math.floor(expMulti) )
-		HORDE:SaveRank(killer)
-	end)
-end
+	end
+	killer:Horde_SetExp(class_name, killer:Horde_GetExp(class_name) + math.floor(expMulti) )
+	HORDE:SaveRank(killer)
+end)
+
