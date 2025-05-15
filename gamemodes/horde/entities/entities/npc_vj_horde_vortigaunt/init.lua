@@ -1,117 +1,66 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-game.AddParticles( "particles/vortigaunt_fx.pcf" )
+ENT.Model = {"models/vortigaunt.mdl"}
 
-PrecacheParticleSystem( "vortigaunt_beam" )
-PrecacheParticleSystem( "vortigaunt_beam_charge" )
-PrecacheParticleSystem( "vortigaunt_charge_token" )
-PrecacheParticleSystem( "vortigaunt_beam_b" )
-
-/*-----------------------------------------------
-	*** Copyright (c) 2012-2016 by DrVrej, All rights reserved. ***
-	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
-	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
------------------------------------------------*/
-ENT.Model = {"models/vortigaunt.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 550
-ENT.SightDistance = 8000
-ENT.HullType = HULL_HUMAN
+
+ENT.SightAngle = 180
+
+ENT.EntitiesToNoCollide = {"npc_vj_horde_class_assault","npc_vj_horde_class_survivor","npc_vj_horde_vortigaunt"}
+
+ENT.FriendsWithAllPlayerAllies = true
+ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_COMBINE"}
+
 ENT.PlayerFriendly = true
----------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY", "CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.AllowIgnition = false -- Can this SNPC be set on fire?
-ENT.Immune_AcidPoisonRadiation = false -- Immune to Acid, Poison and Radiation
-ENT.Immune_Electricity = true -- Immune to Electrical
-ENT.Immune_AcidPoisonRadiation = true
-ENT.Horde_Immune_Status_All = true
-ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
-ENT.MeleeAttackDistance = 35 -- How close does it have to be until it attacks?
-ENT.MeleeAttackDamageDistance = 90 -- How far does the damage go?
-ENT.FootStepTimeRun = 0.3 -- Next foot step sound when it is running
-ENT.FootStepTimeWalk = 0.6 -- Next foot step sound when it is walking
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
+
+ENT.ConstantlyFaceEnemy = true
+
+ENT.BloodColor = "Yellow"
+
+ENT.RunAwayOnUnknownDamage = false
+
+ENT.HasMeleeAttack = false
+
+ENT.HasRangeAttack = true
+ENT.RangeAttackEntityToSpawn = nil
+
+ENT.AnimTbl_RangeAttack = {"vjges_g_zapattack1"}
+ENT.RangeAttackAnimationStopMovement = false
+
+ENT.RangeDistance = 5000
+ENT.RangeToMeleeDistance = 10
+
+ENT.TimeUntilRangeAttackProjectileRelease = 0
 ENT.NextRangeAttackTime = 1.75
 ENT.NextAnyAttackTime_Range = 3
-ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
-ENT.RangeUseAttachmentForPosID = "mouth" -- The attachment used on the range attack if RangeUseAttachmentForPos is set to true
-ENT.RangeAttackEntityToSpawn = nil -- The entity that is spawned when range attacking
-ENT.TimeUntilRangeAttackProjectileRelease = 0
-ENT.HasRangeAttack = true
-ENT.RangeToMeleeDistance = 30
-ENT.RangeDistance = 4000
-ENT.FootStepTimeRun = 0.4 -- Next foot step sound when it is running
-ENT.FootStepTimeWalk = 0.5 -- Next foot step sound when it is walking
-ENT.FootStepSoundLevel = 60
-ENT.RunAwayOnUnknownDamage = false -- Should run away on damage
 
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
-ENT.SoundTbl_FootStep = {"npc/vort/vort_foot1.wav","npc/vort/vort_foot2.wav","npc/vort/vort_foot3.wav","npc/vort/vort_foot4.wav"}
-ENT.SoundTbl_Idle = {
-"vo/npc/vortigaunt/affirmed.wav",
-"vo/npc/vortigaunt/alldear.wav",
-"vo/npc/vortigaunt/allinoneinall.wav",
-"vo/npc/vortigaunt/gloriousend.wav",
-"vo/npc/vortigaunt/hopeless.wav",
-"vo/npc/vortigaunt/livetoserve.wav",
-"vo/npc/vortigaunt/mutual.wav",
-"vo/npc/vortigaunt/poet.wav",
-"vo/npc/vortigaunt/seenworse.wav",
-"vo/npc/vortigaunt/vmono_15.wav",
-}
-ENT.SoundTbl_Alert = {
-"vo/npc/vortigaunt/caution.wav",
-}
-ENT.SoundTbl_CombatIdle = {
-"vo/npc/vortigaunt/allowme.wav",
-"vo/npc/vortigaunt/calm.wav",
-"vo/npc/vortigaunt/cannotfire.wav",
-"vo/npc/vortigaunt/followfm.wav",
-"vo/npc/vortigaunt/forfreedom.wav",
-"vo/npc/vortigaunt/forward.wav",
-}
-ENT.SoundTbl_FollowPlayer = {
-"vo/npc/vortigaunt/accompany.wav",
-"vo/npc/vortigaunt/assent.wav",
-"vo/npc/vortigaunt/bodyyours.wav",
-"vo/npc/vortigaunt/certainly.wav",
-"vo/npc/vortigaunt/dedicate.wav",
-"vo/npc/vortigaunt/fminway.wav",
-}
-ENT.SoundTbl_UnFollowPlayer = {
-"vo/npc/vortigaunt/allfornow.wav",
-"vo/npc/vortigaunt/asyouwish.wav",
-"vo/npc/vortigaunt/canconvince.wav",
-"vo/npc/vortigaunt/done.wav",
-"vo/npc/vortigaunt/fearfailed.wav",
-"vo/npc/vortigaunt/fmknowsbest.wav",
-}
-ENT.SoundTbl_OnPlayerSight = {
-"vo/npc/vortigaunt/allwehave.wav",
-"vo/npc/vortigaunt/beofservice.wav",
-"vo/npc/vortigaunt/corporeal.wav",
-"vo/npc/vortigaunt/fmhonorsus.wav",
-"vo/npc/vortigaunt/putaside.wav",
-}
+ENT.RangeUseAttachmentForPos = true
+ENT.RangeUseAttachmentForPosID = "mouth"
+
 ENT.DisableDefaultRangeAttackCode = true
-ENT.DisableMakingSelfEnemyToNPCs = true
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
-    self:SetCollisionBounds(Vector(0,0,0), Vector(0,0,0))
-end
 
-function ENT:OnRemove()
-    self:StopSound("npc/vort/attack_charge.wav")
-end
+ENT.FootStepTimeRun = 0.25
+ENT.FootStepTimeWalk = 0.75
 
-function ENT:DoRelationshipCheck(ent)
-    if ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid() then return false end
-    return true
-end
+ENT.SoundTbl_FootStep = {"npc/vort/vort_foot1.wav","npc/vort/vort_foot2.wav","npc/vort/vort_foot3.wav","npc/vort/vort_foot4.wav"}
 
----------------------------------------------------------------------------------------------------------------------------------------
+ENT.SoundTbl_Idle = {"vo/npc/vortigaunt/vortigese02.wav","vo/npc/vortigaunt/vortigese03.wav","vo/npc/vortigaunt/vortigese04.wav","vo/npc/vortigaunt/vortigese05.wav","vo/npc/vortigaunt/vortigese07.wav","vo/npc/vortigaunt/vortigese08.wav"}
+ENT.SoundTbl_IdleDialogue = {"vo/npc/vortigaunt/vques01.wav","vo/npc/vortigaunt/vques03.wav","vo/npc/vortigaunt/vques04.wav","vo/npc/vortigaunt/vques05.wav","vo/npc/vortigaunt/vques06.wav","vo/npc/vortigaunt/vques07.wav","vo/npc/vortigaunt/vques09.wav","vo/npc/vortigaunt/vques10.wav"}
+ENT.SoundTbl_IdleDialogueAnswer = {"vo/npc/vortigaunt/vanswer01.wav","vo/npc/vortigaunt/vanswer02.wav","vo/npc/vortigaunt/vanswer03.wav","vo/npc/vortigaunt/vanswer04.wav","vo/npc/vortigaunt/vanswer05.wav","vo/npc/vortigaunt/vanswer06.wav","vo/npc/vortigaunt/vanswer07.wav","vo/npc/vortigaunt/vanswer08.wav","vo/npc/vortigaunt/vanswer09.wav","vo/npc/vortigaunt/vanswer10.wav","vo/npc/vortigaunt/vanswer11.wav","vo/npc/vortigaunt/vanswer12.wav","vo/npc/vortigaunt/vanswer13.wav","vo/npc/vortigaunt/vanswer14.wav","vo/npc/vortigaunt/vanswer15.wav","vo/npc/vortigaunt/vanswer16.wav","vo/npc/vortigaunt/vanswer17.wav","vo/npc/vortigaunt/vanswer18.wav"}
+ENT.SoundTbl_CombatIdle = {"vo/npc/vortigaunt/vortigese02.wav","vo/npc/vortigaunt/vortigese03.wav","vo/npc/vortigaunt/vortigese04.wav","vo/npc/vortigaunt/vortigese05.wav","vo/npc/vortigaunt/vortigese07.wav","vo/npc/vortigaunt/vortigese08.wav"}
+ENT.SoundTbl_OnReceiveOrder = {"vo/npc/vortigaunt/affirmed.wav"}
+ENT.SoundTbl_FollowPlayer = {"vo/npc/vortigaunt/leadon.wav","vo/npc/vortigaunt/onward.wav","vo/npc/vortigaunt/yesforward.wav"}
+ENT.SoundTbl_UnFollowPlayer = {"vo/npc/vortigaunt/servebetterhere.wav","vo/npc/vortigaunt/willremain.wav"}
+ENT.SoundTbl_Alert = {"vo/npc/vortigaunt/caution.wav","vo/npc/vortigaunt/forward.wav","vo/npc/vortigaunt/standclear.wav","vo/npc/vortigaunt/ware.wav"}
+ENT.SoundTbl_OnKilledEnemy = {"vo/npc/vortigaunt/passon.wav","vo/npc/vortigaunt/returntoall.wav","vo/npc/vortigaunt/returnvoid.wav","vo/npc/vortigaunt/tethercut.wav","vo/npc/vortigaunt/tothevoid.wav","vo/npc/vortigaunt/troubleus.wav","vo/npc/vortigaunt/undeserving.wav"}
+
+ENT.IdleSoundChance = 5
+ENT.CombatIdleSoundChance = 5
+ENT.OnReceiveOrderSoundChance = 5
+ENT.AlertSoundChance = 5
+ENT.OnKilledEnemySoundChance = 5
+
 function ENT:CustomRangeAttackCode()
 	local ene = self:GetEnemy()
     if not ene:IsValid() or ene:IsPlayer() then return false end
@@ -119,7 +68,7 @@ function ENT:CustomRangeAttackCode()
         local chargeSound = CreateSound(self, "npc/vort/attack_charge.wav");
         chargeSound:Play()
         local pos = ene:GetPos() + ene:OBBCenter()
-        timer.Simple(1.5 / self.AnimationPlaybackRate, function ()
+        timer.Simple(0.5 / self.AnimationPlaybackRate, function ()
             if not self:IsValid() then
                 chargeSound:Stop()
                 return
@@ -185,9 +134,29 @@ function ENT:CustomRangeAttackCode()
         return true
     end
 end
-/*-----------------------------------------------
-	*** Copyright (c) 2012-2016 by DrVrej, All rights reserved. ***
-	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
-	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
------------------------------------------------*/
+
+function ENT:CustomOnFootStepSound()
+    if self:WaterLevel() > 0 then
+        VJ_EmitSound(self,{"player/footsteps/slosh1.wav","player/footsteps/slosh2.wav","player/footsteps/slosh3.wav","player/footsteps/slosh4.wav"}, 70, math.random(80,100))
+    end
+end
+
+function ENT:OnRemove()
+    self:StopSound("npc/vort/attack_charge.wav")
+end
+
+function ENT:DoRelationshipCheck(ent)
+    if ent:IsPlayer() or ent:GetNWEntity("HordeOwner"):IsValid() then return false end
+    return true
+end
+
+ENT.Horde_Immune_Status_All = true
+
 VJ.AddNPC("Vortigaunt","npc_vj_horde_vortigaunt", "Horde")
+
+game.AddParticles("particles/vortigaunt_fx.pcf")
+
+PrecacheParticleSystem("vortigaunt_beam")
+PrecacheParticleSystem("vortigaunt_beam_charge")
+PrecacheParticleSystem("vortigaunt_charge_token")
+PrecacheParticleSystem("vortigaunt_beam_b")
