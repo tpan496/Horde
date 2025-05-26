@@ -77,7 +77,7 @@ end
 
 HORDE = {}
 HORDE.__index = HORDE
-HORDE.version = "2.1"
+HORDE.version = "2.1.1"
 print("[HORDE] HORDE Version is " .. HORDE.version) -- Sanity check
 
 HORDE.color_crimson = Color(220, 20, 60, 225)
@@ -144,7 +144,6 @@ HORDE.enable_ammobox = GetConVar("horde_enable_ammobox"):GetInt()
 -- the network.
 HORDE.player_drop_entities = {}
 HORDE.player_ready = {}
-HORDE.player_skip_check = {}
 HORDE.player_damage = {}
 HORDE.player_damage_taken = {}
 HORDE.player_heal = {}

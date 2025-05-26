@@ -43,7 +43,7 @@ function HORDE:BroadcastGameResultMessage(status, wave)
     net.Broadcast()
 end
 
-function Start(ply)
+function HORDE:Start(ply)
     if ply:IsAdmin() then
         if not HORDE.start_game then
             HORDE.start_game = true
@@ -56,8 +56,8 @@ function Start(ply)
     end
 end
 
-function Ready(ply)
-    if HORDE.current_wave > 0 then SkipTraderTime(ply) return end
+function HORDE:Ready(ply)
+    if HORDE.current_wave > 0 then HORDE:SkipTraderTime(ply) return end
     if HORDE.current_break_time <= 10 then
         HORDE:SendNotification(translate.Get("Game_F4_Starting"), 1, ply)
         return
@@ -84,9 +84,11 @@ function Ready(ply)
     if ready_count >= total_player then
         HORDE.start_game = true
         HORDE.current_break_time = math.min(HORDE.current_break_time, 10)
+        HORDE.DirectorIntervalUpdate = CurTime() + 1
     elseif ready_count >= HORDE:Round2(total_player * GetConVar("horde_ready_countdown_ratio"):GetFloat()) then
         HORDE.start_game = true
         HORDE.current_break_time = math.min(HORDE.current_break_time, HORDE.total_break_time)
+        HORDE.DirectorIntervalUpdate = CurTime() + 1
     end
 
     net.Start("Horde_PlayerReadySync")
@@ -98,7 +100,7 @@ function Ready(ply)
 end
 
 --Skip trader time--
-function SkipTraderTime(ply)
+function HORDE:SkipTraderTime(ply)
     if HORDE.current_wave <= 0 then return end
     if not HORDE:InBreak() then 
         HORDE:SendNotification(translate.Get("Game_F4_CannotSkip"), 1, ply)
@@ -129,7 +131,8 @@ function SkipTraderTime(ply)
     end
     
     if skip_count >= total_player then
-        HORDE.current_break_time = math.min(HORDE.current_break_time, 0)
+        HORDE.current_break_time = 0
+        HORDE.DirectorIntervalUpdate = CurTime() + 1
     end
 
     net.Start("Horde_PlayerReadySync")
@@ -137,7 +140,7 @@ function SkipTraderTime(ply)
     net.Broadcast()
 end
 
-function End(ply)
+function HORDE:End(ply)
     if not ply:IsAdmin() then
         HORDE:SendNotificationDenyAccess(ply)
         return
@@ -147,7 +150,7 @@ function End(ply)
     ply:PrintMessage(HUD_PRINTTALK, "Stopping game...")
 end
 
-function Shop(ply)
+function HORDE:Shop(ply)
     if GetConVar("horde_enable_shop"):GetInt() == 0 then
         HORDE:SendNotification("Shop has been disabled.", 1, ply)
     end
@@ -175,7 +178,7 @@ function Shop(ply)
     end
 end
 
-function ItemConfig(ply)
+function HORDE:ItemConfig(ply)
     if HORDE.start_game then
         HORDE:SendNotification("You cannot open config after a game has started.", 1, ply)
         return
@@ -188,7 +191,7 @@ function ItemConfig(ply)
     end
 end
 
-function EnemyConfig(ply)
+function HORDE:EnemyConfig(ply)
     if HORDE.start_game then
         HORDE:SendNotification("You cannot open config after a game has started.", 1, ply)
         return
@@ -203,7 +206,7 @@ function EnemyConfig(ply)
     end
 end
 
-function ClassConfig(ply)
+function HORDE:ClassConfig(ply)
     if HORDE.start_game then
         HORDE:SendNotification("You cannot open config after a game has started.", 1, ply)
         return
@@ -216,7 +219,7 @@ function ClassConfig(ply)
     end
 end
 
-function MapConfig(ply)
+function HORDE:MapConfig(ply)
     if HORDE.start_game then
         HORDE:SendNotification("You cannot open config after a game has started.", 1, ply)
         return
@@ -230,9 +233,9 @@ function MapConfig(ply)
     end
 end
 
-function ConfigMenu(ply)
+function HORDE:ConfigMenu(ply)
     if not ply:IsSuperAdmin() then
-        StatsMenu(ply)
+        HORDE:StatsMenu(ply)
         return
     end
 
@@ -240,7 +243,7 @@ function ConfigMenu(ply)
     net.Send(ply)
 end
 
-function StatsMenu(ply)
+function HORDE:StatsMenu(ply)
     net.Start("Horde_ToggleStats")
     net.Send(ply)
 end
@@ -261,23 +264,23 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
         ply:PrintMessage(HUD_PRINTTALK, "'!throwmoney <amount>' - Drop money")
         ply:PrintMessage(HUD_PRINTTALK, "'!rtv' -Initiate a map change vote")
     elseif text[1] == "!start" then
-        Start(ply)
+        HORDE:Start(ply)
     elseif text[1] == "!ready" then
-        Ready(ply)
+        HORDE:Ready(ply)
     elseif text[1] == "!skip" then
-        SkipTraderTime(ply)
+        HORDE:SkipTraderTime(ply)
     elseif text[1] == "!end" then
-        End(ply)
+        HORDE:End(ply)
     elseif text[1] == "!shop" then
-        Shop(ply)
+        HORDE:Shop(ply)
     elseif text[1] == "!itemconfig" then
-        ItemConfig(ply)
+        HORDE:ItemConfig(ply)
     elseif text[1] == "!enemyconfig" then
-        EnemyConfig(ply)
+        HORDE:EnemyConfig(ply)
     elseif text[1] == "!classconfig" then
-        ClassConfig(ply)
+        HORDE:ClassConfig(ply)
     elseif text[1] == "!mapconfig" then
-        MapConfig(ply)
+        HORDE:MapConfig(ply)
     elseif text[1] == "!drop" then
         ply:ConCommand("horde_drop_weapon")
     elseif text[1] == "!throwmoney" then
@@ -285,7 +288,7 @@ hook.Add("PlayerSay", "Horde_Commands", function(ply, input, public)
     elseif text[1] == "!rtv" then
         HORDE.VoteChangeMap(ply)
     elseif text[1] == "!stats" then
-        StatsMenu(ply)
+        HORDE:StatsMenu(ply)
     --[[elseif text == "!sync_to_local" then
         HORDE:SyncToLocal(ply)
     elseif text == "!sync_to_server" then
@@ -295,43 +298,43 @@ end)
 
 -- Console variants
 concommand.Add("horde_start", function (ply, cmd, args)
-    Start(ply)
+    HORDE:Start(ply)
 end)
 
 concommand.Add("horde_ready", function (ply, cmd, args)
-    Ready(ply)
+    HORDE:Ready(ply)
 end)
 
 concommand.Add("horde_skip_trader", function (ply, cmd, args)
-    SkipTraderTime(ply)
+    HORDE:SkipTraderTime(ply)
 end)
 
 concommand.Add("horde_end", function (ply, cmd, args)
-    End(ply)
+    HORDE:End(ply)
 end)
 
 concommand.Add("horde_shop", function (ply, cmd, args)
-    Shop(ply)
+    HORDE:Shop(ply)
 end)
 
 concommand.Add("horde_item_config", function (ply, cmd, args)
-    ItemConfig(ply)
+    HORDE:ItemConfig(ply)
 end)
 
 concommand.Add("horde_enemy_config", function (ply, cmd, args)
-    EnemyConfig(ply)
+    HORDE:EnemyConfig(ply)
 end)
 
 concommand.Add("horde_class_config", function (ply, cmd, args)
-    ClassConfig(ply)
+    HORDE:ClassConfig(ply)
 end)
 
 concommand.Add("horde_map_config", function (ply, cmd, args)
-    MapConfig(ply)
+    HORDE:MapConfig(ply)
 end)
 
 concommand.Add("horde_stats", function (ply, cmd, args)
-    StatsMenu(ply)
+    HORDE:StatsMenu(ply)
 end)
 
 concommand.Add("horde_testing_gorlami", function (ply, cmd, args)

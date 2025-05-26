@@ -125,6 +125,15 @@ att.UBGL_Fire = function(wep, ubgl)
     -- this bitch
     local fixedcone = wep:GetDispersion() / 360 / 60
 
+    local dmgmax = 29
+    local dmgmin = 21
+    local range = 50
+    if wep:GetClass() == "arccw_horde_akimbo_m9" then
+        dmgmax = wep:GetBuff("Damage")
+        dmgmin = wep:GetBuff("DamageMin")
+        range = wep:GetBuff("Range")
+    end
+
     wep.Owner:FireBullets({
 		Src = wep.Owner:EyePos(),
 		Num = 1,
@@ -136,10 +145,7 @@ att.UBGL_Fire = function(wep, ubgl)
 		Callback = function(_, tr, dmg)
 			local dist = (tr.HitPos - tr.StartPos):Length() * ArcCW.HUToM
 
-			local dmgmax = 29
-			local dmgmin = 21
-
-			local delta = dist / 800
+			local delta = dist / range
 
 			delta = math.Clamp(delta, 0, 1)
 
@@ -168,28 +174,33 @@ att.UBGL_Fire = function(wep, ubgl)
 end
 
 att.UBGL_Reload = function(wep, ubgl)
-        if wep:Clip2() >= 15 then return end
-        if Ammo(wep) <= 0 then return end
+    if wep:Clip2() >= 15 then return end
+    if Ammo(wep) <= 0 then return end
+
+    local reload_speed = 1
+    if wep:GetClass() == "arccw_horde_akimbo_m9" then
+        reload_speed = wep:GetBuff("ReloadTime")
+    end
 
     wep:SetInUBGL(false)
     wep:Reload()
 
     if wep:Clip2() <= 0 then
-        wep:DoLHIKAnimation("reload_empty", 89/40)
-        wep:SetNextSecondaryFire(CurTime() + 89/40)
-        wep:SetMW2Masterkey_ShellInsertTime(CurTime() + 1.2)
+        wep:DoLHIKAnimation("reload_empty", 89/40 * reload_speed)
+        wep:SetNextSecondaryFire(CurTime() + 89/40 * reload_speed)
+        wep:SetMW2Masterkey_ShellInsertTime(CurTime() + 1.2 * reload_speed)
         wep:PlaySoundTable({
-            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 4/40},
-            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav",  	t = 42/40},
-            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_chamber_v2.wav", 	t = 67/40},
+            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 4/40 * reload_speed},
+            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav",  	t = 42/40 * reload_speed},
+            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_chamber_v2.wav", 	t = 67/40 * reload_speed},
         })
     else
-        wep:DoLHIKAnimation("reload", 70/40)
-        wep:SetNextSecondaryFire(CurTime() + 70/40)
-        wep:SetMW2Masterkey_ShellInsertTime(CurTime() + 1.2)
+        wep:DoLHIKAnimation("reload", 70/40 * reload_speed)
+        wep:SetNextSecondaryFire(CurTime() + 70/40 * reload_speed)
+        wep:SetMW2Masterkey_ShellInsertTime(CurTime() + 1.2 * reload_speed)
         wep:PlaySoundTable({
-            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 4/40},
-            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	    t = 36/40},
+            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipout_v2.wav", 	t = 4/40 * reload_speed},
+            {s = "weapons/fesiugmw2/foley/wpfoly_beretta9mm_reload_clipin_v2.wav", 	    t = 36/40 * reload_speed},
         })
     end
 end

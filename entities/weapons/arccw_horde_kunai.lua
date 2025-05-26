@@ -97,27 +97,45 @@ function SWEP:CustomInitialize()
     end)
 end
 
+function SWEP:Hook_Think()
+    --if SERVER then return end
+    local ply = self:GetOwner()
+    if !ply:HasWeapon("arccw_horde_kunai") then return end
+    if not self.Is_In_Rapid_Throw then return end
+    
+    if self.Anim1 and self.PlayThrowAnim_Curtime <= CurTime() then
+        self:PlayAnimation("pre_throw", mult, pred, startfrom, tt, skipholster, true, absolute)
+        self.Anim1 = nil
+        self.Anim2 = true
+        self.Anim3 = nil
+    elseif self.Anim2 and self.PlayThrowAnim_Curtime + 0.2 <= CurTime() then
+        self:PlayAnimation("throw", mult, pred, startfrom, tt, skipholster, true, absolute)
+        self:FireRocket("arccw_horde_thr_knife", 1000, ply:EyeAngles(), true)
+        ply:SetAmmo(ply:GetAmmoCount("horde_arccw_knives") - 1, "horde_arccw_knives")
+        --self.PlayThrowAnim_Curtime = CurTime()
+        self.Anim1 = nil
+        self.Anim2 = nil
+        self.Anim3 = true
+    elseif self.Anim3 and self.PlayThrowAnim_Curtime + 0.3 <= CurTime() then
+        self:PlayAnimation("draw", 0.5, pred, startfrom, tt, skipholster, true, absolute)
+        self.Is_In_Rapid_Throw = nil
+        self.Anim1 = nil
+        self.Anim2 = nil
+        self.Anim3 = nil
+    end
+end
+
 function SWEP:SecondaryAttack()
     if self:GetNextPrimaryFire() > CurTime() then return end
     if self:GetNextSecondaryFire() > CurTime() then return end
     local ply = self:GetOwner()
-    if ply:GetAmmoCount("horde_arccw_knives") <= 0 then return end
-    self:PlayAnimation("pre_throw", mult, pred, startfrom, tt, skipholster, true, absolute)
-    timer.Simple(0.2, function ()
-        if !ply:HasWeapon("arccw_horde_kunai") then return end
-        self:FireRocket("arccw_horde_thr_knife", 1000, ply:EyeAngles(), true)
-        ply:SetAmmo(ply:GetAmmoCount("horde_arccw_knives") - 1, "horde_arccw_knives")
-    end)
-
-    timer.Simple(0.15, function ()
-        if !ply:HasWeapon("arccw_horde_kunai") then return end
-        self:PlayAnimation("throw", mult, pred, startfrom, tt, skipholster, true, absolute)
-    end)
     
-    timer.Simple(0.25, function ()
-        if !ply:HasWeapon("arccw_horde_kunai") then return end
-        self:PlayAnimation("draw", 0.5, pred, startfrom, tt, skipholster, true, absolute)
-    end)
+    if ply:GetAmmoCount("horde_arccw_knives") <= 0 then return end
+    --print(ply:GetWeapon("arccw_horde_kunai").Primary.Ammo)
+    self.Is_In_Rapid_Throw = true
+    self.Anim1 = true
+    self.PlayThrowAnim_Curtime = CurTime()
+    
     self.Weapon:SetNextPrimaryFire(CurTime() + 0.5)
     self.Weapon:SetNextSecondaryFire(CurTime() + 0.5)
 end

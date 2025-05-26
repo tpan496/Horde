@@ -107,16 +107,16 @@ if GetConVar("horde_disable_f1"):GetInt() == 0 then
         if GetConVar("horde_enable_sandbox"):GetBool() then
             ply:SendLua("hook.Run( 'StartSearch' )")
         else
-            StatsMenu(ply)
+            HORDE:StatsMenu(ply)
         end
     end
 end
 
-function GM:ShowTeam(ply) ConfigMenu(ply) end
+function GM:ShowTeam(ply) HORDE:ConfigMenu(ply) end
 
-function GM:ShowSpare1(ply) Shop(ply) end
+function GM:ShowSpare1(ply) HORDE:Shop(ply) end
 
-function GM:ShowSpare2(ply) Ready(ply) end
+function GM:ShowSpare2(ply) HORDE:Ready(ply) end
 
 local groups = { "group01", "group03" }
 local sex = { "female", "male" }
