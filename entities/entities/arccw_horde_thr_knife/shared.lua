@@ -109,7 +109,7 @@ function ENT:Touch(ply)
     if item.whitelist and not item.whitelist[ply:Horde_GetCurrentSubclass()] then return end
     if ply:HasWeapon("arccw_horde_kunai") then
         --ply:SetAmmo(ply:GetAmmoCount("horde_arccw_knives") + 1, "horde_arccw_knives")
-        ply:GiveAmmo(1, "horde_arccw_knives", false)
+        ply:GiveAmmo(1, ply:GetWeapon("arccw_horde_kunai").Primary.Ammo, false)
         self:Remove()
     end
 end

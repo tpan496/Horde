@@ -29,7 +29,7 @@ SWEP.ViewModelFOV = 65
 
 SWEP.Damage = 40
 SWEP.DamageMin = 20
-SWEP.Range = 740 * 0.025  -- GAME UNITS * 0.025 = METRES
+SWEP.Range = 50  -- GAME UNITS * 0.025 = METRES
 SWEP.Penetration = 4
 SWEP.DamageType = DMG_BULLET
 SWEP.ShootEntity = nil -- entity to fire, if any
@@ -273,19 +273,29 @@ function SWEP:Hook_OnDeploy()
     end)
 end
 
+function SWEP:Hook_OnHolster()
+    self.Duallies_Primed = nil
+end
+
 DEFINE_BASECLASS(SWEP.Base)
 
+SWEP.Duallies_Delay = 0
 function SWEP:PrimaryAttack(...)
-    if self:GetOwner():KeyDown(IN_ATTACK) and self:GetCurrentFiremode().Mode == 2 and self.Attachments[8].Installed == "horde_akimbo_glock" then
-        timer.Simple(self.Delay / 2, function()
-            self:SetInUBGL(true)
-            self:ShootUBGL()
-            timer.Simple(self.Delay / 2, function()
-                self:SetInUBGL(false)
-            end)
-        end)
-    end
     BaseClass.PrimaryAttack(self, ...)
+    if self:GetOwner():KeyDown(IN_ATTACK) and self:GetCurrentFiremode().Mode == 2 and self.Attachments[8].Installed == "horde_akimbo_glock" then
+        self.Duallies_Delay = CurTime() + self.Delay / 2
+        self.Duallies_Primed = true
+    end
+end
+
+function SWEP:Hook_Think()
+    if self.Duallies_Delay <= CurTime() and self.Duallies_Primed then
+        self.Duallies_Primed = nil
+        self:SetInUBGL(true)
+        self:SetNextSecondaryFire(CurTime())
+        self:ShootUBGL()
+        self:SetInUBGL(false)
+    end
 end
 
 SWEP.Animations = {

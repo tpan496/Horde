@@ -23,6 +23,9 @@ local horde_boss_reposition = false
 local horde_boss_properties = nil
 local boss_music_loop = nil
 
+HORDE.BreakTimerUpdate = 0
+HORDE.DirectorIntervalUpdate = 0
+
 -- These are for horde default bosses only,
 local horde_boss_critical = nil
 
@@ -177,6 +180,10 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
             else
                 HORDE.total_enemies_this_wave = HORDE.total_enemies_this_wave + 1
             end
+            -- So the wave ends immediately after cooking the last enemy
+            if HORDE.total_enemies_this_wave <= 0 and HORDE.alive_enemies_this_wave <= 0 then
+                HORDE.DirectorIntervalUpdate = CurTime() + 1
+            end
         end
         --[[
         if (HORDE.total_enemies_this_wave_fixed - HORDE.killed_enemies_this_wave) <= 10 then
@@ -257,6 +264,7 @@ function HORDE:OnEnemyKilled(victim, killer, weapon)
                     HORDE.horde_has_active_objective = true
                 else
                     HORDE:WaveEnd()
+                    hook.Run("HordeWaveEnd", HORDE.current_wave)
                 end
             end
 
@@ -977,6 +985,7 @@ function HORDE:StartBreak()
     net.Start("Horde_SyncGameInfo")
     net.WriteUInt(HORDE.current_wave, 16)
     net.Broadcast()
+    --[[ --Using hook think to see if it fixes skip trader, if not then plan B
     timer.Create("Horder_Counter", 1, 0, function()
         if not HORDE.start_game then return end
         HORDE:BroadcastBreakCountDownMessage(HORDE.current_break_time, false)
@@ -994,11 +1003,34 @@ function HORDE:StartBreak()
             timer.Remove("Horder_Counter")
         end
     end)
+    ]]
 end
 
 function HORDE:InBreak()
     return horde_in_break
 end
+
+hook.Add("Think", "HORDE_BreakTimerUpdate", function()
+    if HORDE.GameHasEnded then return end
+    if not HORDE.start_game then return end
+    if not HORDE:InBreak() then return end
+    if HORDE.BreakTimerUpdate > CurTime() then return end
+    HORDE.BreakTimerUpdate = CurTime() + 1
+    
+    HORDE:BroadcastBreakCountDownMessage(HORDE.current_break_time, false)
+
+    if 0 < HORDE.current_break_time then
+        HORDE.current_break_time = HORDE.current_break_time - 1
+    elseif HORDE.current_break_time <= 0 then
+        -- New round
+        HORDE.current_wave = HORDE.current_wave + 1
+        net.Start("Horde_SyncGameInfo")
+        net.WriteUInt(HORDE.current_wave, 16)
+        net.Broadcast()
+        HORDE:BroadcastBreakCountDownMessage(0, false)
+        horde_in_break = nil
+    end
+end)
 
 -- Starts a wave.
 -- 1. Sets the spawn configuration for the current wave.
@@ -1196,7 +1228,6 @@ function HORDE:WaveEnd()
     horde_boss_critical = false
     HORDE.player_ready = {}
 
-    HORDE:StartBreak()
     local enemies = HORDE:ScanEnemies()
     if not table.IsEmpty(enemies) then
         for _, enemy in pairs(enemies) do
@@ -1219,6 +1250,7 @@ function HORDE:WaveEnd()
         end)
         boss_music_loop:Play()
     else
+        HORDE:StartBreak()
         HORDE:BroadcastBreakCountDownMessage(0, true)
         HORDE:SendNotification("Wave Completed!", 0)
     end
@@ -1460,8 +1492,21 @@ function HORDE:Direct()
         hook.Run("HordeWaveEnd", HORDE.current_wave)
     end
 end
-
+--[[ --Using hook think to see if it fixes skip trader, if not then plan B
 timer.Create("Horde_Main", director_interval, 0, function()
+    local status, err = pcall(function() HORDE:Direct() end)
+
+    if not status then
+        print(err)
+    end
+end)
+]]
+
+hook.Add("Think", "HORDE_DirectorIntervalUpdate", function()
+    if HORDE.GameHasEnded then return end
+    if HORDE.DirectorIntervalUpdate > CurTime() then return end
+    HORDE.DirectorIntervalUpdate = CurTime() + director_interval
+    
     local status, err = pcall(function() HORDE:Direct() end)
 
     if not status then
