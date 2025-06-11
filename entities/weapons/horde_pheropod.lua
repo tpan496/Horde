@@ -176,14 +176,14 @@ end
 function SWEP:RaiseAntlion()
 	if not IsValid(self.Owner) then return end
     if not self.Owner:Horde_GetPerk("hatcher_base") then return end
-	if self.Owner:Horde_GetPerk("hatcher_swarm") then
-		if HORDE:GetAntlionMinionsCount(self.Owner) > 1 then return end
-	else
-		if HORDE:GetAntlionMinionsCount(self.Owner) > 0 then return end
-	end
+    if not self.UpgradeBypass then
+        if self.Owner:Horde_GetPerk("hatcher_swarm") then
+            if HORDE:GetAntlionMinionsCount(self.Owner) > 1 then return end
+        else
+            if HORDE:GetAntlionMinionsCount(self.Owner) > 0 then return end
+        end
 
-	if self.Weapon:Clip1() < 40 and not self.UpgradeBypass then return end
-	if not self.UpgradeBypass then
+        if self.Weapon:Clip1() < 40 then return end
         self:TakePrimaryAmmo(40)
         self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
         self.SecondaryCharging = 1
@@ -197,13 +197,14 @@ function SWEP:RaiseAntlion()
 	
     if self.UpgradeBypass then
         ent.evolutionmaximum = true
-        timer.Simple(0.1, function ()
+        local id = self:EntIndex()
+        timer.Create("pheropod_spamupgradedelay" .. id, 1, 1, function()
             self.UpgradeBypass = false
         end)
     end
     
     dir:Normalize()
-	local drop_pos = pos + dir * 50
+	local drop_pos = pos + dir * 50 + Vector(0, 0, 15)
 	ent:SetPos(drop_pos)
 	ent:SetOwner(ply)
 	ply:Horde_AddDropEntity(ent:GetClass(), ent)
@@ -213,6 +214,7 @@ function SWEP:RaiseAntlion()
 	ent:Spawn()
 
 	timer.Simple(0.1, function ()
+        if not ent:IsValid() then return end
 		ent:AddRelationship("player D_LI 99")
 		ent:AddRelationship("ally D_LI 99")
 		if HORDE.items["npc_vj_horde_vortigaunt"] then

@@ -111,7 +111,7 @@ function SWEP:Hook_Think()
     elseif self.Anim2 and self.PlayThrowAnim_Curtime + 0.2 <= CurTime() then
         self:PlayAnimation("throw", mult, pred, startfrom, tt, skipholster, true, absolute)
         self:FireRocket("arccw_horde_thr_knife", 1000, ply:EyeAngles(), true)
-        ply:SetAmmo(ply:GetAmmoCount("horde_arccw_knives") - 1, "horde_arccw_knives")
+        ply:SetAmmo(ply:GetAmmoCount(self.Primary.Ammo) - 1, self.Primary.Ammo)
         --self.PlayThrowAnim_Curtime = CurTime()
         self.Anim1 = nil
         self.Anim2 = nil
@@ -130,7 +130,7 @@ function SWEP:SecondaryAttack()
     if self:GetNextSecondaryFire() > CurTime() then return end
     local ply = self:GetOwner()
     
-    if ply:GetAmmoCount("horde_arccw_knives") <= 0 then return end
+    if ply:GetAmmoCount(self.Primary.Ammo) <= 0 then return end
     --print(ply:GetWeapon("arccw_horde_kunai").Primary.Ammo)
     self.Is_In_Rapid_Throw = true
     self.Anim1 = true

@@ -84,11 +84,9 @@ function HORDE:Ready(ply)
     if ready_count >= total_player then
         HORDE.start_game = true
         HORDE.current_break_time = math.min(HORDE.current_break_time, 10)
-        HORDE.DirectorIntervalUpdate = CurTime() + 1
     elseif ready_count >= HORDE:Round2(total_player * GetConVar("horde_ready_countdown_ratio"):GetFloat()) then
         HORDE.start_game = true
         HORDE.current_break_time = math.min(HORDE.current_break_time, HORDE.total_break_time)
-        HORDE.DirectorIntervalUpdate = CurTime() + 1
     end
 
     net.Start("Horde_PlayerReadySync")
@@ -131,8 +129,7 @@ function HORDE:SkipTraderTime(ply)
     end
     
     if skip_count >= total_player then
-        HORDE.current_break_time = 0
-        HORDE.DirectorIntervalUpdate = CurTime() + 1
+        HORDE.Skip_Wave_Timer = true
     end
 
     net.Start("Horde_PlayerReadySync")

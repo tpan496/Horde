@@ -78,7 +78,7 @@ function ENT:PhysicsCollide(colData, collider)
 
     if HORDE.player_drop_entities[self.Owner:SteamID()] then
         for id, ent in pairs(HORDE.player_drop_entities[self.Owner:SteamID()]) do
-            if ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
+            if ent:IsValid() and ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
                 ent:RangeAttackLocation(pos)
             end
         end

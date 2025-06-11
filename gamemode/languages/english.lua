@@ -2001,7 +2001,8 @@ LANGUAGE["Module_Desc_WM_Suffering"] = [[
 
 LANGUAGE["Item_Watchtower Module: Terror"] = [[Watchtower Module: Terror]]
 LANGUAGE["Module_Desc_WM_Terror"] = [[
-Enemies in your presence receive 16% stun buildup or 40 stun buildup per second, whichever is less.
+Fear causes enemies to receive 16% stun buildup or 40 stun buildup, whichever is less.
+Stun buildup cannot be shotgunned.
 50% less effective against bosses.
 ]]
 
@@ -2012,8 +2013,8 @@ LANGUAGE["Module_Desc_WM_Paranoia"] = [[
 
 LANGUAGE["Item_Watchtower Module: Nightmare"] = [[Watchtower Module: Nightmare]]
 LANGUAGE["Module_Desc_WM_Nightmare"] = [[
-Enemies in your presence take 8% of their maximum health as true damage, once.
-Enemies in your presence are culled while below 10% of their maximum health.
+Fear causes enemies to take 8% of their maximum health as true damage, once.
+Fear causes enemies to be culled while below 10% health.
 ]]
 
 LANGUAGE["Item_Watchtower Module: Hysteria"] = [[Watchtower Module: Hysteria]]
@@ -2070,7 +2071,7 @@ LANGUAGE["Gadget_gadget_death_incarnate"] = [[Death Incarnate]]
 LANGUAGE["Gadget_Desc_gadget_death_incarnate"] = [[
 Active Gadget:
 Your presence ignores line of sight.
-Enemies in your presence have Necrosis.
+Fear causes enemies to receive Necrosis.
 
 Passive Effect:
 Immune to Necrosis.
