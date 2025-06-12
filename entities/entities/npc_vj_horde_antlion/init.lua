@@ -453,7 +453,7 @@ function ENT:RangeAttackP(pos)
 	-- Create projectile
 	if !self:OnRangeAttackExecute("Init", ene) then
 		local projectile = ents.Create(self.RangeAttackEntityToSpawn)
-		local target_pos = pos + Vector(0, 0, 100)
+		local target_pos = pos + Vector(0, 0, 10)
 		projectile.Owner = self
 		projectile.BaseDamage = self.RangeAttackDamage
 		projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up)
