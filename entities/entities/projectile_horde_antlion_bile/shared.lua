@@ -14,8 +14,8 @@ AddCSLuaFile()
 
 ENT.Model = "models/vj_base/projectiles/spit_acid_medium.mdl"
 ENT.Ticks = 0
-ENT.CollisionGroup = COLLISION_GROUP_PLAYER
-ENT.CollisionGroupType = COLLISION_GROUP_PLAYER
+ENT.CollisionGroup = COLLISION_GROUP_PASSABLE_DOOR
+ENT.CollisionGroupType = COLLISION_GROUP_PASSABLE_DOOR
 ENT.Removing = nil
 ENT.StartPos = nil
 ENT.PlaySoundTimer = 0
@@ -44,7 +44,7 @@ function ENT:Initialize()
     self.PlaySoundTimer = CurTime()
     self.StartPos = self:GetPos()
     
-    --self:SetCollisionGroup(COLLISION_GROUP_PLAYER)
+    self:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
     self.ExplodeTimer = CurTime() + 2
     self.StartTime = CurTime()
     end

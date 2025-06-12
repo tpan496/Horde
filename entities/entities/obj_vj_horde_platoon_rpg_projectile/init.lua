@@ -47,7 +47,7 @@ if !SERVER then return end
 ENT.Model = {"models/weapons/w_missile_launch.mdl"} -- The models it should spawn with | Picks a random one from the table
 ENT.DoesRadiusDamage = false -- Should it do a blast damage when it hits something?
 ENT.RadiusDamageRadius = 250 -- How far the damage go? The farther away it's from its enemy, the less damage it will do | Counted in world units
-ENT.RadiusDamage = 50 -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
+ENT.RadiusDamage = 40 -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
 ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the enemy is from the position that the projectile hit?
 ENT.RadiusDamageType = DMG_BLAST -- Damage type
 ENT.RadiusDamageForce = 90 -- Put the force amount it should apply | false = Don't apply any force
@@ -105,16 +105,25 @@ end
 
 function ENT:CustomOnPhysicsCollide(data, phys)
     if self.Dead then return end
+    if not self.Owner:IsValid() then self:Remove() return end
     self.Dead = true
     local dmg = DamageInfo()
-    if self.Owner:IsValid() then
-        dmg:SetAttacker(self.Owner)
-    else
-        dmg:SetAttacker(self)
-    end
+    PrintTable(data)
+	local gunPos = self.Owner:GetShootPos()
+	local hitPos = data.HitPos
+	
+	local x = (gunPos.x - hitPos.x)^2;
+	local y = (gunPos.y - hitPos.y)^2;
+	local z = (gunPos.z - hitPos.z)^2;
+	local distance = math.sqrt(x + y + z);
+	
+	local max_distance = 1500
+    local scaled_dmg = self.RadiusDamage * 0.5 * (1 + math.min(distance, max_distance) / max_distance)
+    
+    dmg:SetAttacker(self.Owner)
     dmg:SetInflictor(self)
     dmg:SetDamageType(self.RadiusDamageType)
-    dmg:SetDamage(self.RadiusDamage)
+    dmg:SetDamage(scaled_dmg)
     util.BlastDamageInfo(dmg, self:GetPos(), self.RadiusDamageRadius)
     
     self:Remove()

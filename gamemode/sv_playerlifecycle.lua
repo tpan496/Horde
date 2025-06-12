@@ -231,9 +231,8 @@ function HORDE:GameEnd(status)
     net.Start("Horde_SyncEscapeEnd")
     net.Broadcast()
 
-    --timer.Remove("Horde_Main")
-    --timer.Remove("Horder_Counter")
-    HORDE.GameHasEnded = true
+    timer.Remove("Horde_Main")
+    timer.Remove("Horder_Counter")
     HORDE:BroadcastGameResultMessage(status, HORDE.current_wave)
 
     for _, ply in pairs(player.GetHumans()) do
