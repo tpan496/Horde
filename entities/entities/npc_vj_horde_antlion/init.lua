@@ -413,7 +413,7 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 end
 
 function ENT:RangeAttackLocation(pos)
-	if self.Evolve_Stage == 4 then return end
+	--if self.Evolve_Stage == 4 then return end
 	local selfData = self:GetTable()
 	selfData.AttackType = VJ.ATTACK_TYPE_RANGE
 	selfData.AttackState = VJ.ATTACK_STATE_STARTED
@@ -453,7 +453,7 @@ function ENT:RangeAttackP(pos)
 	-- Create projectile
 	if !self:OnRangeAttackExecute("Init", ene) then
 		local projectile = ents.Create(self.RangeAttackEntityToSpawn)
-		local target_pos = pos + Vector(0, 10, 0)
+		local target_pos = pos + Vector(0, 0, 100)
 		projectile.Owner = self
 		projectile.BaseDamage = self.RangeAttackDamage
 		projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up)
