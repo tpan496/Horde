@@ -161,29 +161,32 @@ function SWEP:Throw(level)
 end
 
 function SWEP:UpgradeReset()
-	if not HORDE.player_drop_entities[self.Owner:SteamID()] then return end
-	for id, ent in pairs(HORDE.player_drop_entities[self.Owner:SteamID()]) do
-        if ent:IsValid() and ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
-            ent:Remove()
-            self.UpgradeBypass = true
-            timer.Simple(0.1, function()
-                self:RaiseAntlion()
-            end)
+	if HORDE.player_drop_entities[self.Owner:SteamID()] then
+        for id, ent in pairs(HORDE.player_drop_entities[self.Owner:SteamID()]) do
+            if ent:IsValid() and ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
+                ent:Remove()
+            end
         end
+    end
+    self.UpgradeBypass = true
+    self:RaiseAntlion()
+    if self.Owner:Horde_GetPerk("hatcher_swarm") then
+        self.UpgradeBypass = true
+        self:RaiseAntlion()
     end
 end
 
 function SWEP:RaiseAntlion()
 	if not IsValid(self.Owner) then return end
     if not self.Owner:Horde_GetPerk("hatcher_base") then return end
-	if self.Owner:Horde_GetPerk("hatcher_swarm") then
-		if HORDE:GetAntlionMinionsCount(self.Owner) > 1 then return end
-	else
-		if HORDE:GetAntlionMinionsCount(self.Owner) > 0 then return end
-	end
+    if not self.UpgradeBypass then
+        if self.Owner:Horde_GetPerk("hatcher_swarm") then
+            if HORDE:GetAntlionMinionsCount(self.Owner) > 1 then return end
+        else
+            if HORDE:GetAntlionMinionsCount(self.Owner) > 0 then return end
+        end
 
-	if self.Weapon:Clip1() < 40 and not self.UpgradeBypass then return end
-	if not self.UpgradeBypass then
+        if self.Weapon:Clip1() < 40 then return end
         self:TakePrimaryAmmo(40)
         self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
         self.SecondaryCharging = 1
@@ -197,13 +200,11 @@ function SWEP:RaiseAntlion()
 	
     if self.UpgradeBypass then
         ent.evolutionmaximum = true
-        timer.Simple(0.1, function ()
-            self.UpgradeBypass = false
-        end)
+        self.UpgradeBypass = false
     end
     
     dir:Normalize()
-	local drop_pos = pos + dir * 50
+	local drop_pos = pos + dir * 50 + Vector(0, 0, 15)
 	ent:SetPos(drop_pos)
 	ent:SetOwner(ply)
 	ply:Horde_AddDropEntity(ent:GetClass(), ent)
@@ -213,6 +214,7 @@ function SWEP:RaiseAntlion()
 	ent:Spawn()
 
 	timer.Simple(0.1, function ()
+        if not ent:IsValid() then return end
 		ent:AddRelationship("player D_LI 99")
 		ent:AddRelationship("ally D_LI 99")
 		if HORDE.items["npc_vj_horde_vortigaunt"] then
@@ -267,7 +269,7 @@ end
 function SWEP:Come()
 	if not HORDE.player_drop_entities[self.Owner:SteamID()] then return end
 	for id, ent in pairs(HORDE.player_drop_entities[self.Owner:SteamID()]) do
-		if ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
+		if ent:IsValid() and ent:IsNPC() and ent:GetClass() == "npc_vj_horde_antlion" then
 			ent:SetLastPosition(self.Owner:GetPos())
 			ent:SetSchedule(SCHED_FORCED_GO_RUN)
 		end
